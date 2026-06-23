@@ -88,6 +88,21 @@ nav:
       - foundation/papers/neuromorphic-sensing.md
       - foundation/papers/edge-tpu-benchmark.md
       - foundation/papers/risc-v-iot.md
+      - foundation/papers/lora-chip-architecture.md
+      - foundation/papers/multi-sensor-fusion.md
+      - foundation/papers/low-power-design-patterns.md
+      - foundation/papers/can-lin-bus-iot.md
+      - foundation/papers/fpga-iot-acceleration.md
+      - foundation/papers/tactile-sensing-iot.md
+      - foundation/papers/gas-sensor-arrays.md
+      - foundation/papers/optical-sensors-iot.md
+      - foundation/papers/imu-inertial-navigation.md
+      - foundation/papers/battery-management-bms.md
+      - foundation/papers/wireless-charging-iot.md
+      - foundation/papers/flexible-electronics-iot.md
+      - foundation/papers/digital-twin-sensor-calibration.md
+      - foundation/papers/acoustic-sensor-networks.md
+      - foundation/papers/mmwave-radar-sensing.md
   - Layer 2 无线接入:
     - connectivity/index.md
     - 论文与综述:
@@ -101,6 +116,21 @@ nav:
       - connectivity/papers/satellite-iot.md
       - connectivity/papers/zigbee-matter-thread.md
       - connectivity/papers/backscatter-communication.md
+      - connectivity/papers/wifi-halow-802-11ah.md
+      - connectivity/papers/dect-2020-nr.md
+      - connectivity/papers/private-5g-networks.md
+      - connectivity/papers/mesh-networking-topology.md
+      - connectivity/papers/cognitive-radio-spectrum.md
+      - connectivity/papers/lifi-visible-light-communication.md
+      - connectivity/papers/thz-communication-iot.md
+      - connectivity/papers/mimo-iot-applications.md
+      - connectivity/papers/swipt-energy-harvesting.md
+      - connectivity/papers/d2d-device-communication.md
+      - connectivity/papers/dynamic-spectrum-access.md
+      - connectivity/papers/multi-protocol-gateway.md
+      - connectivity/papers/sub-ghz-band-comparison.md
+      - connectivity/papers/noma-iot-access.md
+      - connectivity/papers/relay-cooperative-communication.md
   - Layer 3 网络协议:
     - network/index.md
     - 论文与综述:
@@ -114,6 +144,21 @@ nav:
       - network/papers/named-data-networking-iot.md
       - network/papers/ipv6-6lowpan-rpl.md
       - network/papers/network-slicing-iot.md
+      - network/papers/quic-iot-applicability.md
+      - network/papers/dds-data-distribution.md
+      - network/papers/amqp-industrial-messaging.md
+      - network/papers/edge-gateway-protocol-conversion.md
+      - network/papers/opc-ua-tsn-industrial.md
+      - network/papers/mptcp-multipath-transport.md
+      - network/papers/qos-adaptive-iot.md
+      - network/papers/network-coding-iot.md
+      - network/papers/intent-based-networking-iot.md
+      - network/papers/apn6-application-aware.md
+      - network/papers/websocket-realtime-iot.md
+      - network/papers/dtls-tls13-comparison.md
+      - network/papers/low-latency-transport.md
+      - network/papers/wireguard-vpn-iot.md
+      - network/papers/traffic-engineering-congestion.md
   - Layer 4 计算平台:
     - computing/index.md
     - 论文与综述:
@@ -127,6 +172,21 @@ nav:
       - computing/papers/edgex-foundry-deep-dive.md
       - computing/papers/microservice-edge.md
       - computing/papers/resource-management-heterogeneous.md
+      - computing/papers/wasm-edge-sandbox.md
+      - computing/papers/unikernel-minimal-vm.md
+      - computing/papers/realtime-linux-preempt-rt.md
+      - computing/papers/ebpf-xdp-dataplane.md
+      - computing/papers/edge-database-sqlite-duckdb.md
+      - computing/papers/flink-on-edge-streaming.md
+      - computing/papers/edge-message-queue-nats.md
+      - computing/papers/gitops-edge-deployment.md
+      - computing/papers/digital-twin-computing.md
+      - computing/papers/edge-ai-inference-serving.md
+      - computing/papers/multi-tenant-edge-isolation.md
+      - computing/papers/edge-storage-minio-ceph.md
+      - computing/papers/service-mesh-edge.md
+      - computing/papers/opentelemetry-edge-observability.md
+      - computing/papers/green-edge-scheduling.md
   - Layer 5 边缘智能:
     - intelligence/index.md
     - 论文与综述:
@@ -140,6 +200,21 @@ nav:
       - intelligence/papers/edge-ai-video-analytics.md
       - intelligence/papers/nas-edge-models.md
       - intelligence/papers/continual-learning-edge.md
+      - intelligence/papers/transformer-edge-deployment.md
+      - intelligence/papers/llm-quantization-gptq-awq.md
+      - intelligence/papers/edge-rag-retrieval.md
+      - intelligence/papers/multimodal-edge-perception.md
+      - intelligence/papers/reinforcement-learning-edge.md
+      - intelligence/papers/graph-neural-network-iot.md
+      - intelligence/papers/self-supervised-pretraining-device.md
+      - intelligence/papers/privacy-computing-tee-fl.md
+      - intelligence/papers/async-federated-learning.md
+      - intelligence/papers/contrastive-learning-sensor.md
+      - intelligence/papers/edge-anomaly-detection.md
+      - intelligence/papers/time-series-transformer.md
+      - intelligence/papers/edge-gan-generation.md
+      - intelligence/papers/one-shot-nas-edge.md
+      - intelligence/papers/on-device-diffusion-model.md
   - Layer 6 安全与隐私:
     - security/index.md
     - 论文与综述:
@@ -153,6 +228,21 @@ nav:
       - security/papers/firmware-security.md
       - security/papers/zero-trust-iot.md
       - security/papers/adversarial-attacks-edge-ai.md
+      - security/papers/post-quantum-crypto-iot.md
+      - security/papers/secure-boot-root-of-trust.md
+      - security/papers/sbom-software-supply-chain.md
+      - security/papers/ota-secure-update.md
+      - security/papers/honeypot-deception-iot.md
+      - security/papers/side-channel-attack-defense.md
+      - security/papers/fido2-webauthn-iot.md
+      - security/papers/network-traffic-anomaly-ml.md
+      - security/papers/secure-multiparty-computation.md
+      - security/papers/homomorphic-encryption-practical.md
+      - security/papers/devsecops-iot.md
+      - security/papers/compliance-framework-nist-etsi.md
+      - security/papers/supply-chain-security-iot.md
+      - security/papers/v2x-security.md
+      - security/papers/ics-protocol-security.md
   - Layer 7 综合应用:
     - applications/index.md
     - 论文与综述:
@@ -166,6 +256,21 @@ nav:
       - applications/papers/drone-iot-inspection.md
       - applications/papers/smart-building-hvac.md
       - applications/papers/supply-chain-iot.md
+      - applications/papers/water-quality-monitoring.md
+      - applications/papers/smart-traffic-signal.md
+      - applications/papers/warehouse-robot-coordination.md
+      - applications/papers/remote-surgery-tactile-internet.md
+      - applications/papers/livestock-precision-management.md
+      - applications/papers/mine-safety-monitoring.md
+      - applications/papers/ocean-buoy-sensor-network.md
+      - applications/papers/smart-fire-prevention.md
+      - applications/papers/elderly-home-care.md
+      - applications/papers/ar-vr-industrial-assistance.md
+      - applications/papers/underwater-communication.md
+      - applications/papers/smart-parking-system.md
+      - applications/papers/environmental-noise-monitoring.md
+      - applications/papers/cold-chain-traceability.md
+      - applications/papers/cross-border-logistics-iot.md
   - Layer 8 前沿方向:
     - frontier/index.md
     - 论文与综述:
@@ -179,3 +284,18 @@ nav:
       - frontier/papers/quantum-iot-security.md
       - frontier/papers/aigc-edge-generation.md
       - frontier/papers/space-air-ground-iot.md
+      - frontier/papers/embodied-ai-iot.md
+      - frontier/papers/federated-llm-iot.md
+      - frontier/papers/dna-storage-biocomputing.md
+      - frontier/papers/optical-computing-interconnect.md
+      - frontier/papers/self-evolving-network.md
+      - frontier/papers/digital-immune-system.md
+      - frontier/papers/metaverse-infrastructure.md
+      - frontier/papers/energy-internet-eot.md
+      - frontier/papers/cognitive-digital-twin.md
+      - frontier/papers/swarm-intelligence-iot.md
+      - frontier/papers/edge-causal-reasoning.md
+      - frontier/papers/ambient-iot-zero-energy.md
+      - frontier/papers/holographic-communication.md
+      - frontier/papers/human-machine-symbiosis-iot.md
+      - frontier/papers/explainable-ai-iot.md
