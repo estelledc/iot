@@ -1,0 +1,184 @@
+site_name: IoT From Zero to Infinity
+site_description: 物联网全栈技术学习站 —— 从零到无穷
+site_url: https://estelledc.github.io/iot/
+repo_url: https://github.com/estelledc/iot
+repo_name: iot
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: 切换暗色模式
+    - scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: 切换亮色模式
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+  - tags
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_mermaid
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.mark
+  - pymdownx.critic
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/estelledc/iot
+
+nav:
+  - 首页: index.md
+  - 学习路线: roadmap.md
+  - 阅读进度: progress.md
+  - Layer 1 感知与硬件:
+    - foundation/index.md
+    - 论文与综述:
+      - foundation/papers/rtos-comparison.md
+      - foundation/papers/tinyml-mcu-deployment.md
+      - foundation/papers/rfid-sensing-survey.md
+      - foundation/papers/esp32-iot-prototyping.md
+      - foundation/papers/mems-sensors-survey.md
+      - foundation/papers/energy-harvesting-iot.md
+      - foundation/papers/wearable-sensors.md
+      - foundation/papers/neuromorphic-sensing.md
+      - foundation/papers/edge-tpu-benchmark.md
+      - foundation/papers/risc-v-iot.md
+  - Layer 2 无线接入:
+    - connectivity/index.md
+    - 论文与综述:
+      - connectivity/papers/sparklink-vs-ble6.md
+      - connectivity/papers/lpwan-comparison.md
+      - connectivity/papers/uwb-positioning.md
+      - connectivity/papers/wifi7-iot.md
+      - connectivity/papers/5g-redcap-iot.md
+      - connectivity/papers/nb-iot-deployment.md
+      - connectivity/papers/lorawan-scalability.md
+      - connectivity/papers/satellite-iot.md
+      - connectivity/papers/zigbee-matter-thread.md
+      - connectivity/papers/backscatter-communication.md
+  - Layer 3 网络协议:
+    - network/index.md
+    - 论文与综述:
+      - network/papers/iot-app-protocols.md
+      - network/papers/tsn-detnet-industrial.md
+      - network/papers/wsn-routing-drl.md
+      - network/papers/time-sync-ptp.md
+      - network/papers/mqtt5-deep-dive.md
+      - network/papers/coap-lwm2m-constrained.md
+      - network/papers/sdn-iot-networking.md
+      - network/papers/named-data-networking-iot.md
+      - network/papers/ipv6-6lowpan-rpl.md
+      - network/papers/network-slicing-iot.md
+  - Layer 4 计算平台:
+    - computing/index.md
+    - 论文与综述:
+      - computing/papers/edge-computing-survey.md
+      - computing/papers/serverless-edge.md
+      - computing/papers/kubeedge-openyurt-comparison.md
+      - computing/papers/task-offloading-drl.md
+      - computing/papers/fog-computing-architecture.md
+      - computing/papers/mec-5g-integration.md
+      - computing/papers/container-orchestration-edge.md
+      - computing/papers/edgex-foundry-deep-dive.md
+      - computing/papers/microservice-edge.md
+      - computing/papers/resource-management-heterogeneous.md
+  - Layer 5 边缘智能:
+    - intelligence/index.md
+    - 论文与综述:
+      - intelligence/papers/jupiter.md
+      - intelligence/papers/federated-learning-iot.md
+      - intelligence/papers/model-compression-edge.md
+      - intelligence/papers/collaborative-inference-survey.md
+      - intelligence/papers/split-computing.md
+      - intelligence/papers/knowledge-distillation-edge.md
+      - intelligence/papers/on-device-training.md
+      - intelligence/papers/edge-ai-video-analytics.md
+      - intelligence/papers/nas-edge-models.md
+      - intelligence/papers/continual-learning-edge.md
+  - Layer 6 安全与隐私:
+    - security/index.md
+    - 论文与综述:
+      - security/papers/iot-security-systematic-review.md
+      - security/papers/federated-learning-privacy.md
+      - security/papers/puf-device-authentication.md
+      - security/papers/tee-edge-computing.md
+      - security/papers/blockchain-iot-security.md
+      - security/papers/intrusion-detection-edge.md
+      - security/papers/differential-privacy-iot.md
+      - security/papers/firmware-security.md
+      - security/papers/zero-trust-iot.md
+      - security/papers/adversarial-attacks-edge-ai.md
+  - Layer 7 综合应用:
+    - applications/index.md
+    - 论文与综述:
+      - applications/papers/v2x-autonomous-driving.md
+      - applications/papers/iiot-predictive-maintenance.md
+      - applications/papers/indoor-positioning-survey.md
+      - applications/papers/iomt-health-monitoring.md
+      - applications/papers/smart-agriculture-iot.md
+      - applications/papers/smart-grid-edge.md
+      - applications/papers/digital-twin-iiot.md
+      - applications/papers/drone-iot-inspection.md
+      - applications/papers/smart-building-hvac.md
+      - applications/papers/supply-chain-iot.md
+  - Layer 8 前沿方向:
+    - frontier/index.md
+    - 论文与综述:
+      - frontier/papers/digital-twin-edge-offloading.md
+      - frontier/papers/6g-isac-iot.md
+      - frontier/papers/wasm-edge-runtime.md
+      - frontier/papers/green-edge-computing.md
+      - frontier/papers/ris-intelligent-surface.md
+      - frontier/papers/semantic-communication-iot.md
+      - frontier/papers/edge-native-architecture.md
+      - frontier/papers/quantum-iot-security.md
+      - frontier/papers/aigc-edge-generation.md
+      - frontier/papers/space-air-ground-iot.md

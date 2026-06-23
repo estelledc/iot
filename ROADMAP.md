@@ -1,0 +1,310 @@
+# IoT Reading Station — 从零到无穷 · 项目路线图
+
+> 目标：建成一个覆盖物联网全栈技术的中文学习站，从硬件入门到前沿研究，任何人都能找到自己的起点并持续深入。
+
+---
+
+## 一、项目愿景
+
+**一句话**：IoT 领域的 csdiy.wiki —— 结构化、可导航、持续生长的中文物联网知识站。
+
+**设计原则**：
+
+- 全面 > 深度（先铺开 8 层技术栈，再逐层深钻）
+- 中文重写 > 翻译（零基础也能读懂，参考 Embodied AI Reading Station 风格）
+- 源真相是 Markdown，网站是衍生物
+- 每篇内容自带元数据（标签、难度、前置知识、关联内容）
+- 持续生长：每周可增量添加新论文/新主题
+
+---
+
+## 二、内容架构：IoT 8 层技术栈
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Layer 8: 前沿方向 (Frontier)                                │
+│  数字孪生 · 6G ISAC · RIS · 语义通信 · 边缘原生 · Wasm      │
+├─────────────────────────────────────────────────────────────┤
+│  Layer 7: 综合应用 (Applications)                            │
+│  智慧城市 · 自动驾驶 · IIoT · 医疗 · 智能家居 · 室内定位     │
+├─────────────────────────────────────────────────────────────┤
+│  Layer 6: 安全与隐私 (Security & Privacy)                    │
+│  威胁分类 · TEE · 联邦学习 · 差分隐私 · 零信任 · 区块链      │
+├─────────────────────────────────────────────────────────────┤
+│  Layer 5: 边缘智能 (Edge Intelligence)                       │
+│  TinyML · 模型压缩 · 协作推理 · 联邦学习 · LLM on Edge      │
+├─────────────────────────────────────────────────────────────┤
+│  Layer 4: 计算平台 (Computing)                               │
+│  云平台 · 边缘计算 · 雾计算 · MEC · Serverless · 开源框架    │
+├─────────────────────────────────────────────────────────────┤
+│  Layer 3: 网络协议 (Networking)                              │
+│  WSN MAC/路由 · MQTT/CoAP/LwM2M · TSN/DetNet · 时间同步     │
+├─────────────────────────────────────────────────────────────┤
+│  Layer 2: 无线接入 (Connectivity)                            │
+│  BLE · WiFi 6/7 · ZigBee · UWB · 星闪 · LoRaWAN · NB-IoT   │
+│  LTE-M · 5G mMTC/URLLC · RedCap · 卫星 IoT                  │
+├─────────────────────────────────────────────────────────────┤
+│  Layer 1: 感知与硬件 (Sensing & Hardware)                    │
+│  传感器 · Arduino/ESP32/RPi · RTOS · RFID · 嵌入式基础      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+每层包含：
+
+- **概览页**（index.md）：该层的技术地图、核心概念、学习路径
+- **论文阅读报告**（papers/）：精选论文的深度阅读笔记
+- **综述/对比**（surveys/）：自写综述或技术对比分析
+- **入门指南**（guides/）：零基础友好的概念讲解（可选，按需补充）
+
+---
+
+## 三、内容填充计划
+
+### 已完成
+
+| # | 内容 | 层级 | 类型 |
+|---|------|------|------|
+| 1 | 边缘计算与物联网综述 | Layer 4 | 综述报告 |
+| 2 | Jupiter (INFOCOM 2025) | Layer 5 | 论文阅读报告 |
+
+### 规划中（按层级铺开，优先覆盖空白层）
+
+#### Layer 1: 感知与硬件
+
+| # | 选题方向 | 候选论文/主题 | 类型 |
+|---|----------|--------------|------|
+| 3 | IoT RTOS 对比 | FreeRTOS vs Zephyr vs LiteOS：架构、生态、适用场景 | 对比分析 |
+| 4 | TinyML 端侧部署 | "Empowering Edge Intelligence: On-Device AI Models" (ACM CSUR 2025) | 论文报告 |
+| 5 | RFID 技术与应用 | RFID 感知识别技术现状综述 | 综述 |
+
+#### Layer 2: 无线接入
+
+| # | 选题方向 | 候选论文/主题 | 类型 |
+|---|----------|--------------|------|
+| 6 | 星闪 vs BLE 6.0 | SparkLink/SLE 技术分析 + 与蓝牙 6.0 Channel Sounding 对比 | 对比分析 |
+| 7 | LPWAN 技术实测 | LoRaWAN/NB-IoT/LTE-M/5G RedCap 多场景性能对比 | 综述 |
+| 8 | UWB 高精度定位 | UWB 定位技术及其在工业/消费场景的应用 | 论文报告 |
+| 9 | WiFi 6/7 for IoT | 802.11ax/be 对物联网接入的适用性分析 | 综述 |
+
+#### Layer 3: 网络协议
+
+| # | 选题方向 | 候选论文/主题 | 类型 |
+|---|----------|--------------|------|
+| 10 | IoT 应用层协议 | MQTT 5.0 / CoAP / LwM2M / AMQP 全面对比 | 对比分析 |
+| 11 | TSN/DetNet | 5G+TSN/DetNet 融合：确定性工业网络 | 论文报告 |
+| 12 | WSN 路由优化 | AI 驱动的无线传感网路由协议 (DRL-based) | 论文报告 |
+| 13 | 时间同步 | IEEE 1588 PTP / 802.1AS 精密时间同步综述 | 综述 |
+
+#### Layer 4: 计算平台（已有综述，补充深钻）
+
+| # | 选题方向 | 候选论文/主题 | 类型 |
+|---|----------|--------------|------|
+| 14 | Serverless 边缘 | "Serverless Edge Computing: Taxonomy & Systematic Review" (2025) | 论文报告 |
+| 15 | 开源平台对比 | KubeEdge vs OpenYurt vs EdgeX Foundry 架构对比 | 对比分析 |
+| 16 | 任务卸载 | DRL-based 任务卸载最新进展（DAG 结构感知） | 论文报告 |
+
+#### Layer 5: 边缘智能（已有 Jupiter，补充广度）
+
+| # | 选题方向 | 候选论文/主题 | 类型 |
+|---|----------|--------------|------|
+| 17 | 联邦学习 for IoT | FedGPA (INFOCOM 2025): 全局-个性化协作边缘异常检测 | 论文报告 |
+| 18 | 模型压缩 | 量化/剪枝/蒸馏：边缘 AI 模型压缩技术全景 | 综述 |
+| 19 | 协作推理 | EdgeShard / Petals / PowerInfer-2 对比分析 | 对比分析 |
+
+#### Layer 6: 安全与隐私
+
+| # | 选题方向 | 候选论文/主题 | 类型 |
+|---|----------|--------------|------|
+| 20 | IoT 安全全景 | "A Systematic Review of IoT Security" (ACM CSUR 2024) | 论文报告 |
+| 21 | 隐私保护 FL | FL + 差分隐私 + TEE 融合方案 | 论文报告 |
+| 22 | PUF 与硬件安全 | 物理不可克隆函数在 IoT 设备认证中的应用 | 论文报告 |
+
+#### Layer 7: 综合应用
+
+| # | 选题方向 | 候选论文/主题 | 类型 |
+|---|----------|--------------|------|
+| 23 | 自动驾驶 V2X | MEC-V2X 任务卸载 + 协同感知 | 论文报告 |
+| 24 | 工业 IoT | 预测性维护 + 数字孪生在 IIoT 中的应用 | 综述 |
+| 25 | 室内定位 | VLP / UWB / BLE AoA 多技术融合定位 | 综述 |
+| 26 | 智慧医疗 IoMT | 边缘计算 + 可穿戴的实时健康监测系统 | 论文报告 |
+
+#### Layer 8: 前沿方向
+
+| # | 选题方向 | 候选论文/主题 | 类型 |
+|---|----------|--------------|------|
+| 27 | 数字孪生 + 边缘 | "DT-empowered intelligent computation offloading" (2025) | 论文报告 |
+| 28 | 6G + ISAC | 通感一体化技术及其在 IoT 中的应用 | 综述 |
+| 29 | Wasm on Edge | WebAssembly 作为边缘轻量运行时：基准测试与分析 | 论文报告 |
+| 30 | 绿色边缘计算 | 能效优化 + 碳感知调度 + 可再生能源集成 | 论文报告 |
+| 31 | RIS 智能超表面 | RIS + ISAC + UAV + MEC 多技术融合 | 论文报告 |
+| 32 | 语义通信 | 面向 IoT 的语义通信：从传统比特传输到意义传输 | 综述 |
+
+---
+
+## 四、站点工程方案
+
+### 技术选型：MkDocs Material
+
+**选择理由**：
+
+- csdiy.wiki（68k+ stars）已验证大规模中文知识库场景
+- 论文笔记只需写 Markdown，YAML 配置导航
+- 数学公式（KaTeX）、代码高亮、Admonitions、标签系统原生支持
+- 内置本地搜索（中文分词友好）
+- GitHub Pages 一键部署，GitHub Actions 自动构建
+
+### 目标目录结构
+
+```
+iot-reading-station/
+├── docs/
+│   ├── index.md                    # 首页：项目介绍 + 全景技术地图
+│   ├── roadmap.md                  # 学习路线图（难度分级导航）
+│   ├── progress.md                 # 阅读进度追踪
+│   │
+│   ├── foundation/                 # Layer 1: 感知与硬件
+│   │   ├── index.md               # 层级概览 + 技术地图
+│   │   ├── papers/
+│   │   │   └── rtos-comparison.md
+│   │   └── guides/
+│   │       └── getting-started.md  # 零基础入门指南
+│   │
+│   ├── connectivity/              # Layer 2: 无线接入
+│   │   ├── index.md
+│   │   ├── papers/
+│   │   │   ├── sparklink-vs-ble6.md
+│   │   │   └── lpwan-comparison.md
+│   │   └── guides/
+│   │
+│   ├── network/                   # Layer 3: 网络协议
+│   │   ├── index.md
+│   │   ├── papers/
+│   │   │   ├── iot-protocols.md
+│   │   │   └── tsn-detnet.md
+│   │   └── guides/
+│   │
+│   ├── computing/                 # Layer 4: 计算平台
+│   │   ├── index.md
+│   │   ├── papers/
+│   │   │   ├── edge-computing-survey.md   # 已有
+│   │   │   └── serverless-edge.md
+│   │   └── guides/
+│   │
+│   ├── intelligence/              # Layer 5: 边缘智能
+│   │   ├── index.md
+│   │   ├── papers/
+│   │   │   ├── jupiter.md                 # 已有
+│   │   │   └── fedgpa.md
+│   │   └── guides/
+│   │
+│   ├── security/                  # Layer 6: 安全与隐私
+│   │   ├── index.md
+│   │   ├── papers/
+│   │   │   └── iot-security-survey.md
+│   │   └── guides/
+│   │
+│   ├── applications/              # Layer 7: 综合应用
+│   │   ├── index.md
+│   │   ├── papers/
+│   │   │   ├── v2x-mec.md
+│   │   │   └── indoor-positioning.md
+│   │   └── guides/
+│   │
+│   └── frontier/                  # Layer 8: 前沿方向
+│       ├── index.md
+│       ├── papers/
+│       │   ├── digital-twin-edge.md
+│       │   └── wasm-edge.md
+│       └── guides/
+│
+├── mkdocs.yml                     # MkDocs 配置（导航、主题、插件）
+├── requirements.txt               # Python 依赖（mkdocs-material 等）
+├── .github/
+│   └── workflows/
+│       └── deploy.yml             # GitHub Actions: push → build → deploy
+├── ROADMAP.md                     # 本文件
+├── SOP.md                         # 内容生产流程（已有）
+├── reading-progress.md            # 阅读进度（已有）
+└── README.md                      # GitHub 仓库首页
+```
+
+### 特色功能规划
+
+| 功能 | 实现方式 | 优先级 |
+|------|---------|--------|
+| 技术全景图（交互式） | Mermaid 或自定义 SVG + 点击跳转 | P0 |
+| 学习路线图（难度分级） | 自定义页面，按 零基础/入门/进阶/前沿 分级 | P0 |
+| 论文卡片列表 | MkDocs 标签系统 + 自定义 meta | P1 |
+| 全文搜索（中文） | mkdocs-material 内置搜索 + jieba 分词 | P1 |
+| 暗色模式 | mkdocs-material 原生支持 | P1 |
+| 跨层级交叉引用 | Markdown 内链 + 标签关联 | P1 |
+| RSS 订阅 | mkdocs-rss-plugin | P2 |
+| 评论系统 | giscus（基于 GitHub Discussions） | P2 |
+| 贡献指南 | CONTRIBUTING.md + 模板 | P2 |
+
+---
+
+## 五、执行节奏
+
+### 阶段 1：站点搭建 + 已有内容迁入（1-2 周）
+
+- [ ] 初始化 MkDocs 项目（mkdocs.yml + 主题配置）
+- [ ] 迁入已有 2 篇内容（边缘计算综述 → computing/，Jupiter → intelligence/）
+- [ ] 编写首页（index.md）+ 全景技术地图
+- [ ] 配置 GitHub Actions 自动部署
+- [ ] 站点上线，验证可访问
+
+### 阶段 2：覆盖全 8 层（3-8 周）
+
+- [ ] 每层至少 1 篇内容（综述 or 论文报告 or 对比分析）
+- [ ] 优先填补完全空白的 Layer 1/2/3/6
+- [ ] 每篇走 SOP 流程（选题 → 初稿 → 扩充 → 审查）
+- [ ] 目标：8 层全覆盖，总计 15+ 篇内容
+
+### 阶段 3：体验优化 + 持续生长（第 9 周起）
+
+- [ ] 交互式技术全景图上线
+- [ ] 学习路线图完善（标注前置知识依赖关系）
+- [ ] 评论系统 + 贡献指南
+- [ ] 持续添加新论文（跟踪 INFOCOM/MobiCom/SenSys/SEC 等顶会）
+- [ ] 邀请同学贡献内容
+
+---
+
+## 六、论文选题原则（不限课程）
+
+1. **顶会/顶刊优先**：CCF A/B 级（INFOCOM、MobiCom、SenSys、MobiSys、NSDI、IoTDI、IEEE COMST、ACM CSUR）
+2. **时效性**：2024-2025 年为主，经典工作不限年份
+3. **有开源代码优先**：方便验证理解、复现实验
+4. **覆盖广度优先**：先保证每层都有内容，再逐层深钻
+5. **跨层关联优先**：能串联多层技术的论文（如 Jupiter 串联 Layer 4+5）更有价值
+6. **实践导向**：有真实系统实现或实测数据的优先于纯理论
+
+---
+
+## 七、与已有产出的关系
+
+| 已有内容 | 站点位置 | 覆盖层级 |
+|----------|---------|---------|
+| 边缘计算与物联网综述 | docs/computing/papers/edge-computing-survey.md | Layer 4（主）+ Layer 5/6/7/8（辅） |
+| Jupiter 论文阅读报告 | docs/intelligence/papers/jupiter.md | Layer 5 |
+| SOP 内容生产流程 | 根目录 SOP.md（不迁入站点，作为内部流程文档） | — |
+
+综述报告因为覆盖面广（从边缘计算视角触及了安全、应用、前沿等多层），可在多个层级页面中交叉引用。
+
+---
+
+## 八、参考与灵感
+
+| 项目 | 借鉴点 |
+|------|--------|
+| [csdiy.wiki](https://csdiy.wiki) | MkDocs Material 技术栈、学习路径组织方式、中文知识库规模验证 |
+| [Embodied AI Reading Station](https://estelledc.github.io/embodied-ai-reading-station/) | "零基础也能读懂"的中文重写风格、论文编号系统、极简美学 |
+| [roadmap.sh](https://roadmap.sh) | 交互式学习路线图、节点式导航 |
+| [李沐 paper-reading](https://github.com/mli/paper-reading) | 论文精读的深度标准、视频+文字双轨 |
+| [CS 自学指南](https://csdiy.wiki) | 前置依赖标注、难度分级、课程推荐模式 |
+
+---
+
+*创建日期：2026-06-23*
+*最后更新：2026-06-23*
