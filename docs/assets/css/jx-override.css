@@ -32,6 +32,41 @@
     --md-primary-fg-color: var(--jx-accent);
     --md-primary-bg-color: var(--jx-paper);
     --md-accent-fg-color: var(--jx-accent);
+    color-scheme: dark;
+  }
+
+  /* 强制覆盖 Material 硬编码的白色背景 */
+  body,
+  .md-main,
+  .md-container,
+  .md-content {
+    background-color: var(--jx-paper) !important;
+    color: var(--jx-ink);
+  }
+
+  .md-header,
+  .md-tabs {
+    background: color-mix(in oklab, var(--jx-paper), transparent 16%) !important;
+    border-color: var(--jx-rule) !important;
+  }
+
+  .md-footer,
+  .md-footer-meta {
+    background: var(--jx-paper) !important;
+    color: var(--jx-ink-muted);
+  }
+
+  .md-search__input {
+    background: var(--jx-surface) !important;
+    color: var(--jx-ink);
+  }
+
+  .md-nav__link {
+    color: var(--jx-ink-2);
+  }
+
+  .md-typeset {
+    color: var(--jx-ink);
   }
 }
 
