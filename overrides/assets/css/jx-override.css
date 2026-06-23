@@ -46,8 +46,8 @@
 
   .md-header,
   .md-tabs {
-    background: color-mix(in oklab, var(--jx-paper), transparent 16%) !important;
-    border-color: var(--jx-rule) !important;
+    background: var(--jx-surface) !important;
+    border-color: var(--jx-rule-strong) !important;
   }
 
   .md-footer,
@@ -212,11 +212,10 @@ body,
 
 /* ═══ Header / Nav ═══ */
 .md-header {
-  background: color-mix(in oklab, var(--jx-paper), transparent 16%);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--jx-rule);
+  background: var(--jx-surface);
+  border-bottom: 1px solid var(--jx-rule-strong);
   box-shadow: none;
+  color: var(--jx-ink);
 }
 
 .md-header[data-md-state="shadow"] {
@@ -231,8 +230,20 @@ body,
   color: var(--jx-ink);
 }
 
+/* 确保 header 内所有图标和文字可见 */
+.md-header .md-header__button,
+.md-header .md-logo,
+.md-header .md-search__icon,
+.md-header .md-source {
+  color: var(--jx-ink) !important;
+}
+
+.md-source__repository {
+  color: var(--jx-ink-2) !important;
+}
+
 .md-tabs {
-  background: var(--jx-paper);
+  background: var(--jx-surface);
   border-bottom: 1px solid var(--jx-rule);
 }
 
