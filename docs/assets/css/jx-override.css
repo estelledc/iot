@@ -298,6 +298,14 @@ body,
   font-family: var(--jx-font-sans-zh);
   background: var(--jx-surface-sunk);
   border-radius: var(--jx-radius-pill);
+  box-shadow: none;
+  border: 1px solid var(--jx-rule);
+}
+
+.md-search__input:hover,
+.md-search__input:focus {
+  border-color: var(--jx-rule-strong);
+  box-shadow: none;
 }
 
 /* ═══ Admonitions ═══ */
