@@ -1,3 +1,7 @@
+---
+template: home.html
+---
+
 # IoT: From Zero to Infinity
 
 > 物联网全栈技术学习站 —— 从传感器到 6G，从零基础到前沿研究。

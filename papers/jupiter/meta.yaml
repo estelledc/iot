@@ -1,0 +1,8 @@
+title: "Jupiter: Fast and Resource-Efficient Collaborative Inference of Generative LLMs on Edge Devices"
+authors: ["Shengyuan Ye", "Bei Ouyang", "Liekang Zeng", "Tianyi Qian", "Xiaowen Chu", "Jian Tang", "Xu Chen"]
+venue: "IEEE INFOCOM 2025"
+year: 2025
+tags: ["edge-computing", "LLM-inference", "pipeline-parallelism", "speculative-decoding"]
+one_liner: "多设备协作推理 LLM，用投机解码填充流水线气泡，实现低延迟边缘部署"
+github: "https://github.com/ysyisyourbrother/Jupiter"
+status: "completed"

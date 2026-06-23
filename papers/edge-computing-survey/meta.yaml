@@ -1,0 +1,8 @@
+title: "边缘计算与物联网综述"
+authors: ["周浔"]
+venue: "华中科技大学 2026 春季物联网课程报告"
+year: 2026
+tags: ["edge-computing", "IoT", "task-offloading", "federated-learning", "MEC"]
+one_liner: "系统梳理边缘计算在物联网中的架构、核心技术、应用场景与前沿趋势"
+github: ""
+status: "completed"
