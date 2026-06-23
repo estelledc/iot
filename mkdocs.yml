@@ -9,18 +9,9 @@ theme:
   custom_dir: overrides
   language: zh
   palette:
-    - scheme: default
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-7
-        name: 切换暗色模式
-    - scheme: slate
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-4
-        name: 切换亮色模式
+    scheme: default
+    primary: custom
+    accent: custom
   font: false
   features:
     - navigation.tabs

@@ -137,32 +137,3 @@
   }
 }
 
-/* ── Dark mode: Material slate scheme 触发（用户手动切换） ── */
-[data-md-color-scheme="slate"] {
-  --jx-paper: #0e1014;
-  --jx-surface: #161922;
-  --jx-surface-sunk: #0a0c10;
-  --jx-ink: #ebecef;
-  --jx-ink-2: #b0b4bd;
-  --jx-ink-muted: #7c818c;
-  --jx-ink-faint: #5a5f69;
-  --jx-rule: rgba(255,255,255,0.07);
-  --jx-rule-soft: rgba(255,255,255,0.035);
-  --jx-rule-strong: rgba(255,255,255,0.14);
-  --jx-accent: #6c8aff;
-  --jx-accent-hover: color-mix(in oklab, var(--jx-accent), white 10%);
-  --jx-accent-tint: color-mix(in oklab, var(--jx-accent), black 70%);
-  --jx-focus-ring: rgba(108,138,255,0.36);
-  --jx-shadow-stack:
-    0 0 0 1px rgba(255,255,255,0.06),
-    0 1px 1px rgba(0,0,0,0.4),
-    0 8px 28px -12px rgba(0,0,0,0.55);
-
-  /* Pill 暗色 */
-  --jx-pill-bg: #ebecef;
-  --jx-pill-fg: #0e1014;
-  --jx-pill-border: #ebecef;
-  --jx-pill-secondary-fg: #ebecef;
-  --jx-pill-secondary-border: #7c818c;
-  --jx-pill-secondary-hover-bg: rgba(255,255,255,0.08);
-}
