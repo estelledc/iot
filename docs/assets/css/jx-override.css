@@ -21,7 +21,14 @@
   --md-default-bg-color: var(--jx-paper);
   --md-default-fg-color: var(--jx-ink);
   --md-code-bg-color: var(--jx-surface-sunk);
+  --md-code-fg-color: var(--jx-ink);
+  --md-typeset-color: var(--jx-ink);
+  --md-typeset-a-color: var(--jx-accent);
   --md-footer-bg-color: var(--jx-surface);
+  --md-footer-fg-color: var(--jx-ink-muted);
+  --md-primary-fg-color: var(--jx-accent);
+  --md-primary-bg-color: var(--jx-paper);
+  --md-accent-fg-color: var(--jx-accent);
 }
 
 /* ═══ Typography ═══ */
@@ -84,6 +91,24 @@ body,
 .md-typeset a:hover {
   color: var(--jx-accent-hover);
   text-decoration-color: var(--jx-accent);
+}
+
+/* Pill 按钮不受 md-typeset a 链接样式影响 */
+.md-typeset a.iot-pill,
+.md-typeset a.iot-pill:hover,
+.md-typeset a.iot-layer-card,
+.md-typeset a.iot-layer-card:hover,
+.jx-footer-custom__index a {
+  text-decoration: none;
+}
+.md-typeset a.iot-pill {
+  color: var(--jx-pill-fg);
+}
+.md-typeset a.iot-pill.iot-pill--secondary {
+  color: var(--jx-pill-secondary-fg);
+}
+.md-typeset a.iot-layer-card {
+  color: var(--jx-ink);
 }
 
 /* ═══ Code ═══ */

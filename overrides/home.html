@@ -58,9 +58,9 @@
     align-items: center;
     justify-content: center;
     padding: 11px 24px;
-    color: #ffffff !important;
-    background: var(--jx-ink) !important;
-    border: 1px solid var(--jx-ink);
+    color: var(--jx-pill-fg) !important;
+    background: var(--jx-pill-bg) !important;
+    border: 1.5px solid var(--jx-pill-border);
     border-radius: var(--jx-radius-pill);
     font-family: var(--jx-font-sans-zh);
     font-size: 16px;
@@ -71,19 +71,19 @@
                 opacity var(--jx-duration-fast) var(--jx-easing);
   }
   .iot-pill:hover {
-    transform: scale(0.96);
-    opacity: 0.85;
-    color: #ffffff !important;
+    transform: scale(0.97);
+    opacity: 0.82;
+    color: var(--jx-pill-fg) !important;
     text-decoration: none !important;
   }
   .iot-pill--secondary {
-    color: var(--jx-ink) !important;
+    color: var(--jx-pill-secondary-fg) !important;
     background: transparent !important;
-    border: 1.5px solid var(--jx-ink);
+    border: 1.5px solid var(--jx-pill-secondary-border);
   }
   .iot-pill--secondary:hover {
-    color: var(--jx-ink) !important;
-    background: var(--jx-surface-sunk) !important;
+    color: var(--jx-pill-secondary-fg) !important;
+    background: var(--jx-pill-secondary-hover-bg) !important;
     opacity: 1;
   }
 
