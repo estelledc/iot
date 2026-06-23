@@ -305,18 +305,35 @@ body,
 }
 
 /* ═══ Search ═══ */
-.md-search__input {
-  font-family: var(--jx-font-sans-zh);
-  background: var(--jx-surface-sunk);
-  border-radius: var(--jx-radius-pill);
-  box-shadow: none;
-  border: 1px solid var(--jx-rule);
+.md-search__form {
+  background: var(--jx-surface-sunk) !important;
+  border-radius: var(--jx-radius-pill) !important;
+  box-shadow: none !important;
+  border: 1px solid var(--jx-rule) !important;
 }
 
-.md-search__input:hover,
-.md-search__input:focus {
-  border-color: var(--jx-rule-strong);
-  box-shadow: none;
+.md-search__form:hover {
+  border-color: var(--jx-rule-strong) !important;
+}
+
+.md-search__input {
+  font-family: var(--jx-font-sans-zh);
+  background: transparent !important;
+  border-radius: var(--jx-radius-pill);
+  box-shadow: none !important;
+  border: none !important;
+  color: var(--jx-ink);
+}
+
+.md-search__input::placeholder {
+  color: var(--jx-ink-muted);
+}
+
+/* 去掉 Material 搜索框所有可能的阴影源 */
+.md-search__inner,
+.md-search__output,
+[data-md-toggle="search"] ~ .md-header .md-search__form {
+  box-shadow: none !important;
 }
 
 /* ═══ Admonitions ═══ */
