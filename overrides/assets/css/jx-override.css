@@ -228,6 +228,7 @@ body,
   font-family: var(--jx-font-display);
   font-weight: var(--jx-weight-heading);
   font-size: var(--jx-fs-sm);
+  color: var(--jx-ink);
 }
 
 .md-tabs {
@@ -241,7 +242,7 @@ body,
   letter-spacing: 0.04em;
   text-transform: uppercase;
   opacity: 1;
-  color: var(--jx-ink-muted);
+  color: var(--jx-ink-2);
 }
 
 .md-tabs__link--active,
