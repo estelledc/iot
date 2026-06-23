@@ -4,10 +4,12 @@
 
 {% block content %}
 <style>
-  /* Hide default content/sidebar on home */
-  .md-sidebar { display: none; }
+  /* Hide default content/sidebar/toc on home */
+  .md-sidebar { display: none !important; }
   .md-content__inner { max-width: none; padding: 0; }
   .md-content { margin: 0; max-width: none; }
+  .md-typeset .md-content__inner > .toc,
+  .md-nav--secondary { display: none !important; }
 
   /* ── Hero Tile ── */
   .iot-hero {
