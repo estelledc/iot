@@ -37,13 +37,14 @@ python tools/generate_layer_catalogs.py --check
 ## 当前决策
 
 - M1 治理基线已完成：frontmatter 全量覆盖、八层 catalog 可发现、CI `--all` 启用。
-- 下一步进入 M2 可信基线（来源抽样与 review record）；在此之前不启动 Layer 3–8 大批量扩容。
-- 实施记录见 [M1 治理基线计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)。
+- **下一步执行 M2 可信基线**：可执行步骤见 [M2 可信基线推进计划](superpowers/plans/2026-07-10-m2-trust-baseline.md)（审计 schema → 24 篇抽样报告 → 清单可统计 → 部署验收 → v0.3.0）。M2 完成前不启动 M3–M4。
+- 实施记录（M1）见 [M1 治理基线计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)。
 
 ## 相关入口
 
 - [学习路线](roadmap.md)
 - [M1 治理基线推进计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)
+- [M2 可信基线推进计划](superpowers/plans/2026-07-10-m2-trust-baseline.md)
 - [Layer 1：感知与硬件](foundation/index.md)
 - [Layer 2：无线接入](connectivity/index.md)
 - [Layer 3：网络协议](network/index.md)
