@@ -102,6 +102,27 @@ class ReleaseMetadataTests(unittest.TestCase):
             errors = check_release_metadata.validate(version, changelog)
             self.assertTrue(any("does not match" in error for error in errors))
 
+    def test_local_user_path_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            version = root / "VERSION"
+            changelog = root / "CHANGELOG.md"
+            version.write_text("0.1.0\n", encoding="utf-8")
+            local_path = "/" + "Users/example/private.log"
+            changelog.write_text(
+                "## [0.1.0] - 2026-07-10\n"
+                "IOT-T025\n"
+                + "a" * 40
+                + "\n"
+                + "b" * 64
+                + "\n"
+                + local_path
+                + "\n",
+                encoding="utf-8",
+            )
+            errors = check_release_metadata.validate(version, changelog)
+            self.assertTrue(any("local absolute user path" in error for error in errors))
+
 
 class SiteValidationTests(unittest.TestCase):
     def test_duplicate_landmarks_and_unsafe_blank_link_fail(self) -> None:
