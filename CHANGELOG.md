@@ -2,6 +2,17 @@
 
 本项目从 `0.1.0` 起使用语义化版本。每条变更必须引用实施任务，并记录可重复验证命令。
 
+## [0.1.1] - 2026-07-10
+
+### Changed
+
+- `IOT-T026`：在 `ROADMAP.md` 新增「三、未来方向：四个里程碑」（M1 治理基线 → M2 可信基线 → M3 受控生长 → M4 体验与社区，均含可机械验证的完成判据），把已过时的内容填充选题表改为历史归档并重排章节编号；`README.md` 扩展原则小节同步指向新方向章节。不改动任何站点 URL、导航、内容正文或自动生成块。验证：`python tools/content_inventory.py --check`、`python tools/check_markdown_links.py --all --anchors --strict`、`python tools/check_markdown_fences.py --all`。
+
+### Review baseline
+
+- Source commit: `7d937fd02de4b5345f614065fe27cefb8b5d9ec8`
+- 迁移说明：纯文档变更，无 URL、schema 或内容正文迁移要求。
+
 ## [0.1.0] - 2026-07-10
 
 ### Added
