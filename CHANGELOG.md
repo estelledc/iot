@@ -10,7 +10,7 @@
 
 ### Review baseline
 
-- Source commit: `e22161779385bba230380c18b797273b06d7a68a`
+- Source commit: `e9f96688b5f20b36e8be3d33fec6982180534c3c`
 - 迁移说明：正文与编辑性 frontmatter 变更；公开 URL / `id` / 路径不变。
 
 ## [0.2.1] - 2026-07-10
