@@ -2,6 +2,17 @@
 
 本项目从 `0.1.0` 起使用语义化版本。每条变更必须引用实施任务，并记录可重复验证命令。
 
+## [0.2.2] - 2026-07-10
+
+### Changed
+
+- `IOT-T034`：全量正文深审战役完成——按 Layer 8→1、每批 5 篇对全部 **642** 篇存量文章做 SOP Phase 4 级正文重构完善；frontmatter 统一为 `review_status: IN_REVIEW` 与 `last_reviewed: 2026-07-10`，并补齐可确定的 `content_type` / `tags` / `prerequisites`。不写 `HUMAN_APPROVED` / `VERIFIED`（与 M2 来源审计正交）。进度真相：`data/deep-review-progress.yml`；计划：`docs/superpowers/plans/2026-07-10-full-deep-review.md`。验证：`python3 tools/validate_frontmatter.py --all`、`python3 tools/check_markdown_fences.py --all`、`python3 tools/check_markdown_links.py --all --anchors --strict`。
+
+### Review baseline
+
+- Source commit: `e22161779385bba230380c18b797273b06d7a68a`
+- 迁移说明：正文与编辑性 frontmatter 变更；公开 URL / `id` / 路径不变。
+
 ## [0.2.1] - 2026-07-10
 
 ### Added

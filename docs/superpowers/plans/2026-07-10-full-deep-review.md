@@ -33,6 +33,8 @@
 3. `validate_frontmatter.py --all`、`check_markdown_fences.py --all`、`git diff --check`
 4. 进度标 `in_review` → commit（`IOT-T034` + `L{n}-B{mm}`）→ push → 更新层 PR
 
-## 与 M2 关系
+## 完成判据（已满足）
 
-本战役产出正文 `IN_REVIEW`，与 M2 来源审计（`PARTIAL`/`VERIFIED`）正交，不替代 M2。
+- `data/deep-review-progress.yml` 中 642 条均为 `in_review`
+- 对应文章 frontmatter：`review_status: IN_REVIEW` 且 `last_reviewed` 为日期
+- 全量门禁通过：`validate_frontmatter.py --all`、`check_markdown_fences.py --all`、`check_markdown_links.py --all --anchors --strict`
