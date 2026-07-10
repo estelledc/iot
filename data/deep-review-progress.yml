@@ -5,34 +5,44 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 642
-  in_review: 0
+  pending: 637
+  in_review: 5
 articles:
 - id: 6g-isac-iot
   layer: 8
   path: docs/frontier/papers/6g-isac-iot.md
   batch: L8-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B01
 - id: aigc-edge-generation
   layer: 8
   path: docs/frontier/papers/aigc-edge-generation.md
   batch: L8-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B01
 - id: ambient-iot-zero-energy
   layer: 8
   path: docs/frontier/papers/ambient-iot-zero-energy.md
   batch: L8-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B01
 - id: cognitive-digital-twin
   layer: 8
   path: docs/frontier/papers/cognitive-digital-twin.md
   batch: L8-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B01
 - id: digital-immune-system
   layer: 8
   path: docs/frontier/papers/digital-immune-system.md
   batch: L8-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B01
 - id: digital-twin-edge-offloading
   layer: 8
   path: docs/frontier/papers/digital-twin-edge-offloading.md
