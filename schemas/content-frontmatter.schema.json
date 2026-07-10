@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://estelledc.github.io/iot/schemas/content-frontmatter.schema.json",
+  "title": "IoT Reading Station content frontmatter",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "title",
+    "layer",
+    "content_type",
+    "difficulty",
+    "reading_time",
+    "prerequisites",
+    "tags",
+    "source_status",
+    "review_status",
+    "last_reviewed"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "layer": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8
+    },
+    "content_type": {
+      "enum": [
+        "paper_reading",
+        "survey",
+        "tutorial",
+        "comparison",
+        "technical_analysis",
+        "UNKNOWN"
+      ]
+    },
+    "difficulty": {
+      "enum": [
+        "zero_base",
+        "beginner",
+        "intermediate",
+        "advanced",
+        "frontier",
+        "UNKNOWN"
+      ]
+    },
+    "reading_time": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "const": "UNKNOWN"
+        }
+      ]
+    },
+    "prerequisites": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+        {
+          "const": "UNKNOWN"
+        }
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "source_status": {
+      "enum": [
+        "UNVERIFIED",
+        "PARTIAL",
+        "VERIFIED",
+        "UNKNOWN"
+      ]
+    },
+    "review_status": {
+      "enum": [
+        "UNREVIEWED",
+        "IN_REVIEW",
+        "HUMAN_APPROVED",
+        "NEEDS_CHANGES",
+        "UNKNOWN"
+      ]
+    },
+    "last_reviewed": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "const": "UNKNOWN"
+        }
+      ]
+    },
+    "target_paper": {
+      "$ref": "#/$defs/target_paper"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "content_type": {
+            "const": "paper_reading"
+          }
+        },
+        "required": [
+          "content_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "target_paper"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "review_status": {
+            "const": "HUMAN_APPROVED"
+          }
+        },
+        "required": [
+          "review_status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "last_reviewed": {
+            "type": "string",
+            "format": "date",
+            "not": {
+              "const": "UNKNOWN"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "unknown_or_string": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "const": "UNKNOWN"
+        }
+      ]
+    },
+    "target_paper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "year": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1800,
+              "maximum": 2100
+            },
+            {
+              "const": "UNKNOWN"
+            }
+          ]
+        },
+        "doi": {
+          "$ref": "#/$defs/unknown_or_string"
+        },
+        "url": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://"
+            },
+            {
+              "const": "UNKNOWN"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
