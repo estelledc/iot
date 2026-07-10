@@ -2,11 +2,13 @@
   "schema_version": 1,
   "review_baseline_commit": "2a18aec69793494156ffca67848ca0639c145fe4",
   "generated_by": "python tools/content_inventory.py --write",
-  "source_fingerprint_sha256": "031bb5a7d198f78f2a74e02d1766d79a45b218a30370000349db222a9a66b835",
+  "source_fingerprint_sha256": "cc563739536a18e81705bbdd482f6a494ee9d132b6553e68c970c82080901a35",
   "definitions": {
     "content_files": "docs/<layer>/papers 下存在的 Markdown 文件；不代表来源或事实已审核",
     "explicit_nav_entries": "mkdocs.yml 的 nav 中显式列出的内容文件",
     "layer_index_entries": "八个层级 index.md 直接链接的内容文件",
+    "catalog_entries": "八个层级 catalog.md 直接链接的内容文件",
+    "discoverable_entries": "显式导航 ∪ 层级 catalog 链接；不等于来源已审核",
     "plan_topics": "plans/*.json 中的条目；包含已完成扩展计划，不能与内容文件直接相加",
     "planned_capacity": "每层 max(现有文件数, 25 个种子文件 + plan 条目数) 的容量估计",
     "source_audited_files": "尚无机器可读的全量来源审计记录，因此为 null"
@@ -15,6 +17,8 @@
     "content_files": 642,
     "explicit_nav_entries": 200,
     "layer_index_entries": 80,
+    "catalog_entries": 642,
+    "discoverable_entries": 642,
     "plan_topics": 1761,
     "planned_capacity": 1962,
     "source_audited_files": null
@@ -27,6 +31,8 @@
       "content_files": 275,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
+      "catalog_entries": 275,
+      "discoverable_entries": 275,
       "plan_topics": 250,
       "planned_capacity": 275,
       "source_audit": "NOT_TRACKED"
@@ -38,6 +44,8 @@
       "content_files": 217,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
+      "catalog_entries": 217,
+      "discoverable_entries": 217,
       "plan_topics": 191,
       "planned_capacity": 217,
       "source_audit": "NOT_TRACKED"
@@ -49,6 +57,8 @@
       "content_files": 25,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
+      "catalog_entries": 25,
+      "discoverable_entries": 25,
       "plan_topics": 179,
       "planned_capacity": 204,
       "source_audit": "NOT_TRACKED"
@@ -60,6 +70,8 @@
       "content_files": 25,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
+      "catalog_entries": 25,
+      "discoverable_entries": 25,
       "plan_topics": 190,
       "planned_capacity": 215,
       "source_audit": "NOT_TRACKED"
@@ -71,6 +83,8 @@
       "content_files": 25,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
+      "catalog_entries": 25,
+      "discoverable_entries": 25,
       "plan_topics": 301,
       "planned_capacity": 326,
       "source_audit": "NOT_TRACKED"
@@ -82,6 +96,8 @@
       "content_files": 25,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
+      "catalog_entries": 25,
+      "discoverable_entries": 25,
       "plan_topics": 197,
       "planned_capacity": 222,
       "source_audit": "NOT_TRACKED"
@@ -93,6 +109,8 @@
       "content_files": 25,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
+      "catalog_entries": 25,
+      "discoverable_entries": 25,
       "plan_topics": 205,
       "planned_capacity": 230,
       "source_audit": "NOT_TRACKED"
@@ -104,6 +122,8 @@
       "content_files": 25,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
+      "catalog_entries": 25,
+      "discoverable_entries": 25,
       "plan_topics": 248,
       "planned_capacity": 273,
       "source_audit": "NOT_TRACKED"
