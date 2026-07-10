@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: coexistence-management-iot-spectrum
+title: IoT频谱共存管理与干扰协调
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT频谱共存管理与干扰协调
 > **难度**：🔴 高级 | **领域**：频谱共存 | **阅读时间**：约 22 分钟
 

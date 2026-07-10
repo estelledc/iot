@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: 6g-isac-iot
+title: 6G 通感一体化（ISAC）与 IoT
+layer: 8
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 30
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 6G 通感一体化（ISAC）与 IoT
 
 > **难度**：🟠 进阶 | **领域**：6G 通信 × 感知 | **阅读时间**：约 30 分钟

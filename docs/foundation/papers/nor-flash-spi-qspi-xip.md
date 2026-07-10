@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nor-flash-spi-qspi-xip
+title: NOR Flash SPI/QSPI接口与XIP执行
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NOR Flash SPI/QSPI接口与XIP执行
 > **难度**：🟡 中级 | **领域**：存储接口技术 | **阅读时间**：约 20 分钟
 

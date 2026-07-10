@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: fram-mram-nvram-comparison
+title: FRAM/MRAM/NVRAM新型非易失存储对比
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # FRAM/MRAM/NVRAM新型非易失存储对比
 > **难度**：🟡 中级 | **领域**：新型存储技术 | **阅读时间**：约 20 分钟
 

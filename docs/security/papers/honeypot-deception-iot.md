@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: honeypot-deception-iot
+title: IoT 蜜罐与诱骗技术
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 蜜罐与诱骗技术
 
 > **难度**：🟡 中级 | **领域**：威胁情报、入侵检测 | **阅读时间**：约 18 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rf-front-end-lna-pa-design
+title: 射频前端LNA/PA设计基础与指标
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 射频前端LNA/PA设计基础与指标
 > **难度**：🔴 高级 | **领域**：射频前端设计 | **阅读时间**：约 22 分钟
 

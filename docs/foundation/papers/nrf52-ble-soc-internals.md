@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nrf52-ble-soc-internals
+title: nRF52系列BLE SoC内部架构与SoftDevice
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # nRF52系列BLE SoC内部架构与SoftDevice
 
 > **难度**：🟡 中级 | **领域**：BLE SoC架构 | **阅读时间**：约 22 分钟

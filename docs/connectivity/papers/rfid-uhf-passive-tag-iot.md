@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rfid-uhf-passive-tag-iot
+title: UHF RFID无源标签在IoT资产追踪中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # UHF RFID无源标签在IoT资产追踪中的应用
 > **难度**：🟢 初级 | **领域**：RFID资产管理 | **阅读时间**：约 18 分钟
 

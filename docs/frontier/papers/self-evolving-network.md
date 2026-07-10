@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: self-evolving-network
+title: 自进化网络（Self-X Networks）：从人工运维到网络自治
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 自进化网络（Self-X Networks）：从人工运维到网络自治
 
 > **难度**：🟡 中级 | **领域**：自组织网络、意图驱动自动化、O-RAN | **阅读时间**：约 25 分钟

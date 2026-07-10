@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: differential-privacy-iot
+title: 差分隐私在IoT中的应用：用数学保障数据隐私
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 差分隐私在IoT中的应用：用数学保障数据隐私
 
 > 难度：🟡 进阶 | 领域：隐私计算/数据保护 | 更新：2025-06

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mtbf-reliability-prediction-iot
+title: IoT设备MTBF可靠性预测方法
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT设备MTBF可靠性预测方法
 > **难度**：🟡 中级 | **领域**：可靠性工程 | **阅读时间**：约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mimo-beamforming-iot-base-station
+title: MIMO波束赋形在IoT基站中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MIMO波束赋形在IoT基站中的应用
 > **难度**: 高级 | **领域**: 天线技术 | **阅读时间**: 约 22 分钟
 

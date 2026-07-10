@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: matter-protocol-architecture
+title: Matter协议架构与设备互操作性
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Matter协议架构与设备互操作性
 > **难度**：🟢 初级 | **领域**：Matter智能家居 | **阅读时间**：约 18 分钟
 

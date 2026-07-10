@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wireless-channel-emulator-testing
+title: 无线信道模拟器在IoT通信测试中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 无线信道模拟器在IoT通信测试中的应用
 > **难度**: 高级 | **领域**: 通信测试 | **阅读时间**: 约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: self-supervised-pretraining-device
+title: 自监督预训练在端侧的应用
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 自监督预训练在端侧的应用
 
 > **难度**：🟡 中级 | **领域**：自监督学习、时序分析、端侧 AI | **阅读时间**：约 20 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: smart-agriculture-iot
+title: 智慧农业物联网
+layer: 7
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 智慧农业物联网
 
 > **难度**：🟢 入门 | **领域**：基础设施与资源 | **关键词**：精准农业, LoRaWAN, 无人机巡检, 土壤监测, 水肥一体化

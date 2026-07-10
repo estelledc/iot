@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: fog-computing-architecture
+title: 雾计算：云与端之间的多层计算架构
+layer: 4
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 雾计算：云与端之间的多层计算架构
 
 > **难度**：🟡 进阶 | **前置知识**：了解云计算和边缘计算基本概念  

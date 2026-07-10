@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ris-intelligent-surface
+title: RIS 智能超表面
+layer: 8
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 30
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RIS 智能超表面
 
 > **难度**：🟠 进阶 | **领域**：无线通信 × 可编程电磁环境 | **阅读时间**：约 30 分钟

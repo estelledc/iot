@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: digital-immune-system
+title: 数字免疫系统：让 IoT 基础设施自我防御与自我修复
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 数字免疫系统：让 IoT 基础设施自我防御与自我修复
 
 > **难度**：🟡 中级 | **领域**：系统韧性、混沌工程、自愈合 | **阅读时间**：约 25 分钟

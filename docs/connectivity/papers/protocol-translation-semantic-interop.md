@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: protocol-translation-semantic-interop
+title: 协议翻译与语义互操作在IoT中的挑战
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 协议翻译与语义互操作在IoT中的挑战
 > **难度**: 高级 | **领域**: 互操作性 | **阅读时间**: 约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: human-machine-symbiosis-iot
+title: 人机共融 IoT：脑机接口与增强人类
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 人机共融 IoT：脑机接口与增强人类
 
 > **难度**：🟡 中级 | **领域**：脑机接口、可穿戴神经技术、人机交互 | **阅读时间**：约 25 分钟

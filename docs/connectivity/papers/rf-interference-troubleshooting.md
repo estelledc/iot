@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rf-interference-troubleshooting
+title: 射频干扰排查与IoT现场调试方法
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 射频干扰排查与IoT现场调试方法
 > **难度**: 中级 | **领域**: 现场调试 | **阅读时间**: 约 20 分钟
 

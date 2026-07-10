@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: smart-sensor-with-integrated-mcu
+title: 智能传感器集成MCU的片上信号处理
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 智能传感器集成MCU的片上信号处理
 > **难度**：🟡 中级 | **领域**：智能传感器架构 | **阅读时间**：约 20 分钟
 

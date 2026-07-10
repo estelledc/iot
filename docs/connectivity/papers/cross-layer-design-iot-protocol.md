@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cross-layer-design-iot-protocol
+title: 跨层设计在IoT协议栈优化中的方法
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 跨层设计在IoT协议栈优化中的方法
 > **难度**: 高级 | **领域**: 协议设计 | **阅读时间**: 约 22 分钟
 

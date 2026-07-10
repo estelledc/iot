@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: antenna-testing-ota-measurement
+title: 天线OTA测试与辐射性能评估
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 天线OTA测试与辐射性能评估
 > **难度**: 高级 | **领域**: 天线测试 | **阅读时间**: 约 22 分钟
 

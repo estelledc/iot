@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ble-channel-hopping-interference
+title: BLE跳频机制与2.4GHz干扰规避
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # BLE跳频机制与2.4GHz干扰规避
 > **难度**：🟡 中级 | **领域**：BLE协议演进 | **阅读时间**：约 20 分钟
 

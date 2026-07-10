@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: devsecops-iot
+title: DevSecOps for IoT：安全左移的嵌入式实践
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DevSecOps for IoT：安全左移的嵌入式实践
 
 > **难度**：🟡 中级 | **领域**：安全工程、CI/CD | **阅读时间**：约 25 分钟

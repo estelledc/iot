@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi-roaming-802-11r-iot
+title: WiFi快速漫游802.11r在移动IoT中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WiFi快速漫游802.11r在移动IoT中的应用
 > **难度**：🔴 高级 | **领域**：WiFi移动性 | **阅读时间**：约 22 分钟
 

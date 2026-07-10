@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lte-cat-m1-vs-nbiot
+title: LTE Cat-M1与NB-IoT技术选型决策
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LTE Cat-M1与NB-IoT技术选型决策
 > **难度**：🟡 中级 | **领域**：蜂窝IoT选型 | **阅读时间**：约 20 分钟
 

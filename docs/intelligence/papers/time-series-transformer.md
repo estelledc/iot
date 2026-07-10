@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: time-series-transformer
+title: 时序预测 Transformer 模型
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 时序预测 Transformer 模型
 
 > **难度**：🟡 中级 | **领域**：时序预测、Transformer、边缘部署 | **阅读时间**：约 22 分钟

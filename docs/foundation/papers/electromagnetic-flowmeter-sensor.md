@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: electromagnetic-flowmeter-sensor
+title: 电磁流量计传感器原理与工业IoT集成
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电磁流量计传感器原理与工业IoT集成
 > **难度**：🟡 中级 | **领域**：工业传感器 | **阅读时间**：约 20 分钟
 

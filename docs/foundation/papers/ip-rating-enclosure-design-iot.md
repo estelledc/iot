@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ip-rating-enclosure-design-iot
+title: IP防护等级与IoT设备外壳设计
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IP防护等级与IoT设备外壳设计
 
 > **难度**：🟢 初级 | **领域**：结构防护设计 | **阅读时间**：约 18 分钟

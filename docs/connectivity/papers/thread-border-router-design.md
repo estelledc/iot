@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: thread-border-router-design
+title: Thread边界路由器设计与IPv6互联
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Thread边界路由器设计与IPv6互联
 > **难度**：🟡 中级 | **领域**：Thread基础设施 | **阅读时间**：约 20 分钟
 

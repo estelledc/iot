@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: matter-bridge-legacy-device
+title: Matter桥接器连接传统非Matter设备
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Matter桥接器连接传统非Matter设备
 > **难度**：🟡 中级 | **领域**：Matter生态扩展 | **阅读时间**：约 20 分钟
 

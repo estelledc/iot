@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: semantic-communication-iot
+title: 语义通信与 IoT
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 语义通信与 IoT
 
 > **难度**：🟡 中级 | **领域**：通信理论 × 深度学习 | **阅读时间**：约 25 分钟

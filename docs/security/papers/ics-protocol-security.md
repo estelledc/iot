@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ics-protocol-security
+title: 工控 ICS 协议安全：从 Modbus 到 OPC UA 的攻防实战
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 工控 ICS 协议安全：从 Modbus 到 OPC UA 的攻防实战
 
 > **难度**：🟡 中级 | **领域**：工控安全、协议分析 | **阅读时间**：约 25 分钟

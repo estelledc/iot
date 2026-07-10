@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: one-wire-protocol-ds18b20
+title: 1-Wire协议与DS18B20温度传感器实战
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 15
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 1-Wire协议与DS18B20温度传感器实战
 
 > **难度**：🟢 初级 | **领域**：单总线通信 | **阅读时间**：约 15 分钟

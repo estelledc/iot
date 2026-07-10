@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: model-compression-pruning-distillation
+title: 模型压缩：剪枝与知识蒸馏在边缘部署中的对比
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 模型压缩：剪枝与知识蒸馏在边缘部署中的对比
 > **难度**：高级 | **领域**：模型优化技术 | **阅读时间**：约 22 分钟
 

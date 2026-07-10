@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ble-gatt-profile-custom-service
+title: BLE GATT自定义服务与特征值设计
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # BLE GATT自定义服务与特征值设计
 > **难度**：🟢 初级 | **领域**：BLE应用开发 | **阅读时间**：约 18 分钟
 

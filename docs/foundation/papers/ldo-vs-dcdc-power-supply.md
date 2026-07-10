@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ldo-vs-dcdc-power-supply
+title: LDO与DC-DC电源转换器效率对比与选型
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LDO与DC-DC电源转换器效率对比与选型
 > **难度**: 绿 初级 | **领域**: 电源设计基础 | **阅读时间**: 约 18 分钟
 

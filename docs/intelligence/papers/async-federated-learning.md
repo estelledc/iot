@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: async-federated-learning
+title: 异步联邦学习：让千差万别的设备协同训练
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 异步联邦学习：让千差万别的设备协同训练
 
 > **难度**：🟡 中级 | **领域**：联邦学习、分布式系统、边缘智能 | **阅读时间**：约 20 分钟

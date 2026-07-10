@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: embedded-linux-vs-rtos-iot
+title: 嵌入式Linux与RTOS在IoT设备中的选择
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 嵌入式Linux与RTOS在IoT设备中的选择
 > **难度**：🟡 中级 | **领域**：操作系统选型 | **阅读时间**：约 20 分钟
 

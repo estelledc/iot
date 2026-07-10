@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: serverless-edge
+title: Serverless 边缘计算：事件驱动的物联网计算新范式
+layer: 4
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Serverless 边缘计算：事件驱动的物联网计算新范式
 
 > **难度**：🟡 进阶 | **前置知识**：了解基本云计算概念、函数式编程基础  

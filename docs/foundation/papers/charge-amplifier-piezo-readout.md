@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: charge-amplifier-piezo-readout
+title: 电荷放大器在压电传感器读出电路中的设计
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电荷放大器在压电传感器读出电路中的设计
 > **难度**：🟡 中级 | **领域**：传感器模拟前端 | **阅读时间**：约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nvidia-jetson-nano-orin-iot
+title: NVIDIA Jetson Nano/Orin在IoT边缘推理中的定位
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NVIDIA Jetson Nano/Orin在IoT边缘推理中的定位
 > **难度**：🟡 中级 | **领域**：边缘计算平台 | **阅读时间**：约 20 分钟
 

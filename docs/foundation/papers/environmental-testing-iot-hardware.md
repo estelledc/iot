@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: environmental-testing-iot-hardware
+title: IoT硬件环境试验：温度/湿度/振动/盐雾
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT硬件环境试验：温度/湿度/振动/盐雾
 > **难度**：🟡 中级 | **领域**：环境可靠性测试 | **阅读时间**：约 20 分钟
 

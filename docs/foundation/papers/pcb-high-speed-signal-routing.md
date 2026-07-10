@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: pcb-high-speed-signal-routing
+title: 高速信号走线规则：差分对/等长/阻抗匹配
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 高速信号走线规则：差分对/等长/阻抗匹配
 
 > **难度**：🔴 高级 | **领域**：高速PCB设计 | **阅读时间**：约 22 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: smart-grid-edge
+title: 智能电网边缘计算
+layer: 7
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 智能电网边缘计算
 
 > **难度**：🟡 进阶 | **领域**：基础设施与资源 | **关键词**：需求响应, 分布式能源, 故障检测, AMI, 可再生能源集成

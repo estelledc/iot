@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: noma-iot-access
+title: NOMA 非正交多址接入技术：让更多设备"同时说话"
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NOMA 非正交多址接入技术：让更多设备"同时说话"
 
 > **难度**：🟡 中级 | **领域**：多址接入、5G mMTC、物理层技术 | **阅读时间**：约 22 分钟

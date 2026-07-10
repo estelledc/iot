@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sensor-self-test-auto-diagnosis
+title: 传感器自测试与自动诊断功能实现
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 传感器自测试与自动诊断功能实现
 > **难度**：🟡 中级 | **领域**：传感器可靠性 | **阅读时间**：约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: pic-microcontroller-iot-legacy
+title: PIC单片机在传统IoT设备中的延续与局限
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # PIC单片机在传统IoT设备中的延续与局限
 > **难度**：🟢 初级 | **领域**：传统MCU架构 | **阅读时间**：约 18 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: container-orchestration-edge
+title: 边缘容器编排技术：从 Docker 到轻量级运行时
+layer: 4
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘容器编排技术：从 Docker 到轻量级运行时
 
 > **难度**：🟡 进阶 | **前置知识**：了解容器和 Docker 的基本概念  

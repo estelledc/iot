@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: hart-protocol-4-20ma-digital
+title: HART协议4-20mA叠加数字通信
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # HART协议4-20mA叠加数字通信
 > **难度**：🟡 中级 | **领域**：过程自动化 | **阅读时间**：约 20 分钟
 

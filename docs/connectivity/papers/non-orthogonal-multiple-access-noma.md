@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: non-orthogonal-multiple-access-noma
+title: 非正交多址NOMA在大规模IoT中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 非正交多址NOMA在大规模IoT中的应用
 > **难度**: 高级 | **领域**: 多址接入 | **阅读时间**: 约 22 分钟
 

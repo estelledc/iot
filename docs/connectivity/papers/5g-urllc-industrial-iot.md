@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: 5g-urllc-industrial-iot
+title: 5G URLLC超可靠低时延在工业IoT中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 5G URLLC超可靠低时延在工业IoT中的应用
 > **难度**：🔴 高级 | **领域**：5G工业应用 | **阅读时间**：约 22 分钟
 

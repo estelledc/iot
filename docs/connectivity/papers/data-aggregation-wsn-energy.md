@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: data-aggregation-wsn-energy
+title: 无线传感器网络数据聚合节能策略
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 无线传感器网络数据聚合节能策略
 > **难度**: 中级 | **领域**: 数据聚合 | **阅读时间**: 约 20 分钟
 

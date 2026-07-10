@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: corrosion-sensor-structural-health
+title: 腐蚀传感器在结构健康监测IoT中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 腐蚀传感器在结构健康监测IoT中的应用
 > **难度**：🟡 中级 | **领域**：结构健康监测 | **阅读时间**：约 20 分钟
 

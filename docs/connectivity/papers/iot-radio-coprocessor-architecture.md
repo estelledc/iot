@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: iot-radio-coprocessor-architecture
+title: IoT射频协处理器架构与主控分工
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT射频协处理器架构与主控分工
 > **难度**: 中级 | **领域**: 硬件架构 | **阅读时间**: 约 20 分钟
 

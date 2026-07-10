@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: arm-trustzone-iot-security
+title: ARM TrustZone在IoT安全隔离中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ARM TrustZone在IoT安全隔离中的应用
 > **难度**：🔴 高级 | **领域**：可信执行环境 | **阅读时间**：约 22 分钟
 

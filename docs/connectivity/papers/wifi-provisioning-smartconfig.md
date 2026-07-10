@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi-provisioning-smartconfig
+title: WiFi配网技术SmartConfig/SoftAP/BLE辅助对比
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WiFi配网技术SmartConfig/SoftAP/BLE辅助对比
 > **难度**：🟢 初级 | **领域**：WiFi配网方案 | **阅读时间**：约 18 分钟
 

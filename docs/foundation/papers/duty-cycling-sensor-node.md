@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: duty-cycling-sensor-node
+title: 传感器节点占空比策略与寿命估算
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 传感器节点占空比策略与寿命估算
 
 > **难度**：🟡 中级 | **领域**：IoT功耗优化 | **阅读时间**：约 18 分钟

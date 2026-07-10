@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: uv-index-sensor-iot
+title: 紫外线指数传感器UV检测技术与校准
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 紫外线指数传感器UV检测技术与校准
 
 > **难度**：🟡 中级 | **领域**：光电传感、光谱加权、IoT 环境监测 | **阅读时间**：约 18 分钟

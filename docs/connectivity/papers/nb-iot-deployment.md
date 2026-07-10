@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nb-iot-deployment
+title: NB-IoT 规模部署：从标准到实践
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NB-IoT 规模部署：从标准到实践
 
 > 难度：🟡 进阶 | 领域：低功耗广域网 · 蜂窝物联网 | 更新：2025-06

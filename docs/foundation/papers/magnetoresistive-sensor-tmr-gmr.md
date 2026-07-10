@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: magnetoresistive-sensor-tmr-gmr
+title: TMR与GMR磁阻传感器技术对比
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # TMR与GMR磁阻传感器技术对比
 
 > **难度**：🔴 高级 | **领域**：磁阻效应、自旋电子学、精密测量 | **阅读时间**：约 22 分钟

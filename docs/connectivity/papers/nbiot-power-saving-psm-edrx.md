@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nbiot-power-saving-psm-edrx
+title: NB-IoT省电模式PSM与eDRX配置优化
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NB-IoT省电模式PSM与eDRX配置优化
 > **难度**：🟡 中级 | **领域**：蜂窝IoT功耗 | **阅读时间**：约 20 分钟
 

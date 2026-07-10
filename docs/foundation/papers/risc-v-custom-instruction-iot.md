@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: risc-v-custom-instruction-iot
+title: RISC-V自定义指令扩展加速IoT工作负载
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RISC-V自定义指令扩展加速IoT工作负载
 
 > **难度**：🔴 高级 | **领域**：RISC-V定制化 | **阅读时间**：约 25 分钟

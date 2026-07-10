@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: threadx-azure-rtos-iot
+title: ThreadX/Azure RTOS在IoT认证中的优势
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ThreadX/Azure RTOS在IoT认证中的优势
 
 > **难度**：🟡 中级 | **领域**：IoT RTOS生态 | **阅读时间**：约 20 分钟

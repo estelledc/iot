@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: side-channel-attack-defense
+title: 侧信道攻击与防护
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 侧信道攻击与防护
 
 > **难度**：🟡 中级 | **领域**：硬件安全、密码工程 | **阅读时间**：约 20 分钟

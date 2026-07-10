@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nbiot-release-14-features
+title: NB-IoT Release 14增强特性与性能提升
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NB-IoT Release 14增强特性与性能提升
 > **难度**：🟡 中级 | **领域**：蜂窝IoT演进 | **阅读时间**：约 20 分钟
 

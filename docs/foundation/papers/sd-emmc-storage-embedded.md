@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sd-emmc-storage-embedded
+title: SD/eMMC嵌入式存储接口与文件系统选择
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # SD/eMMC嵌入式存储接口与文件系统选择
 > **难度**：🟡 中级 | **领域**：嵌入式存储系统 | **阅读时间**：约 20 分钟
 

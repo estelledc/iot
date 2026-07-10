@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sparklink-vs-ble6
+title: 星闪(SparkLink) vs 蓝牙 6.0：下一代短距无线技术对决
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 星闪(SparkLink) vs 蓝牙 6.0：下一代短距无线技术对决
 
 > 难度：🟡 进阶 | 领域：短距无线通信 | 更新：2025-06

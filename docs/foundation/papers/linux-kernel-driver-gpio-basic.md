@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: linux-kernel-driver-gpio-basic
+title: Linux内核GPIO驱动开发基础
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Linux内核GPIO驱动开发基础
 > **难度**：🟡 中级 | **领域**：Linux驱动开发 | **阅读时间**：约 20 分钟
 

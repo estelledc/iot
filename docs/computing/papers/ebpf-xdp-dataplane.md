@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ebpf-xdp-dataplane
+title: eBPF/XDP 数据平面编程在 IoT 网关中的应用
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # eBPF/XDP 数据平面编程在 IoT 网关中的应用
 
 > **难度**：🟡 中级 | **领域**：网络编程、Linux 内核、数据平面 | **阅读时间**：约 20 分钟

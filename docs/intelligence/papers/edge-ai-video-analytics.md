@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-ai-video-analytics
+title: 边缘视频分析系统：从原始视频流到实时智能决策
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘视频分析系统：从原始视频流到实时智能决策
 
 > 难度：🟡 进阶 | 前置知识：了解基本的目标检测概念（YOLO、bounding box）和视频编码基础

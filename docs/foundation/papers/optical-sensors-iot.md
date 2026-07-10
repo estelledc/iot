@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: optical-sensors-iot
+title: 光电传感器在 IoT 中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 19
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 光电传感器在 IoT 中的应用
 
 > **难度**：🟡 中级 | **领域**：光电子、信号处理、智能感知 | **阅读时间**：约 19 分钟

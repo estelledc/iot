@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: adc-calibration-offset-gain-error
+title: ADC校准：失调误差与增益误差补偿
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ADC校准：失调误差与增益误差补偿
 
 > **难度**：🟡 中级 | **领域**：ADC精度优化 | **阅读时间**：约 18 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: roaming-global-iot-sim-esim
+title: 全球IoT漫游SIM/eSIM连接管理
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 全球IoT漫游SIM/eSIM连接管理
 > **难度**: 中级 | **领域**: 蜂窝IoT | **阅读时间**: 约 20 分钟
 

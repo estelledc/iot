@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: uwb-positioning
+title: UWB 超宽带高精度定位技术
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # UWB 超宽带高精度定位技术
 
 > 难度：🟡 进阶 | 领域：短距通信与定位 | 更新：2025-06

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nbiot-coverage-enhancement-repetition
+title: NB-IoT覆盖增强重复传输机制分析
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NB-IoT覆盖增强重复传输机制分析
 > **难度**：🔴 高级 | **领域**：蜂窝IoT覆盖 | **阅读时间**：约 22 分钟
 

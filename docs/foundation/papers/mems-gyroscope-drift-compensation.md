@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mems-gyroscope-drift-compensation
+title: MEMS 陀螺仪零偏漂移补偿算法
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 30
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS 陀螺仪零偏漂移补偿算法
 
 > **难度**：🔴 高级 | **领域**：惯性导航、信号处理、传感器融合 | **阅读时间**：约 30 分钟

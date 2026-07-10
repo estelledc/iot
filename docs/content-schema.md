@@ -64,9 +64,8 @@ target_paper:
 ## 验证
 
 ```bash
-python tools/validate_frontmatter.py \
-  --schema-only \
-  --fixtures tests/fixtures/frontmatter
+python tools/validate_frontmatter.py --schema-only --fixtures
+python tools/validate_frontmatter.py --all
 ```
 
-在 `IOT-T010` 完成前，不把 `--all` 加入 required CI；当前 642 篇缺少 frontmatter 是已知基线，不应通过伪造字段来“修绿”。
+CI 与 Pages 构建均要求全量内容文件通过 schema + 路径语义校验。

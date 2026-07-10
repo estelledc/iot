@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edgex-foundry-deep-dive
+title: EdgeX Foundry 深度解析：IoT 边缘中间件平台
+layer: 4
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # EdgeX Foundry 深度解析：IoT 边缘中间件平台
 
 > **难度**：🟡 进阶 | **前置知识**：了解 IoT 设备协议和微服务基础  

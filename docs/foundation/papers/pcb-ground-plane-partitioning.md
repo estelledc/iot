@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: pcb-ground-plane-partitioning
+title: PCB地平面分割与混合信号设计
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # PCB地平面分割与混合信号设计
 > **难度**: 🔴 高级 | **领域**: 混合信号PCB设计 | **阅读时间**: 约 22 分钟
 

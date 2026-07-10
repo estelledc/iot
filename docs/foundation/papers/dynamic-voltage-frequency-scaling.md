@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dynamic-voltage-frequency-scaling
+title: DVFS动态电压频率调节在IoT节点中的实现
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DVFS动态电压频率调节在IoT节点中的实现
 
 > **难度**：🔴 高级 | **领域**：动态功耗管理 | **阅读时间**：约 22 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: on-device-training
+title: 设备端在线训练：让边缘模型持续进化
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 设备端在线训练：让边缘模型持续进化
 
 > 难度：🟡 进阶 | 前置知识：了解迁移学习和微调（fine-tuning）的基本概念

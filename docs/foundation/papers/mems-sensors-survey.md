@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mems-sensors-survey
+title: MEMS 传感器技术综述
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 30
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS 传感器技术综述
 
 > **难度**：🟡 中级 | **领域**：微机电系统、传感器技术 | **阅读时间**：约 30 分钟

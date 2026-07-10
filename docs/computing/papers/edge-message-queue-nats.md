@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-message-queue-nats
+title: 边缘消息队列：NATS 与 Mosquitto 深度对比
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘消息队列：NATS 与 Mosquitto 深度对比
 
 > **难度**：🟡 中级 | **领域**：消息中间件、IoT 通信、分布式系统 | **阅读时间**：约 20 分钟

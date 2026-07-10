@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: homomorphic-encryption-practical
+title: 同态加密实用化进展：从理论突破到 IoT 落地
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 同态加密实用化进展：从理论突破到 IoT 落地
 
 > **难度**：🟡 中级 | **领域**：密码学、隐私计算 | **阅读时间**：约 25 分钟

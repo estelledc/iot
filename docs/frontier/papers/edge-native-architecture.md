@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-native-architecture
+title: 边缘原生架构
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘原生架构
 
 > **难度**：🟡 中级 | **领域**：分布式系统 × 边缘计算 | **阅读时间**：约 25 分钟

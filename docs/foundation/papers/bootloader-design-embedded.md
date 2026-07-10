@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: bootloader-design-embedded
+title: 嵌入式Bootloader设计与固件升级流程
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 嵌入式Bootloader设计与固件升级流程
 > **难度**：🟡 中级 | **领域**：系统启动设计 | **阅读时间**：约 20 分钟
 

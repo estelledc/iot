@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: federated-learning-privacy
+title: 联邦学习隐私保护：从梯度泄露到多重防御
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 联邦学习隐私保护：从梯度泄露到多重防御
 
 > 难度：🟠 挑战 | 领域：隐私计算/联邦学习 | 更新：2025-06

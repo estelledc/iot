@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: automotive-sensor-iot-crossover
+title: 车规级传感器技术向IoT的迁移与复用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 车规级传感器技术向IoT的迁移与复用
 > **难度**：🟡 中级 | **领域**：传感器技术迁移 | **阅读时间**：约 20 分钟
 

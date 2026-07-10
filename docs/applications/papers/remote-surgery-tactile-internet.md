@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: remote-surgery-tactile-internet
+title: 远程手术与触觉互联网
+layer: 7
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 远程手术与触觉互联网
 
 > **难度**：🟠 挑战 | **领域**：医疗健康、通信技术 | **阅读时间**：约 25 分钟

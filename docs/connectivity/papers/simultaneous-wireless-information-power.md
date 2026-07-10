@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: simultaneous-wireless-information-power
+title: 无线信息与能量同传SWIPT在IoT中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 无线信息与能量同传SWIPT在IoT中的应用
 > **难度**: 高级 | **领域**: 能量收集 | **阅读时间**: 约 22 分钟
 

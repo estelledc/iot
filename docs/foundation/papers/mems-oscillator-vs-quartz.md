@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mems-oscillator-vs-quartz
+title: MEMS振荡器与石英晶振时钟源对比
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS振荡器与石英晶振时钟源对比
 
 > **难度**: 🟡 中级 | **领域**: 时钟与频率源 | **阅读时间**: 约 18 分钟

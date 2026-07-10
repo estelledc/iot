@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: battery-management-bms
+title: IoT 设备电池管理系统 BMS
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 设备电池管理系统 BMS
 
 > **难度**：🟡 中级 | **领域**：电源管理、嵌入式系统、电化学 | **阅读时间**：约 20 分钟

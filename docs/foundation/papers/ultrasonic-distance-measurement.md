@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ultrasonic-distance-measurement
+title: 超声波测距传感器原理与盲区优化
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 15
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 超声波测距传感器原理与盲区优化
 
 > **难度**：🟢 初级 | **领域**：距离测量、声学传感、机器人避障 | **阅读时间**：约 15 分钟

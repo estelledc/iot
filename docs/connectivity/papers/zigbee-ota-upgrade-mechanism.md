@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zigbee-ota-upgrade-mechanism
+title: Zigbee OTA固件升级机制与实现
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Zigbee OTA固件升级机制与实现
 > **难度**：🟡 中级 | **领域**：Zigbee设备管理 | **阅读时间**：约 20 分钟
 

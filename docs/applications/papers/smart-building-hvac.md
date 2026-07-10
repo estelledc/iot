@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: smart-building-hvac
+title: 智慧建筑能耗优化
+layer: 7
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 智慧建筑能耗优化
 
 > **难度**：🟡 进阶 | **领域**：民生与健康 | **关键词**：HVAC, 占位感知, 强化学习, BMS, 能耗优化

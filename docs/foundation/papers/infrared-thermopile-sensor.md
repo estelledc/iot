@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: infrared-thermopile-sensor
+title: 红外热电堆传感器非接触测温技术
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 红外热电堆传感器非接触测温技术
 
 > **难度**：🟡 中级 | **领域**：红外传感、非接触测温、医疗IoT | **阅读时间**：约 25 分钟

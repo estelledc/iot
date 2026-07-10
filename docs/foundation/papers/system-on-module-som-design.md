@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: system-on-module-som-design
+title: 系统级模块SoM在IoT产品快速落地中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 系统级模块SoM在IoT产品快速落地中的应用
 > **难度**：🟢 初级 | **领域**：产品开发策略 | **阅读时间**：约 18 分钟
 

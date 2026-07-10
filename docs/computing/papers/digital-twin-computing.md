@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: digital-twin-computing
+title: 数字孪生计算框架
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 数字孪生计算框架
 
 > **难度**：🟡 中级 | **领域**：数字孪生、仿真引擎、边云协同 | **阅读时间**：约 20 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: comparator-circuit-threshold-detection
+title: 比较器电路在阈值检测与报警中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 比较器电路在阈值检测与报警中的应用
 
 > **难度**：🟢 初级 | **领域**：模拟比较电路 | **阅读时间**：约 18 分钟

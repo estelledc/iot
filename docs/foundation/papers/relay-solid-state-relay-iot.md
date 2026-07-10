@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: relay-solid-state-relay-iot
+title: 继电器与固态继电器在IoT控制中的选型
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 继电器与固态继电器在IoT控制中的选型
 > **难度**：🟢 初级 | **领域**：执行器控制 | **阅读时间**：约 18 分钟
 

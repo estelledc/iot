@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nand-flash-wear-leveling-ftl
+title: NAND Flash磨损均衡与FTL闪存转换层
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NAND Flash磨损均衡与FTL闪存转换层
 > **难度**：🔴 高级 | **领域**：存储系统设计 | **阅读时间**：约 22 分钟
 

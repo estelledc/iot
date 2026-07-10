@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: llm-quantization-gptq-awq
+title: 大模型推理量化：GPTQ 与 AWQ
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 大模型推理量化：GPTQ 与 AWQ
 
 > **难度**：🟡 中级 | **领域**：模型压缩、大语言模型、边缘推理 | **阅读时间**：约 22 分钟

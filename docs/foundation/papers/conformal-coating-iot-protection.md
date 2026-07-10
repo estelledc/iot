@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: conformal-coating-iot-protection
+title: 三防漆在IoT户外设备中的防护应用
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 三防漆在IoT户外设备中的防护应用
 
 > **难度**：🟢 初级 | **领域**：PCB防护工艺 | **阅读时间**：约 18 分钟

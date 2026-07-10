@@ -2,6 +2,46 @@
 
 本项目从 `0.1.0` 起使用语义化版本。每条变更必须引用实施任务，并记录可重复验证命令。
 
+## [0.2.0] - 2026-07-10
+
+### Added
+
+- `IOT-T010` / `IOT-T011`：642 篇内容 frontmatter 机械迁移（正文 SHA-256 不变）；`tools/migrate_frontmatter.py`；CI/Pages 启用 `validate_frontmatter.py --all`。验证：`python tools/validate_frontmatter.py --all`、`python -m unittest tests.test_frontmatter_migration -v`。
+- `IOT-T003`：八层 `docs/<layer>/catalog.md` 自动目录；清单增加 `catalog_entries` / `discoverable_entries`（可发现 = 显式导航 ∪ 目录页）；侧栏挂载「全部目录」且不改变既有 papers URL。验证：`python tools/generate_layer_catalogs.py --check`、`python tools/content_inventory.py --check`。
+- `IOT-T027`：Material tags 索引页 `docs/tags.md`（`<!-- material/tags -->`）。验证：`mkdocs build --strict`、`python tools/validate_site.py --site-dir .tmp/site --page tags/index.html --assert-single-main --assert-single-h1`。
+
+### Changed
+
+- `docs/content-schema.md`：全量 frontmatter 校验成为 required CI。
+- `docs/progress.md`：M1 完成，下一步为 M2 可信基线。
+
+### Review baseline
+
+- Source commit: `d4f3761f1f5a6b01fb47d0ea68cfca07b4c34f1a`
+- 迁移说明：仅插入 frontmatter、新增目录/标签页与门禁；既有 `docs/*/papers/<slug>/` URL 不变；两篇 legacy mirror 与 canonical 保持字节一致。
+
+## [0.1.2] - 2026-07-10
+
+### Added
+
+- `IOT-T028`：新增 M1 治理基线可执行推进计划 `docs/superpowers/plans/2026-07-10-m1-governance-baseline.md`（T1–T7：frontmatter 迁移 → catalog 可发现 → 标签索引 → CI `--all` → v0.2.0 验收）；在 `docs/progress.md` 与 `ROADMAP.md` M1 小节挂上入口，并锁定「层级 catalog 收编孤立页、不塞满侧栏」方案。本版本不执行迁移或导航改动。验证：`python tools/content_inventory.py --check`、`python tools/check_markdown_links.py --all --anchors --strict`、`python tools/check_markdown_fences.py --all`。
+
+### Review baseline
+
+- Source commit: `16f5b2cfac071e7f53bd450c01d7b3e7a125b600`
+- 迁移说明：纯文档变更；无 URL、schema 或内容正文迁移。
+
+## [0.1.1] - 2026-07-10
+
+### Changed
+
+- `IOT-T026`：在 `ROADMAP.md` 新增「三、未来方向：四个里程碑」（M1 治理基线 → M2 可信基线 → M3 受控生长 → M4 体验与社区，均含可机械验证的完成判据），把已过时的内容填充选题表改为历史归档并重排章节编号；`README.md` 扩展原则小节同步指向新方向章节。不改动任何站点 URL、导航、内容正文或自动生成块。验证：`python tools/content_inventory.py --check`、`python tools/check_markdown_links.py --all --anchors --strict`、`python tools/check_markdown_fences.py --all`。
+
+### Review baseline
+
+- Source commit: `7d937fd02de4b5345f614065fe27cefb8b5d9ec8`
+- 迁移说明：纯文档变更，无 URL、schema 或内容正文迁移要求。
+
 ## [0.1.0] - 2026-07-10
 
 ### Added

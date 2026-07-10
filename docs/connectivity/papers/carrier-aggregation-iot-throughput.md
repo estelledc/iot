@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: carrier-aggregation-iot-throughput
+title: 载波聚合在IoT高吞吐场景中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 载波聚合在IoT高吞吐场景中的应用
 > **难度**: 高级 | **领域**: 蜂窝技术 | **阅读时间**: 约 22 分钟
 

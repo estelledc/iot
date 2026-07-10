@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: load-cell-hx711-interface
+title: 称重传感器与HX711 ADC接口设计
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 15
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 称重传感器与HX711 ADC接口设计
 
 > **难度**：🟢 初级 | **领域**：力传感、称重系统、嵌入式接口 | **阅读时间**：约 15 分钟

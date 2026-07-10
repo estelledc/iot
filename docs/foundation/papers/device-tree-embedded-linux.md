@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: device-tree-embedded-linux
+title: 设备树Device Tree在嵌入式Linux中的硬件描述
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 设备树Device Tree在嵌入式Linux中的硬件描述
 > **难度**：🔴 高级 | **领域**：Linux硬件抽象 | **阅读时间**：约 22 分钟
 

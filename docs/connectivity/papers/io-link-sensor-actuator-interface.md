@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: io-link-sensor-actuator-interface
+title: IO-Link传感器执行器智能接口标准
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IO-Link传感器执行器智能接口标准
 > **难度**：🟡 中级 | **领域**：传感器通信 | **阅读时间**：约 20 分钟
 

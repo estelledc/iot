@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: forward-error-correction-iot
+title: 前向纠错FEC在IoT低功耗通信中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 前向纠错FEC在IoT低功耗通信中的应用
 > **难度**：🔴 高级 | **领域**：信道编码 | **阅读时间**：约 22 分钟
 

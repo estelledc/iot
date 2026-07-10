@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: tsn-detnet-industrial
+title: TSN/DetNet 确定性网络：工业物联网的实时通信基石
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # TSN/DetNet 确定性网络：工业物联网的实时通信基石
 
 > 难度：🟠 进阶 | 预计阅读：40 分钟 | 最后更新：2025-06

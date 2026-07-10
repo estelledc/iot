@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: thermoelectric-energy-harvesting
+title: 温差发电热电能量采集器件与电路
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 温差发电热电能量采集器件与电路
 
 > **难度**：🔴 高级 | **领域**：热电能量采集 | **阅读时间**：约 22 分钟

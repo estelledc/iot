@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: flexible-electronics-iot
+title: 柔性电子与 IoT 融合：从可弯曲基底到可穿戴传感贴片
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 柔性电子与 IoT 融合：从可弯曲基底到可穿戴传感贴片
 
 > **难度**：🟡 中级 | **领域**：柔性电子、传感器、制造工艺 | **阅读时间**：约 20 分钟

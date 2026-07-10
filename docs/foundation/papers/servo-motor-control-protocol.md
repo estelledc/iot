@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: servo-motor-control-protocol
+title: 舵机控制协议PWM/总线式在IoT中的对比
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 舵机控制协议PWM/总线式在IoT中的对比
 
 > **难度**：🟢 初级 | **领域**：舵机控制 | **阅读时间**：约 18 分钟

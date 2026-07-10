@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mosfet-switching-circuit-iot
+title: MOSFET开关电路在IoT负载控制中的设计
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MOSFET开关电路在IoT负载控制中的设计
 
 > **难度**：🟢 初级 | **领域**：功率开关设计 | **阅读时间**：约 18 分钟

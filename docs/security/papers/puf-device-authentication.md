@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: puf-device-authentication
+title: PUF物理不可克隆函数：IoT设备的"硅指纹"认证
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # PUF物理不可克隆函数：IoT设备的"硅指纹"认证
 
 > 难度：🟡 进阶 | 领域：硬件安全/设备认证 | 更新：2025-06

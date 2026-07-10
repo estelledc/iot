@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ethercat-real-time-industrial
+title: EtherCAT实时工业以太网在IoT中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # EtherCAT实时工业以太网在IoT中的应用
 > **难度**：🔴 高级 | **领域**：高速工业通信 | **阅读时间**：约 22 分钟
 

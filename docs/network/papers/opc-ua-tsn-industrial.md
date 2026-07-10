@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: opc-ua-tsn-industrial
+title: OPC UA over TSN：工业互联网融合
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 21
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # OPC UA over TSN：工业互联网融合
 
 > **难度**：🟡 中级 | **领域**：工业通信、确定性网络、IT/OT 融合 | **阅读时间**：约 21 分钟

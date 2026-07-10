@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: crystal-oscillator-selection-iot
+title: 晶振选型：频率精度/温度稳定性/功耗
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 晶振选型：频率精度/温度稳定性/功耗
 
 > **难度**：🟡 中级 | **领域**：时钟源设计 | **阅读时间**：约 20 分钟

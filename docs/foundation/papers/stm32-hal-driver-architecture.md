@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: stm32-hal-driver-architecture
+title: STM32 HAL驱动架构与寄存器级编程对比
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # STM32 HAL驱动架构与寄存器级编程对比
 
 > **难度**：🟡 中级 | **领域**：嵌入式驱动开发 | **阅读时间**：约 22 分钟

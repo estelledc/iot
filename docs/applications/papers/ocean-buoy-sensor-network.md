@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ocean-buoy-sensor-network
+title: 海洋浮标传感网络
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 海洋浮标传感网络
 
 > **难度**：🟡 中级 | **领域**：海洋观测、环境科学 | **阅读时间**：约 25 分钟

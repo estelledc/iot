@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: encoder-rotary-absolute-incremental
+title: 绝对值与增量式旋转编码器在IoT中的对比
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 绝对值与增量式旋转编码器在IoT中的对比
 > **难度**：🟢 初级 | **领域**：位置反馈传感器 | **阅读时间**：约 18 分钟
 

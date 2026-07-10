@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: hw-sw-codesign-iot-system
+title: IoT系统软硬件协同设计方法论
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT系统软硬件协同设计方法论
 > **难度**：🟡 中级 | **领域**：系统设计方法 | **阅读时间**：约 20 分钟
 

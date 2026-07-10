@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zigbee-cc2530-hardware-design
+title: Zigbee CC2530模组硬件设计与组网
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Zigbee CC2530模组硬件设计与组网
 
 > **难度**：🟡 中级 | **领域**：Zigbee硬件设计 | **阅读时间**：约 20 分钟

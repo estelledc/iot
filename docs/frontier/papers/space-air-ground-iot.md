@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: space-air-ground-iot
+title: 天地一体化 IoT 网络
+layer: 8
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 30
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 天地一体化 IoT 网络
 
 > **难度**：🟠 进阶 | **领域**：卫星通信 × IoT × 异构网络 | **阅读时间**：约 30 分钟

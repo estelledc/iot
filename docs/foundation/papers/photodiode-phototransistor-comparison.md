@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: photodiode-phototransistor-comparison
+title: 光电二极管与光电晶体管选型对比
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 15
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 光电二极管与光电晶体管选型对比
 
 > **难度**：🟢 初级 | **领域**：光电检测、光通信、环境感知 | **阅读时间**：约 15 分钟

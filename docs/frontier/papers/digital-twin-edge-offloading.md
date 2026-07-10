@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: digital-twin-edge-offloading
+title: 数字孪生赋能边缘计算卸载
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 数字孪生赋能边缘计算卸载
 
 > **难度**：🟡 中级 | **领域**：边缘计算 × 数字孪生 | **阅读时间**：约 25 分钟

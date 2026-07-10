@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: intrusion-detection-edge
+title: 边缘入侵检测系统：在资源受限环境中守护网络安全
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘入侵检测系统：在资源受限环境中守护网络安全
 
 > 难度：🟡 进阶 | 领域：网络安全/边缘AI | 更新：2025-06

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: multicore-mcu-amp-smp
+title: 多核MCU的AMP与SMP运行模式分析
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 多核MCU的AMP与SMP运行模式分析
 
 > **难度**：🔴 高级 | **领域**：多核嵌入式系统 | **阅读时间**：约 22 分钟

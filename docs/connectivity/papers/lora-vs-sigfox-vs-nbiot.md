@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lora-vs-sigfox-vs-nbiot
+title: LoRa/Sigfox/NB-IoT LPWAN技术全面对比
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LoRa/Sigfox/NB-IoT LPWAN技术全面对比
 > **难度**：🟢 初级 | **领域**：LPWAN选型 | **阅读时间**：约 18 分钟
 

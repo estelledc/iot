@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: digital-twin-sensor-calibration
+title: 数字孪生驱动的传感器校准：从物理模型到在线自适应
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 数字孪生驱动的传感器校准：从物理模型到在线自适应
 
 > **难度**：🟡 中级 | **领域**：数字孪生、传感器校准、机器学习 | **阅读时间**：约 18 分钟

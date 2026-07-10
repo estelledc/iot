@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: iot-spectrum-sharing-dynamic
+title: IoT动态频谱共享与频谱数据库
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT动态频谱共享与频谱数据库
 > **难度**: 高级 | **领域**: 频谱管理 | **阅读时间**: 约 22 分钟
 

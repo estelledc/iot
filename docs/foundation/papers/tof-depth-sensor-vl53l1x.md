@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: tof-depth-sensor-vl53l1x
+title: ToF深度传感器VL53L1X原理与测距精度
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ToF深度传感器VL53L1X原理与测距精度
 
 > **难度**：🟡 中级 | **领域**：距离测量传感器 | **阅读时间**：约 20 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lpwan-mac-layer-comparison
+title: LPWAN MAC层协议对比：LoRaWAN/Sigfox/NB-IoT
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LPWAN MAC层协议对比：LoRaWAN/Sigfox/NB-IoT
 > **难度**：🟡 中级 | **领域**：LPWAN协议 | **阅读时间**：约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lithium-battery-charging-profile
+title: 锂电池CC-CV充电曲线与充电IC设计
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 锂电池CC-CV充电曲线与充电IC设计
 > **难度**：🟢 初级 | **领域**：电池充电设计 | **阅读时间**：约 18 分钟
 

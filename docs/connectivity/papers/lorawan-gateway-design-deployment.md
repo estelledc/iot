@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lorawan-gateway-design-deployment
+title: LoRaWAN网关设计与部署规划
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LoRaWAN网关设计与部署规划
 > **难度**：🟡 中级 | **领域**：LoRaWAN基础设施 | **阅读时间**：约 20 分钟
 

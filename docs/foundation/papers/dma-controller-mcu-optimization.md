@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dma-controller-mcu-optimization
+title: DMA控制器在MCU数据搬运中的优化策略
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DMA控制器在MCU数据搬运中的优化策略
 > **难度**：🟡 中级 | **领域**：嵌入式数据传输 | **阅读时间**：约 20 分钟
 

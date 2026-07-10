@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mems-fabrication-process-survey
+title: MEMS传感器制造工艺：体硅与表面微加工
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS传感器制造工艺：体硅与表面微加工
 
 > **难度**：🔴 高级 | **领域**：MEMS制造工艺 | **阅读时间**：约 25 分钟

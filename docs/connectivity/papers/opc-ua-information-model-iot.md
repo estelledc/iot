@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: opc-ua-information-model-iot
+title: OPC UA信息模型在IoT数据互操作中的作用
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # OPC UA信息模型在IoT数据互操作中的作用
 > **难度**：🟡 中级 | **领域**：工业数据互操作 | **阅读时间**：约 20 分钟
 

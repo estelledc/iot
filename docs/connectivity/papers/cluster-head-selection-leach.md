@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cluster-head-selection-leach
+title: 簇头选择LEACH协议与改进算法
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 簇头选择LEACH协议与改进算法
 > **难度**: 高级 | **领域**: 路由协议 | **阅读时间**: 约 22 分钟
 

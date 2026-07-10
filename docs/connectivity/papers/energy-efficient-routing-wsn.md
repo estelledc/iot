@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: energy-efficient-routing-wsn
+title: 无线传感器网络能量高效路由协议
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 无线传感器网络能量高效路由协议
 > **难度**: 高级 | **领域**: 路由协议 | **阅读时间**: 约 22 分钟
 

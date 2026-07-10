@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lorawan-adr-algorithm-analysis
+title: LoRaWAN ADR自适应速率算法深度分析
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LoRaWAN ADR自适应速率算法深度分析
 > **难度**：🔴 高级 | **领域**：LoRaWAN优化 | **阅读时间**：约 22 分钟
 

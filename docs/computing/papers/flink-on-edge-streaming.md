@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: flink-on-edge-streaming
+title: 流处理 Flink-on-Edge 实践
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 流处理 Flink-on-Edge 实践
 
 > **难度**：🟡 中级 | **领域**：流处理、边缘分析、实时计算 | **阅读时间**：约 20 分钟

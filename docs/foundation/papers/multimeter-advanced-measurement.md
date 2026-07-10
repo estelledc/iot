@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: multimeter-advanced-measurement
+title: 万用表高级测量：真有效值/温度/频率
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 万用表高级测量：真有效值/温度/频率
 > **难度**：🟢 初级 | **领域**：基础测量工具 | **阅读时间**：约 18 分钟
 

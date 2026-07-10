@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-causal-reasoning
+title: 边缘因果推理：让 IoT 设备理解"为什么"
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘因果推理：让 IoT 设备理解"为什么"
 
 > **难度**：🟡 中级 | **领域**：因果推理、边缘 AI、根因分析 | **阅读时间**：约 25 分钟

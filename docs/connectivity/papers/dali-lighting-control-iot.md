@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dali-lighting-control-iot
+title: DALI数字照明控制在IoT智能照明中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DALI数字照明控制在IoT智能照明中的应用
 > **难度**：🟢 初级 | **领域**：照明控制 | **阅读时间**：约 18 分钟
 

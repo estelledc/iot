@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: intent-based-networking-iot
+title: 意图驱动网络 IBN 在 IoT 中的应用
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 意图驱动网络 IBN 在 IoT 中的应用
 
 > **难度**：🟡 中级 | **领域**：网络自动化、IoT 管理 | **阅读时间**：约 20 分钟

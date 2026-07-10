@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cable-harness-design-iot
+title: IoT设备线束设计与连接可靠性
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT设备线束设计与连接可靠性
 > **难度**：🟡 中级 | **领域**：线束工程 | **阅读时间**：约 20 分钟
 

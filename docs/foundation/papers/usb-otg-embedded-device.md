@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: usb-otg-embedded-device
+title: USB OTG在嵌入式IoT设备中的实现
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # USB OTG在嵌入式IoT设备中的实现
 > **难度**：🟡 中级 | **领域**：USB嵌入式应用 | **阅读时间**：约 20 分钟
 

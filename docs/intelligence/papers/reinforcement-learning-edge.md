@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: reinforcement-learning-edge
+title: 强化学习在边缘自适应中的应用
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 强化学习在边缘自适应中的应用
 
 > **难度**：🟡 中级 | **领域**：强化学习、资源管理、IoT 优化 | **阅读时间**：约 20 分钟

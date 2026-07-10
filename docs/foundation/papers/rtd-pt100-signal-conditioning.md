@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rtd-pt100-signal-conditioning
+title: RTD/PT100温度传感器信号调理电路设计
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RTD/PT100温度传感器信号调理电路设计
 
 > **难度**：🟡 中级 | **领域**：模拟电路设计、传感器接口、工业测温 | **阅读时间**：约 20 分钟

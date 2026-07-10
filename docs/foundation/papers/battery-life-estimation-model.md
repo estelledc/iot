@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: battery-life-estimation-model
+title: IoT电池寿命估算模型与实测验证
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT电池寿命估算模型与实测验证
 
 > **难度**：🟡 中级 | **领域**：IoT电源管理 | **阅读时间**：约 20 分钟

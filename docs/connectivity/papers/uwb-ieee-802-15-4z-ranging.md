@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: uwb-ieee-802-15-4z-ranging
+title: UWB IEEE 802.15.4z精密测距协议
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # UWB IEEE 802.15.4z精密测距协议
 > **难度**：🔴 高级 | **领域**：UWB精密定位 | **阅读时间**：约 22 分钟
 

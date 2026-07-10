@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cognitive-radio-spectrum
+title: 认知无线电与动态频谱共享
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 认知无线电与动态频谱共享
 
 > 难度：🟡 中级 | 领域：频谱管理、无线通信 | 更新：2025-06

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: split-computing
+title: 分割计算：DNN 端-边最优切分
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 分割计算：DNN 端-边最优切分
 
 > 难度：🟡 进阶 | 前置知识：了解深度神经网络的层级结构（卷积层、全连接层、激活函数）

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: fpga-partial-reconfiguration
+title: FPGA部分重配置在自适应IoT系统中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # FPGA部分重配置在自适应IoT系统中的应用
 
 > **难度**：🔴 高级 | **领域**：FPGA高级技术 | **阅读时间**：约 22 分钟

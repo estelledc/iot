@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: buck-converter-design-iot
+title: Buck降压转换器在IoT设备中的设计要点
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Buck降压转换器在IoT设备中的设计要点
 > **难度**: 黄 中级 | **领域**: 开关电源设计 | **阅读时间**: 约 20 分钟
 

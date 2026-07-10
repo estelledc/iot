@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lpwan-capacity-planning-dense
+title: LPWAN密集部署容量规划与干扰分析
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LPWAN密集部署容量规划与干扰分析
 > **难度**: 高级 | **领域**: 网络规划 | **阅读时间**: 约 22 分钟
 

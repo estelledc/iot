@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cellular-cat1-cat4-module
+title: 蜂窝Cat.1/Cat.4模组硬件选型与集成
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 蜂窝Cat.1/Cat.4模组硬件选型与集成
 > **难度**: 中级 | **领域**: 蜂窝模组集成 | **阅读时间**: 约 20 分钟
 

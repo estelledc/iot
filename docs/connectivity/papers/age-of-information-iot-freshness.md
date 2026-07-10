@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: age-of-information-iot-freshness
+title: 信息年龄AoI在IoT数据新鲜度中的度量
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 信息年龄AoI在IoT数据新鲜度中的度量
 > **难度**: 高级 | **领域**: 信息论 | **阅读时间**: 约 22 分钟
 

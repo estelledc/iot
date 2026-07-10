@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: electromagnetic-acoustic-transducer
+title: 电磁超声换能器EMAT在无损检测IoT中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电磁超声换能器EMAT在无损检测IoT中的应用
 > **难度**：🔴 高级 | **领域**：无损检测传感器 | **阅读时间**：约 22 分钟
 

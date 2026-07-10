@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: optocoupler-digital-isolator-comparison
+title: 光耦与数字隔离器在IoT隔离通信中的对比
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 光耦与数字隔离器在IoT隔离通信中的对比
 
 > **难度**：🟡 中级 | **领域**：信号隔离技术 | **阅读时间**：约 20 分钟

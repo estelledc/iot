@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zephyr-rtos-device-driver-model
+title: Zephyr RTOS设备驱动模型与DeviceTree
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Zephyr RTOS设备驱动模型与DeviceTree
 
 > **难度**：🔴 高级 | **领域**：RTOS驱动框架 | **阅读时间**：约 25 分钟

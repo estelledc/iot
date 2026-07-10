@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: resource-management-heterogeneous
+title: 异构边缘环境下的资源管理
+layer: 4
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 异构边缘环境下的资源管理
 
 > **难度**：🟠 深入 | **前置知识**：了解边缘计算基础、操作系统资源管理概念  

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: electrochemical-gas-sensor-principle
+title: 电化学气体传感器工作原理与寿命管理
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电化学气体传感器工作原理与寿命管理
 
 > **难度**：🟡 中级 | **领域**：电化学传感器、信号调理、IoT 气体监测 | **阅读时间**：约 25 分钟

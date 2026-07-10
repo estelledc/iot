@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: iot-security-systematic-review
+title: IoT安全系统性综述：威胁分类、攻击面与纵深防御
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT安全系统性综述：威胁分类、攻击面与纵深防御
 
 > 难度：🟢 入门 | 领域：物联网安全综述 | 更新：2025-06

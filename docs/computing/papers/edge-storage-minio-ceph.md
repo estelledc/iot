@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-storage-minio-ceph
+title: 边缘存储：MinIO 与 Ceph-lite 方案
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘存储：MinIO 与 Ceph-lite 方案
 
 > **难度**：🟡 中级 | **领域**：边缘存储、对象存储、数据管理 | **阅读时间**：约 20 分钟

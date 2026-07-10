@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: graph-neural-network-iot
+title: 图神经网络在 IoT 中的应用
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 图神经网络在 IoT 中的应用
 
 > **难度**：🟡 中级 | **领域**：图神经网络、IoT 网络分析、时空预测 | **阅读时间**：约 20 分钟

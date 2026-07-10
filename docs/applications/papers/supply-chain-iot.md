@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: supply-chain-iot
+title: 智慧供应链 IoT
+layer: 7
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 智慧供应链 IoT
 
 > **难度**：🟢 入门 | **领域**：基础设施与资源 | **关键词**：冷链监控, 资产追踪, 区块链溯源, RFID, 实时可视化

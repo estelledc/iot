@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ble-audio-le-audio-lc3
+title: LE Audio与LC3编解码器在IoT音频中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LE Audio与LC3编解码器在IoT音频中的应用
 > **难度**：🔴 高级 | **领域**：BLE音频技术 | **阅读时间**：约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: link-budget-calculation-lpwan
+title: LPWAN链路预算计算与覆盖估算
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LPWAN链路预算计算与覆盖估算
 > **难度**：🟡 中级 | **领域**：无线工程 | **阅读时间**：约 20 分钟
 

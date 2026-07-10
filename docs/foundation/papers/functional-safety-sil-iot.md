@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: functional-safety-sil-iot
+title: 功能安全SIL等级在IoT传感器中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 功能安全SIL等级在IoT传感器中的应用
 > **难度**：🔴 高级 | **领域**：功能安全工程 | **阅读时间**：约 22 分钟
 

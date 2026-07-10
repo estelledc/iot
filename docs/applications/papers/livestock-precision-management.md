@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: livestock-precision-management
+title: 畜牧养殖精准管理
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 畜牧养殖精准管理
 
 > **难度**：🟡 中级 | **领域**：智慧农牧、动物科学 | **阅读时间**：约 25 分钟

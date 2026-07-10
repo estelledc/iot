@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: knowledge-distillation-edge
+title: 知识蒸馏在边缘部署的应用
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 知识蒸馏在边缘部署的应用
 
 > 难度：🟡 进阶 | 前置知识：了解深度学习训练流程（前向传播、反向传播、损失函数）

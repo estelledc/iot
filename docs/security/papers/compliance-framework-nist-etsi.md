@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: compliance-framework-nist-etsi
+title: IoT 合规框架：NIST 与 ETSI EN 303 645 详解
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 合规框架：NIST 与 ETSI EN 303 645 详解
 
 > **难度**：🟡 中级 | **领域**：安全合规、标准化 | **阅读时间**：约 25 分钟

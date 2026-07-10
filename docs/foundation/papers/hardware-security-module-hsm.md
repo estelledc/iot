@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: hardware-security-module-hsm
+title: 硬件安全模块HSM在IoT设备中的集成
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 硬件安全模块HSM在IoT设备中的集成
 > **难度**：🔴 高级 | **领域**：硬件安全 | **阅读时间**：约 22 分钟
 

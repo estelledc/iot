@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: renesas-ra-mcu-iot
+title: 瑞萨RA系列MCU在IoT网关中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 瑞萨RA系列MCU在IoT网关中的应用
 
 > **难度**：🟡 中级 | **领域**：IoT网关处理器 | **阅读时间**：约 20 分钟

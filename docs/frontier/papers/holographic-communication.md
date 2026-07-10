@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: holographic-communication
+title: 全息通信：从平面视频到三维临场
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 全息通信：从平面视频到三维临场
 
 > **难度**：🟡 中级 | **领域**：全息显示、6G 通信、点云处理 | **阅读时间**：约 25 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lorawan-scalability
+title: LoRaWAN 网络可扩展性：从单网关到大规模部署
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LoRaWAN 网络可扩展性：从单网关到大规模部署
 
 > 难度：🟠 挑战 | 领域：低功耗广域网 | 更新：2025-06

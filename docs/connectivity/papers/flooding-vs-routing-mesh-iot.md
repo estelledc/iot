@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: flooding-vs-routing-mesh-iot
+title: Mesh网络泛洪与路由转发策略对比
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Mesh网络泛洪与路由转发策略对比
 > **难度**: 中级 | **领域**: Mesh网络 | **阅读时间**: 约 20 分钟
 

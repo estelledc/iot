@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cognitive-radio-spectrum-sensing-iot
+title: 认知无线电频谱感知在IoT中的应用前景
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 认知无线电频谱感知在IoT中的应用前景
 > **难度**：🔴 高级 | **领域**：频谱管理 | **阅读时间**：约 22 分钟
 

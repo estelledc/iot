@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-rag-retrieval
+title: 边缘 RAG：检索增强生成在边缘的实现
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘 RAG：检索增强生成在边缘的实现
 
 > **难度**：🟡 中级 | **领域**：检索增强生成、向量数据库、边缘智能 | **阅读时间**：约 20 分钟

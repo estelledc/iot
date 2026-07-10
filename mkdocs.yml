@@ -75,12 +75,14 @@ nav:
   - 首页: index.md
   - 学习路线: roadmap.md
   - 阅读进度: progress.md
+  - 标签索引: tags.md
   - 维护与质量:
     - 发布规则: architecture/release-policy.md
     - 构建兼容性: architecture/build-compatibility.md
     - 内容元数据契约: content-schema.md
   - Layer 1 感知与硬件:
     - foundation/index.md
+    - 全部目录: foundation/catalog.md
     - 论文与综述:
       - foundation/papers/rtos-comparison.md
       - foundation/papers/tinyml-mcu-deployment.md
@@ -109,6 +111,7 @@ nav:
       - foundation/papers/mmwave-radar-sensing.md
   - Layer 2 无线接入:
     - connectivity/index.md
+    - 全部目录: connectivity/catalog.md
     - 论文与综述:
       - connectivity/papers/sparklink-vs-ble6.md
       - connectivity/papers/lpwan-comparison.md
@@ -137,6 +140,7 @@ nav:
       - connectivity/papers/relay-cooperative-communication.md
   - Layer 3 网络协议:
     - network/index.md
+    - 全部目录: network/catalog.md
     - 论文与综述:
       - network/papers/iot-app-protocols.md
       - network/papers/tsn-detnet-industrial.md
@@ -165,6 +169,7 @@ nav:
       - network/papers/traffic-engineering-congestion.md
   - Layer 4 计算平台:
     - computing/index.md
+    - 全部目录: computing/catalog.md
     - 论文与综述:
       - computing/papers/edge-computing-survey.md
       - computing/papers/serverless-edge.md
@@ -193,6 +198,7 @@ nav:
       - computing/papers/green-edge-scheduling.md
   - Layer 5 边缘智能:
     - intelligence/index.md
+    - 全部目录: intelligence/catalog.md
     - 论文与综述:
       - intelligence/papers/jupiter.md
       - intelligence/papers/federated-learning-iot.md
@@ -221,6 +227,7 @@ nav:
       - intelligence/papers/on-device-diffusion-model.md
   - Layer 6 安全与隐私:
     - security/index.md
+    - 全部目录: security/catalog.md
     - 论文与综述:
       - security/papers/iot-security-systematic-review.md
       - security/papers/federated-learning-privacy.md
@@ -249,6 +256,7 @@ nav:
       - security/papers/ics-protocol-security.md
   - Layer 7 综合应用:
     - applications/index.md
+    - 全部目录: applications/catalog.md
     - 论文与综述:
       - applications/papers/v2x-autonomous-driving.md
       - applications/papers/iiot-predictive-maintenance.md
@@ -277,6 +285,7 @@ nav:
       - applications/papers/cross-border-logistics-iot.md
   - Layer 8 前沿方向:
     - frontier/index.md
+    - 全部目录: frontier/catalog.md
     - 论文与综述:
       - frontier/papers/digital-twin-edge-offloading.md
       - frontier/papers/6g-isac-iot.md

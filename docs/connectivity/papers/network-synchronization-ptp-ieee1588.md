@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: network-synchronization-ptp-ieee1588
+title: 网络时间同步PTP IEEE 1588在IoT中的实现
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 网络时间同步PTP IEEE 1588在IoT中的实现
 
 > **难度**: 高级 | **领域**: 时间同步 | **阅读时间**: 约 22 分钟

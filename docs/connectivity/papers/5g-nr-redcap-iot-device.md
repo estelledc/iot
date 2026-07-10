@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: 5g-nr-redcap-iot-device
+title: 5G NR RedCap精简能力设备IoT应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 5G NR RedCap精简能力设备IoT应用
 > **难度**：🔴 高级 | **领域**：5G IoT | **阅读时间**：约 22 分钟
 

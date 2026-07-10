@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: named-data-networking-iot
+title: 命名数据网络 NDN-IoT：以内容为中心的物联网通信
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 命名数据网络 NDN-IoT：以内容为中心的物联网通信
 
 > 难度：🔴 高级 | 预计阅读：35 分钟 | 最后更新：2025-06

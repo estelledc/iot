@@ -25,13 +25,16 @@ jobs:
           python-version: '3.11'
       - run: python -m pip install --require-hashes -r requirements.lock
       - name: Verify generated inventory
-        run: python tools/content_inventory.py --check
+        run: |
+          python tools/content_inventory.py --check
+          python tools/generate_layer_catalogs.py --check
       - name: Verify release metadata
         run: python tools/check_release_metadata.py --version-file VERSION --changelog CHANGELOG.md
       - name: Verify repository policies
         run: |
           python tools/check_duplicates.py
           python tools/validate_frontmatter.py --schema-only --fixtures
+          python tools/validate_frontmatter.py --all
           python tools/check_workflow_policy.py
       - name: Run repository quality tests
         run: python -m unittest discover -s tests -v

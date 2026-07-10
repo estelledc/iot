@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: imu-inertial-navigation
+title: 惯性导航 IMU 在 IoT 中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 惯性导航 IMU 在 IoT 中的应用
 
 > **难度**：🟡 中级 | **领域**：惯性导航、传感器融合、室内定位 | **阅读时间**：约 20 分钟

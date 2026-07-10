@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: bare-metal-state-machine-pattern
+title: 裸机编程状态机模式与事件驱动架构
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 裸机编程状态机模式与事件驱动架构
 > **难度**：🟡 中级 | **领域**：嵌入式软件架构 | **阅读时间**：约 20 分钟
 

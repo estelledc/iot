@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mesh-networking-topology
+title: Mesh 自组网拓扑设计与优化
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Mesh 自组网拓扑设计与优化
 
 > 难度：🟡 中级 | 领域：无线自组网、网络拓扑 | 更新：2025-06

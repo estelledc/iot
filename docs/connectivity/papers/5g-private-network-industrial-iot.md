@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: 5g-private-network-industrial-iot
+title: 5G专网在工业IoT中的部署模式
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 5G专网在工业IoT中的部署模式
 > **难度**：🟡 中级 | **领域**：5G工业部署 | **阅读时间**：约 20 分钟
 

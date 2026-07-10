@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wireless-charging-iot
+title: IoT 设备无线充电技术：从 Qi 标准到射频能量收集
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 设备无线充电技术：从 Qi 标准到射频能量收集
 
 > **难度**：🟡 中级 | **领域**：能量传输、硬件设计、IoT 供电 | **阅读时间**：约 18 分钟

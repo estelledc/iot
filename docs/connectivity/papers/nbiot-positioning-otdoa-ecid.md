@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nbiot-positioning-otdoa-ecid
+title: NB-IoT定位技术OTDOA/E-CID精度分析
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NB-IoT定位技术OTDOA/E-CID精度分析
 > **难度**：🔴 高级 | **领域**：蜂窝IoT定位 | **阅读时间**：约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi-halow-802-11ah
+title: WiFi HaLow (802.11ah)：专为物联网设计的长距离 WiFi
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WiFi HaLow (802.11ah)：专为物联网设计的长距离 WiFi
 
 > 难度：🟡 中级 | 领域：低功耗广域网、Sub-GHz 通信 | 更新：2025-06

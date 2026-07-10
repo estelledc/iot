@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: adc-resolution-snr-enob
+title: ADC分辨率/SNR/ENOB有效位数深度解析
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ADC分辨率/SNR/ENOB有效位数深度解析
 
 > **难度**：🟡 中级 | **领域**：数据转换器性能 | **阅读时间**：约 20 分钟

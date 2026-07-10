@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: power-sequencing-multi-rail
+title: 多路电源上电时序设计与保护
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 多路电源上电时序设计与保护
 > **难度**：🟡 中级 | **领域**：电源系统设计 | **阅读时间**：约 18 分钟
 

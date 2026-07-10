@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi-direct-p2p-iot-communication
+title: WiFi Direct P2P在IoT设备间直连通信中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WiFi Direct P2P在IoT设备间直连通信中的应用
 > **难度**：🟡 中级 | **领域**：WiFi直连技术 | **阅读时间**：约 20 分钟
 

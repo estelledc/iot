@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dynamic-spectrum-access
+title: 动态频谱接入技术：从"固定车道"到"智能导航"
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 动态频谱接入技术：从"固定车道"到"智能导航"
 
 > **难度**：🟡 中级 | **领域**：频谱管理、认知无线电、IoT 连接 | **阅读时间**：约 20 分钟

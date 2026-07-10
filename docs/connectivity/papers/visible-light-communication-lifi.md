@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: visible-light-communication-lifi
+title: 可见光通信LiFi在IoT室内定位中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 可见光通信LiFi在IoT室内定位中的应用
 > **难度**：🔴 高级 | **领域**：光无线通信 | **阅读时间**：约 22 分钟
 

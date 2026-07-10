@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zigbee-coordinator-router-enddevice
+title: Zigbee协调器/路由器/终端设备角色分析
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Zigbee协调器/路由器/终端设备角色分析
 > **难度**：🟢 初级 | **领域**：Zigbee网络基础 | **阅读时间**：约 18 分钟
 

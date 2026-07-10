@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zero-trust-iot
+title: 零信任架构与IoT：从"城堡护城河"到"永不信任"
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 零信任架构与IoT：从"城堡护城河"到"永不信任"
 
 > 难度：🟡 进阶 | 领域：网络安全架构 | 更新：2025-06

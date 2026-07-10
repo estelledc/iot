@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: coap-lwm2m-constrained
+title: CoAP 与 LwM2M：受限设备的轻量协议栈
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # CoAP 与 LwM2M：受限设备的轻量协议栈
 
 > 难度：🟡 中级 | 预计阅读：35 分钟 | 最后更新：2025-06

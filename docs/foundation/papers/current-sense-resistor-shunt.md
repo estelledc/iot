@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: current-sense-resistor-shunt
+title: 电流采样电阻与分流器精密电流测量
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电流采样电阻与分流器精密电流测量
 
 > **难度**：🟡 中级 | **领域**：电流测量技术 | **阅读时间**：约 20 分钟

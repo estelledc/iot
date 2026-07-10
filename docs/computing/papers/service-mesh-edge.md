@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: service-mesh-edge
+title: 服务网格 Istio-lite 在边缘的应用
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 服务网格 Istio-lite 在边缘的应用
 
 > **难度**：🟡 中级 | **领域**：服务网格、微服务、边缘基础设施 | **阅读时间**：约 20 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: esd-protection-circuit-design
+title: ESD静电防护电路设计与TVS选型
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ESD静电防护电路设计与TVS选型
 > **难度**：🟢 初级 | **领域**：静电防护设计 | **阅读时间**：约 18 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: eeprom-vs-flash-data-storage
+title: EEPROM与Flash在IoT配置存储中的对比
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # EEPROM与Flash在IoT配置存储中的对比
 > **难度**：🟢 初级 | **领域**：数据存储基础 | **阅读时间**：约 18 分钟
 

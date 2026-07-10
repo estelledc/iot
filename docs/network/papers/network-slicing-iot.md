@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: network-slicing-iot
+title: 5G 网络切片与物联网：按需定制的虚拟网络
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 5G 网络切片与物联网：按需定制的虚拟网络
 
 > 难度：🟠 进阶 | 预计阅读：35 分钟 | 最后更新：2025-06

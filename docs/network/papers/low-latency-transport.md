@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: low-latency-transport
+title: IoT 低延迟传输优化技术
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 19
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 低延迟传输优化技术
 
 > **难度**：🟡 中级 | **领域**：传输协议、性能优化 | **阅读时间**：约 19 分钟

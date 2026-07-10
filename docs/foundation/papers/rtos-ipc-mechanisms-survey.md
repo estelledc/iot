@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rtos-ipc-mechanisms-survey
+title: RTOS进程间通信机制：队列/信号量/邮箱
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RTOS进程间通信机制：队列/信号量/邮箱
 > **难度**：🟡 中级 | **领域**：RTOS通信机制 | **阅读时间**：约 20 分钟
 

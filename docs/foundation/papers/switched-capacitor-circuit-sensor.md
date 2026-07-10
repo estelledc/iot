@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: switched-capacitor-circuit-sensor
+title: 开关电容电路在传感器接口中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 开关电容电路在传感器接口中的应用
 > **难度**：🔴 高级 | **领域**：模拟集成电路 | **阅读时间**：约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zigbee-vs-thread-vs-ble-mesh
+title: Zigbee/Thread/BLE Mesh组网技术对比
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Zigbee/Thread/BLE Mesh组网技术对比
 > **难度**：🟡 中级 | **领域**：Mesh网络选型 | **阅读时间**：约 20 分钟
 

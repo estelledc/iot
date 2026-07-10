@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mine-safety-monitoring
+title: 矿山安全监测物联网
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 矿山安全监测物联网
 
 > **难度**：🟡 中级 | **领域**：工业安全、矿业工程 | **阅读时间**：约 25 分钟

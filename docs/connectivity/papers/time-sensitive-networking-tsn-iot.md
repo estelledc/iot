@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: time-sensitive-networking-tsn-iot
+title: 时间敏感网络TSN在IoT确定性通信中的标准
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 时间敏感网络TSN在IoT确定性通信中的标准
 
 > **难度**: 高级 | **领域**: 确定性网络 | **阅读时间**: 约 22 分钟

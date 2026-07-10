@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: private-5g-networks
+title: 私有 5G 网络在工业 IoT 中的部署
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 私有 5G 网络在工业 IoT 中的部署
 
 > 难度：🟡 中级 | 领域：蜂窝通信、工业物联网 | 更新：2025-06

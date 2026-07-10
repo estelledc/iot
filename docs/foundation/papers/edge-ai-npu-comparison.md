@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-ai-npu-comparison
+title: 边缘AI加速器NPU芯片对比：K210/V831/BL808
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘AI加速器NPU芯片对比：K210/V831/BL808
 > **难度**：🟡 中级 | **领域**：边缘AI硬件 | **阅读时间**：约 20 分钟
 

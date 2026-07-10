@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: satellite-iot-leo-connectivity
+title: 卫星IoT LEO低轨星座连接方案
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 卫星IoT LEO低轨星座连接方案
 > **难度**：🔴 高级 | **领域**：卫星IoT通信 | **阅读时间**：约 22 分钟
 

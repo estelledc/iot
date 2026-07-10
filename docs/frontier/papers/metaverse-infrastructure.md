@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: metaverse-infrastructure
+title: 元宇宙基础设施：支撑虚实融合的计算与网络底座
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 元宇宙基础设施：支撑虚实融合的计算与网络底座
 
 > **难度**：🟡 中级 | **领域**：空间计算、边缘渲染、XR 设备 | **阅读时间**：约 25 分钟

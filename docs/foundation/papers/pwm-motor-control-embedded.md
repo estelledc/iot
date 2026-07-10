@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: pwm-motor-control-embedded
+title: PWM电机控制在嵌入式IoT执行器中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # PWM电机控制在嵌入式IoT执行器中的应用
 > **难度**：🟢 初级 | **领域**：电机控制基础 | **阅读时间**：约 18 分钟
 

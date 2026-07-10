@@ -64,6 +64,17 @@ def _layer_index_paths(slug: str) -> set[str]:
     }
 
 
+def _catalog_paths(slug: str) -> set[str]:
+    path = ROOT / "docs" / slug / "catalog.md"
+    if not path.is_file():
+        return set()
+    text = path.read_text(encoding="utf-8")
+    return {
+        f"{slug}/{target}"
+        for target in re.findall(r"\]\((papers/[^)#?]+\.md)(?:#[^)]+)?\)", text)
+    }
+
+
 def _source_fingerprint(structural_paths: list[Path]) -> str:
     digest = hashlib.sha256()
     for path in sorted(structural_paths, key=lambda item: item.as_posix()):
@@ -88,12 +99,15 @@ def content_inventory() -> dict[str, Any]:
         paper_paths = sorted((ROOT / "docs" / slug / "papers").glob("*.md"))
         plan_path = ROOT / "plans" / plan_name
         index_path = ROOT / "docs" / slug / "index.md"
+        catalog_file = ROOT / "docs" / slug / "catalog.md"
         plan_topics = len(_load_plan(plan_path))
         index_paths = _layer_index_paths(slug)
+        catalog_paths = _catalog_paths(slug)
         content_files = len(paper_paths)
         seed_files = min(content_files, 25)
         planned_capacity = max(content_files, seed_files + plan_topics)
         layer_nav_paths = {path for path in nav_paths if path.startswith(f"{slug}/")}
+        discoverable = layer_nav_paths | catalog_paths
 
         layers.append(
             {
@@ -103,6 +117,8 @@ def content_inventory() -> dict[str, Any]:
                 "content_files": content_files,
                 "explicit_nav_entries": len(layer_nav_paths),
                 "layer_index_entries": len(index_paths),
+                "catalog_entries": len(catalog_paths),
+                "discoverable_entries": len(discoverable),
                 "plan_topics": plan_topics,
                 "planned_capacity": planned_capacity,
                 "source_audit": "NOT_TRACKED",
@@ -110,11 +126,15 @@ def content_inventory() -> dict[str, Any]:
         )
         structural_paths.extend(paper_paths)
         structural_paths.extend((plan_path, index_path))
+        if catalog_file.is_file():
+            structural_paths.append(catalog_file)
 
     totals = {
         "content_files": sum(layer["content_files"] for layer in layers),
         "explicit_nav_entries": sum(layer["explicit_nav_entries"] for layer in layers),
         "layer_index_entries": sum(layer["layer_index_entries"] for layer in layers),
+        "catalog_entries": sum(layer["catalog_entries"] for layer in layers),
+        "discoverable_entries": sum(layer["discoverable_entries"] for layer in layers),
         "plan_topics": sum(layer["plan_topics"] for layer in layers),
         "planned_capacity": sum(layer["planned_capacity"] for layer in layers),
         "source_audited_files": None,
@@ -129,6 +149,8 @@ def content_inventory() -> dict[str, Any]:
             "content_files": "docs/<layer>/papers 下存在的 Markdown 文件；不代表来源或事实已审核",
             "explicit_nav_entries": "mkdocs.yml 的 nav 中显式列出的内容文件",
             "layer_index_entries": "八个层级 index.md 直接链接的内容文件",
+            "catalog_entries": "八个层级 catalog.md 直接链接的内容文件",
+            "discoverable_entries": "显式导航 ∪ 层级 catalog 链接；不等于来源已审核",
             "plan_topics": "plans/*.json 中的条目；包含已完成扩展计划，不能与内容文件直接相加",
             "planned_capacity": "每层 max(现有文件数, 25 个种子文件 + plan 条目数) 的容量估计",
             "source_audited_files": "尚无机器可读的全量来源审计记录，因此为 null",
@@ -153,19 +175,21 @@ def _markdown_table(inventory: dict[str, Any], compact: bool = False) -> str:
         return "\n".join(lines)
 
     lines = [
-        "| 层级 | 方向 | 内容文件 | 显式导航 | 层级首页入口 | Plan 条目 | 目标容量 |",
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: |",
+        "| 层级 | 方向 | 内容文件 | 显式导航 | 目录页入口 | 可发现 | 层级首页入口 | Plan 条目 | 目标容量 |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for layer in inventory["layers"]:
         lines.append(
             f"| Layer {layer['id']} | {layer['name']} | {layer['content_files']} | "
-            f"{layer['explicit_nav_entries']} | {layer['layer_index_entries']} | "
+            f"{layer['explicit_nav_entries']} | {layer['catalog_entries']} | "
+            f"{layer['discoverable_entries']} | {layer['layer_index_entries']} | "
             f"{layer['plan_topics']} | {layer['planned_capacity']} |"
         )
     totals = inventory["totals"]
     lines.append(
         f"| **合计** | | **{totals['content_files']}** | "
-        f"**{totals['explicit_nav_entries']}** | **{totals['layer_index_entries']}** | "
+        f"**{totals['explicit_nav_entries']}** | **{totals['catalog_entries']}** | "
+        f"**{totals['discoverable_entries']}** | **{totals['layer_index_entries']}** | "
         f"**{totals['plan_topics']}** | **{totals['planned_capacity']}** |"
     )
     return "\n".join(lines)
@@ -177,7 +201,9 @@ def _render_readme(inventory: dict[str, Any]) -> str:
     return (
         "## 当前内容基线\n\n"
         f"- 内容文件：**{totals['content_files']}** 篇（八层依次为 {counts}）。\n"
-        f"- 显式导航：**{totals['explicit_nav_entries']}** 篇；层级首页直接入口："
+        f"- 显式导航：**{totals['explicit_nav_entries']}** 篇；目录页入口："
+        f"**{totals['catalog_entries']}** 篇；可发现："
+        f"**{totals['discoverable_entries']}** 篇；层级首页直接入口："
         f"**{totals['layer_index_entries']}** 篇。\n"
         f"- 扩展计划：`plans/*.json` 共 **{totals['plan_topics']}** 条；按当前口径的目标容量为 "
         f"**{totals['planned_capacity']}** 篇。\n"
@@ -193,8 +219,8 @@ def _render_roadmap_root(inventory: dict[str, Any]) -> str:
     return (
         "### 当前内容基线（自动派生）\n\n"
         + _markdown_table(inventory)
-        + "\n\n> “内容文件”只表示 Markdown 存在；来源审计状态尚未建立。"
-        "继续扩展 Layer 3–8 前，先完成导航、内容 schema、来源抽样和可重复生产门禁。"
+        + "\n\n> “内容文件”只表示 Markdown 存在；“可发现”= 显式导航 ∪ 层级 catalog。"
+        "来源审计状态尚未建立。继续扩展 Layer 3–8 前，先完成来源抽样和可重复生产门禁。"
     )
 
 
@@ -225,6 +251,8 @@ def _render_docs_progress(inventory: dict[str, Any]) -> str:
         + "\n\n"
         f"- **内容文件 {totals['content_files']}**：可被 MkDocs 构建，不等于已完成来源审计。\n"
         f"- **显式导航 {totals['explicit_nav_entries']}**：当前 `mkdocs.yml` 直接列出的内容文件。\n"
+        f"- **目录页入口 {totals['catalog_entries']}**：八个层级 `catalog.md` 直接链接的内容文件。\n"
+        f"- **可发现 {totals['discoverable_entries']}**：显式导航 ∪ 目录页链接。\n"
         f"- **层级首页入口 {totals['layer_index_entries']}**：八个概览页直接链接的内容文件。\n"
         f"- **Plan 条目 {totals['plan_topics']}**：包含已执行和未执行计划，不能与现有文件直接相加。\n"
         "- **来源审计**：尚无机器可读的全量记录，状态为 `NOT_TRACKED`。\n\n"
@@ -232,6 +260,7 @@ def _render_docs_progress(inventory: dict[str, Any]) -> str:
         "```bash\n"
         "python tools/content_inventory.py --write\n"
         "python tools/content_inventory.py --check\n"
+        "python tools/generate_layer_catalogs.py --check\n"
         "```"
     )
 
@@ -242,12 +271,13 @@ def _render_docs_roadmap(inventory: dict[str, Any]) -> str:
         "## 当前扩展基线\n\n"
         + _markdown_table(inventory)
         + "\n\n"
-        f"当前仓库有 **{totals['content_files']}** 个内容文件和 **{totals['plan_topics']}** 条 plan 记录。"
+        f"当前仓库有 **{totals['content_files']}** 个内容文件、"
+        f"**{totals['discoverable_entries']}** 个可发现入口和 **{totals['plan_topics']}** 条 plan 记录。"
         "Plan 同时包含已执行和未执行条目，因此不能把两者直接相加。\n\n"
         "### 扩展门禁\n\n"
         "Layer 3–8 暂不进行大批量生成。恢复扩展前必须先满足：\n\n"
-        "1. 642 篇全部进入可发现目录，且不改变现有 URL；\n"
-        "2. frontmatter schema、双模式内容 linter 和来源抽样通过；\n"
+        "1. 内容文件全部可发现（显式导航 ∪ 层级 catalog），且不改变现有 URL；\n"
+        "2. frontmatter schema、全量校验和来源抽样通过；\n"
         "3. 生成流程具备幂等、失败恢复、去重、来源锁定和人工批准；\n"
         "4. 先做 4 篇 shadow pilot，再以每批最多 5 篇发布。"
     )
@@ -340,6 +370,8 @@ def _summary(inventory: dict[str, Any]) -> str:
     return (
         f"content_files={totals['content_files']} "
         f"nav={totals['explicit_nav_entries']} "
+        f"catalog={totals['catalog_entries']} "
+        f"discoverable={totals['discoverable_entries']} "
         f"layer_index={totals['layer_index_entries']} "
         f"plan_topics={totals['plan_topics']} "
         f"planned_capacity={totals['planned_capacity']}"

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rfid-rain-protocol-epc-gen2
+title: RAIN RFID EPC Gen2协议与读写器设计
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RAIN RFID EPC Gen2协议与读写器设计
 > **难度**：🟡 中级 | **领域**：RFID协议 | **阅读时间**：约 20 分钟
 

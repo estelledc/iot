@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sdn-iot-networking
+title: 软件定义网络在物联网中的应用
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 软件定义网络在物联网中的应用
 
 > 难度：🟠 进阶 | 预计阅读：35 分钟 | 最后更新：2025-06

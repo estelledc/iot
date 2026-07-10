@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: helium-network-decentralized-iot
+title: Helium去中心化IoT网络经济模型分析
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Helium去中心化IoT网络经济模型分析
 > **难度**: 中级 | **领域**: 去中心化网络 | **阅读时间**: 约 20 分钟
 

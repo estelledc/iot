@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mqtt5-deep-dive
+title: MQTT 5.0 深度解析：IoT 消息传输的事实标准
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MQTT 5.0 深度解析：IoT 消息传输的事实标准
 
 > 难度：🟡 中级 | 预计阅读：35 分钟 | 最后更新：2025-06

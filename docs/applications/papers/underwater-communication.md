@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: underwater-communication
+title: 水下通信与探测技术
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 28
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 水下通信与探测技术
 
 > **难度**：🟡 中级 | **领域**：海洋工程、通信技术 | **阅读时间**：约 28 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: radiation-hardened-sensor-iot
+title: 抗辐射加固传感器在极端环境IoT中的设计
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 抗辐射加固传感器在极端环境IoT中的设计
 > **难度**：🔴 高级 | **领域**：极端环境设计 | **阅读时间**：约 22 分钟
 

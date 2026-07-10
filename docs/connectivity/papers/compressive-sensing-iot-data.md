@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: compressive-sensing-iot-data
+title: 压缩感知在IoT数据采集中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 压缩感知在IoT数据采集中的应用
 > **难度**: 高级 | **领域**: 信号处理 | **阅读时间**: 约 22 分钟
 

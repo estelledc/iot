@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: bridge-circuit-sensor-excitation
+title: 电桥电路传感器激励与零点调整
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电桥电路传感器激励与零点调整
 
 > **难度**：🟡 中级 | **领域**：传感器接口电路 | **阅读时间**：约 20 分钟

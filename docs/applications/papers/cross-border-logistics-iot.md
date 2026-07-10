@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cross-border-logistics-iot
+title: 跨境物流 IoT 系统
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 26
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 跨境物流 IoT 系统
 
 > **难度**：🟡 中级 | **领域**：国际贸易、供应链管理 | **阅读时间**：约 26 分钟

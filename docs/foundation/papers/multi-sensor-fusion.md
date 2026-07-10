@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: multi-sensor-fusion
+title: 多传感器融合技术综述
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 多传感器融合技术综述
 
 > **难度**：🟡 中级 | **领域**：信号处理、机器人感知 | **阅读时间**：约 22 分钟

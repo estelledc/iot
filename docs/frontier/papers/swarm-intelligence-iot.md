@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: swarm-intelligence-iot
+title: 群体智能（Swarm Intelligence）：从蚁群到万物协作
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 群体智能（Swarm Intelligence）：从蚁群到万物协作
 
 > **难度**：🟡 中级 | **领域**：群体智能、优化算法、分布式协调 | **阅读时间**：约 25 分钟

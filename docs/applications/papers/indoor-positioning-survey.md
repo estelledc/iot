@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: indoor-positioning-survey
+title: 室内定位技术综述
+layer: 7
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 室内定位技术综述
 
 > **难度**：🟢 入门 | **领域**：民生与健康 | **关键词**：UWB, BLE AoA, WiFi RTT, VLP, RFID, 融合定位

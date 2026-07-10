@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: spread-spectrum-dsss-fhss
+title: 扩频技术DSSS与FHSS在IoT抗干扰中的原理
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 扩频技术DSSS与FHSS在IoT抗干扰中的原理
 > **难度**: 中级 | **领域**: 扩频通信 | **阅读时间**: 约 20 分钟
 

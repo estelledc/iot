@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: digital-twin-iiot
+title: 数字孪生与工业 IoT
+layer: 7
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 数字孪生与工业 IoT
 
 > **难度**：🟠 挑战 | **领域**：工业制造 | **关键词**：数字孪生, 实时同步, 预测仿真, 能源优化, 5G+DT+Edge

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: microfluidic-sensor-iot-health
+title: 微流控传感器在IoT健康检测中的前沿
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 微流控传感器在IoT健康检测中的前沿
 > **难度**：🔴 高级 | **领域**：微流控生物传感 | **阅读时间**：约 22 分钟
 

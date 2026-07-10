@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: adc-reference-voltage-design
+title: ADC基准电压源设计与温漂控制
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ADC基准电压源设计与温漂控制
 
 > **难度**：🟡 中级 | **领域**：精密基准设计 | **阅读时间**：约 20 分钟

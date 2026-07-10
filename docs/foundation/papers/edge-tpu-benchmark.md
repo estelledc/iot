@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-tpu-benchmark
+title: 边缘 AI 加速器对比：Edge TPU vs NPU vs GPU
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 28
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘 AI 加速器对比：Edge TPU vs NPU vs GPU
 
 > **难度**：🟠 进阶 | **领域**：边缘计算、AI 硬件 | **阅读时间**：约 28 分钟

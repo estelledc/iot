@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: radar-level-sensor-fmcw
+title: FMCW雷达液位传感器在工业IoT中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # FMCW雷达液位传感器在工业IoT中的应用
 > **难度**：🔴 高级 | **领域**：雷达液位测量 | **阅读时间**：约 22 分钟
 

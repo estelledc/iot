@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: voltage-reference-precision-design
+title: 精密电压基准源设计与温度系数分析
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 精密电压基准源设计与温度系数分析
 
 > **难度**：🟡 中级 | **领域**：精密模拟设计 | **阅读时间**：约 20 分钟

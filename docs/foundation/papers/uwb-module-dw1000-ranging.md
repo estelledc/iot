@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: uwb-module-dw1000-ranging
+title: UWB模组DW1000测距定位硬件架构
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # UWB模组DW1000测距定位硬件架构
 > **难度**: 高级 | **领域**: UWB精密定位 | **阅读时间**: 约 22 分钟
 

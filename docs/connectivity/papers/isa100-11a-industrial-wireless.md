@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: isa100-11a-industrial-wireless
+title: ISA100.11a工业无线标准与应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ISA100.11a工业无线标准与应用
 > **难度**：🔴 高级 | **领域**：工业无线标准 | **阅读时间**：约 22 分钟
 

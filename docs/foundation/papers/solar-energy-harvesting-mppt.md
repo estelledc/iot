@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: solar-energy-harvesting-mppt
+title: 太阳能采集MPPT算法与IoT节点集成
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 太阳能采集MPPT算法与IoT节点集成
 
 > **难度**：🔴 高级 | **领域**：能量采集系统 | **阅读时间**：约 22 分钟

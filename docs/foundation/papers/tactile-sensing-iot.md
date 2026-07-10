@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: tactile-sensing-iot
+title: 触觉传感技术与 IoT 应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 触觉传感技术与 IoT 应用
 
 > **难度**：🟡 中级 | **领域**：传感器、机器人、人机交互 | **阅读时间**：约 18 分钟

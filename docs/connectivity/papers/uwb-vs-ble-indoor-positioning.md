@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: uwb-vs-ble-indoor-positioning
+title: UWB与BLE室内定位精度对比
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # UWB与BLE室内定位精度对比
 > **难度**：🟡 中级 | **领域**：室内定位技术 | **阅读时间**：约 20 分钟
 

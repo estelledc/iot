@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sub-ghz-band-comparison
+title: Sub-GHz 频段技术对比：穿墙利器的选择之道
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Sub-GHz 频段技术对比：穿墙利器的选择之道
 
 > **难度**：🟡 中级 | **领域**：LPWAN、射频传播、IoT 部署 | **阅读时间**：约 20 分钟

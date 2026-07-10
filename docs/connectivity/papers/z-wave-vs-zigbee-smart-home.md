@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: z-wave-vs-zigbee-smart-home
+title: Z-Wave与Zigbee智能家居协议对比
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Z-Wave与Zigbee智能家居协议对比
 > **难度**：🟢 初级 | **领域**：智能家居选型 | **阅读时间**：约 18 分钟
 

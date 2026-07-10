@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi-mesh-esp-mesh-architecture
+title: WiFi Mesh ESP-MESH自组网架构分析
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WiFi Mesh ESP-MESH自组网架构分析
 > **难度**：🟡 中级 | **领域**：WiFi Mesh网络 | **阅读时间**：约 20 分钟
 

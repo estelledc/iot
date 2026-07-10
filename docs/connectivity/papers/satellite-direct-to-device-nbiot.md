@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: satellite-direct-to-device-nbiot
+title: 卫星直连设备NTN NB-IoT技术分析
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 卫星直连设备NTN NB-IoT技术分析
 > **难度**：🔴 高级 | **领域**：卫星直连IoT | **阅读时间**：约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: op-amp-selection-iot-sensor
+title: 运算放大器在IoT传感器前端的选型要点
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 运算放大器在IoT传感器前端的选型要点
 
 > **难度**：🟢 初级 | **领域**：模拟前端设计 | **阅读时间**：约 18 分钟

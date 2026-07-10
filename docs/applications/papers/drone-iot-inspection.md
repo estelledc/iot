@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: drone-iot-inspection
+title: 无人机 IoT 巡检系统
+layer: 7
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 无人机 IoT 巡检系统
 
 > **难度**：🟡 进阶 | **领域**：出行与交通 | **关键词**：UAV, 边缘 AI, 实时缺陷检测, 路径规划, 电力巡检, 风电巡检

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: profinet-profibus-industrial-iot
+title: PROFINET/PROFIBUS工业IoT通信协议
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # PROFINET/PROFIBUS工业IoT通信协议
 > **难度**：🟡 中级 | **领域**：工业通信协议 | **阅读时间**：约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: 4-20ma-current-loop-industrial
+title: 4-20mA电流环在工业IoT中的信号传输
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 4-20mA电流环在工业IoT中的信号传输
 
 > **难度**：🟢 初级 | **领域**：工业信号传输 | **阅读时间**：约 18 分钟

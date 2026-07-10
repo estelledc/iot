@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: decoupling-capacitor-placement
+title: 去耦电容选型与PCB放置策略
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 去耦电容选型与PCB放置策略
 > **难度**：🟢 初级 | **领域**：PCB电源完整性 | **阅读时间**：约 18 分钟
 

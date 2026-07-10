@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: network-traffic-anomaly-ml
+title: 网络流量异常检测与机器学习
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 网络流量异常检测与机器学习
 
 > **难度**：🟡 中级 | **领域**：网络安全、机器学习 | **阅读时间**：约 20 分钟

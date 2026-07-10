@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: bom-cost-optimization-iot
+title: IoT设备BOM成本优化策略与替代选型
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT设备BOM成本优化策略与替代选型
 > **难度**：🟡 中级 | **领域**：产品成本工程 | **阅读时间**：约 20 分钟
 

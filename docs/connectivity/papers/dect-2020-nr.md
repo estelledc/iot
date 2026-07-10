@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dect-2020-nr
+title: DECT-2020 NR：从无绳电话到工业物联网的蜕变
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DECT-2020 NR：从无绳电话到工业物联网的蜕变
 
 > 难度：🟡 中级 | 领域：短距无线通信、工业物联网 | 更新：2025-06

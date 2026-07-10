@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: uwb-fira-car-digital-key
+title: UWB FiRa数字车钥匙技术方案
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # UWB FiRa数字车钥匙技术方案
 > **难度**：🔴 高级 | **领域**：UWB应用 | **阅读时间**：约 22 分钟
 

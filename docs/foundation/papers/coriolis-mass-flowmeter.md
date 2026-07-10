@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: coriolis-mass-flowmeter
+title: 科里奥利质量流量计工作原理与精度分析
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 科里奥利质量流量计工作原理与精度分析
 > **难度**：🔴 高级 | **领域**：精密流量测量 | **阅读时间**：约 22 分钟
 

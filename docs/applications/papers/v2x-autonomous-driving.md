@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: v2x-autonomous-driving
+title: V2X 与自动驾驶边缘计算
+layer: 7
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # V2X 与自动驾驶边缘计算
 
 > **难度**：🟠 挑战 | **领域**：出行与交通 | **关键词**：V2X, MEC, C-V2X, 任务卸载, ADAS, 传感器融合

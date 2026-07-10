@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: task-offloading-drl
+title: 深度强化学习驱动的计算卸载决策
+layer: 4
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 深度强化学习驱动的计算卸载决策
 
 > **难度**：🟠 深入 | **前置知识**：了解边缘计算基本概念、机器学习基础  
