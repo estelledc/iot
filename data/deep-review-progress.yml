@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 542
-  in_review: 100
+  pending: 517
+  in_review: 125
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -712,127 +712,177 @@ articles:
   layer: 4
   path: docs/computing/papers/container-orchestration-edge.md
   batch: L4-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B01
 - id: digital-twin-computing
   layer: 4
   path: docs/computing/papers/digital-twin-computing.md
   batch: L4-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B01
 - id: ebpf-xdp-dataplane
   layer: 4
   path: docs/computing/papers/ebpf-xdp-dataplane.md
   batch: L4-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B01
 - id: edge-ai-inference-serving
   layer: 4
   path: docs/computing/papers/edge-ai-inference-serving.md
   batch: L4-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B01
 - id: edge-computing-survey
   layer: 4
   path: docs/computing/papers/edge-computing-survey.md
   batch: L4-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B01
 - id: edge-database-sqlite-duckdb
   layer: 4
   path: docs/computing/papers/edge-database-sqlite-duckdb.md
   batch: L4-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B02
 - id: edge-message-queue-nats
   layer: 4
   path: docs/computing/papers/edge-message-queue-nats.md
   batch: L4-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B02
 - id: edge-storage-minio-ceph
   layer: 4
   path: docs/computing/papers/edge-storage-minio-ceph.md
   batch: L4-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B02
 - id: edgex-foundry-deep-dive
   layer: 4
   path: docs/computing/papers/edgex-foundry-deep-dive.md
   batch: L4-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B02
 - id: flink-on-edge-streaming
   layer: 4
   path: docs/computing/papers/flink-on-edge-streaming.md
   batch: L4-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B02
 - id: fog-computing-architecture
   layer: 4
   path: docs/computing/papers/fog-computing-architecture.md
   batch: L4-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B03
 - id: gitops-edge-deployment
   layer: 4
   path: docs/computing/papers/gitops-edge-deployment.md
   batch: L4-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B03
 - id: green-edge-scheduling
   layer: 4
   path: docs/computing/papers/green-edge-scheduling.md
   batch: L4-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B03
 - id: kubeedge-openyurt-comparison
   layer: 4
   path: docs/computing/papers/kubeedge-openyurt-comparison.md
   batch: L4-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B03
 - id: mec-5g-integration
   layer: 4
   path: docs/computing/papers/mec-5g-integration.md
   batch: L4-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B03
 - id: microservice-edge
   layer: 4
   path: docs/computing/papers/microservice-edge.md
   batch: L4-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B04
 - id: multi-tenant-edge-isolation
   layer: 4
   path: docs/computing/papers/multi-tenant-edge-isolation.md
   batch: L4-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B04
 - id: opentelemetry-edge-observability
   layer: 4
   path: docs/computing/papers/opentelemetry-edge-observability.md
   batch: L4-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B04
 - id: realtime-linux-preempt-rt
   layer: 4
   path: docs/computing/papers/realtime-linux-preempt-rt.md
   batch: L4-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B04
 - id: resource-management-heterogeneous
   layer: 4
   path: docs/computing/papers/resource-management-heterogeneous.md
   batch: L4-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B04
 - id: serverless-edge
   layer: 4
   path: docs/computing/papers/serverless-edge.md
   batch: L4-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B05
 - id: service-mesh-edge
   layer: 4
   path: docs/computing/papers/service-mesh-edge.md
   batch: L4-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B05
 - id: task-offloading-drl
   layer: 4
   path: docs/computing/papers/task-offloading-drl.md
   batch: L4-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B05
 - id: unikernel-minimal-vm
   layer: 4
   path: docs/computing/papers/unikernel-minimal-vm.md
   batch: L4-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B05
 - id: wasm-edge-sandbox
   layer: 4
   path: docs/computing/papers/wasm-edge-sandbox.md
   batch: L4-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L4-B05
 - id: amqp-industrial-messaging
   layer: 3
   path: docs/network/papers/amqp-industrial-messaging.md

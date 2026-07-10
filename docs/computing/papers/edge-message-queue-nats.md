@@ -3,491 +3,181 @@ schema_version: '1.0'
 id: edge-message-queue-nats
 title: 边缘消息队列：NATS 与 Mosquitto 深度对比
 layer: 4
-content_type: UNKNOWN
+content_type: comparison
 difficulty: intermediate
 reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+prerequisites:
+  - mqtt5-deep-dive
+  - edge-computing-survey
+tags:
+- NATS
+- MQTT
+- Mosquitto
+- JetStream
+- Pub/Sub
+- 边缘消息
+- QoS
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 边缘消息队列：NATS 与 Mosquitto 深度对比
 
-> **难度**：🟡 中级 | **领域**：消息中间件、IoT 通信、分布式系统 | **阅读时间**：约 20 分钟
+> **难度**：🟡 中级 | **领域**：消息中间件、IoT 通信 | **阅读时间**：约 20 分钟
 
 ## 日常类比
 
-消息队列就像一个智能邮局系统。Mosquitto（MQTT broker）像是一个专门的报刊亭——擅长把订阅的杂志准时送到每户人家门口，轻量、省纸（带宽），即使信箱满了也能把杂志先存着（QoS 1/2）。它专注于一件事：发布/订阅消息投递。
+Mosquitto（MQTT broker）像报刊亭：专做订阅投递，包头小、省带宽，QoS（Quality of Service）管「丢了重送」。NATS 像物流中心：Pub/Sub、Request/Reply、JetStream 持久化与重放、叶子节点联邦都在一套里。纯遥测上报偏 MQTT；要命令确认、流重放、多边缘联邦偏 NATS——也可桥接共存。
 
-NATS 则更像一个现代物流中心——不仅能送杂志（pub/sub），还能帮你寄快递等回复（request/reply），提供包裹存储和历史查询（JetStream），甚至能在多个城市间自动同步库存（集群/超级集群）。它更通用，但相应地也需要更多仓库空间。
+## 摘要
 
-在边缘 IoT 场景中，选择 Mosquitto 还是 NATS 取决于你的通信模式：纯遥测上报选 Mosquitto，需要命令下发和确认回复选 NATS，或者两者结合使用。
+对比 Eclipse Mosquitto（MQTT）与 NATS Core/JetStream 在边缘的协议开销、持久化、集群/叶子节点与安全模型。吞吐与延迟为公开材料或单机示意量级，跨硬件须复测[1][2][3][8]。
 
-## 1. 消息模式基础
+## 1 通信模式
 
-### 1.1 Pub/Sub vs Request/Reply
+| IoT 场景 | 模式 | 更贴合 |
+|----------|------|--------|
+| 遥测上报 | Pub/Sub | MQTT / Mosquitto |
+| 配置下发 | Pub/Sub + 确认 | MQTT QoS 1–2 |
+| 命令控制 | Request/Reply | NATS |
+| 固件/审计流 | 持久化 + 重放 | NATS JetStream |
+| 边缘服务发现 | Request / 广播 | NATS |
+| 多工人消费 | 共享订阅 / Queue Group | MQTT 5 / NATS |
 
 ```
-Pub/Sub (发布/订阅):
-Publisher --> [Topic: sensors/temp] --> Subscriber A
-                                   --> Subscriber B
-                                   --> Subscriber C
-发布者不知道谁在订阅，解耦度高
-
-Request/Reply (请求/响应):
-Requester --[请求]--> Service --[响应]--> Requester
-类似 HTTP 但基于消息，支持超时/重试
-
-Queue Group (负载均衡):
-Publisher --> [Subject] --> |Worker A|  (轮流消费)
-                       --> |Worker B|
-                       --> |Worker C|
+Pub/Sub: 发布者 ↔ Topic/Subject ↔ 多订阅者（解耦）
+Request/Reply: 请求方等待响应（类 RPC over messaging）
+Queue Group: 同组内负载均衡消费
 ```
 
-### 1.2 IoT 通信模式映射
+## 2 Mosquitto 与 MQTT
 
-| IoT 场景 | 通信模式 | 更适合 |
-|----------|---------|--------|
-| 传感器上报遥测 | Pub/Sub (单向) | MQTT/Mosquitto |
-| 云端下发配置 | Pub/Sub (带确认) | MQTT QoS 1-2 |
-| 设备命令控制 | Request/Reply | NATS |
-| 固件升级通知 | Pub/Sub + 持久化 | NATS JetStream |
-| 边缘服务发现 | Request (广播) | NATS |
-| 数据流处理 | Stream (有序、重放) | NATS JetStream |
+MQTT（Message Queuing Telemetry Transport）面向受限设备：固定头可小至约 2 字节量级；QoS 0/1/2；Will（遗嘱）、Retain；通配 `+`/`#`[1][5]。
 
-## 2. Mosquitto（MQTT Broker）深入
-
-### 2.1 MQTT 协议特点
-
-MQTT 是为受限设备设计的轻量协议：
-
-- 最小包头仅 2 字节（HTTP 至少几百字节）
-- 三级 QoS（0: 最多一次, 1: 至少一次, 2: 精确一次）
-- 遗嘱消息（设备离线自动通知）
-- 保留消息（新订阅者立刻获取最新值）
-- Topic 通配符（sensors/+/temperature, sensors/#）
-
-### 2.2 Mosquitto 配置与部署
-
-```conf
-# mosquitto.conf (边缘优化)
-listener 1883 0.0.0.0
-protocol mqtt
-
-# TLS 加密（生产必须）
-listener 8883
-certfile /etc/mosquitto/certs/server.crt
-keyfile /etc/mosquitto/certs/server.key
-cafile /etc/mosquitto/certs/ca.crt
-
-# 持久化（确保 QoS 1/2 消息不丢）
-persistence true
-persistence_location /var/lib/mosquitto/
-autosave_interval 60
-
-# 性能调优
-max_inflight_messages 100
-max_queued_messages 10000
-message_size_limit 1048576
-
-# 桥接到云端 MQTT（断网时本地缓存）
-connection bridge-to-cloud
-address cloud-mqtt.example.com:8883
-topic sensors/# out 1
-topic commands/# in 1
-bridge_cafile /etc/mosquitto/certs/cloud-ca.crt
-notifications true
-restart_timeout 30
-```
-
-### 2.3 Python 客户端示例
+边缘配置要点：TLS 监听、`persistence`、合理 `max_queued_messages`、桥接云端 broker（断网本地积压、恢复后刷出）[3]。
 
 ```python
 import paho.mqtt.client as mqtt
-import json
-import time
+import json, time
 
-class IoTSensorPublisher:
-    def __init__(self, broker="localhost", port=1883):
-        self.client = mqtt.Client(
-            client_id="sensor-001",
-            clean_session=False  # 持久会话，断线重连不丢消息
-        )
-        # 遗嘱消息：设备异常离线时自动发布
-        self.client.will_set(
-            "devices/sensor-001/status",
-            payload="offline",
-            qos=1,
-            retain=True
-        )
-        self.client.connect(broker, port, keepalive=60)
-        self.client.loop_start()
-
-    def publish_reading(self, temperature, humidity):
-        payload = json.dumps({
-            "ts": int(time.time() * 1000),
-            "temp": temperature,
-            "humid": humidity,
-            "device": "sensor-001"
-        })
-        # QoS 1: 至少送达一次
-        self.client.publish(
-            "sensors/sensor-001/readings",
-            payload=payload,
-            qos=1
-        )
-
-class IoTCommandSubscriber:
-    def __init__(self, broker="localhost"):
-        self.client = mqtt.Client(client_id="gateway-001")
-        self.client.on_message = self._on_message
-        self.client.connect(broker)
-        # 订阅该网关下所有设备的命令
-        self.client.subscribe("commands/gateway-001/#", qos=1)
-        self.client.loop_start()
-
-    def _on_message(self, client, userdata, msg):
-        command = json.loads(msg.payload)
-        print(f"Received command on {msg.topic}: {command}")
-        # 执行命令并回复状态
-        self.client.publish(
-            f"responses/{msg.topic}",
-            payload=json.dumps({"status": "ok"}),
-            qos=1
-        )
+client = mqtt.Client(client_id="sensor-001", clean_session=False)
+client.will_set("devices/sensor-001/status", "offline", qos=1, retain=True)
+client.connect("localhost", 1883, keepalive=60)
+client.loop_start()
+client.publish(
+    "sensors/sensor-001/readings",
+    json.dumps({"ts": int(time.time() * 1000), "temp": 25.1}),
+    qos=1,
+)
 ```
 
-## 3. NATS 核心与 JetStream
+## 3 NATS Core 与 JetStream
 
-### 3.1 NATS 架构
+| 层 | 能力 |
+|----|------|
+| NATS Core | 内存 Pub/Sub、Request/Reply、Queue Group；默认不持久化[2] |
+| JetStream | Stream 持久化、Consumer 确认/重放、KV、Object Store[2][6] |
 
-NATS 的设计哲学是"简单至上"：
-
-```
-NATS Core (内存中，无持久化):
-  - Pub/Sub: 发布即忘，超快（10M+ msg/s 单节点）
-  - Request/Reply: 同步请求模式
-  - Queue Groups: 负载均衡消费
-
-NATS JetStream (持久化层):
-  - Stream: 持久化消息序列
-  - Consumer: 可重放、可确认的消费者
-  - Key-Value: 分布式 KV 存储
-  - Object Store: 大对象存储
-```
-
-### 3.2 NATS 服务器部署
-
-```conf
-# nats-server.conf (边缘配置)
-listen: 0.0.0.0:4222
-
-# 适配边缘资源
-max_payload: 1MB
-max_connections: 1000
-
-# JetStream 持久化
-jetstream {
-    store_dir: "/data/nats/jetstream"
-    max_memory_store: 256MB
-    max_file_store: 2GB
-}
-
-# 叶子节点连接到中心集群
-leafnodes {
-    remotes [
-        {
-            url: "nats-leaf://cloud-nats.example.com:7422"
-            credentials: "/etc/nats/edge-node.creds"
-        }
-    ]
-}
-
-# 认证
-authorization {
-    users = [
-        {user: "sensor", password: "xxx", permissions: {
-            publish: ["sensors.>"]
-            subscribe: ["commands.gateway-001.>"]
-        }}
-        {user: "admin", password: "xxx", permissions: {
-            publish: [">"]
-            subscribe: [">"]
-        }}
-    ]
-}
-```
-
-### 3.3 NATS 客户端示例
+边缘常见：限制 `max_payload`/`max_connections`；JetStream `max_memory_store`/`max_file_store` 封顶；`leafnodes` 连云端集群，断网本地域继续工作[2]。
 
 ```python
-import nats
-import asyncio
-import json
+import nats, asyncio, json
 
 async def main():
-    # 连接 NATS
     nc = await nats.connect("nats://localhost:4222")
     js = nc.jetstream()
-
-    # 创建 Stream（持久化）
     await js.add_stream(
         name="SENSORS",
         subjects=["sensors.>"],
-        retention="limits",
-        max_bytes=1024*1024*512,  # 512MB 上限
-        max_age=86400 * 7,       # 保留 7 天
-        storage="file"
+        max_bytes=512 * 1024 * 1024,
+        max_age=86400 * 7,
+        storage="file",
     )
-
-    # 发布传感器数据（持久化到 JetStream）
-    async def publish_reading(device_id, temp, humid):
-        await js.publish(
-            f"sensors.{device_id}.readings",
-            json.dumps({
-                "ts": asyncio.get_event_loop().time(),
-                "temp": temp,
-                "humid": humid
-            }).encode()
-        )
-
-    # Request/Reply: 发送命令并等待回复
-    async def send_command(device_id, command):
-        try:
-            response = await nc.request(
-                f"commands.{device_id}",
-                json.dumps(command).encode(),
-                timeout=5.0  # 5 秒超时
-            )
-            return json.loads(response.data)
-        except nats.errors.TimeoutError:
-            return {"error": "device not responding"}
-
-    # 创建持久化消费者（支持重放）
-    consumer = await js.pull_subscribe(
-        "sensors.>",
-        durable="edge-processor"
-    )
-
-    # 批量拉取处理
-    while True:
-        try:
-            msgs = await consumer.fetch(batch=100, timeout=1)
-            for msg in msgs:
-                data = json.loads(msg.data)
-                process(data)
-                await msg.ack()  # 确认处理完成
-        except nats.errors.TimeoutError:
-            await asyncio.sleep(0.1)
-
+    await js.publish("sensors.dev1.readings", json.dumps({"temp": 25.1}).encode())
+    resp = await nc.request("commands.dev1", b'{"op":"ping"}', timeout=5.0)
 asyncio.run(main())
 ```
 
-## 4. 深度对比
+## 4 对比表
 
-### 4.1 资源占用
+### 4.1 资源与功能
 
-测试环境：Raspberry Pi 4 (4GB), 1000 个客户端连接, 10K msg/s
+| 维度 | Mosquitto (MQTT) | NATS + JetStream |
+|------|------------------|------------------|
+| 二进制体积量级 | 很小（数百 KB 级常见） | 更大（单二进制十余 MB 量级）[3][2] |
+| 协议开销 | 极低 | 文本协议，仍轻但通常高于 MQTT 最小帧 |
+| Request/Reply | 需自建约定 | 原生 |
+| 持久化 | QoS 队列 / 持久会话 | Stream + Durable Consumer |
+| 消息重放 | 基本不支持 | 按序号/时间 |
+| 集群 | 桥接为主 | 原生集群 + Supercluster |
+| 多租户 | ACL 有限 | Account 等模型更完整 |
+| MCU 客户端生态 | 成熟 | 相对少，网关侧更常见 |
 
-| 指标 | Mosquitto 2.0 | NATS Server 2.10 |
-|------|--------------|-----------------|
-| 二进制大小 | 300 KB | 20 MB |
-| 空闲内存 | 5 MB | 30 MB |
-| 1K连接内存 | 25 MB | 80 MB |
-| 10K msg/s CPU | 15% | 25% |
-| 持久化写入 | 按消息 fsync | 批量 flush |
-| Go/Rust 客户端 | 第三方 | 官方 |
+### 4.2 延迟与吞吐（示意）
 
-### 4.2 延迟对比
+公开评测与博客常给出「NATS Core 极低延迟、JetStream/QoS1 更高」的相对秩序；绝对 msg/s、P99 毫秒数强烈依赖消息大小、持久化 fsync 策略、CPU 与网卡，文中不固化未复现数字[8][10]。选型以目标板上的端到端 P99 与断网积压测试为准。
 
-```
-端到端延迟 (本地, P99):
-  NATS Core (无持久化):     0.1 ms
-  NATS JetStream:          0.5 ms
-  Mosquitto QoS 0:         0.2 ms
-  Mosquitto QoS 1:         0.8 ms
-  Mosquitto QoS 2:         2.5 ms
+## 5 联邦拓扑
 
-吞吐量 (单核, 256B 消息):
-  NATS Core:               2M msg/s
-  NATS JetStream:          500K msg/s
-  Mosquitto QoS 0:         200K msg/s
-  Mosquitto QoS 1:         80K msg/s
-```
+**Mosquitto**：多跳 bridge（车间 ↔ 仓库 ↔ 云），运维简单但拓扑与环路要小心[3]。
 
-### 4.3 功能对比
+**NATS**：云端集群 + 边缘 Leaf；Subject 级导入/导出控制，本地流量可不出边缘；JetStream 域可独立[2]。
 
-| 功能 | Mosquitto (MQTT) | NATS + JetStream |
-|------|-----------------|-----------------|
-| 发布/订阅 | 支持 | 支持 |
-| 请求/响应 | 需自行实现 | 原生支持 |
-| 消息持久化 | QoS 1/2 队列 | JetStream Stream |
-| 消息重放 | 不支持 | 按时间/序号重放 |
-| 消费者组 | MQTT 5.0 共享订阅 | Queue Group |
-| 集群 | 需桥接 | 原生集群 |
-| 多租户 | 有限 | Account 隔离 |
-| KV 存储 | 不支持 | JetStream KV |
-| 通配符 | +/# | */.> |
-| 离线消息 | 持久会话 | Durable Consumer |
-| 协议开销 | 极小（2B 起） | 较小（文本协议） |
-
-## 5. 集群与联邦
-
-### 5.1 Mosquitto 桥接模式
-
-Mosquitto 不支持原生集群，通过桥接实现多节点互联：
-
-```
-边缘节点 A (工厂车间)        边缘节点 B (仓库)
-+-------------+             +-------------+
-| Mosquitto A |--桥接------>| Mosquitto B |
-| 本地设备     |<--桥接-----|  本地设备    |
-+------+------+             +------+------+
-       |                           |
-       +----------桥接-------------+
-                   |
-            +------+------+
-            | Cloud MQTT  |
-            | (HiveMQ/EMQX)|
-            +-------------+
-```
-
-### 5.2 NATS 超级集群 + 叶子节点
-
-```
-                Cloud Cluster (3 nodes)
-              +---+   +---+   +---+
-              | N1|---| N2|---| N3|
-              +---+   +---+   +---+
-               /               \
-   Leaf Node /                  \ Leaf Node
-     +----+                      +----+
-     |Edge|                      |Edge|
-     | A  |                      | B  |
-     +----+                      +----+
-     /    \                      /    \
-  Dev1  Dev2                  Dev3  Dev4
-
-特点:
-- 叶子节点断网后独立工作
-- 重连后自动同步（JetStream Replication）
-- Subject 级别路由（不是所有消息都上云）
-- 延迟感知（本地消息不出边缘）
-```
-
-### 5.3 NATS 叶子节点配置
-
-```conf
-# edge-leaf.conf
-listen: 0.0.0.0:4222
-
-jetstream {
-    store_dir: "/data/nats"
-    max_memory_store: 128MB
-    max_file_store: 1GB
-    domain: "edge-factory-a"  # 独立 JetStream 域
-}
-
-leafnodes {
-    remotes [
-        {
-            url: "nats-leaf://cloud.example.com:7422"
-            credentials: "/etc/nats/leaf.creds"
-            # 只同步特定 subject
-            deny_imports: ["internal.>"]
-            deny_exports: ["local.>"]
-        }
-    ]
-}
-```
-
-## 6. 安全模型对比
-
-### 6.1 认证方式
+## 6 安全
 
 | 方式 | Mosquitto | NATS |
 |------|-----------|------|
-| 用户名/密码 | 支持 | 支持 |
-| TLS 客户端证书 | 支持 | 支持 |
-| Token | 支持 | 支持 |
-| JWT/NKey | 不支持 | 原生支持 |
-| OAuth 2.0 | 插件 | 不支持 |
-| ACL 粒度 | Topic 级 | Subject 级 |
+| 用户名密码 / TLS | 支持 | 支持 |
+| 客户端证书 | 支持 | 支持 |
+| JWT / NKey | 无原生 | 原生（去中心化凭证链）[2] |
+| ACL 粒度 | Topic | Subject |
 
-### 6.2 NATS 去中心化安全
+生产默认 TLS；设备侧最小权限 Subject/Topic；避免明文口令进镜像。
 
-```bash
-# NATS 使用 NKey（Ed25519 密钥对）+ JWT
-# 无需中心化密码数据库
+## 7 局限、挑战与可改进方向
 
-# 生成操作者密钥
-nsc add operator IoT-Edge
+### 1. 「更快」不等于「更适合 MCU」
 
-# 创建账户（对应一个租户/项目）
-nsc add account FactoryA
+**局限**：NATS 服务端与客户端栈对 RAM/Flash 极紧的 MCU 不友好；MQTT 仍是端侧主流[1][5]。
+**改进**：MCU 跑 MQTT → 网关再桥 NATS；或仅在网关以上用 JetStream。
 
-# 创建用户（对应一个设备/服务）
-nsc add user --account FactoryA sensor-001
+### 2. 持久化与磁盘寿命
 
-# 设置权限
-nsc edit user sensor-001 \
-  --allow-pub "sensors.factory-a.>" \
-  --allow-sub "commands.sensor-001.>"
+**局限**：QoS1/JetStream file store 放大闪存写入。
+**改进**：封顶 `max_bytes`/`max_age`；批量 flush；热路径放 SSD/工业级 eMMC；监控队列深度。
 
-# 导出凭证文件（部署到设备）
-nsc generate creds --account FactoryA --name sensor-001 > sensor-001.creds
-```
+### 3. 语义易混用
 
-## 7. 实践建议
+**局限**：把 MQTT QoS2 或 JetStream ack 当成端到端业务 Exactly-Once，忽略应用去重。
+**改进**：业务幂等键；明确「传输至少一次 + 应用去重」契约。
 
-### 7.1 初学者入门路径
+### 4. 桥接双栈复杂度
 
-1. 安装 Mosquitto，用 mosquitto_pub/sub 命令行体验 MQTT
-2. 用 Python paho-mqtt 写一个完整的传感器采集发布程序
-3. 安装 NATS Server，用 nats CLI 体验 pub/sub 和 request/reply
-4. 配置 JetStream，实现消息持久化和重放
-5. 搭建 Mosquitto 到 NATS 的桥接（mqtt-bridge-nats）
+**局限**：Mosquitto↔NATS 主题映射、QoS 与保留消息语义不一致易丢语义。
+**改进**：单一真源协议逐步收敛；桥接层做契约测试与死信观察。
 
-### 7.2 具体选型建议
+## 8 选型与调优
 
 ```
-纯传感器遥测（小包、高频、低功耗设备）?
-  --> Mosquitto (MQTT 协议开销最小)
-
-需要命令下发+确认回复?
-  --> NATS (原生 request/reply)
-
-需要消息重放/审计?
-  --> NATS JetStream
-
-设备极度受限 (MCU, < 1MB RAM)?
-  --> MQTT (有 MCU 级客户端实现)
-
-需要多边缘节点联邦?
-  --> NATS 超级集群 + 叶子节点
-
-已有 MQTT 生态，逐步升级?
-  --> Mosquitto + NATS 桥接混合部署
+小包高频低功耗端侧 → MQTT/Mosquitto
+命令+确认、重放审计 → NATS JetStream
+多边缘联邦 → NATS Leaf
+已有 MQTT 资产 → 桥接渐进，而非一夜切换
 ```
 
-### 7.3 性能调优
-
-- **Mosquitto**：开启 persistence 但设置合理的 max_queued_messages，避免内存溢出
-- **NATS**：JetStream 使用 file storage 而非 memory，配合 max_bytes 限制
-- **连接管理**：保持长连接，避免频繁重连（MQTT keepalive 设 60-120s）
-- **批量发布**：NATS 支持批量 publish，减少网络往返
-- **压缩**：大消息使用 gzip/snappy 压缩后再发送
+长连接 + 合理 keepalive；大消息先压缩；JetStream 优先 file + 限额，避免 memory store 撑爆边缘节点。
 
 ## 参考文献
 
-1. OASIS. "MQTT Version 5.0 Specification." 2019. https://docs.oasis-open.org/mqtt/mqtt/v5.0/
-2. Synadia. "NATS Documentation." 2024. https://docs.nats.io/
-3. Eclipse Foundation. "Eclipse Mosquitto." 2024. https://mosquitto.org/
-4. Collison, D. "NATS Messaging - Part 1." 2024. https://nats.io/blog/
-5. Jaffey, T., Stanford-Clark, A. "MQTT for IoT." IBM DeveloperWorks, 2013.
-6. Synadia. "NATS JetStream Technical Preview." 2024.
-7. HiveMQ. "MQTT vs NATS: A Comparison." Technical Blog, 2024.
-8. Koziolek, H., et al. "Performance Evaluation of Message Brokers for IoT." IEEE SEAA 2020.
-9. EMQX. "The Comparison of IoT MQTT Brokers." 2024. https://www.emqx.com/en/blog
-10. Banno, R., et al. "Measuring MQTT Performance for IoT Applications." IEEE ICIOT 2019.
+[1] OASIS, "MQTT Version 5.0," 2019. https://docs.oasis-open.org/mqtt/mqtt/v5.0/
+[2] Synadia / NATS, "NATS Documentation," https://docs.nats.io/
+[3] Eclipse Foundation, "Eclipse Mosquitto," https://mosquitto.org/
+[4] D. Collison, "NATS Messaging" (blog series), nats.io.
+[5] A. Stanford-Clark, H. Linh Truong, "MQTT For Sensor Networks (MQTT-SN) Protocol," IBM, 2013.
+[6] Synadia, "JetStream," NATS documentation.
+[7] HiveMQ, "MQTT Essentials / broker comparison materials," 2024.
+[8] H. Koziolek et al., "Performance Evaluation of Message Brokers for IoT," IEEE SEAA, 2020.
+[9] EMQX, "MQTT Broker Comparison," https://www.emqx.com/en/blog
+[10] R. Banno et al., "Measuring MQTT Performance for IoT Applications," IEEE ICIOT, 2019.
+[11] NATS, "Leaf Nodes," documentation.
+[12] OASIS, "MQTT Version 3.1.1," 2014.

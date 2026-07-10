@@ -3,84 +3,66 @@ schema_version: '1.0'
 id: gitops-edge-deployment
 title: GitOps 边缘部署实践
 layer: 4
-content_type: UNKNOWN
+content_type: tutorial
 difficulty: intermediate
-reading_time: 18
-prerequisites: UNKNOWN
-tags: []
+reading_time: 20
+prerequisites:
+  - container-orchestration-edge
+  - kubeedge-openyurt-comparison
+tags:
+- GitOps
+- Flux
+- ArgoCD
+- 边缘部署
+- Kustomize
+- OTA
+- Akri
+- K3s
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # GitOps 边缘部署实践
 
-> **难度**：🟡 中级 | **领域**：DevOps、边缘运维、声明式部署 | **阅读时间**：约 18 分钟
+> **难度**：🟡 中级 | **领域**：DevOps、边缘运维、声明式部署 | **阅读时间**：约 20 分钟
 
 ## 日常类比
 
-想象你经营一个连锁奶茶店，有 500 家分店遍布全国。传统运维方式（命令式）像是总部打电话给每家店："把菜单上的珍珠奶茶价格改成 15 元"——如果某家店电话没接上，就要记着回拨，如果有店长记错了改成 50 元，你也不一定能发现。
+连锁奶茶店有数百家分店。命令式运维像总部逐家打电话改菜单——漏接、记错、难审计。GitOps 则是：总部维护一份标准菜单（Git 仓库），每家店的核对员（agent）定期对照并自动改回；新品只改标准菜单，回退看历史版本。边缘上数百到数万台设备同理：期望状态进 Git，设备拉取并持续调谐[1][6]。
 
-GitOps 的方式则是：总部维护一份标准菜单（Git 仓库），每家店有一个自动核对员（agent），每隔几分钟对照标准菜单检查自家菜单——不对的自动改回来。新品上线只需要改标准菜单，500 家店自动同步。想回退？查看历史版本一键恢复。所有变更都有记录，谁改了什么一目了然。
+## 摘要
 
-在边缘计算中，我们可能有数百到数万个设备，分布在工厂、门店、基站。GitOps 让边缘设备的软件部署变得像管理代码一样可控、可审计、可回退。
+介绍 GitOps 四原则在边缘的含义，对比推送式空中下载（Over-the-Air, OTA）与拉取式调谐，给出 Flux / Argo CD 配置骨架、气隙（air-gap）镜像同步、与 Mender 等传统 OTA 的分工，以及 Akri 设备发现纳入同一仓库的做法。资源与间隔数字为实践量级，须按站点带宽与集群规模调参[2][3][9]。
 
-## 1. GitOps 核心原则
+## 1 GitOps 核心
 
-### 1.1 四大原则
+### 1.1 四原则
 
-| 原则 | 含义 | 边缘场景意义 |
-|------|------|-------------|
-| 声明式 | 描述期望状态，而非步骤 | 不需要知道设备当前状态 |
-| 版本化 | 所有配置存在 Git 中 | 完整的变更历史和审计日志 |
-| 自动拉取 | Agent 主动拉取配置 | 设备在 NAT 后面也能工作 |
-| 持续调谐 | 实际状态持续向期望状态收敛 | 设备重启/故障后自动恢复 |
+| 原则 | 含义 | 边缘意义 |
+|------|------|----------|
+| 声明式 | 描述期望状态 | 不必先探清每台设备当前步骤 |
+| 版本化 | 配置在 Git | 审计与回退天然可得 |
+| 自动拉取 | Agent 拉配置 | 设备在网络地址转换（Network Address Translation, NAT）后仍可工作 |
+| 持续调谐 | 实际→期望收敛 | 重启/短暂故障后自愈 |
 
-### 1.2 GitOps vs 传统 OTA
-
-```
-传统 OTA (推送式):
-Cloud --push--> 设备 A (在线, 成功)
-      --push--> 设备 B (离线, 失败, 需要重试队列)
-      --push--> 设备 C (版本不对, 需要特殊处理)
-问题: 需要跟踪每台设备状态，重试逻辑复杂
-
-GitOps (拉取式):
-Git Repo (期望状态: v2.1.0)
-  |
-  +-- 设备 A: "我是 v2.0.0" --> 自行升级
-  +-- 设备 B: 离线 --> 下次上线时自动检查
-  +-- 设备 C: "我是 v2.1.0" --> 无需操作
-优势: 无需跟踪设备状态，最终一致性
-```
-
-### 1.3 核心工作流
+### 1.2 推送 OTA vs 拉取 GitOps
 
 ```
-开发者 --> PR 修改配置 --> Code Review --> Merge to main
-                                              |
-                                              v
-                                    Git Repo (Source of Truth)
-                                              |
-                        +---------------------+-------------------+
-                        |                     |                   |
-                        v                     v                   v
-                  Edge Cluster A       Edge Cluster B       Edge Cluster C
-                  (Flux/ArgoCD)        (Flux/ArgoCD)        (Flux/ArgoCD)
-                        |                     |                   |
-                        v                     v                   v
-                  检测差异 -> 应用     检测差异 -> 应用     检测差异 -> 应用
+传统 OTA: 云 --push--> 在线成功 / 离线失败需重试队列
+GitOps:   Git(期望) <--pull-- 各站点 agent；离线站点上线后再对齐
 ```
 
-## 2. Flux CD 在边缘
+优势是最终一致性与更简单的中心状态机；代价是依赖可运行 agent 的基线（通常为轻量 Kubernetes）[1][6]。
 
-### 2.1 Flux 架构
+### 1.3 工作流（示意）
 
-Flux v2 由多个专用控制器组成：Source Controller 负责从 Git/Helm/OCI 获取配置，Kustomize Controller 负责应用 Kustomize 清单，Helm Controller 负责管理 Helm Release，Notification Controller 负责通知和事件。
+开发者改清单 → 评审合并 → Git 为唯一真相源 → 各边缘集群上的 Flux/Argo CD 检测差异并应用。
 
-### 2.2 边缘 Flux 配置示例
+## 2 Flux 在边缘
+
+Flux v2 拆为 Source / Kustomize / Helm / Notification 等控制器[2]。边缘站点常用 **Kustomize overlay** 表达差异（MQTT 地址、站点 ID、内存上限）。
 
 ```yaml
-# GitRepository: 定义配置来源
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
@@ -88,15 +70,10 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  url: https://git.company.com/iot/edge-manifests
-  ref:
-    branch: main
-  secretRef:
-    name: git-credentials
+  url: https://git.example.com/iot/edge-manifests
+  ref: { branch: main }
   timeout: 30s
-
 ---
-# Kustomization: 定义如何应用配置
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -104,387 +81,107 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  sourceRef:
-    kind: GitRepository
-    name: edge-apps
+  sourceRef: { kind: GitRepository, name: edge-apps }
   path: ./overlays/edge-site-001
   prune: true
-  healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: sensor-collector
-      namespace: iot
   timeout: 5m
   retryInterval: 2m
 ```
 
-### 2.3 Kustomize Overlay 实现站点差异化
+拉取间隔常见为数分钟到十余分钟：更短更实时、更耗电与带宽；须按链路质量选择[2][9]。
 
-```yaml
-# base/deployment.yaml (所有站点共享)
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: sensor-collector
-spec:
-  replicas: 1
-  template:
-    spec:
-      containers:
-      - name: collector
-        image: registry.company.com/iot/sensor-collector:v2.1.0
-        resources:
-          limits:
-            memory: "256Mi"
-            cpu: "500m"
-        env:
-        - name: MQTT_BROKER
-          value: "localhost:1883"
-        - name: SITE_ID
-          value: "default"
+## 3 Argo CD 边缘模式
 
----
-# overlays/edge-site-001/kustomization.yaml (站点特化)
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: iot
-resources:
-- ../../base
-patches:
-- target:
-    kind: Deployment
-    name: sensor-collector
-  patch: |
-    - op: replace
-      path: /spec/template/spec/containers/0/env/0/value
-      value: "mqtt.factory-a.local:1883"
-    - op: replace
-      path: /spec/template/spec/containers/0/env/1/value
-      value: "factory-a-001"
-    - op: replace
-      path: /spec/template/spec/containers/0/resources/limits/memory
-      value: "128Mi"
-```
+**ApplicationSet** 可按 `sites/*` 目录为每个站点生成 Application，配合 `selfHeal` 与重试退避[3]。灰度可用 sync-wave 或分批 list generator：先金丝雀站点，再扩大——避免全网同时拉镜像造成拥塞。
 
-## 3. ArgoCD 边缘模式
+## 4 边缘特有问题
 
-### 3.1 ApplicationSet：大规模站点管理
+### 4.1 气隙 / 弱网
 
-```yaml
-# 自动为每个边缘集群创建应用
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: edge-sensor-apps
-  namespace: argocd
-spec:
-  generators:
-  - git:
-      repoURL: https://git.company.com/iot/edge-configs
-      revision: HEAD
-      directories:
-      - path: sites/*
-  template:
-    metadata:
-      name: 'sensor-app-{{path.basename}}'
-    spec:
-      project: edge-iot
-      source:
-        repoURL: https://git.company.com/iot/edge-configs
-        targetRevision: HEAD
-        path: '{{path}}'
-      destination:
-        server: '{{metadata.annotations.cluster-url}}'
-        namespace: iot
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-        - CreateNamespace=true
-        retry:
-          limit: 5
-          backoff:
-            duration: 30s
-            maxDuration: 5m
-```
+本地 Registry + 有网窗口用 `skopeo`/`crane` 同步镜像；Git 可用内网镜像或 bundle。清单里的镜像名指向本地仓库，避免运行时访问公网。
 
-### 3.2 渐进式发布
+### 4.2 回退
 
-```yaml
-# 边缘灰度发布策略
-# 先在 10% 的站点部署，验证后再全量推送
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: canary-rollout
-spec:
-  generators:
-  - list:
-      elements:
-      # 第一批：金丝雀站点
-      - cluster: edge-site-canary-01
-        wave: "1"
-      - cluster: edge-site-canary-02
-        wave: "1"
-      # 第二批：大部分站点
-      - cluster: edge-site-003
-        wave: "2"
-      - cluster: edge-site-004
-        wave: "2"
-  template:
-    metadata:
-      name: 'app-{{cluster}}'
-      annotations:
-        argocd.argoproj.io/sync-wave: '{{wave}}'
-    spec:
-      source:
-        targetRevision: HEAD
-        path: 'sites/{{cluster}}'
-```
+健康检查失败则不要标成功；运维回退即 `git revert` / 检出已知好提交并推送——Git 操作即变更操作[1]。容器滚动更新与嵌入式 A/B 分区语义不同，见下表。
 
-## 4. 边缘特有挑战与解决方案
+### 4.3 多集群差异
 
-### 4.1 Air-Gap（气隙/离线）部署
+| 挑战 | 常见手段 |
+|------|----------|
+| 站点配置漂移 | Kustomize overlay / 模板 |
+| 网络不稳 | 本地缓存、拉长 interval、重试 |
+| 分批发布 | wave / ApplicationSet 分代 |
+| 硬件异构 | label + 条件组件 |
+| 清单错误 | CI 中 `kustomize build` / schema 校验 |
 
-很多边缘环境无法访问公网，需要本地镜像仓库：
+## 5 Akri 与 GitOps
 
-```bash
-# 方案：边缘本地 Registry + 定期镜像同步
+Akri（CNCF）做边缘设备发现与 broker 工作负载绑定（如 USB 摄像头）[4]。将 Akri `Configuration` 放进同一 GitOps 仓库，按站点 overlay 删减设备类型，避免手工改节点。
 
-# 在边缘网关上运行本地 Registry
-docker run -d -p 5000:5000 \
-  -v /data/registry:/var/lib/registry \
-  --name edge-registry \
-  registry:2
+## 6 与传统 OTA 对比
 
-# 镜像同步脚本（有网络时运行）
-#!/bin/bash
-IMAGES=(
-  "sensor-collector:v2.1.0"
-  "mqtt-broker:2.0.18"
-  "data-processor:v1.3.0"
-)
+| 维度 | 传统 OTA（Mender/SWUpdate 等） | GitOps（Flux/Argo CD） |
+|------|-------------------------------|-------------------------|
+| 模型 | 服务端推送为主 | Agent 拉取调谐 |
+| 原子更新 | 双分区 A/B 常见 | 工作负载滚动/重建 |
+| 回退 | 切回旧分区 | Git 历史 |
+| 审计 | 需平台补齐 | Git 历史 |
+| 最小设备量级 | 嵌入式 Linux（十余 MB 级系统） | 通常需 K3s 等（数百 MB RAM 量级）[5] |
+| 适用 | 固件/裸机 | 已容器编排的边缘 |
 
-for img in "${IMAGES[@]}"; do
-  # 从中心仓库拉取
-  skopeo copy \
-    docker://registry.company.com/iot/$img \
-    docker://localhost:5000/iot/$img \
-    --src-creds="$REGISTRY_USER:$REGISTRY_PASS"
-done
-echo "Mirror sync completed at $(date)"
-```
+异构车队可混合：`/k8s-manifests` → Flux；`/firmware` → Mender；仍尽量单一 Git 真相源[8][10]。
 
-### 4.2 回退策略
+## 7 实践要点
 
-```yaml
-# 自动回退配置
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: edge-apps
-spec:
-  # 健康检查失败自动回退
-  healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: sensor-collector
-  timeout: 5m
+- 密钥用 SOPS / Sealed Secrets，禁止明文进库
+- `prune: true` 会删 Git 中不存在的资源，变更前先 dry-run
+- 限制 Flux 控制器内存，避免在 K3s 上 OOM
+- 时钟漂移会导致证书校验失败，边缘须做网络时间协议（Network Time Protocol, NTP）
 
-  # 结合 Flux 的 Git revert 自动化
-  # 部署失败时自动创建 revert commit
-  patches:
-    - patch: |
-        - op: add
-          path: /metadata/annotations/fluxcd.io~1auto-revert
-          value: "true"
-```
+推荐仓库骨架：`base/`（共享应用）+ `overlays/<site>/` + `clusters/<site>/flux-system/`。
 
-手动回退也很简单：
+## 8 局限、挑战与可改进方向
 
-```bash
-# 回退到上一个版本（Git 操作即运维操作）
-git revert HEAD
-git push
+### 1. 基线过重
 
-# 或者回退到特定版本
-git checkout abc123 -- manifests/edge-site-001/
-git commit -m "Rollback site-001 to known-good state"
-git push
-```
+**局限**：纯 GitOps 假设节点能跑 Kubernetes agent；MCU / 极小 Linux 无法直接套用。
+**改进**：分层：固件用专用 OTA，应用层 GitOps；或 Ansible/git-pull 管裸机配置，仍指向同一仓库不同目录[8]。
 
-### 4.3 多集群管理挑战
+### 2. 期望状态与现场硬件脱节
 
-| 挑战 | 解决方案 |
-|------|---------|
-| 500+ 集群配置差异 | Kustomize overlays + 变量模板 |
-| 网络不稳定 | Agent 本地缓存 + 重试 |
-| 版本分批推送 | Wave annotation + 暂停门控 |
-| 设备硬件异构 | Label selector + 条件部署 |
-| 配置冲突检测 | CI 中跑 kubeval/kustomize build |
+**局限**：overlay 爆炸、设备热插拔后清单未更新，导致“Git 绿、现场红”。
+**改进**：Akri 等发现结果反哺库存；CI 校验站点 label 与必选组件；金丝雀站点强制人工门禁[4]。
 
-## 5. Akri：设备自动发现
+### 3. 弱网下的抖动与惊群
 
-### 5.1 Akri 是什么
+**局限**：全网同一 interval 对齐拉取，易打满回程链路；失败重试放大。
+**改进**：抖动（jitter）拉取、分批 wave、本地镜像预热；失败退避上限与告警分级[9]。
 
-Akri 是 CNCF 项目，专门解决边缘 Kubernetes 中的设备发现和共享问题：
+### 4. 安全与供应链
 
-```
-传统方式:
-  手动配置: "这台机器连着温度传感器在 /dev/ttyUSB0"
-  问题: 设备热插拔怎么办？设备漂移到另一个节点？
-
-Akri 方式:
-  自动发现: Akri Agent 扫描所有节点的设备
-  自动分配: 发现设备后自动创建 K8s 资源
-  自动调度: 把工作负载调度到有对应设备的节点
-```
-
-### 5.2 Akri 配置示例
-
-```yaml
-# 发现所有 USB 摄像头并自动分配
-apiVersion: akri.sh/v0
-kind: Configuration
-metadata:
-  name: usb-camera-discovery
-spec:
-  discoveryHandler:
-    name: udev
-    discoveryDetails: |
-      udevRules:
-      - SUBSYSTEM=="video4linux"
-  brokerSpec:
-    brokerPodSpec:
-      containers:
-      - name: camera-processor
-        image: registry.local:5000/iot/camera-processor:v1.0
-        resources:
-          limits:
-            "{{PLACEHOLDER}}": "1"
-  instanceServiceSpec:
-    type: ClusterIP
-    ports:
-    - name: grpc
-      port: 8080
-  capacity: 1  # 每个设备只分配给一个 Pod
-```
-
-### 5.3 与 GitOps 集成
-
-```yaml
-# 将 Akri Configuration 纳入 GitOps 管理
-# fleet-repo/base/akri/
-# |-- kustomization.yaml
-# |-- usb-camera.yaml
-# |-- bluetooth-sensor.yaml
-# |-- gpio-relay.yaml
-
-# 不同站点有不同设备
-# overlays/factory-a/akri-patch.yaml
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- ../../base/akri
-# 工厂 A 只有摄像头和 GPIO，没有蓝牙
-patchesStrategicMerge:
-- delete-bluetooth.yaml
-```
-
-## 6. 对比传统 OTA 方案
-
-### 6.1 全面对比
-
-| 维度 | 传统 OTA (Mender/SWUpdate) | GitOps (Flux/ArgoCD) |
-|------|---------------------------|---------------------|
-| 推送模型 | 服务端推送 | Agent 拉取 |
-| 原子更新 | 双分区 A/B 切换 | K8s rolling update |
-| 回退 | 切回旧分区 | git revert |
-| 配置管理 | 设备影子/配置下发 | Git 仓库 |
-| 审计 | 需额外实现 | Git 历史天然提供 |
-| 协议 | HTTPS/CoAP | HTTPS (Git) |
-| 最小设备 | 嵌入式 Linux (16MB) | K3s (512MB) |
-| 多租户 | 需要平台实现 | Git 分支/目录 |
-| 部署速度 | 快（二进制推送） | 中等（容器拉取） |
-| 适用设备 | 任何 Linux 设备 | 运行 K8s 的设备 |
-
-### 6.2 混合方案
-
-对于异构边缘环境（部分设备运行 K8s，部分是裸 Linux），可以混合使用：
-
-```
-Git Repository (统一配置源)
-  |
-  +-- /k8s-manifests/     --> Flux/ArgoCD (K8s 边缘节点)
-  |
-  +-- /system-configs/    --> Ansible + Git pull (裸机)
-  |
-  +-- /firmware/          --> Mender artifacts (嵌入式设备)
-```
-
-## 7. 实践建议
-
-### 7.1 初学者入门路径
-
-1. 在本地用 Kind/K3d 创建一个集群，安装 Flux CLI
-2. 创建一个 Git 仓库，放入简单的 Deployment YAML
-3. 配置 Flux 监控该仓库，观察自动部署行为
-4. 修改 Git 中的镜像版本，观察自动更新
-5. 在树莓派上安装 K3s + Flux，部署真实的边缘工作负载
-
-### 7.2 具体调优建议
-
-- **拉取间隔**：边缘设备设置 5-15 分钟（平衡实时性和资源消耗）
-- **镜像策略**：使用 Flux ImagePolicy 自动检测新版本，避免手动改 YAML
-- **密钥管理**：用 SOPS 或 Sealed Secrets 加密 Git 中的敏感配置
-- **资源限制**：在 K3s 上限制 Flux 控制器资源（200Mi 内存足够）
-- **分批发布**：用 Wave annotation 或 ApplicationSet 分批推送
-- **健康检查**：必须配置 healthChecks，确保部署成功才算完成
-
-### 7.3 Git 仓库结构推荐
-
-```
-edge-fleet-repo/
-  base/                    # 基础配置（所有站点共享）
-    apps/
-      sensor-collector/
-      mqtt-broker/
-      data-processor/
-    infrastructure/
-      monitoring/
-      logging/
-    akri/                  # 设备发现配置
-  overlays/                # 站点特化
-    edge-site-001/
-      kustomization.yaml
-      patches/
-    edge-site-002/
-      kustomization.yaml
-  clusters/                # 集群引导配置
-    edge-site-001/
-      flux-system/
-    edge-site-002/
-      flux-system/
-```
-
-### 7.4 常见陷阱
-
-- 不要把敏感信息（密码、证书）明文存在 Git 中
-- 不要让所有站点同时更新（网络拥塞风险）
-- 设置 prune: true 时要小心，它会删除 Git 中不存在的资源
-- 边缘节点时钟偏差可能导致证书验证失败
-- K3s 内存不足时 Flux 控制器可能被 OOMKill
+**局限**：被篡改的 Git 或镜像即大规模投毒面；prune 误删可造成区域停服。
+**改进**：签名提交/签名镜像、只读部署密钥、变更窗口与强制评审；生产 `prune` 配策略与备份回滚演练[6][7]。
 
 ## 参考文献
 
-1. Weaveworks. "GitOps: Operations by Pull Request." 2024. https://www.weave.works/technologies/gitops/
-2. Flux Project. "Flux Documentation v2." CNCF, 2024. https://fluxcd.io/docs/
-3. Argo Project. "Argo CD Documentation." CNCF, 2024. https://argo-cd.readthedocs.io/
-4. Akri Project. "Akri Documentation." CNCF, 2024. https://docs.akri.sh/
-5. K3s Project. "K3s: Lightweight Kubernetes." 2024. https://k3s.io/
-6. Limoncelli, T. "GitOps: A Path to More Self-Service IT." ACM Queue, 2022.
-7. Beetz, F., Harrer, S. "GitOps: The Evolution of DevOps?" IEEE Software, 2022.
-8. Northern.tech. "Mender: OTA Software Updates for IoT." 2024. https://mender.io/
-9. CNCF. "Cloud Native Edge Whitepaper." 2024.
-10. Rancher Labs. "Fleet: Multi-Cluster Management." 2024. https://fleet.rancher.io/
+[1] Weaveworks, "GitOps: Operations by Pull Request," https://www.weave.works/technologies/gitops/
+
+[2] Flux Project, "Flux Documentation v2," CNCF, https://fluxcd.io/docs/
+
+[3] Argo Project, "Argo CD Documentation," CNCF, https://argo-cd.readthedocs.io/
+
+[4] Akri Project, "Akri Documentation," CNCF, https://docs.akri.sh/
+
+[5] K3s Project, "K3s: Lightweight Kubernetes," https://docs.k3s.io/
+
+[6] T. Limoncelli, "GitOps: A Path to More Self-Service IT," ACM Queue, 2022.
+
+[7] F. Beetz and S. Harrer, "GitOps: The Evolution of DevOps?" IEEE Software, 2022.
+
+[8] Northern.tech, "Mender: OTA Software Updates for IoT," https://mender.io/
+
+[9] CNCF, "Cloud Native Edge Whitepaper," 2024.
+
+[10] Rancher / SUSE, "Fleet: Multi-Cluster Management," https://fleet.rancher.io/
+
+[11] Bitnami / community, "Sealed Secrets," https://github.com/bitnami-labs/sealed-secrets

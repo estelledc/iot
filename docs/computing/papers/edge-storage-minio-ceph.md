@@ -3,411 +3,145 @@ schema_version: '1.0'
 id: edge-storage-minio-ceph
 title: 边缘存储：MinIO 与 Ceph-lite 方案
 layer: 4
-content_type: UNKNOWN
+content_type: comparison
 difficulty: intermediate
 reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+prerequisites:
+  - edge-computing-survey
+  - edge-database-sqlite-duckdb
+tags:
+- MinIO
+- Ceph
+- 对象存储
+- 纠删码
+- S3
+- 边缘存储
+- Rook
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 边缘存储：MinIO 与 Ceph-lite 方案
 
-> **难度**：🟡 中级 | **领域**：边缘存储、对象存储、数据管理 | **阅读时间**：约 20 分钟
+> **难度**：🟡 中级 | **领域**：边缘存储、对象存储 | **阅读时间**：约 20 分钟
 
 ## 日常类比
 
-想象一个连锁便利店的仓储系统。总部有一个巨大的中央仓库（云存储），但每家门店也需要一个小仓库来存放当天要卖的货（边缘存储）。门店的小仓库不可能和中央仓库一样大，所以必须做取舍：畅销品常备，冷门品临时调货。如果一家门店断网了，顾客不能因此买不到东西——本地库存必须能独立运作。
+云像中央大仓，边缘像门店小库：断网也要能卖货。摄像头与模型把小库塞满，必须分层、过期、异步回仓。MinIO 像好摆弄的货架（单二进制、S3 API）；Ceph 像自动化大仓（RADOS + RBD/CephFS），能力全但更重。边缘多数先 MinIO；要块设备/共享文件系统再上精简 Ceph/Rook。
 
-边缘存储面临的问题完全一样。摄像头每天产生数 TB 的视频，传感器数据不断涌入，AI 模型需要本地缓存——但边缘节点可能只有几百 GB 到几 TB 的磁盘。如何在有限空间里高效存储、可靠同步、快速读取，是边缘存储的核心挑战。
+## 摘要
 
-MinIO 和 Ceph 是两个最常见的开源存储方案。一个轻量快速（像便利店的小货架），一个功能全面（像沃尔玛的自动化仓库）。边缘场景下它们各有用武之地。
+对比 MinIO 与 Ceph（含 Rook 精简）在边缘的部署重量、S3 兼容、纠删码（Erasure Coding, EC）与副本、生命周期与边云复制。吞吐数字为示意量级，以目标盘与网为准[1][2][5]。
 
-## 1. 为什么边缘需要对象存储
+## 1 为何要对象存储
 
-### 1.1 传统文件系统的局限
+| 问题 | 本地文件系统困境 | 对象存储解法 |
+|------|------------------|--------------|
+| 跨节点访问 | NFS 等易成瓶颈/单点 | HTTP S3 API |
+| 元数据 | 路径名几乎唯一索引 | 用户 metadata |
+| 冗余 | 绑本地 RAID | 跨节点副本/EC |
+| 生命周期 | 手工删 | TTL / Transition 策略 |
+| 多应用并发 | 文件锁 | 无状态 API |
 
-边缘设备上直接用 ext4/XFS 存文件当然可以，但会遇到几个问题：
+典型容量结构（示意）：视频/图像占大头，时序与模型较小；视频可丢帧，时序与模型版本通常更金贵。
 
-| 问题 | 文件系统的困境 | 对象存储的解法 |
-|------|-------------|-------------|
-| 跨节点访问 | NFS 单点故障、性能差 | S3 API 标准化，任何节点都能访问 |
-| 元数据管理 | 文件名是唯一索引 | 自定义 metadata（设备ID/时间戳/标签） |
-| 数据冗余 | RAID 依赖本地磁盘数 | 纠删码可跨节点 |
-| 生命周期 | 手动清理 | 自动过期策略（TTL） |
-| 多应用访问 | 文件锁竞争 | HTTP API 无状态并发 |
+## 2 MinIO
 
-### 1.2 边缘存储的典型数据类型
-
-```
-┌──────────────────────────────────────────────┐
-│ 边缘节点存储的数据类型                         │
-├──────────────┬────────────┬──────────────────┤
-│ 视频/图像     │ 传感器时序   │ AI 模型文件      │
-│ 80-90% 容量  │ 5-10% 容量  │ 1-5% 容量       │
-│ 写多读少      │ 追加写入     │ 读多写少        │
-│ 可容忍丢帧    │ 不可丢失     │ 版本管理重要     │
-└──────────────┴────────────┴──────────────────┘
-```
-
-## 2. MinIO：轻量级 S3 兼容存储
-
-### 2.1 架构概览
-
-MinIO 是一个高性能的 S3 兼容对象存储，核心特点是"简单"。单个二进制文件，无外部依赖：
+单进程集成 S3 API、IAM、EC、复制；无独立元数据服务[1]。开发可单节点目录模式；生产常用多节点多盘 EC。
 
 ```bash
-# 单节点部署（开发/测试）
-wget https://dl.min.io/server/minio/release/linux-arm64/minio
-chmod +x minio
 export MINIO_ROOT_USER=admin
-export MINIO_ROOT_PASSWORD=password123
+export MINIO_ROOT_PASSWORD='***'
 ./minio server /data --console-address ":9001"
-
-# 生产部署：4 节点 × 4 盘的纠删码集群
-./minio server http://edge{1...4}/data{1...4}
+# 集群示例：./minio server http://edge{1...4}/data{1...4}
 ```
 
-MinIO 的架构非常精简：
-
-```
-客户端 (S3 API)
-     │
-     ▼
-┌─────────────┐
-│  MinIO 进程   │  ← 单进程，无独立元数据服务
-│  - S3 API    │
-│  - IAM       │
-│  - 纠删码     │
-│  - 复制       │
-└──────┬──────┘
-       │
-  ┌────┴────┐
-  ▼         ▼
-[磁盘1]   [磁盘2]   ← 直接管理裸磁盘或目录
-```
-
-### 2.2 边缘场景的最小部署
-
-在 ARM64 边缘网关（如 Jetson Orin、RK3588）上的实测：
-
-```
-硬件配置：
-  CPU：ARM Cortex-A78AE × 8
-  内存：16 GB LPDDR5
-  存储：1TB NVMe SSD
-
-MinIO 单节点资源消耗：
-  内存占用：~150 MB（空闲）/ ~500 MB（满负载）
-  CPU 占用：<5%（空闲）/ 30-40%（并发写入）
-  
-性能基准（1MB 对象，16 并发）：
-  PUT 吞吐：420 MB/s
-  GET 吞吐：680 MB/s
-  PUT 延迟 P99：12ms
-  GET 延迟 P99：5ms
-```
-
-### 2.3 数据生命周期管理
-
-边缘存储最实用的功能之一是自动过期：
+资源：空闲常为百 MB 内存量级，满载随并发与对象大小上升；绝对 MB/s 取决于 NVMe vs SATA 与网[1]。生命周期用 prefix 规则过期视频/原始传感器；`mc replicate` 做边缘→云异步复制。
 
 ```python
 import boto3
-from datetime import datetime
-
-# 连接边缘 MinIO
-s3 = boto3.client('s3',
-    endpoint_url='http://edge-node:9000',
-    aws_access_key_id='admin',
-    aws_secret_access_key='password123')
-
-# 设置生命周期策略：视频 7 天后删除，模型文件永久保留
-lifecycle = {
-    'Rules': [
-        {
-            'ID': 'expire-video-7d',
-            'Filter': {'Prefix': 'video/'},
-            'Status': 'Enabled',
-            'Expiration': {'Days': 7}
-        },
-        {
-            'ID': 'expire-sensor-raw-30d',
-            'Filter': {'Prefix': 'sensor/raw/'},
-            'Status': 'Enabled',
-            'Expiration': {'Days': 30},
-            'Transitions': [
-                {
-                    'Days': 7,
-                    'StorageClass': 'GLACIER'  # 7天后转冷存储
-                }
-            ]
-        }
-    ]
-}
+s3 = boto3.client('s3', endpoint_url='http://edge-node:9000',
+                  aws_access_key_id='admin', aws_secret_access_key='***')
 s3.put_bucket_lifecycle_configuration(
-    Bucket='factory-data', LifecycleConfiguration=lifecycle)
+    Bucket='factory-data',
+    LifecycleConfiguration={'Rules': [{
+        'ID': 'expire-video-7d', 'Filter': {'Prefix': 'video/'},
+        'Status': 'Enabled', 'Expiration': {'Days': 7}
+    }]})
 ```
 
-### 2.4 边缘到云的同步
+## 3 Ceph 与边缘精简
 
-MinIO 内置 Bucket Replication，支持边缘节点向云端单向同步：
+标准 Ceph：MON/MGR/MDS + 多 OSD；完整高可用栈内存常到十余 GB 量级，边缘过重[2][4]。Rook Operator 可在 K8s/K3s 上压缩 requests/limits、减少 MON/MGR，换运维复杂度[3]。
 
-```bash
-# 配置边缘 MinIO → 云端 MinIO/S3 单向复制
-mc alias set edge http://edge-node:9000 admin password123
-mc alias set cloud https://s3.amazonaws.com AKID SECRET
+| 指标 | MinIO | Rook-Ceph 精简 | 标准 Ceph |
+|------|-------|----------------|-----------|
+| 部署 | 低 | 中（需 K8s） | 高 |
+| 内存量级 | 较低（数百 MB 起） | 数 GB | 更高 |
+| 最少节点 | 1 / EC 常 ≥4 | 常 3 | 3+ |
+| S3 | 原生强项 | RGW | RGW |
+| 块/文件 | 无 | RBD / CephFS | RBD / CephFS |
 
-# 启用从 edge 到 cloud 的异步复制
-mc replicate add edge/factory-data \
-  --remote-bucket cloud/factory-archive \
-  --replicate "delete,delete-marker,existing-objects"
-```
+## 4 分层与冗余
 
-## 3. Ceph 在边缘的适配
+| 层 | 位置 | 特征 | 延迟量级 |
+|----|------|------|----------|
+| Hot | 边缘 NVMe | 近 24h 原始 | 亚 ms–数 ms |
+| Warm | 边缘 HDD/近端 | 数日–数十日聚合 | 数–数十 ms |
+| Cold | 云 S3/归档 | 长期 | 更高、可变 |
 
-### 3.1 Ceph 架构简述
+| 维度 | 多副本 | 纠删码 EC |
+|------|--------|-----------|
+| 开销 | 如 3 副本 ≈3× | 如 4+2 ≈1.5× |
+| 修复 | 拷贝快 | 计算重建更慢 |
+| 节点数 | 3 即可起步 | 编码宽度约束更大 |
+| 边缘 | 小集群常用 | 节点够多或极省盘时 |
 
-Ceph 的标准架构包括三大组件：
+MinIO 默认走 EC；小集群需按盘数选 EC 配比，避免「节点不够宽度」[5]。
 
-```
-┌──────────┐  ┌──────────┐  ┌──────────┐
-│   MON    │  │   MGR    │  │   MDS    │
-│ 监控/选举 │  │ 管理/指标 │  │ 元数据   │
-└────┬─────┘  └────┬─────┘  └────┬─────┘
-     │             │             │
-     └──────┬──────┘             │
-            ▼                    │
-┌──────────────────┐             │
-│     OSD × N      │◄────────────┘
-│  (每块磁盘一个)   │
-└──────────────────┘
-```
+## 5 视频与时序
 
-标准 Ceph 集群至少需要 3 MON + 3 OSD + 1 MGR + 1 MDS，内存消耗 >10GB。这对边缘节点来说过重。
+1080p 级码流按编码与是否事件触发，单路可达约数十 GB/天量级；数十路摄像头很快到 TB/天——须事件录制、转码、降分辨率分层，而非只加盘。高频传感器原始字节累积快，宜先时序库降采样/压缩，对象存储放 Parquet 等归档，而非用 S3 做高频点查[10]。
 
-### 3.2 Rook-Ceph 边缘优化配置
+容量规划：估日增量 × 热保留天数 × 冗余系数，再留更换与峰值余量；文中工厂算例仅方法论，非通用定额。
 
-Rook 是 Ceph 的 Kubernetes Operator，可以简化部署。边缘场景需要精简配置：
+## 6 局限、挑战与可改进方向
 
-```yaml
-# Rook-Ceph 边缘精简集群（3 节点）
-apiVersion: ceph.rook.io/v1
-kind: CephCluster
-metadata:
-  name: edge-ceph
-spec:
-  cephVersion:
-    image: quay.io/ceph/ceph:v18.2   # Reef 版本
-  mon:
-    count: 3
-    allowMultiplePerNode: true         # 边缘节点少，允许共存
-  mgr:
-    count: 1
-  resources:
-    mon:
-      limits:
-        memory: "1Gi"                  # 默认 4Gi，压缩到 1Gi
-        cpu: "500m"
-      requests:
-        memory: "512Mi"
-        cpu: "250m"
-    osd:
-      limits:
-        memory: "2Gi"                  # 默认 8Gi，压缩到 2Gi
-        cpu: "1"
-      requests:
-        memory: "1Gi"
-        cpu: "500m"
-  storage:
-    useAllNodes: true
-    useAllDevices: false
-    devices:
-    - name: "nvme0n1"                  # 指定设备
-    config:
-      osdsPerDevice: "1"
-      storeType: bluestore
-```
+### 1. 把云 Ceph 原样搬边缘
 
-### 3.3 资源消耗对比
+**局限**：MON/OSD 默认内存与运维假设不匹配网关级硬件[2][6]。
+**改进**：仅对象需求用 MinIO；必须 RBD/CephFS 时用 Rook 精简并压测恢复时间。
 
-同一硬件上（3 节点 × ARM64 × 1TB NVMe）的实测：
+### 2. EC 与小集群错配
 
-| 指标 | MinIO | Rook-Ceph（精简） | Ceph（标准） |
-|------|-------|------------------|-------------|
-| 部署复杂度 | 低（一条命令） | 中（Kubernetes Operator） | 高（手动） |
-| 总内存占用 | ~500 MB | ~6 GB | ~15 GB |
-| 总 CPU 开销 | <2 核 | ~4 核 | ~8 核 |
-| 最少节点数 | 1（无冗余）/ 4（纠删码） | 3 | 3 |
-| S3 PUT 吞吐 | 420 MB/s | 280 MB/s | 350 MB/s |
-| S3 GET 吞吐 | 680 MB/s | 450 MB/s | 550 MB/s |
-| 块存储支持 | 不支持 | RBD | RBD |
-| 文件存储支持 | 不支持 | CephFS | CephFS |
+**局限**：盘/节点数小于编码宽度时可用性与扩容痛苦[5]。
+**改进**：3–4 节点优先副本或窄 EC；扩容路径写进演练手册。
 
-## 4. 数据分层策略
+### 3. 闪存寿命与小对象
 
-### 4.1 Hot/Warm/Cold 三层模型
+**局限**：海量小对象 + 频繁删除/EC 重建磨损 SSD。
+**改进**：合并对象、合理 part size、生命周期早删、`smartctl` 盯 TBW。
 
-边缘存储的分层和云端概念相同，但边界不同：
+### 4. 复制不等于备份语义
 
-| 层级 | 位置 | 数据特征 | 存储介质 | 访问延迟 |
-|------|------|---------|---------|---------|
-| Hot | 边缘 NVMe | 最近 24h 的原始数据 | NVMe SSD | <1ms |
-| Warm | 边缘 HDD / 近端 | 7-30 天聚合数据 | SATA SSD/HDD | 1-10ms |
-| Cold | 云端 S3/Glacier | 30 天+ 归档 | 对象存储 | 50-200ms |
+**局限**：错误删除可被 replicate 传播。
+**改进**：版本控制/法律持有、云端延迟删除、定期恢复演练。
 
-```python
-# 数据分层策略引擎（简化实现）
-class TieringEngine:
-    def __init__(self, hot_days=1, warm_days=30):
-        self.hot_days = hot_days
-        self.warm_days = warm_days
+## 7 实践建议
 
-    def classify(self, object_key: str, created_at, last_accessed):
-        from datetime import datetime, timedelta
-        now = datetime.utcnow()
-        age_days = (now - created_at).days
-        idle_days = (now - last_accessed).days
-
-        if age_days <= self.hot_days or idle_days < 1:
-            return "hot"    # 保留在本地 NVMe
-        elif age_days <= self.warm_days:
-            return "warm"   # 可压缩/降采样后保留
-        else:
-            return "cold"   # 同步到云端后本地可删除
-
-    def apply_policy(self, s3_client, bucket):
-        """扫描 bucket 并执行分层迁移"""
-        objects = s3_client.list_objects_v2(Bucket=bucket)
-        for obj in objects.get('Contents', []):
-            tier = self.classify(
-                obj['Key'], obj['LastModified'], obj['LastModified'])
-            if tier == "cold":
-                # 确认云端已同步后删除本地副本
-                self._archive_and_delete(s3_client, bucket, obj['Key'])
-```
-
-### 4.2 纠删码 vs 副本复制
-
-| 维度 | 副本复制（Replication） | 纠删码（Erasure Coding） |
-|------|----------------------|------------------------|
-| 原理 | 存 N 份完整副本 | 数据分片 + 校验片 |
-| 典型配置 | 3 副本 | EC 4+2（4 数据片 + 2 校验片） |
-| 存储开销 | 300% | 150% |
-| 修复速度 | 快（直接拷贝） | 慢（需计算重建） |
-| 最小节点数 | 3 | 6（4+2 方案） |
-| 适用边缘场景 | 小集群（3 节点） | 中大集群（≥6 节点） |
-
-大多数边缘部署只有 3-4 个节点，更适合副本复制。如果有 6+ 节点或对存储效率敏感，纠删码是更经济的选择。
-
-MinIO 默认使用 EC（最小 4 节点），可以配置 EC:2（2 数据 + 2 校验）适应 4 节点边缘集群。
-
-## 5. 视频与传感器数据的存储优化
-
-### 5.1 视频存储的特殊需求
-
-工业摄像头是边缘存储最大的容量消费者：
-
-```
-一台 1080p@30fps 摄像头：
-  H.264 编码：~4 Mbps = ~1.7 GB/h = ~40 GB/天
-  H.265 编码：~2 Mbps = ~0.86 GB/h = ~20 GB/天
-
-一个中型工厂 50 台摄像头：
-  H.265 编码：~1 TB/天 = ~30 TB/月
-```
-
-存储优化手段：
-
-1. **事件触发录制**：只在检测到异常时录制完整视频，平时只存关键帧。可减少 60-80% 存储。
-2. **边缘转码**：原始 H.264 在边缘转码为 H.265，体积减半。
-3. **分层存储**：热数据（24h）保留原始质量，温数据降分辨率，冷数据只保留元数据和告警截图。
-
-### 5.2 传感器时序数据
-
-传感器数据虽然单条很小，但高频采集累计惊人：
-
-```
-1000 个传感器 × 10 Hz × 每条 100 字节
-= 1 MB/s = 86 GB/天（原始）
-
-优化手段：
-  降采样（10Hz → 1Hz 均值）：减少 90%
-  差值编码 + LZ4 压缩：再减少 70%
-  最终：~2.6 GB/天
-```
-
-对象存储不适合高频查询的时序数据。推荐架构是用 TimescaleDB 或 InfluxDB 存热数据（边缘），用对象存储存归档数据（Parquet 格式），用 MinIO 做中间缓冲。
-
-## 6. 容量规划实例
-
-### 6.1 典型工厂场景
-
-```
-场景：中型制造工厂，3 条产线
-  摄像头：30 台（H.265，事件触发）
-  传感器：500 个（1Hz 降采样后）
-  AI 模型：5 个（平均 200MB）
-  日志：各类系统日志
-
-每日数据量估算：
-  视频：30 × 10 GB/天(事件触发) = 300 GB/天
-  传感器：500 × 86 KB/天(压缩后) = 43 MB/天 ≈ 忽略
-  模型更新：~1 GB/周 ≈ 忽略
-  日志：~5 GB/天
-
-总计：~305 GB/天
-
-存储规划（保留 7 天热数据）：
-  热存储：305 × 7 = ~2.1 TB（NVMe SSD）
-  冗余：2 副本 → ~4.2 TB 原始容量
-  推荐配置：3 节点 × 2TB NVMe = 6TB 可用
-```
-
-## 7. 实践建议
-
-### 7.1 初学者入门路径
-
-**第一步**：在本地用 Docker 跑一个 MinIO 单节点，用 `mc`（MinIO Client）或 `aws s3` CLI 上传下载文件，熟悉 S3 API。
-
-```bash
-docker run -d -p 9000:9000 -p 9001:9001 \
-  -e MINIO_ROOT_USER=admin \
-  -e MINIO_ROOT_PASSWORD=password123 \
-  minio/minio server /data --console-address ":9001"
-
-# 用 mc 创建 bucket 并上传文件
-mc alias set local http://localhost:9000 admin password123
-mc mb local/test-bucket
-mc cp myfile.txt local/test-bucket/
-```
-
-**第二步**：配置生命周期策略，观察对象自动过期删除的行为。
-
-**第三步**：用 4 个 Docker 容器模拟 MinIO 纠删码集群，测试一个节点宕机后数据仍可读取。
-
-**第四步**：部署 Rook-Ceph（可以用 K3s + 虚拟磁盘），体验块存储和对象存储的区别。
-
-### 7.2 具体调优建议
-
-**MinIO 优先于 Ceph**。除非你需要块存储（RBD）或共享文件系统（CephFS），否则在边缘场景选 MinIO。它的资源占用是 Ceph 的 1/10，部署复杂度是 1/5。
-
-**不要忽略磁盘选型**。对象存储的性能瓶颈通常不是 CPU 或内存，而是磁盘 I/O。边缘节点如果用 SATA SSD 替代 NVMe，写入吞吐可能降低 50-70%。
-
-**设置合理的对象大小**。MinIO 对 >5MB 的对象使用 multipart upload，默认 part size 是 64MB。边缘场景建议调小到 16MB，减少单次上传的内存占用。
-
-**监控磁盘健康**。边缘节点的 SSD 寿命是隐形炸弹。用 `smartctl` 定期检查 TBW（Total Bytes Written），在达到额定寿命 80% 时预警更换。
+纯对象选 MinIO；要块/共享文件再 Ceph。瓶颈常在盘与网，不在「再加点 CPU」。multipart 在边缘可调小 part，控内存。监控容量、复制滞后、磁盘健康。
 
 ## 参考文献
 
-1. MinIO. (2024). MinIO High Performance Object Storage Documentation. https://min.io/docs/
-2. Ceph. (2024). Ceph Reef (v18) Documentation. https://docs.ceph.com/en/reef/
-3. Rook. (2024). Rook-Ceph Operator for Kubernetes. https://rook.io/docs/rook/latest/
-4. Weil, S., et al. (2006). CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data. ACM/IEEE SC.
-5. MinIO. (2024). MinIO Erasure Code Quickstart Guide. https://min.io/docs/minio/linux/operations/concepts/erasure-coding.html
-6. Red Hat. (2024). Ceph at the Edge: Design Patterns. https://www.redhat.com/en/resources/ceph-edge-brief
-7. SNIA. (2024). Object Storage for Edge Computing. https://www.snia.org/
-8. Ceph. (2024). BlueStore Performance Tuning Guide. https://docs.ceph.com/en/reef/rados/configuration/bluestore-config-ref/
-9. AWS. (2024). S3 API Reference — Lifecycle Configuration. https://docs.aws.amazon.com/AmazonS3/latest/API/
-10. Li, H., et al. (2023). Edge Storage Systems: A Survey. IEEE Communications Surveys & Tutorials, 25(4), 2201-2230.
+[1] MinIO, "MinIO Documentation," https://min.io/docs/
+[2] Ceph, "Ceph Reef Documentation," https://docs.ceph.com/en/reef/
+[3] Rook, "Rook-Ceph Documentation," https://rook.io/docs/rook/latest/
+[4] S. Weil et al., "CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data," SC, 2006.
+[5] MinIO, "Erasure Coding," https://min.io/docs/minio/linux/operations/concepts/erasure-coding.html
+[6] Red Hat, "Ceph at the Edge" design materials, 2024.
+[7] SNIA, "Object Storage" educational materials, https://www.snia.org/
+[8] Ceph, "BlueStore Configuration," https://docs.ceph.com/en/reef/rados/configuration/bluestore-config-ref/
+[9] AWS, "S3 Lifecycle Configuration API," https://docs.aws.amazon.com/AmazonS3/latest/API/
+[10] H. Li et al., "Edge Storage Systems: A Survey," IEEE Commun. Surveys Tuts., 2023.
+[11] MinIO, "Bucket Replication," documentation.
+[12] Ceph, "RADOS Gateway (RGW)," documentation.
