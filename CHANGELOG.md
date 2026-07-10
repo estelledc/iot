@@ -2,6 +2,17 @@
 
 本项目从 `0.1.0` 起使用语义化版本。每条变更必须引用实施任务，并记录可重复验证命令。
 
+## [0.2.1] - 2026-07-10
+
+### Added
+
+- `IOT-T029`：新增 M2 可信基线可执行推进计划 `docs/superpowers/plans/2026-07-10-m2-trust-baseline.md`（T1–T6：审计/review schema → 清单可统计 → 24 篇导航精选抽样 → PARTIAL 同步 → 部署验收 → v0.3.0）；在 `docs/progress.md` 与 `ROADMAP.md` M2 小节挂上入口，并锁定每层 3 篇结构性审计方案。本版本不执行抽样核验。验证：`python tools/content_inventory.py --check`、`python tools/check_markdown_links.py --all --anchors --strict`、`python tools/check_markdown_fences.py --all`。
+
+### Review baseline
+
+- Source commit: `6ab813ad9d50cc36e06f247eacf24a21706fd097`
+- 迁移说明：纯文档变更；无 URL、schema 或内容正文迁移。
+
 ## [0.2.0] - 2026-07-10
 
 ### Added

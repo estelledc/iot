@@ -113,20 +113,22 @@ flowchart LR
 
 ### M2 可信基线 — 从「文件存在」到「来源可查」
 
+**可执行计划**：[docs/superpowers/plans/2026-07-10-m2-trust-baseline.md](docs/superpowers/plans/2026-07-10-m2-trust-baseline.md)（任务 T1–T6，完成后版本目标 `0.3.0`）。
+
 **目标**：把「文件存在 ≠ 技术事实已验证」的免责声明替换为机器可读的审计事实。
 
 **工作项**：
 
-1. **来源审计记录**：每篇内容的 `source_status`（`UNVERIFIED` / `PARTIAL` / `VERIFIED`）落入 frontmatter；清单工具把 `source_audited_files` 从 `null` 变为可统计。
-2. **抽样核验**：每层抽 3–5 篇做人工来源核验，抽样报告以机器可读形式入库（`data/` 目录）；抽样不合格的层级先修复存量再谈扩容。
+1. **来源审计记录**：每篇内容的 `source_status`（`UNVERIFIED` / `PARTIAL` / `VERIFIED`）落入 frontmatter；清单工具把 `source_audited_files` 从 `null` 变为可统计。抽样规模锁定为每层 3 篇（导航精选前 3），结构性审计可标 `PARTIAL`；`VERIFIED` 必须经 review record。
+2. **抽样核验**：每层 3 篇报告写入 `data/source-audits/<slug>/`；抽样不合格（`NEEDS_CHANGES`）的篇目先修复再谈升格。
 3. **review record 流程**：`HUMAN_APPROVED` 必须绑定人工证据与正文 hash（[frontmatter schema](schemas/content-frontmatter.schema.json) 已对 `last_reviewed` 施加约束）。
-4. **线上验收**：对 <https://estelledc.github.io/iot/> 针对目标 commit 做一次部署健康验收，消除 README 中「运行状态必须单独验收」的口径。
+4. **线上验收**：对 <https://estelledc.github.io/iot/> 针对目标 commit 做一次部署健康验收，结果写入 `data/deploy-acceptance.yml`。
 
 **完成判据**：
 
 - 全部内容文件有显式 `source_status`（允许 `UNVERIFIED`，不允许缺失）；
 - 每层至少 3 篇抽样核验报告入库；
-- 清单中的 `source_audit` 从 `NOT_TRACKED` 变为可统计状态。
+- 清单中的 `source_audit` 从 `NOT_TRACKED` 变为可统计状态（每层 `SAMPLED`）。
 
 ### M3 受控生长 — 按门禁恢复 Layer 3–8 扩容
 
@@ -416,4 +418,4 @@ iot-reading-station/
 ---
 
 *创建日期：2026-06-23*
-*最后更新：2026-07-10（M1 治理基线完成，v0.2.0）*
+*最后更新：2026-07-10（M2 可执行推进计划已挂载；M1 已完成于 v0.2.0）*
