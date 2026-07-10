@@ -1,0 +1,39 @@
+data/content-enums.yml
+  s_94860e6e1eeabd::t_05cbf9c8f17547 1-37
+docs/content-schema.md
+  s_94860e6e1eeabd::t_2810f465ddc2a9 1-72
+schemas/content-frontmatter.schema.json
+  s_94860e6e1eeabd::t_f45867b1ddef48 1-226
+tests/fixtures/frontmatter/invalid-content-type.md
+  s_94860e6e1eeabd::t_51d9cd88556689 1-16
+tests/fixtures/frontmatter/invalid-missing-fields.md
+  s_94860e6e1eeabd::t_5065af5d07fbce 1-9
+tests/fixtures/frontmatter/invalid-paper-without-target.md
+  s_94860e6e1eeabd::t_63e52536bc61ec 1-16
+tests/fixtures/frontmatter/valid-paper-reading.md
+  s_94860e6e1eeabd::t_a69cf4bf0abbaa 1-25
+tests/fixtures/frontmatter/valid-technical-analysis.md
+  s_94860e6e1eeabd::t_e6edd3ec871f2f 1-19
+tests/test_frontmatter_schema.py
+  s_94860e6e1eeabd::t_ad00aff1c27f87 1-32
+tools/validate_frontmatter.py
+  s_94860e6e1eeabd::t_a63174e0c6c055 1-198
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "805a3d8e6cc13a84fbc3351dd2141f42a7ba4709",
+  "prompts": {},
+  "sessions": {
+    "s_94860e6e1eeabd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_94860e6e1eeabd",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
