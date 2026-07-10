@@ -1,0 +1,41 @@
+README.md
+  s_9e62b4c403d567::t_02701379849858 5-6,8-16,22,24
+ROADMAP.md
+  s_9e62b4c403d567::t_32abf878e80aec 19-36,81,265-267
+data/content-inventory.json
+  s_9e62b4c403d567::t_95ad739500644e 1-112
+docs/index.md
+  s_9e62b4c403d567::t_a54ebe3c3c48e0 5-39,41,43-118,122,126,130-137,148,150,152,156-162,164,166-173
+docs/progress.md
+  s_9e62b4c403d567::t_9fc586fb0acdcb 1-50
+docs/roadmap.md
+  s_9e62b4c403d567::t_b4a93b8419436a 3,7-8,10-20,22,24,26,28-32
+overrides/home.html
+  s_9e62b4c403d567::t_6c173972d94131 200-216,245
+overrides/partials/footer.html
+  s_9e62b4c403d567::t_df345c1375f6fc 1,25,28,36-37
+reading-progress.md
+  s_9e62b4c403d567::t_d4bd199f1d8b0e 1-5
+tools/content_inventory.py
+  s_9e62b4c403d567::t_c5dc90e0f00596 1-383
+tools/validate_site.py
+  s_9e62b4c403d567::t_cc58aae9439d33 1-112
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f9da09fd76a85239a4fa535a991b3d0744113097",
+  "prompts": {},
+  "sessions": {
+    "s_9e62b4c403d567": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_9e62b4c403d567",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
