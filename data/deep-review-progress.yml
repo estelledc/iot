@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 592
-  in_review: 50
+  pending: 567
+  in_review: 75
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -362,127 +362,177 @@ articles:
   layer: 6
   path: docs/security/papers/adversarial-attacks-edge-ai.md
   batch: L6-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B01
 - id: blockchain-iot-security
   layer: 6
   path: docs/security/papers/blockchain-iot-security.md
   batch: L6-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B01
 - id: compliance-framework-nist-etsi
   layer: 6
   path: docs/security/papers/compliance-framework-nist-etsi.md
   batch: L6-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B01
 - id: devsecops-iot
   layer: 6
   path: docs/security/papers/devsecops-iot.md
   batch: L6-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B01
 - id: differential-privacy-iot
   layer: 6
   path: docs/security/papers/differential-privacy-iot.md
   batch: L6-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B01
 - id: federated-learning-privacy
   layer: 6
   path: docs/security/papers/federated-learning-privacy.md
   batch: L6-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B02
 - id: fido2-webauthn-iot
   layer: 6
   path: docs/security/papers/fido2-webauthn-iot.md
   batch: L6-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B02
 - id: firmware-security
   layer: 6
   path: docs/security/papers/firmware-security.md
   batch: L6-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B02
 - id: homomorphic-encryption-practical
   layer: 6
   path: docs/security/papers/homomorphic-encryption-practical.md
   batch: L6-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B02
 - id: honeypot-deception-iot
   layer: 6
   path: docs/security/papers/honeypot-deception-iot.md
   batch: L6-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B02
 - id: ics-protocol-security
   layer: 6
   path: docs/security/papers/ics-protocol-security.md
   batch: L6-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B03
 - id: intrusion-detection-edge
   layer: 6
   path: docs/security/papers/intrusion-detection-edge.md
   batch: L6-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B03
 - id: iot-security-systematic-review
   layer: 6
   path: docs/security/papers/iot-security-systematic-review.md
   batch: L6-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B03
 - id: network-traffic-anomaly-ml
   layer: 6
   path: docs/security/papers/network-traffic-anomaly-ml.md
   batch: L6-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B03
 - id: ota-secure-update
   layer: 6
   path: docs/security/papers/ota-secure-update.md
   batch: L6-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B03
 - id: post-quantum-crypto-iot
   layer: 6
   path: docs/security/papers/post-quantum-crypto-iot.md
   batch: L6-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B04
 - id: puf-device-authentication
   layer: 6
   path: docs/security/papers/puf-device-authentication.md
   batch: L6-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B04
 - id: sbom-software-supply-chain
   layer: 6
   path: docs/security/papers/sbom-software-supply-chain.md
   batch: L6-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B04
 - id: secure-boot-root-of-trust
   layer: 6
   path: docs/security/papers/secure-boot-root-of-trust.md
   batch: L6-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B04
 - id: secure-multiparty-computation
   layer: 6
   path: docs/security/papers/secure-multiparty-computation.md
   batch: L6-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B04
 - id: side-channel-attack-defense
   layer: 6
   path: docs/security/papers/side-channel-attack-defense.md
   batch: L6-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B05
 - id: supply-chain-security-iot
   layer: 6
   path: docs/security/papers/supply-chain-security-iot.md
   batch: L6-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B05
 - id: tee-edge-computing
   layer: 6
   path: docs/security/papers/tee-edge-computing.md
   batch: L6-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B05
 - id: v2x-security
   layer: 6
   path: docs/security/papers/v2x-security.md
   batch: L6-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B05
 - id: zero-trust-iot
   layer: 6
   path: docs/security/papers/zero-trust-iot.md
   batch: L6-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L6-B05
 - id: async-federated-learning
   layer: 5
   path: docs/intelligence/papers/async-federated-learning.md

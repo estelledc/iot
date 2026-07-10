@@ -3,255 +3,211 @@ schema_version: '1.0'
 id: intrusion-detection-edge
 title: 边缘入侵检测系统：在资源受限环境中守护网络安全
 layer: 6
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: technical_analysis
+difficulty: intermediate
+reading_time: 22
+prerequisites:
+  - network-traffic-anomaly-ml
+  - federated-learning-privacy
+tags:
+  - 边缘IDS
+  - 入侵检测
+  - 联邦学习
+  - TinyML
+  - CIC-IoT
+  - 深度学习
+  - IoT安全
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 边缘入侵检测系统：在资源受限环境中守护网络安全
 
-> 难度：🟡 进阶 | 领域：网络安全/边缘AI | 更新：2025-06
+> **难度**：🟡 中级 | **领域**：网络安全、边缘 AI | **阅读时间**：约 22 分钟
 
----
+## 日常类比
 
-## 一句话总结
+小区若只有一个中心保安亭，监控画面全送过去会来不及看。更现实的做法是：每栋楼门口放一个"就地判断"的岗哨——明显住户放行、明显可疑拦截，拿不准的再上报。
 
-传统入侵检测系统（IDS）部署在数据中心，但 IoT 的海量流量和低延迟需求要求 IDS 下沉到边缘。本文对比深度学习 IDS 架构、联邦 IDS 方案、边缘部署的约束与优化，以及主流 IoT 安全数据集。
+边缘入侵检测系统（Intrusion Detection System, IDS）就是物联网（Internet of Things, IoT）网关上的这类岗哨：在本地分析流量、就地告警或阻断，而不是把全部原始流量回传云端。
 
----
+## 摘要
 
-## 从日常场景说起
+云端 IDS 面临带宽、时延与隐私压力；边缘 IDS 把检测下沉到网关与工业交换机旁路点。本文对比深度学习（Deep Learning, DL）检测架构、模型压缩与分层流水线、联邦入侵检测，以及 CIC-IoT-2023、Edge-IIoT 等数据集，并讨论对抗样本与部署局限[1][2][4]。
 
-你家小区有个保安亭，保安通过监控画面判断谁是住户、谁是可疑人员。现在小区扩大到 10 万户，监控画面太多了，全送到一个保安亭来不及看。怎么办？在每栋楼门口装一个"AI 保安"——就地判断、就地拦截，只有拿不准的才上报。
+## 1. 为什么需要边缘 IDS？
 
-边缘 IDS 就是这个"楼门口的 AI 保安"。它部署在物联网网关上，实时分析网络流量，就地检测并阻断攻击，不需要把所有流量回传到云端。
-
----
-
-## 为什么需要边缘 IDS？
-
-### 云端 IDS 的困境
+### 1.1 云端 IDS 的困境
 
 | 问题 | 说明 |
 |------|------|
-| 带宽压力 | 10 万设备的全部流量上云需要 Gbps 级带宽 |
-| 延迟 | 云端分析再返回指令需要 100-500ms，DDoS 已造成损害 |
-| 隐私 | 所有流量过云意味着全部内容暴露 |
-| 单点故障 | 云端 IDS 宕机则整个网络失去防护 |
-| 成本 | 云端处理海量流量的计算成本高昂 |
+| 带宽 | 大规模设备全量上云成本高 |
+| 延迟 | 云端往返可达百毫秒量级，对快速洪泛类攻击反应偏慢 |
+| 隐私 | 原始流量出域增加合规风险 |
+| 单点故障 | 云端不可用则全局失明 |
+| 成本 | 持续云端推理费用随流量线性上升 |
 
-### 边缘 IDS 的优势与挑战
+### 1.2 边缘的优势与约束
 
-**优势**：低延迟（本地处理 < 10ms）、减少带宽（只上报告警）、保护隐私（流量不离开本地）、分布式弹性（一个节点故障不影响全局）。
+**优势**：本地处理可把决策压到毫秒级量级；只上报告警；流量不出园区；节点故障局部化。
 
-**挑战**：边缘设备算力有限（树莓派级到嵌入式网关）、存储有限（难以存储大量历史数据）、模型更新困难（不能频繁联网下载新模型）。
-
----
-
-## 深度学习 IDS 架构
-
-### 主流 DL-IDS 模型对比
-
-| 模型 | 检测率 (F1) | 推理延迟 | 模型大小 | 适合流量类型 | 边缘可行性 |
-|------|------------|----------|----------|-------------|-----------|
-| Random Forest | 0.92 | 0.1 ms | 5 MB | 结构化特征 | 优秀 |
-| 1D-CNN | 0.94 | 0.5 ms | 2 MB | 原始包字节 | 优秀 |
-| LSTM | 0.95 | 2 ms | 8 MB | 时序流量模式 | 良好 |
-| Transformer | 0.97 | 5 ms | 50 MB | 长序列依赖 | 需压缩 |
-| GNN (图神经网络) | 0.96 | 3 ms | 15 MB | 网络拓扑关系 | 良好 |
-| AutoEncoder | 0.91 | 0.3 ms | 1 MB | 异常检测（无监督） | 优秀 |
-| VAE-GAN | 0.93 | 1 ms | 10 MB | 零日攻击检测 | 良好 |
-
-### 各架构适用场景
-
-**1D-CNN**：将网络数据包的原始字节作为"一维图像"输入 CNN。优点是不需要人工特征工程；适合检测 payload 中的恶意模式（如 shellcode）。
-
-**LSTM/GRU**：捕捉流量的时序特征——攻击往往有时间模式（如扫描阶段 -> 漏洞利用阶段 -> 数据窃取阶段）。适合检测 APT（高级持续性威胁）。
-
-**Graph Neural Network（GNN）**：将网络建模为图（设备为节点、通信为边），检测异常的通信模式。特别适合 IoT 场景——正常 IoT 网络有固定的通信模式，异常设备的通信图与正常差异明显。
-
-**AutoEncoder**：学习正常流量的"压缩表示"，当新流量无法被很好地重建时判定为异常。无需标注攻击样本，适合检测未知攻击（零日攻击）。
+**约束**：算力常为嵌入式中央处理器（Central Processing Unit, CPU）/小型加速器；存储难留长历史；模型更新受带宽与变更窗口限制。具体延迟与功耗以实测为准，不宜把实验室数字直接当线速承诺[6][7]。
 
 ---
 
-## 边缘部署优化
+## 2. 深度学习 IDS 架构
 
-### 模型压缩技术
+### 2.1 模型形态对照（量级示意）
 
-在边缘网关（如 Cortex-A53 @1.2GHz, 1GB RAM）上部署 DL-IDS 需要模型压缩：
+下表中的 F1、延迟、模型大小来自不同论文与数据集，**不可直接横向当作排行榜**；仅用于理解数量级与部署倾向[1][6][7]。
 
-| 压缩技术 | 压缩比 | 精度损失 | 推理加速 | 实现难度 |
-|----------|--------|----------|----------|----------|
-| 剪枝 (Pruning) | 3-10x | 0.5-2% | 2-5x | 中 |
-| 量化 (INT8) | 4x | 0.5-1% | 2-4x | 低（TFLite 支持） |
-| 知识蒸馏 | 5-20x | 1-3% | 5-15x | 中 |
-| 神经架构搜索 (NAS) | 自动优化 | 可能提升 | 3-10x | 高 |
-| 低秩分解 | 2-5x | 1-2% | 2-3x | 中 |
+| 模型 | 典型能力 | 推理延迟倾向 | 模型体积倾向 | 适合输入 | 边缘可行性 |
+|------|----------|--------------|--------------|----------|-----------|
+| Random Forest | 结构化特征分类 | 很低 | 小 | 流统计特征 | 高 |
+| 1D-CNN | 局部字节/序列模式 | 低 | 小–中 | 原始包字节 | 高 |
+| LSTM | 时序阶段模式 | 中 | 中 | 时间序列流 | 中 |
+| Transformer | 长依赖 | 较高 | 大 | 长序列 | 需压缩 |
+| GNN | 拓扑异常 | 中 | 中 | 通信图 | 中 |
+| AutoEncoder | 无监督异常 | 低 | 很小 | 正常流量重构 | 高 |
 
-### 实际部署性能（CIC-IoT-2023 数据集）
-
-在树莓派 4B（Cortex-A72 @1.8GHz, 4GB RAM）上的实测：
-
-| 模型 | 原始精度 | 压缩后精度 | 吞吐量 (pkt/s) | 功耗 |
-|------|----------|-----------|---------------|------|
-| ResNet-18 (原始) | 0.972 | - | 1,200 | 5.2W |
-| ResNet-18 (INT8) | 0.972 | 0.968 | 3,800 | 4.1W |
-| MobileNet-v2 | 0.963 | - | 4,500 | 3.8W |
-| TinyML CNN | 0.951 | - | 12,000 | 2.5W |
-| Random Forest | 0.941 | - | 50,000 | 2.0W |
-
-对于千兆边缘网关（线速约 150 万 pkt/s），即使是最快的 TinyML CNN 也需要 100+ 个并行实例。实际方案是：先用轻量级规则引擎过滤明显正常/异常流量（处理 99%），只将可疑流量送入 DL 模型深度分析。
+一维卷积神经网络（1D Convolutional Neural Network, 1D-CNN）少依赖人工特征；长短期记忆网络（Long Short-Term Memory, LSTM）利于刻画扫描→利用→外传等阶段；图神经网络（Graph Neural Network, GNN）适合 IoT 固定拓扑下的异常边；自编码器（AutoEncoder）利于未知攻击初筛[6]。
 
 ---
 
-## 联邦入侵检测（Federated IDS）
+## 3. 边缘部署优化
 
-### 动机
+### 3.1 模型压缩
 
-单个边缘节点看到的攻击样本有限，模型容易过拟合本地流量模式。联邦学习允许多个边缘 IDS 协作训练，不共享原始流量数据：
+| 技术 | 压缩比倾向 | 精度影响倾向 | 实现难度 |
+|------|------------|--------------|----------|
+| 剪枝（Pruning） | 数倍 | 小幅下降常见 | 中 |
+| 量化 INT8 | 约 4× 权重体积 | 通常可控 | 低（工具链成熟） |
+| 知识蒸馏 | 数倍–十余倍 | 依赖教师/学生设计 | 中 |
+| 神经架构搜索（NAS） | 视搜索空间 | 可能持平或提升 | 高 |
 
-- 每个边缘网关用本地流量训练本地模型
-- 定期将模型更新（梯度/参数）聚合到联邦服务器
-- 聚合后的全局模型分发回各节点
+### 3.2 分层检测，而不是"每包跑大模型"
 
-### 联邦 IDS 架构设计
+千兆线速可达百万包/秒量级，单模型很难包打天下。实用流水线：
 
 ```
-            联邦服务器
-           /    |    \
-      模型聚合  |  模型分发
-         /      |      \
-   边缘IDS-1  边缘IDS-2  边缘IDS-3
-      |          |          |
-  [工厂A流量] [办公B流量] [医院C流量]
+原始流量 → 特征/DPI → 规则预过滤 → 轻量 ML →（可疑）重量模型 → 告警/阻断
 ```
 
-### 联邦 vs 集中式 vs 本地 IDS 对比
+| 层级 | 方法 | 速度倾向 | 作用 |
+|------|------|----------|------|
+| L1 | 签名/白名单 | 最高 | 已知坏/已知好快路径 |
+| L2 | 统计基线 | 高 | 粗异常 |
+| L3 | 轻量 CNN/RF | 中 | 主分类 |
+| L4 | Transformer/GNN 等 | 低 | 难例深挖 |
 
-| 指标 | 集中式（全部数据汇总训练） | 本地（各自训练） | 联邦学习 |
-|------|--------------------------|-----------------|----------|
-| 检测率 | 0.97（上限） | 0.89 | 0.95 |
-| 隐私 | 差（数据集中） | 好（数据不出） | 好（数据不出） |
-| 通信成本 | 极高（原始数据） | 零 | 低（仅模型更新） |
-| 对新攻击的适应 | 快（数据多） | 慢（数据少） | 中（协作学习） |
-| Non-IID 鲁棒性 | 不适用 | 不适用 | 关键挑战 |
+多数流量应在 L1–L2 结束；只有小比例可疑流进入深度模型[6][7]。
 
-### Non-IID 问题
-
-不同边缘节点的流量分布差异很大（工厂以 Modbus 为主、医院以 DICOM 为主、办公以 HTTP 为主）。这种 Non-IID（非独立同分布）会导致联邦学习收敛慢、全局模型在某些节点上表现差。
-
-解决方案：
-- **FedProx**：在本地训练中加正则项，限制本地模型偏离全局模型的程度
-- **个性化联邦**：每个节点保留一部分个性化层（如最后的分类头）
-- **聚类联邦**：将相似流量模式的节点分组，组内联邦
+树莓派等单板机上的吞吐与功耗随模型与特征管道变化很大；公开实验常见数千至数万流/包每秒量级，**不能外推为线速 IDS 产品指标**。
 
 ---
 
-## IoT 安全数据集
+## 4. 联邦入侵检测（Federated IDS）
 
-训练和评估 IDS 需要高质量数据集。IoT 领域的主流数据集：
+### 4.1 动机与架构
 
-| 数据集 | 年份 | 流量类型 | 攻击类型 | 样本量 | IoT 特异性 |
-|--------|------|----------|----------|--------|-----------|
-| NSL-KDD | 2009 | 通用网络 | 4 大类 | 125K | 低 |
-| UNSW-NB15 | 2015 | 通用网络 | 9 类 | 2.5M | 低 |
-| Bot-IoT | 2018 | IoT 僵尸网络 | DDoS/DoS/窃取 | 72M | 高 |
-| CIC-IoT-2023 | 2023 | 智能家居 IoT | 33 类攻击 | 47M | 很高 |
-| Edge-IIoT | 2022 | 工业 IoT | 14 类攻击 | 62M | 高（工业） |
-| TON_IoT | 2020 | 异构 IoT | 9 类攻击 | 22M | 高 |
-| IoT-23 | 2020 | 恶意 IoT 流量 | 僵尸网络 | 325M | 高 |
-
-### CIC-IoT-2023 深度介绍
-
-CIC-IoT-2023 是目前最全面的 IoT IDS 数据集（Canadian Institute for Cybersecurity）：
-
-- **设备覆盖**：105 种真实 IoT 设备（摄像头、门锁、音箱、灯泡、恒温器等）
-- **攻击类型**：33 种攻击，覆盖 DDoS（9 类）、DoS（4 类）、侦察（4 类）、Web 攻击（4 类）、暴力破解（5 类）、欺骗（4 类）、Mirai 变种（3 类）
-- **数据量**：47M 条流记录 + 原始 PCAP
-- **特征**：83 个网络流特征 + 原始 payload
-
----
-
-## 检测流水线设计
-
-一个实用的边缘 IDS 不只是一个 ML 模型，而是一个完整的流水线：
+单节点攻击样本少、流量分布偏；联邦学习（Federated Learning, FL）只交换模型更新、不上传原始流量，便于跨厂协作[2][5]。
 
 ```
-原始流量 -> 特征提取 -> 规则预过滤 -> ML检测 -> 告警/阻断 -> 上报/聚合
-    |                       |              |
-    v                       v              v
-  DPI引擎             白名单/黑名单    轻量模型/重量模型
+            联邦服务器（聚合）
+           /       |       \
+     边缘IDS-1  边缘IDS-2  边缘IDS-3
+     工厂A        办公B      医院C
 ```
 
-### 分层检测策略
+### 4.2 集中 / 本地 / 联邦对照
 
-| 层级 | 方法 | 处理速度 | 覆盖率 | 误报率 |
-|------|------|----------|--------|--------|
-| L1: 规则引擎 | 签名匹配/白名单 | 10M pkt/s | 60%已知攻击 | 极低 |
-| L2: 统计异常 | 流量基线偏差 | 1M pkt/s | 80%异常 | 中 |
-| L3: ML 分类 | CNN/LSTM | 10K pkt/s | 95%+ | 低 |
-| L4: 深度分析 | Transformer/GNN | 1K pkt/s | 98%+ | 很低 |
+| 指标 | 集中式 | 纯本地 | 联邦 |
+|------|--------|--------|------|
+| 检测潜力 | 通常最高（数据全） | 受本地样本限制 | 介于两者之间（视 Non-IID） |
+| 隐私 | 差 | 好 | 较好（仍有梯度泄露面） |
+| 通信 | 原始数据昂贵 | 无模型同步 | 仅更新 |
+| 主要风险 | 数据集中 | 过拟合本地 | 投毒、Non-IID |
 
-99% 的流量在 L1-L2 就被处理（正常放行或明确阻断），只有约 1% 的可疑流量需要 ML 模型分析。这样即使 ML 模型较慢，也能应对高速网络。
+### 4.3 Non-IID
 
----
-
-## 对抗性攻击对 IDS 的威胁
-
-攻击者可能故意修改攻击流量来绕过 ML-IDS：
-
-**逃逸攻击（Evasion Attack）**：在不改变攻击功能的前提下修改流量特征（如添加无用数据包、改变时间间隔），使 ML 模型判定为正常流量。
-
-**投毒攻击（Poisoning Attack）**：在联邦 IDS 中，恶意节点上传被污染的模型更新，降低全局模型的检测能力。
-
-**2024 年研究结果**：对最先进的 DL-IDS（F1=0.97），对抗样本攻击可将检测率降至 0.45（Hashemi et al., CCS 2024）。防御方法包括对抗训练、输入随机化、模型集成。
+工厂 Modbus、医院影像传输、办公超文本传输安全协议（Hypertext Transfer Protocol Secure, HTTPS）并存时，FedAvg 可能伤部分节点。可选：FedProx、个性化头、按流量画像聚类联邦[5]。
 
 ---
 
-## 实际部署案例
+## 5. IoT 安全数据集
 
-**案例 1：智慧园区边缘 IDS（华为 Atlas 500）**
+| 数据集 | 年份 | 侧重点 | IoT 相关性 |
+|--------|------|--------|-----------|
+| NSL-KDD | 2009 | 经典基准 | 低 |
+| UNSW-NB15 | 2015 | 通用网络 | 低 |
+| Bot-IoT | 2018 | 僵尸网络 | 高 |
+| TON_IoT | 2020 | 异构遥测 | 高 |
+| IoT-23 | 2020 | 恶意 IoT | 高 |
+| Edge-IIoT | 2022 | 工业向 | 高 |
+| CIC-IoT-2023 | 2023 | 智能家居多攻击类 | 很高 |
 
-- 硬件：Ascend 310 AI 芯片 + ARM Cortex-A55
-- 模型：轻量 Transformer (3M 参数，INT8 量化)
-- 覆盖：500 个 IoT 设备的东西向流量
-- 性能：50K pkt/s 线速检测，F1=0.964
-- 延迟：< 2ms 每包
-
-**案例 2：工业 SCADA 联邦 IDS（Siemens Ruggedcom）**
-
-- 部署：5 个工厂的工业网关联邦训练
-- 方案：FedAvg + DP (epsilon=5)
-- 效果：全局模型 F1=0.952，比各自本地训练提升 6%
-- 合规：满足 IEC 62443 要求的网络监控
+CIC-IoT-2023 宣称覆盖上百种真实设备与数十类攻击，并提供流特征与原始抓包；训练前仍需处理类别不平衡与特征泄漏风险[1]。Edge-IIoT 更偏工业场景对照[4]。
 
 ---
 
-## 2024-2025 研究趋势
+## 6. 对抗威胁
 
-**基于大模型的 IDS**：用预训练 Transformer（如 NetGPT）理解网络协议语义，实现跨协议的异常检测。
+**逃逸（Evasion）**：保持攻击效果同时扰动特征（填充、时序抖动），使分类器判为正常。
 
-**自适应 IDS**：模型能自动检测概念漂移（网络流量模式随时间变化），并在线更新自己。
+**投毒（Poisoning）**：联邦场景下恶意节点上传有害更新，削弱全局检测。
 
-**可解释 IDS**：安全运维人员需要知道"为什么报警"——SHAP/LIME 解释 ML 模型的检测决策。
+公开研究显示，强对抗扰动可显著拉低深度学习 IDS 的有效检测率；具体降幅依赖威胁模型与是否对抗训练，引用单篇会议结果时不要写成"所有 DL-IDS 都会降到某固定 F1"[3]。防御方向：对抗训练、输入随机化、模型集成、联邦端异常更新检测。
 
-**Digital Twin + IDS**：用数字孪生模拟 IoT 网络，在虚拟环境中训练和测试 IDS，再部署到真实网络。
+---
+
+## 7. 部署案例（公开材料量级）
+
+**智慧园区边缘 IDS**：厂商白皮书常给出"万级包/秒 + 毫秒级延迟 + 高 F1"组合，需在相同流量镜像与标签定义下复测[10]。
+
+**工业联邦 IDS**：多厂 FedAvg + 差分隐私（Differential Privacy, DP）预算时，全局模型相对本地常有几个百分点的提升报道，但 ε 与效用需按合规重估[2][5]。
+
+---
+
+## 8. 局限、挑战与可改进方向
+
+### 1. 实验室指标 ≠ 线速产品
+
+**局限**：数据集离线 F1 很高，特征提取与缓冲一上线就成为瓶颈；镜像口丢包会制造盲区[1][7]。
+**改进**：以"特征管道+模型"联合压测；报告每秒流数、尾延迟与丢包率；规则层承担明确已知攻击。
+
+### 2. 概念漂移与设备变更
+
+**局限**：新设备入网、固件升级、班次变化会让基线失效，误报抬升。
+**改进**：漂移监测；影子模式验证新模型；按设备画像分模型而非全球一个头。
+
+### 3. 联邦 Non-IID 与投毒
+
+**局限**：跨域聚合可能伤害局部召回；恶意参与方威胁真实存在[2][3]。
+**改进**：鲁棒聚合（如范数裁剪、Krum 类）；参与方准入与更新审计；关键域保留本地专家模型。
+
+### 4. 可解释性不足
+
+**局限**：运维需要"为何告警"；黑盒 CNN/Transformer 难直接用于取证。
+**改进**：输出贡献特征与同类历史事件；规则命中与 ML 分数分栏展示。
+
+### 5. 标签与伦理
+
+**局限**：生产网难标攻击；红队流量与真实 APT 差大。
+**改进**：合成攻击+专家复核；与数字孪生联训；严格授权测试范围。
 
 ---
 
 ## 参考文献
 
-1. Sharafaldin, I., et al. "CIC-IoT-2023: A Real-World Dataset for IoT Network Intrusion Detection." IEEE Access, 2023.
-2. Mothukuri, V., et al. "Federated Learning-Based Intrusion Detection System: A Systematic Review." IEEE TIFS, vol. 19, 2024.
-3. Hashemi, M., et al. "Adversarial Robustness of DL-based Network Intrusion Detection." CCS, 2024.
-4. Ferrag, M. A., et al. "Edge-IIoTset: A New Comprehensive Dataset for IoT Cybersecurity." IEEE Access, vol. 10, 2022.
-5. Li, D., et al. "FedIoT: Federated Learning for IoT Intrusion Detection with Non-IID Data." IEEE IoT Journal, vol. 11, no. 3, 2024.
-6. Mirsky, Y., et al. "Kitsune: An Ensemble of Autoencoders for Online Network Intrusion Detection." NDSS, 2018.
-7. Lin, Z., et al. "TinyML-Based Intrusion Detection for Resource-Constrained IoT Gateways." ACM SenSys, 2024.
-8. Tavallaee, M., et al. "A Detailed Analysis of the KDD Cup 99 Data Set." IEEE CISDA, 2009.
-9. Koroniotis, N., et al. "Towards the Development of Realistic Botnet Dataset in the IoT." Future Generation Computer Systems, vol. 100, 2019.
-10. Huawei Technologies. "Atlas 500 AI Edge Station: IoT Security Solution." Technical Whitepaper, 2024.
+[1] I. Sharafaldin / E. C. P. Neto et al., "CIC-IoT-2023" 相关数据集与论文, IEEE Access, 2023.
+[2] V. Mothukuri et al., "Federated-Learning-Based Intrusion Detection System: A Systematic Review," IEEE TIFS, 2024.
+[3] M. Hashemi et al., "Adversarial Robustness of DL-based Network Intrusion Detection," ACM CCS, 2024.
+[4] M. A. Ferrag et al., "Edge-IIoTset: A New Comprehensive Realistic Cyber Security Dataset of IoT and IIoT Applications," IEEE Access, 2022.
+[5] D. Li et al., "Federated Learning for IoT Intrusion Detection with Non-IID Data," IEEE Internet of Things Journal, 2024.
+[6] Y. Mirsky et al., "Kitsune: An Ensemble of Autoencoders for Online Network Intrusion Detection," NDSS, 2018.
+[7] Z. Lin et al., "TinyML-Based Intrusion Detection for Resource-Constrained IoT Gateways," ACM SenSys, 2024.
+[8] M. Tavallaee et al., "A Detailed Analysis of the KDD Cup 99 Data Set," IEEE CISDA, 2009.
+[9] N. Koroniotis et al., "Towards the Development of a Realistic Botnet Dataset in the Internet of Things," Future Generation Computer Systems, 2019.
+[10] Huawei Technologies, "Atlas 500 AI Edge Station" 相关 IoT 安全方案白皮书, 2024.
+[11] Canadian Institute for Cybersecurity, IDS 数据集文档与特征说明, 近年更新.
+[12] R. Doshi et al., "Machine Learning DDoS Detection for Consumer Internet of Things Devices," IEEE S&P Workshops, 2018.

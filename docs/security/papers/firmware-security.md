@@ -3,317 +3,206 @@ schema_version: '1.0'
 id: firmware-security
 title: IoT固件安全分析：从提取到防护的全链路
 layer: 6
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: technical_analysis
+difficulty: advanced
+reading_time: 30
+prerequisites:
+  - secure-boot-root-of-trust
+  - ota-secure-update
+  - sbom-software-supply-chain
+tags:
+- 固件安全
+- 逆向工程
+- 安全启动
+- OTA
+- Fuzzing
+- SBOM
+- MCUboot
+- 漏洞分析
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # IoT固件安全分析：从提取到防护的全链路
 
-> 难度：🟠 挑战 | 领域：固件安全/逆向工程 | 更新：2025-06
+> **难度**：🟠 进阶 | **领域**：固件安全 / 逆向工程 | **阅读时间**：约 30 分钟
 
----
+## 日常类比
 
-## 一句话总结
+家用路由器的“系统”往往不是桌面操作系统，而是几 MB 到几十 MB 的固件：内核、应用、配置甚至密钥被打包装进 Flash。
 
-IoT 设备的固件是攻防的核心战场——攻击者通过提取和逆向固件发现漏洞，防御者通过安全启动链和签名验证保护固件完整性。本文覆盖固件提取方法、逆向工程技术、自动化漏洞发现（Fuzzing/符号执行）以及安全启动链的设计。
+拿到固件并拆开分析，就像拿到一栋楼的施工图与钥匙柜清单——既能帮厂商找漏洞，也能被攻击者用来找默认口令、过时组件和未鉴权调试口。攻防双方用的是同一套“拆包—理解—验证”流程。
 
----
+## 摘要
 
-## 从日常场景说起
+物联网（Internet of Things, IoT）固件是攻防焦点。本文覆盖提取路径、静态/动态逆向、模糊测试（Fuzzing）与符号执行、安全启动链与安全空中下载（Over-The-Air, OTA）更新，并对照 OWASP 固件测试方法与自动化扫描工具。行业统计数字口径不一，文中作软化处理并以参考文献为线索。
 
-你家路由器的"系统"是什么？不是 Windows 也不是 macOS，而是一个几 MB 大的"固件"——它包含了操作系统（通常是精简 Linux）、应用程序、配置文件和密钥，全部打包成一个二进制文件烧写在 Flash 芯片里。
+## 1 现状：公开报告中的常见问题
 
-如果有人能拿到这个固件文件并分析它，就可能找到硬编码的密码、不安全的服务、已知漏洞的老旧组件——这就是固件安全分析。好的一面：安全研究员用同样的方法帮厂商找到问题；坏的一面：攻击者也在用同样的方法找攻击入口。
+Finite State 等机构的年度固件分析报告[1]常给出“平均 CVE 数、硬编码凭证比例、安全启动普及率”等指标。不同年份样本与检测方法不同，**具体百分比应回查原报告**，下文只保留定性结论：
 
----
+| 问题类型 | 公开报告中的常见趋势 | 工程含义 |
+|----------|----------------------|----------|
+| 已知 CVE 堆积 | 单镜像常含大量已知漏洞 | 需要 SBOM + 持续补丁 |
+| 不安全 API / 过时组件 | 占比高 | 供应链与 SDK 老化 |
+| 硬编码凭证 | 反复出现 | 提取固件即可横向移动 |
+| 安全 OTA / 安全启动 | 普及率仍有限 | 被攻破后难恢复信任 |
 
-## IoT 固件安全现状
+根因常是：硬件公司软件安全投入不足、SDK 多年不升级、更新通道缺失。
 
-### 2024 年行业数据
+## 2 固件提取
 
-Finite State 2024 报告（分析了 4000+ 固件镜像）的关键发现：
+| 方法 | 难度 | 典型工具/设备 | 风险 |
+|------|------|---------------|------|
+| 官网/支持站下载 | 低 | 浏览器 | 无 |
+| 截获 OTA | 低–中 | 抓包；若明文则易得 | 无设备损伤 |
+| UART/JTAG | 中 | USB‑TTL、OpenOCD | 低 |
+| SPI Flash 直读 | 中 | 编程器；或需热风 | 可能损硬件 |
+| 芯片脱焊 | 高 | BGA 返修 | 高 |
+| 故障注入绕过读保护 | 很高 | 毛刺/激光等 | 可能砖机 |
 
-| 指标 | 数值 |
-|------|------|
-| 平均每个固件的已知 CVE | 27 个 |
-| 高危/严重 CVE 占比 | 12% |
-| 使用已知不安全函数的固件比例 | 78% |
-| 包含硬编码凭证的固件比例 | 21% |
-| 使用 5 年以上老旧组件的比例 | 63% |
-| 支持安全 OTA 更新的比例 | 34% |
-| 实现安全启动的比例 | 28% |
+### 常见格式
 
-根因分析：IoT 厂商往往是硬件公司，软件安全能力薄弱。为了节省成本和缩短开发周期，大量使用过时的 SDK 和开源组件，且从不更新。
+| 格式 | 常见设备 | 提取线索 |
+|------|----------|----------|
+| SquashFS + 内核 | 路由器、NVR | binwalk、unsquashfs |
+| JFFS2 / UBIFS | 网关类 | jefferson、ubi_reader |
+| 裸机 binary | MCU | 直接进 Ghidra |
+| 加密/签名容器 | 高安全产品 | 先破密钥或从调试口拿 |
 
----
+大规模嵌入式固件安全研究的早期基线见 Costin 等[2]。
 
-## 固件提取
+## 3 逆向与仿真
 
-要分析固件，第一步是获取它。从易到难有多种方法：
+### 3.1 工具链
 
-### 提取方法对比
+| 工具 | 用途 | 开源 |
+|------|------|------|
+| Ghidra | 反汇编/反编译 | 是 |
+| IDA Pro / Binary Ninja | 商业逆向 | 否 |
+| radare2/rizin | CLI 逆向 | 是 |
+| binwalk | 解包 | 是 |
+| EMBA / Firmwalker | 自动化检查 | 是 |
+| FirmAE 等 | 系统级仿真 | 是 |
 
-| 方法 | 难度 | 需要的设备 | 成功率 | 风险 |
-|------|------|-----------|--------|------|
-| 官网下载 | 低 | 浏览器 | 中（很多厂商不提供） | 无 |
-| OTA 更新截获 | 低 | 抓包工具 | 高（如果 OTA 不加密） | 无 |
-| UART/JTAG 读取 | 中 | TTL转USB, OpenOCD | 高 | 低 |
-| SPI Flash 直读 | 中 | SPI 编程器 + 热风枪 | 高 | 可能损坏设备 |
-| 芯片脱焊读取 | 高 | BGA 返修台 | 很高 | 需要经验 |
-| 侧信道辅助提取 | 高 | 示波器 + 专用工具 | 中 | 需要专业知识 |
-| 故障注入绕过保护 | 很高 | 故障注入设备 | 中 | 可能永久损坏 |
+### 3.2 静态流程
 
-### 常见固件格式
+解包 → 搜口令/密钥/证书 → 逆向 httpd 等关键二进制 → 识别第三方库版本 → 匹配 CVE。
 
-| 格式 | 常见设备 | 文件系统 | 提取工具 |
-|------|----------|----------|----------|
-| Squashfs + 内核 | 路由器, NVR | SquashFS | binwalk, unsquashfs |
-| JFFS2 | 旧款路由器 | JFFS2 | jefferson |
-| UBI/UBIFS | 现代 IoT 网关 | UBIFS | ubi_reader |
-| 裸机 binary | MCU 设备 | 无文件系统 | 直接加载到 Ghidra |
-| 加密固件 | 高端设备 | 加密容器 | 需要先破解密钥 |
-| 签名+加密 | 安全设备 | 多层保护 | 极难提取有效内容 |
+### 3.3 动态仿真
 
----
+FirmAE/QEMU 等可在 PC 上模拟 ARM/MIPS 固件网络栈[3]。论文报告的“成功仿真率”依赖样本集，部署时以本仓库固件实测为准，不宜写死单一百分比。
 
-## 逆向工程
+## 4 自动化漏洞发现
 
-提取固件后，下一步是理解它的结构和逻辑。
+### 4.1 Fuzzing 挑战与工具
 
-### 工具链
-
-| 工具 | 用途 | 支持架构 | 开源 |
-|------|------|----------|------|
-| Ghidra | 反汇编+反编译 | ARM/MIPS/x86/RISC-V/+ | 是（NSA 发布） |
-| IDA Pro | 反汇编+反编译 | 几乎所有 | 否（商业） |
-| Binary Ninja | 反汇编+中间表示分析 | 主流架构 | 否（商业） |
-| radare2/rizin | 命令行逆向框架 | 广泛支持 | 是 |
-| binwalk | 固件解包/文件系统提取 | N/A | 是 |
-| EMBA | 自动化固件安全扫描 | Linux-based | 是 |
-| Firmwalker | 固件静态信息提取 | Linux-based | 是 |
-| FirmAE | 固件仿真运行 | ARM/MIPS | 是 |
-
-### 静态分析流程
-
-1. **固件解包**：用 binwalk 识别和提取文件系统、内核、引导加载程序
-2. **文件系统分析**：扫描硬编码密码、私钥、配置文件
-3. **二进制分析**：用 Ghidra 逆向关键二进制（如 httpd、管理进程）
-4. **组件识别**：通过字符串和库版本确定使用的开源组件及版本
-5. **CVE 匹配**：将组件版本与已知 CVE 数据库比对
-
-### 动态分析（仿真）
-
-很多漏洞只在运行时才能触发。FirmAE/QEMU 可以在 PC 上模拟运行 IoT 固件：
-
-- 用 QEMU 模拟 ARM/MIPS CPU
-- 用 nvram 模拟设备配置存储
-- 用虚拟网络接口模拟网络环境
-- 成功仿真率：约 79%（FirmAE 论文数据）
-
-仿真后可以：登录设备 Web 界面、发送网络请求、运行 exploit 验证漏洞。
-
----
-
-## 自动化漏洞发现
-
-### Fuzzing（模糊测试）
-
-Fuzzing 的原理：向目标程序输入大量畸形/随机数据，观察是否导致崩溃或异常行为。
-
-**IoT Fuzzing 的特殊挑战**：
-
-| 挑战 | 说明 | 解决方案 |
+| 挑战 | 说明 | 常见对策 |
 |------|------|----------|
-| 无法直接在设备上跑 | MCU 没有 OS 支持 | 仿真 + rehosting |
-| 交叉编译复杂 | ARM/MIPS/RISC-V | 仿真器辅助 |
-| 状态依赖 | 需要特定协议状态才能触发深层代码 | 协议感知 fuzzing |
-| 外设依赖 | 固件访问特定硬件寄存器 | HAL 模拟/抽象 |
-| 反馈困难 | 裸机固件无覆盖率反馈 | 硬件辅助/仿真插桩 |
+| 设备上难跑覆盖率 | MCU 资源少 | 仿真 / rehosting |
+| 外设依赖 | MMIO、中断 | 精确 MMIO 模型[4] |
+| 协议状态机 | 需握手后才到深路径 | 协议感知种子 |
+| 反馈弱 | 裸机缺 sanitizer | 仿真插桩 / 硬件追踪 |
 
-**主要 IoT Fuzzer 对比**：
+| 工具（代表） | 思路 | 适用 |
+|--------------|------|------|
+| Fuzzware[4] | 精确 MMIO + 模糊 | Cortex‑M 等 |
+| SaTC 等 | Web 入口提取 + fuzz | Linux IoT |
+| Greenhouse 等 LLM 辅助[9] | 种子/重托管辅助 | 研究前沿 |
+| AFL 家族 + 系统仿真 | 经典覆盖率引导 | 能仿真的 Linux 固件 |
 
-| 工具 | 方法 | 目标 | 发现漏洞数 | 适用范围 |
-|------|------|------|-----------|----------|
-| Fuzzware (2022) | 仿真 + 硬件模型 | MCU 固件 | 30+ (论文报告) | Cortex-M |
-| SaTC (2021) | 前端入口点提取 + fuzzing | Linux IoT | 33 零日 | 路由器/摄像头 |
-| FirmFuzz (2019) | 系统仿真 + AFL | Linux IoT | 12 零日 | 通用 |
-| Greenhouse (2024) | LLM 辅助 + 选择性仿真 | MCU 固件 | 45+ | ARM Cortex-M |
-| DIANE (2021) | 应用伴侣 app 分析 + fuzzing | IoT 设备 | 11 零日 | 有配套 app 的 |
+### 4.2 符号执行
 
-### 符号执行（Symbolic Execution）
+angr、KLEE、Triton 等可生成触发路径的输入[7]。限制是路径爆炸与环境建模成本；常与 fuzz 组合而非替代。
 
-符号执行将程序输入设为"符号变量"（而非具体值），沿着所有可能的执行路径推导约束条件。当约束可满足时，自动生成能触发特定代码路径的具体输入。
+### 4.3 LLM 辅助
 
-**在 IoT 固件分析中的应用**：
+用于注释反编译、生成协议种子、识别常见缺陷模式；需人工验证，避免幻觉当 CVE。
 
-- **angr**：Python 符号执行框架，支持 ARM/MIPS，可分析固件二进制
-- **KLEE**：LLVM 级符号执行，需要源码
-- **Triton**：动态符号执行（concolic），适合跟踪具体执行路径
-
-**限制**：路径爆炸（分支太多时不可行）、环境建模困难（需要模拟 OS/硬件）。
-
-### 2024 年新趋势：LLM 辅助漏洞发现
-
-大语言模型正在被用于辅助固件安全分析：
-
-- **漏洞模式识别**：LLM 理解反编译代码并识别常见漏洞模式（缓冲区溢出、格式化字符串等）
-- **Fuzzing 种子生成**：LLM 理解协议格式后生成高质量的 fuzzing 输入
-- **逆向辅助**：LLM 为反编译的函数命名、添加注释
-- Google Project Zero 和 DARPA AIxCC 项目已展示 LLM 辅助发现真实 CVE 的能力
-
----
-
-## 安全启动链
-
-### 什么是安全启动？
-
-安全启动（Secure Boot）确保设备从上电到运行应用程序的每一步都经过验证——只有被信任的代码才能执行。
-
-### 信任链模型
+## 5 安全启动与信任根
 
 ```
-硬件信任根 (ROM/eFuse)
-    | 验证签名
-    v
-第一级引导加载程序 (BL1)
-    | 验证签名
-    v
-第二级引导加载程序 (BL2/U-Boot)
-    | 验证签名
-    v
-操作系统内核
-    | 验证签名
-    v
-应用程序/服务
+ROM/eFuse 信任根 → BL1 → BL2/U-Boot → 内核 → 应用
+         （每级验证下一级签名，失败则停）
 ```
 
-每一级在启动下一级之前，用上一级传递的公钥验证下一级的签名。如果任何一级验证失败，启动终止。
+| 信任根 | 强度 | 灵活性 | 典型形态 |
+|--------|------|--------|----------|
+| Mask ROM | 高 | 无 | 多数 MCU |
+| OTP/eFuse | 高 | 低 | i.MX、STM32H7 等 |
+| 独立安全芯片 | 很高 | 中 | ATECC、SE050 等 |
+| PUF + ROM | 高 | 中 | 抗克隆取向 |
 
-### 信任根类型
+**MCUboot** 是 MCU 场景常见开源安全引导：支持多种签名算法、版本回滚保护、可选镜像加密与 A/B 槽[6]。Flash 占用随配置变化（数十 KB 量级），以官方文档为准。
 
-| 信任根 | 安全强度 | 成本 | 灵活性 | 典型芯片 |
-|--------|----------|------|--------|----------|
-| Mask ROM | 高（不可修改） | 低 | 无（固化） | 大部分 MCU |
-| OTP (eFuse) | 高（一次性写入） | 中 | 低 | NXP i.MX, STM32H7 |
-| 安全芯片 | 很高 | 高 | 中 | ATECC608B, SE050 |
-| PUF + ROM | 很高 | 低 | 中 | Intrinsic ID 方案 |
+## 6 安全 OTA
 
-### MCUboot：IoT 安全启动的事实标准
+OTA 是补丁主通道，也是“一次攻破、百万设备中招”的通道。
 
-MCUboot 是 Zephyr/Apache Mynewt 生态的开源安全引导加载程序：
+IETF SUIT 定义面向受限设备的清单（Manifest）与 COSE 签名更新架构[5]。
 
-- 支持 RSA-2048/ECDSA-P256/Ed25519 签名验证
-- 支持回滚保护（版本号递增，不允许降级）
-- 支持加密固件镜像（出厂加密，启动时解密）
-- 占用 Flash：约 24-48 KB（取决于配置）
-- 支持双分区 (A/B) 更新和回退
+| 方案 | 签名 | 传输保护 | 回滚保护 | 适合 |
+|------|------|----------|----------|------|
+| 明文 HTTP + 校验和 | 弱 | 弱 | 常无 | 不推荐 |
+| HTTPS + 哈希 | 完整性有限 | TLS | 常无 | 最低基线 |
+| MCUboot + SUIT | 强 | COSE 等 | 版本单调 | MCU |
+| Mender / 云厂商 OTA | 强 | mTLS/TLS | 通常有 | Linux IoT |
 
----
+## 7 评估框架与案例（示意）
 
-## 安全 OTA 更新
+OWASP 固件安全测试方法覆盖信息泄露、过时组件、危险服务、弱密码学、权限与更新机制等[10]。EMBA 等工具可自动化部分检查[8]。
 
-### 为什么 OTA 安全如此重要？
+| 测试项 | 常见发现类型 |
+|--------|--------------|
+| 密钥与口令 | 硬编码、测试账号残留 |
+| 组件清单 | 多年未升级的 OpenSSL/BusyBox |
+| 网络服务 | Telnet、未鉴权调试口 |
+| 更新 | 无签名、可降级 |
 
-OTA 是修复漏洞的唯一途径（不可能派人去更新每个设备），但也是攻击面：如果 OTA 通道被攻破，攻击者可以向数百万设备推送恶意固件。
+真实案例模式（细节以 CVE 公告为准）：Web 诊断命令注入 → RCE；无回滚保护的降级攻击；固件内硬编码设备间对称密钥。修复分别对应输入净化、MCUboot 版本检查、每设备唯一密钥 + 双向认证。
 
-### SUIT（Software Updates for IoT）标准
+## 8 局限、挑战与可改进方向
 
-IETF SUIT 工作组定义了面向资源受限设备的安全更新架构：
+### 1. 加密固件与读保护提高分析成本，也提高盲区
 
-- **Manifest**：描述更新内容的签名元数据（版本、大小、哈希、依赖关系）
-- **Envelope**：包含 Manifest 和固件镜像
-- **COSE 签名**：使用 CBOR Object Signing and Encryption
-- **最小实现**：约 4KB ROM, 1KB RAM
+**局限**：无法提取时，厂商与第三方都难做完整审计；安全靠“藏”不靠“可验证”。
+**改进**：向客户/实验室提供受控审计镜像或 SBOM + 签名证明；读保护与安全启动并行，而不是只靠混淆。
 
-### OTA 安全方案对比
+### 2. 仿真成功不等于漏洞可利用
 
-| 方案 | 签名验证 | 加密传输 | 回滚保护 | 增量更新 | 适合设备 |
-|------|----------|----------|----------|----------|----------|
-| 无安全 OTA | 无 | 无 | 无 | 无 | 不推荐 |
-| HTTPS + 校验和 | 弱（仅完整性） | TLS | 无 | 可选 | 基本保护 |
-| MCUboot + SUIT | ECDSA/Ed25519 | COSE_Encrypt | 版本号递增 | 是 (bsdiff) | IoT 终端 |
-| Mender.io | RSA/ECDSA | mTLS | 是 | 是 (delta) | Linux IoT |
-| AWS IoT OTA | Code Signing | TLS 1.2 | 是 | 是 | AWS 生态 |
+**局限**：QEMU 外设模型不完整会导致漏报/误报；设备特有 DMA 路径仿真不到。
+**改进**：关键漏洞在实机或硬件在环上复现；维护外设模型回归集。
 
----
+### 3. Fuzz 发现量不等于产品风险下降
 
-## 固件安全评估框架
+**局限**：论文“N 个零日”难对比；修复与 OTA 覆盖率才是风险函数。
+**改进**：以“可利用性 + 影响面 + 补丁时效”排序；绑定 CRA/SBOM 义务做组件级追踪。
 
-### OWASP Firmware Security Testing Methodology
+### 4. 安全启动被错误配置抵消
 
-OWASP 定义的固件安全测试清单：
+**局限**：调试熔丝未烧、签名密钥共用、允许降级，使信任链名存实亡。
+**改进**：量产熔丝清单；每产品线独立签名密钥；强制单调版本；出厂抽检。
 
-| 测试项 | 检查内容 | 常见发现 |
-|--------|----------|----------|
-| 信息泄露 | 硬编码密码、API key、私钥 | 21% 固件含硬编码凭证 |
-| 过时组件 | 已知漏洞的库/内核版本 | 63% 使用 5 年以上组件 |
-| 不安全服务 | Telnet/FTP/无鉴权 debug 端口 | 44% 有不必要的服务暴露 |
-| 加密弱点 | 弱算法(MD5/DES)、密钥管理缺陷 | 31% 使用过时加密 |
-| 权限问题 | root 运行服务、SUID 滥用 | 56% 服务以 root 运行 |
-| 更新机制 | 无签名、无回滚保护 | 66% 更新不验签名 |
+### 5. 工具链与法规要求脱节
 
-### 自动化评估工具
+**局限**：只会 binwalk 不够满足欧盟 CRA 等对漏洞处理与 SBOM 的要求。
+**改进**：EMBA/sca 流水线进 CI；维护机器可读 SBOM；披露与 SLA 流程产品化。
 
-**EMBA（Embedded Firmware Analyzer）**：
+## 9 趋势（简）
 
-- 全自动固件安全扫描
-- 支持：CVE 匹配、密码搜索、加密分析、配置检查
-- 输出：HTML 报告 + 严重度评分
-- 覆盖：超过 150 项检查规则
-- 2024 年已集成 LLM 辅助分析（GPT-4 解释漏洞影响）
-
----
-
-## 真实漏洞案例分析
-
-### 案例 1：TP-Link 路由器命令注入 (CVE-2024-XXXX)
-
-- 漏洞：Web 管理界面的 ping 诊断功能未过滤用户输入
-- 发现方法：binwalk 解包 -> Ghidra 逆向 httpd -> 发现 system() 调用
-- 影响：远程代码执行（RCE），无需认证
-- 修复：输入验证 + 使用安全的 API 替代 system()
-
-### 案例 2：某智能门锁固件降级攻击 (2024)
-
-- 漏洞：OTA 更新没有回滚保护，可以推送旧版固件
-- 攻击链：MITM 截获更新请求 -> 替换为含已知漏洞的旧版固件 -> 利用旧漏洞获取控制
-- 修复：MCUboot 启用版本号递增检查
-
-### 案例 3：工业 PLC 硬编码密钥 (2024)
-
-- 漏洞：固件中硬编码了用于设备间通信的对称密钥
-- 影响：任何获取固件的人都能伪造通信
-- 发现方法：EMBA 自动扫描 -> 字符串搜索发现 128-bit 密钥
-- 正确做法：使用 PUF 生成设备唯一密钥 + TLS mutual auth
-
----
-
-## 2024-2025 发展趋势
-
-**SBOM（Software Bill of Materials）强制化**：EU CRA 和美国行政令要求 IoT 设备提供 SBOM，列出所有软件组件及版本。这使得漏洞追踪和修复更加可行。
-
-**Rust for IoT Firmware**：Rust 的内存安全特性从根源上消除缓冲区溢出类漏洞。Embassy（Rust 嵌入式异步框架）正在被越来越多的 IoT 项目采用。
-
-**eBPF for Firmware Monitoring**：在 Linux IoT 设备上用 eBPF 做运行时行为监控，检测异常系统调用和内存访问模式。
-
-**AI 驱动的漏洞挖掘**：LLM + Fuzzing + 符号执行的组合正在大幅提升漏洞发现效率。Google 的 OSS-Fuzz + AI 项目在 2024 年发现了 26 个新的开源组件漏洞。
-
----
+SBOM 强制化、Rust 等内存安全语言用于新固件、Linux IoT 上 eBPF 运行时监控、LLM+fuzz 提效，都在推进，但都需与安全启动/OTA 闭环结合才有防御深度。
 
 ## 参考文献
 
-1. Finite State. "The State of IoT/Connected Device Security 2024." Annual Report, 2024.
-2. Costin, A., et al. "A Large-Scale Analysis of the Security of Embedded Firmwares." USENIX Security, 2014.
-3. Chen, D., et al. "FirmAE: Towards Large-Scale Emulation of IoT Firmware for Dynamic Analysis." USENIX Security, 2020.
-4. Scharnowski, T., et al. "Fuzzware: Using Precise MMIO Modeling for Effective Firmware Fuzzing." USENIX Security, 2022.
-5. IETF. "SUIT: Software Updates for Internet of Things." RFC 9019 / draft-ietf-suit-manifest, 2024.
-6. MCUboot Project. "MCUboot: Secure Boot for 32-bit Microcontrollers." Documentation, 2024.
-7. Shoshitaishvili, Y., et al. "SOK: (State of) The Art of War: Offensive Techniques in Binary Analysis." IEEE S&P, 2016.
-8. EMBA Project. "EMBA: The Firmware Security Analyzer." GitHub, 2024.
-9. Feng, Q., et al. "Greenhouse: LLM-assisted Firmware Rehosting and Fuzzing." USENIX Security, 2024.
-10. OWASP. "Firmware Security Testing Methodology." OWASP IoT Project, 2024.
+[1] Finite State, "The State of IoT/Connected Device Security," Annual Report, 2024（具体统计以原报告表格为准）.
+[2] A. Costin et al., "A Large-Scale Analysis of the Security of Embedded Firmwares," USENIX Security, 2014.
+[3] D. Chen et al., "FirmAE: Towards Large-Scale Emulation of IoT Firmware for Dynamic Analysis," USENIX Security, 2020.
+[4] T. Scharnowski et al., "Fuzzware: Using Precise MMIO Modeling for Effective Firmware Fuzzing," USENIX Security, 2022.
+[5] IETF, "SUIT: Software Updates for Internet of Things," RFC 9019 及 manifest 相关草案/RFC, 2021–2024.
+[6] MCUboot Project, "MCUboot: Secure Boot for 32-bit Microcontrollers," Documentation, 2024.
+[7] Y. Shoshitaishvili et al., "SOK: (State of) The Art of War: Offensive Techniques in Binary Analysis," IEEE S&P, 2016.
+[8] EMBA Project, "EMBA: The Firmware Security Analyzer," GitHub, 2024.
+[9] Q. Feng et al., "Greenhouse: LLM-assisted Firmware Rehosting and Fuzzing," USENIX Security, 2024（或同行评议最终版）.
+[10] OWASP, "Firmware Security Testing Methodology," OWASP IoT Project, 近年版本.
+[11] EU Cyber Resilience Act (CRA) 相关文本与指导, 2024–2026.
+[12] Google OSS-Fuzz / AI 辅助漏洞发现公开材料, 2023–2024.

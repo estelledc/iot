@@ -3,418 +3,185 @@ schema_version: '1.0'
 id: secure-multiparty-computation
 title: 安全多方计算 MPC 在 IoT 中的应用
 layer: 6
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 25
-prerequisites: UNKNOWN
-tags: []
+reading_time: 24
+prerequisites:
+  - homomorphic-encryption-practical
+  - differential-privacy-iot
+tags:
+- MPC
+- 安全多方计算
+- 秘密共享
+- SPDZ
+- 隐私计算
+- 混淆电路
+- IoT隐私
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 安全多方计算 MPC 在 IoT 中的应用
 
-> **难度**：🟡 中级 | **领域**：隐私计算、密码学 | **阅读时间**：约 25 分钟
-
----
+> **难度**：🟡 中级 | **领域**：隐私计算、密码学 | **阅读时间**：约 24 分钟
 
 ## 日常类比
 
-想象三个邻居想知道他们三家的平均月收入，但谁都不想暴露自己的实际工资。传统做法需要一个"可信第三方"——比如找一个大家都信任的公证人来收集数据、算平均值，再把结果告诉大家。
+三个邻居想算平均月收入，却不愿暴露各自工资。传统做法找“可信公证人”代收代算。
 
-安全多方计算（Secure Multi-Party Computation, MPC）的厉害之处在于：不需要这个公证人。三个邻居可以通过一套巧妙的数学协议，各自只交换加密片段，最终共同计算出平均工资，但谁也无法推断出另外两个人的具体数字。
+安全多方计算（Secure Multi-Party Computation, MPC）不需要这个公证人：各方只交换加密或随机份额，最终得到约定函数结果，却推不出他人输入。物联网（Internet of Things, IoT）里，这意味着多网关可联合统计用电或训练模型，而不必汇集原始读数。[10]
 
-在 IoT 场景中，这意味着：多个智能家居设备可以联合统计用电模式而不暴露各家的具体用电数据；多家医院的可穿戴设备数据可以联合训练疾病预测模型而不需要汇集原始患者数据。MPC 把"数据可用而不可见"从理论变成了工程实践。
+## 1. 核心概念与安全模型
 
----
+### 1.1 目标
 
-## 1. MPC 核心概念与安全模型
-
-### 1.1 形式化定义
-
-MPC 的目标用一句话概括：n 个参与方各持有私有输入 x₁, x₂, ..., xₙ，希望共同计算一个函数 f(x₁, x₂, ..., xₙ)，使得每个参与方只学到计算结果，不泄露其他方的输入。
-
-安全性的核心保证是：MPC 协议的执行应当与"存在一个理想的可信第三方"等价——如果你信不出在理想世界和现实协议之间的区别，这个协议就是安全的。这叫做**理想-现实模拟范式**（Ideal-Real Simulation Paradigm）。
+n 方各持私有输入 x₁…xₙ，共同计算 f(x₁…xₙ)，只学到允许输出。安全性常用**理想-现实模拟范式**：现实协议应与“理想可信第三方代算”不可区分。[10]
 
 ### 1.2 敌手模型
 
-| 敌手类型 | 行为特征 | 安全假设 | 适用场景 |
-|----------|----------|----------|----------|
-| 半诚实（Semi-honest） | 遵守协议但试图从收到的消息推断信息 | 较弱 | 企业间联合分析 |
-| 恶意（Malicious） | 可能任意偏离协议 | 较强 | 对抗性强的场景 |
-| 隐蔽（Covert） | 可能作弊但害怕被抓 | 居中 | 商业场景有声誉约束 |
+| 敌手类型 | 行为 | 假设强度 | 典型场景 |
+|----------|------|----------|----------|
+| 半诚实（Semi-honest） | 守协议但窥探消息 | 较弱 | 企业联合分析 |
+| 恶意（Malicious） | 可任意偏离 | 较强 | 对抗强 |
+| 隐蔽（Covert） | 敢作弊但怕被抓 | 居中 | 有声誉约束的商业 |
 
-在 IoT 环境下，设备可能被物理攻破，因此恶意模型更贴近现实——但恶意模型的通信和计算开销也更大，这正是 IoT 部署 MPC 的核心矛盾。
+IoT 设备可被物理攻破，恶意模型更贴近现实，但通信/计算开销也更大——这是部署核心矛盾。
 
-### 1.3 安全性参数
+### 1.3 安全强度用语
 
-- **计算安全**：假设多项式时间内的敌手无法破解（基于计算困难假设如 DDH）
-- **统计安全**：允许 2⁻⁴⁰ 量级的出错概率
-- **信息论安全**：无论计算能力多强都安全（如 Shamir 秘密共享在诚实多数下）
+- **计算安全**：多项式敌手不可破（如基于困难假设）
+- **统计安全**：允许极小出错概率（如 2⁻ᵏ 量级）
+- **信息论安全**：不依赖计算假设（如诚实多数下的 Shamir 共享）[3]
 
----
-
-## 2. 基础密码原语
+## 2. 基础原语
 
 ### 2.1 秘密共享（Secret Sharing）
 
-秘密共享是 MPC 最重要的构建模块。直觉是：把一个秘密"拆"成多个碎片分发给参与方，单个碎片不泄露任何信息，但足够多的碎片可以恢复秘密。
-
-**Shamir 秘密共享**（t-out-of-n 阈值方案）：
-
-```python
-import random
-from functools import reduce
-
-PRIME = 2**61 - 1  # 大质数，定义有限域
-
-def share_secret(secret, n_shares, threshold):
-    """将秘密拆成 n_shares 份，任意 threshold 份可恢复"""
-    # 随机选 threshold-1 个系数，构造 t-1 次多项式
-    coeffs = [secret] + [random.randrange(PRIME) for _ in range(threshold - 1)]
-    shares = []
-    for i in range(1, n_shares + 1):
-        # 在 x=i 处求值：f(i) = a0 + a1*i + a2*i^2 + ...
-        y = sum(c * pow(i, k, PRIME) for k, c in enumerate(coeffs)) % PRIME
-        shares.append((i, y))
-    return shares
-
-def reconstruct(shares, prime=PRIME):
-    """拉格朗日插值恢复秘密"""
-    def lagrange_basis(j, xs):
-        num = den = 1
-        for k, xk in enumerate(xs):
-            if k != j:
-                num = num * (0 - xk) % prime
-                den = den * (xs[j] - xk) % prime
-        return num * pow(den, -1, prime) % prime
-
-    xs = [s[0] for s in shares]
-    return sum(s[1] * lagrange_basis(i, xs) for i, s in enumerate(shares)) % prime
-
-# 示例：将秘密 42 拆成 5 份，任意 3 份可恢复
-shares = share_secret(42, 5, 3)
-print(f"份额: {shares}")
-print(f"用前 3 份恢复: {reconstruct(shares[:3])}")  # 输出 42
-```
-
-**加法秘密共享**（Additive Secret Sharing）：更简单，直接把秘密拆成 n 个随机数之和。
-
-```python
-def additive_share(secret, n, prime=PRIME):
-    """加法秘密共享：s = s1 + s2 + ... + sn mod p"""
-    shares = [random.randrange(prime) for _ in range(n - 1)]
-    shares.append((secret - sum(shares)) % prime)
-    return shares
-
-# 加法份额天然支持加法同态：share(a) + share(b) = share(a+b)
-a_shares = additive_share(10, 3)
-b_shares = additive_share(20, 3)
-sum_shares = [(a + b) % PRIME for a, b in zip(a_shares, b_shares)]
-print(f"加法结果: {sum(sum_shares) % PRIME}")  # 输出 30
-```
+把秘密拆成多份，单份无信息，够门限可恢复。Shamir 为多项式门限方案；加法共享则 s = s₁+…+sₙ，天然支持本地加法同态。[3]
 
 ### 2.2 不经意传输（Oblivious Transfer, OT）
 
-OT 是另一个核心原语：发送方有两条消息 m₀ 和 m₁，接收方有一个选择位 b。OT 协议让接收方得到 m_b，而发送方不知道 b 是 0 还是 1，接收方也不知道 m_{1-b}。
+发送方有 m₀,m₁，接收方选 bit b：只得 m_b，发送方不知 b，接收方不知另一条。混淆电路用 OT 传输入标签；OT 扩展与 Silent OT 等持续降低通信。[8]
 
-OT 在混淆电路（Garbled Circuit）中用于传输输入方的加密标签。2024 年的 SoftSpoken OT 协议将 OT 扩展的通信量降低到接近理论最优。
+### 2.3 混淆电路（Garbled Circuits, GC）
 
-### 2.3 混淆电路（Garbled Circuits）
+Yao 协议把函数编成布尔电路并加密真值表，求值方逐门解密得输出标签。[1] 适合两方、布尔味重的计算。
 
-Yao 的混淆电路协议将计算函数表示为布尔电路，然后"加密"整个电路：
+## 3. 协议族对比
 
-1. 构造者（Garbler）为每条线的 0/1 各生成一个随机标签
-2. 每个门的真值表用标签加密，然后打乱顺序
-3. 计算者（Evaluator）拿到加密电路和自己输入对应的标签（通过 OT 获取）
-4. 逐门解密得到输出标签，最后查输出映射表得到结果
+| 协议 | 年代 | 基础 | 参与方 | 安全模型 | 适合 |
+|------|------|------|--------|----------|------|
+| Yao GC | 1986 | 混淆电路 | 2 | 半诚实起 | 布尔 |
+| GMW | 1987 | OT+共享 | 多方 | 半诚实/恶意 | 通用 |
+| BGW | 1988 | Shamir | 诚实多数 | 信息论 | 算术 |
+| SPDZ | 2012 | 加法共享+MAC | 不诚实多数 | 恶意 | 算术 |
+| ABY | 2015 | 混合共享 | 2 | 半诚实 | 混合 |
+| ABY3 | 2018 | 三方复制共享 | 3 | 恶意 | ML 等 |
 
----
+### 3.1 SPDZ 直觉
 
-## 3. MPC 协议族
+离线预生成 Beaver 三元组 (a,b,c=a·b)；在线用公开掩码把乘法变成本地运算加一轮通信。[4] 工业与学术框架（如 MP-SPDZ）广泛实现该族。[7]
 
-### 3.1 主流协议对比
+### 3.2 ABY 混合
 
-| 协议 | 年代 | 基础 | 参与方 | 安全模型 | 适合场景 |
-|------|------|------|--------|----------|----------|
-| Yao GC | 1986 | 混淆电路 | 2 方 | 半诚实 | 布尔计算 |
-| GMW | 1987 | OT + 秘密共享 | 多方 | 半诚实/恶意 | 通用布尔/算术 |
-| BGW | 1988 | Shamir 共享 | 多方（诚实多数） | 信息论安全 | 算术运算 |
-| SPDZ | 2012 | 加法共享 + MAC | 多方（不诚实多数） | 恶意安全 | 算术运算 |
-| ABY | 2015 | 混合共享 | 2 方 | 半诚实 | 混合计算 |
-| ABY3 | 2018 | 3 方复制共享 | 3 方 | 恶意安全 | ML 训练 |
+Arithmetic / Boolean / Yao 三种共享可转换，按子电路选最优表示，常比单一共享更快——具体加速比依赖电路结构，文献报告有数倍量级，需实测。[5][6]
 
-### 3.2 SPDZ 协议详解
+## 4. 实用框架
 
-SPDZ（读作"Speedz"）是目前工业界最常用的恶意安全 MPC 协议之一。它的核心思路是把协议分成两个阶段：
+| 框架 | 语言 | 协议覆盖 | 恶意安全 | IoT 适配 | 活跃度 |
+|------|------|----------|----------|----------|--------|
+| MP-SPDZ | Python DSL 等 | 很广 | 支持 | 中（偏服务器/网关） | 高 |
+| ABY/ABY3 | C++ | 聚焦 | ABY3 等 | 中 | 中 |
+| CrypTen | PyTorch | 偏 ML | 有限 | 低–中 | 高 |
+| MOTION | C++ | 多种 | 支持 | 相对更易嵌入 | 中 |
 
-**离线阶段**（与输入无关）：预生成大量"Beaver 三元组"（a, b, c 满足 c = a·b）。这些三元组不依赖实际输入，可以提前批量生成。
+终端 MCU 很少直接跑完整恶意 MPC；常见模式是**终端只做份额拆分，网关/边缘跑协议**。[7][9]
 
-**在线阶段**（输入相关）：用预生成的三元组辅助乘法运算，每次乘法只需要一轮通信。
+## 5. IoT 应用场景
 
-```python
-# SPDZ 在线阶段的乘法（简化演示）
-# 假设 [x], [y] 是 x, y 的加法秘密共享
-# 预计算的 Beaver 三元组 [a], [b], [c]，其中 c = a*b
+### 5.1 隐私聚合
 
-def spdz_multiply(x_share, y_share, a_share, b_share, c_share, prime):
-    """SPDZ 乘法：用 Beaver 三元组将乘法化归为加法"""
-    # 第 1 步：本地计算 [e] = [x] - [a], [f] = [y] - [b]
-    e_share = (x_share - a_share) % prime
-    f_share = (y_share - b_share) % prime
+智能电网等场景需要区域总量调度，又不希望细粒度用电曲线暴露作息。[10] 工程上要在采集周期（如十余分钟级）内完成；公开演示常给出百节点、百毫秒到秒级延迟的量级，**强依赖网络与协议变体，不能当 SLA**。
 
-    # 第 2 步：广播 e_share, f_share（一轮通信）
-    # 重建 e = x - a 和 f = y - b（明文，不泄露 x, y）
-    # e = reconstruct(e_shares), f = reconstruct(f_shares)
+### 5.2 联合异常检测 / 安全推理
 
-    # 第 3 步：本地计算 [xy] = [c] + f*[a] + e*[b] + e*f
-    # 只有 party 0 加 e*f 项
-    # xy_share = c_share + f * a_share + e * b_share  (+ e*f if party_id == 0)
-    return  # 每方得到 [xy] 的一个份额
-```
+多方工厂或医院联合建模、推理：模型方护参数，数据方护样本。[6][9]
 
-### 3.3 ABY 混合计算框架
+| 运算类型（示意） | 相对明文开销（文献量级） | 工程含义 |
+|------------------|--------------------------|---------|
+| 加法 | 数倍 | 常可接受 |
+| 乘法 | 数十–上百倍 | 需预计算与批处理 |
+| 比较 | 上百倍级 | 尽量少用或改电路 |
+| 简单 ML 推理 | 百倍级常见 | 放边缘/云，不放 MCU |
 
-ABY 的创新在于支持三种共享类型之间的高效转换：
+上表数字来自公开基准的粗量级，换硬件与协议会变；上线前必须用本拓扑复测。[6][7]
 
-- **A（Arithmetic）共享**：适合加法和线性运算
-- **B（Boolean）共享**：适合比较和非线性运算
-- **Y（Yao）共享**：适合常数轮复杂布尔运算
+### 5.3 与同态加密 / TEE 对比
 
-根据计算的不同部分选择最优共享类型，比全部用一种共享的方案快 2-10 倍。
+| 维度 | MPC | 同态加密（HE） | TEE |
+|------|-----|----------------|-----|
+| 信任 | 密码学假设+阈值 | 密码学 | 硬件厂商与实现 |
+| 通信 | 高（多轮） | 相对单向 | 低 |
+| 计算 | 中 | 常极重 | 接近明文 |
+| 侧信道 | 协议层较少 | 较少 | 需防微架构泄漏 |
+| IoT | 需分层优化 | 端侧难 | 有硬件时友好 |
 
----
+实践中常组合：TEE 护本地，MPC 做跨域，HE 做单向外包。[9][10]
 
-## 4. 实用 MPC 框架
+## 6. 性能优化方向
 
-### 4.1 MP-SPDZ
+| 技术 | 原理 | 作用 |
+|------|------|------|
+| OT 扩展 / Silent OT | 少次基 OT 扩大量 OT | 降通信 [8] |
+| 函数秘密共享（FSS） | 部分函数本地化 | 减在线轮次 |
+| 电路优化 | 减 AND/乘法门 | 直接降成本 |
+| 分层架构 | MCU 只共享，边缘跑在线阶段 | 适配异构 IoT |
+| 离峰预计算 | Beaver 等放夜间/云 | 削峰在线延迟 |
 
-MP-SPDZ 是当前最全面的 MPC 框架，支持 30+ 种协议变体：
+## 7. 局限、挑战与可改进方向
 
-```python
-# MP-SPDZ 示例：隐私保护的 IoT 设备平均温度计算
-# 文件：iot_avg_temp.mpc
+### 1. 通信轮次与 LPWAN 不兼容
 
-# n_parties 个 IoT 网关各持有一个温度读数
-n_parties = 3
-temps = [sint.get_input_from(i) for i in range(n_parties)]
+**局限**：每次乘法常需交互；LoRa 等几十 kbps 链路撑不住中等电路。[8]
+**改进**：聚合放到宽带网关；终端仅上传份额；严格限制乘法门并批处理多周期数据。
 
-# 安全计算平均值
-total = sum(temps)
-avg = total / n_parties  # 安全除法
+### 2. 恶意安全代价过高
 
-# 只公开平均值，不泄露各方原始数据
-print_ln("平均温度: %s", avg.reveal())
-```
+**局限**：半诚实原型到恶意部署，带宽与 CPU 可再涨一个数量级。[4][7]
+**改进**：三方诚实一者模型（ABY3）换成本；关键任务才上恶意；其余用合同+审计。
 
-```bash
-# 编译并运行
-$ python compile.py iot_avg_temp
-$ Scripts/spdz2k.sh iot_avg_temp  # 使用 SPDZ2k 协议（整数域）
-```
+### 3. 设备掉线破坏协议假设
 
-### 4.2 ABY 框架实践
+**局限**：IoT 节点间歇在线，同步 MPC 易卡死。
+**改进**：选支持退出/鲁棒的协议变体；法定人数网关代持；超时降级为延迟批处理。
 
-```cpp
-// ABY 框架：两方安全比较（哪个传感器读数更大）
-// 使用 Yao 共享进行比较运算
+### 4. 实现与侧信道缺口
 
-#include "abycore/circuit/booleancircuits.h"
-#include "abycore/sharing/sharing.h"
+**局限**：学术原型常量时间、随机数质量参差，嵌入式移植易引入泄漏。
+**改进**：选用活跃框架并跟进 CVE；份额与密钥进 SE/TEE；做功耗/时序回归。
 
-void secure_compare(ABYParty* party, uint32_t my_value) {
-    auto sharings = party->GetSharings();
-    auto yao_circ = (BooleanCircuit*)sharings[S_YAO]->GetCircuitBuildRoutine();
+### 5. 功能与合规预期错配
 
-    // 各方输入自己的值
-    share* s_a = yao_circ->PutINGate(my_value, 32, SERVER);
-    share* s_b = yao_circ->PutINGate(my_value, 32, CLIENT);
+**局限**：MPC 不自动满足“最小必要”或差分隐私；输出仍可能泄露聚合敏感信息。[10]
+**改进**：输出加噪或门限；数据最小化；与法务共同定义可发布统计。
 
-    // 安全比较 a > b
-    share* s_gt = yao_circ->PutGTGate(s_a, s_b);
+## 8. 实践建议（简）
 
-    // 输出结果（双方都能看到谁更大，但看不到对方的值）
-    share* s_out = yao_circ->PutOUTGate(s_gt, ALL);
-    party->ExecCircuit();
-
-    uint32_t result = s_out->get_clear_value<uint32_t>();
-    printf("比较结果: %s\n", result ? "我方更大" : "对方更大或相等");
-}
-```
-
-### 4.3 框架对比
-
-| 框架 | 语言 | 协议数 | 恶意安全 | IoT 适配 | 活跃度 |
-|------|------|--------|----------|----------|--------|
-| MP-SPDZ | Python DSL | 30+ | 支持 | 中 | 高 |
-| ABY/ABY3 | C++ | 3/1 | ABY3 支持 | 中 | 中 |
-| CrypTen | Python/PyTorch | 2 | 不支持 | 低 | 高 |
-| TF Encrypted | Python/TF | 3 | 部分 | 低 | 低 |
-| MOTION | C++ | 5+ | 支持 | 高 | 中 |
-
----
-
-## 5. IoT 场景中的 MPC 应用
-
-### 5.1 隐私保护聚合
-
-最典型的场景是多个 IoT 节点联合统计，不暴露各自的原始数据。
-
-**案例：智能电网隐私用电统计**
-
-电力公司需要知道一个区域的总用电量来调度发电，但不应该知道每户的具体用电模式（用电模式可以推断出住户的作息、是否在家、甚至宗教信仰）。
-
-```
-网关A (户1-100)      网关B (户101-200)      网关C (户201-300)
-    [sum_A]               [sum_B]                [sum_C]
-       \                    |                     /
-        \                   |                    /
-         -------- MPC 协议 --------
-                     |
-              总用电量 (明文)
-              各区段用电量 (密文)
-```
-
-2024 年 IEEE SmartGridComm 报告显示，基于 SPDZ 的隐私聚合方案在 100 个智能电表规模下，延迟开销约 200ms，相比明文计算增加 15-20 倍，但在 15 分钟采集周期内完全可接受。
-
-### 5.2 联合异常检测
-
-多个工厂的 IoT 系统联合训练异常检测模型，不共享各自的生产数据。
-
-**性能数据**（2024 USENIX Security 论文基准）：
-
-| 操作 | 明文 | 2-PC（半诚实） | 3-PC（恶意） | 开销比 |
-|------|------|----------------|--------------|--------|
-| 加法（百万次） | 0.01s | 0.03s | 0.08s | 3-8x |
-| 乘法（百万次） | 0.01s | 0.5s | 1.2s | 50-120x |
-| 比较（百万次） | 0.02s | 2.1s | 4.5s | 100-225x |
-| 逻辑回归推理 | 0.001s | 0.15s | 0.4s | 150-400x |
-
-### 5.3 隐私保护机器学习推理
-
-多个 IoT 设备联合进行模型推理：模型拥有方不想暴露模型参数，数据拥有方不想暴露推理输入。
-
-```python
-# 使用 CrypTen 进行安全推理（简化示例）
-import crypten
-import torch
-
-crypten.init()
-
-# 医院持有患者数据，模型公司持有训练好的模型
-# 双方都不想暴露自己的输入
-@crypten.mpc.run_multiprocess(world_size=2)
-def secure_inference():
-    # Party 0：加载加密模型
-    model = crypten.load("heart_disease_model.pth", src=0)
-
-    # Party 1：加载加密患者数据
-    patient_data = crypten.load("patient_features.pt", src=1)
-
-    # 安全推理：模型方看不到数据，数据方看不到模型
-    prediction = model(patient_data)
-
-    # 只有 Party 1（医院）能解密看到结果
-    result = prediction.get_plain_text(dst=1)
-    return result
-```
-
----
-
-## 6. IoT 环境的性能优化
-
-### 6.1 通信优化
-
-通信量是 IoT MPC 的首要瓶颈（低功耗广域网带宽有限）。
-
-| 优化技术 | 原理 | 通信节省 | 适用协议 |
-|----------|------|----------|----------|
-| OT 扩展 | 用少量真 OT 生成大量伪 OT | 100x | GC, GMW |
-| Silent OT | 用 LPN 假设进一步压缩 | 10x vs 传统 OT 扩展 | 所有基于 OT 的 |
-| 函数秘密共享 FSS | 将比较/DPF 运算压缩为本地计算 | 去掉在线通信 | 特定函数 |
-| 电路层面优化 | 减少乘法门（AND 门）数量 | 依电路而定 | 所有 |
-
-### 6.2 分层 MPC 架构
-
-针对 IoT 的资源异构性，采用分层设计：
-
-```
-终端层（MCU/传感器）     边缘层（网关/边缘服务器）     云层
-┌─────────────────┐   ┌──────────────────────┐   ┌─────────┐
-│ 轻量秘密共享      │   │ 完整 MPC 协议执行      │   │ 离线阶段 │
-│ 只做加法共享拆分   │──>│ 在线阶段乘法/比较      │──>│ 预计算   │
-│ 加密上报份额      │   │ 处理中等规模电路       │   │ 大规模   │
-│ 能耗：< 1mW      │   │ 能耗：< 5W            │   │ Beaver  │
-└─────────────────┘   └──────────────────────┘   │ 三元组   │
-                                                  └─────────┘
-```
-
-### 6.3 与同态加密 / TEE 的对比
-
-| 维度 | MPC | 同态加密 (HE) | TEE |
-|------|-----|---------------|-----|
-| 信任假设 | 纯密码学 | 纯密码学 | 信任硬件厂商 |
-| 计算类型 | 通用 | 通用但缓慢 | 通用且快速 |
-| 通信开销 | 高（多轮交互） | 低（单向） | 极低 |
-| 计算开销 | 中等 | 极高 | 接近明文 |
-| 侧信道风险 | 无 | 无 | 有（Spectre 等） |
-| IoT 适合度 | 中（需优化） | 低（太重） | 高（硬件支持时） |
-| 组合性 | 好 | 好 | 差 |
-
-实际项目中三者经常组合使用：TEE 做本地计算保护，MPC 做跨设备协作，HE 做单向外包计算。
-
----
-
-## 7. 实践建议
-
-### 7.1 初学者入门路径
-
-1. **概念理解**：先用加法秘密共享实现一个两方安全加法，跑通端到端流程
-2. **框架上手**：安装 MP-SPDZ，运行官方示例程序（均值计算、排序等）
-3. **协议选择**：根据参与方数量、安全模型、计算类型选择合适协议
-   - 两方半诚实 → Yao GC 或 ABY
-   - 三方恶意 → ABY3 或 Replicated
-   - 多方恶意 → SPDZ
-4. **IoT 适配**：在树莓派上部署 MPC 客户端，测量实际延迟和带宽消耗
-5. **进阶阅读**：Evans、Kolesnikov、Rosulek 的教材《A Pragmatic Introduction to MPC》
-
-### 7.2 具体调优建议
-
-**协议选择决策树**：
-
-```
-参与方数量？
-├── 2 方
-│   ├── 主要是布尔运算 → Yao GC
-│   ├── 主要是算术运算 → 算术共享
-│   └── 混合运算 → ABY
-├── 3 方
-│   ├── 可信至少 1 方诚实 → ABY3 (Replicated)
-│   └── 不可信 → SPDZ (3方)
-└── n 方 (n > 3)
-    ├── 诚实多数 → BGW / Shamir
-    └── 不诚实多数 → SPDZ / MASCOT
-```
-
-**IoT 部署清单**：
-
-- 评估通信量：MPC 协议每次乘法需要 1-3 轮通信，LoRaWAN 环境（< 50 kbps）应控制乘法门数量在千级以下
-- 预计算分离：将 Beaver 三元组生成放在夜间低峰时段或云端
-- 批处理：多个 IoT 采集周期的数据打包执行一次 MPC，摊薄启动开销
-- 安全级别：IoT 场景可接受 128 位安全参数，不必追求 256 位
-- 容错设计：IoT 设备可能掉线，协议需支持"中途退出不影响已完成计算"
-
----
+**选型树**：2 方布尔 → Yao/ABY；3 方且可信一者 → ABY3；多方恶意 → SPDZ 族。
+**部署**：树莓派/网关先测带宽与轮次，再谈 MCU。
+**入门**：加法共享跑通 → MP-SPDZ 示例 → 再读 Evans 等教材。[7][10]
 
 ## 参考文献
 
-1. Yao, A.C. "How to Generate and Exchange Secrets." FOCS 1986.
-2. Goldreich, O., Micali, S., Wigderson, A. "How to Play ANY Mental Game." STOC 1987.
-3. Ben-Or, M., Goldwasser, S., Wigderson, A. "Completeness Theorems for Non-Cryptographic Fault-Tolerant Distributed Computation." STOC 1988.
-4. Damgård, I. et al. "Multiparty Computation from Somewhat Homomorphic Encryption." CRYPTO 2012. (SPDZ 论文)
-5. Demmler, D., Schneider, T., Zohner, M. "ABY – A Framework for Efficient Mixed-Protocol Secure Two-Party Computation." NDSS 2015.
-6. Mohassel, P., Rindal, P. "ABY3: A Mixed Protocol Framework for Machine Learning." CCS 2018.
-7. Keller, M. "MP-SPDZ: A Versatile Framework for Multi-Party Computation." CCS 2020.
-8. Boyle, E. et al. "Silent OT Extension and Its Applications." CRYPTO 2023.
-9. Knott, B. et al. "CrypTen: Secure Multi-Party Computation Meets Machine Learning." NeurIPS 2021.
-10. Evans, D., Kolesnikov, V., Rosulek, M. "A Pragmatic Introduction to Secure Multi-Party Computation." Foundations and Trends in Privacy and Security, 2018.
+[1] A. C. Yao, "How to Generate and Exchange Secrets," FOCS, 1986.
+[2] O. Goldreich, S. Micali, and A. Wigderson, "How to Play ANY Mental Game," STOC, 1987.
+[3] M. Ben-Or, S. Goldwasser, and A. Wigderson, "Completeness Theorems for Non-Cryptographic Fault-Tolerant Distributed Computation," STOC, 1988.
+[4] I. Damgård et al., "Multiparty Computation from Somewhat Homomorphic Encryption," CRYPTO, 2012. (SPDZ)
+[5] D. Demmler, T. Schneider, and M. Zohner, "ABY – A Framework for Efficient Mixed-Protocol Secure Two-Party Computation," NDSS, 2015.
+[6] P. Mohassel and P. Rindal, "ABY3: A Mixed Protocol Framework for Machine Learning," CCS, 2018.
+[7] M. Keller, "MP-SPDZ: A Versatile Framework for Multi-Party Computation," CCS, 2020.
+[8] E. Boyle et al., "Silent OT Extension and Its Applications," CRYPTO, 2023.
+[9] B. Knott et al., "CrypTen: Secure Multi-Party Computation Meets Machine Learning," NeurIPS, 2021.
+[10] D. Evans, V. Kolesnikov, and M. Rosulek, "A Pragmatic Introduction to Secure Multi-Party Computation," Foundations and Trends in Privacy and Security, 2018.
+[11] I. Damgård et al., "Practical Covertly Secure MPC for Dishonest Majority – Or: Breaking the SPDZ Limits," ESORICS, 2013.
+[12] C. Hazay and Y. Lindell, *Efficient Secure Two-Party Protocols*, Springer, 2010.
