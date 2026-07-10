@@ -93,9 +93,11 @@ flowchart LR
 
 ### M1 治理基线 — 让全部存量内容可发现、可分类
 
+**状态**：已完成（v0.2.0）。
+
 **目标**：消除「内容存在但不可发现」的断层，为每篇内容建立机器可读元数据。
 
-**可执行计划**：[docs/superpowers/plans/2026-07-10-m1-governance-baseline.md](docs/superpowers/plans/2026-07-10-m1-governance-baseline.md)（任务 T1–T7，完成后版本目标 `0.2.0`）。
+**可执行计划**：[docs/superpowers/plans/2026-07-10-m1-governance-baseline.md](docs/superpowers/plans/2026-07-10-m1-governance-baseline.md)（任务 T1–T7）。
 
 **工作项**：
 
@@ -414,4 +416,4 @@ iot-reading-station/
 ---
 
 *创建日期：2026-06-23*
-*最后更新：2026-07-10（M1 可执行推进计划已挂载；四里程碑方向见第三节）*
+*最后更新：2026-07-10（M1 治理基线完成，v0.2.0）*

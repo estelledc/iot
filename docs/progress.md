@@ -36,10 +36,9 @@ python tools/generate_layer_catalogs.py --check
 
 ## 当前决策
 
-- Layer 1–2 已有较大规模内容，Layer 3–8 各有种子内容和扩展计划。
-- 在导航覆盖、内容 schema、来源抽样和可重复生产门禁完成前，暂停大批量扩展。
-- 后续扩展先做 4 篇 shadow pilot，再以每批最多 5 篇发布。
-- **下一步执行 M1 治理基线**：可执行步骤见 [M1 治理基线推进计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)（frontmatter 机械迁移 → 八层 catalog 收编孤立页 → 标签索引 → CI `--all`）。M1 完成前不启动 M2–M4。
+- M1 治理基线已完成：frontmatter 全量覆盖、八层 catalog 可发现、CI `--all` 启用。
+- 下一步进入 M2 可信基线（来源抽样与 review record）；在此之前不启动 Layer 3–8 大批量扩容。
+- 实施记录见 [M1 治理基线计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)。
 
 ## 相关入口
 

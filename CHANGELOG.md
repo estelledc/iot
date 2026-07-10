@@ -2,6 +2,24 @@
 
 本项目从 `0.1.0` 起使用语义化版本。每条变更必须引用实施任务，并记录可重复验证命令。
 
+## [0.2.0] - 2026-07-10
+
+### Added
+
+- `IOT-T010` / `IOT-T011`：642 篇内容 frontmatter 机械迁移（正文 SHA-256 不变）；`tools/migrate_frontmatter.py`；CI/Pages 启用 `validate_frontmatter.py --all`。验证：`python tools/validate_frontmatter.py --all`、`python -m unittest tests.test_frontmatter_migration -v`。
+- `IOT-T003`：八层 `docs/<layer>/catalog.md` 自动目录；清单增加 `catalog_entries` / `discoverable_entries`（可发现 = 显式导航 ∪ 目录页）；侧栏挂载「全部目录」且不改变既有 papers URL。验证：`python tools/generate_layer_catalogs.py --check`、`python tools/content_inventory.py --check`。
+- `IOT-T027`：Material tags 索引页 `docs/tags.md`（`<!-- material/tags -->`）。验证：`mkdocs build --strict`、`python tools/validate_site.py --site-dir .tmp/site --page tags/index.html --assert-single-main --assert-single-h1`。
+
+### Changed
+
+- `docs/content-schema.md`：全量 frontmatter 校验成为 required CI。
+- `docs/progress.md`：M1 完成，下一步为 M2 可信基线。
+
+### Review baseline
+
+- Source commit: `d4f3761f1f5a6b01fb47d0ea68cfca07b4c34f1a`
+- 迁移说明：仅插入 frontmatter、新增目录/标签页与门禁；既有 `docs/*/papers/<slug>/` URL 不变；两篇 legacy mirror 与 canonical 保持字节一致。
+
 ## [0.1.2] - 2026-07-10
 
 ### Added
