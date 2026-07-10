@@ -3,455 +3,145 @@ schema_version: '1.0'
 id: one-shot-nas-edge
 title: 神经架构搜索 One-Shot NAS 在边缘的应用
 layer: 5
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+reading_time: 22
+prerequisites:
+  - nas-edge-models
+  - model-compression-edge
+  - knowledge-distillation-edge
+tags:
+- One-Shot NAS
+- Supernet
+- OFA
+- MCUNet
+- 硬件感知
+- DARTS
+- 进化搜索
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 神经架构搜索 One-Shot NAS 在边缘的应用
 
-> **难度**：🟡 中级 | **领域**：NAS、模型压缩、边缘部署 | **阅读时间**：约 20 分钟
+> **难度**：🟡 中级 | **领域**：NAS、超网络、边缘部署 | **阅读时间**：约 22 分钟
 
 ## 日常类比
 
-你要装修一套房子，但不知道哪种布局最好。最笨的方法是：试 1000 种方案，每种都请工人完整装修一遍，住一个月看哪种最舒服。这太贵了——每种方案都要全部建造成本。
+装修若每种布局都从零砌墙，成本不可承受。One-Shot NAS 像先搭一座「万能毛坯」（超网络, Supernet），墙体与管线预埋了多种隔断可能；试布局时只拆改隔断，不必每次重建。边缘场景还要同时满足延迟、功耗与内存预算——好比装修必须卡在造价与承重之内，于是需要硬件感知搜索，而不是只看「好不好看」（精度）。
 
-**One-Shot NAS** 的思路像乐高积木：先搭一个"万能大房子"（超网络），里面包含所有可能的隔断、家具摆放方式。然后你只需要在这个大房子里"拆掉一些隔断"来尝试不同布局——不需要每次从零建造。一次训练，无限采样。
+## 摘要
 
-在边缘设备上，我们不仅要找到准确的模型，还要找到满足延迟、功耗、内存约束的模型。这就像装修时不仅要好看，还要控制在预算内——**硬件感知 NAS** 同时优化精度和硬件效率。
+本文聚焦权重共享的 One-Shot / Once-for-All 路线：超网络训练、延迟查找表、进化多目标搜索，以及 MCUNet/TinyNAS 在微控制器（MCU）上的约束处理。与总览文 [nas-edge-models](nas-edge-models.md) 互补，本文偏工程流水线。搜索成本与精度数字为公开论文量级[1][2][3][4]。
 
-## 1. NAS 基础概念
+## 1 NAS 基础与代际
 
-### 1.1 三要素
+| 要素 | 说明 | 边缘常见选择 |
+|------|------|-------------|
+| 搜索空间 | 合法结构集合 | MBConv、深度卷积、通道、SE |
+| 搜索策略 | 探索方式 | 随机、进化、可微分 |
+| 性能评估 | 打分方式 | 超网络共享权重、LUT 延迟、短训 |
 
-| 要素 | 说明 | 常见选择 |
-|------|------|---------|
-| 搜索空间 | 可能的网络结构集合 | 卷积类型、通道数、连接方式 |
-| 搜索策略 | 如何在空间中探索 | 随机搜索、进化算法、强化学习、梯度 |
-| 性能评估 | 如何判断架构好坏 | 完整训练、权重共享、预测器 |
+| 代际 | 方法 | 成本量级 | 代表 |
+|------|------|---------|------|
+| 独立训练 | 每架构完整训 | 约数千 GPU-天 | NASNet 等 |
+| One-Shot | 权重共享超网络 | 约 1–5 GPU-天 | ENAS、DARTS、SPOS[3][4] |
+| Once-for-All | 一训多抽 | 训练一次，多端部署 | OFA、BigNAS[1][7] |
+| Zero-Shot | 不训候选 | 常 <1 GPU-hour | Zen-NAS 等[6] |
 
-### 1.2 NAS 方法演进
+边缘搜索空间常含深度可分离/MBConv、通道档位、每 stage 层数、核大小、SE 比例等，组合可达约 \(10^{13}\) 量级——必须靠共享权重或代理，而非穷举。
 
-| 代际 | 方法 | 搜索成本 | 代表工作 |
-|------|------|---------|---------|
-| 第一代 | 每个架构独立训练 | 3000+ GPU-days | NASNet (2018) |
-| 第二代 | 权重共享 One-Shot | 1-5 GPU-days | ENAS, DARTS |
-| 第三代 | Once-for-All | 训练1次 部署无限 | OFA, BigNAS |
-| 第四代 | Zero-Shot | 小于 1 GPU-hour | ZenNAS, NASWOT |
+## 2 One-Shot 超网络
 
-### 1.3 搜索空间设计
+核心：一个超网络包含多条候选路径；训练时每个 mini-batch 随机（或按规则）采样子路径更新共享权重；搜索时固定架构编码，用共享权重估计精度，再对优选子网重训或直接抽取（OFA 类）[3]。
 
-```python
-# 典型的边缘 NAS 搜索空间定义
-SEARCH_SPACE = {
-    'conv_ops': [
-        'conv3x3',           # 标准 3x3 卷积
-        'conv5x5',           # 标准 5x5 卷积
-        'dwconv3x3',         # 深度可分离 3x3
-        'dwconv5x5',         # 深度可分离 5x5
-        'mbconv3_e3',        # MBConv k=3 expand=3
-        'mbconv3_e6',        # MBConv k=3 expand=6
-        'mbconv5_e3',        # MBConv k=5 expand=3
-        'mbconv5_e6',        # MBConv k=5 expand=6
-        'skip',              # 跳过连接
-        'zero',              # 不连接
-    ],
-    'channels': [16, 24, 32, 48, 64, 96, 128],
-    'layers_per_stage': [1, 2, 3, 4],
-    'kernel_sizes': [3, 5, 7],
-    'se_ratio': [0, 0.25],  # Squeeze-and-Excitation
-}
-# 搜索空间大小约 10^13 种可能架构
-```
+单路径 One-Shot（Single Path One-Shot, SPOS）强调每次只激活一条路径，减轻多路径耦合[3]。可微分方法（DARTS）用连续 \(\alpha\) 混合算子，搜索快但离散化落差与跳连优势偏差已知[4]。
 
-## 2. One-Shot Supernet 方法
+**训练要点（实践共识）**：足够长的 epoch；操作均匀采样；可用三明治规则（最大+最小+随机子网）与知识蒸馏稳住小子网；搜索结束后对部署候选做独立验证，不轻信超网络排序。
 
-### 2.1 核心思想
-
-训练一个包含所有可能路径的超网络（Supernet），然后通过采样子网络来评估不同架构的质量。
-
-```python
-import torch
-import torch.nn as nn
-import random
-
-class SupernetBlock(nn.Module):
-    """超网络中的一个可选操作块"""
-
-    def __init__(self, in_channels, out_channels, stride=1):
-        super().__init__()
-        self.ops = nn.ModuleList([
-            MBConv(in_channels, out_channels, 3, stride, expand_ratio=3),
-            MBConv(in_channels, out_channels, 3, stride, expand_ratio=6),
-            MBConv(in_channels, out_channels, 5, stride, expand_ratio=3),
-            MBConv(in_channels, out_channels, 5, stride, expand_ratio=6),
-            SkipConnect(in_channels, out_channels, stride),
-        ])
-        self.n_ops = len(self.ops)
-
-    def forward(self, x, op_idx=None):
-        """前向传播：训练时随机选操作，搜索时指定"""
-        if op_idx is None:
-            op_idx = random.randint(0, self.n_ops - 1)
-        return self.ops[op_idx](x)
-
-
-class Supernet(nn.Module):
-    """完整超网络"""
-
-    def __init__(self, n_classes=10, n_stages=5, blocks_per_stage=4):
-        super().__init__()
-        self.stem = nn.Sequential(
-            nn.Conv2d(3, 32, 3, stride=2, padding=1),
-            nn.BatchNorm2d(32),
-            nn.ReLU6()
-        )
-
-        channels = [32, 48, 64, 96, 128]
-        self.stages = nn.ModuleList()
-        in_ch = 32
-        for stage_idx in range(n_stages):
-            stage = nn.ModuleList()
-            for block_idx in range(blocks_per_stage):
-                out_ch = channels[stage_idx]
-                stride = 2 if block_idx == 0 else 1
-                stage.append(SupernetBlock(in_ch, out_ch, stride))
-                in_ch = out_ch
-            self.stages.append(stage)
-
-        self.head = nn.Sequential(
-            nn.AdaptiveAvgPool2d(1),
-            nn.Flatten(),
-            nn.Linear(channels[-1], n_classes)
-        )
-
-    def forward(self, x, architecture=None):
-        """
-        architecture: list of lists, 指定每个块的操作选择
-        None 则随机采样
-        """
-        x = self.stem(x)
-        for stage_idx, stage in enumerate(self.stages):
-            for block_idx, block in enumerate(stage):
-                op_idx = None
-                if architecture is not None:
-                    op_idx = architecture[stage_idx][block_idx]
-                x = block(x, op_idx)
-        return self.head(x)
-```
-
-### 2.2 训练策略
-
-```python
-def train_supernet(supernet, dataloader, epochs=100, lr=0.05):
-    """单路径采样训练超网络"""
-    optimizer = torch.optim.SGD(supernet.parameters(), lr=lr, momentum=0.9)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, epochs)
-
-    for epoch in range(epochs):
-        for images, labels in dataloader:
-            # 关键：每个 mini-batch 随机采样一条路径
-            architecture = sample_random_architecture(supernet)
-
-            output = supernet(images, architecture)
-            loss = nn.CrossEntropyLoss()(output, labels)
-
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-
-        scheduler.step()
-
-
-def sample_random_architecture(supernet):
-    """随机采样一个子网络架构"""
-    architecture = []
-    for stage in supernet.stages:
-        stage_choices = [random.randint(0, stage[0].n_ops - 1) for _ in stage]
-        architecture.append(stage_choices)
-    return architecture
-```
-
-## 3. 硬件感知 NAS
-
-### 3.1 多目标优化
-
-边缘部署需要同时优化多个目标：
+## 3 硬件感知：多目标与延迟预测
 
 | 目标 | 度量 | 约束示例 |
 |------|------|---------|
-| 准确率 | Top-1 Accuracy | 大于 85% |
-| 延迟 | ms 每帧 | 小于 10ms on RPi4 |
-| 能耗 | mJ 每推理 | 小于 5mJ |
-| 模型大小 | MB | 小于 2MB Flash |
-| 峰值内存 | KB | 小于 256KB SRAM |
+| 准确率 | Top-1 等 | ≥ 业务阈值 |
+| 延迟 | ms/帧 | 如树莓派 <10 ms 量级 |
+| 能耗 | mJ/次 | 电池节点严约束 |
+| 模型体积 | Flash/磁盘 | MCU 常 <1–2 MB |
+| 峰值内存 | SRAM/RAM | MCU 常 <256–512 KB |
 
-### 3.2 延迟预测器
+延迟查找表（Lookup Table, LUT）：在目标设备上预测「算子×通道×特征图分辨率」延迟，搜索时累加预测，避免每个候选都上板。预测器网络适合更大空间，但有误差带。进化搜索在延迟超标时施加惩罚，维护种群至收敛；最终取帕累托（Pareto）前沿——无人同时更准且更快的集合。
 
-```python
-class LatencyPredictor:
-    """基于查找表的延迟预测器"""
+| 方法 | 硬件耦合 | 部署灵活性 | 备注 |
+|------|---------|------------|------|
+| FBNet 等可微分硬件感知 | 强（延迟进损失） | 每硬件常需重搜 | 手机端经典路线[5] |
+| OFA + 进化 | 训练一次，搜索多次 | 高 | 换硬件主要重测 LUT[1] |
+| MCUNet/TinyNAS | 极强（含内存规划） | 绑定 MCU 工具链 | 引擎与架构联合[2] |
 
-    def __init__(self, target_device='rpi4'):
-        self.lut = self._build_lookup_table(target_device)
+## 4 OFA 与 MCUNet
 
-    def _build_lookup_table(self, device):
-        """在目标设备上逐个测量操作延迟"""
-        lut = {}
-        op_types = ['mbconv3_e3', 'mbconv3_e6', 'mbconv5_e3', 'mbconv5_e6', 'skip']
-        for op_type in op_types:
-            for in_ch in [16, 24, 32, 48, 64, 96, 128]:
-                for out_ch in [16, 24, 32, 48, 64, 96, 128]:
-                    for resolution in [56, 28, 14, 7]:
-                        key = (op_type, in_ch, out_ch, resolution)
-                        lut[key] = self._measure_on_device(key, device)
-        return lut
+**OFA**：弹性深度/宽度/核/分辨率；渐进式收缩先训最大网再引入更小配置；部署时按约束抽子网，公开称常无需重训即可用[1]。仍建议在关键产品上做短微调与量化校准。
 
-    def predict(self, architecture, input_resolution=224):
-        """预测整个架构的推理延迟"""
-        total_latency = 0
-        resolution = input_resolution // 2
-        in_ch = 32
-        channels = [32, 48, 64, 96, 128]
-        op_names = ['mbconv3_e3', 'mbconv3_e6', 'mbconv5_e3', 'mbconv5_e6', 'skip']
+**MCUNet**：面向约 256–320 KB SRAM 级 MCU，对比手机/云资源差可达数个数量级[2]。
 
-        for stage_idx, stage_choices in enumerate(architecture):
-            out_ch = channels[stage_idx]
-            for block_idx, op_idx in enumerate(stage_choices):
-                op_type = op_names[op_idx]
-                key = (op_type, in_ch, out_ch, resolution)
-                total_latency += self.lut.get(key, 0)
-                in_ch = out_ch
-            resolution //= 2
+| 约束维 | MCU 量级 | 手机量级 | 云 GPU 量级 |
+|--------|---------|---------|------------|
+| 片上内存 | 数百 KB | 数 GB | 数十 GB |
+| 存储 | ~1 MB Flash | 很大 | 很大 |
+| 功耗 | 约百 mW | 数 W | 数百 W |
 
-        return total_latency
-```
+| 模型（论文） | SRAM（约） | Flash（约） | ImageNet Top-1（约） | 延迟（约） |
+|-------------|-----------|------------|---------------------|-----------|
+| MCUNet-5FPS | 293 KB | 741 KB | 60.3% | 200 ms |
+| MCUNet-12FPS | 195 KB | 488 KB | 51.5% | 83 ms |
+| MobileNetV2 0.35× | 398 KB | 543 KB | 49.7% | 320 ms |
 
-### 3.3 进化搜索
+TinyNAS 会按目标 FLOPs/内存缩放搜索空间宽度，使「满足约束且质量代理高」的采样比例上升，避免空间里大量非法点浪费搜索[2]。
 
-```python
-import numpy as np
+## 5 端到端流水线
 
-def evolutionary_search(supernet, latency_predictor,
-                        n_generations=50, population_size=100,
-                        latency_target=10.0):
-    """进化搜索：在延迟约束下找最优架构"""
+1. 按硬件缩放搜索空间
+2. 目标板构建算子延迟/内存 LUT
+3. 训练超网络（单路径 / 渐进收缩）
+4. 多目标进化或可微分搜索
+5. 优选子网短训或完整重训
+6. 量化与编译（TFLite / ONNX / TVM 等）
+7. 板级验证延迟、精度、功耗、峰值内存
 
-    population = [sample_random_architecture(supernet)
-                  for _ in range(population_size)]
+**何时用 NAS**：多硬件要极致折中 → OFA；MCU 极限 → MCUNet；空间小 → 随机+早停往往够用；只要换数据集微调头，优先手工 EfficientNet/MobileNet，勿为 NAS 而 NAS。
 
-    for gen in range(n_generations):
-        fitness_scores = []
-        for arch in population:
-            acc = evaluate_on_supernet(supernet, arch)
-            latency = latency_predictor.predict(arch)
+## 6 局限、挑战与可改进方向
 
-            if latency > latency_target:
-                penalty = (latency - latency_target) * 10
-                fitness = acc - penalty
-            else:
-                fitness = acc
-            fitness_scores.append(fitness)
+### 1. 共享权重排序不可靠
 
-        # 选择 top-20%
-        top_k = population_size // 5
-        top_indices = np.argsort(fitness_scores)[-top_k:]
-        parents = [population[i] for i in top_indices]
+**局限**：超网络上的精度序与独立训练后序常不一致，导致「搜到的最优」上板掉点[3][4]。
+**改进**：Pareto 前沿保留 K 个候选完整重训；报告 Kendall 序相关；关键型号禁止跳过重训。
 
-        # 变异生成新种群
-        new_population = list(parents)
-        while len(new_population) < population_size:
-            parent = random.choice(parents)
-            child = mutate(parent)
-            new_population.append(child)
+### 2. LUT 与真实流水线偏差
 
-        population = new_population
+**局限**：算子微基准忽略框架开销、内存带宽、热降频与前后处理。
+**改进**：端到端测「相机→后处理」；LUT 加常数开销项；CI 定期重测。
 
-        best_idx = np.argmax(fitness_scores)
-        best_lat = latency_predictor.predict(population[best_idx])
-        print(f"Gen {gen}: Best fitness={fitness_scores[best_idx]:.3f}, "
-              f"latency={best_lat:.1f}ms")
+### 3. 与量化/编译耦合不足
 
-    return population[np.argmax(fitness_scores)]
-```
+**局限**：浮点搜到的结构在 INT8 后瓶颈移位（如 SE、5×5 不被 NPU 支持）。
+**改进**：搜索空间只含部署后端支持的算子；搜索阶段用量化感知或 INT8 代理延迟。
 
-## 4. OFA (Once-for-All)
+### 4. 成本与人才门槛
 
-### 4.1 核心思想
-
-训练一个支持弹性深度、宽度和分辨率的超网络。部署时根据目标设备约束直接抽取最优子网络，无需重新训练。
-
-```python
-class ElasticBlock(nn.Module):
-    """支持弹性宽度和核大小的块"""
-
-    def __init__(self, max_in_ch=128, max_out_ch=128, max_kernel=7):
-        super().__init__()
-        self.max_kernel = max_kernel
-        self.conv = nn.Conv2d(max_in_ch, max_out_ch, max_kernel,
-                              padding=max_kernel // 2)
-        self.bn = nn.BatchNorm2d(max_out_ch)
-
-    def forward(self, x, active_in_ch=None, active_out_ch=None, active_kernel=None):
-        """弹性前向：只使用部分权重"""
-        active_in_ch = active_in_ch or x.size(1)
-        active_out_ch = active_out_ch or self.conv.out_channels
-        active_kernel = active_kernel or self.max_kernel
-
-        weight = self.conv.weight[:active_out_ch, :active_in_ch]
-
-        if active_kernel < self.max_kernel:
-            start = (self.max_kernel - active_kernel) // 2
-            end = start + active_kernel
-            weight = weight[:, :, start:end, start:end]
-
-        padding = active_kernel // 2
-        out = nn.functional.conv2d(x[:, :active_in_ch], weight, padding=padding)
-        out = self.bn(out)[:, :active_out_ch]
-        return nn.functional.relu6(out)
-```
-
-### 4.2 渐进式训练
-
-OFA 的训练分 4 个阶段，逐步引入弹性：
-
-```
-阶段 1: 训练最大网络（正常训练）
-阶段 2: 引入弹性核大小（7 -> 5 -> 3）
-阶段 3: 引入弹性深度（4 -> 3 -> 2 层）
-阶段 4: 引入弹性宽度（128 -> 96 -> 64 通道）
-```
-
-## 5. MCUNet / TinyNAS
-
-### 5.1 专为微控制器设计的 NAS
-
-MCUNet（MIT, 2020）针对 256KB SRAM、1MB Flash 的 MCU 搜索架构：
-
-| 约束 | MCU (STM32F746) | 手机 (Snapdragon) | 云 (V100) |
-|------|----------------|-------------------|-----------|
-| SRAM | 320KB | 4GB | 32GB |
-| Flash | 1MB | 128GB | - |
-| 算力 | 216MHz ARM | 2.84GHz x 8 | 5120 CUDA |
-| 功耗 | 150mW | 5W | 300W |
-
-搜索结果对比：
-
-| 模型 | SRAM | Flash | ImageNet Top-1 | 延迟 |
-|------|------|-------|---------------|------|
-| MCUNet-5FPS | 293KB | 741KB | 60.3% | 200ms |
-| MCUNet-12FPS | 195KB | 488KB | 51.5% | 83ms |
-| MobileNetV2 0.35x | 398KB | 543KB | 49.7% | 320ms |
-
-### 5.2 TinyNAS 的搜索空间优化
-
-```python
-def optimize_search_space(target_flops, initial_space):
-    """
-    根据目标 FLOPs 自动调整搜索空间的宽度上限,
-    使得搜索空间中满足约束的好架构比例最大化
-    """
-    best_space = None
-    best_score = 0
-
-    for width_mult in [0.25, 0.35, 0.5, 0.75, 1.0]:
-        scaled_space = scale_channels(initial_space, width_mult)
-
-        valid_count = 0
-        total_quality = 0
-        for _ in range(1000):
-            arch = random_sample(scaled_space)
-            flops = compute_flops(arch)
-            if flops <= target_flops:
-                valid_count += 1
-                total_quality += zen_score(arch)
-
-        score = total_quality / max(valid_count, 1)
-        if score > best_score:
-            best_score = score
-            best_space = scaled_space
-
-    return best_space
-```
-
-## 6. 从搜索到部署的完整流水线
-
-### 6.1 端到端流程
-
-```
-1. 定义搜索空间 -> 基于目标硬件约束缩放
-2. 构建硬件延迟查找表 -> 在目标设备上实测每个操作
-3. 训练超网络 -> 单路径采样 / 渐进式缩小
-4. 进化搜索 -> 多目标: 准确率 + 延迟/功耗
-5. 重新训练最优架构 -> 从头训练到收敛
-6. 量化 + 编译 -> TFLite / ONNX / TVM
-7. 设备部署验证 -> 实测延迟/精度/功耗
-```
-
-### 6.2 Pareto 最优架构选择
-
-```python
-def find_pareto_front(architectures, accuracies, latencies):
-    """找到 Pareto 前沿: 没有其他架构同时更准且更快"""
-    n = len(architectures)
-    is_pareto = [True] * n
-
-    for i in range(n):
-        for j in range(n):
-            if i == j:
-                continue
-            if accuracies[j] >= accuracies[i] and latencies[j] <= latencies[i]:
-                if accuracies[j] > accuracies[i] or latencies[j] < latencies[i]:
-                    is_pareto[i] = False
-                    break
-
-    pareto_archs = [architectures[i] for i in range(n) if is_pareto[i]]
-    return pareto_archs
-```
-
-## 7. 实践建议
-
-### 7.1 初学者入门路径
-
-1. **第一步**：理解 MobileNetV2/V3 的手工设计思路（NAS 的搜索目标）
-2. **第二步**：用 NNI (Neural Network Intelligence) 框架跑一个简单 NAS
-3. **第三步**：实现最简 One-Shot Supernet + 随机搜索
-4. **第四步**：加入延迟预测器实现硬件感知搜索
-5. **第五步**：用 OFA 的预训练模型在自己的硬件上搜索子网
-
-### 7.2 具体调优建议
-
-**何时使用 NAS**：
-- 有明确硬件约束且需要极致优化 -> OFA / MCUNet
-- 模型精度瓶颈在架构设计 -> One-Shot NAS
-- 需要部署到多种设备 -> OFA (一次训练多次部署)
-- 数据集特定且通用模型效果不好 -> 数据集感知 NAS
-
-**搜索策略选择**：
-- 搜索空间小 (< 10^6) -> 随机搜索 + 早停已够好
-- 搜索空间中等 -> 进化算法 (50 代 x 100 种群)
-- 搜索空间大且可微分 -> DARTS 类梯度方法
-- 极致效率 -> Zero-cost proxy (几分钟完成)
-
-**超网络训练技巧**：
-- Sandwich Rule: 每个 batch 训练最大 + 最小 + 2 个随机子网
-- 知识蒸馏: 用最大子网指导小子网
-- 足够长的训练: 至少 120 epochs (权重共享需要充分训练)
-- 公平采样: 确保每种操作被均匀采样到
+**局限**：超网络训练与多硬件 LUT 维护成本高，小团队易半途而废。
+**改进**：复用公开 OFA 权重；先固定空间做随机搜索基线；工具优先 NNI/厂商 NAS 套件而非自研可微分框架。
 
 ## 参考文献
 
-1. Cai, H., et al. (2020). "Once-for-All: Train One Network and Specialize it for Efficient Deployment." *ICLR*.
-2. Lin, J., et al. (2020). "MCUNet: Tiny Deep Learning on IoT Devices." *NeurIPS*.
-3. Guo, Z., et al. (2020). "Single Path One-Shot Neural Architecture Search." *ECCV*.
-4. Liu, H., et al. (2019). "DARTS: Differentiable Architecture Search." *ICLR*.
-5. Wu, B., et al. (2019). "FBNet: Hardware-Aware Efficient ConvNet Design via Differentiable NAS." *CVPR*.
-6. Lin, M., et al. (2021). "Zen-NAS: A Zero-Shot NAS for High-Performance Image Recognition." *ICCV*.
-7. Yu, J., et al. (2020). "BigNAS: Scaling Up Neural Architecture Search with Big Single-Stage Models." *ECCV*.
-8. Tan, M., and Le, Q. (2019). "EfficientNet: Rethinking Model Scaling for CNNs." *ICML*.
-9. Howard, A., et al. (2019). "Searching for MobileNetV3." *ICCV*.
-10. Lin, J., et al. (2022). "On-Device Training Under 256KB Memory." *NeurIPS*.
+[1] H. Cai et al., "Once-for-All: Train One Network and Specialize it for Efficient Deployment," ICLR, 2020.
+[2] J. Lin et al., "MCUNet: Tiny Deep Learning on IoT Devices," NeurIPS, 2020.
+[3] Z. Guo et al., "Single Path One-Shot Neural Architecture Search with Uniform Sampling," ECCV, 2020.
+[4] H. Liu et al., "DARTS: Differentiable Architecture Search," ICLR, 2019.
+[5] B. Wu et al., "FBNet: Hardware-Aware Efficient ConvNet Design via Differentiable NAS," CVPR, 2019.
+[6] M. Lin et al., "Zen-NAS: A Zero-Shot NAS for High-Performance Image Recognition," ICCV, 2021.
+[7] J. Yu et al., "BigNAS: Scaling Up Neural Architecture Search with Big Single-Stage Models," ECCV, 2020.
+[8] M. Tan and Q. Le, "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks," ICML, 2019.
+[9] A. Howard et al., "Searching for MobileNetV3," ICCV, 2019.
+[10] J. Lin et al., "On-Device Training Under 256KB Memory," NeurIPS, 2022.
+[11] M. Tan et al., "MnasNet: Platform-Aware Neural Architecture Search for Mobile," CVPR, 2019.
+[12] X. Dong and Y. Yang, "NAS-Bench-201: Extending the Scope of Reproducible Neural Architecture Search," ICLR, 2020.

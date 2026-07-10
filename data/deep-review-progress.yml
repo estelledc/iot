@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 567
-  in_review: 75
+  pending: 542
+  in_review: 100
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -537,127 +537,177 @@ articles:
   layer: 5
   path: docs/intelligence/papers/async-federated-learning.md
   batch: L5-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B01
 - id: collaborative-inference-survey
   layer: 5
   path: docs/intelligence/papers/collaborative-inference-survey.md
   batch: L5-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B01
 - id: continual-learning-edge
   layer: 5
   path: docs/intelligence/papers/continual-learning-edge.md
   batch: L5-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B01
 - id: contrastive-learning-sensor
   layer: 5
   path: docs/intelligence/papers/contrastive-learning-sensor.md
   batch: L5-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B01
 - id: edge-ai-video-analytics
   layer: 5
   path: docs/intelligence/papers/edge-ai-video-analytics.md
   batch: L5-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B01
 - id: edge-anomaly-detection
   layer: 5
   path: docs/intelligence/papers/edge-anomaly-detection.md
   batch: L5-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B02
 - id: edge-gan-generation
   layer: 5
   path: docs/intelligence/papers/edge-gan-generation.md
   batch: L5-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B02
 - id: edge-rag-retrieval
   layer: 5
   path: docs/intelligence/papers/edge-rag-retrieval.md
   batch: L5-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B02
 - id: federated-learning-iot
   layer: 5
   path: docs/intelligence/papers/federated-learning-iot.md
   batch: L5-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B02
 - id: graph-neural-network-iot
   layer: 5
   path: docs/intelligence/papers/graph-neural-network-iot.md
   batch: L5-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B02
 - id: jupiter
   layer: 5
   path: docs/intelligence/papers/jupiter.md
   batch: L5-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B03
 - id: knowledge-distillation-edge
   layer: 5
   path: docs/intelligence/papers/knowledge-distillation-edge.md
   batch: L5-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B03
 - id: llm-quantization-gptq-awq
   layer: 5
   path: docs/intelligence/papers/llm-quantization-gptq-awq.md
   batch: L5-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B03
 - id: model-compression-edge
   layer: 5
   path: docs/intelligence/papers/model-compression-edge.md
   batch: L5-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B03
 - id: multimodal-edge-perception
   layer: 5
   path: docs/intelligence/papers/multimodal-edge-perception.md
   batch: L5-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B03
 - id: nas-edge-models
   layer: 5
   path: docs/intelligence/papers/nas-edge-models.md
   batch: L5-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B04
 - id: on-device-diffusion-model
   layer: 5
   path: docs/intelligence/papers/on-device-diffusion-model.md
   batch: L5-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B04
 - id: on-device-training
   layer: 5
   path: docs/intelligence/papers/on-device-training.md
   batch: L5-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B04
 - id: one-shot-nas-edge
   layer: 5
   path: docs/intelligence/papers/one-shot-nas-edge.md
   batch: L5-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B04
 - id: privacy-computing-tee-fl
   layer: 5
   path: docs/intelligence/papers/privacy-computing-tee-fl.md
   batch: L5-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B04
 - id: reinforcement-learning-edge
   layer: 5
   path: docs/intelligence/papers/reinforcement-learning-edge.md
   batch: L5-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B05
 - id: self-supervised-pretraining-device
   layer: 5
   path: docs/intelligence/papers/self-supervised-pretraining-device.md
   batch: L5-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B05
 - id: split-computing
   layer: 5
   path: docs/intelligence/papers/split-computing.md
   batch: L5-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B05
 - id: time-series-transformer
   layer: 5
   path: docs/intelligence/papers/time-series-transformer.md
   batch: L5-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B05
 - id: transformer-edge-deployment
   layer: 5
   path: docs/intelligence/papers/transformer-edge-deployment.md
   batch: L5-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L5-B05
 - id: container-orchestration-edge
   layer: 4
   path: docs/computing/papers/container-orchestration-edge.md

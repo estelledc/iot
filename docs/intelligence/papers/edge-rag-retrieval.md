@@ -3,78 +3,83 @@ schema_version: '1.0'
 id: edge-rag-retrieval
 title: 边缘 RAG：检索增强生成在边缘的实现
 layer: 5
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+reading_time: 22
+prerequisites:
+  - llm-quantization-gptq-awq
+  - transformer-edge-deployment
+tags:
+  - RAG
+  - 向量数据库
+  - Embedding
+  - 边缘LLM
+  - 混合检索
+  - SQLite-vec
+  - 离线推理
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 边缘 RAG：检索增强生成在边缘的实现
 
-> **难度**：🟡 中级 | **领域**：检索增强生成、向量数据库、边缘智能 | **阅读时间**：约 20 分钟
+> **难度**：🟡 中级 | **领域**：检索增强生成、向量数据库、边缘智能 | **阅读时间**：约 22 分钟
 
 ## 日常类比
 
-想象你是一个维修工程师，带着一本厚厚的设备手册去现场维修（离线场景）。传统做法是把整本手册背下来（把所有知识塞进模型），但这不现实。RAG 的做法是：你带着手册（知识库）和一个聪明的助手（生成模型），遇到问题时助手先帮你翻到相关页面（检索），然后基于这几页内容给你解答（生成）。
+维修工程师带手册去现场：不必把整本背下。**检索增强生成（Retrieval-Augmented Generation, RAG）** 像聪明助手——先翻到相关页（检索），再据此作答（生成）[1]。
 
-边缘 RAG 的挑战在于：你不能打电话回公司查资料（没有云端连接），手册必须装在你的工具箱里（本地向量数据库），而且助手的脑容量有限（小模型）。但好处是响应快、不依赖网络、数据不出设备。
+边缘 RAG 的约束是：不能随时打电话回公司（弱网/离线），手册必须塞进工具箱（本地向量库），助手脑容量有限（量化小模型）。好处是快、数据不出设备。
+
+## 摘要
+
+本文对比云端与边缘 RAG，介绍 SQLite-vec / Qdrant 嵌入式向量库、轻量句向量模型、物联网（Internet of Things, IoT）手册分块、稠密+稀疏混合检索与端到端延迟优化。文中延迟与体积为单板机量级示意，需按机型实测[3][6][7]。
 
 ## 1. RAG 架构基础
 
-### 1.1 标准 RAG 流程
+### 1.1 标准流程
 
 ```
-用户查询 -> [Embedding 模型] -> 查询向量
-                                    |
-                                    v
-知识文档 -> [分块] -> [Embedding] -> 向量数据库 -> Top-K 检索
-                                                      |
-                                                      v
-                                    查询 + 检索结果 -> [LLM] -> 回答
+查询 → Embedding → 查询向量
+文档 → 分块 → Embedding → 向量库 → Top-K
+                              ↓
+                    查询 + 上下文 → LLM → 回答
 ```
 
-### 1.2 边缘 RAG vs 云端 RAG
+稠密检索（Dense Passage Retrieval 等）是现代开放域问答的基础组件之一[2]。
 
-| 维度 | 云端 RAG | 边缘 RAG |
-|------|---------|---------|
-| 模型大小 | 70B+ | 1-7B (量化) |
-| 向量库规模 | 百万-十亿级 | 千-十万级 |
-| Embedding 维度 | 768-4096 | 256-384 |
-| 检索延迟 | 10-50 ms | 5-20 ms (本地) |
-| 生成延迟 | 100-500 ms | 500-3000 ms |
-| 网络依赖 | 必须 | 无 |
-| 数据隐私 | 需传输 | 完全本地 |
-| 知识更新 | 实时 | 定期同步 |
+### 1.2 边缘 vs 云端
 
-### 1.3 边缘 RAG 适用场景
+| 维度 | 云端 RAG（常见） | 边缘 RAG（常见） |
+|------|------------------|------------------|
+| 模型规模 | 很大 | 约 1–7B 量化 |
+| 向量库规模 | 百万–十亿级 | 千–十万级 |
+| Embedding 维 | 较高 | 约 256–384 |
+| 检索延迟 | 毫秒–数十毫秒 | 本地毫秒级 |
+| 生成延迟 | 相对快（强 GPU） | 常为秒级（CPU） |
+| 网络 | 必需 | 可离线 |
+| 隐私 | 需传查询/文档 | 可完全本地 |
+| 知识更新 | 近实时 | 定期同步 |
 
-- 工业设备维护手册查询（离线工厂环境）
-- 医疗设备故障诊断（隐私敏感）
-- 智能家居语音助手（低延迟要求）
-- 车载信息系统（网络不稳定）
-- 农业 IoT 种植指导（偏远地区无网络）
+### 1.3 适用场景
+
+工业离线手册、医疗设备诊断（隐私）、车载弱网助手、偏远农业指导等——共同特点是**知识相对静态、延迟与隐私优先于百科广度**。
 
 ## 2. 边缘向量数据库
 
 ### 2.1 SQLite-vec
 
-SQLite-vec 是 SQLite 的向量搜索扩展，零依赖、单文件、适合嵌入式：
+零依赖扩展、单文件，适合嵌入式知识库[3]：
 
 ```python
 import sqlite3
 import sqlite_vec
 import struct
-import numpy as np
 
-# 初始化数据库
 db = sqlite3.connect("knowledge.db")
 db.enable_load_extension(True)
 sqlite_vec.load(db)
 
-# 创建向量表 (384 维，匹配 all-MiniLM-L6-v2)
 db.execute("""
     CREATE VIRTUAL TABLE documents USING vec0(
         embedding float[384],
@@ -83,97 +88,60 @@ db.execute("""
     )
 """)
 
-# 插入文档向量
-def insert_document(db, embedding, content, source):
-    db.execute(
-        "INSERT INTO documents(embedding, content, source) VALUES (?, ?, ?)",
-        [serialize_f32(embedding), content, source]
-    )
-
 def serialize_f32(vector):
-    """将 numpy 数组序列化为 bytes"""
     return struct.pack(f"{len(vector)}f", *vector)
 
-# 相似度搜索
 def search(db, query_embedding, top_k=5):
-    results = db.execute("""
-        SELECT content, source, distance
-        FROM documents
-        WHERE embedding MATCH ?
-        ORDER BY distance
-        LIMIT ?
-    """, [serialize_f32(query_embedding), top_k]).fetchall()
-    return results
-
-# 性能基准 (RPi 4, 10000 文档, 384维):
-# - 插入: ~2000 docs/s
-# - 搜索: ~3 ms (top-5)
-# - 数据库大小: ~15 MB
+    return db.execute(
+        """
+        SELECT content, source, distance FROM documents
+        WHERE embedding MATCH ? ORDER BY distance LIMIT ?
+        """,
+        [serialize_f32(query_embedding), top_k],
+    ).fetchall()
 ```
 
-### 2.2 Qdrant (嵌入式模式)
+公开材料称在树莓派级硬件、万级 384 维向量上检索可达数毫秒量级；插入吞吐与库体积随维度/索引而变，部署前应基准测试[3]。
+
+### 2.2 Qdrant 嵌入式
 
 ```python
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 
-# 嵌入式模式，无需启动服务器
 client = QdrantClient(path="./qdrant_data")
-
-# 创建集合
 client.create_collection(
     collection_name="iot_manuals",
-    vectors_config=VectorParams(
-        size=384,
-        distance=Distance.COSINE
-    )
-)
-
-# 批量插入
-points = [
-    PointStruct(
-        id=i,
-        vector=embeddings[i].tolist(),
-        payload={"content": chunks[i], "device": device_ids[i]}
-    )
-    for i in range(len(chunks))
-]
-client.upsert(collection_name="iot_manuals", points=points)
-
-# 搜索 (支持过滤)
-results = client.search(
-    collection_name="iot_manuals",
-    query_vector=query_embedding.tolist(),
-    query_filter={"must": [{"key": "device", "match": {"value": "pump-001"}}]},
-    limit=5
+    vectors_config=VectorParams(size=384, distance=Distance.COSINE),
 )
 ```
 
-### 2.3 向量数据库对比
+过滤（按设备型号）比纯 FAISS 更省事，但运行时与磁盘占用高于 SQLite-vec[6]。
 
-| 特性 | SQLite-vec | Qdrant (嵌入式) | FAISS | ChromaDB |
-|------|-----------|----------------|-------|----------|
-| 依赖 | 零 (单 .so) | Rust 运行时 | numpy | Python 生态 |
-| 内存占用 | ~5 MB | ~50 MB | ~20 MB | ~100 MB |
-| 10K 搜索延迟 | 3 ms | 2 ms | 1 ms | 5 ms |
-| 过滤支持 | SQL WHERE | 丰富 | 无原生 | 基础 |
-| 持久化 | 自动 (SQLite) | 自动 | 手动 | 自动 |
-| 适合设备 | MCU/RPi | RPi/Jetson | Jetson | PC/Jetson |
+### 2.3 向量库对比（示意）
 
-## 3. 边缘 Embedding 模型
+| 特性 | SQLite-vec | Qdrant 嵌入式 | FAISS | ChromaDB |
+|------|-----------|---------------|-------|----------|
+| 依赖 | 极轻 | Rust 运行时 | numpy 等 | Python 生态 |
+| 内存倾向 | 低 | 中 | 中 | 偏高 |
+| 过滤 | SQL | 丰富 | 弱 | 基础 |
+| 持久化 | 自动 | 自动 | 常需自管 | 自动 |
+| 设备倾向 | MCU 网关 / RPi | RPi / Jetson | Jetson+ | 开发机 / 强边缘 |
 
-### 3.1 轻量级 Embedding 模型选择
+## 3. 边缘 Embedding
 
-| 模型 | 维度 | 参数量 | MTEB 分数 | RPi4 延迟 | 适用场景 |
-|------|------|--------|-----------|-----------|----------|
-| all-MiniLM-L6-v2 | 384 | 22M | 56.3 | ~45 ms | 通用英文 |
-| all-MiniLM-L12-v2 | 384 | 33M | 59.8 | ~85 ms | 精度优先 |
-| BGE-small-zh | 512 | 24M | 57.8 | ~50 ms | 中文场景 |
-| BGE-small-en | 384 | 33M | 62.1 | ~80 ms | 英文精度 |
-| E5-small-v2 | 384 | 33M | 59.9 | ~80 ms | 多语言 |
-| GTE-small | 384 | 33M | 61.4 | ~75 ms | 平衡选择 |
+### 3.1 轻量模型选型（公开榜单量级）
 
-### 3.2 ONNX 部署 Embedding 模型
+| 模型 | 维 | 参数量级 | 任务倾向 |
+|------|----|---------|---------|
+| all-MiniLM-L6-v2 | 384 | 约 22M | 通用英文[4] |
+| all-MiniLM-L12-v2 | 384 | 约 33M | 精度优先 |
+| BGE-small 系列 | 384/512 | 约 24–33M | 中英检索[5][9] |
+| E5-small / GTE-small | 384 | 约 33M | 多语/平衡 |
+
+MTEB 等分数随版本变化；边缘应同时看延迟与领域适配，而非只追榜[5][9]。
+
+### 3.2 ONNX 推理骨架
 
 ```python
 import onnxruntime as ort
@@ -181,298 +149,128 @@ import numpy as np
 from tokenizers import Tokenizer
 
 class EdgeEmbedder:
-    """边缘设备上的轻量级 Embedding 推理"""
-    
-    def __init__(self, model_path, tokenizer_path):
-        # 使用 ONNX Runtime，支持 ARM CPU
+    def __init__(self, model_path, tokenizer_path, threads=4):
+        opts = ort.SessionOptions()
+        opts.intra_op_num_threads = threads
+        opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         self.session = ort.InferenceSession(
-            model_path,
-            providers=["CPUExecutionProvider"],
-            sess_options=self._get_options()
+            model_path, providers=["CPUExecutionProvider"], sess_options=opts
         )
         self.tokenizer = Tokenizer.from_file(tokenizer_path)
         self.tokenizer.enable_truncation(max_length=128)
         self.tokenizer.enable_padding(length=128)
-    
-    def _get_options(self):
-        opts = ort.SessionOptions()
-        opts.intra_op_num_threads = 4  # RPi 4 核
-        opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
-        return opts
-    
+
     def encode(self, texts):
-        """批量编码文本为向量"""
         if isinstance(texts, str):
             texts = [texts]
-        
-        encodings = self.tokenizer.encode_batch(texts)
-        input_ids = np.array([e.ids for e in encodings], dtype=np.int64)
-        attention_mask = np.array([e.attention_mask for e in encodings], dtype=np.int64)
-        
-        outputs = self.session.run(None, {
-            "input_ids": input_ids,
-            "attention_mask": attention_mask
-        })
-        
-        # Mean pooling
-        embeddings = outputs[0]  # [batch, seq_len, dim]
-        mask = attention_mask[:, :, np.newaxis].astype(np.float32)
-        pooled = (embeddings * mask).sum(axis=1) / mask.sum(axis=1)
-        
-        # L2 归一化
-        norms = np.linalg.norm(pooled, axis=1, keepdims=True)
-        return pooled / norms
-
-# 使用示例
-embedder = EdgeEmbedder("minilm-l6.onnx", "tokenizer.json")
-vectors = embedder.encode(["设备温度过高报警", "泵体振动异常"])
-# RPi 4 延迟: ~45 ms/句 (batch=1), ~30 ms/句 (batch=8)
+        enc = self.tokenizer.encode_batch(texts)
+        input_ids = np.array([e.ids for e in enc], dtype=np.int64)
+        mask = np.array([e.attention_mask for e in enc], dtype=np.int64)
+        emb = self.session.run(
+            None, {"input_ids": input_ids, "attention_mask": mask}
+        )[0]
+        m = mask[:, :, None].astype(np.float32)
+        pooled = (emb * m).sum(1) / m.sum(1)
+        return pooled / np.linalg.norm(pooled, axis=1, keepdims=True)
 ```
 
-## 4. 文档分块策略
+Sentence-BERT 类双塔是句向量主流范式之一[4]。
 
-### 4.1 分块方法对比
+## 4. 文档分块
 
-| 方法 | 优点 | 缺点 | 适用场景 |
-|------|------|------|----------|
-| 固定长度 | 简单、均匀 | 可能切断语义 | 结构化文档 |
-| 句子分割 | 保持语义完整 | 长度不均 | 自然语言文本 |
-| 递归分割 | 层次化、灵活 | 实现复杂 | 通用 |
-| 语义分割 | 语义最优 | 需要模型 | 精度要求高 |
+| 方法 | 优点 | 缺点 | 适用 |
+|------|------|------|------|
+| 固定长度 | 简单 | 易切断语义 | 结构化文本 |
+| 句子分割 | 语义较完整 | 长度不均 | 叙述性手册 |
+| 递归分割 | 灵活 | 实现复杂 | 通用 |
+| 语义分割 | 边界更好 | 需模型 | 高精度 |
 
-### 4.2 IoT 场景的分块实践
+IoT 手册建议：按章节标题切；表格整块保留；块长约数百字符并带小重叠——过长检索糊，过短缺上下文。
+
+## 5. 混合检索
+
+稠密向量抓语义，BM25 抓型号/错误码等关键词；线性融合常优于单路[2][7]。
 
 ```python
-import re
-
-def chunk_iot_manual(text, chunk_size=256, overlap=50):
-    """
-    IoT 设备手册专用分块策略
-    - 按章节标题分割
-    - 保留设备型号和参数上下文
-    - 表格不拆分
-    """
-    # 按标题分割
-    sections = re.split(r'\n(#{1,3}\s+.+)\n', text)
-    
-    chunks = []
-    current_chunk = ""
-    current_header = ""
-    
-    for i, section in enumerate(sections):
-        if section.startswith('#'):
-            current_header = section.strip()
-            continue
-        
-        # 检测表格，不拆分
-        if '|' in section and section.count('|') > 4:
-            chunks.append(f"{current_header}\n{section}")
-            continue
-        
-        # 按句子累积到 chunk_size
-        sentences = re.split(r'(?<=[。！？.!?])\s*', section)
-        for sent in sentences:
-            if len(current_chunk) + len(sent) > chunk_size:
-                if current_chunk:
-                    chunks.append(f"{current_header}\n{current_chunk}")
-                # 保留 overlap
-                words = current_chunk.split()
-                current_chunk = ' '.join(words[-overlap//4:]) + sent
-            else:
-                current_chunk += sent
-    
-    if current_chunk:
-        chunks.append(f"{current_header}\n{current_chunk}")
-    
-    return chunks
+final_scores = alpha * dense_norm + (1 - alpha) * sparse_norm
 ```
 
-## 5. 混合检索策略
+\(\alpha\) 需按语料调；错误码密集的手册可略降 \(\alpha\)。
 
-### 5.1 Dense + Sparse 混合搜索
-
-```python
-import numpy as np
-from collections import Counter
-import math
-
-class HybridSearch:
-    """稠密向量 + BM25 稀疏检索的混合方案"""
-    
-    def __init__(self, embedder, documents, alpha=0.7):
-        self.embedder = embedder
-        self.documents = documents
-        self.alpha = alpha  # 稠密检索权重
-        
-        # 构建稠密索引
-        self.dense_vectors = embedder.encode(documents)
-        
-        # 构建 BM25 稀疏索引
-        self.bm25_index = self._build_bm25(documents)
-    
-    def _build_bm25(self, docs, k1=1.5, b=0.75):
-        """构建 BM25 索引"""
-        tokenized = [doc.split() for doc in docs]
-        avg_dl = np.mean([len(d) for d in tokenized])
-        
-        # 计算 IDF
-        df = Counter()
-        for doc in tokenized:
-            df.update(set(doc))
-        
-        n_docs = len(docs)
-        idf = {word: math.log((n_docs - freq + 0.5) / (freq + 0.5) + 1)
-               for word, freq in df.items()}
-        
-        return {"tokenized": tokenized, "idf": idf, "avg_dl": avg_dl,
-                "k1": k1, "b": b}
-    
-    def _bm25_score(self, query_tokens, doc_idx):
-        """计算单个文档的 BM25 分数"""
-        idx = self.bm25_index
-        doc = idx["tokenized"][doc_idx]
-        dl = len(doc)
-        score = 0
-        tf_dict = Counter(doc)
-        
-        for term in query_tokens:
-            if term in idx["idf"]:
-                tf = tf_dict.get(term, 0)
-                numerator = tf * (idx["k1"] + 1)
-                denominator = tf + idx["k1"] * (1 - idx["b"] + idx["b"] * dl / idx["avg_dl"])
-                score += idx["idf"][term] * numerator / denominator
-        return score
-    
-    def search(self, query, top_k=5):
-        """混合检索"""
-        # 稠密检索分数
-        query_vec = self.embedder.encode(query)
-        dense_scores = np.dot(self.dense_vectors, query_vec.T).flatten()
-        
-        # BM25 分数
-        query_tokens = query.split()
-        sparse_scores = np.array([
-            self._bm25_score(query_tokens, i) 
-            for i in range(len(self.documents))
-        ])
-        
-        # 归一化并融合
-        dense_norm = (dense_scores - dense_scores.min()) / (dense_scores.max() - dense_scores.min() + 1e-8)
-        sparse_norm = (sparse_scores - sparse_scores.min()) / (sparse_scores.max() - sparse_scores.min() + 1e-8)
-        
-        final_scores = self.alpha * dense_norm + (1 - self.alpha) * sparse_norm
-        
-        top_indices = np.argsort(final_scores)[::-1][:top_k]
-        return [(self.documents[i], final_scores[i]) for i in top_indices]
-```
-
-## 6. 端到端边缘 RAG 系统
-
-### 6.1 完整架构
+## 6. 端到端系统
 
 ```python
 class EdgeRAG:
-    """完整的边缘 RAG 系统"""
-    
     def __init__(self, embedder, vector_db, llm_path):
-        self.embedder = embedder
-        self.db = vector_db
-        self.llm = self._load_llm(llm_path)
-    
-    def _load_llm(self, path):
-        """加载量化 LLM (使用 llama-cpp-python)"""
         from llama_cpp import Llama
-        return Llama(
-            model_path=path,
-            n_ctx=2048,
-            n_threads=4,
-            n_gpu_layers=0  # CPU only for RPi
-        )
-    
+        self.embedder, self.db = embedder, vector_db
+        self.llm = Llama(model_path=llm_path, n_ctx=2048, n_threads=4, n_gpu_layers=0)
+
     def query(self, question, top_k=3):
-        """RAG 查询流程"""
-        # 1. 编码查询
-        query_vec = self.embedder.encode(question)
-        
-        # 2. 检索相关文档
-        results = search(self.db, query_vec[0], top_k=top_k)
-        context = "\n---\n".join([r[0] for r in results])
-        
-        # 3. 构建 prompt
-        prompt = f"""基于以下参考资料回答问题。如果资料中没有相关信息，请说明。
-
-参考资料：
-{context}
-
-问题：{question}
-
-回答："""
-        
-        # 4. 生成回答
-        response = self.llm(prompt, max_tokens=256, temperature=0.1)
-        return {
-            "answer": response["choices"][0]["text"],
-            "sources": [r[1] for r in results],
-            "latency_ms": {
-                "embedding": 45,   # 典型值
-                "retrieval": 5,
-                "generation": 2500  # 3B 模型在 RPi4
-            }
-        }
+        qv = self.embedder.encode(question)
+        results = search(self.db, qv[0], top_k=top_k)
+        context = "\n---\n".join(r[0] for r in results)
+        prompt = f"基于参考资料回答；若无相关信息请说明。\n资料：\n{context}\n问题：{question}\n回答："
+        out = self.llm(prompt, max_tokens=256, temperature=0.1)
+        return {"answer": out["choices"][0]["text"], "sources": [r[1] for r in results]}
 ```
 
-### 6.2 延迟优化技巧
+### 延迟优化
 
-| 优化手段 | 效果 | 实现难度 |
-|----------|------|----------|
-| Embedding 缓存 | 避免重复编码，节省 40ms | 低 |
-| 向量量化 (PQ) | 搜索加速 2-3x，精度损失 <2% | 中 |
-| 预计算常见查询 | 热门问题 0ms 检索 | 低 |
-| 流式生成 | 首 token 延迟降低 80% | 中 |
-| 异步预取 | 隐藏检索延迟 | 中 |
-| 模型预热 | 避免冷启动 500ms | 低 |
+| 手段 | 效果倾向 | 难度 |
+|------|---------|------|
+| Embedding 缓存 | 省重复编码 | 低 |
+| 向量量化 (PQ) | 加速检索，精度略损 | 中 |
+| 热门查询预计算 | 近零检索 | 低 |
+| 流式生成 | 降低首 token 等待 | 中 |
+| 模型预热 | 减冷启动 | 低 |
+| 无生成降级 | 只返回片段，毫秒级 | 低 |
+
+小上下文窗口下 Top-K=3 往往比 K=5 更稳，避免塞爆上下文[7]。
+
+### 云边协作
+
+有网：边缘检索 + 云端大模型；离线：本地小模型；混合：先本地快答，再云端精修。
 
 ## 7. 实践建议
 
-### 7.1 初学者入门路径
+1. PC 上用 LangChain 等跑通 RAG 闭环。
+2. 换成 MiniLM + SQLite-vec + 量化小模型。
+3. 在目标单板机测 embedding / 检索 / 生成三段延迟。
+4. 调分块与混合检索 \(\alpha\)。
+5. 加缓存与离线降级。
 
-1. **第一步**：在 PC 上用 LangChain 搭建基础 RAG，理解流程
-2. **第二步**：替换为轻量组件（MiniLM + SQLite-vec + Phi-3-mini）
-3. **第三步**：在 RPi 4 上部署，测量各环节延迟
-4. **第四步**：优化分块策略和检索参数
-5. **第五步**：添加混合检索和缓存机制
+## 8. 局限、挑战与可改进方向
 
-### 7.2 具体调优建议
+### 1. 生成才是瓶颈
 
-- **Embedding 维度**：384 维是边缘场景的甜点——比 768 维快 2 倍，精度只损失 3-5%
-- **分块大小**：IoT 手册建议 200-300 字符，太长检索不精确，太短缺乏上下文
-- **Top-K 选择**：边缘 LLM 上下文窗口小，K=3 通常最优（K=5 可能超出 context）
-- **更新策略**：设备手册更新不频繁，可以在夜间低负载时重建索引
-- **降级方案**：LLM 推理太慢时，可以直接返回检索结果（无生成），延迟从秒级降到毫秒级
+**局限**：检索毫秒级，1–3B 模型 CPU 生成常要数秒，体验像"卡死"[7][10]。
+**改进**：流式输出、更小专用模型、检索直出、热问题缓存。
 
-### 7.3 与云端 RAG 的协作模式
+### 2. 幻觉与过时手册
 
-```
-正常模式（有网络）：
-  查询 -> 边缘检索 -> 云端 LLM 生成 -> 高质量回答
+**局限**：小模型更易无视检索结果胡编；现场固件与手册版本不一致[1][7]。
+**改进**：强制引用片段；版本化索引；答不出就说不知道。
 
-离线模式（无网络）：
-  查询 -> 边缘检索 -> 本地小 LLM 生成 -> 可用回答
+### 3. 中文工业术语
 
-混合模式：
-  查询 -> 边缘检索 -> 本地快速回答（先展示）
-                   -> 同时发送云端 -> 云端精确回答（后更新）
-```
+**局限**：通用英文句向量对设备型号、故障码召回弱[5][9]。
+**改进**：领域微调 / 中文小模型；混合 BM25；同义词表。
+
+### 4. 更新与一致性
+
+**局限**：边缘索引定期同步，窗口期内答旧知识。
+**改进**：差分更新包；查询时带知识版本号；关键安全规程走强校验通道。
 
 ## 参考文献
 
-1. Lewis, P. et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." NeurIPS 2020.
-2. Karpukhin, V. et al. "Dense Passage Retrieval for Open-Domain Question Answering." EMNLP 2020.
-3. SQLite-vec. "A vector search SQLite extension." GitHub, 2024.
-4. Reimers, N. et al. "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks." EMNLP 2019.
-5. Xiao, S. et al. "C-Pack: Packaged Resources To Advance General Chinese Embedding." arXiv 2023.
-6. Qdrant. "Qdrant: Vector Search Engine." Documentation, 2024.
-7. Gao, Y. et al. "Retrieval-Augmented Generation for Large Language Models: A Survey." arXiv 2024.
-8. Ma, X. et al. "Fine-Tuning LLaMA for Multi-Stage Text Retrieval." SIGIR 2024.
-9. Chen, J. et al. "BGE M3-Embedding: Multi-Lingual, Multi-Functionality, Multi-Granularity." arXiv 2024.
-10. Edge Impulse. "Deploying RAG on Edge Devices." Technical Blog, 2024.
+[1] P. Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks," NeurIPS, 2020.
+[2] V. Karpukhin et al., "Dense Passage Retrieval for Open-Domain Question Answering," EMNLP, 2020.
+[3] SQLite-vec, "A vector search SQLite extension," GitHub, 2024.
+[4] N. Reimers and I. Gurevych, "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks," EMNLP, 2019.
+[5] S. Xiao et al., "C-Pack: Packaged Resources To Advance General Chinese Embedding," arXiv, 2023.
+[6] Qdrant, "Qdrant: Vector Search Engine," Documentation, 2024.
+[7] Y. Gao et al., "Retrieval-Augmented Generation for Large Language Models: A Survey," arXiv, 2024.
+[8] X. Ma et al., "Fine-Tuning LLaMA for Multi-Stage Text Retrieval," SIGIR, 2024.
+[9] J. Chen et al., "BGE M3-Embedding: Multi-Lingual, Multi-Functionality, Multi-Granularity," arXiv, 2024.
+[10] Edge Impulse 等, "Deploying RAG on Edge Devices" 技术博文与实践报告, 2024.

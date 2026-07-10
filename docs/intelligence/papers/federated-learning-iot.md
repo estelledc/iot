@@ -3,264 +3,207 @@ schema_version: '1.0'
 id: federated-learning-iot
 title: 联邦学习与物联网：隐私保护下的分布式智能
 layer: 5
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: survey
+difficulty: advanced
+reading_time: 28
+prerequisites:
+  - async-federated-learning
+  - privacy-computing-tee-fl
+tags:
+  - 联邦学习
+  - FedAvg
+  - Non-IID
+  - 个性化FL
+  - FedGPA
+  - 隐私保护
+  - 边缘训练
+  - IoT
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 联邦学习与物联网：隐私保护下的分布式智能
 
-> 难度：🟠 挑战 | 前置知识：了解基本机器学习训练流程（损失函数、梯度下降、模型参数）
+> **难度**：🟠 进阶 | **领域**：联邦学习、隐私、物联网 | **阅读时间**：约 28 分钟
 
-## 论文信息
+## 日常类比
 
-- **主题**：联邦学习（Federated Learning）在物联网场景下的算法演进、核心挑战与前沿进展
-- **重点论文**：FedGPA — Federated Learning with Global Personalized Aggregation (IEEE INFOCOM 2025)
-- **涵盖范围**：FedAvg (2017) → FedProx (2020) → SCAFFOLD (2020) → FedBN (2021) → FedGPA (2025) 的技术演进
+连锁餐饮想优化口味：传统做法是把各店顾客反馈集中到总部——隐私与带宽都头疼。
 
-## 1 什么是联邦学习
+**联邦学习（Federated Learning, FL）** 换做法：每店用本地反馈训"口味模型"，只把**模型参数**（不是顾客数据）交给总部做平均，再发回各店。几轮后，各店模型吸收了全国经验，原始数据从未离店[1]。
 
-### 1.1 一句话定位
+## 摘要
 
-联邦学习是一种"数据不动、模型动"的分布式机器学习范式——多个设备协作训练一个共享模型，但原始数据始终留在本地，只交换模型参数或梯度。
+物联网（Internet of Things, IoT）数据天然分散、受法规约束，适合"数据不动、模型动"。本文沿 FedAvg → FedProx → SCAFFOLD → FedBN → 个性化方法 → FedGPA 梳理 Non-IID 对策，并讨论通信、异构、安全与应用。文中准确率数字来自各论文报告的实验设定，不可直接外推到任意传感器部署[1][2][5]。
 
-### 1.2 日常类比
+## 1. 什么是联邦学习
 
-想象一个连锁餐饮品牌想优化菜品口味。传统做法是把所有门店的顾客反馈收集到总部，统一分析。但问题来了：顾客隐私怎么办？海量数据传输成本谁承担？各地口味差异怎么处理？
+一句话：多设备协作训练共享模型，原始数据留在本地，交换参数或梯度[1]。
 
-联邦学习的做法不同：每个门店用自己的顾客反馈在本地训练一个"口味偏好模型"，然后只把训练后的模型参数（不是顾客数据）发给总部。总部把所有门店的模型参数平均一下，得到一个"综合模型"，再发回各门店。这样反复几轮，每个门店都得到了一个融合了全国口味经验的模型，但没有一条顾客数据离开过门店。
+IoT 特别需要 FL 的三点：
 
-### 1.3 为什么物联网特别需要联邦学习
+| 动机 | 说明 |
+|------|------|
+| 数据分散 | 海量终端各自产生数据，全量上云不现实 |
+| 隐私合规 | 医疗/家居/产线数据受 GDPR 等约束 |
+| 本地适应 | 希望模型在边缘持续进化，而非只靠云端下发 |
 
-物联网场景天然适合联邦学习，原因有三：
+## 2. FedAvg：起点
 
-**数据分散性**：物联网的数据天然分布在成千上万的边缘设备上——每个传感器、每个摄像头、每个可穿戴设备都在独立产生数据。把这些数据全部汇聚到中心服务器，在带宽和存储上都不现实。
-
-**隐私合规性**：智慧医疗中的患者数据、智能家居中的生活习惯数据、工业 IoT 中的生产数据——这些数据受到 GDPR、《数据安全法》等法规的严格限制，不能随意跨设备或跨机构传输。
-
-**实时响应性**：等数据传到云端再训练、再把模型传回来，对于需要快速适应环境变化的 IoT 应用（如入侵检测、异常监控）来说太慢了。联邦学习让模型在本地就能持续进化。
-
-## 2 FedAvg：联邦学习的起点
-
-### 2.1 算法流程
-
-FedAvg（Federated Averaging）是 Google 在 2017 年提出的奠基算法，流程如下：
+### 2.1 流程
 
 ```
-第 0 轮：服务器初始化全局模型 w₀
-
-每一轮 t = 1, 2, ..., T：
-  1. 服务器选择 C 比例的客户端（如 C=10%）
-  2. 服务器把当前全局模型 wₜ 发送给被选中的客户端
-  3. 每个客户端 k：
-     - 用本地数据跑 E 个 epoch 的 SGD
-     - 得到本地更新后的模型 wₜ₊₁ᵏ
-     - 把 wₜ₊₁ᵏ 发回服务器
-  4. 服务器按数据量加权平均：wₜ₊₁ = Σ (nₖ/n) · wₜ₊₁ᵏ
+初始化全局模型 w₀
+每轮 t：
+  1. 选 C 比例客户端
+  2. 下发 wₜ
+  3. 各客户端本地 SGD E 个 epoch → wₜ₊₁ᵏ
+  4. 服务器按数据量加权平均
 ```
 
-关键参数有三个：C（每轮参与比例）、E（本地训练轮数）、B（本地 batch size）。E 越大，通信轮数越少，但模型漂移风险越大——这就是联邦学习的核心矛盾。
+关键超参：参与比例 \(C\)、本地轮数 \(E\)、batch \(B\)。\(E\) 大省通信，但加剧客户端漂移[1]。
 
-### 2.2 为什么 FedAvg 在 IoT 场景下会出问题
+### 2.2 为何在 IoT 上吃瘪
 
-FedAvg 假设每个客户端的数据分布是相似的（IID，独立同分布）。但在真实的物联网场景中，这个假设几乎不成立：
+FedAvg 隐含独立同分布（Independent and Identically Distributed, IID）假设；真实 IoT 几乎总是 Non-IID：
 
-**标签分布偏斜（Label Skew）**：部署在医院ICU的传感器几乎只见到危重患者数据，而门诊的传感器主要见到健康人数据。同一类别在不同设备上的比例差异巨大。
+| 偏斜类型 | IoT 表现 |
+|----------|---------|
+| 标签偏斜 | ICU 与门诊传感器所见类别比例迥异 |
+| 特征偏斜 | 同型号传感器在高温车间 vs 空调房分布不同 |
+| 数量偏斜 | 全天候设备与偶发设备数据量可差几个数量级 |
 
-**特征分布偏斜（Feature Skew）**：同一类型的传感器在不同环境下采集的数据特征差异很大——高温车间的振动传感器和空调房里的振动传感器，即使都在监测"正常运行"，数据分布也完全不同。
+在图像基准的极端 Non-IID 划分下，FedAvg 相对 IID 设定可出现显著准确率下降甚至难收敛；具体幅度随数据集与划分而变[1][2]。
 
-**数据量不均衡（Quantity Skew）**：有的设备全天候运行产生海量数据，有的设备一天只触发几次。10000:1 的数据量差距在 IoT 中很常见。
+## 3. 应对 Non-IID：算法演进
 
-在 Non-IID 条件下，FedAvg 的表现会急剧下降。实验数据显示：在 CIFAR-10 数据集上，IID 条件下 FedAvg 能达到约 86% 的准确率，但当每个客户端只有 2 个类别的数据（极端 Non-IID）时，准确率降到 64% 以下，甚至出现训练不收敛的情况。
+### 3.1 FedProx
 
-## 3 应对 Non-IID：算法演进
+本地目标加近端项 \((\mu/2)\|w-w_t\|^2\)，限制本地模型跑离全局；\(\mu=0\) 退回 FedAvg。报告称在高度异构设定下收敛更稳，并对掉队设备更友好[2]。
 
-### 3.1 FedProx：给本地训练加刹车
+### 3.2 SCAFFOLD
 
-FedProx（2020，MLSys）的核心思想非常直觉：既然问题出在各客户端本地训练后模型差异太大，那就给本地训练加一个"弹性绳"——一个近端项（proximal term），阻止本地模型跑得离全局模型太远。
+用控制变量修正客户端漂移；理论对数据异质性更不敏感，但每轮额外传控制变量，通信量约翻倍——带宽紧张的 IoT 需权衡[3]。
 
-FedProx 在本地损失函数中增加一项：
+### 3.3 FedBN
 
-```
-本地目标 = 原始损失 + (μ/2) · ||w - wₜ||²
-```
-
-这里 μ 是超参数，控制"弹性绳"的松紧度。μ=0 就退化为 FedAvg；μ 越大，本地模型越被限制在全局模型附近。
-
-效果：在高度 Non-IID 的场景下，FedProx 的收敛速度比 FedAvg 快约 22%，且对"掉队者"（stragglers，指计算能力弱的设备）更鲁棒，因为即使某些设备只跑了部分 epoch 就上传，近端项也能保证其更新不会偏离太远。
-
-### 3.2 SCAFFOLD：修正客户端漂移
-
-SCAFFOLD（2020，ICML）从更根本的角度解决问题。它引入了"控制变量"（control variates）来追踪和修正客户端漂移（client drift）。
-
-核心思想：每个客户端维护一个控制变量 cₖ，服务器维护全局控制变量 c。客户端在本地更新时，用 (c - cₖ) 来修正梯度方向，补偿本地数据分布偏差带来的梯度偏移。
-
-SCAFFOLD 的收敛速度理论上不受 Non-IID 程度影响（数据异质性对收敛界无贡献），但代价是通信量翻倍——每轮需要额外传输控制变量。对带宽受限的 IoT 设备来说，这是个需要权衡的代价。
-
-### 3.3 FedBN：让 BatchNorm 保持本地
-
-FedBN（2021，ICLR）的观察非常精妙：在 CNN 中，BatchNorm 层记录的是数据分布的统计信息（均值和方差）。如果不同客户端的数据分布不同，那共享 BatchNorm 参数本身就是错误的。
-
-解决方案极其简单：联邦聚合时，跳过 BatchNorm 层，让每个客户端保留自己的 BN 参数。效果出奇地好——在 Non-IID 场景下，仅这一个修改就能带来 3-8 个百分点的准确率提升，而且实现成本几乎为零。
+联邦聚合时跳过批归一化（Batch Normalization, BN）层，让各客户端保留本地统计。实现极简，在特征偏斜场景常有几个百分点量级的收益报告[4]。
 
 ### 3.4 算法对比
 
-| 算法 | 发表 | 核心策略 | 通信开销 | Non-IID 改善 | 额外计算 | IoT 适用性 |
-|------|------|----------|----------|-------------|----------|-----------|
-| FedAvg | 2017 AISTATS | 加权平均 | 基准 | 无 | 无 | 高（简单） |
-| FedProx | 2020 MLSys | 近端正则项 | 基准 | 中等（~22%↑） | 低 | 高 |
-| SCAFFOLD | 2020 ICML | 控制变量修正 | 2x | 强 | 中 | 中（通信贵） |
-| FedBN | 2021 ICLR | 不聚合BN层 | 略低于基准 | 中（~3-8%↑） | 无 | 高 |
-| FedNova | 2020 NeurIPS | 归一化平均 | 基准 | 中 | 低 | 高 |
-| MOON | 2021 CVPR | 对比学习正则 | 基准 | 中强 | 中 | 中 |
-| Per-FedAvg | 2020 NeurIPS | MAML元学习 | 基准 | 强 | 高 | 低（计算重） |
+| 算法 | 发表 | 核心策略 | 通信 | Non-IID 倾向 | IoT 适用 |
+|------|------|----------|------|-------------|---------|
+| FedAvg | 2017 | 加权平均 | 基准 | 弱 | 高（简单）[1] |
+| FedProx | 2020 | 近端正则 | 基准 | 中 | 高[2] |
+| SCAFFOLD | 2020 | 控制变量 | ~2× | 强 | 中（通信贵）[3] |
+| FedBN | 2021 | 不聚合 BN | ≤基准 | 中（特征偏斜） | 高[4] |
+| FedNova | 2020 | 归一化平均 | 基准 | 中 | 高 |
+| MOON | 2021 | 对比正则 | 基准 | 中强 | 中 |
+| Per-FedAvg | 2020 | 元学习 | 基准 | 强 | 低（算力重） |
 
-## 4 个性化联邦学习：从全局模型到本地定制
+## 4. 个性化联邦学习
 
-### 4.1 为什么需要个性化
+全局"一个模型打天下"在南北供暖/空调等温控场景常不成立。个性化联邦学习（Personalized FL, PFL）在协作的同时保留本地适配。
 
-全局模型的根本假设是"一个模型适合所有人"——但在物联网场景中，这个假设往往不成立。部署在北方供暖系统的温度预测模型和南方空调系统的模型，即使监测的都是"室内温度"，最优模型参数也截然不同。
+| 类别 | 代表 | 优势 | 劣势 | IoT 场景 |
+|------|------|------|------|---------|
+| 参数解耦 | FedBN, FedPer | 简单、通信省 | 需定哪些层共享 | 多类型传感器 |
+| 模型插值 | APFL, Ditto | 连续调节个性化 | 超参敏感 | 地域差异 |
+| 元学习 | Per-FedAvg | 新客户端快适应 | 二阶/算力重 | 冷启动 |
+| 聚类 | IFCA, CFL | 自动分组 | 组数难定 | 多区域 |
+| 蒸馏 | FedDF, FedMD | 支持异构模型 | 常需公共数据 | 异构设备群 |
 
-个性化联邦学习（Personalized Federated Learning，PFL）的目标是：利用联邦学习的协作优势（从其他客户端借力），同时让每个客户端拥有针对本地数据分布优化的个性化模型。
+## 5. 前沿：FedGPA（INFOCOM 2025）
 
-### 4.2 个性化方法分类
+**问题**：全员平均可能负迁移；聚类又要额外通信探相似性。
 
-**参数解耦类**：把模型参数分为"全局共享"和"本地私有"两部分。前面提到的 FedBN 就是最简单的例子。更进一步的 FedPer（2020）让模型的 base layers 全局共享（学通用特征），top layers 本地私有（学个性化分类头）。LG-FedAvg 则反过来——底层本地化，高层全局化。
+**思路**：维护客户端更新方向的相似性，按"有用程度"加权聚合，并在训练早期偏均匀、后期偏个性化，以降低负迁移[5]。
 
-**模型插值类**：本地模型 = α · 全局模型 + (1-α) · 纯本地模型。α 可以手动设定（如 APFL），也可以学习得到（如 Ditto）。
+作者在 CIFAR-10（Dirichlet 强 Non-IID）与 FEMNIST 等基准上报告个性化准确率优于若干经典基线，并称相对部分聚类方法可用更少轮次达到相近精度——**数字以原论文表格为准，迁移到传感器任务需重测**[5]。
 
-**元学习类**：把联邦学习建模为 MAML 式的元学习问题——全局模型不追求在任何单一客户端上表现好，而是追求"几步微调后就能适应任意客户端"。Per-FedAvg 就是这一类的代表。
+对 IoT 的启示：同气候区土壤传感器可互借力，跨气候带强行聚合可能有害；选择性吸收比一刀切平均更贴现场。
 
-**聚类类**：自动发现数据分布相似的客户端分组，组内做聚合，组间不做。IFCA、CFL 是典型方法。适合 IoT 场景中设备按地理区域或功能类型天然分群的情况。
+## 6. IoT 特殊挑战
 
-### 4.3 个性化方法对比
+### 6.1 通信
 
-| 方法类别 | 代表工作 | 优势 | 劣势 | IoT 典型场景 |
-|---------|---------|------|------|-------------|
-| 参数解耦 | FedBN, FedPer, LG-FedAvg | 实现简单，通信高效 | 需要预定义哪些层共享 | 多类型传感器 |
-| 模型插值 | APFL, Ditto, L2GD | 灵活，连续调节个性化程度 | α 调参敏感 | 地域差异设备 |
-| 元学习 | Per-FedAvg, FedMeta | 快速适应新客户端 | 计算开销大，二阶梯度 | 新设备冷启动 |
-| 聚类 | IFCA, CFL, FeSEM | 自动分组，无需先验 | 组数需估计 | 多区域部署 |
-| 知识蒸馏 | FedDF, FedMD | 支持异构模型 | 需要公共数据集 | 异构设备群 |
+LoRa / NB-IoT 等低速链路传完整深度模型不现实。常见手段：
 
-## 5 前沿进展：FedGPA (INFOCOM 2025)
+| 手段 | 思路 | 代价 |
+|------|------|------|
+| 梯度压缩 | 只传 top-k 分量[8] | 可能损精度 |
+| 稀疏更新 | 只传变化参数 | 实现复杂 |
+| 量化 | 8-bit / 符号梯度 | 噪声增大 |
+| 参数高效微调 | 只传 LoRA 等适配器[9] | 依赖预训练底座 |
 
-### 5.1 解决什么问题
+Deep Gradient Compression 等工作报告在高压缩率下仍可保持接近基线精度，但取决于任务与实现[8]。
 
-FedGPA（Federated Learning with Global Personalized Aggregation）针对的是个性化联邦学习中的一个关键痛点：现有方法要么聚合所有客户端的模型（可能引入对本地任务有害的知识），要么需要大量通信来发现相似客户端（聚类方法），缺乏一种高效的"选择性知识吸收"机制。
+### 6.2 设备异构
 
-### 5.2 核心思想
+MCU 与 Jetson 算力可差数量级。HeteroFL 等允许不同宽度子模型；蒸馏可在异构架构间传知识[7]。
 
-FedGPA 的核心创新是一种全局个性化聚合策略——每个客户端不再被动接受全局平均模型，而是根据其他客户端对自己的"有用程度"进行加权聚合。
+### 6.3 安全
 
-具体来说，FedGPA 包含三个关键组件：
-
-**客户端相似性矩阵**：服务器维护一个 N×N 的相似性矩阵（N 为客户端数），通过比较客户端模型更新方向的余弦相似度来量化客户端间的关联程度。更新方向一致说明数据分布相似，方向相反说明差异大。
-
-**个性化聚合权重**：对于客户端 k，其个性化全局模型不是简单的算术平均，而是根据相似性矩阵计算的加权平均。相似度高的客户端权重大，相似度低甚至为负的客户端权重被截断为零（避免"负迁移"）。
-
-**渐进式信任建立**：在训练初期，所有客户端的相似性估计不准确（因为模型还在快速变化），FedGPA 使用一个动态调节机制——初期更接近均匀聚合（类似 FedAvg），随着训练推进逐步过渡到个性化聚合（利用已建立的相似性估计）。
-
-### 5.3 实验结果
-
-FedGPA 在多个标准基准上进行了评估：
-
-在 CIFAR-10（α=0.1 的 Dirichlet 分布，100 个客户端）上，FedGPA 的个性化准确率达到 89.3%，超过 FedAvg（78.2%）、FedProx（80.1%）、SCAFFOLD（82.5%）和 Per-FedAvg（85.7%）。
-
-在更贴近 IoT 的 FEMNIST 数据集（自然 Non-IID，写字风格因人而异）上，FedGPA 达到 88.6%，而最强基线 Ditto 为 86.1%。
-
-通信效率方面，FedGPA 相比聚类方法（如 IFCA）减少了约 40% 的通信轮数达到相同精度，因为它不需要额外的聚类探测通信。
-
-### 5.4 对 IoT 部署的启示
-
-FedGPA 的"选择性知识吸收"思想特别适合物联网场景。想象一个智慧农业系统中部署了数百个土壤传感器——位于同一气候区的传感器数据分布相似，可以互相借力学习；但热带和寒带的传感器数据差异巨大，强行聚合反而有害。FedGPA 能自动发现这种关联结构，无需人工预设分组。
-
-## 6 物联网联邦学习的特殊挑战
-
-### 6.1 通信效率
-
-IoT 设备通常通过 LoRa（50kbps）、NB-IoT（200kbps）等低速链路连接，传输一个 ResNet-18 的参数（~44MB）需要数分钟甚至数十分钟。解决思路包括：
-
-**梯度压缩**：只上传 top-k% 最大的梯度分量（如 k=1，只传 1% 的梯度），其余累积到下一轮。Deep Gradient Compression（2018）在 1% 压缩率下仍保持 99% 以上的模型精度。
-
-**稀疏化更新**：只上传与上一轮全局模型不同的参数分量。在 IoT 场景中，每轮本地训练带来的参数变化通常只占 5-20%。
-
-**量化通信**：将 32-bit 浮点梯度量化为 8-bit 甚至 1-bit（SignSGD），通信量直接缩小 4-32 倍。
-
-### 6.2 设备异构性
-
-IoT 系统中的设备计算能力差异可达 1000 倍——从 Cortex-M4 微控制器（MHz 级）到 Jetson AGX（TFLOPS 级）。统一的全局模型可能对弱设备来说太大（跑不动），对强设备来说太小（浪费能力）。
-
-**异构模型联邦学习**：允许不同客户端使用不同大小的模型。HeteroFL（2021）让不同设备训练全局模型的不同子集（宽度缩放），InclusiveFL（2022）通过知识蒸馏在异构模型间传递知识。
-
-### 6.3 安全与隐私攻击
-
-虽然联邦学习不直接传输原始数据，但模型参数和梯度本身也可能泄露隐私信息：
-
-**梯度反演攻击**：Zhu et al.（2019）证明，仅从共享梯度就能重建单条训练样本的像素级近似。在 IoT 场景中，这意味着攻击者可能从共享的模型更新中推断出传感器的原始读数。
-
-**模型投毒攻击**：恶意客户端上传精心构造的模型参数，影响全局模型的行为。在 IoT 场景中，被入侵的设备可能成为攻击联邦学习系统的跳板。
-
-**防御机制**：差分隐私（给梯度加噪声）、安全聚合（加密聚合协议）、Byzantine-robust 聚合（如 Krum、Trimmed Mean）。
+不传原始数据 ≠ 隐私自动满足。梯度反演可从更新中近似恢复样本[6]；恶意客户端可投毒。防御：差分隐私、安全聚合、Byzantine 鲁棒聚合——均有精度或延迟代价。
 
 ### 6.4 挑战汇总
 
-| 挑战 | IoT 具体表现 | 代表解决方案 | 代价 |
-|------|------------|------------|------|
-| 通信瓶颈 | LoRa 50kbps 传44MB模型 | 梯度压缩/稀疏化/量化 | 精度轻微下降 |
-| Non-IID 数据 | 不同环境的传感器数据差异大 | FedProx/SCAFFOLD/个性化FL | 算法复杂度↑ |
-| 设备异构 | MCU vs Jetson 计算力差1000x | HeteroFL/知识蒸馏 | 模型设计复杂度↑ |
-| 隐私泄露 | 梯度反演恢复传感器数据 | 差分隐私/安全聚合 | 精度下降/计算开销 |
-| 模型投毒 | 被入侵设备污染全局模型 | Byzantine-robust聚合 | 收敛速度下降 |
-| 设备掉线 | 电池耗尽/信号不稳 | 异步FL/部分参与 | 模型一致性↓ |
-| 标签缺失 | IoT设备数据难以标注 | 半监督FL/自监督FL | 精度下降 |
+| 挑战 | IoT 表现 | 代表对策 | 代价 |
+|------|---------|---------|------|
+| 通信瓶颈 | 低速链传大模型 | 压缩/量化/PEFT | 精度/复杂度 |
+| Non-IID | 环境差异大 | Prox/SCAFFOLD/PFL | 算法复杂 |
+| 异构 | MCU vs GPU | HeteroFL/蒸馏 | 设计复杂 |
+| 隐私 | 梯度泄露 | DP/安全聚合 | 效用下降 |
+| 投毒 | 失陷终端 | 鲁棒聚合 | 收敛变慢 |
+| 掉线 | 电池/信号 | 异步 FL/部分参与 | 一致性↓ |
 
-## 7 应用案例
+## 7. 应用案例（报告口径）
 
-### 7.1 智慧医疗
+| 场景 | 做法要点 | 文献/报告倾向 |
+|------|---------|---------------|
+| 多中心医疗 | 影像不出院，协作分割/诊断 | 性能可接近集中训练量级，视任务而定[11] |
+| 智能键盘 | 本地语言模型 + 全局聚合 | 大规模商用 FL 典范[1] |
+| 工业预测维护 | 厂间不共享原始振动/工艺数据 | 行业报告称可提升故障识别，需独立验证 |
+| 车联网 | 车端训练、路侧聚合 | 合规驱动，增益视数据与标注 |
 
-多家医院联合训练疾病诊断模型，患者数据不出院。Google 在 2020 年与多家医疗机构合作，使用联邦学习训练了一个脑肿瘤分割模型（BraTS challenge），在不共享任何 MRI 影像数据的前提下，模型性能接近集中训练的水平（Dice score 差距 < 1%），但支持了 10x 更多的训练数据量。
+## 8. 趋势（2024–2025）
 
-### 7.2 智能键盘预测
+- **联邦微调大模型**：LoRA 等只传极少参数，通信可降两个数量级量级[9]。
+- **去中心化 FL**：无单点服务器，适合 P2P IoT，收敛与拓扑仍开放。
+- **编排框架**：Flower、NVIDIA FLARE 等降低跨组织落地成本[10]。
 
-Google Gboard 是联邦学习最成功的商业部署案例。每个用户的打字习惯在本地训练小型语言模型，全局聚合后的模型既学到了通用语言模式，又通过个性化保留了用户习惯。日活用户覆盖数亿设备，单轮联邦训练参与数十万设备。
+## 9. 局限、挑战与可改进方向
 
-### 7.3 工业预测性维护
+### 1. 基准≠传感器现场
 
-每台工业设备的运行数据是企业核心机密，不愿共享。联邦学习让同行业的工厂可以协作训练设备故障预测模型——每家工厂用自己的传感器数据本地训练，聚合后获得一个见过更多故障模式的全局模型。GE Digital 报告其联邦预测维护模型将故障预测准确率从单工厂的 72% 提升到联邦训练后的 89%。
+**局限**：CIFAR/FEMNIST 结论难直接映射到振动、电表、摄像头多模态流[1][5]。
+**改进**：用真实 Non-IID 传感器划分重评；报告通信字节与能耗，不只准确率。
 
-### 7.4 车联网
+### 2. 隐私声明过度
 
-车辆产生的驾驶数据涉及行车轨迹、乘客隐私，法规限制上传。联邦学习让车辆在本地训练路况识别、行人检测等模型，再通过路侧单元（RSU）聚合更新。BMW 和 Intel 在 2023 年的联合项目中，使用联邦学习在 1000 辆测试车上训练了一个行人检测模型，相比单车训练提升了 12% 的检测率，同时满足欧盟 GDPR 对车辆数据的合规要求。
+**局限**：明文梯度仍可能泄露；加噪不足时合规叙事站不住[6]。
+**改进**：明确威胁模型；默认安全聚合 + 适度 DP；审计成员推断风险。
 
-## 8 前沿趋势（2024-2025）
+### 3. 弱网与掉队
 
-### 8.1 大语言模型 + 联邦学习
+**局限**：同步 FedAvg 被最慢设备拖死；丢包导致偏置聚合。
+**改进**：异步/半异步；参与感知加权；本地更多步 + 压缩上传。
 
-随着 LLM 在边缘部署的趋势（参见本层 Jupiter 论文），联邦微调（Federated Fine-Tuning）成为热点——多个组织协作微调一个预训练 LLM，无需共享私有数据。FedPETuning（2024）将 LoRA 等参数高效微调方法与联邦学习结合，只在客户端训练和传输 LoRA 适配器（<1% 的参数量），通信开销降低 100x 以上。
+### 4. 个性化与全局的张力
 
-### 8.2 去中心化联邦学习
+**局限**：过度个性化失去协作红利；过度全局伤害本地工况。
+**改进**：相似性门控（如 FedGPA 思路）[5]；按区域/设备类型分层聚合。
 
-传统联邦学习依赖中心服务器做聚合，存在单点故障风险。去中心化联邦学习（Decentralized FL）让设备之间直接通信聚合，更适合 IoT 的 P2P 网络拓扑。DFedAvg、D-PSGD 等方法在 gossip 协议上实现分布式聚合，但收敛速度和通信效率仍是开放问题。
+## 参考文献
 
-### 8.3 联邦学习 + 边缘计算协同
-
-将联邦学习的训练过程与边缘计算平台（KubeEdge、OpenYurt）集成，实现"训练即服务"。NVIDIA FLARE（2023）和 Flower（2024）是两个代表性框架，支持跨组织、跨设备的联邦学习编排。
-
-## 9 参考文献
-
-- McMahan, B., et al. "Communication-Efficient Learning of Deep Networks from Decentralized Data." AISTATS 2017.
-- Li, T., et al. "Federated Optimization in Heterogeneous Networks (FedProx)." MLSys 2020.
-- Karimireddy, S. P., et al. "SCAFFOLD: Stochastic Controlled Averaging for Federated Learning." ICML 2020.
-- Li, X., et al. "FedBN: Federated Learning on Non-IID Features via Local Batch Normalization." ICLR 2021.
-- FedGPA Authors. "Federated Learning with Global Personalized Aggregation." IEEE INFOCOM 2025.
-- Zhu, L., et al. "Deep Leakage from Gradients." NeurIPS 2019.
-- Diao, E., et al. "HeteroFL: Computation and Communication Efficient Federated Learning for Heterogeneous Clients." ICLR 2021.
-- Lin, Y., et al. "Deep Gradient Compression: Reducing the Communication Bandwidth for Distributed Training." ICLR 2018.
-- Zhang, J., et al. "FedPETuning: When Federated Learning Meets the Parameter-Efficient Tuning Methods of Foundation Models." ACL Findings 2024.
-- Beutel, D. J., et al. "Flower: A Friendly Federated Learning Framework." IEEE Transactions on Neural Networks 2024.
-- Sheller, M. J., et al. "Federated Learning in Medicine: Facilitating Multi-Institutional Collaborations without Sharing Patient Data." Scientific Reports 2020.
+[1] B. McMahan et al., "Communication-Efficient Learning of Deep Networks from Decentralized Data," AISTATS, 2017.
+[2] T. Li et al., "Federated Optimization in Heterogeneous Networks (FedProx)," MLSys, 2020.
+[3] S. P. Karimireddy et al., "SCAFFOLD: Stochastic Controlled Averaging for Federated Learning," ICML, 2020.
+[4] X. Li et al., "FedBN: Federated Learning on Non-IID Features via Local Batch Normalization," ICLR, 2021.
+[5] FedGPA authors, "Federated Learning with Global Personalized Aggregation," IEEE INFOCOM, 2025.
+[6] L. Zhu et al., "Deep Leakage from Gradients," NeurIPS, 2019.
+[7] E. Diao et al., "HeteroFL: Computation and Communication Efficient Federated Learning for Heterogeneous Clients," ICLR, 2021.
+[8] Y. Lin et al., "Deep Gradient Compression: Reducing the Communication Bandwidth for Distributed Training," ICLR, 2018.
+[9] J. Zhang et al., "FedPETuning: When Federated Learning Meets the Parameter-Efficient Tuning Methods of Foundation Models," ACL Findings, 2024.
+[10] D. J. Beutel et al., "Flower: A Friendly Federated Learning Framework," 相关期刊/预印本, 2024.
+[11] M. J. Sheller et al., "Federated Learning in Medicine: Facilitating Multi-Institutional Collaborations without Sharing Patient Data," Scientific Reports, 2020.

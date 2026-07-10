@@ -3,224 +3,163 @@ schema_version: '1.0'
 id: knowledge-distillation-edge
 title: 知识蒸馏在边缘部署的应用
 layer: 5
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: technical_analysis
+difficulty: intermediate
+reading_time: 24
+prerequisites:
+  - model-compression-edge
+  - neural-network-quantization-int8
+tags:
+- 知识蒸馏
+- 软标签
+- 自蒸馏
+- 数据无关蒸馏
+- LLM蒸馏
+- 边缘AI
+- FitNets
+- MiniLLM
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 知识蒸馏在边缘部署的应用
 
-> 难度：🟡 进阶 | 前置知识：了解深度学习训练流程（前向传播、反向传播、损失函数）
+> **难度**：🟡 中级 | **领域**：模型压缩、边缘部署 | **关键词**：KD, 软标签, 自蒸馏, LLM 蒸馏 | **阅读时间**：约 24 分钟
 
-## 论文信息
+## 日常类比
 
-- **主题**：知识蒸馏（Knowledge Distillation, KD）——用大模型（教师）的知识训练小模型（学生），使小模型在边缘设备上高效运行
-- **核心问题**：如何把一个在 GPU 集群上训练的"学霸"模型的能力，迁移到一个能在微控制器上运行的"袖珍"模型中？
-- **涵盖范围**：经典 KD (2015) → 注意力迁移 → 自蒸馏 → 数据无关蒸馏 → LLM 蒸馏 (2024-2025)
+老中医看诊不只给“是 A 病”的硬结论，还会说“七成像 A、两成像 B”——这种概率直觉是暗知识（dark knowledge）。知识蒸馏（Knowledge Distillation, KD）让大模型（教师）把软概率与中间表示教给小模型（学生），使袖珍网络在微控制器或边缘 GPU 上仍保有可用精度[1]。
+
+## 摘要
+
+梳理输出/特征/关系蒸馏、自蒸馏、数据无关蒸馏与大语言模型（Large Language Model, LLM）蒸馏，并讨论与量化组合的边缘部署路径。表中精度百分点、训练时长为公开论文或典型实践量级，跨任务差异大，须在目标数据与板上实测。
 
 ## 1 什么是知识蒸馏
 
-### 1.1 日常类比
+### 1.1 软标签与硬标签
 
-想象一位有 30 年经验的老中医和一位刚毕业的年轻医生。老中医看诊时不仅知道最终诊断结果，还能感知到"这个症状可能是 A 病（70% 概率），也有可能是 B 病（25%），极小概率是 C 病（5%）"——这种概率直觉是他几十年经验的凝结。
-
-如果年轻医生只看教科书上的标准答案（"这是 A 病"），他学到的信息很有限。但如果老中医把自己的概率判断告诉他（"这像 A 病但别忽视 B 的可能性"），年轻医生就能学到远超教科书的临床智慧。
-
-知识蒸馏做的就是这件事：大模型（教师/老中医）不仅告诉小模型（学生/年轻医生）正确答案是什么，还告诉它"错误答案之间的相似性结构"——也就是"暗知识"（dark knowledge）。
-
-### 1.2 软标签 vs 硬标签
-
-传统训练中，模型学习"硬标签"（one-hot 向量）：正确类别 = 1，其他类别 = 0。但这丢失了类别之间的关系信息。
-
-教师模型的输出（softmax 概率分布）是"软标签"：
+硬标签为 one-hot；教师 softmax 输出为软标签，保留类间相似性结构[1]。
 
 ```
 硬标签：   [猫=1, 狗=0, 兔=0, 虎=0]
-教师软标签：[猫=0.7, 狗=0.15, 虎=0.10, 兔=0.05]
+教师软标签：[猫≈0.7, 狗≈0.15, 虎≈0.10, 兔≈0.05]  # 示意
 ```
 
-软标签告诉学生模型：猫和狗比猫和兔子更相似；猫和虎也有一定相似性。这种隐含的类别关系信息是"暗知识"的核心，它帮助学生模型学到更好的特征表示。
+### 1.2 Hinton 经典框架
 
-### 1.3 Hinton 的经典蒸馏框架
-
-Geoffrey Hinton 在 2015 年提出的知识蒸馏框架至今仍是基础：
-
-学生模型的训练损失 = α × 蒸馏损失 + (1-α) × 任务损失
-
-其中蒸馏损失 = KL 散度 (学生软标签 || 教师软标签)，任务损失 = 交叉熵 (学生预测 || 真实标签)。
-
-**温度参数 T（Temperature）** 是关键超参数。在计算软标签时，将 logits 除以 T 再通过 softmax：
-
-```
-softmax(z_i / T) = exp(z_i / T) / Σ exp(z_j / T)
-```
-
-T=1 是标准 softmax；T 越大，概率分布越平滑（"暗知识"越明显）；T 越小，概率分布越尖锐（接近硬标签）。实践中 T=3-20 效果较好，常用 T=4。
+学生损失 ≈ \(\alpha \cdot \mathrm{KL}(p_s^T \| p_t^T) + (1-\alpha)\cdot \mathrm{CE}(y, p_s)\)，其中温度 \(T\) 平滑 logits：\(p_i = \mathrm{softmax}(z_i/T)\)。\(T\) 越大暗知识越明显；实践中常试 \(T\in[3,20]\)，具体最优依赖任务[1]。
 
 ## 2 蒸馏方法分类
 
-### 2.1 基于输出的蒸馏（Output-based KD）
+### 2.1 输出 / 特征 / 关系
 
-最简单的形式——只利用教师的最终输出层。学生学习模仿教师的输出概率分布。
+| 类别 | 代表 | 传递内容 | 结构约束 | 实现复杂度 |
+|------|------|----------|----------|------------|
+| 输出蒸馏 | Hinton KD[1] | 软标签 | 无 | 低 |
+| 特征蒸馏 | FitNets[2] | 中间特征 | 需层对应+投影 | 中 |
+| 注意力迁移 | AT[3] | 空间注意力图 | 需空间对齐 | 中 |
+| 关系蒸馏 | RKD[4] | 样本距离/角度 | 无 | 中 |
+| 对比蒸馏 | CRD[5] | 对比表示 | 无 | 高 |
+| 自蒸馏 | BYOT[6] | 深层教浅层 | 辅助头 | 低 |
 
-**优势**：实现简单，不需要访问教师的内部结构。教师和学生可以是完全不同的架构（如 ResNet 教师 + MobileNet 学生）。
+**输出蒸馏**：师生架构可完全不同（如 ResNet→MobileNet）。
+**FitNets**：中间层加 regressor 对齐维度[2]。
+**AT**：匹配通道平方和得到的注意力图，通道数可不同[3]。
+**RKD/CRD**：保留样本关系或对比结构，而非逐点特征值[4][5]。
 
-**局限**：只传递最终输出的信息，无法利用教师中间层学到的丰富特征表示。对于深层网络，中间层的特征往往比最终输出包含更多有用的知识。
+公开分类实验中，相对纯硬标签训练，各类方法常见约 0.5–3 个百分点量级的 Top-1 增益，强依赖基线与数据——上表不绑定单一排行[2][4][5]。
 
-### 2.2 基于特征的蒸馏（Feature-based KD）
+## 3 自蒸馏
 
-让学生模型的中间特征尽可能接近教师的中间特征。
-
-**FitNets (2015)**：选择教师和学生的特定中间层建立对应关系。由于教师和学生的中间特征维度通常不同，需要添加一个可训练的转换层（regressor）来对齐维度。
-
-**注意力迁移（Attention Transfer, AT, 2017）**：不直接匹配特征值，而是匹配特征的"注意力图"——即每个空间位置的激活强度。注意力图 = Σ(特征图的通道方向平方和)。这样即使教师和学生的通道数不同，注意力图的空间维度仍然可以对齐。
-
-**NST (Neural Style Transfer for KD, 2017)**：匹配教师和学生特征的 Gram 矩阵（捕捉通道之间的相关性），传递"风格"级别的知识而非具体的特征值。
-
-### 2.3 基于关系的蒸馏（Relation-based KD）
-
-不匹配单个样本的特征，而是匹配样本之间的关系结构。
-
-**RKD (Relational Knowledge Distillation, 2019)**：让学生学习保持教师特征空间中样本对之间的距离关系和角度关系。核心直觉是：即使学生的特征空间与教师完全不同，只要样本之间的相对位置关系被保留，学生就学到了教师的"知识结构"。
-
-**CRD (Contrastive Representation Distillation, 2020)**：使用对比学习框架进行蒸馏——让教师和学生对同一输入产生相似的表示，对不同输入产生不同的表示。
-
-### 2.4 蒸馏方法对比
-
-| 方法类别 | 代表工作 | 知识类型 | 结构约束 | 精度提升 | 实现复杂度 |
-|---------|---------|---------|---------|---------|-----------|
-| 输出蒸馏 | Hinton KD (2015) | 软标签 | 无 | 基准 | 低 |
-| 特征蒸馏 | FitNets (2015) | 中间特征 | 需对应层 | +1-3% | 中 |
-| 注意力迁移 | AT (2017) | 注意力图 | 需空间对齐 | +0.5-2% | 中 |
-| 关系蒸馏 | RKD (2019) | 样本关系 | 无 | +1-2% | 中 |
-| 对比蒸馏 | CRD (2020) | 对比表示 | 无 | +2-3% | 高 |
-| 自蒸馏 | Be Your Own Teacher (2019) | 自身深层知识 | 无 | +0.5-1.5% | 低 |
-
-## 3 自蒸馏：自己教自己
-
-### 3.1 核心思想
-
-自蒸馏（Self-Distillation）是一个颇为反直觉的想法：模型可以做自己的教师。具体做法是在网络的多个中间层添加辅助分类头，然后用深层的输出去"教"浅层。
-
-为什么有效？因为深层学到的特征比浅层更抽象、更有判别力。用深层的软标签指导浅层的训练，等于在早期阶段就注入了高层语义信息，帮助浅层学习更有效的特征表示。
-
-### 3.2 实践效果
-
-Be Your Own Teacher (2019) 在 ResNet 上的实验显示：自蒸馏可以在不改变模型结构、不增加推理开销的前提下，将 ResNet-18 的 Top-1 准确率提升约 1.5%。这个提升是"免费的"——推理时去掉辅助分类头，模型大小和速度与原始 ResNet-18 完全相同。
-
-### 3.3 对边缘部署的意义
-
-自蒸馏对边缘场景特别有价值。传统蒸馏需要一个大型教师模型（可能是 ResNet-152 或 BERT-Large），部署者必须先训练或获取这个教师。但自蒸馏不需要——直接用目标的小模型自己做教师和学生，训练完成后就是一个更好的小模型，直接部署到边缘设备上。
+在中间层加辅助分类头，用深层软标签教浅层；推理时去掉辅助头，体积与延迟不变[6]。对边缘有价值：无需另备巨型教师，直接把目标小模型训得更好。论文在 ResNet 上报告约 1–2 个百分点量级提升，属单点结果[6]。
 
 ## 4 数据无关蒸馏
 
-### 4.1 为什么需要数据无关
+适用：隐私（如医疗数据不可外传）、训练数据已删、或数据集过大不便下发。
 
-传统蒸馏假设可以访问教师的训练数据（或至少是同分布的数据）来指导学生学习。但在很多场景下，这个假设不成立：
+| 方法 | 思路 | 代价（定性） |
+|------|------|--------------|
+| DAFL[7] | 生成器造伪样本激活教师 | 需训生成器；与真实数据蒸馏常有数个百分点差距 |
+| DeepInversion[8] | 用 BatchNorm 统计反演图像 | 无额外生成器；优化噪声图 |
 
-**隐私限制**：教师模型在医院的患者数据上训练，但这些数据受 HIPAA 保护，不能分享给外部用于蒸馏。
+CIFAR 等小数据集上的“接近有数据蒸馏”数字见原论文；迁移到 ImageNet/工业数据时差距可能放大[7][8]。
 
-**数据遗失**：教师模型已经部署在生产环境中，但原始训练数据已经被删除（可能是存储成本或数据保留政策要求）。
+## 5 LLM 知识蒸馏
 
-**数据过大**：ImageNet 有 1.2M 图像 (~150GB)，在带宽受限的边缘环境中传输这些数据用于蒸馏是不现实的。
+### 5.1 与视觉蒸馏差异
 
-### 4.2 生成式数据无关蒸馏
+词表达数万–十余万；知识含序列连贯与推理链；推理能力往往比事实记忆更难迁到小容量学生[9][10]。
 
-Data-Free Knowledge Distillation (DAFL, 2019) 的核心思想：如果没有真实数据，那就"造"数据。具体做法是训练一个生成器（类似 GAN 的生成器），使其产生的伪样本能最大程度地激活教师模型，然后用这些伪样本和教师在其上的输出来训练学生。
+### 5.2 方法对比
 
-**技术流程**：
-1. 冻结教师模型
-2. 训练生成器：目标是让教师对生成样本的输出具有高置信度和高多样性
-3. 生成伪数据集
-4. 用教师在伪数据上的输出指导学生学习
+| 方法 | 类型 | 需教师权重 | 数据 | 适用 |
+|------|------|------------|------|------|
+| Logits KD | 白盒 | 是 | 无标签即可 | 可拿权重 |
+| MiniLLM（反向 KL）[9] | 白盒 | 是 | 同上 | 聚焦高概率 token |
+| Alpaca 式[11] | 黑盒 | 否（API） | 教师生成指令对 | 仅有 API |
+| Step-by-Step[10] | 黑盒 | 否 | 含推理链 | 推理任务 |
+| DistilBERT[12] | 白盒 | 是 | 大规模语料 | 编码器小模型 |
 
-**效果**：在 CIFAR-10 上，DAFL 在完全不使用真实数据的情况下，学生模型（ResNet-18）达到了 92.2% 的准确率——而使用真实数据蒸馏的效果是 94.1%。约 2% 的差距是"数据无关"的代价。
+逐步蒸馏等工作报告：在部分基准上，远小于教师的学生可接近教师表现——属任务相关，不可外推为“任意 4% 参数即可”[10]。GPT-4 等闭源参数量为外界估计，蒸馏叙述中避免当作已核实事实。
 
-### 4.3 基于 BatchNorm 统计的无数据蒸馏
+## 6 边缘部署实践
 
-DeepInversion (2020, CVPR) 提出了一种更优雅的方法：利用教师模型 BatchNorm 层中存储的均值和方差统计量，合成出与原始训练数据分布相似的图像。不需要额外的生成器，直接通过梯度下降"优化"一张随机噪声图像，使其在通过教师时产生的 BN 统计量与训练时记录的统计量匹配。
+### 6.1 蒸馏 + 量化
 
-## 5 LLM 知识蒸馏：大模型到小模型
+常见流水线：大教师 → 小学生 → INT8/INT4（PTQ 或 QAT）→ TensorRT/TFLite 等[13]。例如 ResNet-50 量级模型经 MobileNet 类学生再 INT8，总存储可降一个数量级，精度损失常见约 1–3 个百分点量级——须按任务验收[13][14]。
 
-### 5.1 LLM 蒸馏的特殊性
+### 6.2 资源量级（示意，非承诺）
 
-将 GPT-4 (1.7T) 或 Llama-70B 的知识蒸馏到 1-7B 的小模型，与传统视觉模型蒸馏有几个关键差异：
+| 任务 | 教师→学生 | 算力量级 | 时长量级 | 精度差距量级 |
+|------|-----------|----------|----------|--------------|
+| 图像分类 | ResNet 系→MobileNet | 单卡 GPU | 十余小时 | 约 −2 pp |
+| 检测 | YOLO 大→小 | 多卡 | 约一天 | mAP 约 −1–2 |
+| NLP | BERT-Large→DistilBERT | 单卡 | 数–十余小时 | 约 −0.5 pp[12] |
+| LLM | 70B→7B 量级 | 多卡 A100 级 | 数十小时 | 多任务平均可数个点 |
 
-**输出空间巨大**：视觉分类的输出是 1000 个类别的概率分布，而 LLM 的输出是 32,000-128,000 个 token 的概率分布，且每一步生成都是条件概率——软标签的信息量大了几个数量级。
+## 7 前沿与交叉
 
-**序列级知识**：LLM 的知识不仅体现在单个 token 的预测概率上，还体现在生成序列的连贯性、推理链的逻辑性上。只匹配逐 token 的概率分布可能丢失这些序列级信息。
+- **在线/互学习**：师生同训或互为教师[15]。
+- **联邦 + 蒸馏**：FedMD/FedDF 等用公共数据上的预测聚合异构客户端[16]。
+- **数据增强蒸馏**：Mixup 等提升小数据场景多样性（近年工作，效果任务相关）。
 
-**推理能力难迁移**：实验表明，LLM 的推理能力（如多步数学推理、代码生成）比知识记忆更难蒸馏。小模型可以学到"事实知识"，但"逻辑推理"往往需要足够的模型容量才能体现。
+## 8 局限、挑战与可改进方向
 
-### 5.2 主流 LLM 蒸馏方法
+### 1. 容量鸿沟与推理难迁
 
-**白盒蒸馏（可访问教师内部）**：直接匹配教师和学生的 logits 分布（逐 token 的 KL 散度）。MiniLLM (2024) 发现反向 KL 散度（student || teacher）比正向 KL（teacher || student）更适合 LLM 蒸馏，因为它鼓励学生集中精力学习教师的高概率 token，而非试图覆盖教师的所有可能输出。
+**局限**：师生差距过大时，软标签学生学不全；LLM 多步推理尤其脆弱[9][10]。
+**改进**：中间尺寸教师阶梯蒸馏；显式蒸馏 CoT/工具调用轨迹；验收以任务指标而非仅 KL。
 
-**黑盒蒸馏（只能调用教师 API）**：利用教师生成的文本作为"合成训练数据"来训练学生。Alpaca (2023) 使用 GPT-3.5 的 API 生成了 52K 条指令-回答对来微调 Llama-7B，效果接近 GPT-3.5 本身。这实质上是一种数据蒸馏——教师的知识被"封装"在其生成的文本中。
+### 2. 数据无关质量上限
 
-**逐步蒸馏（Step-by-Step Distillation）**：不只蒸馏最终答案，还蒸馏教师的推理过程（reasoning chain）。教师模型先通过 Chain-of-Thought 生成推理步骤，学生同时学习模仿推理过程和最终答案。Hsieh et al. (2023) 发现这种方法使 540B 教师模型的知识能被有效蒸馏到 0.7B 的学生模型中，在某些任务上学生只需要 4% 的参数量就能匹配教师性能。
+**局限**：伪数据难覆盖长尾与域偏移；BN 反演偏分类 CNN。
+**改进**：少量合法代理数据 + 无关蒸馏混合；生成式教师自身采样再过滤。
 
-### 5.3 LLM 蒸馏对比
+### 3. 与量化/剪枝组合无统一配方
 
-| 方法 | 类型 | 需要教师权重 | 训练数据需求 | 效果 | 适用场景 |
-|------|------|------------|------------|------|---------|
-| Logits KD | 白盒 | 是 | 无标签数据 | 好 | 可获取教师权重时 |
-| MiniLLM (反向KL) | 白盒 | 是 | 无标签数据 | 更好 | 同上 |
-| Alpaca-style | 黑盒 | 否（API） | 教师生成数据 | 中-好 | 仅有API访问时 |
-| 逐步蒸馏 | 黑盒 | 否（API） | 教师生成推理链 | 最好 | 推理任务 |
-| Lion (2024) | 黑盒 | 否（API） | 对抗生成数据 | 好 | 迭代优化场景 |
+**局限**：先蒸馏再量化或反之，超参空间大，文献数字不可直接搬到 MCU。
+**改进**：固定目标延迟/Flash 预算做小网格搜索；蒸馏校准集与量化校准集同分布。
 
-## 6 边缘部署的蒸馏实践
+### 4. 黑盒 API 蒸馏的合规与漂移
 
-### 6.1 蒸馏 + 量化的组合
+**局限**：合成数据可能含偏见；教师升级后学生过时。
+**改进**：记录教师版本与提示模板；定期用黄金集回归；敏感域避免把 API 输出当唯一真值。
 
-在边缘部署中，蒸馏和量化（见 [模型压缩全景](model-compression-edge.md)）经常组合使用：
+## 参考文献
 
-1. 先用大型教师蒸馏出小型学生模型（如 ResNet-50 → MobileNetV2）
-2. 再将学生模型量化为 INT8（PTQ 或 QAT）
-3. 用推理引擎（TensorRT/TFLite）部署
-
-组合效果：原始 ResNet-50 (98MB, 4.1B FLOPs) → 蒸馏后 MobileNetV2 (14MB, 300M FLOPs) → 量化后 (3.5MB, 300M FLOPs INT8)。总压缩比 ~28x，精度仅下降 ~2%。
-
-### 6.2 蒸馏的实际耗时与资源
-
-| 蒸馏任务 | 教师模型 | 学生模型 | 训练GPU | 训练时间 | 精度差距 |
-|---------|---------|---------|--------|---------|---------|
-| 图像分类 | ResNet-152 | MobileNetV2 | 1× V100 | ~12小时 | -2.1% |
-| 目标检测 | YOLOv8-L | YOLOv8-S | 2× V100 | ~24小时 | mAP -1.8% |
-| NLP分类 | BERT-Large | DistilBERT | 1× V100 | ~8小时 | -0.5% |
-| LLM | Llama2-70B | Llama2-7B | 8× A100 | ~48小时 | 多任务平均 -5% |
-| 语音识别 | Whisper-Large | Whisper-Small | 4× V100 | ~16小时 | WER +1.2% |
-
-## 7 前沿趋势（2024-2025）
-
-### 7.1 在线蒸馏（Online Distillation）
-
-传统蒸馏是"离线"的——先训练好教师，再用教师训练学生。在线蒸馏让教师和学生同时训练，互相学习。Deep Mutual Learning (2018) 让两个网络互为教师和学生，共同提升。
-
-### 7.2 蒸馏与联邦学习的结合
-
-FedMD 和 FedDF 将知识蒸馏引入联邦学习，允许不同客户端使用不同大小的模型。客户端在本地数据上训练后，将模型的"知识"（通过在公共数据集上的预测）传给服务器，服务器通过蒸馏将多个异构模型的知识聚合为一个全局模型。
-
-### 7.3 数据混合蒸馏
-
-MixKD (2024) 提出在蒸馏过程中使用 Mixup 数据增强——将两个训练样本按比例混合（图像像素混合 + 标签混合），在混合样本上进行蒸馏。这增加了训练数据的多样性，在小数据集场景下效果提升明显。
-
-## 8 参考文献
-
-- Hinton, G., Vinyals, O., Dean, J. "Distilling the Knowledge in a Neural Network." NeurIPS Workshop 2015.
-- Romero, A., et al. "FitNets: Hints for Thin Deep Nets." ICLR 2015.
-- Zagoruyko, S., Komodakis, N. "Paying More Attention to Attention: Improving the Performance of Convolutional Neural Networks via Attention Transfer." ICLR 2017.
-- Park, W., et al. "Relational Knowledge Distillation." CVPR 2019.
-- Tian, Y., Krishnan, D., Isola, P. "Contrastive Representation Distillation." ICLR 2020.
-- Zhang, L., et al. "Be Your Own Teacher: Improve the Performance of Convolutional Neural Networks via Self Distillation." ICCV 2019.
-- Chen, H., et al. "Data-Free Learning of Student Networks (DAFL)." ICCV 2019.
-- Yin, H., et al. "Dreaming to Distill: Data-Free Knowledge Transfer via DeepInversion." CVPR 2020.
-- Gu, Y., et al. "MiniLLM: Knowledge Distillation of Large Language Models." ICLR 2024.
-- Hsieh, C.-Y., et al. "Distilling Step-by-Step! Outperforming Larger Language Models with Less Training Data and Smaller Model Sizes." ACL Findings 2023.
-- Sanh, V., et al. "DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter." NeurIPS Workshop 2019.
-- Taori, R., et al. "Stanford Alpaca: An Instruction-following LLaMA model." Stanford 2023.
+[1] G. Hinton, O. Vinyals, J. Dean, "Distilling the Knowledge in a Neural Network," NeurIPS Workshop, 2015.
+[2] A. Romero et al., "FitNets: Hints for Thin Deep Nets," ICLR, 2015.
+[3] S. Zagoruyko, N. Komodakis, "Paying More Attention to Attention," ICLR, 2017.
+[4] W. Park et al., "Relational Knowledge Distillation," CVPR, 2019.
+[5] Y. Tian, D. Krishnan, P. Isola, "Contrastive Representation Distillation," ICLR, 2020.
+[6] L. Zhang et al., "Be Your Own Teacher," ICCV, 2019.
+[7] H. Chen et al., "Data-Free Learning of Student Networks," ICCV, 2019.
+[8] H. Yin et al., "Dreaming to Distill: DeepInversion," CVPR, 2020.
+[9] Y. Gu et al., "MiniLLM: Knowledge Distillation of Large Language Models," ICLR, 2024.
+[10] C.-Y. Hsieh et al., "Distilling Step-by-Step!" ACL Findings, 2023.
+[11] R. Taori et al., "Stanford Alpaca," Stanford, 2023.
+[12] V. Sanh et al., "DistilBERT," NeurIPS Workshop, 2019.
+[13] S. Han, H. Mao, W. J. Dally, "Deep Compression," ICLR, 2016.
+[14] B. Jacob et al., "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference," CVPR, 2018.
+[15] Y. Zhang et al., "Deep Mutual Learning," CVPR, 2018.
+[16] D. Li, J. Wang, "FedMD: Heterogenous Federated Learning via Model Distillation," NeurIPS Workshop, 2019.
