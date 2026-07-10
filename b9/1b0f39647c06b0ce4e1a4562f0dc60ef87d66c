@@ -1,0 +1,53 @@
+.github/dependabot.yml
+  s_5197d472ec2409::t_f10cb8cd2731a2 1-7
+.github/workflows/ci.yml
+  s_5197d472ec2409::t_b16c798f24f53f 1-68
+.github/workflows/deploy.yml
+  s_5197d472ec2409::t_79c911d3785acd 18-20,22-23,25-71,77,79-82,88
+.gitignore
+  s_5197d472ec2409::t_82bf5efd5f461e 1-6
+.python-version
+  s_5197d472ec2409::t_481ff22455784d 1
+CHANGELOG.md
+  s_5197d472ec2409::t_e4bdf51b76b332 1-31
+VERSION
+  s_5197d472ec2409::t_8c2947a09848c0 1
+docs/architecture/build-compatibility.md
+  s_5197d472ec2409::t_4b00545dc685e3 1-30
+docs/architecture/release-policy.md
+  s_5197d472ec2409::t_9e03a3f72d893d 1-32
+mkdocs.yml
+  s_5197d472ec2409::t_a03debbfb2207d 78-81
+requirements.in
+  s_5197d472ec2409::t_5f89bb99ad9a45 1-5
+requirements.lock
+  s_5197d472ec2409::t_69387e6331c590 1-561
+requirements.txt
+  s_5197d472ec2409::t_e41694f531740e 1
+tests/test_quality_tools.py
+  s_5197d472ec2409::t_9293dffaa3d7cb 1-148
+tests/test_repository_policies.py
+  s_5197d472ec2409::t_ea742f8d7123cc 1-41
+tools/check_release_metadata.py
+  s_5197d472ec2409::t_8e773018d67e71 1-67
+tools/check_workflow_policy.py
+  s_5197d472ec2409::t_e966822433b0b2 1-102
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b91b0f39647c06b0ce4e1a4562f0dc60ef87d66c",
+  "prompts": {},
+  "sessions": {
+    "s_5197d472ec2409": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_5197d472ec2409",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
