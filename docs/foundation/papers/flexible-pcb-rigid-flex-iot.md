@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: flexible-pcb-rigid-flex-iot
+title: 柔性PCB与刚柔结合板在IoT可穿戴中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 柔性PCB与刚柔结合板在IoT可穿戴中的应用
 
 > **难度**: 🟡 中级 | **领域**: 柔性电路设计 | **阅读时间**: 约 20 分钟

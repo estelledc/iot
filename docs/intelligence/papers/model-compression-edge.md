@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: model-compression-edge
+title: 边缘 AI 模型压缩技术全景
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘 AI 模型压缩技术全景
 
 > 难度：🟡 进阶 | 前置知识：了解基本深度学习概念（权重矩阵、卷积层、推理过程）

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: transformer-edge-deployment
+title: Transformer 模型边缘部署技术
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Transformer 模型边缘部署技术
 
 > **难度**：🟡 中级 | **领域**：边缘智能、模型压缩、深度学习推理 | **阅读时间**：约 20 分钟

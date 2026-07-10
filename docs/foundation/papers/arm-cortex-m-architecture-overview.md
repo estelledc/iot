@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: arm-cortex-m-architecture-overview
+title: ARM Cortex-M系列架构总览与IoT选型
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ARM Cortex-M系列架构总览与IoT选型
 
 > **难度**: 🟢 初级 | **领域**: 嵌入式处理器架构 | **阅读时间**: 约 20 分钟

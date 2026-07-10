@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: inclination-sensor-tilt-measurement
+title: 倾角传感器倾斜测量原理与MEMS实现
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 倾角传感器倾斜测量原理与MEMS实现
 > **难度**：🟢 初级 | **领域**：角度测量 | **阅读时间**：约 18 分钟
 

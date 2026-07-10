@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sensor-data-fusion-kalman-filter
+title: 传感器数据融合卡尔曼滤波实现详解
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 传感器数据融合卡尔曼滤波实现详解
 > **难度**：🔴 高级 | **领域**：数据融合算法 | **阅读时间**：约 25 分钟
 

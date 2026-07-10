@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ble-direction-finding-aoa-aod
+title: BLE测向技术AoA/AoD室内定位原理
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # BLE测向技术AoA/AoD室内定位原理
 > **难度**：🔴 高级 | **领域**：BLE定位技术 | **阅读时间**：约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: relay-cooperative-communication
+title: 中继协作通信：IoT 网络的"接力赛跑"
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 21
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 中继协作通信：IoT 网络的"接力赛跑"
 
 > **难度**：🟡 中级 | **领域**：协作通信、分集技术、IoT 覆盖延伸 | **阅读时间**：约 21 分钟

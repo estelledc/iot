@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: geographic-routing-gpsr-iot
+title: 地理路由GPSR在IoT传感器网络中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 地理路由GPSR在IoT传感器网络中的应用
 > **难度**: 高级 | **领域**: 路由协议 | **阅读时间**: 约 22 分钟
 

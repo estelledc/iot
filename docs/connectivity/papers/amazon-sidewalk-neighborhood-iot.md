@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: amazon-sidewalk-neighborhood-iot
+title: Amazon Sidewalk邻里IoT网络技术分析
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Amazon Sidewalk邻里IoT网络技术分析
 > **难度**: 中级 | **领域**: 社区网络 | **阅读时间**: 约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dna-storage-biocomputing
+title: DNA 存储与生物计算：用生命的语言记录数据
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DNA 存储与生物计算：用生命的语言记录数据
 
 > **难度**：🟡 中级 | **领域**：DNA 存储、生物计算、分子传感 | **阅读时间**：约 25 分钟

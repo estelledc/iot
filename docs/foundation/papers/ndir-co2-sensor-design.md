@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ndir-co2-sensor-design
+title: NDIR 红外 CO2 传感器光路设计与标定
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NDIR 红外 CO2 传感器光路设计与标定
 
 > **难度**：🟡 中级 | **领域**：气体检测、红外光学、环境监测 | **阅读时间**：约 25 分钟

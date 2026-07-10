@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: soil-moisture-sensor-comparison
+title: 土壤湿度传感器类型与农业IoT选型
+layer: 1
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 土壤湿度传感器类型与农业IoT选型
 
 | 属性 | 值 |

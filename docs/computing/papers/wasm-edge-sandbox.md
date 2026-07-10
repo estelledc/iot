@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wasm-edge-sandbox
+title: WebAssembly 边缘沙箱技术
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WebAssembly 边缘沙箱技术
 
 > **难度**：🟡 中级 | **领域**：边缘计算、沙箱安全、轻量运行时 | **阅读时间**：约 20 分钟

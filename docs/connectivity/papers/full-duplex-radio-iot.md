@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: full-duplex-radio-iot
+title: 全双工无线电在IoT中的自干扰消除
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 全双工无线电在IoT中的自干扰消除
 > **难度**: 高级 | **领域**: 无线通信 | **阅读时间**: 约 22 分钟
 

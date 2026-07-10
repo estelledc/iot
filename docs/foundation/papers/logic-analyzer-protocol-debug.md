@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: logic-analyzer-protocol-debug
+title: 逻辑分析仪在嵌入式协议调试中的使用
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 逻辑分析仪在嵌入式协议调试中的使用
 > **难度**：🟢 初级 | **领域**：调试工具 | **阅读时间**：约 18 分钟
 

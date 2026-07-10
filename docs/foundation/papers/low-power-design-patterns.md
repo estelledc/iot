@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: low-power-design-patterns
+title: IoT 低功耗设计模式
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 低功耗设计模式
 
 > **难度**：🟡 中级 | **领域**：嵌入式系统、电源管理 | **阅读时间**：约 20 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rf-energy-harvesting-rectenna
+title: 射频能量采集整流天线设计与效率分析
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 射频能量采集整流天线设计与效率分析
 > **难度**: 红色 高级 | **领域**: RF能量采集 | **阅读时间**: 约 22 分钟
 

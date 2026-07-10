@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: environmental-noise-monitoring
+title: 环境噪声监测物联网
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 环境噪声监测物联网
 
 > **难度**：🟡 中级 | **领域**：环境监测、智慧城市 | **阅读时间**：约 25 分钟

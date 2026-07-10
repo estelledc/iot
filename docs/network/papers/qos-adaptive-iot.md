@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: qos-adaptive-iot
+title: IoT 服务质量 QoS 自适应机制
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 21
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 服务质量 QoS 自适应机制
 
 > **难度**：🟡 中级 | **领域**：网络质量保障、自适应系统、跨层优化 | **阅读时间**：约 21 分钟

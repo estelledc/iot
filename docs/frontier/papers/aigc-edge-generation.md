@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: aigc-edge-generation
+title: AIGC 边缘生成
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # AIGC 边缘生成
 
 > **难度**：🟡 中级 | **领域**：生成式 AI × 边缘计算 | **阅读时间**：约 25 分钟

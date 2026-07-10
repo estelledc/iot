@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: chip-antenna-vs-pcb-antenna
+title: 陶瓷贴片天线与PCB天线性能对比
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 陶瓷贴片天线与PCB天线性能对比
 > **难度**：🟡 中级 | **领域**：天线选型 | **阅读时间**：约 18 分钟
 

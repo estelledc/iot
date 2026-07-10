@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: amqp-industrial-messaging
+title: AMQP 与工业消息传递
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # AMQP 与工业消息传递
 
 > **难度**：🟡 中级 | **领域**：消息队列、工业通信、可靠传输 | **阅读时间**：约 20 分钟

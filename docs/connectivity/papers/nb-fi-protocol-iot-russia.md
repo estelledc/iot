@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nb-fi-protocol-iot-russia
+title: NB-Fi协议在IoT中的技术特点分析
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NB-Fi协议在IoT中的技术特点分析
 > **难度**: 中级 | **领域**: LPWAN协议 | **阅读时间**: 约 20 分钟
 

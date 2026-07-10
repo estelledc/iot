@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: post-quantum-crypto-iot
+title: 后量子密码学在 IoT 中的迁移
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 后量子密码学在 IoT 中的迁移
 
 > **难度**：🟡 中级 | **领域**：密码学、嵌入式安全 | **阅读时间**：约 20 分钟

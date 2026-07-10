@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: event-camera-dvs-iot
+title: 事件相机DVS在IoT低功耗视觉中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 事件相机DVS在IoT低功耗视觉中的应用
 
 > **难度**：🔴 高级 | **领域**：神经形态视觉 | **阅读时间**：约 22 分钟

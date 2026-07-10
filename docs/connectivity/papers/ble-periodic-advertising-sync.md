@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ble-periodic-advertising-sync
+title: BLE周期性广播与同步传输应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # BLE周期性广播与同步传输应用
 > **难度**：🔴 高级 | **领域**：BLE高级特性 | **阅读时间**：约 22 分钟
 

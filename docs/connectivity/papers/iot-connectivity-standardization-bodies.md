@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: iot-connectivity-standardization-bodies
+title: IoT连接标准化组织与标准演进
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT连接标准化组织与标准演进
 > **难度**: 初级 | **领域**: 标准化 | **阅读时间**: 约 18 分钟
 

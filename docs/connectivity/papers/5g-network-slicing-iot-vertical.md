@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: 5g-network-slicing-iot-vertical
+title: 5G网络切片在IoT垂直行业中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 5G网络切片在IoT垂直行业中的应用
 > **难度**：🔴 高级 | **领域**：5G网络架构 | **阅读时间**：约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: heterogeneous-network-iot-handover
+title: 异构网络IoT设备切换与连接选择
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 异构网络IoT设备切换与连接选择
 > **难度**：🔴 高级 | **领域**：网络融合 | **阅读时间**：约 22 分钟
 

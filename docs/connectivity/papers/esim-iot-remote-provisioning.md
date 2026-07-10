@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: esim-iot-remote-provisioning
+title: eSIM IoT远程配置与运营商切换
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # eSIM IoT远程配置与运营商切换
 > **难度**: 中级 | **领域**: 蜂窝IoT | **阅读时间**: 约 20 分钟
 

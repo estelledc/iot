@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: isolation-amplifier-optocoupler
+title: 隔离放大器与光耦隔离在高压测量中的对比
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 隔离放大器与光耦隔离在高压测量中的对比
 > **难度**：🟡 中级 | **领域**：电气隔离技术 | **阅读时间**：约 20 分钟
 

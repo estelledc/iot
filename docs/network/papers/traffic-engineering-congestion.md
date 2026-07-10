@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: traffic-engineering-congestion
+title: IoT 流量工程与拥塞控制
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 流量工程与拥塞控制
 
 > **难度**：🟡 中级 | **领域**：流量工程、拥塞控制 | **阅读时间**：约 20 分钟

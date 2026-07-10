@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mioty-lpwan-telegram-splitting
+title: MIOTY LPWAN电报分割技术分析
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MIOTY LPWAN电报分割技术分析
 > **难度**：🔴 高级 | **领域**：新型LPWAN | **阅读时间**：约 22 分钟
 

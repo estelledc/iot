@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sigma-delta-modulator-sensor-readout
+title: Sigma-Delta调制器在高精度传感器读出中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Sigma-Delta调制器在高精度传感器读出中的应用
 > **难度**：🔴 高级 | **领域**：精密数据转换 | **阅读时间**：约 22 分钟
 

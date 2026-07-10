@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: pressure-sensor-piezoresistive
+title: 压阻式压力传感器工作原理与MEMS制造
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 压阻式压力传感器工作原理与MEMS制造
 
 > **难度**：🟡 中级 | **领域**：压力传感、MEMS工艺、工业IoT | **阅读时间**：约 20 分钟

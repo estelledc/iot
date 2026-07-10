@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ambient-iot-zero-energy
+title: 零能耗通信（Ambient IoT）：无电池时代的万亿连接
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 零能耗通信（Ambient IoT）：无电池时代的万亿连接
 
 > **难度**：🟡 中级 | **领域**：反向散射通信、能量采集、3GPP 标准化 | **阅读时间**：约 25 分钟

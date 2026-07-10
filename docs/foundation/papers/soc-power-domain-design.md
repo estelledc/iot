@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: soc-power-domain-design
+title: SoC多电源域设计与电压调节策略
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # SoC多电源域设计与电压调节策略
 > **难度**：🔴 高级 | **领域**：SoC电源架构 | **阅读时间**：约 22 分钟
 

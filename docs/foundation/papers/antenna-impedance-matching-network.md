@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: antenna-impedance-matching-network
+title: 天线阻抗匹配网络设计与Smith圆图
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 天线阻抗匹配网络设计与Smith圆图
 > **难度**：🔴 高级 | **领域**：射频匹配设计 | **阅读时间**：约 25 分钟
 

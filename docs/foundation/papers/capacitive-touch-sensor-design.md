@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: capacitive-touch-sensor-design
+title: 电容式触摸传感器设计与抗干扰
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电容式触摸传感器设计与抗干扰
 
 > **难度**：🟡 中级 | **领域**：人机交互、电容检测、嵌入式设计 | **阅读时间**：约 18 分钟

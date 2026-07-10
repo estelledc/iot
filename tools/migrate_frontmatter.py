@@ -12,9 +12,11 @@ from typing import Any
 
 import yaml
 
-from tools.validate_frontmatter import LAYER_BY_SLUG, load_schema, validate_file
-
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools.validate_frontmatter import LAYER_BY_SLUG, load_schema, validate_file
 FRONTMATTER_RE = re.compile(r"\A---\n.*?\n---\n?", re.DOTALL)
 H1_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
 META_RE = re.compile(

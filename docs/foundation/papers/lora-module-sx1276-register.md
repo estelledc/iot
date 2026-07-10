@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lora-module-sx1276-register
+title: LoRa模组SX1276寄存器配置与扩频参数
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LoRa模组SX1276寄存器配置与扩频参数
 
 > **难度**：🟡 中级 | **领域**：LoRa射频配置 | **阅读时间**：约 20 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ble-throughput-optimization-dle
+title: BLE数据长度扩展DLE与吞吐量优化
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # BLE数据长度扩展DLE与吞吐量优化
 > **难度**：🟡 中级 | **领域**：BLE性能优化 | **阅读时间**：约 20 分钟
 

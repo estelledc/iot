@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: pcb-thermal-management
+title: PCB热设计：铜面积/过孔散热/热仿真
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # PCB热设计：铜面积/过孔散热/热仿真
 > **难度**：🟡 中级 | **领域**：PCB热管理 | **阅读时间**：约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zigbee-green-power-energy-harvest
+title: Zigbee Green Power能量采集设备协议
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Zigbee Green Power能量采集设备协议
 > **难度**：🟡 中级 | **领域**：Zigbee绿色能源 | **阅读时间**：约 20 分钟
 

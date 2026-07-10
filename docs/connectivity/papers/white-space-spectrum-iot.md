@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: white-space-spectrum-iot
+title: 电视白频谱TVWS在IoT中的大范围连接
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电视白频谱TVWS在IoT中的大范围连接
 > **难度**: 中级 | **领域**: 频谱利用 | **阅读时间**: 约 20 分钟
 

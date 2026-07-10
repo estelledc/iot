@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: interrupt-priority-nvic-design
+title: NVIC中断优先级配置与嵌套中断设计
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NVIC中断优先级配置与嵌套中断设计
 > **难度**：🟡 中级 | **领域**：嵌入式中断系统 | **阅读时间**：约 20 分钟
 

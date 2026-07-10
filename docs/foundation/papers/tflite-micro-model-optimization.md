@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: tflite-micro-model-optimization
+title: TFLite Micro模型优化与MCU内存约束
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # TFLite Micro模型优化与MCU内存约束
 > **难度**：🟡 中级 | **领域**：嵌入式AI | **阅读时间**：约 20 分钟
 

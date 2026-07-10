@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: duty-cycle-mac-protocol-iot
+title: 占空比MAC协议在IoT低功耗通信中的设计
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 占空比MAC协议在IoT低功耗通信中的设计
 > **难度**: 高级 | **领域**: MAC协议 | **阅读时间**: 约 22 分钟
 

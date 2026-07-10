@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: weightless-protocol-iot-lpwan
+title: Weightless协议族在IoT LPWAN中的定位
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Weightless协议族在IoT LPWAN中的定位
 > **难度**: 中级 | **领域**: LPWAN协议 | **阅读时间**: 约 20 分钟
 

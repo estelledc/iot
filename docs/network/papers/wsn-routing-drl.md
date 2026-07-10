@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wsn-routing-drl
+title: AI 驱动的无线传感网路由优化
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # AI 驱动的无线传感网路由优化
 
 > 难度：🟠 进阶 | 预计阅读：35 分钟 | 最后更新：2025-06

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: i3c-next-gen-sensor-bus
+title: I3C下一代传感器总线协议技术分析
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # I3C下一代传感器总线协议技术分析
 > **难度**：🔴 高级 | **领域**：新型总线协议 | **阅读时间**：约 22 分钟
 

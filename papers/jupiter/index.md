@@ -1,3 +1,18 @@
+---
+schema_version: '1.0'
+id: jupiter
+title: '论文阅读报告：Jupiter: Fast and Resource-Efficient Collaborative Inference of Generative
+  LLMs on Edge Devices'
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 论文阅读报告：Jupiter: Fast and Resource-Efficient Collaborative Inference of Generative LLMs on Edge Devices
 
 ## 论文信息

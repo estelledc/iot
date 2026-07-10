@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ntc-thermistor-linearization
+title: NTC热敏电阻线性化方法与查表算法
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NTC热敏电阻线性化方法与查表算法
 
 > **难度**：🟡 中级 | **领域**：温度传感、嵌入式算法、信号处理 | **阅读时间**：约 25 分钟

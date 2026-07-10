@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: pcb-antenna-design-iot
+title: PCB板载天线设计：倒F/蛇形/环形天线
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # PCB板载天线设计：倒F/蛇形/环形天线
 > **难度**：🔴 高级 | **领域**：天线设计 | **阅读时间**：约 22 分钟
 

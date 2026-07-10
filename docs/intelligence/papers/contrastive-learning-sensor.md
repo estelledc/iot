@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: contrastive-learning-sensor
+title: 对比学习在传感器数据中的应用
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 对比学习在传感器数据中的应用
 
 > **难度**：🟡 中级 | **领域**：自监督学习、传感器数据、人体活动识别 | **阅读时间**：约 18 分钟

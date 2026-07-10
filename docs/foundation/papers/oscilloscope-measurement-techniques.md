@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: oscilloscope-measurement-techniques
+title: 示波器测量技巧：触发/解码/电源纹波
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 示波器测量技巧：触发/解码/电源纹波
 > **难度**：🟢 初级 | **领域**：测试测量工具 | **阅读时间**：约 18 分钟
 

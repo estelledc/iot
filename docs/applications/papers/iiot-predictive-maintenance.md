@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: iiot-predictive-maintenance
+title: 工业 IoT 预测性维护
+layer: 7
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 工业 IoT 预测性维护
 
 > **难度**：🟡 进阶 | **领域**：工业制造 | **关键词**：振动分析, RUL 预测, 边缘部署, PHM, ROI

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: thread-protocol-openthread-overview
+title: Thread协议与OpenThread开源实现概述
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Thread协议与OpenThread开源实现概述
 > **难度**：🟢 初级 | **领域**：Thread网络 | **阅读时间**：约 18 分钟
 

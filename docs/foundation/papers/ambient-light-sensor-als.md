@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ambient-light-sensor-als
+title: 环境光传感器ALS在IoT设备中的集成
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 14
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 环境光传感器ALS在IoT设备中的集成
 
 > **难度**：🟢 初级 | **领域**：光传感、人机交互、低功耗设计 | **阅读时间**：约 14 分钟

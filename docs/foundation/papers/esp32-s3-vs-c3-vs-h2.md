@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: esp32-s3-vs-c3-vs-h2
+title: ESP32-S3/C3/H2变体选型与功能对比
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ESP32-S3/C3/H2变体选型与功能对比
 
 > **难度**：🟢 初级 | **领域**：Wi-Fi/BLE SoC | **阅读时间**：约 18 分钟

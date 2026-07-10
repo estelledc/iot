@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: fpga-vs-asic-iot-acceleration
+title: FPGA与ASIC在IoT加速中的成本性能对比
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # FPGA与ASIC在IoT加速中的成本性能对比
 
 > **难度**：🔴 高级 | **领域**：硬件加速架构 | **阅读时间**：约 22 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ble-5-features-coded-phy
+title: BLE 5.0新特性：Coded PHY与远距离通信
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # BLE 5.0新特性：Coded PHY与远距离通信
 > **难度**：🟡 中级 | **领域**：BLE协议演进 | **阅读时间**：约 20 分钟
 

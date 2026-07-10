@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: semantic-communication-iot-future
+title: 语义通信在未来IoT中的应用前景
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 语义通信在未来IoT中的应用前景
 > **难度**: 高级 | **领域**: 前沿通信 | **阅读时间**: 约 22 分钟
 

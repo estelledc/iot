@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: radiated-emission-reduction
+title: 辐射发射降低：走线/接地/屏蔽综合策略
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 辐射发射降低：走线/接地/屏蔽综合策略
 > **难度**：🔴 高级 | **领域**：EMC设计实践 | **阅读时间**：约 22 分钟
 

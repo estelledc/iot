@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: network-coding-iot-throughput
+title: 网络编码在IoT吞吐量提升中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 网络编码在IoT吞吐量提升中的应用
 > **难度**: 高级 | **领域**: 网络编码 | **阅读时间**: 约 22 分钟
 

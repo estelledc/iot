@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: strain-gauge-wheatstone-bridge
+title: 应变片与惠斯通电桥测量电路
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 15
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 应变片与惠斯通电桥测量电路
 
 > **难度**：🟢 初级 | **领域**：力学传感、模拟电路、结构监测 | **阅读时间**：约 15 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: kubeedge-openyurt-comparison
+title: KubeEdge vs OpenYurt vs K3s：边缘 Kubernetes 方案对比
+layer: 4
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # KubeEdge vs OpenYurt vs K3s：边缘 Kubernetes 方案对比
 
 > **难度**：🟡 进阶 | **前置知识**：了解 Kubernetes 基本概念（Pod、Node、Deployment）  

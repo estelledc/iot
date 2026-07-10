@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: tee-edge-computing
+title: TEE与边缘计算安全：硬件隔离的信任锚
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # TEE与边缘计算安全：硬件隔离的信任锚
 
 > 难度：🟡 进阶 | 领域：可信计算/边缘安全 | 更新：2025-06

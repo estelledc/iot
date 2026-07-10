@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: terahertz-communication-future-iot
+title: 太赫兹通信在未来IoT中的潜力与挑战
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 太赫兹通信在未来IoT中的潜力与挑战
 > **难度**: 高级 | **领域**: 前沿通信 | **阅读时间**: 约 22 分钟
 

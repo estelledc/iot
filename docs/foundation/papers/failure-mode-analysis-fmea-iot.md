@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: failure-mode-analysis-fmea-iot
+title: IoT硬件失效模式分析FMEA方法
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT硬件失效模式分析FMEA方法
 
 > **难度**：🟡 中级 | **领域**：可靠性分析 | **阅读时间**：约 20 分钟

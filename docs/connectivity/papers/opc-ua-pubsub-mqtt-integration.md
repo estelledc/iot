@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: opc-ua-pubsub-mqtt-integration
+title: OPC UA PubSub与MQTT集成方案
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # OPC UA PubSub与MQTT集成方案
 > **难度**：🔴 高级 | **领域**：工业IoT集成 | **阅读时间**：约 22 分钟
 

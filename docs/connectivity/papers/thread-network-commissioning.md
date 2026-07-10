@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: thread-network-commissioning
+title: Thread网络调试入网流程与安全凭证
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Thread网络调试入网流程与安全凭证
 > **难度**：🟡 中级 | **领域**：Thread安全 | **阅读时间**：约 20 分钟
 

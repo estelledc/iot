@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: thermocouple-types-principles
+title: 热电偶类型与测温原理详解
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 热电偶类型与测温原理详解
 
 > **难度**：🟢 初级 | **领域**：传感器技术、温度测量、工业物联网 | **阅读时间**：约 20 分钟

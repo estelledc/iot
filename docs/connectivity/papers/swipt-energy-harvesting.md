@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: swipt-energy-harvesting
+title: 射频能量收集与通信一体化 SWIPT
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 射频能量收集与通信一体化 SWIPT
 
 > **难度**：🟡 中级 | **领域**：无线通信、能量收集 | **阅读时间**：约 18 分钟

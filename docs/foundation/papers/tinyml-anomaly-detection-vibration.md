@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: tinyml-anomaly-detection-vibration
+title: TinyML振动异常检测在工业IoT中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # TinyML振动异常检测在工业IoT中的应用
 > **难度**：中级 | **领域**：工业预测维护 | **阅读时间**：约 20 分钟
 

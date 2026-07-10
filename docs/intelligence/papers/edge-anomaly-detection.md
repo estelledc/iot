@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-anomaly-detection
+title: 边缘异常检测：Autoencoder 与 Isolation Forest
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘异常检测：Autoencoder 与 Isolation Forest
 
 > **难度**：🟡 中级 | **领域**：异常检测、边缘部署、工业 IoT | **阅读时间**：约 20 分钟

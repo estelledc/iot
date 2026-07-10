@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: adaptive-modulation-coding-iot
+title: 自适应调制编码AMC在IoT中的实现
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 自适应调制编码AMC在IoT中的实现
 > **难度**: 高级 | **领域**: 自适应通信 | **阅读时间**: 约 22 分钟
 

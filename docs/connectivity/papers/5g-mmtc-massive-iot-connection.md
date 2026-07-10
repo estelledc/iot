@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: 5g-mmtc-massive-iot-connection
+title: 5G mMTC大规模IoT连接场景分析
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 5G mMTC大规模IoT连接场景分析
 > **难度**：🔴 高级 | **领域**：5G大规模IoT | **阅读时间**：约 22 分钟
 

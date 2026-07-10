@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: neural-network-quantization-int8
+title: 神经网络INT8量化在边缘设备上的实现
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 神经网络INT8量化在边缘设备上的实现
 > **难度**：🔴 高级 | **领域**：模型优化 | **阅读时间**：约 22 分钟
 

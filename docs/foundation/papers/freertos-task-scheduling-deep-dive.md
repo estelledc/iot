@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: freertos-task-scheduling-deep-dive
+title: FreeRTOS任务调度器源码深度分析
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # FreeRTOS任务调度器源码深度分析
 > **难度**：🔴 高级 | **领域**：RTOS内核 | **阅读时间**：约 25 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi-power-save-dtim-twt
+title: WiFi省电机制DTIM/TWT在IoT中的配置
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WiFi省电机制DTIM/TWT在IoT中的配置
 > **难度**：🟡 中级 | **领域**：WiFi功耗管理 | **阅读时间**：约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sbom-software-supply-chain
+title: SBOM 软件物料清单在 IoT 中的实践
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 17
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # SBOM 软件物料清单在 IoT 中的实践
 
 > **难度**：🟡 中级 | **领域**：供应链安全、合规 | **阅读时间**：约 17 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: biosensor-electrochemical-iot
+title: 电化学生物传感器在IoT健康监测中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电化学生物传感器在IoT健康监测中的应用
 > **难度**：🔴 高级 | **领域**：生物传感技术 | **阅读时间**：约 22 分钟
 

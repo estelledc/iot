@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mems-barometric-pressure-altimeter
+title: MEMS气压计高度测量原理与温度补偿
+layer: 1
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS气压计高度测量原理与温度补偿
 
 > 技术分析 | 难度：🟡 中级 | 气压测量 · 高度计算 · 导航定位

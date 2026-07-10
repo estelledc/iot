@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: reconfigurable-intelligent-surface-iot
+title: 可重构智能表面RIS辅助IoT通信
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 可重构智能表面RIS辅助IoT通信
 > **难度**：🔴 高级 | **领域**：新型通信技术 | **阅读时间**：约 22 分钟
 

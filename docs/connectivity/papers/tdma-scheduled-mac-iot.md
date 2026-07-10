@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: tdma-scheduled-mac-iot
+title: TDMA调度式MAC在工业IoT中的确定性通信
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # TDMA调度式MAC在工业IoT中的确定性通信
 > **难度**: 高级 | **领域**: MAC协议 | **阅读时间**: 约 22 分钟
 

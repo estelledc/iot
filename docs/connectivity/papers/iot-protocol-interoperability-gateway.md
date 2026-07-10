@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: iot-protocol-interoperability-gateway
+title: IoT协议互操作性与协议转换网关
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT协议互操作性与协议转换网关
 > **难度**: 中级 | **领域**: 互操作性 | **阅读时间**: 约 20 分钟
 

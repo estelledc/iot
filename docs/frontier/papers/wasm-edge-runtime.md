@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wasm-edge-runtime
+title: WebAssembly 边缘运行时
+layer: 8
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WebAssembly 边缘运行时
 
 > **难度**：🟢 入门 | **领域**：边缘计算 × 轻量化运行时 | **阅读时间**：约 20 分钟

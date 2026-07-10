@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: gitops-edge-deployment
+title: GitOps 边缘部署实践
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # GitOps 边缘部署实践
 
 > **难度**：🟡 中级 | **领域**：DevOps、边缘运维、声明式部署 | **阅读时间**：约 18 分钟

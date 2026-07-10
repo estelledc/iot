@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cortex-m0-vs-m4-vs-m7
+title: Cortex-M0/M4/M7性能功耗对比分析
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Cortex-M0/M4/M7性能功耗对比分析
 
 > **难度**：🟡 中级 | **领域**：嵌入式处理器 | **阅读时间**：约 20 分钟

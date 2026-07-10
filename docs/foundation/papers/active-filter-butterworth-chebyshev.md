@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: active-filter-butterworth-chebyshev
+title: 有源滤波器Butterworth与Chebyshev拓扑对比
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 有源滤波器Butterworth与Chebyshev拓扑对比
 
 > **难度**: 🟡 中级 | **领域**: 模拟滤波器设计 | **阅读时间**: 约 20 分钟

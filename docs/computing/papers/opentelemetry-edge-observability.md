@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: opentelemetry-edge-observability
+title: 可观测性：OpenTelemetry 在边缘的实践
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 可观测性：OpenTelemetry 在边缘的实践
 
 > **难度**：🟡 中级 | **领域**：可观测性、监控、分布式追踪 | **阅读时间**：约 22 分钟

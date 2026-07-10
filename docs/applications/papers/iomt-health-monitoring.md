@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: iomt-health-monitoring
+title: IoMT 实时健康监测
+layer: 7
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoMT 实时健康监测
 
 > **难度**：🟡 进阶 | **领域**：民生与健康 | **关键词**：可穿戴传感器, 边缘处理, 心律失常检测, 跌倒检测, HIPAA, 雾-边架构

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: embedded-fat-filesystem
+title: 嵌入式FAT文件系统FatFs移植与SD卡操作
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 嵌入式FAT文件系统FatFs移植与SD卡操作
 > **难度**：中级 | **领域**：文件系统移植 | **阅读时间**：约 20 分钟
 

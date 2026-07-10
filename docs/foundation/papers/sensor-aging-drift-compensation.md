@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sensor-aging-drift-compensation
+title: 传感器老化漂移补偿与在线校准策略
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 传感器老化漂移补偿与在线校准策略
 > **难度**：🔴 高级 | **领域**：传感器长期可靠性 | **阅读时间**：约 22 分钟
 

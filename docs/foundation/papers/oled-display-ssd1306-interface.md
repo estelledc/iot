@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: oled-display-ssd1306-interface
+title: OLED显示屏SSD1306驱动接口与图形库
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # OLED显示屏SSD1306驱动接口与图形库
 > **难度**：🟢 初级 | **领域**：显示接口设计 | **阅读时间**：约 18 分钟
 

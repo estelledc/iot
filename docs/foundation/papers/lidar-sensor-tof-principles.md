@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lidar-sensor-tof-principles
+title: 激光雷达ToF测距原理与点云生成
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 激光雷达ToF测距原理与点云生成
 
 > **难度**：🔴 高级 | **领域**：激光测距、3D感知、自动驾驶 | **阅读时间**：约 25 分钟

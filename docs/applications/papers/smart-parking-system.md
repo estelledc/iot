@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: smart-parking-system
+title: 智慧停车系统
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 智慧停车系统
 
 > **难度**：🟡 中级 | **领域**：智慧城市、交通管理 | **阅读时间**：约 25 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: bare-metal-vs-rtos-decision
+title: 裸机编程与RTOS：IoT项目决策框架
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 裸机编程与RTOS：IoT项目决策框架
 
 > **难度**：🟢 初级 | **领域**：嵌入式架构决策 | **阅读时间**：约 18 分钟

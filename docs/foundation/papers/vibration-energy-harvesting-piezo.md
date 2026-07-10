@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: vibration-energy-harvesting-piezo
+title: 振动能量采集压电换能器匹配电路
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 振动能量采集压电换能器匹配电路
 
 > **难度**：🔴 高级 | **领域**：振动能量采集 | **阅读时间**：约 22 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: federated-llm-iot
+title: 联邦大模型微调（Federated LLM）：IoT 场景下的分布式大模型训练
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 联邦大模型微调（Federated LLM）：IoT 场景下的分布式大模型训练
 
 > **难度**：🟡 中级 | **领域**：联邦学习、大语言模型、边缘智能 | **阅读时间**：约 25 分钟

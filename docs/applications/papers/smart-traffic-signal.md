@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: smart-traffic-signal
+title: 智慧城市交通信号优化
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 智慧城市交通信号优化
 
 > **难度**：🟡 中级 | **领域**：智慧城市、交通工程 | **阅读时间**：约 25 分钟

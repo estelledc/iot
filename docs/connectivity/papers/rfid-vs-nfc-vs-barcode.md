@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rfid-vs-nfc-vs-barcode
+title: RFID/NFC/条码在IoT识别中的对比选型
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RFID/NFC/条码在IoT识别中的对比选型
 > **难度**：🟢 初级 | **领域**：自动识别技术 | **阅读时间**：约 18 分钟
 

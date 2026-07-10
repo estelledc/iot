@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: fpga-hdl-verilog-basics-iot
+title: FPGA Verilog HDL基础与IoT外设实现
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # FPGA Verilog HDL基础与IoT外设实现
 
 > **难度**：🟢 初级 | **领域**：FPGA开发入门 | **阅读时间**：约 20 分钟

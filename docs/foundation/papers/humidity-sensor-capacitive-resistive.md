@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: humidity-sensor-capacitive-resistive
+title: 电容式与电阻式湿度传感器对比
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 15
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电容式与电阻式湿度传感器对比
 
 > **难度**：🟢 初级 | **领域**：湿度传感、环境监测、智能家居 | **阅读时间**：约 15 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: multi-band-antenna-iot-device
+title: 多频段天线在IoT多模设备中的设计
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 多频段天线在IoT多模设备中的设计
 > **难度**: 高级 | **领域**: 天线设计 | **阅读时间**: 约 22 分钟
 

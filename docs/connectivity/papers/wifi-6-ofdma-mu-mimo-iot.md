@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi-6-ofdma-mu-mimo-iot
+title: WiFi 6 OFDMA与MU-MIMO在IoT密集部署中的优势
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WiFi 6 OFDMA与MU-MIMO在IoT密集部署中的优势
 > **难度**：🔴 高级 | **领域**：WiFi技术演进 | **阅读时间**：约 22 分钟
 

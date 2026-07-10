@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: gps-gnss-module-positioning
+title: GPS/GNSS定位模组硬件接口与精度分析
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # GPS/GNSS定位模组硬件接口与精度分析
 > **难度**：🟡 中级 | **领域**：卫星定位技术 | **阅读时间**：约 20 分钟
 

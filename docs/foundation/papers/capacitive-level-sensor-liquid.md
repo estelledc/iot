@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: capacitive-level-sensor-liquid
+title: 电容式液位传感器原理与防腐设计
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电容式液位传感器原理与防腐设计
 > **难度**：🟢 初级 | **领域**：液位测量 | **阅读时间**：约 18 分钟
 

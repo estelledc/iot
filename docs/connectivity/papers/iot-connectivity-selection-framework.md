@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: iot-connectivity-selection-framework
+title: IoT连接技术选型决策框架
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT连接技术选型决策框架
 > **难度**: 初级 | **领域**: 技术选型 | **阅读时间**: 约 18 分钟
 

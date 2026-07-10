@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cognitive-digital-twin
+title: 认知数字孪生：从仿真镜像到自主推理决策
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 认知数字孪生：从仿真镜像到自主推理决策
 
 > **难度**：🟡 中级 | **领域**：数字孪生、知识图谱、因果推理 | **阅读时间**：约 25 分钟

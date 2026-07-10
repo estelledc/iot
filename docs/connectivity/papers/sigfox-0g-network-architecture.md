@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sigfox-0g-network-architecture
+title: Sigfox 0G网络架构与超窄带技术
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Sigfox 0G网络架构与超窄带技术
 > **难度**: 中级 | **领域**: LPWAN | **阅读时间**: 约 20 分钟
 

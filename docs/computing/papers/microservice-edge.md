@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: microservice-edge
+title: 边缘微服务架构：设计模式与实践
+layer: 4
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘微服务架构：设计模式与实践
 
 > **难度**：🟡 进阶 | **前置知识**：了解微服务基本概念、容器和 API  

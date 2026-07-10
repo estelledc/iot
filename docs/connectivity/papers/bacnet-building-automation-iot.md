@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: bacnet-building-automation-iot
+title: BACnet楼宇自动化IoT通信协议
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # BACnet楼宇自动化IoT通信协议
 > **难度**：🟡 中级 | **领域**：楼宇自动化 | **阅读时间**：约 20 分钟
 

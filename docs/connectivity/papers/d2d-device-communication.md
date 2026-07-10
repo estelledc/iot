@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: d2d-device-communication
+title: D2D 设备直连通信
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 19
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # D2D 设备直连通信
 
 > **难度**：🟡 中级 | **领域**：蜂窝通信、近距通信 | **阅读时间**：约 19 分钟

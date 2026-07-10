@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zigbee-matter-thread
+title: ZigBee/Matter/Thread：智能家居协议演进
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ZigBee/Matter/Thread：智能家居协议演进
 
 > 难度：🟢 入门 | 领域：短距通信 · 智能家居 | 更新：2025-06

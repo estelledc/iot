@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: jtag-swd-debug-interface
+title: JTAG与SWD调试接口原理与工具链
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # JTAG与SWD调试接口原理与工具链
 > **难度**：🟡 中级 | **领域**：嵌入式调试技术 | **阅读时间**：约 20 分钟
 

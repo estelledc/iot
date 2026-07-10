@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: explainable-ai-iot
+title: 可解释 AI for IoT：让黑箱决策变得透明
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 可解释 AI for IoT：让黑箱决策变得透明
 
 > **难度**：🟡 中级 | **领域**：可解释人工智能、IoT 边缘推理、监管合规 | **阅读时间**：约 25 分钟

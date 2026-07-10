@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: supply-chain-security-iot
+title: IoT 供应链安全：从芯片到云端的信任链
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 供应链安全：从芯片到云端的信任链
 
 > **难度**：🟡 中级 | **领域**：供应链安全、硬件安全 | **阅读时间**：约 25 分钟

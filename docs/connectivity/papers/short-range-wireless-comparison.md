@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: short-range-wireless-comparison
+title: 短距离无线技术对比：BLE/WiFi/Zigbee/Thread
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 短距离无线技术对比：BLE/WiFi/Zigbee/Thread
 > **难度**: 初级 | **领域**: 短距离无线 | **阅读时间**: 约 18 分钟
 

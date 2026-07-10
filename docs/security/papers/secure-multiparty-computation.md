@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: secure-multiparty-computation
+title: 安全多方计算 MPC 在 IoT 中的应用
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 安全多方计算 MPC 在 IoT 中的应用
 
 > **难度**：🟡 中级 | **领域**：隐私计算、密码学 | **阅读时间**：约 25 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cellular-iot-evolution-2g-5g
+title: 蜂窝IoT演进：从2G到5G的技术路线
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 蜂窝IoT演进：从2G到5G的技术路线
 > **难度**: 初级 | **领域**: 蜂窝演进 | **阅读时间**: 约 18 分钟
 

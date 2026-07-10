@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: transimpedance-amplifier-photodiode
+title: 跨阻放大器TIA在光电二极管信号读出中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 跨阻放大器TIA在光电二极管信号读出中的应用
 > **难度**：🔴 高级 | **领域**：光电信号处理 | **阅读时间**：约 22 分钟
 

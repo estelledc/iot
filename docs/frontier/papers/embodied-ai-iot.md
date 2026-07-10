@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: embodied-ai-iot
+title: 具身智能（Embodied AI）与 IoT
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 具身智能（Embodied AI）与 IoT
 
 > **难度**：🟡 中级 | **领域**：具身智能 × 边缘计算 × 机器人 | **阅读时间**：约 25 分钟

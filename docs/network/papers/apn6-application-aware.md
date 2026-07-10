@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: apn6-application-aware
+title: APN6 应用感知网络
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # APN6 应用感知网络
 
 > **难度**：🟡 中级 | **领域**：IPv6 网络、流量工程 | **阅读时间**：约 18 分钟

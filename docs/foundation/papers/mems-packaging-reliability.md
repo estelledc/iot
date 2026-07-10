@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mems-packaging-reliability
+title: MEMS器件封装技术与可靠性测试
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS器件封装技术与可靠性测试
 
 > **难度**：🔴 高级 | **领域**：MEMS封装与可靠性 | **阅读时间**：约 25 分钟

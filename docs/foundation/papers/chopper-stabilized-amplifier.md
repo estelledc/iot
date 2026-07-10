@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: chopper-stabilized-amplifier
+title: 斩波稳定放大器消除低频噪声与失调
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 斩波稳定放大器消除低频噪声与失调
 > **难度**：🔴 高级 | **领域**：精密放大器技术 | **阅读时间**：约 22 分钟
 

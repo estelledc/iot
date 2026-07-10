@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sleep-mode-hierarchy-mcu
+title: MCU睡眠模式层级：Sleep/Stop/Standby功耗对比
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MCU睡眠模式层级：Sleep/Stop/Standby功耗对比
 
 > **难度**：🟢 初级 | **领域**：低功耗设计 | **阅读时间**：约 18 分钟

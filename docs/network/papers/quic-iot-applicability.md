@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: quic-iot-applicability
+title: QUIC 协议在 IoT 中的适用性分析
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # QUIC 协议在 IoT 中的适用性分析
 
 > **难度**：🟡 中级 | **领域**：传输协议、物联网、低延迟通信 | **阅读时间**：约 20 分钟

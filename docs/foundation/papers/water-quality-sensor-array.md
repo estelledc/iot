@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: water-quality-sensor-array
+title: 水质多参数传感器阵列：pH / DO / 浊度集成
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 水质多参数传感器阵列：pH / DO / 浊度集成
 
 > **难度**：🟡 中级 | **领域**：水质监测、电化学传感、环境 IoT | **阅读时间**：约 18 分钟

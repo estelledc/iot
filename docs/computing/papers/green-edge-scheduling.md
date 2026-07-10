@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: green-edge-scheduling
+title: 绿色边缘调度策略
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 绿色边缘调度策略
 
 > **难度**：🟡 中级 | **领域**：绿色计算、调度优化、边缘计算 | **阅读时间**：约 20 分钟

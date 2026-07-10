@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: federated-learning-iot
+title: 联邦学习与物联网：隐私保护下的分布式智能
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 联邦学习与物联网：隐私保护下的分布式智能
 
 > 难度：🟠 挑战 | 前置知识：了解基本机器学习训练流程（损失函数、梯度下降、模型参数）

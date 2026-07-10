@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lora-spread-factor-optimization
+title: LoRa扩频因子SF优化与链路预算计算
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LoRa扩频因子SF优化与链路预算计算
 > **难度**：🟡 中级 | **领域**：LoRa物理层 | **阅读时间**：约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rtos-comparison
+title: IoT 实时操作系统对比：FreeRTOS vs Zephyr vs LiteOS vs TinyOS
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 实时操作系统对比：FreeRTOS vs Zephyr vs LiteOS vs TinyOS
 
 > **难度**：🟡 中级 | **领域**：嵌入式系统、操作系统 | **阅读时间**：约 25 分钟

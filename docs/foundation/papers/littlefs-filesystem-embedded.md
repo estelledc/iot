@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: littlefs-filesystem-embedded
+title: LittleFS文件系统在MCU Flash上的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LittleFS文件系统在MCU Flash上的应用
 > **难度**：🟡 中级 | **领域**：嵌入式文件系统 | **阅读时间**：约 20 分钟
 

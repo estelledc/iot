@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: knx-smart-building-protocol
+title: KNX智能建筑协议在IoT中的定位
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # KNX智能建筑协议在IoT中的定位
 > **难度**：🟢 初级 | **领域**：楼宇自动化 | **阅读时间**：约 18 分钟
 

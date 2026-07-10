@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: hybrid-connectivity-multi-protocol
+title: 混合连接多协议IoT网关设计
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 混合连接多协议IoT网关设计
 > **难度**: 中级 | **领域**: 网关设计 | **阅读时间**: 约 20 分钟
 

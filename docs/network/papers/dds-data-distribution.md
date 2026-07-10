@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dds-data-distribution
+title: DDS 数据分发服务深度解析
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DDS 数据分发服务深度解析
 
 > **难度**：🟡 中级 | **领域**：中间件、发布订阅、实时系统 | **阅读时间**：约 22 分钟

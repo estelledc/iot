@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: watchdog-timer-system-reliability
+title: 看门狗定时器在嵌入式系统可靠性中的作用
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 15
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 看门狗定时器在嵌入式系统可靠性中的作用
 
 > **难度**：🟢 初级 | **领域**：嵌入式可靠性 | **阅读时间**：约 15 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wake-on-radio-lpwan
+title: 无线唤醒Wake-on-Radio在LPWAN中的实现
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 无线唤醒Wake-on-Radio在LPWAN中的实现
 
 > **难度**：🔴 高级 | **领域**：低功耗无线通信 | **阅读时间**：约 22 分钟

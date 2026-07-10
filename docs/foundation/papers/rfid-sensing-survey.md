@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rfid-sensing-survey
+title: RFID 感知识别技术综述
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RFID 感知识别技术综述
 
 > **难度**：🟢 入门 | **领域**：射频识别、自动识别技术 | **阅读时间**：约 25 分钟

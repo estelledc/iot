@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: signal-integrity-crosstalk
+title: 信号完整性：串扰分析与走线间距规则
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 信号完整性：串扰分析与走线间距规则
 > **难度**：🔴 高级 | **领域**：信号完整性 | **阅读时间**：约 22 分钟
 

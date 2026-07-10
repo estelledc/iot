@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: flow-sensor-mems-thermal
+title: MEMS 热式流量传感器微结构与响应特性
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 40
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS 热式流量传感器微结构与响应特性
 
 > **难度**：🔴 高级 | **领域**：流量测量、MEMS 热传导、微流控 | **阅读时间**：约 40 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rtos-tick-less-idle-mode
+title: RTOS Tickless空闲模式实现与功耗收益
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RTOS Tickless空闲模式实现与功耗收益
 > **难度**：🔴 高级 | **领域**：低功耗RTOS | **阅读时间**：约 22 分钟
 

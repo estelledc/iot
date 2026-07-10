@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: color-sensor-tcs34725
+title: 颜色传感器TCS34725原理与光谱响应分析
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 16
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 颜色传感器TCS34725原理与光谱响应分析
 
 > **难度**：🟢 初级 | **领域**：光电子、颜色科学、IoT感知 | **阅读时间**：约 16 分钟

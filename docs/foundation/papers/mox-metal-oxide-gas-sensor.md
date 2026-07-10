@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mox-metal-oxide-gas-sensor
+title: 金属氧化物半导体气体传感器选择性改进
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 35
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 金属氧化物半导体气体传感器选择性改进
 
 > **难度**：🔴 高级 | **领域**：半导体物理、气体传感、模式识别、嵌入式系统 | **阅读时间**：约 35 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: adc-dma-continuous-sampling
+title: ADC+DMA连续采样实时数据采集系统设计
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ADC+DMA连续采样实时数据采集系统设计
 > **难度**：🟡 中级 | **领域**：数据采集系统 | **阅读时间**：约 20 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zigbee-3-0-protocol-stack
+title: Zigbee 3.0协议栈架构与互操作性
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Zigbee 3.0协议栈架构与互操作性
 > **难度**：🟡 中级 | **领域**：Zigbee协议 | **阅读时间**：约 20 分钟
 

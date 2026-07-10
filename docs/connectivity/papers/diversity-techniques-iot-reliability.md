@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: diversity-techniques-iot-reliability
+title: 分集技术提高IoT无线链路可靠性
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 分集技术提高IoT无线链路可靠性
 > **难度**：🔴 高级 | **领域**：无线可靠性 | **阅读时间**：约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dtls-tls13-comparison
+title: DTLS 与 TLS 1.3 在 IoT 协议安全中的对比
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DTLS 与 TLS 1.3 在 IoT 协议安全中的对比
 
 > **难度**：🟡 中级 | **领域**：网络安全、IoT 协议 | **阅读时间**：约 20 分钟

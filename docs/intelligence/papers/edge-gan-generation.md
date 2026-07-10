@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-gan-generation
+title: 边缘生成对抗网络
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 19
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘生成对抗网络
 
 > **难度**：🟡 中级 | **领域**：生成模型、边缘计算、数据增强 | **阅读时间**：约 19 分钟

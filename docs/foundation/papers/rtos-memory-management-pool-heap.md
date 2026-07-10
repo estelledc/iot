@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rtos-memory-management-pool-heap
+title: RTOS内存管理：内存池与堆分配器对比
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RTOS内存管理：内存池与堆分配器对比
 
 > **难度**：🟡 中级 | **领域**：嵌入式内存管理 | **阅读时间**：约 20 分钟

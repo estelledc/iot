@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: zigbee-mesh-routing-aodv
+title: Zigbee Mesh路由AODV算法分析
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Zigbee Mesh路由AODV算法分析
 > **难度**：🔴 高级 | **领域**：Zigbee网络层 | **阅读时间**：约 22 分钟
 

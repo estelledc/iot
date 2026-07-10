@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ota-secure-update
+title: OTA 安全更新机制
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 19
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # OTA 安全更新机制
 
 > **难度**：🟡 中级 | **领域**：固件更新、设备管理 | **阅读时间**：约 19 分钟

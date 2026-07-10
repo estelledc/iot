@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: can-lin-bus-iot
+title: CAN/LIN 总线在 IoT 中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # CAN/LIN 总线在 IoT 中的应用
 
 > **难度**：🟡 中级 | **领域**：工业通信、车联网 | **阅读时间**：约 20 分钟

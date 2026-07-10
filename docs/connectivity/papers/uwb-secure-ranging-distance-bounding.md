@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: uwb-secure-ranging-distance-bounding
+title: UWB安全测距与距离限界协议
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # UWB安全测距与距离限界协议
 > **难度**：🔴 高级 | **领域**：UWB安全 | **阅读时间**：约 22 分钟
 

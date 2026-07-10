@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: quantum-iot-security
+title: 量子安全 IoT
+layer: 8
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 30
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 量子安全 IoT
 
 > **难度**：🟠 进阶 | **领域**：密码学 × IoT 安全 | **阅读时间**：约 30 分钟

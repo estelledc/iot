@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: solenoid-valve-driver-circuit
+title: 电磁阀驱动电路设计与反向电动势保护
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电磁阀驱动电路设计与反向电动势保护
 
 > **难度**：🟡 中级 | **领域**：电磁执行器驱动 | **阅读时间**：约 20 分钟

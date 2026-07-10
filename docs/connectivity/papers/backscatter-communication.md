@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: backscatter-communication
+title: 反向散射通信：迈向零功耗物联网
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 反向散射通信：迈向零功耗物联网
 
 > 难度：🔴 研究前沿 | 领域：超低功耗通信 | 更新：2025-06

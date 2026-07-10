@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mec-5g-integration
+title: MEC 与 5G 深度融合：从标准到部署
+layer: 4
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEC 与 5G 深度融合：从标准到部署
 
 > **难度**：🟠 深入 | **前置知识**：了解 5G 网络基础、边缘计算概念  

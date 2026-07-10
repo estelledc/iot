@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lvdt-displacement-sensor
+title: LVDT差动变压器位移传感器原理与应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LVDT差动变压器位移传感器原理与应用
 
 > **难度**：🟡 中级 | **领域**：位移测量、电磁感应、工业自动化 | **阅读时间**：约 18 分钟

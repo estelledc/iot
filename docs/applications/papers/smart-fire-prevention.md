@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: smart-fire-prevention
+title: 智慧消防预警系统
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 智慧消防预警系统
 
 > **难度**：🟡 中级 | **领域**：公共安全、建筑工程 | **阅读时间**：约 25 分钟

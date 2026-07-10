@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: hall-effect-current-sensing
+title: 霍尔效应电流传感器设计与校准
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 霍尔效应电流传感器设计与校准
 
 > **难度**：🟡 中级 | **领域**：电流测量、磁场传感、电力监测 | **阅读时间**：约 18 分钟

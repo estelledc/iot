@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wirepas-mesh-massive-iot
+title: Wirepas Mesh大规模IoT自组网技术
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Wirepas Mesh大规模IoT自组网技术
 > **难度**：🟡 中级 | **领域**：工业Mesh网络 | **阅读时间**：约 20 分钟
 

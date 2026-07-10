@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: antenna-diversity-mimo-iot
+title: 天线分集与MIMO在IoT设备中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 天线分集与MIMO在IoT设备中的应用
 > **难度**：🔴 高级 | **领域**：多天线技术 | **阅读时间**：约 22 分钟
 

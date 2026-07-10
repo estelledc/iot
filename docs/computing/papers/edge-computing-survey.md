@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-computing-survey
+title: 边缘计算与物联网综述
+layer: 4
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘计算与物联网综述
 
 ## 摘要

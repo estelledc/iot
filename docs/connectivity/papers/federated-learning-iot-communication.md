@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: federated-learning-iot-communication
+title: 联邦学习在IoT通信优化中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 联邦学习在IoT通信优化中的应用
 > **难度**: 高级 | **领域**: 分布式AI | **阅读时间**: 约 22 分钟
 

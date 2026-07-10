@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: energy-harvesting-iot
+title: IoT 能量收集技术
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 28
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 能量收集技术
 
 > **难度**：🟠 进阶 | **领域**：能量收集、自供电系统 | **阅读时间**：约 28 分钟

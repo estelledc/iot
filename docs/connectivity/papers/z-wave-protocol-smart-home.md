@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: z-wave-protocol-smart-home
+title: Z-Wave协议在智能家居中的定位与特点
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Z-Wave协议在智能家居中的定位与特点
 > **难度**：🟢 初级 | **领域**：Z-Wave智能家居 | **阅读时间**：约 18 分钟
 

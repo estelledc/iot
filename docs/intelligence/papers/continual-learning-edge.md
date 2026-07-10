@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: continual-learning-edge
+title: 边缘持续学习：学新知识不忘旧知识
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘持续学习：学新知识不忘旧知识
 
 > 难度：🟠 挑战 | 前置知识：了解神经网络训练过程、过拟合概念、迁移学习基础

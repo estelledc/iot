@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: risc-v-iot
+title: RISC-V 在物联网中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 28
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RISC-V 在物联网中的应用
 
 > **难度**：🟡 中级 | **领域**：处理器架构、开源硬件 | **阅读时间**：约 28 分钟

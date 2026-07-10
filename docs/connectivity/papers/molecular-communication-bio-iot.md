@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: molecular-communication-bio-iot
+title: 分子通信在生物IoT纳米网络中的前沿
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 分子通信在生物IoT纳米网络中的前沿
 > **难度**: 高级 | **领域**: 前沿通信 | **阅读时间**: 约 22 分钟
 

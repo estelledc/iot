@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: v2x-security
+title: 车联网 V2X 安全：高速移动场景下的信任挑战
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 车联网 V2X 安全：高速移动场景下的信任挑战
 
 > **难度**：🟡 中级 | **领域**：车联网安全、PKI | **阅读时间**：约 25 分钟

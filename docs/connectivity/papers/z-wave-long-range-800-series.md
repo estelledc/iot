@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: z-wave-long-range-800-series
+title: Z-Wave Long Range 800系列芯片新特性
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Z-Wave Long Range 800系列芯片新特性
 > **难度**：🟡 中级 | **领域**：Z-Wave演进 | **阅读时间**：约 20 分钟
 

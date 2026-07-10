@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: soc-vs-mcu-vs-mpu-iot
+title: SoC/MCU/MPU在IoT中的定位与选型边界
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # SoC/MCU/MPU在IoT中的定位与选型边界
 > **难度**：🟢 初级 | **领域**：处理器分类与选型 | **阅读时间**：约 18 分钟
 

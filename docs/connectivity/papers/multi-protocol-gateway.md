@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: multi-protocol-gateway
+title: 多制式网关设计与实现：IoT 世界的"万能翻译官"
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 多制式网关设计与实现：IoT 世界的"万能翻译官"
 
 > **难度**：🟡 中级 | **领域**：网关架构、协议转换、边缘计算 | **阅读时间**：约 22 分钟

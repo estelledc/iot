@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: iot-app-protocols
+title: IoT 应用层协议全面对比：MQTT vs CoAP vs LwM2M vs AMQP vs HTTP
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT 应用层协议全面对比：MQTT vs CoAP vs LwM2M vs AMQP vs HTTP
 
 > 难度：🟡 中级 | 预计阅读：35 分钟 | 最后更新：2025-06

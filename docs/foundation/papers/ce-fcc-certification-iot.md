@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ce-fcc-certification-iot
+title: CE/FCC认证对IoT硬件设计的要求
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # CE/FCC认证对IoT硬件设计的要求
 > **难度**：🟢 初级 | **领域**：产品认证合规 | **阅读时间**：约 18 分钟
 

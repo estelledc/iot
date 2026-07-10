@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: cold-chain-traceability
+title: 食品冷链溯源物联网
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 食品冷链溯源物联网
 
 > **难度**：🟡 中级 | **领域**：食品安全、供应链管理 | **阅读时间**：约 25 分钟

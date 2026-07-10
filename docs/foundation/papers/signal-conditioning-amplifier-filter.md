@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: signal-conditioning-amplifier-filter
+title: 信号调理电路：放大/滤波/隔离基础
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 信号调理电路：放大/滤波/隔离基础
 
 > **难度**：🟢 初级 | **领域**：模拟信号处理 | **阅读时间**：约 18 分钟

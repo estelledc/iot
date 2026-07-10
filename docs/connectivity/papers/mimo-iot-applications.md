@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mimo-iot-applications
+title: MIMO 技术在 IoT 中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 19
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MIMO 技术在 IoT 中的应用
 
 > **难度**：🟡 中级 | **领域**：无线通信、天线技术 | **阅读时间**：约 19 分钟

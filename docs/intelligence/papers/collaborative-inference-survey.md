@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: collaborative-inference-survey
+title: 协作推理系统全景：多设备协同运行深度学习模型
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 协作推理系统全景：多设备协同运行深度学习模型
 
 > 难度：🟠 挑战 | 前置知识：了解 Transformer 架构基础、分布式系统基本概念

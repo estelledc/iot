@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sensor-network-time-sync-hardware
+title: 传感器网络硬件级时间同步PPS/PTP
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 传感器网络硬件级时间同步PPS/PTP
 > **难度**：高级 | **领域**：精密时间同步 | **阅读时间**：约 22 分钟
 

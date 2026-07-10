@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: on-device-diffusion-model
+title: 端侧 Diffusion Model 部署
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 21
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 端侧 Diffusion Model 部署
 
 > **难度**：🟡 中级 | **领域**：扩散模型、模型压缩、移动端推理 | **阅读时间**：约 21 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ipv6-6lowpan-rpl
+title: IPv6/6LoWPAN/RPL：物联网 IP 化协议栈
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IPv6/6LoWPAN/RPL：物联网 IP 化协议栈
 
 > 难度：🟡 中级 | 预计阅读：35 分钟 | 最后更新：2025-06

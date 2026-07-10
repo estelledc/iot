@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: neuromorphic-sensing
+title: 神经形态感知与计算
+layer: 1
+content_type: UNKNOWN
+difficulty: frontier
+reading_time: 28
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 神经形态感知与计算
 
 > **难度**：🔴 前沿 | **领域**：神经形态工程、事件驱动计算 | **阅读时间**：约 28 分钟

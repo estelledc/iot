@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ble-security-pairing-bonding
+title: BLE安全机制：配对/绑定/加密详解
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # BLE安全机制：配对/绑定/加密详解
 > **难度**：🟡 中级 | **领域**：BLE安全 | **阅读时间**：约 20 分钟
 

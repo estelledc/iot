@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: led-driver-circuit-constant-current
+title: LED恒流驱动电路设计与调光方案
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LED恒流驱动电路设计与调光方案
 > **难度**：🟢 初级 | **领域**：LED驱动设计 | **阅读时间**：约 18 分钟
 

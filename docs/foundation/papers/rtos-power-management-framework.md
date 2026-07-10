@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rtos-power-management-framework
+title: RTOS电源管理框架与低功耗状态转换
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RTOS电源管理框架与低功耗状态转换
 > **难度**：高级 | **领域**：低功耗系统设计 | **阅读时间**：约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: firmware-security
+title: IoT固件安全分析：从提取到防护的全链路
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT固件安全分析：从提取到防护的全链路
 
 > 难度：🟠 挑战 | 领域：固件安全/逆向工程 | 更新：2025-06

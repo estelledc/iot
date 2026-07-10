@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: warehouse-robot-coordination
+title: 仓储机器人协同系统
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 仓储机器人协同系统
 
 > **难度**：🟡 中级 | **领域**：智能物流、机器人技术 | **阅读时间**：约 25 分钟

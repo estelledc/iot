@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: satellite-iot
+title: 卫星物联网：天地一体的连接覆盖
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 卫星物联网：天地一体的连接覆盖
 
 > 难度：🟠 挑战 | 领域：卫星通信 · 广域物联网 | 更新：2025-06

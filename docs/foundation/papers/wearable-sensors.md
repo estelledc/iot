@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wearable-sensors
+title: 可穿戴传感器系统
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 30
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 可穿戴传感器系统
 
 > **难度**：🟡 中级 | **领域**：可穿戴技术、生物传感 | **阅读时间**：约 30 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: i2c-vs-spi-selection-guide
+title: I2C与SPI总线选型决策指南
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 15
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # I2C与SPI总线选型决策指南
 
 > **难度**：🟢 初级 | **领域**：总线选型 | **阅读时间**：约 15 分钟

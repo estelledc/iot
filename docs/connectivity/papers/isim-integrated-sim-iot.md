@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: isim-integrated-sim-iot
+title: iSIM集成SIM在IoT芯片中的嵌入方案
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # iSIM集成SIM在IoT芯片中的嵌入方案
 > **难度**: 高级 | **领域**: 芯片集成 | **阅读时间**: 约 22 分钟
 

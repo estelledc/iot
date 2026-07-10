@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: image-sensor-cmos-iot-vision
+title: CMOS图像传感器在IoT视觉应用中的选型
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # CMOS图像传感器在IoT视觉应用中的选型
 > **难度**：🟡 中级 | **领域**：视觉传感器 | **阅读时间**：约 20 分钟
 

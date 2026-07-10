@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi-coexistence-ble-zigbee
+title: WiFi与BLE/Zigbee 2.4GHz共存干扰管理
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WiFi与BLE/Zigbee 2.4GHz共存干扰管理
 > **难度**：🟡 中级 | **领域**：频谱共存 | **阅读时间**：约 20 分钟
 

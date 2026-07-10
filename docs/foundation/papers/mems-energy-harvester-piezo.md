@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mems-energy-harvester-piezo
+title: MEMS压电能量采集器微型化设计
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS压电能量采集器微型化设计
 
 > **难度**：🔴 高级 | **领域**：MEMS能量采集 | **阅读时间**：约 22 分钟

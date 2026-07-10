@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: reverse-polarity-protection-circuit
+title: 反接保护与过压保护电路设计
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 反接保护与过压保护电路设计
 > **难度**：🟢 初级 | **领域**：电源保护设计 | **阅读时间**：约 18 分钟
 

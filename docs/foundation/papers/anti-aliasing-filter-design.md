@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: anti-aliasing-filter-design
+title: 抗混叠滤波器设计与截止频率选择
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 抗混叠滤波器设计与截止频率选择
 
 > **难度**：🟡 中级 | **领域**：采样系统设计 | **阅读时间**：约 20 分钟

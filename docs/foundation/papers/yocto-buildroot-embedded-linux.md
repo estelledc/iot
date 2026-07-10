@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: yocto-buildroot-embedded-linux
+title: Yocto与Buildroot嵌入式Linux构建系统对比
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # Yocto与Buildroot嵌入式Linux构建系统对比
 > **难度**：🔴 高级 | **领域**：嵌入式Linux构建 | **阅读时间**：约 22 分钟
 

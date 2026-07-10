@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: thz-communication-iot
+title: 太赫兹通信在 IoT 中的前景
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 太赫兹通信在 IoT 中的前景
 
 > **难度**：🟡 中级 | **领域**：无线通信、纳米技术 | **阅读时间**：约 20 分钟

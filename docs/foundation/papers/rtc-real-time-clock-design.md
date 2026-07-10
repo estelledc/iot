@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: rtc-real-time-clock-design
+title: RTC实时时钟芯片选型与时间同步
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # RTC实时时钟芯片选型与时间同步
 
 > **难度**：🟢 初级 | **领域**：时钟管理 | **阅读时间**：约 18 分钟

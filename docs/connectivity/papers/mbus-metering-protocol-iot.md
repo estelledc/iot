@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mbus-metering-protocol-iot
+title: M-Bus抄表协议在IoT智能计量中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # M-Bus抄表协议在IoT智能计量中的应用
 > **难度**：🟡 中级 | **领域**：智能计量 | **阅读时间**：约 20 分钟
 

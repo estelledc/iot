@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lorawan-geolocation-tdoa
+title: LoRaWAN地理定位TDOA技术分析
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LoRaWAN地理定位TDOA技术分析
 > **难度**：🔴 高级 | **领域**：LoRaWAN定位 | **阅读时间**：约 22 分钟
 

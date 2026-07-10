@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nas-edge-models
+title: NAS 自动化边缘模型设计：让机器设计机器
+layer: 5
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NAS 自动化边缘模型设计：让机器设计机器
 
 > 难度：🟡 进阶 | 前置知识：了解 CNN 基本结构（卷积、池化、残差连接）和模型部署概念

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wake-up-receiver-iot-mac
+title: 唤醒接收器在IoT MAC层中的超低功耗设计
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 唤醒接收器在IoT MAC层中的超低功耗设计
 > **难度**：🔴 高级 | **领域**：超低功耗通信 | **阅读时间**：约 22 分钟
 

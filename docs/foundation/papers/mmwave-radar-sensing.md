@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mmwave-radar-sensing
+title: 毫米波雷达感知技术：从 FMCW 原理到 4D 成像雷达
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 毫米波雷达感知技术：从 FMCW 原理到 4D 成像雷达
 
 > **难度**：🟡 中级 | **领域**：雷达信号处理、IoT 感知、智能硬件 | **阅读时间**：约 20 分钟

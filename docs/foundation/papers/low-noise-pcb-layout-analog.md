@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: low-noise-pcb-layout-analog
+title: 低噪声模拟信号PCB布局设计规则
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 低噪声模拟信号PCB布局设计规则
 > **难度**：🔴 高级 | **领域**：模拟PCB设计 | **阅读时间**：约 22 分钟
 

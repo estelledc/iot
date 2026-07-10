@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: particulate-matter-pm25-sensor
+title: PM2.5激光散射粒子传感器精度分析
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # PM2.5激光散射粒子传感器精度分析
 
 > **难度**：🟡 中级 | **领域**：颗粒物检测、光散射、空气质量 | **阅读时间**：约 25 分钟

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: phy-layer-security-iot
+title: 物理层安全在IoT无线通信中的应用
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 物理层安全在IoT无线通信中的应用
 > **难度**: 高级 | **领域**: 通信安全 | **阅读时间**: 约 22 分钟
 

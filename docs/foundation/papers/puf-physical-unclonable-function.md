@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: puf-physical-unclonable-function
+title: 物理不可克隆函数PUF设备指纹技术
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 物理不可克隆函数PUF设备指纹技术
 > **难度**：🔴 高级 | **领域**：硬件安全原语 | **阅读时间**：约 22 分钟
 

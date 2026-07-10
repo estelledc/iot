@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: 5g-redcap-iot
+title: 5G RedCap：为物联网量身定制的 5G 技术
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 5G RedCap：为物联网量身定制的 5G 技术
 
 > 难度：🟡 进阶 | 领域：蜂窝物联网 | 更新：2025-06

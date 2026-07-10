@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: grant-free-access-massive-iot
+title: 免授权接入在大规模IoT连接中的方案
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 免授权接入在大规模IoT连接中的方案
 > **难度**: 高级 | **领域**: 大规模接入 | **阅读时间**: 约 22 分钟
 

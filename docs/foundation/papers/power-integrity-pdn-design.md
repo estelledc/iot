@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: power-integrity-pdn-design
+title: 电源完整性PDN设计与去耦网络分析
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电源完整性PDN设计与去耦网络分析
 > **难度**：🔴 高级 | **领域**：电源完整性 | **阅读时间**：约 22 分钟
 

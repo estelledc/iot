@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: accelerated-life-testing-iot
+title: IoT设备加速寿命试验设计与数据分析
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT设备加速寿命试验设计与数据分析
 > **难度**：🔴 高级 | **领域**：可靠性验证 | **阅读时间**：约 22 分钟
 

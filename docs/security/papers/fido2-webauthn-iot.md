@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: fido2-webauthn-iot
+title: 身份联邦 FIDO2/WebAuthn 在 IoT 中的应用
+layer: 6
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 身份联邦 FIDO2/WebAuthn 在 IoT 中的应用
 
 > **难度**：🟡 中级 | **领域**：身份认证、设备管理 | **阅读时间**：约 18 分钟

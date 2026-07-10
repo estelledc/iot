@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: optical-wireless-communication-iot
+title: 光无线通信OWC在IoT中的应用场景
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 光无线通信OWC在IoT中的应用场景
 > **难度**: 高级 | **领域**: 光通信 | **阅读时间**: 约 22 分钟
 

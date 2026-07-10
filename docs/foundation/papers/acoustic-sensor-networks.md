@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: acoustic-sensor-networks
+title: 声学传感网络：从 MEMS 麦克风阵列到边缘音频智能
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 19
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 声学传感网络：从 MEMS 麦克风阵列到边缘音频智能
 
 > **难度**：🟡 中级 | **领域**：声学传感、信号处理、边缘 AI | **阅读时间**：约 19 分钟

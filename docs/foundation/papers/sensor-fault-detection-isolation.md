@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: sensor-fault-detection-isolation
+title: 传感器故障检测与隔离FDI方法
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 传感器故障检测与隔离FDI方法
 > **难度**：🔴 高级 | **领域**：故障诊断 | **阅读时间**：约 22 分钟
 

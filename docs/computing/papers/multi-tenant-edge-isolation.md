@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: multi-tenant-edge-isolation
+title: 多租户边缘隔离技术
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 多租户边缘隔离技术
 
 > **难度**：🟡 中级 | **领域**：边缘计算、安全隔离、多租户 | **阅读时间**：约 20 分钟

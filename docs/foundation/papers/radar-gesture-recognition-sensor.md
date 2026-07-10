@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: radar-gesture-recognition-sensor
+title: 雷达手势识别传感器硬件与算法概述
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 雷达手势识别传感器硬件与算法概述
 > **难度**：🔴 高级 | **领域**：雷达感知技术 | **阅读时间**：约 22 分钟
 

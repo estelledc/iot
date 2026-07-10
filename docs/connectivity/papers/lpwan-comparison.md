@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lpwan-comparison
+title: LPWAN 技术全面对比：LoRaWAN vs NB-IoT vs LTE-M vs Sigfox
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LPWAN 技术全面对比：LoRaWAN vs NB-IoT vs LTE-M vs Sigfox
 
 > 难度：🟢 入门 | 领域：低功耗广域网 | 更新：2025-06

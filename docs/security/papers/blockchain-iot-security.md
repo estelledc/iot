@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: blockchain-iot-security
+title: 区块链赋能IoT安全：去中心化信任基础设施
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 区块链赋能IoT安全：去中心化信任基础设施
 
 > 难度：🟠 挑战 | 领域：区块链/物联网安全 | 更新：2025-06

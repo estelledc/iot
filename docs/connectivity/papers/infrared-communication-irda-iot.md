@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: infrared-communication-irda-iot
+title: 红外通信IrDA在IoT遥控中的应用与局限
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 红外通信IrDA在IoT遥控中的应用与局限
 > **难度**：🟢 初级 | **领域**：红外通信 | **阅读时间**：约 18 分钟
 

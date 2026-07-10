@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: green-edge-computing
+title: 绿色边缘计算
+layer: 8
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 绿色边缘计算
 
 > **难度**：🟢 入门 | **领域**：可持续计算 × 边缘 IoT | **阅读时间**：约 20 分钟

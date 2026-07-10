@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: time-sync-ptp
+title: 精密时间同步协议：从 NTP 到 IEEE 1588 PTP
+layer: 3
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 精密时间同步协议：从 NTP 到 IEEE 1588 PTP
 
 > 难度：🟠 进阶 | 预计阅读：35 分钟 | 最后更新：2025-06

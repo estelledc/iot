@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: adversarial-attacks-edge-ai
+title: 边缘AI对抗攻击与防御：当智能模型遭遇恶意对手
+layer: 6
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘AI对抗攻击与防御：当智能模型遭遇恶意对手
 
 > 难度：🔴 研究前沿 | 领域：AI安全/对抗机器学习 | 更新：2025-06

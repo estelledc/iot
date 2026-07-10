@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: esp32-iot-prototyping
+title: ESP32 物联网开发平台深度分析
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 28
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # ESP32 物联网开发平台深度分析
 
 > **难度**：🟢 入门 | **领域**：嵌入式开发、物联网原型 | **阅读时间**：约 28 分钟

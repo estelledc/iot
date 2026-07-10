@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: i2c-protocol-deep-dive
+title: I2C总线协议深度解析：地址/时序/仲裁
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # I2C总线协议深度解析：地址/时序/仲裁
 
 > **难度**：🟢 初级 | **领域**：嵌入式通信协议 | **阅读时间**：约 18 分钟

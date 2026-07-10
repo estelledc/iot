@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: fading-multipath-iot-channel
+title: 衰落与多径效应对IoT无线信道的影响
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 衰落与多径效应对IoT无线信道的影响
 > **难度**：🔴 高级 | **领域**：无线信道 | **阅读时间**：约 22 分钟
 

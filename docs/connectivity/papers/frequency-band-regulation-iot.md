@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: frequency-band-regulation-iot
+title: IoT无线频段法规：ISM/免许可/许可频段
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # IoT无线频段法规：ISM/免许可/许可频段
 > **难度**：🟢 初级 | **领域**：无线法规 | **阅读时间**：约 18 分钟
 

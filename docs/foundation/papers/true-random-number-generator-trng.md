@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: true-random-number-generator-trng
+title: 真随机数发生器TRNG硬件实现与评估
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 真随机数发生器TRNG硬件实现与评估
 > **难度**：🔴 高级 | **领域**：密码学硬件 | **阅读时间**：约 22 分钟
 

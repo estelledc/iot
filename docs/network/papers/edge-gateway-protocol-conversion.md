@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-gateway-protocol-conversion
+title: 边缘网关协议转换架构
+layer: 3
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘网关协议转换架构
 
 > **难度**：🟡 中级 | **领域**：边缘计算、协议转换、系统架构 | **阅读时间**：约 22 分钟

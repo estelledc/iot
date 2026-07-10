@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: spi-protocol-modes-timing
+title: SPI协议四种模式与时序参数详解
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # SPI协议四种模式与时序参数详解
 
 > **难度**：🟢 初级 | **领域**：嵌入式通信协议 | **阅读时间**：约 18 分钟

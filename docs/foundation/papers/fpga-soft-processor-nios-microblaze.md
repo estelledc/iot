@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: fpga-soft-processor-nios-microblaze
+title: FPGA软核处理器Nios II/MicroBlaze对比
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # FPGA软核处理器Nios II/MicroBlaze对比
 > **难度**：🔴 高级 | **领域**：FPGA系统设计 | **阅读时间**：约 22 分钟
 

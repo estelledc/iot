@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: privacy-computing-tee-fl
+title: 隐私计算：TEE 加联邦学习联合方案
+layer: 5
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 隐私计算：TEE 加联邦学习联合方案
 
 > **难度**：🟡 中级 | **领域**：隐私计算、可信执行环境、联邦学习 | **阅读时间**：约 22 分钟

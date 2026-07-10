@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dac-audio-output-iot
+title: DAC在IoT音频输出与执行器控制中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DAC在IoT音频输出与执行器控制中的应用
 
 > **难度**：🟢 初级 | **领域**：数模转换应用 | **阅读时间**：约 18 分钟

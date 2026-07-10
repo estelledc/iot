@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: battery-fuel-gauge-coulomb-counter
+title: 电池电量计库仑计法与电压法对比
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 电池电量计库仑计法与电压法对比
 > **难度**：🟡 中级 | **领域**：电池管理系统 | **阅读时间**：约 20 分钟
 

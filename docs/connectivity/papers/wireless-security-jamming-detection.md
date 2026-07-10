@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wireless-security-jamming-detection
+title: 无线安全干扰检测与抗干扰策略
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 无线安全干扰检测与抗干扰策略
 > **难度**: 高级 | **领域**: 无线安全 | **阅读时间**: 约 22 分钟
 

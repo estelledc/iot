@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: lorawan-multicast-firmware-update
+title: LoRaWAN组播固件更新FUOTA机制
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # LoRaWAN组播固件更新FUOTA机制
 > **难度**：🔴 高级 | **领域**：LoRaWAN高级功能 | **阅读时间**：约 22 分钟
 

@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: nfc-ndef-data-exchange
+title: NFC NDEF数据交换格式与标签类型
+layer: 2
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # NFC NDEF数据交换格式与标签类型
 > **难度**：🟢 初级 | **领域**：NFC基础 | **阅读时间**：约 18 分钟
 

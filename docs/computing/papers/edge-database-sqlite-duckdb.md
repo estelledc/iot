@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: edge-database-sqlite-duckdb
+title: 边缘数据库：SQLite 与 DuckDB 实战
+layer: 4
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 18
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 边缘数据库：SQLite 与 DuckDB 实战
 
 > **难度**：🟡 中级 | **领域**：嵌入式数据库、时序数据、边缘分析 | **阅读时间**：约 18 分钟

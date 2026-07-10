@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: optical-computing-interconnect
+title: 光计算与光互连：用光速重塑计算架构
+layer: 8
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 光计算与光互连：用光速重塑计算架构
 
 > **难度**：🟡 中级 | **领域**：硅光子学、光神经网络、光互连 | **阅读时间**：约 25 分钟

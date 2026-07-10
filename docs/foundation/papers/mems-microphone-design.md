@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mems-microphone-design
+title: MEMS 麦克风芯片设计与声学性能指标
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 30
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS 麦克风芯片设计与声学性能指标
 
 > **难度**：🔴 高级 | **领域**：声学传感、MEMS 设计、音频处理 | **阅读时间**：约 30 分钟

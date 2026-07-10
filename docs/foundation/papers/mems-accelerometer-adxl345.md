@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: mems-accelerometer-adxl345
+title: MEMS加速度计ADXL345原理与运动检测
+layer: 1
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # MEMS加速度计ADXL345原理与运动检测
 
 > **类型**：技术分析 | **难度**：🟢 初级 | **领域**：惯性传感、运动检测、可穿戴设备

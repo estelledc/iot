@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi7-iot
+title: WiFi 7 (802.11be) 对物联网接入的适用性分析
+layer: 2
+content_type: UNKNOWN
+difficulty: UNKNOWN
+reading_time: UNKNOWN
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WiFi 7 (802.11be) 对物联网接入的适用性分析
 
 > 难度：🟡 进阶 | 领域：短距/中距无线通信 | 更新：2025-06

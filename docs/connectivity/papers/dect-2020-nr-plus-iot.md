@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: dect-2020-nr-plus-iot
+title: DECT-2020 NR+非蜂窝5G IoT标准
+layer: 2
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 22
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # DECT-2020 NR+非蜂窝5G IoT标准
 > **难度**：🔴 高级 | **领域**：新型IoT标准 | **阅读时间**：约 22 分钟
 

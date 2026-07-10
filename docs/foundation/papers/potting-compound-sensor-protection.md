@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: potting-compound-sensor-protection
+title: 灌封材料在传感器防护中的选型与工艺
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 灌封材料在传感器防护中的选型与工艺
 > **难度**：🟡 中级 | **领域**：封装防护工艺 | **阅读时间**：约 20 分钟
 

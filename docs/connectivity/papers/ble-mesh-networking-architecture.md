@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: ble-mesh-networking-architecture
+title: BLE Mesh组网架构与消息转发机制
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # BLE Mesh组网架构与消息转发机制
 > **难度**：🟡 中级 | **领域**：BLE Mesh网络 | **阅读时间**：约 20 分钟
 

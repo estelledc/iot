@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: stm32-mcu-family-selection
+title: STM32 MCU家族选型指南与外设对比
+layer: 1
+content_type: UNKNOWN
+difficulty: beginner
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # STM32 MCU家族选型指南与外设对比
 
 > **难度**: 🟢 初级 | **领域**: MCU选型 | **阅读时间**: 约 20 分钟

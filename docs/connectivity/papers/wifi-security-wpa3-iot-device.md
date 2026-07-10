@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: wifi-security-wpa3-iot-device
+title: WPA3在IoT设备中的实现与安全增强
+layer: 2
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # WPA3在IoT设备中的实现与安全增强
 > **难度**：🟡 中级 | **领域**：WiFi安全 | **阅读时间**：约 20 分钟
 

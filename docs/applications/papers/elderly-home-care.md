@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: elderly-home-care
+title: 老年人居家看护物联网
+layer: 7
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 25
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 老年人居家看护物联网
 
 > **难度**：🟡 中级 | **领域**：民生与健康、智慧养老 | **阅读时间**：约 25 分钟

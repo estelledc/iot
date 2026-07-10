@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: spectrum-analyzer-rf-debug
+title: 频谱分析仪在射频调试与EMI预测试中的应用
+layer: 1
+content_type: UNKNOWN
+difficulty: intermediate
+reading_time: 20
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # 频谱分析仪在射频调试与EMI预测试中的应用
 > **难度**：🟡 中级 | **领域**：射频测试 | **阅读时间**：约 20 分钟
 

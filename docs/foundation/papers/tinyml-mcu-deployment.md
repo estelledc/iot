@@ -1,3 +1,17 @@
+---
+schema_version: '1.0'
+id: tinyml-mcu-deployment
+title: TinyML：在微控制器上部署机器学习
+layer: 1
+content_type: UNKNOWN
+difficulty: advanced
+reading_time: 30
+prerequisites: UNKNOWN
+tags: []
+source_status: UNVERIFIED
+review_status: UNREVIEWED
+last_reviewed: UNKNOWN
+---
 # TinyML：在微控制器上部署机器学习
 
 > **难度**：🟠 进阶 | **领域**：边缘 AI、嵌入式机器学习 | **阅读时间**：约 30 分钟
