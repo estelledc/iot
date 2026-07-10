@@ -95,16 +95,18 @@ flowchart LR
 
 **目标**：消除「内容存在但不可发现」的断层，为每篇内容建立机器可读元数据。
 
+**可执行计划**：[docs/superpowers/plans/2026-07-10-m1-governance-baseline.md](docs/superpowers/plans/2026-07-10-m1-governance-baseline.md)（任务 T1–T7，完成后版本目标 `0.2.0`）。
+
 **工作项**：
 
 1. **frontmatter 全量机械迁移**：严格按 [data/content-enums.yml](data/content-enums.yml) 的 `migration_rules` 执行——只从路径、文件名、H1 和显式可见元信息提取确定值；不能确认的字段一律填 `UNKNOWN`；自动迁移禁止产生 `VERIFIED` 或 `HUMAN_APPROVED`。机械元数据迁移与正文重写不得混在同一批（见[发布规则](docs/architecture/release-policy.md)）。
-2. **导航自动化**：手工维护 `mkdocs.yml` nav 无法承载目标容量。改为按层级与子主题自动生成导航或目录页（候选方案：`mkdocs-literate-nav` 插件，或扩展 `tools/content_inventory.py` 生成导航块），把当前未进入导航的孤立页全部收编，同时不改变任何现有 URL（URL 变更属于 major 版本事件）。
+2. **层级目录页收编孤立页**：不把全部篇目塞进 `mkdocs.yml` 侧栏。为每层生成自动 `catalog.md`，链出该层全部 `papers/*.md`；侧栏仍保留现有精选约 25 篇/层。清单「可发现」口径 = 显式导航 ∪ 目录页链接；不改变任何现有内容 URL。
 3. **标签索引**：打通 `mkdocs.yml` 已启用的 material tags 插件，建立标签索引页，作为跨层发现的第二入口。
 
 **完成判据**：
 
 - 清单口径下「内容文件数 = 可发现内容数」（显式导航或自动目录覆盖全部内容文件）；
-- `tools/validate_frontmatter.py` 扩展出全量校验模式并通过（当前只支持 `--schema-only --fixtures`）；
+- `tools/validate_frontmatter.py --all` 通过并进入 CI required 步骤；
 - 现有 URL 全部不变，CI 全绿。
 
 ### M2 可信基线 — 从「文件存在」到「来源可查」
@@ -412,4 +414,4 @@ iot-reading-station/
 ---
 
 *创建日期：2026-06-23*
-*最后更新：2026-07-10（新增「未来方向：四个里程碑」，归档早期内容填充计划）*
+*最后更新：2026-07-10（M1 可执行推进计划已挂载；四里程碑方向见第三节）*

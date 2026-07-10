@@ -36,10 +36,12 @@ python tools/content_inventory.py --check
 - Layer 1–2 已有较大规模内容，Layer 3–8 各有种子内容和扩展计划。
 - 在导航覆盖、内容 schema、来源抽样和可重复生产门禁完成前，暂停大批量扩展。
 - 后续扩展先做 4 篇 shadow pilot，再以每批最多 5 篇发布。
+- **下一步执行 M1 治理基线**：可执行步骤见 [M1 治理基线推进计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)（frontmatter 机械迁移 → 八层 catalog 收编孤立页 → 标签索引 → CI `--all`）。M1 完成前不启动 M2–M4。
 
 ## 相关入口
 
 - [学习路线](roadmap.md)
+- [M1 治理基线推进计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)
 - [Layer 1：感知与硬件](foundation/index.md)
 - [Layer 2：无线接入](connectivity/index.md)
 - [Layer 3：网络协议](network/index.md)

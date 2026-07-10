@@ -2,6 +2,17 @@
 
 本项目从 `0.1.0` 起使用语义化版本。每条变更必须引用实施任务，并记录可重复验证命令。
 
+## [0.1.2] - 2026-07-10
+
+### Added
+
+- `IOT-T028`：新增 M1 治理基线可执行推进计划 `docs/superpowers/plans/2026-07-10-m1-governance-baseline.md`（T1–T7：frontmatter 迁移 → catalog 可发现 → 标签索引 → CI `--all` → v0.2.0 验收）；在 `docs/progress.md` 与 `ROADMAP.md` M1 小节挂上入口，并锁定「层级 catalog 收编孤立页、不塞满侧栏」方案。本版本不执行迁移或导航改动。验证：`python tools/content_inventory.py --check`、`python tools/check_markdown_links.py --all --anchors --strict`、`python tools/check_markdown_fences.py --all`。
+
+### Review baseline
+
+- Source commit: `16f5b2cfac071e7f53bd450c01d7b3e7a125b600`
+- 迁移说明：纯文档变更；无 URL、schema 或内容正文迁移。
+
 ## [0.1.1] - 2026-07-10
 
 ### Changed
