@@ -1,4 +1,4 @@
-<!-- Jason DS footer override for non-home pages -->
+<!-- Shared Jason DS footer for home and content pages -->
 <footer class="md-footer">
   {% if page.previous_page or page.next_page %}
   <div class="md-footer__inner md-grid">
@@ -22,10 +22,10 @@
   {% endif %}
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <footer class="jx-footer-custom">
+      <div class="jx-footer-custom">
         <div class="jx-footer-custom__colophon">
           <strong>IoT Notebook</strong>
-          <span>Jason · 2026</span>
+          <span>Jason · IoT Reading Station</span>
         </div>
         <nav class="jx-footer-custom__index">
           <a href="https://estelledc.github.io/">hub</a>
@@ -33,8 +33,8 @@
           <a href="{{ 'roadmap/' | url }}">roadmap</a>
           <a href="{{ 'progress/' | url }}">progress</a>
         </nav>
-        <time class="jx-footer-custom__stamp" datetime="2026-06-23">2026·06·23</time>
-      </footer>
+        <span class="jx-footer-custom__stamp">持续维护</span>
+      </div>
     </div>
   </div>
 </footer>

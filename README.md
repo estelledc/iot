@@ -2,19 +2,23 @@
 
 物联网论文阅读站——覆盖边缘计算、协作推理、联邦学习、智能感知等 IoT 相关方向。
 
-## 内容
+<!-- content-inventory:start -->
+## 当前内容基线
 
-- `papers/edge-computing-survey/` — 边缘计算与物联网综述
-- `papers/jupiter/` — Jupiter: 边缘设备协作推理 LLM (INFOCOM 2025)
+- 内容文件：**642** 篇（八层依次为 275/217/25/25/25/25/25/25）。
+- 显式导航：**200** 篇；层级首页直接入口：**80** 篇。
+- 扩展计划：`plans/*.json` 共 **1761** 条；按当前口径的目标容量为 **1962** 篇。
+- 来源审计：尚未建立全量机器可读记录，不能把“文件存在”表述为“技术事实已验证”。
+
+统计由 `python tools/content_inventory.py --write` 生成；`python tools/content_inventory.py --check` 用于检查漂移。
+
+配置的 Pages 地址：<https://estelledc.github.io/iot/>（运行状态必须针对目标 commit 单独验收）。
+<!-- content-inventory:end -->
 
 ## 流程
 
 每篇论文的内容生产流程见 [SOP.md](SOP.md)。
 
-## 扩展计划
+## 扩展原则
 
-后续目标是部署为 GitHub Pages 站点（参考 [embodied-ai-reading-station](https://estelledc.github.io/embodied-ai-reading-station/)），需要：
-
-1. 添加 `site/` 构建脚本（md → html）
-2. 配置 `.github/workflows/deploy.yml`
-3. 持续添加新论文（IoT 各方向均可）
+仓库已包含 GitHub Pages 构建与部署配置，但这不代表线上部署当前健康。继续扩展 Layer 3–8 前，先补齐导航、内容 schema、来源抽样和可重复生产门禁；不要一次性批量生成计划中的全部条目。

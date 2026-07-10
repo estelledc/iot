@@ -75,6 +75,10 @@ nav:
   - 首页: index.md
   - 学习路线: roadmap.md
   - 阅读进度: progress.md
+  - 维护与质量:
+    - 发布规则: architecture/release-policy.md
+    - 构建兼容性: architecture/build-compatibility.md
+    - 内容元数据契约: content-schema.md
   - Layer 1 感知与硬件:
     - foundation/index.md
     - 论文与综述:

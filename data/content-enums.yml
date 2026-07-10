@@ -1,0 +1,37 @@
+schema_version: "1.0"
+
+content_type:
+  paper_reading: 针对一篇可明确识别目标论文的精读；必须提供 target_paper。
+  survey: 围绕一个领域整理多项工作与证据边界的综述。
+  tutorial: 以教学和实践为主要目标的概念或操作指南。
+  comparison: 使用明确维度比较多个协议、系统或方案。
+  technical_analysis: 不满足单篇论文精读定义的技术分析。
+  UNKNOWN: 现有证据不足，等待人工分类；禁止从标题猜测。
+
+difficulty:
+  zero_base: 不要求技术先修。
+  beginner: 需要基本编程或计算机系统常识。
+  intermediate: 需要本层入门知识。
+  advanced: 需要较完整的专业基础。
+  frontier: 面向前沿研究，通常包含论文或标准背景。
+  UNKNOWN: 无法从现有显式元信息确定。
+
+source_status:
+  UNVERIFIED: 尚未核对正文主张与一手来源。
+  PARTIAL: 只完成部分来源或主张核验。
+  VERIFIED: 已按来源审计规则完成核验；不能由自动迁移赋值。
+  UNKNOWN: 历史状态缺失或无法判断。
+
+review_status:
+  UNREVIEWED: 尚无人工 review record。
+  IN_REVIEW: 正在人工审查。
+  HUMAN_APPROVED: 人工证据包通过且正文 hash 未变化。
+  NEEDS_CHANGES: 人工审查发现必须修复的问题。
+  UNKNOWN: 历史审阅状态无法判断。
+
+migration_rules:
+  - 只允许从路径、文件名、H1 和显式可见元信息提取确定值。
+  - 不能确认的 content_type、difficulty、reading_time、prerequisites、source_status、review_status 使用 UNKNOWN。
+  - 自动迁移不得产生 VERIFIED 或 HUMAN_APPROVED。
+  - id 必须与文件名 slug 一致；layer 必须与 docs/<layer>/ 路径一致。
+  - schema_version 1.x 只允许向后兼容地增加可选字段；删除、改名或收紧既有字段需要新的 major schema_version 和迁移说明。
