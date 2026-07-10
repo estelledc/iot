@@ -3,391 +3,126 @@ schema_version: '1.0'
 id: ble-power-consumption-profiling
 title: BLE功耗分析：广播/连接/休眠各阶段
 layer: 2
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
 reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+prerequisites:
+  - ble-connection-parameter-optimization
+tags:
+  - BLE
+  - 功耗
+  - 广播间隔
+  - 连接间隔
+  - Slave Latency
+  - PPK2
+  - DCDC
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # BLE功耗分析：广播/连接/休眠各阶段
+
 > **难度**：🟡 中级 | **领域**：BLE功耗工程 | **阅读时间**：约 20 分钟
 
-## 引言
+## 日常类比
 
-想象你家里有一个水龙头，水表一直在转。你洗手时水流大(活跃状态)，关了水龙头但水表还在微微转(待机漏电)，而真正省水的办法是：每次只在需要时打开几秒钟，其余时间彻底关严。BLE 的功耗管理思路完全一样——射频模块就是那个"水龙头"，发射和接收时电流很大(5-10mA)，睡眠时电流极小(1-3uA)，而功耗优化的核心就是尽量缩短"开水龙头"的时间，延长"关水龙头"的时间。
+水龙头：洗手时大开（射频发射/接收毫安级），关紧后仍可能微漏（休眠微安级）。蓝牙低功耗（Bluetooth Low Energy, BLE）优化核心是缩短开阀时间、拉长关阀时间。同一颗纽扣电池在不同占空比下，续航可差几个数量级——**必须以实测平均电流核算**[2][5]。
 
-BLE 从诞生之初就以低功耗为设计核心。但"低功耗"是一个相对概念——一颗 CR2032 纽扣电池(230mAh)在不同使用模式下，续航可以从几小时到几年不等。理解 BLE 各个工作阶段的功耗特性，掌握功耗测量和优化方法，是每一个 IoT 产品工程师的必修课。
+## 摘要
 
-本文将从 BLE 的功耗状态模型出发，逐一分析广播、扫描、连接和休眠各阶段的电流消耗，并给出实际的测量方法和优化策略。
+本文按链路层状态拆解广播、扫描、连接与休眠电流，给出连接间隔（Connection Interval, CI）、从属延迟（Slave Latency）与发射功率等旋钮，并概述功耗分析仪测量要点。文中微安/毫安数字多取自 Nordic 等数据手册量级，**换芯片需重测**[3]。
 
-## 1. BLE 功耗状态模型
+## 1. 状态与占空比
 
-### 1.1 五种基本状态
+| 状态 | 射频 | 电流量级（常见 SoC） |
+|------|------|----------------------|
+| Sleep/Standby | 关 | µA |
+| Advertising | 周期 TX | 活跃时 mA |
+| Scanning | RX | 活跃时 mA |
+| Connection | 周期 RX/TX | 活跃时 mA |
 
-BLE 链路层定义了五种基本状态，每种状态有完全不同的功耗特征：
+\[
+I_\mathrm{avg}\approx (I_\mathrm{active}T_\mathrm{active}+I_\mathrm{sleep}T_\mathrm{sleep})/T
+\]
 
-| 状态 | 射频行为 | 典型电流 | 说明 |
-|------|---------|---------|------|
-| Standby/Sleep | 射频关闭 | 1-3 uA | MCU 休眠，RTC 运行 |
-| Advertising | 周期性发射 | 5-8 mA (TX时) | 在广播信道上发送 |
-| Scanning | 持续/间歇接收 | 5-8 mA (RX时) | 监听广播信道 |
-| Initiating | 监听特定广播 | 5-8 mA (RX时) | 等待目标设备广播 |
-| Connection | 周期性收发 | 5-10 mA (活跃时) | 双向数据交换 |
+## 2. 广播与扫描
 
-### 1.2 占空比决定平均功耗
+单次广播事件通常在 37/38/39 各发一包，活跃约数毫秒。间隔从约 20 ms 到约 10.24 s：间隔越大越省电，发现越慢[1]。
 
-BLE 低功耗的秘密在于极低的射频占空比。无论是广播还是连接，射频模块在大部分时间都处于关闭状态：
+| 广播间隔倾向 | 平均电流倾向 | 发现时延倾向 |
+|--------------|--------------|--------------|
+| 很快（数十 ms） | 高 | 低 |
+| 中（百 ms～1 s） | 中 | 中 |
+| 很慢（数秒） | 接近休眠 | 高 |
 
-```
-平均电流公式:
-I_avg = (I_active * T_active + I_sleep * T_sleep) / T_total
+扫描平均电流 ≈ RX 电流 ×（Scan Window / Scan Interval）。持续扫描可达数毫安，仅适短时发现[5]。
 
-其中:
-  I_active = 射频活跃电流 (5-10 mA)
-  I_sleep  = 休眠电流 (1-3 uA)
-  T_active = 射频活跃时间
-  T_sleep  = 休眠时间
-  T_total  = T_active + T_sleep = 一个完整周期
-```
+发射功率从 +8 dBm 降到负值可明显降 TX 电流，但缩短距离；室内近场常可低于 0 dBm——**以链路预算实测为准**[3]。
 
-由于 I_sleep 远小于 I_active，平均电流近似等于 I_active 乘以占空比。降低占空比是降低功耗的最直接手段。
+## 3. 连接阶段
 
-## 2. 广播阶段功耗分析
+Peripheral 每事件先 RX 再 TX；无应用数据仍可能交换空包保活。CI 越大，空闲越省电、时延越大。Slave Latency 允许跳过若干事件，有数据时可提前响应[1]。
 
-### 2.1 单次广播事件
+| CI 倾向 | 功耗 | 时延 | 场景叙事 |
+|---------|------|------|----------|
+| 极短 | 高 | 低 | 高吞吐 |
+| 中 | 中 | 中 | 交互 |
+| 长 + Latency | 低 | 首包可能变长 | 慢传感器 |
 
-一次广播事件中，设备在三个广播信道(37/38/39)上依次发送广播包：
+## 4. 休眠与系统漏电
 
-```
-单次广播事件时序:
-|--TX CH37--|--切换--|--TX CH38--|--切换--|--TX CH39--|
-    ~1ms      ~0.1ms    ~1ms      ~0.1ms    ~1ms
+休眠含 RTC、RAM retention、漏电；启用直流-直流（DCDC）相对低压差线性稳压器（LDO）常可降射频阶段电流（需外部电感）[3]。系统总电流 = 射频平均 + MCU + 传感器 + 外设；传感器待机与 GPIO 浮空常是“隐形杀手”。
 
-总活跃时间: 约 3-4 ms
-TX 电流: 约 5-8 mA(取决于发射功率和芯片型号)
-```
+| 优化 | 效果倾向 | 代价 |
+|------|----------|------|
+| 增大广播/连接间隔 | 近似线性降射频均值 | 时延↑ |
+| Slave Latency | 空闲大降 | 下行首包延迟 |
+| 降 TX 功率 | 降 TX 电流 | 距离↓ |
+| 开 DCDC | 降活跃电流 | PCB 电感 |
+| 关调试 UART/日志 | 常可降数百 µA 量级 | 少日志 |
 
-### 2.2 广播间隔对功耗的影响
+## 5. 测量
 
-广播间隔(Advertising Interval)是相邻两次广播事件之间的时间。它是决定广播功耗的最关键参数：
+推荐电源分析仪（如 Nordic PPK2）覆盖 nA～A；或分流电阻+示波器看事件波形。须断开调试器、关 LED/日志，平均至少多个完整事件，并计入晶振启动尖峰[2][5]。
 
-| 广播间隔 | 占空比 | 平均电流(估算) | CR2032 续航(估算) |
-|----------|--------|---------------|------------------|
-| 20 ms | 15% | ~900 uA | 约 10 天 |
-| 100 ms | 3% | ~200 uA | 约 48 天 |
-| 1 s | 0.3% | ~25 uA | 约 1 年 |
-| 10 s | 0.03% | ~5 uA | 约 5 年 |
-| 10.24 s (最大) | 0.03% | ~5 uA | 约 5 年 |
+## 6. 局限、挑战与可改进方向
 
-注意：以上估算基于 nRF52 系列芯片，TX 功率 0dBm，不含 MCU 处理开销。
+### 1. 数据手册 ≠ 整机
 
-### 2.3 发射功率对电流的影响
+**局限**：手册 TX 电流不含传感器与电源效率[3]。
+**改进**：整机电池路径测 \(I_\mathrm{avg}\)；按任务剖面（广播/连接/休眠占比）加权。
 
-BLE 芯片通常支持多种发射功率等级，功率越高电流越大：
+### 2. 调试态污染
 
-| 发射功率 | TX 电流(nRF52840) | 典型通信距离 |
-|----------|-------------------|-------------|
-| +8 dBm | 约 16 mA | ~200m (开阔) |
-| +4 dBm | 约 10 mA | ~150m |
-| 0 dBm | 约 6 mA | ~100m |
-| -4 dBm | 约 5 mA | ~60m |
-| -8 dBm | 约 4.5 mA | ~40m |
-| -20 dBm | 约 3.5 mA | ~10m |
+**局限**：SWD、日志、USB 供电掩盖真实睡眠电流。
+**改进**：量产配置复测；夹具供电与电池内阻一并考虑。
 
-在室内近距离应用(如可穿戴设备)中，降低 TX 功率到 -4dBm 或 -8dBm 就足够了，可以节省约 30-50% 的 TX 电流。
+### 3. 参数与体验冲突
 
-## 3. 扫描阶段功耗分析
+**局限**：为续航把 CI 拉满导致 App 卡顿或超时断连。
+**改进**：空闲用长 CI+Latency，突发数据临时请求参数更新[6]。
 
-### 3.1 扫描窗口与扫描间隔
+### 4. 外设与 GPIO
 
-扫描功耗由两个参数决定：扫描窗口(Scan Window)和扫描间隔(Scan Interval)：
+**局限**：ADC/传感器常开或浮空脚可吞掉射频优化收益。
+**改进**：用完断电；未用脚固定电平；批量上报减唤醒次数。
 
-```
-扫描参数:
-|<------- Scan Interval ------->|
-|<-- Scan Window -->|   休眠    |
-     RX 活跃                    |
-|<------- Scan Interval ------->|
-|<-- Scan Window -->|   休眠    |
-```
+## 7. 实践要点
 
-扫描占空比 = Scan Window / Scan Interval。
-
-### 3.2 扫描功耗估算
-
-| 配置 | 扫描间隔 | 扫描窗口 | 占空比 | 平均电流 |
-|------|---------|---------|--------|---------|
-| 持续扫描 | 10ms | 10ms | 100% | ~6 mA |
-| 快速发现 | 100ms | 50ms | 50% | ~3 mA |
-| 省电扫描 | 1000ms | 30ms | 3% | ~200 uA |
-| 极省电 | 5000ms | 30ms | 0.6% | ~40 uA |
-
-扫描阶段通常是临时性的(发现设备后就停止)，但在某些应用中(如持续监听 Beacon)，扫描功耗需要特别关注。
-
-## 4. 连接阶段功耗分析
-
-### 4.1 连接事件结构
-
-每个连接事件中，Central 和 Peripheral 都经历一次射频收发：
-
-```
-Peripheral 视角的连接事件:
-
-|-- RX (接收 Central 的包) --|-- TX (发送响应) --|-- 休眠 --|
-      约 0.3-2 ms                约 0.3-2 ms      到下一个
-                                                  连接事件
-```
-
-Peripheral 先接收(RX)，然后发送(TX)。如果没有数据需要交换，双方仍然会交换空包以维持连接——这是连接模式的基础开销。
-
-### 4.2 连接间隔的功耗影响
-
-连接间隔(Connection Interval, CI)是最重要的连接功耗参数：
-
-| 连接间隔 | 每秒事件数 | 平均电流(估算) | 适用场景 |
-|----------|-----------|---------------|---------|
-| 7.5 ms | 133 | ~600 uA | 高吞吐量传输 |
-| 30 ms | 33 | ~150 uA | 交互式应用 |
-| 100 ms | 10 | ~50 uA | 传感器定期上报 |
-| 500 ms | 2 | ~12 uA | 低速通知 |
-| 1000 ms | 1 | ~8 uA | 心率带等慢速设备 |
-| 4000 ms (最大) | 0.25 | ~4 uA | 极低功耗保活 |
-
-### 4.3 从属延迟(Slave Latency)
-
-从属延迟允许 Peripheral 跳过若干个连接事件不响应，进一步降低功耗。例如，CI=100ms 加上 slave latency=4 意味着 Peripheral 可以每 500ms 才响应一次：
-
-```
-无 slave latency (CI=100ms):
-事件 1: 收发  事件 2: 收发  事件 3: 收发  事件 4: 收发  事件 5: 收发
-  |             |             |             |             |
-  100ms         100ms         100ms         100ms         100ms
-
-有 slave latency=4 (CI=100ms):
-事件 1: 收发  事件 2: 跳过  事件 3: 跳过  事件 4: 跳过  事件 5: 收发
-  |             |             |             |             |
-  实际响应间隔 = 100ms * (4+1) = 500ms
-```
-
-当 Peripheral 有数据要发送时，它可以随时在任意连接事件中响应，不需要等到 latency 周期结束。这使得系统在空闲时省电、有数据时及时响应。
-
-## 5. 休眠阶段功耗
-
-### 5.1 休眠电流的组成
-
-BLE SoC 在休眠模式下的电流由以下部分组成：
-
-| 组件 | 典型电流 | 说明 |
-|------|---------|------|
-| RTC(实时时钟) | 0.1-0.5 uA | 维持定时唤醒 |
-| RAM 保持 | 0.5-1.5 uA | 保持内存内容 |
-| 漏电流 | 0.1-0.5 uA | 芯片固有漏电 |
-| 合计(nRF52832) | 约 1.9 uA | System ON, RAM retention |
-| 合计(nRF52840) | 约 1.5 uA | System ON, RAM retention |
-
-### 5.2 稳压器的影响
-
-大多数 BLE SoC 提供两种稳压器模式：
-
-- **LDO(低压差线性稳压器)**：电路简单但效率低，约 60-80%
-- **DCDC(开关稳压器)**：效率高约 90-95%，但需要外部电感
-
-```
-DCDC vs LDO 功耗对比(nRF52840, TX 0dBm):
-LDO 模式:  TX 电流约 7.5 mA
-DCDC 模式: TX 电流约 4.8 mA
-节省约 36%
-
-对于电池供电产品，强烈建议启用 DCDC 模式
-代价: PCB 上需要额外的电感(约 10uH)和滤波电容
-```
-
-## 6. 系统级功耗
-
-### 6.1 不仅仅是射频
-
-实际产品的功耗不仅仅是 BLE 射频模块的电流。完整的系统功耗包括：
-
-```
-总功耗 = BLE 射频 + MCU 处理 + 传感器 + 存储 + 其他外设
-
-例(环境传感器节点):
-  BLE 射频(CI=1s):     ~8 uA(平均)
-  MCU 处理(每60s唤醒):  ~2 uA(平均)
-  温湿度传感器(每60s读): ~1 uA(平均)
-  Flash 存储(偶尔写入):  ~0.5 uA(平均)
-  GPIO 漏电:              ~0.5 uA
-  合计:                    ~12 uA
-```
-
-### 6.2 传感器的功耗陷阱
-
-很多开发者容易忽略传感器的功耗。传感器的功耗要分"测量态"和"待机态"两部分看：
-
-| 传感器 | 测量电流 | 测量时间 | 待机电流 |
-|--------|---------|---------|---------|
-| BME280(温湿气压) | ~350 uA | ~10 ms | ~0.1 uA |
-| LIS2DH(加速度计) | ~2 uA | 持续 | ~0.5 uA |
-| MAX30102(心率) | ~600 uA | ~1 ms/采样 | ~0.7 uA |
-| 光敏电阻+ADC | ~200 uA | ~0.1 ms | ~0 uA |
-
-关键原则：不需要的传感器要彻底断电，而不是让它留在待机模式。
-
-## 7. 功耗测量方法
-
-### 7.1 测量工具
-
-**Nordic PPK2(Power Profiler Kit 2)**：专为 BLE 功耗测量设计，可以同时测量 uA 级别的睡眠电流和 mA 级别的活跃电流，动态范围覆盖 200nA 到 1A。
-
-**万用表**：适合测量平均电流，但无法捕捉 BLE 事件级别的瞬态电流变化。
-
-**示波器 + 分流电阻**：在电源回路中串入一个小电阻(如 10 Ohm)，用示波器测量电阻两端的电压波形：
-
-```
-测量电路:
-电池 ----[10 Ohm]---- BLE 模块
-              |
-          示波器探头
-              |
-            GND
-
-电流 = V_shunt / R_shunt
-例: 示波器读到 50mV --> I = 50mV / 10 Ohm = 5 mA
-```
-
-### 7.2 测量注意事项
-
-**去除调试开销**：调试模式(SWD/JTAG 连接、调试 LED、串口日志输出)会显著增加功耗。功耗测量必须在断开调试器的情况下进行。
-
-**捕获足够长的时间**：至少捕获 10 个完整的广播/连接事件，计算平均值。
-
-**注意启动瞬态**：芯片从深度睡眠唤醒时有一个短暂的高电流峰值(晶振启动、PLL 锁定等)，这是正常现象，要纳入平均功耗计算。
-
-### 7.3 使用 PPK2 进行测量
-
-```
-PPK2 测量步骤:
-1. 将 PPK2 设为 Source Meter 模式(同时供电和测量)
-2. 设置输出电压(通常 3.0V 或 3.3V)
-3. 连接到目标板的电源输入
-4. 在 nRF Connect for Desktop 的 Power Profiler 中:
-   - 设置采样率(100kHz 推荐)
-   - 开始记录
-   - 等待若干个完整事件周期
-5. 分析波形:
-   - 识别广播/连接事件的电流峰值
-   - 测量睡眠段的基线电流
-   - 用选区工具计算平均电流
-```
-
-## 8. 功耗优化策略
-
-### 8.1 射频层优化
-
-| 优化手段 | 预期效果 | 代价 |
-|---------|---------|------|
-| 增大广播间隔 | 线性降低广播功耗 | 设备发现时间增加 |
-| 增大连接间隔 | 线性降低连接功耗 | 数据延迟增加 |
-| 启用 slave latency | 大幅降低空闲功耗 | 首包延迟可能增加 |
-| 降低 TX 功率 | 降低 TX 电流 30-50% | 通信距离缩短 |
-| 启用 DLE | 减少同等数据量的事件数 | 单事件时间稍长 |
-| 使用 2M PHY | 缩短空中时间 | 距离稍减少 |
-
-### 8.2 系统层优化
-
-```
-系统优化清单:
-1. 启用 DCDC 稳压器(节省 30-40% 射频电流)
-2. 关闭未使用的外设(UART, SPI, ADC, 传感器电源)
-3. 合理使用 GPIO:
-   - 未使用的 GPIO 设为输入+下拉或断开
-   - 避免浮空引脚(增加漏电流)
-4. 批量处理传感器数据:
-   - 不要每读一次传感器就发一次 BLE 通知
-   - 攒够多个采样值后一次性发送
-5. 合理选择时钟源:
-   - 使用低功耗 RC 振荡器而非外部晶振(如果精度允许)
-6. 优化 MCU 唤醒逻辑:
-   - 减少不必要的定时器中断
-   - 在 BLE 事件回调中处理数据(避免额外唤醒)
-```
-
-## 9. 实际案例
-
-### 9.1 环境传感器节点
-
-**需求**：每 60 秒读取温湿度并通过 BLE 通知上报。CR2032 电池，目标续航 2 年。
-
-```
-功耗预算:
-  目标平均电流: 230mAh / (2 * 365 * 24) = 13.1 uA
-
-设计方案:
-  BLE 连接参数: CI = 1000ms, slave latency = 4
-  实际响应间隔: 1000ms * 5 = 5000ms
-  传感器: BME280, 每 60s 唤醒一次测量
-
-功耗估算:
-  BLE 射频:     ~5 uA (CI=1s, latency=4, 大部分事件跳过)
-  MCU 处理:     ~2 uA (每 60s 唤醒处理)
-  BME280 平均:  ~1 uA (350uA * 10ms / 60000ms + 0.1uA)
-  系统漏电:     ~2 uA
-  合计:         ~10 uA
-
-  实际续航: 230mAh / 10uA = 23000 小时 = 约 2.6 年
-  满足 2 年目标
-```
-
-### 9.2 常见功耗陷阱
-
-**陷阱 1: 忘记关闭调试功能**
-
-```c
-// 错误: 生产版本中仍然启用了日志输出
-LOG_INF("Connection event %d\n", event_count);
-// 每次连接事件唤醒 UART, 增加 ~500uA 平均电流
-
-// 正确: 生产版本中关闭日志
-// 在 prj.conf 中: CONFIG_LOG=n
-```
-
-**陷阱 2: 未关闭不用的外设**
-
-```c
-// 错误: ADC 初始化后一直开着
-nrfx_adc_init(&config, adc_handler);
-// ADC 持续消耗约 400uA
-
-// 正确: 用完就关
-nrfx_adc_init(&config, adc_handler);
-int result = nrfx_adc_sample();  // 读一次
-nrfx_adc_uninit();               // 立即关闭
-```
-
-**陷阱 3: LDO vs DCDC 选择不当**
-
-```c
-// 在 nRF52 系列中启用 DCDC
-NRF_POWER->DCDCEN = 1;
-// 需要 PCB 上有 10uH 电感和 1uF 电容
-// 节省约 30-40% 的射频阶段电流
-```
-
-**陷阱 4: GPIO 浮空**
-
-未使用的 GPIO 引脚如果处于浮空状态，输入缓冲器可能在中间电压附近振荡，每个引脚增加数十 uA 的漏电流。务必将未使用的 GPIO 配置为输入+内部下拉，或者完全断开连接。
-
-## 总结
-
-BLE 的功耗管理是一个系统工程。射频模块在活跃状态下消耗 5-10mA，在睡眠状态下仅消耗 1-3uA——两者相差三个数量级。整个功耗优化的核心就是最大化睡眠时间、最小化射频活跃时间。广播间隔、连接间隔和从属延迟是三个最关键的参数旋钮，配合 DCDC 稳压器、合理的传感器电源管理和外设关闭策略，可以将一颗 CR2032 纽扣电池的续航从几天延长到数年。掌握 PPK2 等工具的功耗测量方法，建立"先测量再优化"的工程习惯，是做好 BLE 产品功耗设计的基础。
+1. 先定续航目标反推允许 \(I_\mathrm{avg}\)，再选 CI/间隔。
+2. 用波形确认“事件尖峰 + 平坦睡眠”，而不是只看万用表瞬时值。
+3. OTA/高速传输阶段单独做功耗预算，勿与慢采样剖面混用。
 
 ## 参考文献
 
-- Bluetooth Core Specification v5.4, Vol 6 Part B: Link Layer Specification, Bluetooth SIG, 2023
-- Nordic Semiconductor, "Measuring Current Consumption with Power Profiler Kit II," Application Note, 2022
-- Nordic Semiconductor, "nRF52840 Product Specification," v1.7, 2023
-- Gomez, C., Oller, J., and Paradells, J., "Overview and Evaluation of Bluetooth Low Energy: An Emerging Low-Power Wireless Technology," Sensors, 2012
-- Texas Instruments, "Measuring Bluetooth Low Energy Power Consumption," Application Report SWRA478, 2017
+[1] Bluetooth SIG, "Bluetooth Core Specification," Vol 6 Link Layer (states, CI, latency).
+[2] Nordic Semiconductor, Measuring current with Power Profiler Kit II.
+[3] Nordic Semiconductor, nRF52/nRF53 Product Specifications (TX/RX/sleep currents).
+[4] Gomez, C. et al., "Overview and Evaluation of Bluetooth Low Energy," Sensors, 2012.
+[5] Texas Instruments, "Measuring Bluetooth Low Energy Power Consumption," SWRA478.
+[6] Bluetooth SIG / vendor docs on connection parameter update.
+[7] Nordic, DCDC enable and external component guidelines.
+[8] ST / Silicon Labs BLE power optimization application notes.
+[9] Bluetooth SIG, Advertising interval ranges and scan window definitions.
+[10] Zephyr Project, power management + Bluetooth integration notes.
+[11] Battery capacity derating guidance for CR2032-class cells in IoT designs.

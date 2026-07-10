@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 492
-  in_review: 150
+  pending: 412
+  in_review: 230
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -1062,402 +1062,562 @@ articles:
   layer: 2
   path: docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
   batch: L2-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B01
 - id: 5g-network-slicing-iot-vertical
   layer: 2
   path: docs/connectivity/papers/5g-network-slicing-iot-vertical.md
   batch: L2-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B01
 - id: 5g-nr-redcap-iot-device
   layer: 2
   path: docs/connectivity/papers/5g-nr-redcap-iot-device.md
   batch: L2-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B01
 - id: 5g-private-network-industrial-iot
   layer: 2
   path: docs/connectivity/papers/5g-private-network-industrial-iot.md
   batch: L2-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B01
 - id: 5g-redcap-iot
   layer: 2
   path: docs/connectivity/papers/5g-redcap-iot.md
   batch: L2-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B01
 - id: 5g-urllc-industrial-iot
   layer: 2
   path: docs/connectivity/papers/5g-urllc-industrial-iot.md
   batch: L2-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B02
 - id: adaptive-modulation-coding-iot
   layer: 2
   path: docs/connectivity/papers/adaptive-modulation-coding-iot.md
   batch: L2-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B02
 - id: age-of-information-iot-freshness
   layer: 2
   path: docs/connectivity/papers/age-of-information-iot-freshness.md
   batch: L2-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B02
 - id: ai-driven-network-optimization-iot
   layer: 2
   path: docs/connectivity/papers/ai-driven-network-optimization-iot.md
   batch: L2-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B02
 - id: amazon-sidewalk-neighborhood-iot
   layer: 2
   path: docs/connectivity/papers/amazon-sidewalk-neighborhood-iot.md
   batch: L2-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B02
 - id: antenna-propagation-indoor-outdoor
   layer: 2
   path: docs/connectivity/papers/antenna-propagation-indoor-outdoor.md
   batch: L2-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B03
 - id: antenna-testing-ota-measurement
   layer: 2
   path: docs/connectivity/papers/antenna-testing-ota-measurement.md
   batch: L2-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B03
 - id: backscatter-communication-ambient-iot
   layer: 2
   path: docs/connectivity/papers/backscatter-communication-ambient-iot.md
   batch: L2-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B03
 - id: backscatter-communication
   layer: 2
   path: docs/connectivity/papers/backscatter-communication.md
   batch: L2-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B03
 - id: bacnet-building-automation-iot
   layer: 2
   path: docs/connectivity/papers/bacnet-building-automation-iot.md
   batch: L2-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B03
 - id: ble-5-features-coded-phy
   layer: 2
   path: docs/connectivity/papers/ble-5-features-coded-phy.md
   batch: L2-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B04
 - id: ble-audio-le-audio-lc3
   layer: 2
   path: docs/connectivity/papers/ble-audio-le-audio-lc3.md
   batch: L2-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B04
 - id: ble-beacon-ibeacon-eddystone
   layer: 2
   path: docs/connectivity/papers/ble-beacon-ibeacon-eddystone.md
   batch: L2-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B04
 - id: ble-channel-hopping-interference
   layer: 2
   path: docs/connectivity/papers/ble-channel-hopping-interference.md
   batch: L2-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B04
 - id: ble-connection-parameter-optimization
   layer: 2
   path: docs/connectivity/papers/ble-connection-parameter-optimization.md
   batch: L2-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B04
 - id: ble-direction-finding-aoa-aod
   layer: 2
   path: docs/connectivity/papers/ble-direction-finding-aoa-aod.md
   batch: L2-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B05
 - id: ble-gatt-profile-custom-service
   layer: 2
   path: docs/connectivity/papers/ble-gatt-profile-custom-service.md
   batch: L2-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B05
 - id: ble-mesh-networking-architecture
   layer: 2
   path: docs/connectivity/papers/ble-mesh-networking-architecture.md
   batch: L2-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B05
 - id: ble-periodic-advertising-sync
   layer: 2
   path: docs/connectivity/papers/ble-periodic-advertising-sync.md
   batch: L2-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B05
 - id: ble-power-consumption-profiling
   layer: 2
   path: docs/connectivity/papers/ble-power-consumption-profiling.md
   batch: L2-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B05
 - id: ble-security-pairing-bonding
   layer: 2
   path: docs/connectivity/papers/ble-security-pairing-bonding.md
   batch: L2-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B06
 - id: ble-throughput-optimization-dle
   layer: 2
   path: docs/connectivity/papers/ble-throughput-optimization-dle.md
   batch: L2-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B06
 - id: can-bus-protocol-automotive-iot
   layer: 2
   path: docs/connectivity/papers/can-bus-protocol-automotive-iot.md
   batch: L2-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B06
 - id: can-fd-flexible-data-rate
   layer: 2
   path: docs/connectivity/papers/can-fd-flexible-data-rate.md
   batch: L2-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B06
 - id: carrier-aggregation-iot-throughput
   layer: 2
   path: docs/connectivity/papers/carrier-aggregation-iot-throughput.md
   batch: L2-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B06
 - id: cellular-iot-evolution-2g-5g
   layer: 2
   path: docs/connectivity/papers/cellular-iot-evolution-2g-5g.md
   batch: L2-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B07
 - id: cluster-head-selection-leach
   layer: 2
   path: docs/connectivity/papers/cluster-head-selection-leach.md
   batch: L2-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B07
 - id: coexistence-management-iot-spectrum
   layer: 2
   path: docs/connectivity/papers/coexistence-management-iot-spectrum.md
   batch: L2-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B07
 - id: cognitive-radio-spectrum-sensing-iot
   layer: 2
   path: docs/connectivity/papers/cognitive-radio-spectrum-sensing-iot.md
   batch: L2-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B07
 - id: cognitive-radio-spectrum
   layer: 2
   path: docs/connectivity/papers/cognitive-radio-spectrum.md
   batch: L2-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B07
 - id: compressive-sensing-iot-data
   layer: 2
   path: docs/connectivity/papers/compressive-sensing-iot-data.md
   batch: L2-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B08
 - id: connectivity-cost-analysis-tco
   layer: 2
   path: docs/connectivity/papers/connectivity-cost-analysis-tco.md
   batch: L2-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B08
 - id: contention-based-mac-csma-aloha
   layer: 2
   path: docs/connectivity/papers/contention-based-mac-csma-aloha.md
   batch: L2-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B08
 - id: cross-layer-design-iot-protocol
   layer: 2
   path: docs/connectivity/papers/cross-layer-design-iot-protocol.md
   batch: L2-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B08
 - id: d2d-device-communication
   layer: 2
   path: docs/connectivity/papers/d2d-device-communication.md
   batch: L2-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B08
 - id: dali-lighting-control-iot
   layer: 2
   path: docs/connectivity/papers/dali-lighting-control-iot.md
   batch: L2-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B09
 - id: dash7-active-rfid-protocol
   layer: 2
   path: docs/connectivity/papers/dash7-active-rfid-protocol.md
   batch: L2-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B09
 - id: data-aggregation-wsn-energy
   layer: 2
   path: docs/connectivity/papers/data-aggregation-wsn-energy.md
   batch: L2-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B09
 - id: dect-2020-nr-plus-iot
   layer: 2
   path: docs/connectivity/papers/dect-2020-nr-plus-iot.md
   batch: L2-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B09
 - id: dect-2020-nr
   layer: 2
   path: docs/connectivity/papers/dect-2020-nr.md
   batch: L2-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B09
 - id: deterministic-networking-detnet
   layer: 2
   path: docs/connectivity/papers/deterministic-networking-detnet.md
   batch: L2-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B10
 - id: device-to-device-d2d-communication
   layer: 2
   path: docs/connectivity/papers/device-to-device-d2d-communication.md
   batch: L2-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B10
 - id: diversity-techniques-iot-reliability
   layer: 2
   path: docs/connectivity/papers/diversity-techniques-iot-reliability.md
   batch: L2-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B10
 - id: dlms-cosem-smart-meter-protocol
   layer: 2
   path: docs/connectivity/papers/dlms-cosem-smart-meter-protocol.md
   batch: L2-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B10
 - id: duty-cycle-mac-protocol-iot
   layer: 2
   path: docs/connectivity/papers/duty-cycle-mac-protocol-iot.md
   batch: L2-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B10
 - id: dynamic-spectrum-access
   layer: 2
   path: docs/connectivity/papers/dynamic-spectrum-access.md
   batch: L2-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B11
 - id: energy-efficient-routing-wsn
   layer: 2
   path: docs/connectivity/papers/energy-efficient-routing-wsn.md
   batch: L2-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B11
 - id: esim-iot-remote-provisioning
   layer: 2
   path: docs/connectivity/papers/esim-iot-remote-provisioning.md
   batch: L2-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B11
 - id: ethercat-real-time-industrial
   layer: 2
   path: docs/connectivity/papers/ethercat-real-time-industrial.md
   batch: L2-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B11
 - id: ethernet-industrial-iot-tsn
   layer: 2
   path: docs/connectivity/papers/ethernet-industrial-iot-tsn.md
   batch: L2-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B11
 - id: ethernet-single-pair-spe-iot
   layer: 2
   path: docs/connectivity/papers/ethernet-single-pair-spe-iot.md
   batch: L2-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B12
 - id: fading-multipath-iot-channel
   layer: 2
   path: docs/connectivity/papers/fading-multipath-iot-channel.md
   batch: L2-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B12
 - id: federated-learning-iot-communication
   layer: 2
   path: docs/connectivity/papers/federated-learning-iot-communication.md
   batch: L2-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B12
 - id: flooding-vs-routing-mesh-iot
   layer: 2
   path: docs/connectivity/papers/flooding-vs-routing-mesh-iot.md
   batch: L2-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B12
 - id: forward-error-correction-iot
   layer: 2
   path: docs/connectivity/papers/forward-error-correction-iot.md
   batch: L2-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B12
 - id: frequency-band-regulation-iot
   layer: 2
   path: docs/connectivity/papers/frequency-band-regulation-iot.md
   batch: L2-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B13
 - id: full-duplex-radio-iot
   layer: 2
   path: docs/connectivity/papers/full-duplex-radio-iot.md
   batch: L2-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B13
 - id: geographic-routing-gpsr-iot
   layer: 2
   path: docs/connectivity/papers/geographic-routing-gpsr-iot.md
   batch: L2-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B13
 - id: grant-free-access-massive-iot
   layer: 2
   path: docs/connectivity/papers/grant-free-access-massive-iot.md
   batch: L2-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B13
 - id: hart-protocol-4-20ma-digital
   layer: 2
   path: docs/connectivity/papers/hart-protocol-4-20ma-digital.md
   batch: L2-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B13
 - id: helium-network-decentralized-iot
   layer: 2
   path: docs/connectivity/papers/helium-network-decentralized-iot.md
   batch: L2-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B14
 - id: heterogeneous-network-iot-handover
   layer: 2
   path: docs/connectivity/papers/heterogeneous-network-iot-handover.md
   batch: L2-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B14
 - id: hybrid-connectivity-multi-protocol
   layer: 2
   path: docs/connectivity/papers/hybrid-connectivity-multi-protocol.md
   batch: L2-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B14
 - id: infrared-communication-irda-iot
   layer: 2
   path: docs/connectivity/papers/infrared-communication-irda-iot.md
   batch: L2-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B14
 - id: io-link-sensor-actuator-interface
   layer: 2
   path: docs/connectivity/papers/io-link-sensor-actuator-interface.md
   batch: L2-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B14
 - id: iot-connectivity-digital-twin-planning
   layer: 2
   path: docs/connectivity/papers/iot-connectivity-digital-twin-planning.md
   batch: L2-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B15
 - id: iot-connectivity-energy-efficiency
   layer: 2
   path: docs/connectivity/papers/iot-connectivity-energy-efficiency.md
   batch: L2-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B15
 - id: iot-connectivity-latency-analysis
   layer: 2
   path: docs/connectivity/papers/iot-connectivity-latency-analysis.md
   batch: L2-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B15
 - id: iot-connectivity-market-trends-2024
   layer: 2
   path: docs/connectivity/papers/iot-connectivity-market-trends-2024.md
   batch: L2-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B15
 - id: iot-connectivity-reliability-metrics
   layer: 2
   path: docs/connectivity/papers/iot-connectivity-reliability-metrics.md
   batch: L2-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B15
 - id: iot-connectivity-selection-framework
   layer: 2
   path: docs/connectivity/papers/iot-connectivity-selection-framework.md
   batch: L2-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B16
 - id: iot-connectivity-standardization-bodies
   layer: 2
   path: docs/connectivity/papers/iot-connectivity-standardization-bodies.md
   batch: L2-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B16
 - id: iot-gateway-multi-protocol-design
   layer: 2
   path: docs/connectivity/papers/iot-gateway-multi-protocol-design.md
   batch: L2-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B16
 - id: iot-massive-access-random-access
   layer: 2
   path: docs/connectivity/papers/iot-massive-access-random-access.md
   batch: L2-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B16
 - id: iot-network-planning-tool
   layer: 2
   path: docs/connectivity/papers/iot-network-planning-tool.md
   batch: L2-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B16
 - id: iot-protocol-interoperability-gateway
   layer: 2
   path: docs/connectivity/papers/iot-protocol-interoperability-gateway.md

@@ -3,413 +3,144 @@ schema_version: '1.0'
 id: iot-connectivity-standardization-bodies
 title: IoT连接标准化组织与标准演进
 layer: 2
-content_type: UNKNOWN
+content_type: survey
 difficulty: beginner
 reading_time: 18
-prerequisites: UNKNOWN
-tags: []
+prerequisites:
+  - iot-connectivity-selection-framework
+  - lpwan-comparison
+tags:
+  - 标准化
+  - IEEE
+  - 3GPP
+  - IETF
+  - Matter
+  - LoRaWAN
+  - Bluetooth
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # IoT连接标准化组织与标准演进
-> **难度**: 初级 | **领域**: 标准化 | **阅读时间**: 约 18 分钟
 
-## 引言
+> **难度**：初级 | **领域**：标准化 | **阅读时间**：约 18 分钟
 
-想象你去国外旅行,带着一个三脚插头的充电器,到了酒店发现墙上是两脚圆孔插座——完全插不进去。这就是"没有统一标准"的后果。IoT世界面临同样的问题: 如果每家公司的设备只能跟自己品牌通信,那"万物互联"就只是一句空话。
+## 日常类比
 
-标准化组织就像国际上制定插头规格的机构。它们召集各方厂商坐在一起,协商出大家都遵守的通信规则,确保A品牌的传感器能和B品牌的网关对话,C品牌的灯泡能被D品牌的手机控制。没有标准,IoT生态就会碎片化; 有了标准,整个产业链才能形成规模效应。
+出国充电器三脚插不进两脚圆孔——没有统一标准就无法互联。标准化组织像“插头规格委员会”：让 A 厂传感器能与 B 厂网关对话。无标准则碎片化；有标准才有规模与认证信任[1][5]。
 
-本文将介绍IoT连接领域最重要的标准化组织,它们各自负责的标准,以及这些标准如何演进和相互配合。
+## 摘要
 
-## 1. 为什么标准很重要
+梳理 IEEE、3GPP、IETF、LoRa Alliance、CSA/Matter、Bluetooth SIG、Wi‑Fi Alliance、ETSI/ITU/ISO 在物联网（IoT）连接中的分工与演进。成员数、版本年与“支持设备数”随官方更新变化，以各组织当前文档为准[1][4]。
 
-### 1.1 标准解决的核心问题
+## 1 标准为何重要
 
-| 问题 | 没有标准时 | 有标准后 |
-|------|-----------|----------|
-| 互操作性 | 设备只能与同品牌产品通信 | 不同厂商设备自由互通 |
-| 市场信心 | 用户怕被锁定在某厂商生态 | 用户放心购买任何品牌 |
-| 厂商独立 | 更换供应商需重建整个系统 | 即插即用替换任何组件 |
-| 规模经济 | 每家做自己的芯片和方案 | 统一芯片大规模量产降低成本 |
-| 安全保障 | 各自为政,安全水平参差不齐 | 统一安全要求和认证流程 |
-| 频谱管理 | 设备互相干扰无法协调 | 明确规则有序共存 |
+| 问题 | 无标准 | 有标准 |
+|------|--------|--------|
+| 互操作 | 同品牌孤岛 | 跨厂互通 |
+| 用户信心 | 怕锁定 | 可替换 |
+| 成本 | 重复造轮子 | 芯片规模化 |
+| 安全 | 参差 | 基线与认证 |
+| 频谱 | 互扰 | 规则共存 |
 
-### 1.2 标准的四种类型
+类型：法规（FCC/ETSI）、正式标准（IEEE/3GPP/IETF）、事实标准、联盟规范（Matter/Zigbee/蓝牙商标）。
 
-```
-按强制性和来源分类:
+## 2 主要组织速览
 
-1. 法规标准(Regulatory) - 政府强制执行
-   例: FCC Part 15(美国), ETSI EN 300 220(欧洲)
-   不遵守 = 违法, 产品不允许上市
+**IEEE**：802.15.4 为 Zigbee/Thread/6LoWPAN 的 PHY/MAC 地基；802.11 系列含 HaLow（802.11ah）、Wi‑Fi 6/7 对密集与省电（TWT）的影响[1]。
 
-2. 行业标准(De Jure) - 正式标准组织投票通过
-   例: IEEE 802.11, 3GPP NB-IoT, IETF RFC
-   通过严格的提案/审核/投票程序
+| 802.11 变体 | IoT 相关性 | 要点 |
+|-------------|------------|------|
+| 11n/ac | 低（偏消费高功耗） | 不适合多年电池 |
+| 11ah HaLow | 高 | Sub‑1 GHz、远距低功耗叙事 |
+| 11ax | 中 | OFDMA、TWT |
+| 11be | 中 | 更高密调度 |
 
-3. 事实标准(De Facto) - 市场广泛采用而形成
-   例: LoRaWAN(先有产品后被ITU认可)
-   市场份额决定其"标准"地位
+**3GPP**：Rel‑13 起 NB-IoT/LTE-M；其后定位、5G 核心融合、RedCap、Ambient IoT 等路线。NB-IoT 偏静止深覆盖极低速率；LTE-M 偏移动与更低时延[2]。
 
-4. 联盟规范(Consortium) - 行业联盟制定
-   例: Matter(CSA), Zigbee, Bluetooth
-   加入联盟才能使用商标和认证
-```
+| 特性 | NB-IoT | LTE-M（Cat‑M1） |
+|------|--------|-----------------|
+| 带宽 | ~200 kHz | ~1.4 MHz |
+| 速率倾向 | 更低 | 更高 |
+| 移动性 | 弱 | 支持切换 |
+| 覆盖增强 | 更强叙事 | 强 |
 
-## 2. IEEE(电气与电子工程师学会)
+5G 场景：eMBB、mMTC（大规模机器类通信）、URLLC——需求目标见 IMT/3GPP，商用达标视部署[2][5]。
 
-### 2.1 组织概况
+**IETF**：6LoWPAN、CoAP、RPL、SCHC，让受限设备说 IP/压缩头[3]。
 
-IEEE是全球最大的技术专业组织,成员超过40万人。其IEEE 802委员会专门制定局域网和城域网标准。对IoT最重要的是802.15.4(低速无线个域网)、802.11(WiFi)和802.15.1(蓝牙物理层)。
+**LoRa Alliance**：LoRaWAN 规范与认证；版本演进含区域参数、安全、中继、漫游等[见联盟文档]。
 
-### 2.2 IEEE 802.15.4 - IoT无线基石
+**CSA**：Zigbee → Matter；Matter 统一应用层，传输常落在 Wi‑Fi/Thread，安全用证书体系[4]。
 
-802.15.4定义了低速无线个域网的PHY和MAC层,是众多IoT上层协议的共同基础:
+**Bluetooth SIG**：BLE 自 4.0 起；Mesh 用管理洪泛，适合照明等，带宽与延迟确定性有限。
 
-```
-基于802.15.4构建的上层协议:
-+--------------------------+
-| Zigbee / Thread / 6LoWPAN |  应用层+网络层(各自定义)
-+--------------------------+
-|     IEEE 802.15.4         |  MAC + PHY(统一基础)
-+--------------------------+
+**其他**：Wi‑Fi Alliance 认证；ETSI EN 303 645 消费 IoT 安全基线；ITU 频谱与 IMT；ISO RFID/参考架构。
 
-关键参数:
-  频段: 2.4GHz(全球通用), 868MHz(欧洲), 915MHz(美洲)
-  2.4GHz数据率: 250 kbps
-  最大帧长: 127 bytes
-  调制方式: O-QPSK + DSSS(直接序列扩频)
-  典型覆盖: 10-100米(室内)
-  
-特点: 定义了"最底层"的无线规则
-  不同的"上层建筑"(Zigbee/Thread)可以共享同一个"地基"
-```
+## 3 层次关系
 
-### 2.3 IEEE 802.11 - WiFi演进对IoT的影响
+应用/服务（Matter、Zigbee、oneM2M）→ 网络/传输（Thread、6LoWPAN、CoAP）→ 链路/物理（BLE、802.15.4、Wi‑Fi、LoRa、蜂窝）→ 频谱法规（ITU/FCC/ETSI）。
 
-WiFi从消费互联网逐步扩展到IoT领域:
+标准生命周期常跨年：提案→草案→互操作测试（Plugfest）→发布→勘误演进。
 
-| 标准 | 名称 | IoT相关性 | 关键特征 |
-|------|------|-----------|----------|
-| 802.11n | WiFi 4 | 低 | 高功耗,不适合电池设备 |
-| 802.11ah | WiFi HaLow | 高 | Sub-1GHz,低功耗,覆盖可达1km |
-| 802.11ax | WiFi 6 | 中 | OFDMA支持大量设备,TWT省电 |
-| 802.11be | WiFi 7 | 中 | 更高效多设备管理 |
+## 4 开发者对照
 
-WiFi HaLow(802.11ah)是专为IoT设计的突破:
-- 频段: 900MHz(穿墙能力强,覆盖距离远)
-- 功耗: 比传统WiFi低约90%
-- 设备密度: 单AP支持8000+设备
-- 兼容性: 保持WiFi IP栈,无需协议转换
+| 场景 | 标准倾向 | 组织 |
+|------|----------|------|
+| 智能家居 | Matter/Thread/BLE | CSA / Bluetooth SIG |
+| 工业监测 | WirelessHART / NB-IoT | IEC / 3GPP |
+| 智慧城市 | LoRaWAN / NB-IoT | LoRa Alliance / 3GPP |
+| 可穿戴 | BLE | Bluetooth SIG |
+| 车联 | C‑V2X / 5G | 3GPP |
 
-## 3. 3GPP(第三代合作伙伴计划)
+建议：押活跃标准、跟路线图、参加 Plugfest、拿官方认证、未成熟领域保持可切换架构。
 
-### 3.1 组织概况
+## 5 局限、挑战与可改进方向
 
-3GPP由全球7个区域电信标准组织组成,制定蜂窝通信标准(2G到5G)。从Release 13开始,3GPP将IoT作为重要战略方向,推出专门的蜂窝IoT标准。
+### 1. 标准≠产品互操作
 
-### 3.2 蜂窝IoT标准演进时间线
+**局限**：符合规范仍可能配置档/可选特性不一致。
+**改进**：要求认证标志 + 目标生态 Plugfest 结果[4]。
 
-```
-Release 13 (2016): NB-IoT + LTE-M(Cat-M1) -- 蜂窝IoT起点
-Release 14 (2017): 增强定位、多播、更好的移动性支持
-Release 15 (2018): 5G NR启动, mMTC场景正式定义
-Release 16 (2020): 5G URLLC完善, RedCap初步讨论
-Release 17 (2022): 5G RedCap(中端IoT), NB-IoT/LTE-M融入5G核心网
-Release 18+ (2024-): Ambient IoT(无电池设备, 能量收集供电)
-
-趋势: 从"手机附属"逐步演变为"IoT原生"设计
-```
+### 2. 多组织重叠
 
-### 3.3 NB-IoT vs LTE-M详细对比
+**局限**：同一问题多份文档，术语冲突。
+**改进**：先定层（PHY 还是应用），再选主组织；架构图标注依赖[1][3]。
 
-| 特性 | NB-IoT | LTE-M(Cat-M1) |
-|------|--------|-------|
-| 带宽 | 200 kHz(极窄) | 1.4 MHz |
-| 峰值速率 | ~250 kbps | ~1 Mbps |
-| 延迟 | 1.6-10秒(高) | 10-15 ms(低) |
-| 移动性 | 不支持小区切换 | 支持切换(适合移动场景) |
-| 语音 | 不支持 | 支持VoLTE |
-| 功耗 | 极低 | 低 |
-| 覆盖增益 | +20 dB(地下室可达) | +15 dB |
-| 典型应用 | 水表/气表/停车位 | 可穿戴/资产追踪/电梯 |
-| 选择原则 | 静止+极低速率+深覆盖 | 移动+中等速率+低延迟 |
+### 3. 长周期与市场窗口
 
-### 3.4 5G三大场景中的IoT
-
-```
-5G为IoT定义了三大应用场景:
+**局限**：等正式版可能错过产品窗口。
+**改进**：跟草稿做风险预研；量产门禁绑冻结版本号。
 
-1. eMBB(增强移动宽带)
-   - 峰值: 20 Gbps
-   - IoT应用: 高清视频监控, 无人机图传, AR/VR
+### 4. 联盟知识产权与商标
 
-2. mMTC(大规模机器通信)
-   - 密度: 100万设备/km2
-   - 特点: 低功耗, 低数据率, 海量连接
-   - IoT应用: 智慧城市传感器网络, 大规模环境监测
-
-3. URLLC(超可靠低延迟通信)
-   - 延迟: < 1 ms
-   - 可靠性: 99.999%
-   - IoT应用: 工业控制, 自动驾驶, 远程手术
-```
+**局限**：未加入联盟可能无法用商标或必要专利池。
+**改进**：立项评估会员费与认证成本，写入 BOM。
 
-## 4. IETF(互联网工程任务组)
-
-### 4.1 组织概况
-
-IETF制定互联网协议标准(TCP/IP、HTTP等),以RFC(Request for Comments)文档形式发布。对IoT的核心贡献是让受限设备也能"说IP语言",融入互联网架构。IETF标准全部免费公开——这是互联网精神的体现。
-
-### 4.2 IoT协议栈适配
-
-```
-传统互联网协议栈:         IoT适配版本:
-+------------------+     +------------------+
-|      HTTP        |     |      CoAP        |  RFC 7252
-+------------------+     +------------------+
-|      TCP         |     |      UDP         |
-+------------------+     +------------------+
-|      IPv6        |     |    6LoWPAN       |  RFC 4944, 6282
-+------------------+     +------------------+
-|    Ethernet      |     |   802.15.4       |
-+------------------+     +------------------+
-```
+## 6 总结
 
-### 4.3 关键IoT协议详解
-
-- **6LoWPAN**(IPv6 over Low-Power WPAN): 把40字节IPv6头压缩到几字节,让只能发127字节帧的设备也能用IP通信
-
-- **CoAP**(Constrained Application Protocol): HTTP的轻量版,基于UDP而非TCP,支持观察模式(服务器主动推送变化)和资源发现
-
-- **RPL**(Routing Protocol for LLN): 低功耗有损网络的路由协议,构建树形拓扑(DODAG),适合传感器网络
-
-- **SCHC**(Static Context Header Compression): 极限压缩方案,发送端和接收端预共享"规则",固定字段完全不传,可推导字段不传,结果IPv6+UDP+CoAP的60字节头压缩到仅1-2字节。专为LoRa/NB-IoT等超低带宽网络设计。
-
-## 5. LoRa Alliance(LoRa联盟)
-
-### 5.1 组织概况
-
-LoRa Alliance成立于2015年,是开放非营利组织,负责维护LoRaWAN规范。拥有超过500家成员公司,涵盖芯片厂商(Semtech)、设备制造商、网络运营商和系统集成商。
-
-### 5.2 LoRaWAN规范演进
-
-| 版本 | 年份 | 关键新增特性 |
-|------|------|----------|
-| 1.0 | 2015 | 基础规范(Class A/B/C设备类型) |
-| 1.0.2 | 2016 | 区域参数独立成文档 |
-| 1.0.3 | 2018 | 安全增强(密钥更新机制) |
-| 1.0.4 | 2020 | 中继(Relay)支持,扩展覆盖 |
-| 1.1 | 2017 | 漫游支持,后向兼容入网 |
-
-### 5.3 认证制度
-
-```
-LoRaWAN认证流程:
-1. 厂商开发LoRaWAN终端/网关
-2. 送至授权测试实验室
-3. 测试内容:
-   - 协议一致性(MAC命令正确实现、帧格式合规)
-   - 射频性能(发射功率精度、接收灵敏度)
-   - 互操作性(与参考网关/服务器通信)
-4. 通过后获得"LoRaWAN Certified"标志
-5. 产品可使用LoRaWAN商标进行市场推广
-
-意义: 用户购买认证设备,确信能在全球任何LoRaWAN网络中即插即用
-```
-
-## 6. CSA(连接标准联盟)与Matter
-
-### 6.1 从Zigbee Alliance到CSA
-
-CSA前身是Zigbee Alliance(2021年更名),反映其使命从单一Zigbee扩展到更广泛的IoT互联。最重要的贡献是推出Matter标准,统一智能家居生态。
-
-### 6.2 Zigbee标准
-
-```
-Zigbee 3.0协议栈:
-+---------------------------+
-| Zigbee应用层(ZCL)        |  设备类型和集群定义
-| 灯光/温度/门锁/...       |  (统一的设备描述语言)
-+---------------------------+
-| Zigbee网络层              |  网状网路由, 安全密钥管理
-+---------------------------+
-| IEEE 802.15.4 MAC + PHY   |  底层无线接入
-+---------------------------+
-
-三种设备角色:
-  Coordinator: 网络创建者(每个网络1个)
-  Router: 中继消息(市电供电设备担任, 如灯泡/插座)
-  End Device: 只收发不中继(电池设备, 如传感器)
-```
-
-### 6.3 Matter标准 - 智能家居统一革命
-
-```
-Matter解决的核心痛点:
-  之前: HomeKit设备只能Apple控制
-        Alexa设备只能Amazon控制
-        Google Home设备只能Google控制
-        用户被锁定在单一生态, 不同品牌不互通
-
-  Matter之后: 一个Matter设备, 所有平台都能控制!
-
-技术基础:
-  传输层: WiFi + Thread(两种都支持)
-  网络层: IPv6(统一寻址)
-  发现:   mDNS/DNS-SD(局域网设备发现)
-  安全:   CASE(基于证书的认证和加密)
-  数据模型: 统一的设备描述(继承自Zigbee ZCL经验)
-
-支持厂商: Apple, Google, Amazon, Samsung, 小米, 欧瑞博...
-2022年发布1.0版本, 持续演进中
-```
-
-## 7. Bluetooth SIG(蓝牙技术联盟)
-
-### 7.1 组织概况
-
-Bluetooth SIG成立于1998年,管理蓝牙商标和规范。成员超过36000家,蓝牙是全球部署最广泛的短距无线标准之一。
-
-### 7.2 BLE演进(IoT相关里程碑)
-
-| 版本 | 年份 | IoT关键特性 |
-|------|------|-------------|
-| 4.0 | 2010 | 引入BLE(低功耗蓝牙),IoT起点 |
-| 4.2 | 2014 | 更大MTU, 6LoWPAN over BLE(IP连接) |
-| 5.0 | 2016 | 2倍速率, 4倍距离, 8倍广播容量 |
-| 5.1 | 2019 | AoA/AoD到达角定位(厘米级室内定位) |
-| 5.2 | 2020 | LE Audio(LC3编码), 等时信道 |
-| 5.4 | 2023 | PAwR(周期广播+响应), 电子货架标签 |
-| 6.0 | 2024 | 信道探测(厘米级测距, 安全测距) |
-
-### 7.3 Bluetooth Mesh
-
-```
-Bluetooth Mesh(2017年发布):
-  目标: 利用BLE构建大规模网状网络
-
-  关键特征:
-    - 管理式洪泛(Managed Flooding): 不需路由表, 消息广播转发
-    - 发布/订阅模型: 灵活的一对多/多对多消息分发
-    - 网络规模: 理论支持32767个节点
-    - 安全: 网络密钥 + 应用密钥分层加密
-
-  典型应用: 商业照明(数百盏灯统一控制), 楼宇传感器网络
-  局限: 洪泛带来带宽开销, 不适合高数据率, 延迟不确定
-```
-
-## 8. Wi-Fi Alliance与其他组织
-
-### 8.1 Wi-Fi Alliance
-
-Wi-Fi Alliance负责WiFi设备互操作性认证。IoT相关项目:
-
-- **Wi-Fi HaLow**: 基于802.11ah的Sub-1GHz IoT认证(2022年开始)
-- **Wi-Fi 6 TWT**: Target Wake Time让IoT设备约定唤醒时间大幅省电
-- **Wi-Fi EasyMesh**: 多AP协作覆盖,统一管理大面积IoT部署
-- **Wi-Fi Aware**: 设备间直接发现和通信(无需AP)
-
-### 8.2 ETSI(欧洲电信标准协会)
-
-- SmartBAN: 专为可穿戴医疗设备的体域网标准
-- LTN: 为Sigfox等超窄带LPWAN制定规范
-- EN 303 645: 消费类IoT安全基线标准(2020年发布,欧洲强制参考,13条安全要求含"无默认密码")
-- oneM2M(ETSI参与): IoT服务层标准,跨底层通信技术的设备管理和数据管理
-
-### 8.3 ITU(国际电信联盟)
-
-- WRC(世界无线电通信大会): 每3-4年决定频谱分配规则(影响所有无线IoT)
-- IMT-2020: 定义5G三大场景需求(指导3GPP标准开发)
-- IMT-2030: 6G愿景(感知通信一体化,千亿连接目标)
-- ITU-T Y.4000系列: IoT参考架构和术语统一
-
-### 8.4 ISO/IEC
-
-- ISO 18000系列: RFID标准(18000-6C即EPC Gen2,最广泛的UHF RFID)
-- ISO/IEC 30141: IoT通用参考架构框架
-- ISO/IEC 27400: IoT安全风险评估和控制措施指南
-
-## 9. 标准制定流程
-
-### 9.1 典型标准生命周期
-
-```
-一个标准从想法到发布:
-
-阶段1 - 提案(6-12个月):
-  公司/研究者提出需求, 形成Study Item, 组建Working Group
-
-阶段2 - 草案(12-24个月):
-  Working Group讨论技术方案, 各公司贡献提案
-  投票或共识选择最优方案, 形成Draft标准
-
-阶段3 - 审核(6-12个月):
-  公开征求意见(Public Review)
-  互操作性测试(Plugfest: 各厂商设备现场互通测试)
-
-阶段4 - 发布:
-  正式投票通过, 发布标准文档, 开始认证程序
-
-阶段5 - 演进:
-  收集实施反馈, 发布勘误, 启动下一版本
-
-总周期通常3-5年(从提案到正式发布)
-```
-
-### 9.2 标准层次关系
-
-```
-IoT连接标准的垂直层次:
-
-        应用/服务层: Matter | Zigbee 3.0 | HomeKit | oneM2M
-                          |
-        网络/传输层: Thread | 6LoWPAN | IP/UDP/CoAP
-                          |
-        链路/物理层: BLE | 802.15.4 | WiFi | LoRa | NB-IoT | 5G NR
-                          |
-        频谱管理层: ITU频谱分配 | FCC Part 15 | ETSI EN 300 220
-```
-
-## 10. IoT开发者实用指南
-
-### 10.1 场景与标准选择
-
-| 应用场景 | 推荐标准 | 标准组织 | 选择理由 |
-|----------|----------|----------|----------|
-| 智能家居 | Matter/Thread/BLE | CSA/Bluetooth SIG | 统一生态,用户体验 |
-| 工业监测 | WirelessHART/NB-IoT | IEC/3GPP | 高可靠,既有部署 |
-| 智慧城市 | LoRaWAN/NB-IoT | LoRa Alliance/3GPP | 广覆盖,低功耗 |
-| 可穿戴 | BLE 5.x | Bluetooth SIG | 超低功耗,手机兼容 |
-| 车联网 | C-V2X/5G NR | 3GPP | 低延迟,高可靠 |
-| 农业 | LoRaWAN | LoRa Alliance | 超远距离,极低功耗 |
-
-### 10.2 开发者建议
-
-- 选择有广泛产业支持的活跃标准(避免"押错赛道")
-- 关注标准路线图提前规划产品演进(如NB-IoT向5G核心网迁移)
-- 参与Plugfest和互操作性测试(发现实现差异)
-- 获取官方认证(LoRaWAN Certified/Bluetooth Qualified)增加市场信任
-- 在标准尚未成熟的领域保持架构灵活性(如预留协议切换能力)
-
-## 总结
-
-IoT连接标准化是多层次多组织协作的复杂生态:
-
-- 标准解决互操作性、市场信心和厂商独立性的核心问题
-- IEEE负责底层PHY/MAC(802.15.4是IoT物理层基石)
-- 3GPP主导蜂窝IoT演进(NB-IoT/LTE-M/5G RedCap)
-- IETF让受限设备说IP语言(6LoWPAN/CoAP/SCHC)
-- 行业联盟推动应用落地(LoRa Alliance/CSA/Bluetooth SIG)
-- Matter标准正在统一碎片化的智能家居生态
-- 标准制定需3-5年耐心,开发者应关注路线图提前布局
+IoT 连接标准是分层生态：IEEE/3GPP 打底，IETF 接 IP，联盟推应用与认证。选型跟场景与活跃度，落地靠认证与互操作测试。
 
 ## 参考文献
 
-1. IEEE Standards Association. (2020). IEEE 802.15.4-2020: Standard for Low-Rate Wireless Networks.
-2. 3GPP. (2022). TR 23.700-28: Study on Evolution of Cellular IoT.
-3. Bormann, C., et al. (2012). 6LoWPAN: The Wireless Embedded Internet. Wiley.
-4. Connectivity Standards Alliance. (2022). Matter Specification Version 1.0.
-5. ITU-R. (2023). IMT-2030 Framework Recommendation.
+[1] IEEE Standards Association, "IEEE 802.15.4: Standard for Low-Rate Wireless Networks," 2020.
+
+[2] 3GPP TR 23.700-28 / Cellular IoT evolution related studies, Rel-17 era.
+
+[3] C. Bormann et al., "6LoWPAN: The Wireless Embedded Internet," Wiley, 2012; IETF RFC 4944/6282/7252.
+
+[4] Connectivity Standards Alliance, "Matter Specification," 1.0+, 2022–.
+
+[5] ITU-R, "IMT-2030 Framework Recommendation," 2023.
+
+[6] LoRa Alliance, "LoRaWAN Specification," v1.0.4 / regional parameters.
+
+[7] Bluetooth SIG, "Bluetooth Core Specification," 5.x/6.0 LE features.
+
+[8] ETSI EN 303 645, "Cyber Security for Consumer IoT," 2020.
+
+[9] Wi-Fi Alliance, "Wi-Fi HaLow" and TWT related materials.
+
+[10] ISO/IEC 30141, "Internet of Things Reference Architecture."
+
+[11] 3GPP TS 36.300 / 38.300, E-UTRA / NR overall descriptions (IoT related features).
