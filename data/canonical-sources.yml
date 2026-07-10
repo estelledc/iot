@@ -1,0 +1,17 @@
+schema_version: 1
+
+canonical_css:
+  - path: docs/assets/css/jx-override.css
+    removed_duplicate: overrides/assets/css/jx-override.css
+  - path: docs/assets/css/jx-tokens.css
+    removed_duplicate: overrides/assets/css/jx-tokens.css
+
+# 根 papers/ 是项目早期归档。用户约束禁止删除或重写已有学习正文，
+# 因此当前只把它声明为只读 mirror，并用哈希门禁阻止两份内容漂移。
+legacy_markdown_mirrors:
+  - canonical: docs/computing/papers/edge-computing-survey.md
+    mirror: papers/edge-computing-survey/index.md
+    policy: READ_ONLY_MIRROR
+  - canonical: docs/intelligence/papers/jupiter.md
+    mirror: papers/jupiter/index.md
+    policy: READ_ONLY_MIRROR
