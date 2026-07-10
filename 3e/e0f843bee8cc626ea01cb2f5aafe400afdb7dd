@@ -1,0 +1,31 @@
+data/canonical-sources.yml
+  s_e4c0c7532fd857::t_8df9f760f9f79c 1-17
+docs/frontier/index.md
+  s_e4c0c7532fd857::t_1e102c59ee7741 54-56
+papers/README.md
+  s_e4c0c7532fd857::t_df8c4ea53803a4 1-10
+tools/check_duplicates.py
+  s_e4c0c7532fd857::t_7ee51212c7b0fe 1-84
+tools/check_markdown_fences.py
+  s_e4c0c7532fd857::t_c02c2a51f778ef 1-79
+tools/check_markdown_links.py
+  s_e4c0c7532fd857::t_776d75badbdcd2 1-180
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3ee0f843bee8cc626ea01cb2f5aafe400afdb7dd",
+  "prompts": {},
+  "sessions": {
+    "s_e4c0c7532fd857": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_e4c0c7532fd857",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
