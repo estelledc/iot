@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 637
-  in_review: 5
+  pending: 617
+  in_review: 25
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -47,102 +47,142 @@ articles:
   layer: 8
   path: docs/frontier/papers/digital-twin-edge-offloading.md
   batch: L8-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B02
 - id: dna-storage-biocomputing
   layer: 8
   path: docs/frontier/papers/dna-storage-biocomputing.md
   batch: L8-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B02
 - id: edge-causal-reasoning
   layer: 8
   path: docs/frontier/papers/edge-causal-reasoning.md
   batch: L8-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B02
 - id: edge-native-architecture
   layer: 8
   path: docs/frontier/papers/edge-native-architecture.md
   batch: L8-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B02
 - id: embodied-ai-iot
   layer: 8
   path: docs/frontier/papers/embodied-ai-iot.md
   batch: L8-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B02
 - id: energy-internet-eot
   layer: 8
   path: docs/frontier/papers/energy-internet-eot.md
   batch: L8-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B03
 - id: explainable-ai-iot
   layer: 8
   path: docs/frontier/papers/explainable-ai-iot.md
   batch: L8-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B03
 - id: federated-llm-iot
   layer: 8
   path: docs/frontier/papers/federated-llm-iot.md
   batch: L8-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B03
 - id: green-edge-computing
   layer: 8
   path: docs/frontier/papers/green-edge-computing.md
   batch: L8-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B03
 - id: holographic-communication
   layer: 8
   path: docs/frontier/papers/holographic-communication.md
   batch: L8-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B03
 - id: human-machine-symbiosis-iot
   layer: 8
   path: docs/frontier/papers/human-machine-symbiosis-iot.md
   batch: L8-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B04
 - id: metaverse-infrastructure
   layer: 8
   path: docs/frontier/papers/metaverse-infrastructure.md
   batch: L8-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B04
 - id: optical-computing-interconnect
   layer: 8
   path: docs/frontier/papers/optical-computing-interconnect.md
   batch: L8-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B04
 - id: quantum-iot-security
   layer: 8
   path: docs/frontier/papers/quantum-iot-security.md
   batch: L8-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B04
 - id: ris-intelligent-surface
   layer: 8
   path: docs/frontier/papers/ris-intelligent-surface.md
   batch: L8-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B04
 - id: self-evolving-network
   layer: 8
   path: docs/frontier/papers/self-evolving-network.md
   batch: L8-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B05
 - id: semantic-communication-iot
   layer: 8
   path: docs/frontier/papers/semantic-communication-iot.md
   batch: L8-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B05
 - id: space-air-ground-iot
   layer: 8
   path: docs/frontier/papers/space-air-ground-iot.md
   batch: L8-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B05
 - id: swarm-intelligence-iot
   layer: 8
   path: docs/frontier/papers/swarm-intelligence-iot.md
   batch: L8-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B05
 - id: wasm-edge-runtime
   layer: 8
   path: docs/frontier/papers/wasm-edge-runtime.md
   batch: L8-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L8-B05
 - id: ar-vr-industrial-assistance
   layer: 7
   path: docs/applications/papers/ar-vr-industrial-assistance.md
