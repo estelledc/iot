@@ -38,6 +38,7 @@ python tools/generate_layer_catalogs.py --check
 
 - M1 治理基线已完成：frontmatter 全量覆盖、八层 catalog 可发现、CI `--all` 启用。
 - **下一步执行 M2 可信基线**：可执行步骤见 [M2 可信基线推进计划](superpowers/plans/2026-07-10-m2-trust-baseline.md)（审计 schema → 24 篇抽样报告 → 清单可统计 → 部署验收 → v0.3.0）。M2 完成前不启动 M3–M4。
+- **并行推进全量正文深审战役**（`IOT-T034`）：按 Layer 8→1、每批 5 篇对 642 篇做 SOP 级正文深审，审后标 `IN_REVIEW`；进度见 [全量正文深审计划](superpowers/plans/2026-07-10-full-deep-review.md) 与 `data/deep-review-progress.yml`。与 M2 来源审计正交。
 - 实施记录（M1）见 [M1 治理基线计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)。
 
 ## 相关入口
@@ -45,6 +46,7 @@ python tools/generate_layer_catalogs.py --check
 - [学习路线](roadmap.md)
 - [M1 治理基线推进计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)
 - [M2 可信基线推进计划](superpowers/plans/2026-07-10-m2-trust-baseline.md)
+- [全量正文深审战役计划](superpowers/plans/2026-07-10-full-deep-review.md)
 - [Layer 1：感知与硬件](foundation/index.md)
 - [Layer 2：无线接入](connectivity/index.md)
 - [Layer 3：网络协议](network/index.md)
