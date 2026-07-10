@@ -3,187 +3,174 @@ schema_version: '1.0'
 id: time-sync-ptp
 title: 精密时间同步协议：从 NTP 到 IEEE 1588 PTP
 layer: 3
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: technical_analysis
+difficulty: advanced
+reading_time: 28
+prerequisites:
+  - tsn-detnet-industrial
+tags:
+- PTP
+- IEEE 1588
+- gPTP
+- NTP
+- White Rabbit
+- 硬件时间戳
+- 时间同步
+- SyncE
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 精密时间同步协议：从 NTP 到 IEEE 1588 PTP
 
-> 难度：🟠 进阶 | 预计阅读：35 分钟 | 最后更新：2025-06
+> **难度**：🟠 进阶 | **领域**：时间同步、TSN、电信与工业 | **阅读时间**：约 28 分钟
+
+## 日常类比
+
+手机后台对时差几十毫秒无感，像约饭“前后几分钟都算准时”。工厂时间敏感网络（TSN）门控、5G 时分双工（Time Division Duplex, TDD）帧对齐则像百米赛的发令枪：各交换机/基站若各快各的几微秒，高优先级帧会撞门、邻区会互相干扰。网络时间协议（Network Time Protocol, NTP）是日常对表；精密时间协议（Precision Time Protocol, PTP / IEEE 1588）和 gPTP（IEEE 802.1AS）是产线与基站的发令系统[1][2][3]。
 
 ## 摘要
 
-时间同步是确定性网络、工业控制、5G 通信和金融交易的基础设施。没有精确的共同时间基准，TSN 的门控调度无法工作，5G 的 TDD 帧对齐无法实现，高频交易的订单时序无法保证。本文从时间同步的基本原理出发，系统介绍从 NTP（毫秒级）到 PTP/gPTP（亚微秒级）再到 White Rabbit（亚纳秒级）的技术阶梯，分析硬件时间戳与软件时间戳的精度差异，并讨论主要应用场景。
+从 GNSS 根时钟到 NTP、PTP/gPTP、White Rabbit 的精度阶梯，说明 E2E/P2P 延迟测量、硬件与软件时间戳差异，以及 5G、电力、金融等场景需求。精度数字为典型量级，受跳数、负载、晶振与时间戳位置影响很大[1][4]。
 
-**关键词**：时间同步；IEEE 1588；PTP；gPTP；NTP；White Rabbit；硬件时间戳；TSN
+## 1. 为何需要精密同步
 
-## 1 引言：为什么时间同步很重要
+| 场景 | 同步失效的后果（定性） |
+|------|------------------------|
+| TSN 802.1Qbv | 门控相位错，实时帧被挡或抖动恶化 |
+| 5G TDD | 邻站上下行干扰 |
+| 金融审计 | 订单时序不合规、争议难裁定 |
 
-时间同步在日常生活中无处不在，只是我们很少注意到。你的手机、电脑、电视机顶盒都在后台默默和网络上的时间服务器对表——这就是 NTP（Network Time Protocol）在工作。日常使用中，差个几十毫秒完全无感。
+## 2. 技术阶梯
 
-但在某些场景中，时间精度是生死攸关的：
+### 2.1 GNSS 与本地原子钟
 
-在工厂里，TSN 网络的 802.1Qbv 门控调度要求所有交换机的时钟同步到微秒级——如果 A 交换机认为现在是 t=0（开门），但 B 交换机认为现在是 t=2μs（还在关门），高优先级数据包就会被 B 挡住。
+全球导航卫星系统（GNSS）接收机可恢复 UTC，精度常达数十纳秒量级；室内/干扰/欺骗是风险。关键设施常用 GNSS + 本地铷/铯保持[10]。
 
-在 5G 网络中，TDD（时分双工）模式要求基站在精确的时间点切换上下行——如果两个相邻基站的时钟偏差超过几微秒，就会产生严重的上下行干扰。
+### 2.2 IEEE 1588 PTP
 
-在金融交易中，MiFID II 法规要求高频交易系统的时间戳精度达到 1 微秒——因为纳斯达克每微秒处理数千笔订单，时序错误可能导致巨额损失或监管处罚。
+主从交换 Sync/Follow_Up 与 Delay_Req/Delay_Resp（或对等延迟），用四时间戳估延迟与偏差并校正时钟。版本演进：v1（2002）→ v2（2008）→ IEEE 1588-2019[1]。
 
-## 2 时间同步层次结构
+| 机制 | 做法 | 适用 |
+|------|------|------|
+| End-to-End (E2E) | 端到端测延迟 | 简单路径 |
+| Peer-to-Peer (P2P) | 逐跳测链路延迟再累加 | 交换网络；gPTP 强制 |
 
-精密时间同步形成了一个清晰的层次结构，从最精确到最普及：
+### 2.3 IEEE 802.1AS（gPTP）
 
-### 2.1 GPS/GNSS — 纳秒级的"终极时钟源"
+| 特性 | 通用 PTP | gPTP (802.1AS) |
+|------|----------|----------------|
+| 延迟测量 | E2E 或 P2P | 仅 P2P |
+| 传输 | UDP/IP 或 L2 | 主要为 L2 |
+| 时间戳 | 软/硬皆可 | 要求硬件时间戳 |
+| 同步间隔 | 可配 | 常见固定较短间隔（如 125 ms 量级） |
+| 多域/冗余 GM | 视版本与配置文件 | 2020 版增强 |
 
-GPS 卫星上搭载了原子钟（铯钟或铷钟），精度达到纳秒级。GPS 接收器通过接收卫星信号、计算传播延迟，可以恢复出 UTC 时间，精度通常在 **10-50 纳秒**。
+端到端同步常可达亚微秒至百纳秒量级（跳数与硬件相关），满足多数 TSN 域需求[2]。
 
-GPS 是大多数时间同步系统的"根"。但 GPS 有局限：需要室外天线接收卫星信号，在室内、隧道、地下等环境无法使用；且 GPS 信号容易被干扰（jamming）或欺骗（spoofing）。因此，关键基础设施通常使用 GPS 作为主时钟源，但配备本地原子钟（铷/铯）作为 GPS 失锁时的后备。
+## 3. 硬件 vs 软件时间戳
 
-### 2.2 IEEE 1588 PTP — 亚微秒级的工业标准
+| 方式 | 打戳位置 | 精度量级倾向 | 主要抖动源 |
+|------|----------|--------------|------------|
+| 用户态软件 | 应用 | 数百 μs–ms | 调度与协议栈 |
+| 内核软件 | 网络栈 | 数十 μs 量级 | 中断与栈 |
+| MAC 硬件 | MAC | 数十 ns 量级 | 时钟分辨率 |
+| PHY 硬件 | PHY | 数 ns 量级 | PHY 设计 |
 
-IEEE 1588（Precision Time Protocol，精密时间协议）是目前工业界最广泛使用的高精度时间同步协议。最初版本 PTPv1 发布于 2002 年，2008 年发布的 PTPv2（IEEE 1588-2008）做了重大改进，2019 年发布了最新修订版 IEEE 1588-2019。
+Linux `SO_TIMESTAMPING` 与 PTP Hardware Clock（PHC）支撑硬件打戳；网卡/交换芯片是否支持需硬件选型确认[1]。
 
-PTP 的基本原理可以用一个简单的类比来理解——两个人互相寄信来对表：
+## 4. 精度对照（典型量级）
 
-Alice（主时钟，Master）在 t1 时刻给 Bob（从时钟，Slave）寄一封信，信上写着"我在 t1 寄出"。Bob 在 t2 时刻收到信。然后 Bob 在 t3 时刻给 Alice 回信，Alice 在 t4 收到。通过 t1、t2、t3、t4 四个时间戳，可以算出两人之间的时钟偏差（Offset）和信件的单程传输延迟（Delay）：
+| 技术 | 典型精度量级 | 覆盖 | 主要应用 |
+|------|--------------|------|----------|
+| NTP | ms 级 | 互联网 | IT/日志 |
+| Chrony 等 | 亚 ms–ms（LAN 更好） | 互联网/LAN | 服务器 |
+| PTP 软件戳 | 数十 μs 量级 | LAN | 非关键工业 |
+| PTP 硬件戳 | 数十–数百 ns | LAN | 电信/工控 |
+| gPTP | 数十–数百 ns | TSN 域 | 工业自动化 |
+| White Rabbit | 亚 ns–ns | 专用光纤 | 科学/部分金融试验 |
+| GNSS | 数十 ns | 室外 | 根时钟 |
+| 铯钟 | 日漂移极低 | 本地 | 时间基准 |
 
-- 延迟 = ((t2 - t1) + (t4 - t3)) / 2
-- 偏差 = ((t2 - t1) - (t4 - t3)) / 2
+## 5. White Rabbit 与高频配置文件
 
-Bob 知道了偏差后，就可以调整自己的时钟。这个过程周期性重复（每秒数次到数十次），持续校正时钟漂移。
+CERN White Rabbit 在 PTP 上叠加同步以太网（Synchronous Ethernet, SyncE）频率同步与 DDMTD 相位测量，追求亚纳秒。需专用设备与光纤，铜缆不对称性难满足。IEEE 1588-2019 纳入 High Accuracy（HA）相关能力，降低从实验室到标准的门槛[4][5][11]。
 
-PTP 定义了两种延迟测量机制：
+## 6. 应用要点
 
-**End-to-End（E2E）**：Sync/Follow_Up 消息从 Master 到 Slave（下行），Delay_Req/Delay_Resp 从 Slave 到 Master（上行）。适用于点对点链路。
+### 6.1 5G RAN
 
-**Peer-to-Peer（P2P）**：每段链路上的两个节点独立测量链路延迟（Pdelay_Req/Pdelay_Resp），然后逐跳累加计算端到端延迟。适用于交换网络，也是 802.1AS 强制使用的机制。
+| 需求 | 量级（标准/常见要求） |
+|------|------------------------|
+| TDD 帧对齐 | 约 μs 级（如 3GPP 基站要求量级）[6] |
+| 载波聚合/波束 | 可到百 ns 内更严 |
+| 高精度定位 | 基站间同步可到十 ns 量级目标 |
 
-### 2.3 802.1AS (gPTP) — TSN 的时间基准
+常用 PTP + SyncE；电信配置文件如 ITU-T G.8275.1[7]。
 
-802.1AS 是 PTP 在 TSN 中的"特化版本"（Profile）。与通用 PTP 相比，802.1AS 做了以下简化和增强：
+### 6.2 电力与金融
 
-| 特性 | IEEE 1588 PTP (通用) | IEEE 802.1AS (gPTP) |
-|------|---------------------|---------------------|
-| 延迟测量 | E2E 或 P2P | 仅 P2P (Peer Delay) |
-| 传输层 | UDP/IPv4、UDP/IPv6、L2 | 仅 L2 (直接以太网帧) |
-| Best Master Clock | BMCA 全功能 | 简化版 BMCA |
-| 时间戳 | 硬件或软件 | 强制硬件时间戳 |
-| 同步间隔 | 可配（0.0625s-64s） | 固定 125ms |
-| 多域支持 | PTPv2 不支持 | 802.1AS-2020 支持 |
-| 热备份 Grand Master | 不标准化 | 802.1AS-2020 标准化 |
+同步相量测量单元（PMU）常需约 μs 级；电力系统 PTP Profile（如 IEEE C37.238）指导部署[8]。金融监管（如 MiFID II）对交易时间戳提出微秒级且可溯源 UTC 等要求；交易所多 GNSS+PTP 冗余，White Rabbit 仍属评估/局部[9][10]。
 
-802.1AS 强制使用硬件时间戳和 P2P 延迟测量，使其在 TSN 网络中可以实现 **<100 纳秒到 <1 微秒** 的端到端同步精度（取决于跳数和硬件质量）。
+## 7. 安全与运维（简述）
 
-## 3 硬件时间戳 vs 软件时间戳
+PTP 消息默认可被延迟攻击或伪造；NTP 侧有 NTS（RFC 8915），PTP 安全（如 Annex P 认证等）在推进中，部署应规划认证与路径冗余[1][9]。SDN/集中工具可辅助监视 BMCA 与同步异常，但不能替代物理层与硬件质量。
 
-时间同步的精度很大程度上取决于"打时间戳的位置"。这个差别非常直观：
+## 8. 局限、挑战与可改进方向
 
-**软件时间戳**：在操作系统内核或用户态记录时间戳。此时数据包已经经过了驱动程序、中断处理、内核协议栈等多层软件处理，每一层都引入不确定的延迟（几微秒到几百微秒）。这些延迟的抖动直接转化为时间同步误差。
+### 1. 软件时间戳误用于硬实时
 
-**硬件时间戳**：在网卡（PHY 或 MAC 层）硬件中，数据包刚进入或刚离开物理层时记录时间戳。此时完全绕过了软件处理的不确定延迟，精度可以达到纳秒级。
+**局限**：用普通网卡软件 PTP 宣称“工业 μs 同步”，现场抖动超标。
+**改进**：TSN/工控强制硬件时间戳与支持 802.1AS 的交换芯片；验收测负载下最大 |offset|[2]。
 
-| 时间戳方式 | 打戳位置 | 典型精度 | 抖动来源 | 成本 |
-|-----------|----------|---------|---------|------|
-| 用户态软件 | 应用层 | 数百微秒~毫秒 | OS调度+协议栈+驱动 | 零(纯软件) |
-| 内核软件 | 网络层/传输层 | 数十微秒 | 中断处理+协议栈 | 零(需内核支持) |
-| MAC 硬件 | MAC 层 | 数十纳秒 | MAC 时钟分辨率 | 低(多数现代网卡支持) |
-| PHY 硬件 | 物理层 | 数纳秒 | PHY 时钟分辨率 | 中(需专用 PHY 芯片) |
+### 2. GNSS 单点依赖
 
-Linux 从 4.x 内核开始通过 `SO_TIMESTAMPING` 套接字选项和 PTP Hardware Clock（PHC）子系统提供了完善的硬件时间戳支持。Intel i210/i225/i226 网卡、Broadcom BCM5396 交换机芯片、NXP SJA1105 TSN 交换机等都支持 PHY/MAC 级硬件时间戳。
+**局限**：干扰/欺骗导致全域失步。
+**改进**：本地原子钟保持；多源（GNSS+地面 PTP）；监控 holdover 时长与告警[10]。
 
-## 4 精度层级对比
+### 3. 非对称与级联误差
 
-不同时间同步技术适用于不同的精度需求：
+**局限**：光纤/铜缆不对称、过多跳数累积误差。
+**改进**：校准不对称；限制关键域直径；P2P + 透明时钟/边界时钟正确配置[1][2]。
 
-| 技术 | 典型精度 | 最佳精度 | 覆盖范围 | 依赖 | 成本 | 主要应用 |
-|------|---------|---------|---------|------|------|---------|
-| NTP | 1-50ms | ~1ms(LAN) | 互联网(全球) | 无特殊要求 | 极低 | IT系统/日志/证书 |
-| Chrony(NTP增强) | 0.1-10ms | ~100μs(LAN) | 互联网/LAN | 无 | 极低 | Linux服务器 |
-| PTP(软件时间戳) | 10-100μs | ~5μs | LAN | PTP协议栈 | 低 | 非关键工业 |
-| PTP(硬件时间戳) | 20-200ns | ~10ns | LAN | PTP硬件 | 中 | 电信/工业控制 |
-| 802.1AS(gPTP) | 50-500ns | ~20ns | TSN域 | TSN交换机 | 中高 | TSN/工业自动化 |
-| White Rabbit | 50ps-1ns | ~10ps | 专用光纤 | WR硬件 | 高 | 科学实验/粒子加速器 |
-| GPS/GNSS | 10-50ns | ~5ns | 全球(室外) | GPS接收器 | 中 | 时钟源/电信/电力 |
-| 原子钟(铯) | <1ns漂移/天 | ~0.1ns/天 | 本地 | 铯原子钟 | 极高 | 时间基准/GPS卫星 |
+### 4. 安全缺口
 
-## 5 White Rabbit：亚纳秒级同步
+**局限**：未认证 PTP 可被中间人拨快拨慢，门控与取证失效。
+**改进**：启用认证扩展/独立安全通道；关键路径物理分区；定期审计 Grand Master[1][9]。
 
-White Rabbit（WR）是 CERN（欧洲核子研究中心）为大型强子对撞机（LHC）的时序控制系统开发的超高精度时间同步技术。它在标准 PTP 基础上叠加了两项关键技术：
+## 9. 选型小结
 
-**同步以太网（SyncE）**：通过物理层时钟恢复实现频率同步。传统以太网的时钟是自由振荡的，SyncE 让所有节点从链路中恢复出统一的参考频率，消除了时钟漂移。
+| 需求 | 倾向方案 |
+|------|----------|
+| 日常 IT | NTP/Chrony |
+| 工业 TSN | gPTP + 硬件戳 |
+| 5G 前传 | PTP + SyncE（电信 Profile） |
+| 亚纳秒科学/特殊金融 | White Rabbit / HA |
 
-**DDMTD（Digital Dual Mixer Time Difference）**：一种亚纳秒级的相位测量技术。通过将两个相近频率的时钟信号"拍频"（类似两个频率接近的音叉会产生"拍"），将纳秒级的时间差"放大"到微秒级，从而用普通的数字电路实现超高精度测量。
+## 10. 总结
 
-WR 的典型精度为 **<1 纳秒**，最优可达 **数十皮秒**。但 WR 需要专用的 WR 交换机和 WR 终端节点，且仅支持光纤链路（铜缆的延迟不对称性太大）。
-
-WR 已从 CERN 走向更广泛的应用：2024 年 NIST（美国国家标准与技术研究院）将 WR 用于其新一代时间分发网络；多个金融交易所正在评估 WR 用于交易时间戳；5G 前传网络（Fronthaul）也在探索 WR 技术实现 <100ns 的基站间同步。
-
-White Rabbit 已被纳入 IEEE 1588-2019 标准作为 "High Accuracy" Profile（也称 PTP HA），标志着从实验室技术向工业标准的转变。
-
-## 6 应用场景深度分析
-
-### 6.1 5G RAN 时间同步
-
-5G 无线接入网（RAN）的时间同步要求极其严格：
-
-**TDD 帧同步**：5G TDD 模式要求相邻基站（gNB）的帧对齐精度 <1.5μs（3GPP TS 38.104），否则上下行会相互干扰。
-
-**载波聚合**：多载波聚合（CA）要求不同载波间的时间对齐精度 <260ns。
-
-**MIMO/Beamforming**：大规模 MIMO 的波束赋形需要天线端口间 <65ns 的时间对齐。
-
-**定位服务**：5G 高精度定位（<1m）需要基站间 <10ns 的同步精度。
-
-5G 前传网络普遍采用 PTP + SyncE 的组合方案：SyncE 提供稳定的频率基准，PTP 提供相位/时间对齐。ITU-T G.8275.1 Profile 定义了电信级 PTP 部署规范。
-
-### 6.2 电力系统
-
-智能电网中的同步相量测量单元（PMU）需要 <1μs 的时间同步精度来准确测量电力系统的相位角。IEEE C37.238-2017 定义了电力系统 PTP Profile。
-
-传统上 PMU 依赖 GPS 作为时间源，但 GPS 的脆弱性（干扰、欺骗、室内覆盖）促使电力行业探索 PTP 作为 GPS 的补充或替代方案。2024 年 IEEE Power & Energy Society 的报告指出，PTP 网络时间同步在美国和欧洲的多个电网已投入运营，实测精度 **<100ns**，满足 PMU 需求。
-
-### 6.3 金融交易
-
-MiFID II（欧盟金融工具市场指令）要求高频交易系统的时间戳精度达到 **1 微秒**，且必须可溯源至 UTC。美国 SEC 的 Consolidated Audit Trail（CAT）规定类似要求。
-
-金融交易所普遍部署 PTP Grand Master + GPS 双冗余架构。纽约和伦敦的主要交易所使用 Spectracom/Oscilloquartz 等厂商的 PTP 设备，实现 <100ns 的全场同步。部分超低延迟交易场所（如 IEX）已开始评估 White Rabbit 技术。
-
-## 7 2024-2025 年前沿动态
-
-**IEEE 1588-2019 的工业采纳**：最新修订版增加了增强精度（包括 White Rabbit HA Profile）、域间冗余、安全增强（annex P 的 AUTHENTICATION TLV）等功能。2024-2025 年各厂商芯片逐步支持新特性。
-
-**PTP Security（IEEE 1588 Annex P + IETF）**：PTP 消息默认不加密不认证，容易被中间人攻击或延迟攻击。2024 年 IETF 发布了 NTS（Network Time Security）for NTP 的 RFC 8915，PTP 的安全增强也在推进。
-
-**Software-Defined Time Sync**：利用 SDN 控制器集中管理 PTP 拓扑和 BMCA 选举，动态调整同步路径。2024 年 Huawei 发布了基于 SDN 的 PTP 运维平台，可自动检测和隔离时间同步异常。
-
-**时间敏感的数字孪生**：将时间同步精度纳入数字孪生的建模范围，用于预测 PTP 路径变化对 TSN 调度的影响。
-
-## 8 总结
-
-时间同步是一个"越精确越好，但越精确越贵"的领域。选择方案的关键是匹配应用需求：
-
-- 日常 IT 系统 → NTP/Chrony（毫秒级，零成本）
-- 工业自动化 → PTP + 硬件时间戳 / 802.1AS（亚微秒级，中等成本）
-- 电信 5G → PTP + SyncE（百纳秒级，需电信级硬件）
-- 科学实验/金融 → White Rabbit（亚纳秒级，高成本专用设备）
-
-2024-2025 年的趋势是时间同步向"更精确、更安全、更自动化"三个方向演进。White Rabbit 的 IEEE 标准化降低了采纳门槛，PTP 安全增强填补了长期存在的安全缺口，SDN 化运维提升了大规模部署的可管理性。对于 IoT 工程师来说，理解 PTP/gPTP 的基本原理和部署方法是进入工业 IoT、5G 和边缘计算领域的必备知识。
+时间同步是“精度换成本”的阶梯：先匹配应用（ms / μs / ns），再选协议、时间戳位置与时钟源冗余。IoT/工业工程师掌握 PTP 与 gPTP 的测量机制和硬件前提，是落地 TSN 与 5G 边缘的基础。
 
 ## 参考文献
 
-1. IEEE 1588-2019. IEEE Standard for a Precision Clock Synchronization Protocol for Networked Measurement and Control Systems. IEEE, 2019.
-2. IEEE 802.1AS-2020. Timing and Synchronization for Time-Sensitive Applications. IEEE, 2020.
-3. Mills, D., et al. "Network Time Protocol Version 4: Protocol and Algorithms Specification." RFC 5905, IETF, 2010.
-4. Moreira, P., et al. "White Rabbit: Sub-Nanosecond Timing Distribution over Ethernet." ISPCS, 2009.
-5. Lipiński, M., et al. "White Rabbit: A PTP Application for Robust Sub-Nanosecond Synchronization." ISPCS, 2011.
-6. 3GPP TS 38.104. NR: Base Station (BS) Radio Transmission and Reception. Release 17, 2022.
-7. ITU-T G.8275.1. Precision Time Protocol Telecom Profile for Phase/Time Synchronization with Full Timing Support from the Network. 2020.
-8. IEEE C37.238-2017. IEEE Standard Profile for Use of IEEE 1588 Precision Time Protocol in Power System Applications. 2017.
-9. Franke, D., et al. "Network Time Security for the Network Time Protocol." RFC 8915, IETF, 2020.
-10. NIST. "Time and Frequency Services: Precision Time Protocol Distribution." NIST Technical Note, 2024.
-11. Dierikx, E., et al. "White Rabbit Precision Time Protocol on Long-Distance Fiber Links." IEEE Transactions on Ultrasonics, Ferroelectrics, and Frequency Control, 2016.
+[1] IEEE, "IEEE 1588-2019: Precision Clock Synchronization Protocol for Networked Measurement and Control Systems," 2019.
+
+[2] IEEE, "IEEE 802.1AS-2020: Timing and Synchronization for Time-Sensitive Applications," 2020.
+
+[3] D. Mills et al., "Network Time Protocol Version 4," RFC 5905, IETF, 2010.
+
+[4] P. Moreira et al., "White Rabbit: Sub-Nanosecond Timing Distribution over Ethernet," ISPCS, 2009.
+
+[5] M. Lipiński et al., "White Rabbit: A PTP Application for Robust Sub-Nanosecond Synchronization," ISPCS, 2011.
+
+[6] 3GPP, "TS 38.104: NR; Base Station (BS) radio transmission and reception," Release 17+.
+
+[7] ITU-T, "G.8275.1: PTP Telecom Profile for Phase/Time Synchronization with Full Timing Support," 2020.
+
+[8] IEEE, "C37.238-2017: PTP Profile for Power System Applications," 2017.
+
+[9] D. Franke et al., "Network Time Security for the Network Time Protocol," RFC 8915, IETF, 2020.
+
+[10] NIST, "Time and Frequency Services / PTP distribution," technical notes, 2024.
+
+[11] E. Dierikx et al., "White Rabbit Precision Time Protocol on Long-Distance Fiber Links," IEEE TUFFC, 2016.

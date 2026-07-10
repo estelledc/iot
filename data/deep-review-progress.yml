@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 517
-  in_review: 125
+  pending: 492
+  in_review: 150
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -887,127 +887,177 @@ articles:
   layer: 3
   path: docs/network/papers/amqp-industrial-messaging.md
   batch: L3-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B01
 - id: apn6-application-aware
   layer: 3
   path: docs/network/papers/apn6-application-aware.md
   batch: L3-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B01
 - id: coap-lwm2m-constrained
   layer: 3
   path: docs/network/papers/coap-lwm2m-constrained.md
   batch: L3-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B01
 - id: dds-data-distribution
   layer: 3
   path: docs/network/papers/dds-data-distribution.md
   batch: L3-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B01
 - id: dtls-tls13-comparison
   layer: 3
   path: docs/network/papers/dtls-tls13-comparison.md
   batch: L3-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B01
 - id: edge-gateway-protocol-conversion
   layer: 3
   path: docs/network/papers/edge-gateway-protocol-conversion.md
   batch: L3-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B02
 - id: intent-based-networking-iot
   layer: 3
   path: docs/network/papers/intent-based-networking-iot.md
   batch: L3-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B02
 - id: iot-app-protocols
   layer: 3
   path: docs/network/papers/iot-app-protocols.md
   batch: L3-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B02
 - id: ipv6-6lowpan-rpl
   layer: 3
   path: docs/network/papers/ipv6-6lowpan-rpl.md
   batch: L3-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B02
 - id: low-latency-transport
   layer: 3
   path: docs/network/papers/low-latency-transport.md
   batch: L3-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B02
 - id: mptcp-multipath-transport
   layer: 3
   path: docs/network/papers/mptcp-multipath-transport.md
   batch: L3-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B03
 - id: mqtt5-deep-dive
   layer: 3
   path: docs/network/papers/mqtt5-deep-dive.md
   batch: L3-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B03
 - id: named-data-networking-iot
   layer: 3
   path: docs/network/papers/named-data-networking-iot.md
   batch: L3-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B03
 - id: network-coding-iot
   layer: 3
   path: docs/network/papers/network-coding-iot.md
   batch: L3-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B03
 - id: network-slicing-iot
   layer: 3
   path: docs/network/papers/network-slicing-iot.md
   batch: L3-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B03
 - id: opc-ua-tsn-industrial
   layer: 3
   path: docs/network/papers/opc-ua-tsn-industrial.md
   batch: L3-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B04
 - id: qos-adaptive-iot
   layer: 3
   path: docs/network/papers/qos-adaptive-iot.md
   batch: L3-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B04
 - id: quic-iot-applicability
   layer: 3
   path: docs/network/papers/quic-iot-applicability.md
   batch: L3-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B04
 - id: sdn-iot-networking
   layer: 3
   path: docs/network/papers/sdn-iot-networking.md
   batch: L3-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B04
 - id: time-sync-ptp
   layer: 3
   path: docs/network/papers/time-sync-ptp.md
   batch: L3-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B04
 - id: traffic-engineering-congestion
   layer: 3
   path: docs/network/papers/traffic-engineering-congestion.md
   batch: L3-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B05
 - id: tsn-detnet-industrial
   layer: 3
   path: docs/network/papers/tsn-detnet-industrial.md
   batch: L3-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B05
 - id: websocket-realtime-iot
   layer: 3
   path: docs/network/papers/websocket-realtime-iot.md
   batch: L3-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B05
 - id: wireguard-vpn-iot
   layer: 3
   path: docs/network/papers/wireguard-vpn-iot.md
   batch: L3-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B05
 - id: wsn-routing-drl
   layer: 3
   path: docs/network/papers/wsn-routing-drl.md
   batch: L3-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L3-B05
 - id: 5g-mmtc-massive-iot-connection
   layer: 2
   path: docs/connectivity/papers/5g-mmtc-massive-iot-connection.md

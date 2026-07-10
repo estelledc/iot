@@ -3,370 +3,221 @@ schema_version: '1.0'
 id: opc-ua-tsn-industrial
 title: OPC UA over TSN：工业互联网融合
 layer: 3
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 21
-prerequisites: UNKNOWN
-tags: []
+reading_time: 22
+prerequisites:
+  - tsn-detnet-industrial
+  - time-sync-ptp
+tags:
+- OPC UA
+- TSN
+- PubSub
+- gPTP
+- IEC 60802
+- IT/OT
+- 确定性网络
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # OPC UA over TSN：工业互联网融合
 
-> **难度**：🟡 中级 | **领域**：工业通信、确定性网络、IT/OT 融合 | **阅读时间**：约 21 分钟
+> **难度**：🟡 中级 | **领域**：工业通信、确定性网络、IT/OT 融合 | **阅读时间**：约 22 分钟
 
 ## 日常类比
 
-想象一条繁忙的高速公路。普通车辆（IT 数据流）可以自由行驶，但是救护车（实时控制数据）需要在任何时候都能畅通无阻地通过。传统做法是给救护车建一条专用车道（专用工业网络），但这很浪费——大部分时间专用车道是空的。
+同一条高速公路上，救护车（实时控制）与普通车（IT 流量）混行。专用车道浪费；时间敏感网络（Time-Sensitive Networking, TSN）像智能信号灯：周期内给救护车留确定窗口，其余时段给普通车。OPC UA（Open Platform Communications Unified Architecture）则是“救护车通信规程”——保证准时到达之外，还约定数据语义。二者叠加，是 IT/OT 共网的常见技术路径[1][5]。
 
-TSN（时间敏感网络）的方案是：还是用同一条高速公路，但增加一套智能信号灯系统。每隔固定时间（比如 1ms），所有普通车辆都必须靠边停，让出车道给救护车通过。救护车走完后，普通车辆继续行驶。这样一条路就能同时服务两种需求。
+## 摘要
 
-OPC UA over TSN 就是在这条"智能高速公路"上跑的"救护车通信系统"——它不仅保证数据准时到达（TSN），还确保数据的含义被正确理解（OPC UA 语义化信息模型）。这是工业 4.0 让 IT 和 OT 网络真正融合的关键技术。
+梳理 OPC UA 信息模型与 PubSub、IEEE 802.1 TSN 关键机制（gPTP、TAS 等），说明 PubSub over TSN 的映射与 IEC/IEEE 60802 工业配置文件要点。文中延迟/抖动数字多为厂商白皮书或论文量级，测量拓扑与负载不同，不可直接横比[6][7]。
 
 ## 1. OPC UA 信息模型
 
-### 1.1 OPC UA 是什么
+### 1.1 角色
 
-OPC UA（Open Platform Communications Unified Architecture）是工业自动化领域的统一通信标准。它不仅是一个通信协议，更是一个完整的信息建模框架：
+OPC UA 既是通信协议，也是信息建模与安全框架[1]：
 
-| OPC UA 的角色 | 具体能力 |
-|--------------|---------|
-| 通信协议 | 客户端-服务器、发布-订阅 |
-| 信息模型 | 面向对象的设备描述 |
-| 安全框架 | 加密、认证、授权 |
-| 发现服务 | 自动发现网络中的服务器 |
-| 历史访问 | 时间序列数据回放 |
+| 角色 | 能力 |
+|------|------|
+| 通信 | 客户端-服务器、发布-订阅（PubSub） |
+| 信息模型 | 面向对象的设备/过程描述 |
+| 安全 | 加密、认证、授权 |
+| 发现 | 网络内服务器发现 |
+| 历史 | 时间序列访问 |
 
-### 1.2 地址空间与节点
+### 1.2 地址空间（示意）
 
-OPC UA 用统一的地址空间描述所有工业设备和数据：
+统一地址空间描述设备与数据（数控机床示意）：
 
 ```
-OPC UA 地址空间（以数控机床为例）:
-Root
-├── Objects
-│   └── CNCMachine_001
-│       ├── Spindle (对象)
-│       │   ├── Speed (变量): 12000 rpm
-│       │   ├── Temperature (变量): 45.2 °C
-│       │   └── Start() (方法)
-│       ├── Axis_X (对象)
-│       │   ├── Position (变量): 125.003 mm
-│       │   ├── Velocity (变量): 500 mm/min
-│       │   └── Home() (方法)
-│       └── Status (变量): Running
-├── Types
-│   └── CNCMachineType (类型定义)
-└── Views
-    └── MaintenanceView (维护视角)
+Root → Objects → CNCMachine_001
+         ├── Spindle（Speed / Temperature / Start()）
+         ├── Axis_X（Position / Velocity / Home()）
+         └── Status
+       Types → CNCMachineType
+       Views → MaintenanceView
 ```
 
 ### 1.3 Companion Specification
 
-OPC UA 的核心优势是行业标准化的信息模型（Companion Specification）：
+行业伴随规范统一字段语义，降低集成成本[1]：
 
-| 行业 | 伴随规范 | 定义内容 |
-|------|---------|---------|
-| 注塑机 | EUROMAP 77 | 机器状态、生产参数 |
-| 包装机 | PackML (OMAC) | 状态机、计数器 |
-| 机器人 | OPC UA Robotics | 运动轴、工具数据 |
-| 机床 | OPC UA CNC | 主轴、进给轴 |
+| 行业 | 伴随规范 | 内容侧重 |
+|------|----------|----------|
+| 注塑 | EUROMAP 77 | 状态、生产参数 |
+| 包装 | PackML (OMAC) | 状态机、计数器 |
+| 机器人 | OPC UA Robotics | 轴、工具 |
+| 机床 | OPC UA CNC | 主轴、进给 |
 | 视觉 | OPC UA Vision | 配方、检测结果 |
 
 ## 2. TSN 时间敏感网络
 
-### 2.1 TSN 标准族
+### 2.1 标准族（节选）
 
-TSN 是 IEEE 802.1 工作组定义的一组以太网增强标准：
+TSN 是 IEEE 802.1 以太网增强集合[2][3][10]：
 
 | 标准 | 名称 | 功能 |
 |------|------|------|
-| 802.1AS-2020 | gPTP | 精确时间同步 (< 1μs) |
-| 802.1Qbv | TAS (Time-Aware Shaper) | 时间调度门控 |
+| 802.1AS-2020 | gPTP | 精确时间同步 |
+| 802.1Qbv | TAS | 时间感知整形（门控） |
 | 802.1Qbu | Frame Preemption | 帧抢占 |
-| 802.1Qcc | SRP enhancements | 流预留配置 |
-| 802.1Qci | PSFP | 逐流过滤和管制 |
-| 802.1CB | FRER | 帧复制和消除冗余 |
+| 802.1Qcc | SRP 增强 | 流预留与集中配置 |
+| 802.1Qci | PSFP | 逐流过滤与管制 |
+| 802.1CB | FRER | 帧复制与消除冗余 |
 
-### 2.2 Time-Aware Shaper (TAS) 工作原理
+### 2.2 Time-Aware Shaper（TAS）
 
-TAS 是 TSN 最核心的机制，它通过时间门控调度实现确定性传输：
+TAS 用门控列表（Gate Control List）按周期开关优先级队列：控制流在固定窗口发送，尽力而为流量填空闲。单跳最坏延迟与周期、门开时长、保护带相关，需按拓扑核算，不宜套用单一“<1 ms”口号[3][10]。
 
-```
-时间门控调度示意 (Gate Control List):
+### 2.3 gPTP 时间同步
 
-    |←── 周期 T = 1ms ──→|
-    
-优先级7 (控制): ████░░░░░░████░░░░░░  (门开→门关→门开)
-优先级5 (视频): ░░░░████░░░░░░████░░  (门关→门开→门关)
-优先级0 (尽力): ░░░░░░░░██░░░░░░░░██  (仅在空闲时段)
-
-████ = 门打开（允许该优先级发送）
-░░░░ = 门关闭（该优先级排队等待）
-
-效果: 
-- 控制数据每 500μs 有一个确定的发送窗口
-- 最大延迟可预测: < T = 1ms (单跳)
-- 尽力而为流量填充剩余带宽
-```
-
-### 2.3 时间同步 (gPTP)
-
-所有 TSN 机制的基础是全网精确时间同步：
-
-```
-gPTP (IEEE 802.1AS) 同步过程:
-
-Grand Master Clock
-     │
-     │ Sync 报文 (t1=发送时间)
-     ↓
-  Switch A ──计算链路延迟──→ 校正本地时钟
-     │
-     │ Sync 报文 (含累积校正)
-     ↓
-  Switch B ──计算链路延迟──→ 校正本地时钟
-     │
-     ↓
-End Station (设备)
-
-同步精度:
-  - 每跳误差: < 50ns
-  - 5跳网络总误差: < 250ns (远优于 NTP 的 ms 级)
-  - 工业要求: 通常 < 1μs 即可
-```
+全网共享时间基准是 TAS/抢占等机制的前提。通用精确时间协议配置文件（generalized Precision Time Protocol, gPTP / IEEE 802.1AS）逐跳测量链路延迟并校正时钟；工业场景常要求端到端同步约亚微秒量级，具体取决于跳数与硬件时间戳质量[2][4]。相对网络时间协议（Network Time Protocol, NTP）的毫秒级，gPTP 面向局域网确定性应用。
 
 ## 3. OPC UA PubSub over TSN
 
-### 3.1 OPC UA 通信模式演进
+### 3.1 模式演进
 
-```
-传统 OPC UA (Client-Server):
-[Controller] ←→ [OPC UA Server on PLC]
-  请求-应答模式，延迟 = 2×网络延迟 + 处理时间
+| 模式 | 路径特征 | 延迟形态（定性） |
+|------|----------|------------------|
+| Client-Server | 请求-应答 | 约 2×网络 + 处理 |
+| PubSub（UDP 多播等） | 单向推送、一对多 | 约 1×网络 |
+| PubSub over TSN | 映射到调度流 | 有界延迟/抖动（依赖配置）[1][5] |
 
-OPC UA PubSub (发布-订阅):
-[Publisher] → [网络 (UDP Multicast)] → [Subscriber 1]
-                                     → [Subscriber 2]
-  单向推送，延迟 = 1×网络延迟，支持一对多
+### 3.2 映射要点
 
-OPC UA PubSub over TSN:
-[Publisher] → [TSN 网络 (确定性调度)] → [Subscriber]
-  确定性延迟 < 1ms，抖动 < 10μs
-```
+以太网 VLAN/优先级标识 TSN 流；OPC UA NetworkMessage 携带 PublisherId、WriterGroup、DataSet、序号等。发布间隔宜与 TSN 周期成整数倍关系；编码优先 UADP 二进制而非 JSON，以降低开销[1][8]。
 
-### 3.2 网络消息格式
-
-```c
-/* OPC UA PubSub NetworkMessage 结构 */
-typedef struct {
-    /* 传输层: Ethernet Frame (VLAN tagged) */
-    uint16_t vlan_id;          // TSN 流标识
-    uint8_t  priority;         // 802.1Q 优先级 (用于 TAS 调度)
-    
-    /* OPC UA 层 */
-    uint8_t  publisher_id[4];  // 发布者标识
-    uint16_t writer_group_id;  // 写入组 ID
-    uint16_t dataset_writer_id;
-    uint32_t sequence_number;  // 序列号（检测丢失）
-    
-    /* 数据集 */
-    struct {
-        uint16_t field_count;
-        variant_t fields[];    // 数据字段 (OPC UA Variant 类型)
-    } dataset;
-    
-    /* 安全 (可选) */
-    uint8_t  security_header[16];
-    uint8_t  signature[32];
-} NetworkMessage;
-```
-
-### 3.3 配置示例
+### 3.3 配置示意
 
 ```xml
-<!-- OPC UA PubSub over TSN 配置文件 -->
-<PubSubConfiguration>
-  <PublishedDataSets>
-    <PublishedDataSet name="CNC_Axes_Position">
-      <Field name="X_Position" dataType="Double"/>
-      <Field name="Y_Position" dataType="Double"/>
-      <Field name="Z_Position" dataType="Double"/>
-      <Field name="SpindleSpeed" dataType="UInt32"/>
-    </PublishedDataSet>
-  </PublishedDataSets>
-  
-  <Connections>
-    <Connection name="TSN_Connection" transportProfile="uadp-udp">
-      <Address>opc.udp://239.0.0.1:4840</Address>
-      <WriterGroups>
-        <WriterGroup name="RT_Group" publishingInterval="1">
-          <!-- 1ms 发布间隔 = TSN 周期 -->
-          <TransportSettings>
-            <QosCategory>RealTime</QosCategory>
-            <VlanId>100</VlanId>
-            <Priority>7</Priority>
-            <!-- 映射到 TSN TAS 最高优先级时隙 -->
-          </TransportSettings>
-        </WriterGroup>
-      </WriterGroups>
-    </Connection>
-  </Connections>
-</PubSubConfiguration>
+<WriterGroup name="RT_Group" publishingInterval="1">
+  <TransportSettings>
+    <QosCategory>RealTime</QosCategory>
+    <VlanId>100</VlanId>
+    <Priority>7</Priority>
+  </TransportSettings>
+</WriterGroup>
 ```
 
-## 4. IT/OT 网络融合
+## 4. IT/OT 融合与 60802
 
-### 4.1 传统隔离架构 vs TSN 融合架构
+### 4.1 架构对比
 
-```
-传统架构（物理隔离）:
-┌──────────┐    ┌──────────────┐    ┌─────────┐
-│ 企业网   │    │  DMZ/防火墙  │    │ 工控网  │
-│ (IT)     │───→│  (隔离)      │───→│ (OT)    │
-│ Ethernet │    │              │    │ PROFINET│
-└──────────┘    └──────────────┘    └─────────┘
-  问题: OT 数据上云延迟大，运维两套网络成本高
+| 维度 | 传统物理隔离 | TSN 共网 |
+|------|--------------|----------|
+| 介质 | IT/OT 分网 | 同一以太网基础设施 |
+| 隔离 | 防火墙/DMZ | 优先级、VLAN、门控、过滤 |
+| 运维 | 两套技能与备件 | 统一但配置更复杂 |
+| 上云/MES | 常经网关、延迟大 | 信息流可同网承载（仍需安全分区）[5][7] |
 
-TSN 融合架构（同一物理网络）:
-┌──────────────────────────────────────────┐
-│         统一 TSN 以太网基础设施           │
-│                                          │
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐ │
-│  │ 实时控制 │  │ 视频流  │  │ IT 数据 │ │
-│  │ 优先级7  │  │ 优先级5 │  │ 优先级0 │ │
-│  │ <1ms确定 │  │ <10ms   │  │ 尽力    │ │
-│  └─────────┘  └─────────┘  └─────────┘ │
-└──────────────────────────────────────────┘
-  优势: 一套网络，流量隔离有保证
-```
+### 4.2 IEC/IEEE 60802（工业 Profile）
 
-### 4.2 TSN Profile for Industrial Automation
+60802 定义工业自动化 TSN 配置文件目标（草案演进中，以正式版为准）[4]：
 
-IEC/IEEE 60802 定义了工业自动化的 TSN Profile：
+| 参数 | 量级目标（规范方向） |
+|------|----------------------|
+| 控制器间端到端延迟 | 约百微秒级（场景相关） |
+| 抖动 | 约微秒级或更严 |
+| 帧丢失 | 极低（如 10⁻⁹ 量级目标） |
+| 同步精度 | 约亚微秒 |
+| 规模/拓扑 | 有限终端数；线/环/星等 |
 
-| 参数 | 要求 |
-|------|------|
-| 端到端延迟 | < 100μs (控制器到控制器) |
-| 抖动 | < 1μs |
-| 帧丢失率 | < 10⁻⁹ |
-| 同步精度 | < 1μs |
-| 网络规模 | 最多 100 个终端设备 |
-| 拓扑 | 线形、环形、星形 |
+## 5. 部署案例（量级，非通用基准）
 
-## 5. 实际部署案例
+厂商材料给出的产线数字依赖具体交换机、周期与负载，仅作量级参考[7][9]：
 
-### 5.1 西门子 PROFINET over TSN
+| 来源倾向 | 场景 | 公开量级要点 |
+|----------|------|--------------|
+| PROFINET over TSN 类 | 焊接等产线 | 控制周期数百 μs 级；P99 延迟可到百 μs 内（白皮书口径）[7] |
+| 机床/伺服类 | 多轴联动 | 周期可到数十 μs；同步常要求百 ns 级；FRER 用于冗余[9] |
 
-```
-部署场景: 汽车焊接生产线 (2024)
-  
-设备:
-- 6 台 KUKA 焊接机器人 (PROFINET 设备)
-- 2 台 S7-1500 PLC (PROFINET 控制器)
-- SCALANCE XR-300 TSN 交换机
+同一物理网可划分：实时控制（高优先级 VLAN）、诊断、视频、IT 尽力而为——比例与门控表需工程核算，避免“实时流占满导致 IT 饿死”。
 
-网络配置:
-- 实时控制流: VLAN 100, 优先级 7, 周期 250μs
-- 诊断数据:   VLAN 200, 优先级 4, 周期 10ms
-- 摄像头视频: VLAN 300, 优先级 5, 单向
-- IT 流量:    默认 VLAN, 优先级 0, 尽力而为
+## 6. 测量方法
 
-实测结果:
-- 控制回路延迟: 87μs (P99), 62μs (P50)
-- 抖动: ±0.8μs
-- 网络利用率: 实时流占 15%, 其余带宽给 IT
-```
+发送端嵌入 gPTP 发送时间戳，接收端记录接收时间戳：端到端延迟 = 收 − 发；抖动用峰峰值或标准差。报告须声明跳数、负载、是否含应用处理[6]。
 
-### 5.2 B&R (ABB) POWERLINK over TSN
+示意量级（文献/实验条件差异大，仅说明“TSN 压尾延迟”趋势）[6][10]：
 
-```
-部署场景: CNC 数控机床 5 轴联动
+| 跳数（示意） | TSN 下 P99 延迟趋势 | 非 TSN 以太网 P99 趋势 |
+|--------------|---------------------|------------------------|
+| 少跳 | 数–数十 μs 量级 | 可至数百 μs–ms（拥塞时） |
+| 多跳 | 随跳数近似累加 | 尾延迟更易爆炸 |
 
-性能指标:
-- 通信周期: 50μs (20kHz 伺服控制)
-- 同步精度: < 100ns (机械臂联动要求)
-- 轴数据更新: 位置 + 速度 + 扭矩, 每轴 24 字节
-- 总带宽需求: 5轴 × 24B × 20kHz = 2.4 MB/s
-- 冗余路径: FRER 双发选收, 切换时间 0
+## 7. 局限、挑战与可改进方向
 
-OPC UA 集成:
-- PLC 内嵌 OPC UA Server
-- 云端 MES 通过 OPC UA Client-Server 读取生产数据
-- 同一 TSN 网络承载控制和信息流
-```
+### 1. 全路径 TSN 硬依赖
 
-## 6. 延迟与抖动测量方法
+**局限**：路径中任一非 TSN 交换机或未同步节点会破坏有界延迟假设；存量产线改造成本高。
+**改进**：分区渐进（先关键环路）；集中网络配置（Centralized Network Configuration, CNC）统一下发；验收用端到端最坏情况测试而非均值[4][10]。
 
-### 6.1 测试拓扑
+### 2. 60802 与多厂商互操作
 
-```
-[发送节点] → [TSN Switch 1] → [TSN Switch 2] → [接收节点]
-     └── gPTP 同步 ──────────────────────────────┘
-     
-测量方法:
-1. 发送节点在报文中嵌入 gPTP 发送时间戳
-2. 接收节点记录 gPTP 接收时间戳
-3. 端到端延迟 = 接收时间 - 发送时间
-4. 抖动 = max(延迟) - min(延迟) 或 标准差
-```
+**局限**：Profile 长期草案态；厂商扩展与认证矩阵不齐，PubSub+TSN 联调成本高。
+**改进**：采购要求明确 60802 符合性与互通测试报告；信息模型优先标准 Companion Spec[4][6]。
 
-### 6.2 延迟基准数据
+### 3. 安全与性能权衡
 
-| 网络规模 | 延迟 (μs) P50 | 延迟 (μs) P99 | 抖动 (μs) |
-|---------|--------------|--------------|-----------|
-| 1 跳 | 3.2 | 5.1 | ±0.4 |
-| 3 跳 | 12.8 | 18.5 | ±1.2 |
-| 5 跳 | 23.1 | 31.7 | ±2.1 |
-| 10 跳 | 48.5 | 67.2 | ±4.3 |
+**局限**：SignAndEncrypt 增加延迟与 CPU；OT 网常弱化加密导致横向移动风险。
+**改进**：分区：控制域 Sign 或链路层隔离 + 边界强认证；密钥轮换与审计纳入运维[1][5]。
 
-对比无 TSN 的标准以太网（相同拓扑）：
+### 4. 工程复杂度
 
-| 网络规模 | 延迟 (μs) P50 | 延迟 (μs) P99 | 抖动 (μs) |
-|---------|--------------|--------------|-----------|
-| 1 跳 | 5.1 | 850 | ±420 |
-| 3 跳 | 18.2 | 2400 | ±1200 |
-| 5 跳 | 32.5 | 5100 | ±2500 |
+**局限**：门控表、保护带、VLAN、gPTP 主时钟选举易配错；文档案例数字被误当 SLA。
+**改进**：以流量工程工具生成 GCL；监控同步锁定状态与门溢出；SLA 写清测量点与负载剖面[3][7]。
 
-## 7. 实践建议
+## 8. 实践要点（简述）
 
-### 7.1 初学者入门路径
+- 控制与 IT 分 VLAN；TAS 留保护带；减少跳数。
+- PubSub：固定布局 DataSet；PublishingInterval 对齐周期。
+- 禁止混用非 TSN 桥接关键路径；Grand Master 选稳定时钟源。
 
-1. **OPC UA 基础**（3天）：安装 open62541 或 python-opcua，搭建简单服务器
-2. **TSN 概念**（2天）：理解 gPTP 时间同步和 TAS 门控调度原理
-3. **仿真实验**（3天）：用 OMNeT++/INET 仿真 TSN 网络行为
-4. **OPC UA PubSub**（2天）：配置 open62541 的 PubSub 功能，UDP 多播
-5. **硬件实验**（需设备）：购买 TSN 评估板（如 TI AM64x），实测延迟
+## 9. 总结
 
-### 7.2 具体调优建议
-
-**TSN 网络设计：**
-- 控制流量与 IT 流量使用不同 VLAN，避免互相干扰
-- TAS 门控表设计留 10-20% 保护带（Guard Band），防止帧溢出
-- 拓扑设计减少跳数，每跳增加约 3-5μs 延迟
-- gPTP Grand Master 选择抖动最小的设备（通常是 PLC）
-
-**OPC UA 优化：**
-- PubSub 使用 UADP 编码（二进制），不要用 JSON（开销大 5-10 倍）
-- 数据集字段固定布局（无变长字段），解析更快
-- PublishingInterval 设为 TSN 周期的整数倍
-- 安全模式选择 Sign（不加密）用于内网，性能提升 30%
-
-**部署注意事项：**
-- 所有交换机必须支持 802.1AS gPTP（普通交换机不行）
-- 网络中不能混用非 TSN 交换机（破坏确定性）
-- CNC（集中式网络配置）模式比分布式更易管理
+OPC UA 提供语义与安全框架，TSN 提供有界时延载体；融合价值在 IT/OT 共网与纵向集成。落地瓶颈在互操作、全路径确定性与安全分区，而非单一协议功能清单。
 
 ## 参考文献
 
-1. OPC Foundation. "OPC UA Part 14: PubSub." OPC 10000-14, 2022.
-2. IEEE. "IEEE 802.1AS-2020: Timing and Synchronization for Time-Sensitive Applications." 2020.
-3. IEEE. "IEEE 802.1Qbv: Enhancements for Scheduled Traffic." 2016.
-4. IEC/IEEE. "IEC/IEEE 60802: TSN Profile for Industrial Automation." Draft, 2024.
-5. Bruckner, D., et al. "OPC UA TSN—A New Solution for Industrial Communication." Automatisierungstechnik, 2019.
-6. Pang, Z., et al. "Is TSN/OPC UA Ready for Industrial Use?" IEEE TII, 2024.
-7. Siemens. "PROFINET over TSN Whitepaper." Siemens Technology, 2023.
-8. Gogolev, A., et al. "TSN-Enabled OPC UA: Deterministic Ethernet Communication." IEEE WFCS, 2023.
-9. B&R Industrial Automation. "TSN for Machine Builders." ABB Technical Report, 2024.
-10. Garner, G., et al. "IEEE 802.1 TSN Standards." IEEE Communications Standards Magazine, 2022.
+[1] OPC Foundation, "OPC UA Part 14: PubSub," OPC 10000-14, 2022.
+
+[2] IEEE, "IEEE 802.1AS-2020: Timing and Synchronization for Time-Sensitive Applications," 2020.
+
+[3] IEEE, "IEEE 802.1Qbv: Enhancements for Scheduled Traffic," 2016.
+
+[4] IEC/IEEE, "IEC/IEEE 60802: TSN Profile for Industrial Automation," draft/ongoing, 2024.
+
+[5] D. Bruckner et al., "OPC UA TSN—A New Solution for Industrial Communication," at - Automatisierungstechnik, 2019.
+
+[6] Z. Pang et al., "Is TSN/OPC UA Ready for Industrial Use?" IEEE Transactions on Industrial Informatics, 2024.
+
+[7] Siemens, "PROFINET over TSN," White Paper, 2023.
+
+[8] A. Gogolev et al., "TSN-Enabled OPC UA: Deterministic Ethernet Communication," IEEE WFCS, 2023.
+
+[9] B&R Industrial Automation / ABB, "TSN for Machine Builders," Technical Report, 2024.
+
+[10] G. Garner et al., "IEEE 802.1 TSN Standards," IEEE Communications Standards Magazine, 2022.
+
+[11] IEEE, "IEEE 802.1CB: Frame Replication and Elimination for Reliability," 2017.
