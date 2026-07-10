@@ -75,6 +75,7 @@ nav:
   - 首页: index.md
   - 学习路线: roadmap.md
   - 阅读进度: progress.md
+  - 标签索引: tags.md
   - 维护与质量:
     - 发布规则: architecture/release-policy.md
     - 构建兼容性: architecture/build-compatibility.md
