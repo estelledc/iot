@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 412
-  in_review: 230
+  pending: 332
+  in_review: 310
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -1622,402 +1622,562 @@ articles:
   layer: 2
   path: docs/connectivity/papers/iot-protocol-interoperability-gateway.md
   batch: L2-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B17
 - id: iot-radio-certification-process
   layer: 2
   path: docs/connectivity/papers/iot-radio-certification-process.md
   batch: L2-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B17
 - id: iot-radio-coprocessor-architecture
   layer: 2
   path: docs/connectivity/papers/iot-radio-coprocessor-architecture.md
   batch: L2-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B17
 - id: iot-sim-management-platform
   layer: 2
   path: docs/connectivity/papers/iot-sim-management-platform.md
   batch: L2-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B17
 - id: iot-spectrum-sharing-dynamic
   layer: 2
   path: docs/connectivity/papers/iot-spectrum-sharing-dynamic.md
   batch: L2-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B17
 - id: isa100-11a-industrial-wireless
   layer: 2
   path: docs/connectivity/papers/isa100-11a-industrial-wireless.md
   batch: L2-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B18
 - id: isim-integrated-sim-iot
   layer: 2
   path: docs/connectivity/papers/isim-integrated-sim-iot.md
   batch: L2-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B18
 - id: knx-smart-building-protocol
   layer: 2
   path: docs/connectivity/papers/knx-smart-building-protocol.md
   batch: L2-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B18
 - id: lifi-visible-light-communication
   layer: 2
   path: docs/connectivity/papers/lifi-visible-light-communication.md
   batch: L2-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B18
 - id: link-budget-calculation-lpwan
   layer: 2
   path: docs/connectivity/papers/link-budget-calculation-lpwan.md
   batch: L2-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B18
 - id: lora-spread-factor-optimization
   layer: 2
   path: docs/connectivity/papers/lora-spread-factor-optimization.md
   batch: L2-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B19
 - id: lora-vs-sigfox-vs-nbiot
   layer: 2
   path: docs/connectivity/papers/lora-vs-sigfox-vs-nbiot.md
   batch: L2-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B19
 - id: lorawan-adr-algorithm-analysis
   layer: 2
   path: docs/connectivity/papers/lorawan-adr-algorithm-analysis.md
   batch: L2-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B19
 - id: lorawan-class-a-b-c-comparison
   layer: 2
   path: docs/connectivity/papers/lorawan-class-a-b-c-comparison.md
   batch: L2-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B19
 - id: lorawan-gateway-design-deployment
   layer: 2
   path: docs/connectivity/papers/lorawan-gateway-design-deployment.md
   batch: L2-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B19
 - id: lorawan-geolocation-tdoa
   layer: 2
   path: docs/connectivity/papers/lorawan-geolocation-tdoa.md
   batch: L2-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B20
 - id: lorawan-multicast-firmware-update
   layer: 2
   path: docs/connectivity/papers/lorawan-multicast-firmware-update.md
   batch: L2-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B20
 - id: lorawan-network-server-architecture
   layer: 2
   path: docs/connectivity/papers/lorawan-network-server-architecture.md
   batch: L2-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B20
 - id: lorawan-relay-coverage-extension
   layer: 2
   path: docs/connectivity/papers/lorawan-relay-coverage-extension.md
   batch: L2-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B20
 - id: lorawan-scalability
   layer: 2
   path: docs/connectivity/papers/lorawan-scalability.md
   batch: L2-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B20
 - id: lorawan-security-keys-join
   layer: 2
   path: docs/connectivity/papers/lorawan-security-keys-join.md
   batch: L2-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B21
 - id: low-power-wide-area-network-survey
   layer: 2
   path: docs/connectivity/papers/low-power-wide-area-network-survey.md
   batch: L2-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B21
 - id: lpwan-capacity-planning-dense
   layer: 2
   path: docs/connectivity/papers/lpwan-capacity-planning-dense.md
   batch: L2-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B21
 - id: lpwan-comparison
   layer: 2
   path: docs/connectivity/papers/lpwan-comparison.md
   batch: L2-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B21
 - id: lpwan-interference-coexistence-study
   layer: 2
   path: docs/connectivity/papers/lpwan-interference-coexistence-study.md
   batch: L2-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B21
 - id: lpwan-mac-layer-comparison
   layer: 2
   path: docs/connectivity/papers/lpwan-mac-layer-comparison.md
   batch: L2-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B22
 - id: lte-cat-m1-vs-nbiot
   layer: 2
   path: docs/connectivity/papers/lte-cat-m1-vs-nbiot.md
   batch: L2-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B22
 - id: matter-bridge-legacy-device
   layer: 2
   path: docs/connectivity/papers/matter-bridge-legacy-device.md
   batch: L2-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B22
 - id: matter-commissioning-flow
   layer: 2
   path: docs/connectivity/papers/matter-commissioning-flow.md
   batch: L2-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B22
 - id: matter-device-types-clusters
   layer: 2
   path: docs/connectivity/papers/matter-device-types-clusters.md
   batch: L2-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B22
 - id: matter-over-thread-vs-wifi
   layer: 2
   path: docs/connectivity/papers/matter-over-thread-vs-wifi.md
   batch: L2-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B23
 - id: matter-protocol-architecture
   layer: 2
   path: docs/connectivity/papers/matter-protocol-architecture.md
   batch: L2-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B23
 - id: mbus-metering-protocol-iot
   layer: 2
   path: docs/connectivity/papers/mbus-metering-protocol-iot.md
   batch: L2-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B23
 - id: mesh-network-scalability-analysis
   layer: 2
   path: docs/connectivity/papers/mesh-network-scalability-analysis.md
   batch: L2-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B23
 - id: mesh-network-self-healing-routing
   layer: 2
   path: docs/connectivity/papers/mesh-network-self-healing-routing.md
   batch: L2-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B23
 - id: mesh-networking-topology
   layer: 2
   path: docs/connectivity/papers/mesh-networking-topology.md
   batch: L2-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B24
 - id: mimo-beamforming-iot-base-station
   layer: 2
   path: docs/connectivity/papers/mimo-beamforming-iot-base-station.md
   batch: L2-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B24
 - id: mimo-iot-applications
   layer: 2
   path: docs/connectivity/papers/mimo-iot-applications.md
   batch: L2-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B24
 - id: mioty-lpwan-telegram-splitting
   layer: 2
   path: docs/connectivity/papers/mioty-lpwan-telegram-splitting.md
   batch: L2-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B24
 - id: modulation-schemes-iot-comparison
   layer: 2
   path: docs/connectivity/papers/modulation-schemes-iot-comparison.md
   batch: L2-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B24
 - id: molecular-communication-bio-iot
   layer: 2
   path: docs/connectivity/papers/molecular-communication-bio-iot.md
   batch: L2-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B25
 - id: multi-band-antenna-iot-device
   layer: 2
   path: docs/connectivity/papers/multi-band-antenna-iot-device.md
   batch: L2-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B25
 - id: multi-protocol-gateway
   layer: 2
   path: docs/connectivity/papers/multi-protocol-gateway.md
   batch: L2-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B25
 - id: multi-radio-connectivity-management
   layer: 2
   path: docs/connectivity/papers/multi-radio-connectivity-management.md
   batch: L2-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B25
 - id: nb-fi-protocol-iot-russia
   layer: 2
   path: docs/connectivity/papers/nb-fi-protocol-iot-russia.md
   batch: L2-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B25
 - id: nb-iot-deployment
   layer: 2
   path: docs/connectivity/papers/nb-iot-deployment.md
   batch: L2-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B26
 - id: nbiot-coverage-enhancement-repetition
   layer: 2
   path: docs/connectivity/papers/nbiot-coverage-enhancement-repetition.md
   batch: L2-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B26
 - id: nbiot-positioning-otdoa-ecid
   layer: 2
   path: docs/connectivity/papers/nbiot-positioning-otdoa-ecid.md
   batch: L2-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B26
 - id: nbiot-power-saving-psm-edrx
   layer: 2
   path: docs/connectivity/papers/nbiot-power-saving-psm-edrx.md
   batch: L2-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B26
 - id: nbiot-release-14-features
   layer: 2
   path: docs/connectivity/papers/nbiot-release-14-features.md
   batch: L2-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B26
 - id: network-coding-iot-throughput
   layer: 2
   path: docs/connectivity/papers/network-coding-iot-throughput.md
   batch: L2-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B27
 - id: network-synchronization-ptp-ieee1588
   layer: 2
   path: docs/connectivity/papers/network-synchronization-ptp-ieee1588.md
   batch: L2-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B27
 - id: nfc-ndef-data-exchange
   layer: 2
   path: docs/connectivity/papers/nfc-ndef-data-exchange.md
   batch: L2-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B27
 - id: nfc-reader-mode-card-emulation
   layer: 2
   path: docs/connectivity/papers/nfc-reader-mode-card-emulation.md
   batch: L2-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B27
 - id: nfc-wireless-charging-qi-integration
   layer: 2
   path: docs/connectivity/papers/nfc-wireless-charging-qi-integration.md
   batch: L2-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B27
 - id: noma-iot-access
   layer: 2
   path: docs/connectivity/papers/noma-iot-access.md
   batch: L2-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B28
 - id: non-orthogonal-multiple-access-noma
   layer: 2
   path: docs/connectivity/papers/non-orthogonal-multiple-access-noma.md
   batch: L2-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B28
 - id: opc-ua-information-model-iot
   layer: 2
   path: docs/connectivity/papers/opc-ua-information-model-iot.md
   batch: L2-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B28
 - id: opc-ua-pubsub-mqtt-integration
   layer: 2
   path: docs/connectivity/papers/opc-ua-pubsub-mqtt-integration.md
   batch: L2-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B28
 - id: opportunistic-routing-iot-network
   layer: 2
   path: docs/connectivity/papers/opportunistic-routing-iot-network.md
   batch: L2-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B28
 - id: optical-wireless-communication-iot
   layer: 2
   path: docs/connectivity/papers/optical-wireless-communication-iot.md
   batch: L2-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B29
 - id: phy-layer-security-iot
   layer: 2
   path: docs/connectivity/papers/phy-layer-security-iot.md
   batch: L2-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B29
 - id: power-line-communication-plc-iot
   layer: 2
   path: docs/connectivity/papers/power-line-communication-plc-iot.md
   batch: L2-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B29
 - id: private-5g-networks
   layer: 2
   path: docs/connectivity/papers/private-5g-networks.md
   batch: L2-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B29
 - id: private-lte-cbrs-iot-deployment
   layer: 2
   path: docs/connectivity/papers/private-lte-cbrs-iot-deployment.md
   batch: L2-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B29
 - id: profinet-profibus-industrial-iot
   layer: 2
   path: docs/connectivity/papers/profinet-profibus-industrial-iot.md
   batch: L2-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B30
 - id: protocol-analyzer-wireless-debug
   layer: 2
   path: docs/connectivity/papers/protocol-analyzer-wireless-debug.md
   batch: L2-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B30
 - id: protocol-translation-semantic-interop
   layer: 2
   path: docs/connectivity/papers/protocol-translation-semantic-interop.md
   batch: L2-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B30
 - id: radio-propagation-model-iot
   layer: 2
   path: docs/connectivity/papers/radio-propagation-model-iot.md
   batch: L2-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B30
 - id: reconfigurable-intelligent-surface-iot
   layer: 2
   path: docs/connectivity/papers/reconfigurable-intelligent-surface-iot.md
   batch: L2-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B30
 - id: relay-cooperative-communication-iot
   layer: 2
   path: docs/connectivity/papers/relay-cooperative-communication-iot.md
   batch: L2-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B31
 - id: relay-cooperative-communication
   layer: 2
   path: docs/connectivity/papers/relay-cooperative-communication.md
   batch: L2-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B31
 - id: rf-interference-troubleshooting
   layer: 2
   path: docs/connectivity/papers/rf-interference-troubleshooting.md
   batch: L2-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B31
 - id: rfid-rain-protocol-epc-gen2
   layer: 2
   path: docs/connectivity/papers/rfid-rain-protocol-epc-gen2.md
   batch: L2-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B31
 - id: rfid-uhf-passive-tag-iot
   layer: 2
   path: docs/connectivity/papers/rfid-uhf-passive-tag-iot.md
   batch: L2-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B31
 - id: rfid-vs-nfc-vs-barcode
   layer: 2
   path: docs/connectivity/papers/rfid-vs-nfc-vs-barcode.md
   batch: L2-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B32
 - id: roaming-global-iot-sim-esim
   layer: 2
   path: docs/connectivity/papers/roaming-global-iot-sim-esim.md
   batch: L2-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B32
 - id: satellite-direct-to-device-nbiot
   layer: 2
   path: docs/connectivity/papers/satellite-direct-to-device-nbiot.md
   batch: L2-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B32
 - id: satellite-iot-leo-connectivity
   layer: 2
   path: docs/connectivity/papers/satellite-iot-leo-connectivity.md
   batch: L2-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B32
 - id: satellite-iot
   layer: 2
   path: docs/connectivity/papers/satellite-iot.md
   batch: L2-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B32
 - id: semantic-communication-iot-future
   layer: 2
   path: docs/connectivity/papers/semantic-communication-iot-future.md
