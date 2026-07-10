@@ -3,429 +3,111 @@ schema_version: '1.0'
 id: short-range-wireless-comparison
 title: 短距离无线技术对比：BLE/WiFi/Zigbee/Thread
 layer: 2
-content_type: UNKNOWN
+content_type: comparison
 difficulty: beginner
-reading_time: 18
-prerequisites: UNKNOWN
-tags: []
+reading_time: 14
+prerequisites:
+  - matter-protocol-architecture
+tags:
+  - BLE
+  - Wi-Fi
+  - Zigbee
+  - Thread
+  - Matter
+  - 短距离无线
+  - 技术选型
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 短距离无线技术对比：BLE/WiFi/Zigbee/Thread
-> **难度**: 初级 | **领域**: 短距离无线 | **阅读时间**: 约 18 分钟
 
-## 引言
+> **难度**：🟢 初级 | **领域**：短距离无线 | **阅读时间**：约 14 分钟
 
-走进你的家，数一数有多少无线设备: 手机连着WiFi看视频，手环通过蓝牙同步步数，智能灯泡用Zigbee组成灯光联动，门锁通过Thread接入HomeKit。四种不同的无线技术，各自负责不同的工作，就像家里同时有自来水管(持续大流量)、煤气管(间歇性小流量)、电话线(实时通话)和门铃线(偶尔一下)——每种"管道"都针对特定用途做了优化。
+## 日常类比
 
-BLE、WiFi、Zigbee、Thread是IoT领域最重要的四种短距离无线技术。它们都工作在2.4GHz频段，覆盖距离在几十到一两百米之间，但在功耗、速率、拓扑、协议复杂度等方面各有特色。本文将逐一介绍这四种技术的核心特征，通过对比帮助你理解它们各自的最佳应用场景，以及Matter标准如何将它们统一起来。
+家里同时有自来水管（持续大流量）、煤气管（间歇小流量）、门铃线（偶尔一下）：Wi-Fi 像自来水，蓝牙低功耗（Bluetooth Low Energy, BLE）像门铃/手环同步，Zigbee/Thread 像多房间灯控联动的煤气管网。四者多在 2.4 GHz 工业科学医疗（Industrial, Scientific and Medical, ISM）频段，距离多为数十米量级，**覆盖与功耗随天线、墙体与固件差异大**[1][2]。
 
-## 1. BLE(蓝牙低功耗)
+## 摘要
 
-### 1.1 技术概述
+选型看吞吐、功耗、拓扑与是否原生 IP。Matter 在应用层统一体验，底层仍常落在 Wi-Fi 或 Thread（及桥接 Zigbee 等）[3]。
 
-BLE(Bluetooth Low Energy)是蓝牙4.0引入的低功耗模式，专为间歇性小数据量传输设计。与经典蓝牙(用于音频传输、文件共享)不同，BLE从协议栈到射频设计都围绕"省电"这个核心目标重新构建。
+## 1. 总览对照
 
-```
-BLE vs 经典蓝牙:
+| 维度 | BLE | Wi-Fi | Zigbee | Thread |
+|------|-----|-------|--------|--------|
+| 典型定位 | 手机直连、穿戴、信标 | 高吞吐、IP 原生 | 低功耗 Mesh 灯控等 | IPv6 Mesh，智能家居骨干 |
+| 物理层叙事 | GFSK，1/2 Mbps 等 | 802.11 族 | IEEE 802.15.4 | 802.15.4 |
+| 拓扑 | 星型/广播/Mesh | 多为 AP 星型 | Mesh 成熟 | Mesh + Border Router |
+| IP 原生 | 否（需网关/配置） | 是 | 否 | 是（6LoWPAN） |
+| 手机直配 | 强 | 强（配网） | 弱（需桥） | 弱（需边界路由/App） |
 
-经典蓝牙(BR/EDR):
-  - 持续连接，高速传输
-  - 适合: 音频流、文件传输
-  - 功耗: 较高
+## 2. 机制要点
 
-BLE:
-  - 快速连接/断开，短突发传输
-  - 适合: 传感器数据、控制指令
-  - 功耗: 极低(经典蓝牙的1/10-1/100)
-```
+**BLE**：为短突发设计；通用属性协议（Generic Attribute Profile, GATT）描述服务/特征。手机生态是最大优势；Mesh 与测向（AoA/AoD）等为扩展能力[1][4]。
 
-### 1.2 核心参数
+**Wi-Fi**：吞吐与现成路由器是优势；峰值电流高。Wi-Fi 6 目标唤醒时间（Target Wake Time, TWT）可降低无效唤醒，电池寿命仍通常弱于 BLE/802.15.4 终端叙事[5]。
 
-| 参数 | BLE 5.0+ |
-|------|----------|
-| 频段 | 2.4GHz ISM |
-| 信道数 | 40个(2MHz间隔) |
-| 调制方式 | GFSK |
-| 数据速率 | 1Mbps(BLE 4) / 2Mbps(BLE 5) |
-| 覆盖距离 | 室内30-50m，室外100-400m |
-| 功耗(峰值TX) | 约15mA |
-| 拓扑 | 点对点/广播/Mesh |
-| IP原生 | 否(需网关转换) |
-| 电池寿命 | 纽扣电池1-3年 |
+**Zigbee**：协调器/路由器/终端角色清晰；Mesh 自愈成熟，但专有网络层，常需网关上云；与 Wi-Fi 同频共存需信道规划[2][6]。
 
-### 1.3 关键特性
+**Thread**：IPv6 到叶节点；需边界路由器；与 Matter 组合常见于门锁、传感器等需本地 IP 与多管理面的场景[3][7]。
 
-BLE的杀手级优势是无处不在的手机兼容性。全球超过50亿台智能手机都支持BLE，这意味着任何BLE设备都可以直接通过手机APP进行配置、控制和数据读取，无需额外网关。
+## 3. 能力量级（选型用）
 
-BLE使用GATT(Generic Attribute Profile)协议定义数据交互模型:
+| 能力 | BLE | Wi-Fi | Zigbee | Thread |
+|------|-----|-------|--------|--------|
+| 吞吐叙事 | kbps–Mbps 级 | 数十 Mbps+（IoT 常用远低于峰值） | ~250 kbps（2.4 GHz） | 同 802.15.4 量级 |
+| 电池终端 | 年量级常见 | 周–月更常见（视 TWT） | 年量级（终端） | 年量级（终端） |
+| 多跳覆盖 | Mesh 可选 | 一般不靠终端多跳 | 强 | 强 |
+| OTA/大包 | 可，但慢 | 适合 | 受限 | 受限 |
+
+## 4. 选型逻辑
 
 ```
-GATT 数据模型示例(温湿度传感器):
-
-+-- 环境感知服务 (Service UUID: 0x181A)
-|   +-- 温度 (Characteristic UUID: 0x2A6E)
-|   |   值: 25.3C  |  属性: Read, Notify
-|   +-- 湿度 (Characteristic UUID: 0x2A6F)
-|       值: 62%    |  属性: Read, Notify
-+-- 电池服务 (Service UUID: 0x180F)
-    +-- 电池电量 (Characteristic UUID: 0x2A19)
-        值: 87%    |  属性: Read, Notify
+需要视频/频繁大包/已有路由器？ → Wi-Fi
+必须手机直连配置与数据？ → BLE
+大量电池灯控/传感器 + 成熟网关生态？ → Zigbee（或 Matter 桥）
+要 IPv6 Mesh + Matter？ → Thread + Border Router
 ```
 
-### 1.4 典型应用
+## 5. 局限、挑战与可改进方向
 
-BLE在以下场景中占据主导地位: 可穿戴设备(手环、手表、耳机)、室内定位(iBeacon、AoA/AoD测向)、医疗健康(血糖仪、血压计)、以及需要手机直接交互的消费级IoT产品。
+### 1. 2.4 GHz 共存
 
-## 2. WiFi
+**局限**：四者易互扰，实地吞吐/时延抖动大。
+**改进**：固定信道规划；关键控制走 Thread/Zigbee 远离 Wi-Fi 主信道；测现场频谱。
 
-### 2.1 技术概述
+### 2. 网关与生态碎片
 
-WiFi是我们最熟悉的无线技术，基于IEEE 802.11标准族。对于IoT来说，WiFi的核心价值是高吞吐量和现有基础设施的普遍可用性——几乎每个家庭和办公室都已经有WiFi路由器。
+**局限**：Zigbee 品牌互通历史包袱；Thread 依赖边界路由供电与厂商实现。
+**改进**：新项目优先 Matter 应用层；桥接遗留设备并文档化能力降级。
 
-### 2.2 核心参数
+### 3. 把峰值参数当承诺
 
-| 参数 | WiFi 4 (802.11n) | WiFi 6 (802.11ax) |
-|------|------------------|-------------------|
-| 频段 | 2.4/5GHz | 2.4/5/6GHz |
-| 最大速率 | 600Mbps | 9.6Gbps |
-| IoT典型速率 | 10-50Mbps | 10-100Mbps |
-| 覆盖距离 | 室内30-50m | 室内30-50m |
-| 功耗(峰值TX) | 200-300mA | 150-250mA |
-| 拓扑 | 星型(AP为中心) | 星型 |
-| IP原生 | 是(TCP/IP原生) | 是 |
-| 电池寿命 | 数周-数月 | 数月(TWT) |
+**局限**：白皮书 Mbps、节点数、电池年数为理想剖面。
+**改进**：按上报周期与重传做能耗与容量测算；试点楼层实测。
 
-### 2.3 关键特性
+### 4. 安全与配网体验
 
-WiFi的最大优势是高吞吐量和IP原生支持。设备连上WiFi就直接在IP网络中，可以使用HTTP、MQTT、WebSocket等标准互联网协议，无需协议转换网关。
+**局限**：配网失败率直接影响退货；密钥与调试口管理易疏漏。
+**改进**：统一佣装流程与错误码；产线注入凭证；禁用默认口令。
 
-WiFi 6引入的TWT(Target Wake Time)机制对IoT有重要意义:
+## 6. 实践要点
 
-```
-TWT 省电机制:
-
-传统WiFi:
-  设备每隔100ms醒来检查是否有数据 -> 大量无效唤醒 -> 费电
-  [醒][睡][醒][睡][醒][睡][醒-收数据][睡]...
-
-WiFi 6 TWT:
-  设备和AP协商好: "我每5分钟醒来一次收数据"
-  [....长睡眠(5分钟)....][醒-收数据][....长睡眠....]
-
-功耗改善: TWT可将IoT设备电池寿命从数周延长到数月
-```
-
-### 2.4 典型应用
-
-WiFi在IoT中适合需要高吞吐量或流媒体的场景: 智能摄像头(持续视频流)、智能音箱(语音+音乐流)、智能显示屏(图片和视频)，以及需要频繁OTA升级的设备。本质上，凡是需要"大流量"或"始终在线"的IoT设备，WiFi是首选。
-
-## 3. Zigbee
-
-### 3.1 技术概述
-
-Zigbee基于IEEE 802.15.4标准，是最早专门为IoT(当时叫M2M/WSN)设计的无线技术之一。它的核心理念是: 用最少的资源(功耗、内存、成本)实现可靠的设备组网。
-
-### 3.2 核心参数
-
-| 参数 | Zigbee 3.0 |
-|------|-----------|
-| 频段 | 2.4GHz(全球) / 868MHz(欧) / 915MHz(美) |
-| 数据速率 | 250kbps(2.4GHz) |
-| 覆盖距离 | 单跳10-100m |
-| 功耗(峰值TX) | 约30mA |
-| 拓扑 | 星型/树型/网状(Mesh) |
-| IP原生 | 否(Zigbee专有协议) |
-| 电池寿命 | 2-5年(终端设备) |
-| 最大节点数 | 65000(理论) |
-
-### 3.3 Mesh网络
-
-Zigbee最突出的特性是成熟的Mesh组网能力:
-
-```
-Zigbee Mesh 网络角色:
-
-[协调器 Coordinator] -- 网络创建者，唯一，存储网络密钥
-      |
-[路由器 Router] ---- 转发数据，常电供电(如智能插座)
-      |       \
-[路由器]    [路由器]
-   |           |
-[终端设备]  [终端设备] -- 只收发自己的数据，可电池供电(如传感器)
-
-自愈特性:
-  如果某个路由器故障，网络自动通过其他路由器重新建立路径
-  节点A --x--> 路由器1(故障) --> 节点B
-  节点A ------> 路由器2 -------> 节点B (自动绕行)
-```
-
-### 3.4 典型应用
-
-Zigbee在楼宇自动化和智能家居领域有深厚积累: 智能照明系统(Philips Hue)、暖通空调(HVAC)控制、安防传感器(门窗磁、人体感应)、智能开关和插座。Zigbee的优势在于大规模Mesh网络的稳定性和互操作性(Zigbee 3.0统一了之前的多个应用Profile)。
-
-## 4. Thread
-
-### 4.1 技术概述
-
-Thread是Google、Apple、三星等公司联合推出的新一代低功耗Mesh网络协议。它和Zigbee使用相同的IEEE 802.15.4物理层，但在网络层有根本性的设计差异——Thread是IP原生的。
-
-### 4.2 核心参数
-
-| 参数 | Thread 1.3 |
-|------|-----------|
-| 频段 | 2.4GHz(802.15.4) |
-| 数据速率 | 250kbps |
-| 覆盖距离 | 单跳10-100m |
-| 功耗(峰值TX) | 约30mA |
-| 拓扑 | 网状(Mesh) |
-| IP原生 | 是(IPv6/6LoWPAN) |
-| 电池寿命 | 2-5年(嗜睡终端设备) |
-| 最大节点数 | 250+(单网络) |
-
-### 4.3 IP原生的意义
-
-Thread与Zigbee最核心的区别是IP原生支持:
-
-```
-Zigbee 的通信路径(非IP):
-  [Zigbee传感器] --Zigbee协议--> [Zigbee网关] --HTTP/MQTT--> [云服务器]
-  需要网关做协议转换，网关是单点故障
-
-Thread 的通信路径(IP原生):
-  [Thread传感器] --IPv6/UDP--> [Border Router] --IPv6--> [云服务器]
-  Border Router只做链路层转换，不做协议翻译
-  传感器拥有自己的IPv6地址，端到端可寻址
-```
-
-这意味着Thread设备可以直接使用CoAP、DTLS等标准IP协议与云端通信，降低了系统复杂度，也使得Thread天然适配Matter标准。
-
-### 4.4 Thread网络角色
-
-```
-Thread 网络结构:
-
-[Border Router] -- 连接Thread网络和外部IP网络
-      |
-[Router] ---- 转发数据，参与路由(常电设备)
-   |      \
-[Router]  [REED] -- Router-Eligible End Device
-   |                (有能力但当前不做路由的设备)
-[SED]              
-  ^-- Sleepy End Device (大部分时间休眠的电池设备)
-
-关键机制:
-  - Leader: 由路由器中自动选举，管理网络配置
-  - 自愈: Leader故障后自动重新选举
-  - 动态路由: 路由器数量随需求自动调整(REED升级为Router)
-```
-
-### 4.5 典型应用
-
-Thread作为Matter的首选底层传输之一，在新一代智能家居中快速普及: Apple HomePod Mini(内置Thread Border Router)、Google Nest Hub(Thread BR)、Eve智能家居产品线、nanoleaf智能灯带等。Thread特别适合低功耗且需要IP连接的设备。
-
-## 5. 四种技术综合对比
-
-### 5.1 对比总表
-
-| 维度 | BLE 5.x | WiFi 6 | Zigbee 3.0 | Thread 1.3 |
-|------|---------|--------|-----------|-----------|
-| 数据速率 | 2Mbps | 9.6Gbps | 250kbps | 250kbps |
-| 覆盖距离 | 100-400m | 30-50m | 10-100m | 10-100m |
-| 功耗 | 极低 | 高 | 低 | 低 |
-| 电池寿命 | 1-3年 | 数周-月 | 2-5年 | 2-5年 |
-| 拓扑 | 点对点/Mesh | 星型 | Mesh | Mesh |
-| IP原生 | 否 | 是 | 否 | 是 |
-| Mesh支持 | BLE Mesh | 否 | 成熟 | 成熟 |
-| 手机直连 | 是 | 是 | 否(需网关) | 否(需BR) |
-| 生态规模 | 巨大 | 巨大 | 大 | 快速增长 |
-| Matter支持 | 配网用 | 传输层 | 不直接 | 传输层 |
-
-### 5.2 按需求选择技术
-
-不同需求对应不同的最佳选择:
-
-需要手机直接交互的场景选BLE。BLE是唯一能被所有智能手机原生支持且低功耗的技术，适合可穿戴设备、健康监测、个人电子产品。
-
-需要高吞吐量或视频流的场景选WiFi。摄像头每秒产生数兆字节数据，只有WiFi能胜任。智能音箱需要持续音频流，同样需要WiFi。
-
-需要大规模低功耗Mesh组网的成熟方案选Zigbee。楼宇自动化中数百个灯具、传感器、开关组成的大网络，Zigbee有十多年的部署经验和完善的产品生态。
-
-需要IP原生且面向未来的Mesh方案选Thread。新产品开发如果要支持Matter，Thread是最佳搭配。它的IP原生特性简化了与云端的集成。
-
-### 5.3 使用场景映射
-
-```
-智能家居设备选型:
-
-可穿戴(手环/手表) -----> BLE (手机直连，极低功耗)
-智能摄像头 ------------> WiFi (高带宽视频流)
-智能音箱 --------------> WiFi (音频流+语音助手)
-智能灯泡 --------------> Zigbee 或 Thread (低功耗Mesh)
-门窗传感器 ------------> Zigbee 或 Thread (电池供电Mesh)
-温湿度传感器 ----------> BLE 或 Thread (低功耗小数据)
-智能门锁 --------------> BLE + Thread (手机开锁+远程控制)
-智能插座 --------------> WiFi 或 Zigbee (常电，可做路由)
-烟雾报警器 ------------> Thread (可靠Mesh+Matter)
-```
-
-## 6. Matter标准: 统一的未来
-
-### 6.1 为什么需要Matter
-
-在Matter出现之前，智能家居面临严重的碎片化问题:
-
-```
-Matter之前的困境:
-
-品牌A灯泡 --Zigbee--> A家网关 --> A家APP
-品牌B插座 --WiFi----> B家云端 --> B家APP
-品牌C门锁 --BLE-----> C家网关 --> C家APP
-
-用户需要: 3个APP + 2个网关 + 无法互联
-
-Matter之后:
-
-品牌A灯泡(Thread) --+
-品牌B插座(WiFi) ----+--> Matter协议 --> 任意支持Matter的APP
-品牌C门锁(Thread) --+   (Apple/Google/Amazon/Samsung)
-
-用户只需: 1个APP，设备自动互联
-```
-
-### 6.2 Matter的技术架构
-
-Matter定义了应用层协议，可以运行在WiFi和Thread两种传输层之上(BLE仅用于设备配网阶段):
-
-```
-Matter 协议栈:
-
-+---------------------------+
-|   应用层 (Matter)          |
-|   设备类型/Cluster定义     |
-+---------------------------+
-|   安全层                   |
-|   CASE/PASE认证           |
-+---------------------------+
-|   消息层                   |
-|   可靠消息传递             |
-+---------------------------+
-|   传输层                   |
-|   UDP/IPv6               |
-+---------------------------+
-|   网络层                   |
-|   WiFi | Thread | BLE*    |
-+---------------------------+
-
-*BLE仅用于设备发现和配网
-```
-
-### 6.3 对现有技术的影响
-
-Matter不会取代BLE、WiFi、Zigbee、Thread，而是在它们之上建立统一的应用层。WiFi设备和Thread设备通过Matter协议可以无缝互操作。Zigbee设备可以通过Matter Bridge接入Matter生态。BLE继续作为最便捷的设备配网手段。
-
-## 7. 2.4GHz频段共存
-
-### 7.1 共存挑战
-
-四种技术都使用2.4GHz ISM频段，在同一空间内部署时不可避免地会相互干扰:
-
-```
-2.4GHz 频段占用:
-
-WiFi信道:  |==Ch1(20MHz)==|    |==Ch6==|    |==Ch11==|
-Zigbee:    |11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|
-Thread:    (与Zigbee相同的16个信道)
-BLE:       |0|1|2|...|36|37|38|39| (40个信道，2MHz宽)
-
-重叠区域:
-  WiFi Ch1 与 Zigbee Ch11-14 重叠
-  WiFi Ch6 与 Zigbee Ch17-19 重叠
-  BLE广播信道37/38/39 设计避开WiFi Ch1/6/11
-```
-
-### 7.2 共存策略
-
-实际部署中，通过以下策略减少干扰: 选择不重叠的信道(如Zigbee用Ch25/26避开WiFi)、利用各协议内置的跳频和重传机制(BLE的自适应跳频会自动避开被占用的信道)、空间隔离(WiFi路由器和Zigbee网关保持1米以上距离)、以及时间域协调(各协议的CSMA/CA机制会在发送前监听信道)。
-
-## 8. 实际案例: 四种技术协同的智能家居
-
-### 8.1 场景描述
-
-一套150平米的三居室智能家居方案，使用四种技术各司其职:
-
-```
-智能家居系统架构:
-
-                    [云端服务 / Matter控制器]
-                           |
-                    [WiFi路由器/Thread BR]
-                     /     |      \
-              WiFi层    Thread层    BLE层
-               |          |          |
-  [智能摄像头x2] [灯泡x12]  [手环]
-  [智能音箱x3]   [门窗传感器x8] [血压计]
-  [扫地机器人]   [温湿度传感器x4]
-                 [智能门锁x2]
-                 [烟雾报警器x3]
-```
-
-### 8.2 各技术的分工
-
-WiFi承担高带宽任务: 两个安防摄像头需要1080p视频流(约2-4Mbps)，三个智能音箱需要音乐流媒体和语音识别数据上传，扫地机器人需要下载地图和上传清扫路径。这些设备都是常电供电，不担心功耗。
-
-Thread承担低功耗Mesh组网: 12个灯泡组成Thread Mesh网络(常电灯泡作为Router)，8个门窗传感器作为Sleepy End Device(电池供电)，4个温湿度传感器每5分钟上报一次数据，2个门锁和3个烟雾报警器。所有Thread设备通过Matter协议统一管理。
-
-BLE承担个人设备交互: 手环通过BLE与手机同步健康数据，血压计测量后通过BLE将结果传到手机APP。门锁同时支持BLE(手机靠近自动开锁)和Thread(远程控制)。
-
-### 8.3 设备数量与协议统计
-
-| 技术 | 设备数量 | 供电方式 | 月均数据量 |
-|------|---------|---------|-----------|
-| WiFi | 6台 | 常电/充电 | 数百GB |
-| Thread | 29台 | 常电+电池 | 数MB |
-| BLE | 2台(+门锁共用) | 电池/充电 | 数KB |
-| 合计 | 37台 | -- | -- |
-
-这个案例清楚地展示了每种技术的定位: WiFi处理少量高带宽设备，Thread管理大量低功耗设备，BLE服务个人交互场景。
-
-## 9. 选择决策树
-
-面对具体的IoT产品设计，可以按照以下决策流程选择技术:
-
-```
-决策树:
-
-Q1: 需要传输视频/音频流吗?
-  |-- 是 --> WiFi
-  |-- 否 --> Q2
-
-Q2: 需要手机直接连接(无网关)?
-  |-- 是 --> BLE
-  |-- 否 --> Q3
-
-Q3: 需要Mesh组网(多设备覆盖扩展)?
-  |-- 否 --> BLE 或 WiFi(按功耗选)
-  |-- 是 --> Q4
-
-Q4: 需要IP原生/Matter兼容?
-  |-- 是 --> Thread
-  |-- 否 --> Zigbee(成熟生态) 或 Thread(面向未来)
-```
-
-实际产品中，很多设备会同时集成多种无线技术。例如智能音箱通常同时具备WiFi(联网和音频流)、BLE(设备配网和近场交互)、Thread/Zigbee(作为智能家居Hub)三种无线能力。
-
-## 总结
-
-BLE、WiFi、Zigbee、Thread四种短距离无线技术各有明确的定位。BLE以极低功耗和手机直连能力占据个人设备市场，WiFi以高吞吐量服务始终在线的多媒体设备，Zigbee以成熟的Mesh生态支撑楼宇自动化，Thread以IP原生和Matter兼容性代表智能家居的未来方向。
-
-理解这四种技术不是为了找出"最好的"，而是要明白每种技术的最佳适用场景。在实际的IoT系统中，它们往往是协同工作的——每种技术负责自己最擅长的任务，共同构建完整的物联网体验。Matter标准的推进正在消除它们之间的应用层壁垒，让不同技术的设备在统一的框架下无缝互操作。
+1. 先列：日字节量、是否需手机直连、是否需多跳、供电方式。
+2. 智能家居新部署：Matter over Thread/Wi-Fi 为主路径评估。
+3. 工业短距另议（WirelessHART 等），勿直接套消费级四选一。
 
 ## 参考文献
 
-1. Bluetooth SIG, "Bluetooth Core Specification v5.3," 2021.
-2. IEEE, "IEEE 802.15.4-2020: Low-Rate Wireless Networks," 2020.
-3. Thread Group, "Thread 1.3.0 Specification," 2022.
-4. Connectivity Standards Alliance, "Matter 1.0 Core Specification," 2022.
-5. S. Bluetooth SIG, "Bluetooth Market Update 2023," 2023.
+[1] Bluetooth SIG, Bluetooth Core Specification (LE related volumes).
+[2] Zigbee Alliance / CSA, Zigbee 3.0 / related specifications.
+[3] Connectivity Standards Alliance, Matter specification overview.
+[4] Bluetooth SIG, GATT / assigned numbers documentation.
+[5] IEEE 802.11ax (Wi-Fi 6) and TWT related materials.
+[6] IEEE 802.15.4 standard.
+[7] Thread Group, Thread specification / Border Router white papers.
+[8] Silicon Labs / Nordic application notes on 2.4 GHz coexistence.
+[9] IETF 6LoWPAN / related RFCs for Thread IP adaptation.
+[10] CSA, Matter over Thread vs Wi-Fi deployment guidance.
+[11] Wi-Fi Alliance, Wi-Fi HaLow / IoT oriented materials (contrast, optional).

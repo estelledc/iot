@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 332
-  in_review: 310
+  pending: 275
+  in_review: 367
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -2182,287 +2182,401 @@ articles:
   layer: 2
   path: docs/connectivity/papers/semantic-communication-iot-future.md
   batch: L2-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B33
 - id: short-range-wireless-comparison
   layer: 2
   path: docs/connectivity/papers/short-range-wireless-comparison.md
   batch: L2-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B33
 - id: sigfox-0g-network-architecture
   layer: 2
   path: docs/connectivity/papers/sigfox-0g-network-architecture.md
   batch: L2-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B33
 - id: simultaneous-wireless-information-power
   layer: 2
   path: docs/connectivity/papers/simultaneous-wireless-information-power.md
   batch: L2-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B33
 - id: software-defined-radio-sdr-iot
   layer: 2
   path: docs/connectivity/papers/software-defined-radio-sdr-iot.md
   batch: L2-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B33
 - id: sparklink-vs-ble6
   layer: 2
   path: docs/connectivity/papers/sparklink-vs-ble6.md
   batch: L2-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B34
 - id: spread-spectrum-dsss-fhss-iot
   layer: 2
   path: docs/connectivity/papers/spread-spectrum-dsss-fhss-iot.md
   batch: L2-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B34
 - id: spread-spectrum-dsss-fhss
   layer: 2
   path: docs/connectivity/papers/spread-spectrum-dsss-fhss.md
   batch: L2-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B34
 - id: sub-ghz-band-comparison
   layer: 2
   path: docs/connectivity/papers/sub-ghz-band-comparison.md
   batch: L2-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B34
 - id: sub-ghz-proprietary-protocol
   layer: 2
   path: docs/connectivity/papers/sub-ghz-proprietary-protocol.md
   batch: L2-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B34
 - id: sub-ghz-range-penetration-advantage
   layer: 2
   path: docs/connectivity/papers/sub-ghz-range-penetration-advantage.md
   batch: L2-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B35
 - id: swipt-energy-harvesting
   layer: 2
   path: docs/connectivity/papers/swipt-energy-harvesting.md
   batch: L2-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B35
 - id: tdma-scheduled-mac-iot
   layer: 2
   path: docs/connectivity/papers/tdma-scheduled-mac-iot.md
   batch: L2-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B35
 - id: terahertz-communication-future-iot
   layer: 2
   path: docs/connectivity/papers/terahertz-communication-future-iot.md
   batch: L2-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B35
 - id: thread-border-router-design
   layer: 2
   path: docs/connectivity/papers/thread-border-router-design.md
   batch: L2-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B35
 - id: thread-network-commissioning
   layer: 2
   path: docs/connectivity/papers/thread-network-commissioning.md
   batch: L2-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B36
 - id: thread-protocol-openthread-overview
   layer: 2
   path: docs/connectivity/papers/thread-protocol-openthread-overview.md
   batch: L2-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B36
 - id: thz-communication-iot
   layer: 2
   path: docs/connectivity/papers/thz-communication-iot.md
   batch: L2-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B36
 - id: time-sensitive-networking-tsn-iot
   layer: 2
   path: docs/connectivity/papers/time-sensitive-networking-tsn-iot.md
   batch: L2-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B36
 - id: underwater-acoustic-communication-iot
   layer: 2
   path: docs/connectivity/papers/underwater-acoustic-communication-iot.md
   batch: L2-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B36
 - id: uwb-fira-car-digital-key
   layer: 2
   path: docs/connectivity/papers/uwb-fira-car-digital-key.md
   batch: L2-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B37
 - id: uwb-ieee-802-15-4z-ranging
   layer: 2
   path: docs/connectivity/papers/uwb-ieee-802-15-4z-ranging.md
   batch: L2-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B37
 - id: uwb-positioning
   layer: 2
   path: docs/connectivity/papers/uwb-positioning.md
   batch: L2-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B37
 - id: uwb-secure-ranging-distance-bounding
   layer: 2
   path: docs/connectivity/papers/uwb-secure-ranging-distance-bounding.md
   batch: L2-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B37
 - id: uwb-vs-ble-indoor-positioning
   layer: 2
   path: docs/connectivity/papers/uwb-vs-ble-indoor-positioning.md
   batch: L2-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B37
 - id: visible-light-communication-lifi
   layer: 2
   path: docs/connectivity/papers/visible-light-communication-lifi.md
   batch: L2-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B38
 - id: wake-up-receiver-iot-mac
   layer: 2
   path: docs/connectivity/papers/wake-up-receiver-iot-mac.md
   batch: L2-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B38
 - id: weightless-protocol-iot-lpwan
   layer: 2
   path: docs/connectivity/papers/weightless-protocol-iot-lpwan.md
   batch: L2-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B38
 - id: white-space-spectrum-iot
   layer: 2
   path: docs/connectivity/papers/white-space-spectrum-iot.md
   batch: L2-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B38
 - id: wifi-6-ofdma-mu-mimo-iot
   layer: 2
   path: docs/connectivity/papers/wifi-6-ofdma-mu-mimo-iot.md
   batch: L2-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B38
 - id: wifi-6e-6ghz-band-iot
   layer: 2
   path: docs/connectivity/papers/wifi-6e-6ghz-band-iot.md
   batch: L2-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B39
 - id: wifi-coexistence-ble-zigbee
   layer: 2
   path: docs/connectivity/papers/wifi-coexistence-ble-zigbee.md
   batch: L2-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B39
 - id: wifi-direct-p2p-iot-communication
   layer: 2
   path: docs/connectivity/papers/wifi-direct-p2p-iot-communication.md
   batch: L2-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B39
 - id: wifi-halow-802-11ah-iot
   layer: 2
   path: docs/connectivity/papers/wifi-halow-802-11ah-iot.md
   batch: L2-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B39
 - id: wifi-halow-802-11ah
   layer: 2
   path: docs/connectivity/papers/wifi-halow-802-11ah.md
   batch: L2-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B39
 - id: wifi-mesh-esp-mesh-architecture
   layer: 2
   path: docs/connectivity/papers/wifi-mesh-esp-mesh-architecture.md
   batch: L2-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B40
 - id: wifi-power-save-dtim-twt
   layer: 2
   path: docs/connectivity/papers/wifi-power-save-dtim-twt.md
   batch: L2-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B40
 - id: wifi-provisioning-smartconfig
   layer: 2
   path: docs/connectivity/papers/wifi-provisioning-smartconfig.md
   batch: L2-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B40
 - id: wifi-roaming-802-11r-iot
   layer: 2
   path: docs/connectivity/papers/wifi-roaming-802-11r-iot.md
   batch: L2-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B40
 - id: wifi-security-wpa3-iot-device
   layer: 2
   path: docs/connectivity/papers/wifi-security-wpa3-iot-device.md
   batch: L2-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B40
 - id: wifi7-iot
   layer: 2
   path: docs/connectivity/papers/wifi7-iot.md
   batch: L2-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B41
 - id: wireless-channel-emulator-testing
   layer: 2
   path: docs/connectivity/papers/wireless-channel-emulator-testing.md
   batch: L2-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B41
 - id: wireless-hart-industrial-sensor
   layer: 2
   path: docs/connectivity/papers/wireless-hart-industrial-sensor.md
   batch: L2-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B41
 - id: wireless-mbus-smart-metering
   layer: 2
   path: docs/connectivity/papers/wireless-mbus-smart-metering.md
   batch: L2-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B41
 - id: wireless-power-transfer-iot-charging
   layer: 2
   path: docs/connectivity/papers/wireless-power-transfer-iot-charging.md
   batch: L2-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B41
 - id: wireless-security-jamming-detection
   layer: 2
   path: docs/connectivity/papers/wireless-security-jamming-detection.md
   batch: L2-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B42
 - id: wirepas-mesh-massive-iot
   layer: 2
   path: docs/connectivity/papers/wirepas-mesh-massive-iot.md
   batch: L2-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B42
 - id: z-wave-long-range-800-series
   layer: 2
   path: docs/connectivity/papers/z-wave-long-range-800-series.md
   batch: L2-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B42
 - id: z-wave-protocol-smart-home
   layer: 2
   path: docs/connectivity/papers/z-wave-protocol-smart-home.md
   batch: L2-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B42
 - id: z-wave-vs-zigbee-smart-home
   layer: 2
   path: docs/connectivity/papers/z-wave-vs-zigbee-smart-home.md
   batch: L2-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B42
 - id: zigbee-3-0-protocol-stack
   layer: 2
   path: docs/connectivity/papers/zigbee-3-0-protocol-stack.md
   batch: L2-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B43
 - id: zigbee-coordinator-router-enddevice
   layer: 2
   path: docs/connectivity/papers/zigbee-coordinator-router-enddevice.md
   batch: L2-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B43
 - id: zigbee-green-power-energy-harvest
   layer: 2
   path: docs/connectivity/papers/zigbee-green-power-energy-harvest.md
   batch: L2-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B43
 - id: zigbee-matter-thread
   layer: 2
   path: docs/connectivity/papers/zigbee-matter-thread.md
   batch: L2-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B43
 - id: zigbee-mesh-routing-aodv
   layer: 2
   path: docs/connectivity/papers/zigbee-mesh-routing-aodv.md
   batch: L2-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B43
 - id: zigbee-ota-upgrade-mechanism
   layer: 2
   path: docs/connectivity/papers/zigbee-ota-upgrade-mechanism.md
   batch: L2-B44
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B44
 - id: zigbee-vs-thread-vs-ble-mesh
   layer: 2
   path: docs/connectivity/papers/zigbee-vs-thread-vs-ble-mesh.md
   batch: L2-B44
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L2-B44
 - id: 3d-printed-sensor-enclosure
   layer: 1
   path: docs/foundation/papers/3d-printed-sensor-enclosure.md
