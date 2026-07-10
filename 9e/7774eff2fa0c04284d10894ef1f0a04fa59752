@@ -1,0 +1,23 @@
+tests/test_quality_tools.py
+  s_7b165d9d352947::t_36900bb60ee1fd 105-125
+tools/check_release_metadata.py
+  s_7b165d9d352947::t_f0b3837d789d2c 18-20,47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9e7774eff2fa0c04284d10894ef1f0a04fa59752",
+  "prompts": {},
+  "sessions": {
+    "s_7b165d9d352947": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_7b165d9d352947",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
