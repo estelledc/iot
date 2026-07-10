@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 617
-  in_review: 25
+  pending: 592
+  in_review: 50
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -187,127 +187,177 @@ articles:
   layer: 7
   path: docs/applications/papers/ar-vr-industrial-assistance.md
   batch: L7-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B01
 - id: cold-chain-traceability
   layer: 7
   path: docs/applications/papers/cold-chain-traceability.md
   batch: L7-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B01
 - id: cross-border-logistics-iot
   layer: 7
   path: docs/applications/papers/cross-border-logistics-iot.md
   batch: L7-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B01
 - id: digital-twin-iiot
   layer: 7
   path: docs/applications/papers/digital-twin-iiot.md
   batch: L7-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B01
 - id: drone-iot-inspection
   layer: 7
   path: docs/applications/papers/drone-iot-inspection.md
   batch: L7-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B01
 - id: elderly-home-care
   layer: 7
   path: docs/applications/papers/elderly-home-care.md
   batch: L7-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B02
 - id: environmental-noise-monitoring
   layer: 7
   path: docs/applications/papers/environmental-noise-monitoring.md
   batch: L7-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B02
 - id: iiot-predictive-maintenance
   layer: 7
   path: docs/applications/papers/iiot-predictive-maintenance.md
   batch: L7-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B02
 - id: indoor-positioning-survey
   layer: 7
   path: docs/applications/papers/indoor-positioning-survey.md
   batch: L7-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B02
 - id: iomt-health-monitoring
   layer: 7
   path: docs/applications/papers/iomt-health-monitoring.md
   batch: L7-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B02
 - id: livestock-precision-management
   layer: 7
   path: docs/applications/papers/livestock-precision-management.md
   batch: L7-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B03
 - id: mine-safety-monitoring
   layer: 7
   path: docs/applications/papers/mine-safety-monitoring.md
   batch: L7-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B03
 - id: ocean-buoy-sensor-network
   layer: 7
   path: docs/applications/papers/ocean-buoy-sensor-network.md
   batch: L7-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B03
 - id: remote-surgery-tactile-internet
   layer: 7
   path: docs/applications/papers/remote-surgery-tactile-internet.md
   batch: L7-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B03
 - id: smart-agriculture-iot
   layer: 7
   path: docs/applications/papers/smart-agriculture-iot.md
   batch: L7-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B03
 - id: smart-building-hvac
   layer: 7
   path: docs/applications/papers/smart-building-hvac.md
   batch: L7-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B04
 - id: smart-fire-prevention
   layer: 7
   path: docs/applications/papers/smart-fire-prevention.md
   batch: L7-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B04
 - id: smart-grid-edge
   layer: 7
   path: docs/applications/papers/smart-grid-edge.md
   batch: L7-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B04
 - id: smart-parking-system
   layer: 7
   path: docs/applications/papers/smart-parking-system.md
   batch: L7-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B04
 - id: smart-traffic-signal
   layer: 7
   path: docs/applications/papers/smart-traffic-signal.md
   batch: L7-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B04
 - id: supply-chain-iot
   layer: 7
   path: docs/applications/papers/supply-chain-iot.md
   batch: L7-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B05
 - id: underwater-communication
   layer: 7
   path: docs/applications/papers/underwater-communication.md
   batch: L7-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B05
 - id: v2x-autonomous-driving
   layer: 7
   path: docs/applications/papers/v2x-autonomous-driving.md
   batch: L7-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B05
 - id: warehouse-robot-coordination
   layer: 7
   path: docs/applications/papers/warehouse-robot-coordination.md
   batch: L7-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B05
 - id: water-quality-monitoring
   layer: 7
   path: docs/applications/papers/water-quality-monitoring.md
   batch: L7-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L7-B05
 - id: adversarial-attacks-edge-ai
   layer: 6
   path: docs/security/papers/adversarial-attacks-edge-ai.md
