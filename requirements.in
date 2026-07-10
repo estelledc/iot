@@ -1,0 +1,5 @@
+mkdocs==1.6.1
+mkdocs-material==9.7.6
+pymdown-extensions==10.21.3
+pyyaml==6.0.3
+jsonschema==4.25.1
