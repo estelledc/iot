@@ -85,6 +85,19 @@ T041 fixtures 只证明记录内部合同，不代表真实内容已经覆盖全
 
 这里的 `ACTIVE` 只表示“一条记录与当前 canonical 正文局部绑定”，不表示它已通过跨记录引用、角色分离或状态投影。记录目录尚未建立或为空时，`--all` 返回 `checked=0`，这同样不代表任何内容已核验；T043 负责 legacy 对账，T044 才负责仓库级有效记录图和可信状态投影。
 
+### 存量 `IN_REVIEW` 对账（T043）
+
+`data/trust-migration-ledger.yml` 是 642 篇现有内容的只读迁移账本。它逐篇记录 canonical `content_id`、仓库相对路径、当前 `body_sha256`、frontmatter 中观察到的双状态和 `observed_at_commit`，但不创建 reviewer、auditor 或批准证据。当前统计必须明确分开：`observed_in_review=642` 只表示历史状态，`evidence_bound_review=0` 才表示尚无独立记录完成绑定。
+
+所有当前条目都标为 `LEGACY_UNBOUND`：既不把历史 `IN_REVIEW` 批量回退为 `UNREVIEWED`，也不把它解释为已人工审阅。只有 T044 的跨记录 validator 确认新 audit/review record 与当前正文 hash、引用和职责分离全部有效后，后续实现才可把对应条目转为 `BOUND`；历史观察继续保留。
+
+```bash
+python tools/reconcile_legacy_review_state.py --write
+python tools/reconcile_legacy_review_state.py --check
+```
+
+`--write` 要求 canonical 论文树与一个不可变 Git commit 完全一致，且发现真实 trust record 时会 fail-closed 交给 T044。若账本提交本身没有改变论文树，后续生成会复用首次 `observed_at_commit`，因此第二次写入必须字节一致。两个命令都不修改 `docs/*/papers/*.md`。
+
 ## 论文精读的额外要求
 
 只有目标论文身份明确时才能使用 `paper_reading`，并必须提供 `target_paper`：
