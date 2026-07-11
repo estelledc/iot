@@ -1,18 +1,62 @@
 ---
 template: home.html
+title: 物联网全栈技术学习站
+description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层技术地图建立可导航、可检查的 IoT 全栈学习路径。
 ---
 
 <section class="iot-hero">
   <div>
     <p class="iot-hero__eyebrow">IoT From Zero to Infinity</p>
+    <span class="jx-chip" data-state="maintained">持续维护 · Maintained</span>
     <h1>物联网全栈技术学习站</h1>
     <p class="iot-hero__lead">
-      从传感器到 6G，从零基础到前沿研究。每篇内容用「零基础也能读懂」的方式重写，用自己的话讲明白一个技术方向。
+      从传感器到 6G，把硬件、连接、协议、计算、智能、安全与应用放回同一张依赖图。先知道一个方向在系统里的位置，再决定从哪里深入。
     </p>
+    <p class="iot-hero__en" lang="en">A maintained, full-stack IoT learning map—from sensing hardware and wireless links to edge intelligence, security, applications and frontier research.</p>
     <div class="iot-hero__actions">
-      <a class="iot-pill" href="roadmap/">学习路线</a>
-      <a class="iot-pill iot-pill--secondary" href="progress/">内容进度</a>
+      <a class="jx-action" href="roadmap/">查看学习路线</a>
+      <a class="jx-action jx-action--secondary" href="foundation/">从 Layer 1 开始</a>
+      <a class="jx-action jx-action--secondary" href="progress/">查看证据口径</a>
     </div>
+    <p class="iot-hero__role"><strong>协作边界：</strong>Jason 负责八层体系、里程碑、发布门禁与验收判断；AI 辅助资料研究、内容初稿、批量审查与站点实现，不自行授予 <code>VERIFIED</code> 或 <code>HUMAN_APPROVED</code>。</p>
+  </div>
+</section>
+
+<section class="iot-case" id="project-proof" aria-labelledby="project-proof-title">
+  <header class="iot-case__header">
+    <p class="jx-eyebrow"><span class="jx-eyebrow__rule"></span>Project proof</p>
+    <h2 id="project-proof-title">先把知识地图做成系统，再讨论规模。</h2>
+    <p>这个项目解决的不是“再写一批 IoT 摘要”，而是让初学者知道技术之间怎样依赖，并让维护者能区分内容存在、可发现、已审查与已验证。</p>
+  </header>
+
+  <div class="jx-proof">
+    <div>
+      <span class="jx-chip" data-state="maintained">v0.2.2 · Maintained</span>
+      <p class="jx-proof__summary">Markdown 是源真相，MkDocs 是交付面；确定性清单、frontmatter schema、目录生成器、链接检查和 CI 把八层内容组织成可重复构建的学习站。</p>
+      <p class="jx-proof__summary-en" lang="en">The public value is not raw volume. It is a navigable eight-layer model backed by reproducible inventories, schema checks, generated catalogs, link audits and explicit review states.</p>
+
+      <div class="jx-proof__metrics" aria-label="可机械验证的项目证据">
+        <div class="jx-proof__metric"><strong>8</strong><span>层 IoT 技术体系</span></div>
+        <div class="jx-proof__metric"><strong>642</strong><span>个内容文件，全部可发现</span></div>
+        <div class="jx-proof__metric"><strong>M1</strong><span>治理基线已完成</span></div>
+      </div>
+
+      <div class="jx-proof__links" aria-label="项目证据入口">
+        <a class="jx-pill" href="progress/">仓库事实与口径</a>
+        <a class="jx-pill" href="architecture/release-policy/">发布与验收规则</a>
+        <a class="jx-pill" href="content-schema/">内容元数据契约</a>
+        <a class="jx-pill" href="https://github.com/estelledc/iot">公开仓库</a>
+      </div>
+    </div>
+
+    <dl class="jx-proof__meta">
+      <div><dt>Problem / 问题</dt><dd>IoT 横跨八层，单篇阅读容易失去依赖关系与学习顺序。</dd></div>
+      <div><dt>Jason / 决策与验收</dt><dd>定义分层与里程碑，锁定“先治理、再可信、后扩容”，并决定发布是否满足证据门槛。</dd></div>
+      <div><dt>AI / 辅助</dt><dd>帮助研究、起草、批量深审和工程实现；自动门禁通过仍不能替代人工验收。</dd></div>
+      <div><dt>System / 系统</dt><dd>Markdown → schema 与清单 → catalog 与搜索 → MkDocs Pages；CI 对结构、链接、来源状态和发布规则做回归。</dd></div>
+      <div><dt>Evidence / 证据</dt><dd>642 个文件全部进入可发现目录；642/642 正文完成深审并保持 <code>IN_REVIEW</code>。</dd></div>
+      <div><dt>Limitations / 局限</dt><dd class="jx-proof__limitation">全量来源审计仍为 <code>NOT_TRACKED</code>；<code>IN_REVIEW</code> 不等于事实已验证，线上状态也需针对目标 commit 单独验收。</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -167,7 +211,7 @@ graph TB
   <h2>从哪里开始？</h2>
   <p>零基础从 Layer 1 逐层向上；有基础可以直接进入感兴趣的层级。</p>
   <div class="iot-hero__actions">
-    <a class="iot-pill" href="roadmap/">查看学习路线</a>
-    <a class="iot-pill iot-pill--secondary" href="https://github.com/estelledc/iot" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    <a class="jx-action" href="roadmap/">查看学习路线</a>
+    <a class="jx-action jx-action--secondary" href="https://github.com/estelledc/iot">查看 GitHub</a>
   </div>
 </section>

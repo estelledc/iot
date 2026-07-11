@@ -1,5 +1,6 @@
 site_name: IoT From Zero to Infinity
 site_description: 物联网全栈技术学习站 —— 从零到无穷
+site_author: Jason
 site_url: https://estelledc.github.io/iot/
 repo_url: https://github.com/estelledc/iot
 repo_name: iot
@@ -60,7 +61,8 @@ markdown_extensions:
       permalink: true
 
 extra_css:
-  - assets/css/jx-tokens.css
+  - assets/css/jx/tokens.css
+  - assets/css/jx/components.css
   - assets/css/jx-override.css
 
 extra_javascript:

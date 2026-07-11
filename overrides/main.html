@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  {% set social_title = page.meta.title if page.meta and page.meta.title else (page.title if page.title and not page.is_homepage else config.site_name) %}
+  {% set social_description = page.meta.description if page.meta and page.meta.description else config.site_description %}
+  <meta property="og:title" content="{{ social_title | striptags | e }}">
+  <meta property="og:description" content="{{ social_description | e }}">
+  <meta property="og:type" content="{% if page.is_homepage %}website{% else %}article{% endif %}">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="{{ config.site_name | e }}">
+  {% if page.canonical_url %}<meta property="og:url" content="{{ page.canonical_url }}">{% endif %}
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ social_title | striptags | e }}">
+  <meta name="twitter:description" content="{{ social_description | e }}">
+  {% if page.is_homepage %}
+    {% set website_schema = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": config.site_name,
+      "alternateName": "物联网全栈技术学习站",
+      "url": config.site_url,
+      "description": config.site_description,
+      "inLanguage": ["zh-CN", "en"],
+      "creator": {
+        "@type": "Person",
+        "name": "Jason",
+        "url": "https://estelledc.github.io/about/"
+      },
+      "sameAs": config.repo_url
+    } %}
+    <script type="application/ld+json">{{ website_schema | tojson }}</script>
+  {% endif %}
+{% endblock %}
