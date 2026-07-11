@@ -14,6 +14,19 @@
   --iot-layer-6: #4f46e5;
   --iot-layer-7: #0891b2;
   --iot-layer-8: #be185d;
+  --iot-grid: rgba(31, 111, 120, 0.055);
+  --iot-glow: rgba(31, 111, 120, 0.13);
+  --iot-console: #0c1415;
+  --iot-console-hover: rgba(125, 226, 216, 0.07);
+  --iot-console-ink: #e9f3f1;
+  --iot-console-muted: #829896;
+  --iot-console-line: rgba(204, 239, 234, 0.11);
+  --iot-console-line-strong: rgba(125, 226, 216, 0.32);
+  --iot-console-signal: #7de2d8;
+  --iot-console-good: #8be6a5;
+  --iot-console-good-bg: rgba(84, 192, 116, 0.13);
+  --iot-console-warn: #f0bf72;
+  --iot-console-warn-bg: rgba(240, 191, 114, 0.12);
   --md-primary-fg-color: var(--jx-accent);
   --md-primary-bg-color: var(--jx-paper);
   --md-accent-fg-color: var(--jx-accent);
@@ -43,6 +56,8 @@
     --md-primary-fg-color: var(--jx-accent);
     --md-primary-bg-color: var(--jx-paper);
     --md-accent-fg-color: var(--jx-accent);
+    --iot-grid: rgba(125, 226, 216, 0.045);
+    --iot-glow: rgba(52, 178, 166, 0.12);
     color-scheme: dark;
   }
 
@@ -516,4 +531,27 @@ body,
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.iot-not-found {
+  width: min(100% - 2rem, 52rem);
+  margin: clamp(4rem, 12vw, 9rem) auto;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  border: 1px solid var(--jx-line);
+  background: var(--jx-paper);
+}
+
+.iot-not-found h1 {
+  max-width: 12ch;
+  margin: 1rem 0;
+  font-family: var(--jx-font-display);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 1.04;
+}
+
+.iot-not-found__actions {
+  display: flex;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }

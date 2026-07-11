@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+
+{% block content %}
+<section class="iot-not-found" aria-labelledby="not-found-title">
+  <p class="jx-eyebrow"><span class="jx-eyebrow__rule"></span>404 · Layer not found</p>
+  <h1 id="not-found-title">这条路径不在当前 IoT 依赖图里。</h1>
+  <p>返回八层学习地图，先看依赖，再选择要深入的硬件、连接、平台或应用层。</p>
+  <div class="iot-not-found__actions">
+    <a class="jx-action" href="{{ config.site_url }}">返回 IoT 学习地图</a>
+    <a class="jx-action jx-action--secondary" href="https://estelledc.github.io/">打开 Jason Hub</a>
+    <a class="jx-action jx-action--secondary" href="https://github.com/estelledc/iot">查看 GitHub</a>
+  </div>
+</section>
+{% endblock %}

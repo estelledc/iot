@@ -4,22 +4,48 @@ title: 物联网全栈技术学习站
 description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层技术地图建立可导航、可检查的 IoT 全栈学习路径。
 ---
 
-<section class="iot-hero">
-  <div>
-    <p class="iot-hero__eyebrow">IoT From Zero to Infinity</p>
-    <span class="jx-chip" data-state="maintained">持续维护 · Maintained</span>
-    <h1>物联网全栈技术学习站</h1>
-    <p class="iot-hero__lead">
-      从传感器到 6G，把硬件、连接、协议、计算、智能、安全与应用放回同一张依赖图。先知道一个方向在系统里的位置，再决定从哪里深入。
-    </p>
-    <p class="iot-hero__en" lang="en">A maintained, full-stack IoT learning map—from sensing hardware and wireless links to edge intelligence, security, applications and frontier research.</p>
-    <div class="iot-hero__actions">
-      <a class="jx-action" href="roadmap/">查看学习路线</a>
-      <a class="jx-action jx-action--secondary" href="foundation/">从 Layer 1 开始</a>
-      <a class="jx-action jx-action--secondary" href="progress/">查看证据口径</a>
+<section class="iot-hero" aria-labelledby="iot-title">
+  <div class="iot-hero__copy">
+    <p class="iot-hero__eyebrow">IoT SYSTEM ATLAS / 8-LAYER LAB</p>
+    <div class="iot-hero__status">
+      <span class="jx-chip" data-state="maintained">持续维护 · Maintained</span>
+      <span><b>642 / 642</b> IN_REVIEW</span>
+      <span><b>0 / 642</b> SOURCE VERIFIED</span>
     </div>
-    <p class="iot-hero__role"><strong>协作边界：</strong>Jason 负责八层体系、里程碑、发布门禁与验收判断；AI 辅助资料研究、内容初稿、批量审查与站点实现，不自行授予 <code>VERIFIED</code> 或 <code>HUMAN_APPROVED</code>。</p>
+    <h1 id="iot-title">先看依赖，再选择要深入的 IoT 层。</h1>
+    <p class="iot-hero__lead">
+      这不是 642 篇文章的陈列柜，而是一张可进入、可检查的系统地图。每层同时公开内容规模、上游依赖和审查状态；<code>IN_REVIEW</code> 与 <code>NOT_TRACKED</code> 会留在首屏，不被“内容很多”掩盖。
+    </p>
+    <p class="iot-hero__en" lang="en">Explore the stack as a dependency system. Every layer exposes its content volume and evidence state—without presenting review activity as source verification.</p>
+    <div class="iot-hero__actions">
+      <a class="jx-action" href="roadmap/">按依赖开始学习</a>
+      <a class="jx-action jx-action--secondary" href="progress/">审查证据与口径</a>
+      <a class="jx-action jx-action--secondary" href="https://github.com/estelledc/iot">检查仓库</a>
+    </div>
+    <p class="iot-hero__role"><strong>协作边界：</strong>Jason Xun 负责八层体系、里程碑、发布门禁与验收判断；AI 辅助资料研究、内容初稿、批量审查与站点实现，不自行授予 <code>VERIFIED</code> 或 <code>HUMAN_APPROVED</code>。</p>
   </div>
+
+  <aside class="iot-stack-lab" aria-labelledby="stack-lab-title">
+    <header class="iot-stack-lab__head">
+      <div><span>DEPENDENCY MAP</span><strong id="stack-lab-title">选择一层，沿依赖进入</strong></div>
+      <span class="iot-stack-lab__truth">TRUTH MODE · ON</span>
+    </header>
+    <ol class="iot-stack-map">
+      <li><a href="frontier/"><span class="iot-stack-map__id">L8</span><strong>前沿方向</strong><small>25 files</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="applications/"><span class="iot-stack-map__id">L7</span><strong>综合应用</strong><small>25 files · depends on L4–L6</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="security/"><span class="iot-stack-map__id">L6</span><strong>安全与隐私</strong><small>25 files · cross-cutting</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="intelligence/"><span class="iot-stack-map__id">L5</span><strong>边缘智能</strong><small>25 files · depends on L4</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="computing/"><span class="iot-stack-map__id">L4</span><strong>计算平台</strong><small>25 files · depends on L1–L3</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="network/"><span class="iot-stack-map__id">L3</span><strong>网络协议</strong><small>25 files · depends on L2</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="connectivity/"><span class="iot-stack-map__id">L2</span><strong>无线接入</strong><small>217 files · depends on L1</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="foundation/"><span class="iot-stack-map__id">L1</span><strong>感知与硬件</strong><small>275 files · foundation</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+    </ol>
+    <div class="iot-stack-lab__legend" aria-label="审查状态图例">
+      <span><i data-state="review"></i>正文进入审查</span>
+      <span><i data-state="source"></i>来源审计未跟踪</span>
+      <a href="architecture/release-policy/">状态如何升级？</a>
+    </div>
+  </aside>
 </section>
 
 <section class="iot-case" id="project-proof" aria-labelledby="project-proof-title">
@@ -51,7 +77,7 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
 
     <dl class="jx-proof__meta">
       <div><dt>Problem / 问题</dt><dd>IoT 横跨八层，单篇阅读容易失去依赖关系与学习顺序。</dd></div>
-      <div><dt>Jason / 决策与验收</dt><dd>定义分层与里程碑，锁定“先治理、再可信、后扩容”，并决定发布是否满足证据门槛。</dd></div>
+      <div><dt>Jason Xun / 决策与验收</dt><dd>定义分层与里程碑，锁定“先治理、再可信、后扩容”，并决定发布是否满足证据门槛。</dd></div>
       <div><dt>AI / 辅助</dt><dd>帮助研究、起草、批量深审和工程实现；自动门禁通过仍不能替代人工验收。</dd></div>
       <div><dt>System / 系统</dt><dd>Markdown → schema 与清单 → catalog 与搜索 → MkDocs Pages；CI 对结构、链接、来源状态和发布规则做回归。</dd></div>
       <div><dt>Evidence / 证据</dt><dd>642 个文件全部进入可发现目录；642/642 正文完成深审并保持 <code>IN_REVIEW</code>。</dd></div>

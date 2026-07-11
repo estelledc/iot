@@ -2,7 +2,7 @@
   "schema_version": 1,
   "review_baseline_commit": "2a18aec69793494156ffca67848ca0639c145fe4",
   "generated_by": "python tools/content_inventory.py --write",
-  "source_fingerprint_sha256": "8f22d5ac1c62a5851098823212813c04e0d1d0e2902cf0efed2f56dcb1be750e",
+  "source_fingerprint_sha256": "76a3099540823e3094aa8a35aca5617e382d43343368ab02f40fcb5f21cce10f",
   "definitions": {
     "content_files": "docs/<layer>/papers 下存在的 Markdown 文件；不代表来源或事实已审核",
     "explicit_nav_entries": "mkdocs.yml 的 nav 中显式列出的内容文件",
