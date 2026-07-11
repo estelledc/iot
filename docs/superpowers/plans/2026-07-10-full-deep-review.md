@@ -2,7 +2,7 @@
 
 > **任务号：** `IOT-T034`  
 > **目标：** 对全部 642 篇存量文章做 SOP Phase 4 级正文深审重构，审后标为 `IN_REVIEW`。  
-> **进度真相：** [`data/deep-review-progress.yml`](../../../data/deep-review-progress.yml)
+> **进度真相：** `data/deep-review-progress.yml`（仓库内维护文件，不随站点发布）
 
 ## 锁定决策
 

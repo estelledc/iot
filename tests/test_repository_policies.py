@@ -1,5 +1,8 @@
 import copy
+import hashlib
+import tempfile
 import unittest
+from pathlib import Path
 
 from tools import check_duplicates, check_workflow_policy
 
@@ -11,6 +14,191 @@ class DuplicatePolicyTests(unittest.TestCase):
         )
         self.assertEqual(errors, [])
         self.assertEqual(counts, {"canonical_css": 2, "legacy_markdown_mirrors": 2})
+
+    @staticmethod
+    def _write_mirror_fixture(
+        root: Path,
+        *,
+        canonical: str = "docs/network/papers/a.md",
+        mirror: str = "papers/a/index.md",
+    ) -> Path:
+        for raw_path, content in ((canonical, "canonical\n"), (mirror, "stale\n")):
+            relative = Path(raw_path)
+            if relative.is_absolute() or ".." in relative.parts:
+                continue
+            path = root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content, encoding="utf-8")
+        policy = root / "data" / "canonical-sources.yml"
+        policy.parent.mkdir(parents=True)
+        policy.write_text(
+            "schema_version: 1\n"
+            "canonical_css: []\n"
+            "legacy_markdown_mirrors:\n"
+            f"  - canonical: {canonical}\n"
+            f"    mirror: {mirror}\n"
+            "    policy: READ_ONLY_MIRROR\n",
+            encoding="utf-8",
+        )
+        return policy
+
+    def test_legacy_mirror_sync_is_one_way_and_idempotent(self):
+        from tools import sync_legacy_mirrors
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            policy = self._write_mirror_fixture(root)
+            canonical = root / "docs/network/papers/a.md"
+            mirror = root / "papers/a/index.md"
+            canonical_before = hashlib.sha256(canonical.read_bytes()).hexdigest()
+            errors, updated = sync_legacy_mirrors.sync_policy(
+                policy,
+                root=root,
+                write=False,
+            )
+            self.assertEqual(1, len(errors))
+            self.assertEqual(0, updated)
+            self.assertEqual(b"stale\n", mirror.read_bytes())
+            errors, updated = sync_legacy_mirrors.sync_policy(
+                policy,
+                root=root,
+                write=True,
+            )
+            self.assertEqual([], errors)
+            self.assertEqual(1, updated)
+            self.assertEqual(canonical.read_bytes(), mirror.read_bytes())
+            self.assertEqual(
+                canonical_before,
+                hashlib.sha256(canonical.read_bytes()).hexdigest(),
+            )
+            errors, updated = sync_legacy_mirrors.sync_policy(
+                policy,
+                root=root,
+                write=True,
+            )
+            self.assertEqual([], errors)
+            self.assertEqual(0, updated)
+
+    def test_legacy_mirror_sync_rejects_path_traversal(self):
+        from tools import sync_legacy_mirrors
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            policy = self._write_mirror_fixture(
+                root,
+                mirror="../outside.md",
+            )
+            with self.assertRaisesRegex(ValueError, "safe repository-relative path"):
+                sync_legacy_mirrors.sync_policy(policy, root=root, write=True)
+
+    def test_legacy_mirror_sync_rejects_reverse_direction(self):
+        from tools import sync_legacy_mirrors
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            policy = self._write_mirror_fixture(
+                root,
+                canonical="papers/a/index.md",
+                mirror="docs/network/papers/a.md",
+            )
+            with self.assertRaisesRegex(ValueError, "canonical must be under docs/"):
+                sync_legacy_mirrors.sync_policy(policy, root=root, write=True)
+
+    def test_legacy_mirror_sync_rejects_absolute_path(self):
+        from tools import sync_legacy_mirrors
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            outside = root.parent / f"{root.name}-outside.md"
+            policy = self._write_mirror_fixture(root)
+            policy.write_text(
+                "schema_version: 1\n"
+                "canonical_css: []\n"
+                "legacy_markdown_mirrors:\n"
+                "  - canonical: docs/network/papers/a.md\n"
+                f"    mirror: {outside}\n"
+                "    policy: READ_ONLY_MIRROR\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "safe repository-relative path"):
+                sync_legacy_mirrors.sync_policy(policy, root=root, write=True)
+
+    def test_legacy_mirror_sync_rejects_missing_paths(self):
+        from tools import sync_legacy_mirrors
+
+        missing_paths = (("canonical", "missing canonical"), ("mirror", "missing mirror"))
+        for missing, message in missing_paths:
+            with (
+                self.subTest(missing=missing),
+                tempfile.TemporaryDirectory() as directory,
+            ):
+                root = Path(directory)
+                policy = self._write_mirror_fixture(root)
+                target = (
+                    root / "docs/network/papers/a.md"
+                    if missing == "canonical"
+                    else root / "papers/a/index.md"
+                )
+                target.unlink()
+                with self.assertRaisesRegex(ValueError, message):
+                    sync_legacy_mirrors.sync_policy(policy, root=root, write=True)
+
+    def test_legacy_mirror_sync_preflights_all_pairs_before_writing(self):
+        from tools import sync_legacy_mirrors
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            policy = self._write_mirror_fixture(root)
+            second = root / "docs/computing/papers/b.md"
+            second.parent.mkdir(parents=True)
+            second.write_text("second\n", encoding="utf-8")
+            policy.write_text(
+                policy.read_text(encoding="utf-8")
+                + "  - canonical: docs/computing/papers/b.md\n"
+                + "    mirror: papers/b/index.md\n"
+                + "    policy: READ_ONLY_MIRROR\n",
+                encoding="utf-8",
+            )
+            first_mirror = root / "papers/a/index.md"
+            with self.assertRaisesRegex(ValueError, "missing mirror"):
+                sync_legacy_mirrors.sync_policy(policy, root=root, write=True)
+            self.assertEqual(b"stale\n", first_mirror.read_bytes())
+
+    def test_legacy_mirror_sync_rejects_duplicate_target(self):
+        from tools import sync_legacy_mirrors
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            policy = self._write_mirror_fixture(root)
+            second = root / "docs/computing/papers/b.md"
+            second.parent.mkdir(parents=True)
+            second.write_text("second\n", encoding="utf-8")
+            policy.write_text(
+                policy.read_text(encoding="utf-8")
+                + "  - canonical: docs/computing/papers/b.md\n"
+                + "    mirror: papers/a/index.md\n"
+                + "    policy: READ_ONLY_MIRROR\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "duplicate mirror target"):
+                sync_legacy_mirrors.sync_policy(policy, root=root, write=True)
+
+    def test_legacy_mirror_sync_rejects_symlink_escape(self):
+        from tools import sync_legacy_mirrors
+
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            tempfile.TemporaryDirectory() as outside_directory,
+        ):
+            root = Path(directory)
+            policy = self._write_mirror_fixture(root)
+            mirror = root / "papers/a/index.md"
+            outside = Path(outside_directory) / "outside.md"
+            outside.write_text("outside\n", encoding="utf-8")
+            mirror.unlink()
+            mirror.symlink_to(outside)
+            with self.assertRaisesRegex(ValueError, "safe repository-relative path"):
+                sync_legacy_mirrors.sync_policy(policy, root=root, write=True)
 
 
 class WorkflowPolicyTests(unittest.TestCase):
