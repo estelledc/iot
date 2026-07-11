@@ -200,6 +200,74 @@ class DuplicatePolicyTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "safe repository-relative path"):
                 sync_legacy_mirrors.sync_policy(policy, root=root, write=True)
 
+    def test_canonical_change_drifts_mirror_and_stales_trust_until_reaudit(self):
+        """One body edit couples mirror refresh to trust invalidation.
+
+        Refreshing the derived mirror must not make the immutable old audit
+        current again; only the canonical docs identity can own trust.
+        """
+
+        from tools import sync_legacy_mirrors
+        from tools.iot_domain import ContentError, parse_document
+        from tools.trust_records import record_validity
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            policy = self._write_mirror_fixture(root)
+            canonical = root / "docs/network/papers/a.md"
+            mirror = root / "papers/a/index.md"
+            original = (
+                b"---\n"
+                b"schema_version: '1.0'\n"
+                b"id: a\n"
+                b"title: A\n"
+                b"layer: 3\n"
+                b"---\n"
+                b"# A\nbody\n"
+            )
+            canonical.write_bytes(original)
+            mirror.write_bytes(original)
+            before = parse_document(canonical, repo_root=root)
+            record = {
+                "audit_id": "audit-20260711-a",
+                "content_id": "a",
+                "content_path": "docs/network/papers/a.md",
+                "body_sha256": before.body_sha256,
+                "revocation": None,
+            }
+            self.assertTrue(record_validity(record, before).is_current)
+
+            canonical.write_bytes(original.replace(b"body\n", b"Body\n"))
+            changed = parse_document(canonical, repo_root=root)
+            errors, updated = sync_legacy_mirrors.sync_policy(
+                policy,
+                root=root,
+                write=False,
+            )
+            self.assertEqual(1, len(errors))
+            self.assertEqual(0, updated)
+            self.assertNotEqual(canonical.read_bytes(), mirror.read_bytes())
+            self.assertEqual(
+                "BODY_HASH_MISMATCH",
+                record_validity(record, changed).code,
+            )
+
+            errors, updated = sync_legacy_mirrors.sync_policy(
+                policy,
+                root=root,
+                write=True,
+            )
+            self.assertEqual([], errors)
+            self.assertEqual(1, updated)
+            self.assertEqual(canonical.read_bytes(), mirror.read_bytes())
+            self.assertEqual(
+                "BODY_HASH_MISMATCH",
+                record_validity(record, changed).code,
+            )
+            with self.assertRaises(ContentError) as caught:
+                parse_document(mirror, repo_root=root)
+            self.assertEqual("INVALID_CONTENT_PATH", caught.exception.issue.code)
+
 
 class WorkflowPolicyTests(unittest.TestCase):
     def test_repository_workflows_follow_policy(self):
