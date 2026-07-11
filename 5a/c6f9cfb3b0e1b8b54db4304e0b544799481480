@@ -1,0 +1,25 @@
+docs/content-schema.md
+  s_bee7af57a7fb2f::t_1245a3663c92b9 114
+tests/test_trust_state_machine.py
+  s_bee7af57a7fb2f::t_bf06b8cf137a2a 976-987,1428-1600
+tools/trust_records.py
+  s_bee7af57a7fb2f::t_33d7b2602fb343 1452-1475,1812-1896
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5ac6f9cfb3b0e1b8b54db4304e0b544799481480",
+  "prompts": {},
+  "sessions": {
+    "s_bee7af57a7fb2f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_bee7af57a7fb2f",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
