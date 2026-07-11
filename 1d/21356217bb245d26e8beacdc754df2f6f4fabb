@@ -1,0 +1,27 @@
+data/trust-migration-ledger.yml
+  s_373db33ac6bb76::t_ba7b62dc1fee23 1-5797
+docs/content-schema.md
+  s_373db33ac6bb76::t_aab2e6b3b40494 88-100
+tests/test_legacy_reconciliation.py
+  s_373db33ac6bb76::t_abcf370909663b 1-296
+tools/reconcile_legacy_review_state.py
+  s_373db33ac6bb76::t_b042babf0b2f1b 1-503
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1d21356217bb245d26e8beacdc754df2f6f4fabb",
+  "prompts": {},
+  "sessions": {
+    "s_373db33ac6bb76": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_373db33ac6bb76",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
