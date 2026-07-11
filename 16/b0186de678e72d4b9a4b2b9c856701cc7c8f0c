@@ -1,0 +1,63 @@
+.github/workflows/ci.yml
+  s_9112633bbeafed::t_5950f00bc88499 53-55,66-76
+.github/workflows/deploy.yml
+  s_9112633bbeafed::t_ea800c3b014bc4 56-58,69-79
+README.md
+  s_9112633bbeafed::t_a906bd4953aa9f 3-13
+data/content-inventory.json
+  s_9112633bbeafed::t_9577150ce8a52f 5
+docs/assets/css/jx-override.css
+  s_9112633bbeafed::t_6c3de5e9a1bd42 7-16,34,151-154,167-175,251-252,271-326
+docs/assets/css/jx/VERSION
+  s_9112633bbeafed::t_29956a7df7b9d7 1
+docs/assets/css/jx/base.css
+  s_9112633bbeafed::t_bfc07c60cf1b8e 1-165
+docs/assets/css/jx/components.css
+  s_9112633bbeafed::t_4d5225ec6044a0 1-590
+docs/assets/css/jx/tokens.css
+  s_9112633bbeafed::t_62635d884e7f68 1-184
+docs/connectivity/catalog.md
+  s_9112633bbeafed::t_e6533ac7366544 8-11,13-17,58,60-67,107
+docs/foundation/catalog.md
+  s_9112633bbeafed::t_13975b428f513e 11,173-174,176-178,181-187,217,233-239,250,255-276,278-279,281-282
+docs/index.md
+  s_9112633bbeafed::t_4ae6fb5e918ab2 3-4,10,13,15,17-19,21-59,214-215
+docs/superpowers/plans/2026-07-10-full-deep-review.md
+  s_9112633bbeafed::t_52fc8014c22d9e 5
+mkdocs.yml
+  s_9112633bbeafed::t_302b27d623e868 3,64-65
+overrides/home.html
+  s_9112633bbeafed::t_819551a9b48370 7-11,21,26-28,45,57-64,71-78,80-88,90-121,123-124,275-281
+overrides/main.html
+  s_9112633bbeafed::t_6ef62da4626286 1-34
+overrides/partials/footer.html
+  s_9112633bbeafed::t_51747a7e7d4d88 32-33
+overrides/partials/header.html
+  s_9112633bbeafed::t_9587c87e48c4a3 1-63
+papers/edge-computing-survey/index.md
+  s_9112633bbeafed::t_ac591b93b81d9d 6-18,20-21,25,27,29,31,33,35,37,39,41,43,45-49,51,53,55-59,61,63,65-70,72,78,82,86-89,91,95,97,101,105,107,109,113,115,117,119,121,123-128,130,132,134,136,138,140-144,146,148,150,152,154-160,162,164,166,170,172,174,176,178,180,182,184,186,188-189,191,193-194,196,198-199,201,203-204,206,208,213-222,227-229,232-233
+papers/jupiter/index.md
+  s_9112633bbeafed::t_01fab2fbb10f71 7-22,24-38,42,44,46,48,50,52,54-62,64,66,68,70,72-77,79,81,83,85,87-91,93,95,97,99-102,104,106,108,110,114,116-122,124,126-131,133,135,137-142,144,146-151,153,155,157,159,161-168,170,174,176,178,180-181,183,185-186,188,190-191,193,195-196,198,200-201,203,205-206,208,210,212,214-227
+tests/test_quality_tools.py
+  s_9112633bbeafed::t_0ea729bb616b4c 36-83,215-252
+tools/validate_site.py
+  s_9112633bbeafed::t_86a7a026016fbb 7,22-24,26,30,32-43,46-47,64-66,88-116,140-142,154-156
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "16b0186de678e72d4b9a4b2b9c856701cc7c8f0c",
+  "prompts": {},
+  "sessions": {
+    "s_9112633bbeafed": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_9112633bbeafed",
+        "model": "unknown"
+      },
+      "human_author": "Jason <150260202+estelledc@users.noreply.github.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
