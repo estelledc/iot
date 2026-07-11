@@ -5,16 +5,16 @@
 <!-- layer-catalog:start -->
 | # | 标题 | 文件 |
 | --- | --- | --- |
-| 1 | 5G mMTC大规模IoT连接场景分析 | [5g-mmtc-massive-iot-connection](papers/5g-mmtc-massive-iot-connection.md) |
-| 2 | 5G网络切片在IoT垂直行业中的应用 | [5g-network-slicing-iot-vertical](papers/5g-network-slicing-iot-vertical.md) |
-| 3 | 5G NR RedCap精简能力设备IoT应用 | [5g-nr-redcap-iot-device](papers/5g-nr-redcap-iot-device.md) |
-| 4 | 5G专网在工业IoT中的部署模式 | [5g-private-network-industrial-iot](papers/5g-private-network-industrial-iot.md) |
+| 1 | 5G mMTC 大规模 IoT 连接场景分析 | [5g-mmtc-massive-iot-connection](papers/5g-mmtc-massive-iot-connection.md) |
+| 2 | 5G 网络切片在 IoT 垂直行业中的应用 | [5g-network-slicing-iot-vertical](papers/5g-network-slicing-iot-vertical.md) |
+| 3 | 5G NR RedCap 精简能力设备 IoT 应用 | [5g-nr-redcap-iot-device](papers/5g-nr-redcap-iot-device.md) |
+| 4 | 5G 专网在工业 IoT 中的部署模式 | [5g-private-network-industrial-iot](papers/5g-private-network-industrial-iot.md) |
 | 5 | 5G RedCap：为物联网量身定制的 5G 技术 | [5g-redcap-iot](papers/5g-redcap-iot.md) |
-| 6 | 5G URLLC超可靠低时延在工业IoT中的应用 | [5g-urllc-industrial-iot](papers/5g-urllc-industrial-iot.md) |
-| 7 | 自适应调制编码AMC在IoT中的实现 | [adaptive-modulation-coding-iot](papers/adaptive-modulation-coding-iot.md) |
-| 8 | 信息年龄AoI在IoT数据新鲜度中的度量 | [age-of-information-iot-freshness](papers/age-of-information-iot-freshness.md) |
-| 9 | AI驱动的IoT网络优化与自配置 | [ai-driven-network-optimization-iot](papers/ai-driven-network-optimization-iot.md) |
-| 10 | Amazon Sidewalk邻里IoT网络技术分析 | [amazon-sidewalk-neighborhood-iot](papers/amazon-sidewalk-neighborhood-iot.md) |
+| 6 | 5G URLLC 超可靠低时延在工业 IoT 中的应用 | [5g-urllc-industrial-iot](papers/5g-urllc-industrial-iot.md) |
+| 7 | 自适应调制编码 AMC 在 IoT 中的实现 | [adaptive-modulation-coding-iot](papers/adaptive-modulation-coding-iot.md) |
+| 8 | 信息年龄 AoI 在 IoT 数据新鲜度中的度量 | [age-of-information-iot-freshness](papers/age-of-information-iot-freshness.md) |
+| 9 | AI 驱动的 IoT 网络优化与自配置 | [ai-driven-network-optimization-iot](papers/ai-driven-network-optimization-iot.md) |
+| 10 | Amazon Sidewalk 邻里 IoT 网络技术分析 | [amazon-sidewalk-neighborhood-iot](papers/amazon-sidewalk-neighborhood-iot.md) |
 | 11 | 室内外天线传播特性与IoT部署考量 | [antenna-propagation-indoor-outdoor](papers/antenna-propagation-indoor-outdoor.md) |
 | 12 | 天线OTA测试与辐射性能评估 | [antenna-testing-ota-measurement](papers/antenna-testing-ota-measurement.md) |
 | 13 | 反向散射通信在环境IoT中的应用 | [backscatter-communication-ambient-iot](papers/backscatter-communication-ambient-iot.md) |
@@ -55,16 +55,16 @@
 | 48 | 分集技术提高IoT无线链路可靠性 | [diversity-techniques-iot-reliability](papers/diversity-techniques-iot-reliability.md) |
 | 49 | DLMS/COSEM智能电表通信协议标准 | [dlms-cosem-smart-meter-protocol](papers/dlms-cosem-smart-meter-protocol.md) |
 | 50 | 占空比MAC协议在IoT低功耗通信中的设计 | [duty-cycle-mac-protocol-iot](papers/duty-cycle-mac-protocol-iot.md) |
-| 51 | 动态频谱接入技术：从"固定车道"到"智能导航" | [dynamic-spectrum-access](papers/dynamic-spectrum-access.md) |
+| 51 | 动态频谱接入技术：从固定车道到智能导航 | [dynamic-spectrum-access](papers/dynamic-spectrum-access.md) |
 | 52 | 无线传感器网络能量高效路由协议 | [energy-efficient-routing-wsn](papers/energy-efficient-routing-wsn.md) |
-| 53 | eSIM IoT远程配置与运营商切换 | [esim-iot-remote-provisioning](papers/esim-iot-remote-provisioning.md) |
-| 54 | EtherCAT实时工业以太网在IoT中的应用 | [ethercat-real-time-industrial](papers/ethercat-real-time-industrial.md) |
-| 55 | 工业以太网TSN时间敏感网络在IoT中的应用 | [ethernet-industrial-iot-tsn](papers/ethernet-industrial-iot-tsn.md) |
-| 56 | 单对以太网SPE在IoT边缘连接中的应用 | [ethernet-single-pair-spe-iot](papers/ethernet-single-pair-spe-iot.md) |
-| 57 | 衰落与多径效应对IoT无线信道的影响 | [fading-multipath-iot-channel](papers/fading-multipath-iot-channel.md) |
-| 58 | 联邦学习在IoT通信优化中的应用 | [federated-learning-iot-communication](papers/federated-learning-iot-communication.md) |
-| 59 | Mesh网络泛洪与路由转发策略对比 | [flooding-vs-routing-mesh-iot](papers/flooding-vs-routing-mesh-iot.md) |
-| 60 | 前向纠错FEC在IoT低功耗通信中的应用 | [forward-error-correction-iot](papers/forward-error-correction-iot.md) |
+| 53 | eSIM IoT 远程配置与运营商切换 | [esim-iot-remote-provisioning](papers/esim-iot-remote-provisioning.md) |
+| 54 | EtherCAT 实时工业以太网在 IoT 中的应用 | [ethercat-real-time-industrial](papers/ethercat-real-time-industrial.md) |
+| 55 | 工业以太网 TSN 时间敏感网络在 IoT 中的应用 | [ethernet-industrial-iot-tsn](papers/ethernet-industrial-iot-tsn.md) |
+| 56 | 单对以太网 SPE 在 IoT 边缘连接中的应用 | [ethernet-single-pair-spe-iot](papers/ethernet-single-pair-spe-iot.md) |
+| 57 | 衰落与多径效应对 IoT 无线信道的影响 | [fading-multipath-iot-channel](papers/fading-multipath-iot-channel.md) |
+| 58 | 联邦学习在 IoT 通信优化中的应用 | [federated-learning-iot-communication](papers/federated-learning-iot-communication.md) |
+| 59 | Mesh 网络泛洪与路由转发策略对比 | [flooding-vs-routing-mesh-iot](papers/flooding-vs-routing-mesh-iot.md) |
+| 60 | 前向纠错 FEC 在 IoT 低功耗通信中的应用 | [forward-error-correction-iot](papers/forward-error-correction-iot.md) |
 | 61 | IoT无线频段法规：ISM/免许可/许可频段 | [frequency-band-regulation-iot](papers/frequency-band-regulation-iot.md) |
 | 62 | 全双工无线电在IoT中的自干扰消除 | [full-duplex-radio-iot](papers/full-duplex-radio-iot.md) |
 | 63 | 地理路由GPSR在IoT传感器网络中的应用 | [geographic-routing-gpsr-iot](papers/geographic-routing-gpsr-iot.md) |
@@ -104,7 +104,7 @@
 | 97 | LoRaWAN组播固件更新FUOTA机制 | [lorawan-multicast-firmware-update](papers/lorawan-multicast-firmware-update.md) |
 | 98 | LoRaWAN网络服务器架构与数据流 | [lorawan-network-server-architecture](papers/lorawan-network-server-architecture.md) |
 | 99 | LoRaWAN中继节点覆盖扩展方案 | [lorawan-relay-coverage-extension](papers/lorawan-relay-coverage-extension.md) |
-| 100 | LoRaWAN 网络可扩展性：从单网关到大规模部署 | [lorawan-scalability](papers/lorawan-scalability.md) |
+| 100 | LoRaWAN网络可扩展性：从单网关到大规模部署 | [lorawan-scalability](papers/lorawan-scalability.md) |
 | 101 | LoRaWAN安全密钥体系与入网流程 | [lorawan-security-keys-join](papers/lorawan-security-keys-join.md) |
 | 102 | 低功耗广域网LPWAN技术综合综述 | [low-power-wide-area-network-survey](papers/low-power-wide-area-network-survey.md) |
 | 103 | LPWAN密集部署容量规划与干扰分析 | [lpwan-capacity-planning-dense](papers/lpwan-capacity-planning-dense.md) |

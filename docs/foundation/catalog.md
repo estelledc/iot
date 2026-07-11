@@ -8,7 +8,7 @@
 | 1 | 3D打印传感器外壳设计与快速原型 | [3d-printed-sensor-enclosure](papers/3d-printed-sensor-enclosure.md) |
 | 2 | 4-20mA电流环在工业IoT中的信号传输 | [4-20ma-current-loop-industrial](papers/4-20ma-current-loop-industrial.md) |
 | 3 | IoT设备加速寿命试验设计与数据分析 | [accelerated-life-testing-iot](papers/accelerated-life-testing-iot.md) |
-| 4 | 声学传感网络：从 MEMS 麦克风阵列到边缘音频智能 | [acoustic-sensor-networks](papers/acoustic-sensor-networks.md) |
+| 4 | 声学传感网络：从MEMS麦克风阵列到边缘音频智能 | [acoustic-sensor-networks](papers/acoustic-sensor-networks.md) |
 | 5 | 有源滤波器Butterworth与Chebyshev拓扑对比 | [active-filter-butterworth-chebyshev](papers/active-filter-butterworth-chebyshev.md) |
 | 6 | ADC校准：失调误差与增益误差补偿 | [adc-calibration-offset-gain-error](papers/adc-calibration-offset-gain-error.md) |
 | 7 | ADC+DMA连续采样实时数据采集系统设计 | [adc-dma-continuous-sampling](papers/adc-dma-continuous-sampling.md) |
@@ -170,21 +170,21 @@
 | 163 | 1-Wire协议与DS18B20温度传感器实战 | [one-wire-protocol-ds18b20](papers/one-wire-protocol-ds18b20.md) |
 | 164 | 运算放大器在IoT传感器前端的选型要点 | [op-amp-selection-iot-sensor](papers/op-amp-selection-iot-sensor.md) |
 | 165 | 光电传感器在 IoT 中的应用 | [optical-sensors-iot](papers/optical-sensors-iot.md) |
-| 166 | 光耦与数字隔离器在IoT隔离通信中的对比 | [optocoupler-digital-isolator-comparison](papers/optocoupler-digital-isolator-comparison.md) |
-| 167 | 示波器测量技巧：触发/解码/电源纹波 | [oscilloscope-measurement-techniques](papers/oscilloscope-measurement-techniques.md) |
+| 166 | 光耦与数字隔离器对比选型 | [optocoupler-digital-isolator-comparison](papers/optocoupler-digital-isolator-comparison.md) |
+| 167 | 示波器测量技术与IoT调试实践 | [oscilloscope-measurement-techniques](papers/oscilloscope-measurement-techniques.md) |
 | 168 | MCU OTA固件更新机制与双Bank设计 | [ota-firmware-update-mcu](papers/ota-firmware-update-mcu.md) |
-| 169 | 过采样与噪声整形提高ADC有效分辨率 | [oversampling-noise-shaping-adc](papers/oversampling-noise-shaping-adc.md) |
-| 170 | PM2.5激光散射粒子传感器精度分析 | [particulate-matter-pm25-sensor](papers/particulate-matter-pm25-sensor.md) |
-| 171 | PCB板载天线设计：倒F/蛇形/环形天线 | [pcb-antenna-design-iot](papers/pcb-antenna-design-iot.md) |
+| 169 | 过采样与噪声整形提升ADC有效位数 | [oversampling-noise-shaping-adc](papers/oversampling-noise-shaping-adc.md) |
+| 170 | PM2.5颗粒物传感器原理与精度校正 | [particulate-matter-pm25-sensor](papers/particulate-matter-pm25-sensor.md) |
+| 171 | IoT设备PCB板载天线设计 | [pcb-antenna-design-iot](papers/pcb-antenna-design-iot.md) |
 | 172 | IoT设备PCB设计基础：布局布线规则 | [pcb-design-basics-iot](papers/pcb-design-basics-iot.md) |
 | 173 | PCB可制造性设计DFM检查清单 | [pcb-dfm-design-for-manufacturing](papers/pcb-dfm-design-for-manufacturing.md) |
-| 174 | PCB地平面分割与混合信号设计 | [pcb-ground-plane-partitioning](papers/pcb-ground-plane-partitioning.md) |
-| 175 | 高速信号走线规则：差分对/等长/阻抗匹配 | [pcb-high-speed-signal-routing](papers/pcb-high-speed-signal-routing.md) |
-| 176 | 多层PCB叠层设计与阻抗控制 | [pcb-stackup-layer-design](papers/pcb-stackup-layer-design.md) |
-| 177 | PCB热设计：铜面积/过孔散热/热仿真 | [pcb-thermal-management](papers/pcb-thermal-management.md) |
-| 178 | 光电二极管与光电晶体管选型对比 | [photodiode-phototransistor-comparison](papers/photodiode-phototransistor-comparison.md) |
-| 179 | PIC单片机在传统IoT设备中的延续与局限 | [pic-microcontroller-iot-legacy](papers/pic-microcontroller-iot-legacy.md) |
-| 180 | 压电式振动传感器在工业IoT中的应用 | [piezoelectric-vibration-sensor](papers/piezoelectric-vibration-sensor.md) |
+| 174 | PCB地平面分割与混合信号接地策略 | [pcb-ground-plane-partitioning](papers/pcb-ground-plane-partitioning.md) |
+| 175 | PCB高速信号布线与阻抗控制 | [pcb-high-speed-signal-routing](papers/pcb-high-speed-signal-routing.md) |
+| 176 | PCB叠层设计与阻抗控制 | [pcb-stackup-layer-design](papers/pcb-stackup-layer-design.md) |
+| 177 | PCB热设计与散热管理 | [pcb-thermal-management](papers/pcb-thermal-management.md) |
+| 178 | 光电二极管与光电晶体管对比选型 | [photodiode-phototransistor-comparison](papers/photodiode-phototransistor-comparison.md) |
+| 179 | PIC单片机在工业IoT中的延续与局限 | [pic-microcontroller-iot-legacy](papers/pic-microcontroller-iot-legacy.md) |
+| 180 | 压电振动传感器与预测性维护 | [piezoelectric-vibration-sensor](papers/piezoelectric-vibration-sensor.md) |
 | 181 | 集成PMIC电源管理芯片选型与设计 | [pmic-integrated-power-management](papers/pmic-integrated-power-management.md) |
 | 182 | NuttX POSIX兼容RTOS在IoT中的应用 | [posix-rtos-nuttx-iot](papers/posix-rtos-nuttx-iot.md) |
 | 183 | 灌封材料在传感器防护中的选型与工艺 | [potting-compound-sensor-protection](papers/potting-compound-sensor-protection.md) |
@@ -214,7 +214,7 @@
 | 207 | RTC实时时钟芯片选型与时间同步 | [rtc-real-time-clock-design](papers/rtc-real-time-clock-design.md) |
 | 208 | RTD/PT100温度传感器信号调理电路设计 | [rtd-pt100-signal-conditioning](papers/rtd-pt100-signal-conditioning.md) |
 | 209 | IoT 实时操作系统对比：FreeRTOS vs Zephyr vs LiteOS vs TinyOS | [rtos-comparison](papers/rtos-comparison.md) |
-| 210 | RTOS进程间通信机制：队列/信号量/邮箱 | [rtos-ipc-mechanisms-survey](papers/rtos-ipc-mechanisms-survey.md) |
+| 210 | RTOS进程间通信机制综述 | [rtos-ipc-mechanisms-survey](papers/rtos-ipc-mechanisms-survey.md) |
 | 211 | RTOS内存管理：内存池与堆分配器对比 | [rtos-memory-management-pool-heap](papers/rtos-memory-management-pool-heap.md) |
 | 212 | RTOS电源管理框架与低功耗状态转换 | [rtos-power-management-framework](papers/rtos-power-management-framework.md) |
 | 213 | RTOS Tickless空闲模式实现与功耗收益 | [rtos-tick-less-idle-mode](papers/rtos-tick-less-idle-mode.md) |
@@ -230,13 +230,13 @@
 | 223 | 传感器自测试与自动诊断功能实现 | [sensor-self-test-auto-diagnosis](papers/sensor-self-test-auto-diagnosis.md) |
 | 224 | 舵机控制协议PWM/总线式在IoT中的对比 | [servo-motor-control-protocol](papers/servo-motor-control-protocol.md) |
 | 225 | Sigma-Delta调制器在高精度传感器读出中的应用 | [sigma-delta-modulator-sensor-readout](papers/sigma-delta-modulator-sensor-readout.md) |
-| 226 | 信号调理电路：放大/滤波/隔离基础 | [signal-conditioning-amplifier-filter](papers/signal-conditioning-amplifier-filter.md) |
-| 227 | 信号完整性：串扰分析与走线间距规则 | [signal-integrity-crosstalk](papers/signal-integrity-crosstalk.md) |
-| 228 | MCU睡眠模式层级：Sleep/Stop/Standby功耗对比 | [sleep-mode-hierarchy-mcu](papers/sleep-mode-hierarchy-mcu.md) |
-| 229 | 智能传感器集成MCU的片上信号处理 | [smart-sensor-with-integrated-mcu](papers/smart-sensor-with-integrated-mcu.md) |
-| 230 | SMT贴片与通孔焊接工艺对比 | [smt-through-hole-assembly](papers/smt-through-hole-assembly.md) |
-| 231 | SoC多电源域设计与电压调节策略 | [soc-power-domain-design](papers/soc-power-domain-design.md) |
-| 232 | SoC/MCU/MPU在IoT中的定位与选型边界 | [soc-vs-mcu-vs-mpu-iot](papers/soc-vs-mcu-vs-mpu-iot.md) |
+| 226 | 传感器信号调理放大与滤波电路设计 | [signal-conditioning-amplifier-filter](papers/signal-conditioning-amplifier-filter.md) |
+| 227 | 高速信号完整性与串扰分析 | [signal-integrity-crosstalk](papers/signal-integrity-crosstalk.md) |
+| 228 | MCU休眠模式层次与唤醒源设计 | [sleep-mode-hierarchy-mcu](papers/sleep-mode-hierarchy-mcu.md) |
+| 229 | 集成MCU的智能传感器架构与应用 | [smart-sensor-with-integrated-mcu](papers/smart-sensor-with-integrated-mcu.md) |
+| 230 | SMT与通孔装配工艺在IoT硬件中的选择 | [smt-through-hole-assembly](papers/smt-through-hole-assembly.md) |
+| 231 | SoC电源域划分与低功耗架构 | [soc-power-domain-design](papers/soc-power-domain-design.md) |
+| 232 | SoC、MCU与MPU在物联网中的选型对比 | [soc-vs-mcu-vs-mpu-iot](papers/soc-vs-mcu-vs-mpu-iot.md) |
 | 233 | 土壤湿度传感器类型与农业IoT选型 | [soil-moisture-sensor-comparison](papers/soil-moisture-sensor-comparison.md) |
 | 234 | 太阳能采集MPPT算法与IoT节点集成 | [solar-energy-harvesting-mppt](papers/solar-energy-harvesting-mppt.md) |
 | 235 | 电磁阀驱动电路设计与反向电动势保护 | [solenoid-valve-driver-circuit](papers/solenoid-valve-driver-circuit.md) |
@@ -247,37 +247,37 @@
 | 240 | STM32 MCU家族选型指南与外设对比 | [stm32-mcu-family-selection](papers/stm32-mcu-family-selection.md) |
 | 241 | 应变片与惠斯通电桥测量电路 | [strain-gauge-wheatstone-bridge](papers/strain-gauge-wheatstone-bridge.md) |
 | 242 | Sub-GHz无线模组CC1310硬件设计 | [sub-ghz-module-cc1310-design](papers/sub-ghz-module-cc1310-design.md) |
-| 243 | 超级电容器作为IoT能量缓冲的设计考量 | [supercapacitor-iot-energy-buffer](papers/supercapacitor-iot-energy-buffer.md) |
+| 243 | 超级电容在IoT能量缓冲中的应用 | [supercapacitor-iot-energy-buffer](papers/supercapacitor-iot-energy-buffer.md) |
 | 244 | 开关电容电路在传感器接口中的应用 | [switched-capacitor-circuit-sensor](papers/switched-capacitor-circuit-sensor.md) |
 | 245 | 系统级模块SoM在IoT产品快速落地中的应用 | [system-on-module-som-design](papers/system-on-module-som-design.md) |
 | 246 | 触觉传感技术与 IoT 应用 | [tactile-sensing-iot](papers/tactile-sensing-iot.md) |
 | 247 | IoT硬件可测试性设计DFT与测试点布局 | [testability-design-iot-hardware](papers/testability-design-iot-hardware.md) |
-| 248 | TFLite Micro模型优化与MCU内存约束 | [tflite-micro-model-optimization](papers/tflite-micro-model-optimization.md) |
-| 249 | 热电偶类型与测温原理详解 | [thermocouple-types-principles](papers/thermocouple-types-principles.md) |
-| 250 | 温差发电热电能量采集器件与电路 | [thermoelectric-energy-harvesting](papers/thermoelectric-energy-harvesting.md) |
-| 251 | ThreadX/Azure RTOS在IoT认证中的优势 | [threadx-azure-rtos-iot](papers/threadx-azure-rtos-iot.md) |
-| 252 | 定时器/计数器PWM输出与输入捕获应用 | [timer-counter-pwm-capture](papers/timer-counter-pwm-capture.md) |
-| 253 | TinyML振动异常检测在工业IoT中的应用 | [tinyml-anomaly-detection-vibration](papers/tinyml-anomaly-detection-vibration.md) |
-| 254 | TinyML关键词检测在MCU上的部署实践 | [tinyml-keyword-spotting-mcu](papers/tinyml-keyword-spotting-mcu.md) |
-| 255 | TinyML：在微控制器上部署机器学习 | [tinyml-mcu-deployment](papers/tinyml-mcu-deployment.md) |
-| 256 | ToF深度传感器VL53L1X原理与测距精度 | [tof-depth-sensor-vl53l1x](papers/tof-depth-sensor-vl53l1x.md) |
-| 257 | 磁致伸缩扭矩传感器原理与工业应用 | [torque-sensor-magnetostrictive](papers/torque-sensor-magnetostrictive.md) |
-| 258 | 跨阻放大器TIA在光电二极管信号读出中的应用 | [transimpedance-amplifier-photodiode](papers/transimpedance-amplifier-photodiode.md) |
-| 259 | 真随机数发生器TRNG硬件实现与评估 | [true-random-number-generator-trng](papers/true-random-number-generator-trng.md) |
-| 260 | UART/RS-232/RS-485串口通信对比 | [uart-rs232-rs485-comparison](papers/uart-rs232-rs485-comparison.md) |
-| 261 | 超声波测距传感器原理与盲区优化 | [ultrasonic-distance-measurement](papers/ultrasonic-distance-measurement.md) |
-| 262 | USB OTG在嵌入式IoT设备中的实现 | [usb-otg-embedded-device](papers/usb-otg-embedded-device.md) |
-| 263 | 紫外线指数传感器UV检测技术与校准 | [uv-index-sensor-iot](papers/uv-index-sensor-iot.md) |
-| 264 | UWB模组DW1000测距定位硬件架构 | [uwb-module-dw1000-ranging](papers/uwb-module-dw1000-ranging.md) |
-| 265 | 振动能量采集压电换能器匹配电路 | [vibration-energy-harvesting-piezo](papers/vibration-energy-harvesting-piezo.md) |
-| 266 | 精密电压基准源设计与温度系数分析 | [voltage-reference-precision-design](papers/voltage-reference-precision-design.md) |
-| 267 | 无线唤醒Wake-on-Radio在LPWAN中的实现 | [wake-on-radio-lpwan](papers/wake-on-radio-lpwan.md) |
-| 268 | 看门狗定时器在嵌入式系统可靠性中的作用 | [watchdog-timer-system-reliability](papers/watchdog-timer-system-reliability.md) |
-| 269 | 水质多参数传感器阵列：pH / DO / 浊度集成 | [water-quality-sensor-array](papers/water-quality-sensor-array.md) |
+| 248 | TensorFlow Lite Micro模型优化与MCU部署 | [tflite-micro-model-optimization](papers/tflite-micro-model-optimization.md) |
+| 249 | 热电偶类型与测温原理及冷端补偿 | [thermocouple-types-principles](papers/thermocouple-types-principles.md) |
+| 250 | 温差发电能量采集与IoT节点供电 | [thermoelectric-energy-harvesting](papers/thermoelectric-energy-harvesting.md) |
+| 251 | ThreadX/Azure RTOS在物联网中的应用与生态 | [threadx-azure-rtos-iot](papers/threadx-azure-rtos-iot.md) |
+| 252 | 定时器计数器PWM与输入捕获应用 | [timer-counter-pwm-capture](papers/timer-counter-pwm-capture.md) |
+| 253 | TinyML振动异常检测在预测性维护中的应用 | [tinyml-anomaly-detection-vibration](papers/tinyml-anomaly-detection-vibration.md) |
+| 254 | TinyML关键词唤醒在MCU上的实现 | [tinyml-keyword-spotting-mcu](papers/tinyml-keyword-spotting-mcu.md) |
+| 255 | TinyML在微控制器上的部署实践 | [tinyml-mcu-deployment](papers/tinyml-mcu-deployment.md) |
+| 256 | ToF深度传感器VL53L1X原理与应用 | [tof-depth-sensor-vl53l1x](papers/tof-depth-sensor-vl53l1x.md) |
+| 257 | 磁致伸缩扭矩传感器原理与工业IoT应用 | [torque-sensor-magnetostrictive](papers/torque-sensor-magnetostrictive.md) |
+| 258 | 跨阻放大器与光电二极管读出设计 | [transimpedance-amplifier-photodiode](papers/transimpedance-amplifier-photodiode.md) |
+| 259 | 真随机数发生器TRNG原理与IoT安全应用 | [true-random-number-generator-trng](papers/true-random-number-generator-trng.md) |
+| 260 | UART与RS-232/RS-485物理层对比 | [uart-rs232-rs485-comparison](papers/uart-rs232-rs485-comparison.md) |
+| 261 | 超声波测距原理与IoT应用设计 | [ultrasonic-distance-measurement](papers/ultrasonic-distance-measurement.md) |
+| 262 | 嵌入式USB OTG设备设计与角色切换 | [usb-otg-embedded-device](papers/usb-otg-embedded-device.md) |
+| 263 | 紫外线指数传感器原理与户外IoT应用 | [uv-index-sensor-iot](papers/uv-index-sensor-iot.md) |
+| 264 | 超宽带UWB模组DW1000测距原理与硬件 | [uwb-module-dw1000-ranging](papers/uwb-module-dw1000-ranging.md) |
+| 265 | 压电振动能量采集原理与IoT供电 | [vibration-energy-harvesting-piezo](papers/vibration-energy-harvesting-piezo.md) |
+| 266 | 精密电压基准源设计与噪声分析 | [voltage-reference-precision-design](papers/voltage-reference-precision-design.md) |
+| 267 | 无线唤醒与LPWAN低功耗接收技术 | [wake-on-radio-lpwan](papers/wake-on-radio-lpwan.md) |
+| 268 | 看门狗定时器与系统可靠性设计 | [watchdog-timer-system-reliability](papers/watchdog-timer-system-reliability.md) |
+| 269 | 水质传感器阵列与多参数监测系统 | [water-quality-sensor-array](papers/water-quality-sensor-array.md) |
 | 270 | 可穿戴传感器系统 | [wearable-sensors](papers/wearable-sensors.md) |
-| 271 | WiFi模组ESP AT固件指令集与主控接口 | [wifi-module-esp-at-firmware](papers/wifi-module-esp-at-firmware.md) |
-| 272 | IoT 设备无线充电技术：从 Qi 标准到射频能量收集 | [wireless-charging-iot](papers/wireless-charging-iot.md) |
+| 271 | Wi-Fi模组AT固件接口与二次开发 | [wifi-module-esp-at-firmware](papers/wifi-module-esp-at-firmware.md) |
+| 272 | 物联网设备无线充电技术与线圈设计 | [wireless-charging-iot](papers/wireless-charging-iot.md) |
 | 273 | Yocto与Buildroot嵌入式Linux构建系统对比 | [yocto-buildroot-embedded-linux](papers/yocto-buildroot-embedded-linux.md) |
-| 274 | Zephyr RTOS设备驱动模型与DeviceTree | [zephyr-rtos-device-driver-model](papers/zephyr-rtos-device-driver-model.md) |
-| 275 | Zigbee CC2530模组硬件设计与组网 | [zigbee-cc2530-hardware-design](papers/zigbee-cc2530-hardware-design.md) |
+| 274 | Zephyr RTOS设备驱动模型与设备树 | [zephyr-rtos-device-driver-model](papers/zephyr-rtos-device-driver-model.md) |
+| 275 | Zigbee CC2530硬件设计与射频匹配 | [zigbee-cc2530-hardware-design](papers/zigbee-cc2530-hardware-design.md) |
 <!-- layer-catalog:end -->

@@ -52,7 +52,11 @@ jobs:
             --assert-single-main \
             --assert-single-footer \
             --assert-single-h1 \
-            --assert-text "物联网全栈技术学习站" \
+            --assert-text "先看依赖，再选择要深入的 IoT 层" \
+            --assert-text "持续维护 · Maintained" \
+            --assert-text "Jason Xun 负责八层体系" \
+            --assert-text "NOT_TRACKED" \
+            --assert-text "全量来源审计仍为" \
             --assert-link "foundation/" \
             --assert-link "connectivity/" \
             --assert-link "network/" \
@@ -63,6 +67,21 @@ jobs:
             --assert-link "frontier/" \
             --assert-link "roadmap/" \
             --assert-link "progress/" \
+            --assert-link "https://estelledc.github.io/" \
+            --assert-link "https://estelledc.github.io/about/" \
+            --assert-link "https://estelledc.github.io/resume/" \
+            --assert-link "https://github.com/estelledc/iot" \
+            --assert-canonical "https://estelledc.github.io/iot/" \
+            --assert-meta "og:title" \
+            --assert-meta "og:description" \
+            --assert-meta "og:url" \
+            --assert-meta "og:image" \
+            --assert-meta "twitter:card" \
+            --assert-meta "twitter:title" \
+            --assert-meta "twitter:image" \
+            --assert-json-ld-type "Person" \
+            --assert-json-ld-type "WebSite" \
+            --assert-json-ld-type "CollectionPage" \
             --external-link-rel
           python tools/validate_site.py \
             --site-dir site \
@@ -70,6 +89,17 @@ jobs:
             --assert-single-main \
             --assert-single-footer \
             --assert-single-h1 \
+            --external-link-rel
+          python tools/validate_site.py \
+            --site-dir site \
+            --page 404.html \
+            --assert-single-main \
+            --assert-single-footer \
+            --assert-single-h1 \
+            --assert-text "这条路径不在当前 IoT 依赖图里" \
+            --assert-canonical "https://estelledc.github.io/iot/404.html" \
+            --assert-robots "noindex,follow" \
+            --forbid-json-ld \
             --external-link-rel
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:

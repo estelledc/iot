@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  {% set social_title = page.meta.title if page.meta and page.meta.title else (page.title if page.title and not page.is_homepage else config.site_name) %}
+  {% set social_description = page.meta.description if page.meta and page.meta.description else config.site_description %}
+  <meta property="og:title" content="{{ social_title | striptags | e }}">
+  <meta property="og:description" content="{{ social_description | e }}">
+  <meta property="og:type" content="{% if page.is_homepage %}website{% else %}article{% endif %}">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="{{ config.site_name | e }}">
+  {% if page.canonical_url %}<meta property="og:url" content="{{ page.canonical_url }}">{% else %}<link rel="canonical" href="{{ config.site_url }}404.html"><meta name="robots" content="noindex,follow"><meta property="og:url" content="{{ config.site_url }}404.html">{% endif %}
+  <meta property="og:image" content="https://estelledc.github.io/assets/media/og-showcase.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Jason Xun · Product Systems Builder portfolio preview">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ social_title | striptags | e }}">
+  <meta name="twitter:description" content="{{ social_description | e }}">
+  <meta name="twitter:image" content="https://estelledc.github.io/assets/media/og-showcase.png">
+  {% if page.canonical_url %}
+  {% set person_schema = {
+      "@type": "Person",
+      "@id": "https://estelledc.github.io/#person",
+      "name": "Jason Xun",
+      "url": "https://estelledc.github.io/about/",
+      "sameAs": ["https://github.com/estelledc"]
+  } %}
+  {% set website_schema = {
+      "@type": "WebSite",
+      "@id": config.site_url ~ "#website",
+      "name": config.site_name,
+      "alternateName": "物联网全栈技术学习站",
+      "url": config.site_url,
+      "description": config.site_description,
+      "inLanguage": ["zh-CN", "en"],
+      "creator": {"@id": "https://estelledc.github.io/#person"},
+      "sameAs": config.repo_url
+  } %}
+  {% set page_schema = {
+      "@type": "CollectionPage" if page.is_homepage else "TechArticle",
+      "@id": (page.canonical_url if page.canonical_url else config.site_url) ~ "#page",
+      "url": page.canonical_url if page.canonical_url else config.site_url,
+      "name": social_title,
+      "headline": social_title,
+      "description": social_description,
+      "inLanguage": "zh-CN",
+      "author": {"@id": "https://estelledc.github.io/#person"},
+      "isPartOf": {"@id": config.site_url ~ "#website"}
+  } %}
+  {% set schema_graph = {
+      "@context": "https://schema.org",
+      "@graph": [person_schema, website_schema, page_schema]
+  } %}
+  <script type="application/ld+json">{{ schema_graph | tojson }}</script>
+  {% endif %}
+{% endblock %}

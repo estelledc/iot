@@ -1,18 +1,88 @@
 ---
 template: home.html
+title: 物联网全栈技术学习站
+description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层技术地图建立可导航、可检查的 IoT 全栈学习路径。
 ---
 
-<section class="iot-hero">
-  <div>
-    <p class="iot-hero__eyebrow">IoT From Zero to Infinity</p>
-    <h1>物联网全栈技术学习站</h1>
-    <p class="iot-hero__lead">
-      从传感器到 6G，从零基础到前沿研究。每篇内容用「零基础也能读懂」的方式重写，用自己的话讲明白一个技术方向。
-    </p>
-    <div class="iot-hero__actions">
-      <a class="iot-pill" href="roadmap/">学习路线</a>
-      <a class="iot-pill iot-pill--secondary" href="progress/">内容进度</a>
+<section class="iot-hero" aria-labelledby="iot-title">
+  <div class="iot-hero__copy">
+    <p class="iot-hero__eyebrow">IoT SYSTEM ATLAS / 8-LAYER LAB</p>
+    <div class="iot-hero__status">
+      <span class="jx-chip" data-state="maintained">持续维护 · Maintained</span>
+      <span><b>642 / 642</b> IN_REVIEW</span>
+      <span><b>0 / 642</b> SOURCE VERIFIED</span>
     </div>
+    <h1 id="iot-title">先看依赖，再选择要深入的 IoT 层。</h1>
+    <p class="iot-hero__lead">
+      这不是 642 篇文章的陈列柜，而是一张可进入、可检查的系统地图。每层同时公开内容规模、上游依赖和审查状态；<code>IN_REVIEW</code> 与 <code>NOT_TRACKED</code> 会留在首屏，不被“内容很多”掩盖。
+    </p>
+    <p class="iot-hero__en" lang="en">Explore the stack as a dependency system. Every layer exposes its content volume and evidence state—without presenting review activity as source verification.</p>
+    <div class="iot-hero__actions">
+      <a class="jx-action" href="roadmap/">按依赖开始学习</a>
+      <a class="jx-action jx-action--secondary" href="progress/">审查证据与口径</a>
+      <a class="jx-action jx-action--secondary" href="https://github.com/estelledc/iot">检查仓库</a>
+    </div>
+    <p class="iot-hero__role"><strong>协作边界：</strong>Jason Xun 负责八层体系、里程碑、发布门禁与验收判断；AI 辅助资料研究、内容初稿、批量审查与站点实现，不自行授予 <code>VERIFIED</code> 或 <code>HUMAN_APPROVED</code>。</p>
+  </div>
+
+  <aside class="iot-stack-lab" aria-labelledby="stack-lab-title">
+    <header class="iot-stack-lab__head">
+      <div><span>DEPENDENCY MAP</span><strong id="stack-lab-title">选择一层，沿依赖进入</strong></div>
+      <span class="iot-stack-lab__truth">TRUTH MODE · ON</span>
+    </header>
+    <ol class="iot-stack-map">
+      <li><a href="frontier/"><span class="iot-stack-map__id">L8</span><strong>前沿方向</strong><small>25 files</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="applications/"><span class="iot-stack-map__id">L7</span><strong>综合应用</strong><small>25 files · depends on L4–L6</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="security/"><span class="iot-stack-map__id">L6</span><strong>安全与隐私</strong><small>25 files · cross-cutting</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="intelligence/"><span class="iot-stack-map__id">L5</span><strong>边缘智能</strong><small>25 files · depends on L4</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="computing/"><span class="iot-stack-map__id">L4</span><strong>计算平台</strong><small>25 files · depends on L1–L3</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="network/"><span class="iot-stack-map__id">L3</span><strong>网络协议</strong><small>25 files · depends on L2</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="connectivity/"><span class="iot-stack-map__id">L2</span><strong>无线接入</strong><small>217 files · depends on L1</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="foundation/"><span class="iot-stack-map__id">L1</span><strong>感知与硬件</strong><small>275 files · foundation</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+    </ol>
+    <div class="iot-stack-lab__legend" aria-label="审查状态图例">
+      <span><i data-state="review"></i>正文进入审查</span>
+      <span><i data-state="source"></i>来源审计未跟踪</span>
+      <a href="architecture/release-policy/">状态如何升级？</a>
+    </div>
+  </aside>
+</section>
+
+<section class="iot-case" id="project-proof" aria-labelledby="project-proof-title">
+  <header class="iot-case__header">
+    <p class="jx-eyebrow"><span class="jx-eyebrow__rule"></span>Project proof</p>
+    <h2 id="project-proof-title">先把知识地图做成系统，再讨论规模。</h2>
+    <p>这个项目解决的不是“再写一批 IoT 摘要”，而是让初学者知道技术之间怎样依赖，并让维护者能区分内容存在、可发现、已审查与已验证。</p>
+  </header>
+
+  <div class="jx-proof">
+    <div>
+      <span class="jx-chip" data-state="maintained">v0.2.2 · Maintained</span>
+      <p class="jx-proof__summary">Markdown 是源真相，MkDocs 是交付面；确定性清单、frontmatter schema、目录生成器、链接检查和 CI 把八层内容组织成可重复构建的学习站。</p>
+      <p class="jx-proof__summary-en" lang="en">The public value is not raw volume. It is a navigable eight-layer model backed by reproducible inventories, schema checks, generated catalogs, link audits and explicit review states.</p>
+
+      <div class="jx-proof__metrics" aria-label="可机械验证的项目证据">
+        <div class="jx-proof__metric"><strong>8</strong><span>层 IoT 技术体系</span></div>
+        <div class="jx-proof__metric"><strong>642</strong><span>个内容文件，全部可发现</span></div>
+        <div class="jx-proof__metric"><strong>M1</strong><span>治理基线已完成</span></div>
+      </div>
+
+      <div class="jx-proof__links" aria-label="项目证据入口">
+        <a class="jx-pill" href="progress/">仓库事实与口径</a>
+        <a class="jx-pill" href="architecture/release-policy/">发布与验收规则</a>
+        <a class="jx-pill" href="content-schema/">内容元数据契约</a>
+        <a class="jx-pill" href="https://github.com/estelledc/iot">公开仓库</a>
+      </div>
+    </div>
+
+    <dl class="jx-proof__meta">
+      <div><dt>Problem / 问题</dt><dd>IoT 横跨八层，单篇阅读容易失去依赖关系与学习顺序。</dd></div>
+      <div><dt>Jason Xun / 决策与验收</dt><dd>定义分层与里程碑，锁定“先治理、再可信、后扩容”，并决定发布是否满足证据门槛。</dd></div>
+      <div><dt>AI / 辅助</dt><dd>帮助研究、起草、批量深审和工程实现；自动门禁通过仍不能替代人工验收。</dd></div>
+      <div><dt>System / 系统</dt><dd>Markdown → schema 与清单 → catalog 与搜索 → MkDocs Pages；CI 对结构、链接、来源状态和发布规则做回归。</dd></div>
+      <div><dt>Evidence / 证据</dt><dd>642 个文件全部进入可发现目录；642/642 正文完成深审并保持 <code>IN_REVIEW</code>。</dd></div>
+      <div><dt>Limitations / 局限</dt><dd class="jx-proof__limitation">全量来源审计仍为 <code>NOT_TRACKED</code>；<code>IN_REVIEW</code> 不等于事实已验证，线上状态也需针对目标 commit 单独验收。</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -167,7 +237,7 @@ graph TB
   <h2>从哪里开始？</h2>
   <p>零基础从 Layer 1 逐层向上；有基础可以直接进入感兴趣的层级。</p>
   <div class="iot-hero__actions">
-    <a class="iot-pill" href="roadmap/">查看学习路线</a>
-    <a class="iot-pill iot-pill--secondary" href="https://github.com/estelledc/iot" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    <a class="jx-action" href="roadmap/">查看学习路线</a>
+    <a class="jx-action jx-action--secondary" href="https://github.com/estelledc/iot">查看 GitHub</a>
   </div>
 </section>
