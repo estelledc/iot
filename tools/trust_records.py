@@ -1449,6 +1449,30 @@ def _record_is_current(record: _GraphRecord, document: ContentDocument) -> bool:
     )
 
 
+def _active_current_records_by_content(
+    registry: Mapping[str, _GraphRecord],
+    edges: Mapping[str, str],
+    *,
+    invalid_ids: set[str],
+    documents_by_id: Mapping[str, ContentDocument],
+) -> dict[str, list[_GraphRecord]]:
+    """Return current leaves after invalid dependency edges are pruned."""
+
+    suppressed_ids = set(edges.values())
+    active_by_content: dict[str, list[_GraphRecord]] = {}
+    for record_id, record in sorted(registry.items()):
+        document = documents_by_id.get(record.content_id)
+        if (
+            document is None
+            or record_id in invalid_ids
+            or record_id in suppressed_ids
+            or not _record_is_current(record, document)
+        ):
+            continue
+        active_by_content.setdefault(record.content_id, []).append(record)
+    return active_by_content
+
+
 def _record_was_effective_at(
     record: _GraphRecord,
     *,
@@ -1785,18 +1809,91 @@ def validate_trust_graph(
         invalid_ids=invalid_review,
     )
     issues.extend(dependency_issues)
-    suppressed_review = set(review_edges.values())
-    active_review_by_content: dict[str, list[_GraphRecord]] = {}
-    for record_id, record in sorted(review_records.items()):
-        document = documents_by_id.get(record.content_id)
-        if (
-            document is None
-            or record_id in invalid_review
-            or record_id in suppressed_review
-            or not _record_is_current(record, document)
-        ):
-            continue
-        active_review_by_content.setdefault(record.content_id, []).append(record)
+    # Link validation can invalidate a successor that initially suppressed an
+    # older approval.  Revalidate every approval exposed by the pruned graph
+    # against current evidence, then prune again until the active leaves stop
+    # changing.  Historical suppressed reviews keep their reviewed_at snapshot
+    # semantics; only a final current approval must pass this gate.
+    while True:
+        active_review_by_content = _active_current_records_by_content(
+            review_records,
+            review_edges,
+            invalid_ids=invalid_review,
+            documents_by_id=documents_by_id,
+        )
+        newly_invalid: set[str] = set()
+        current_approval_issues: list[ValidationIssue] = []
+        for content_id, records in sorted(active_review_by_content.items()):
+            current_audit_ids = set(active_audit_ids.get(content_id, ()))
+            for record in records:
+                if record.payload.get("decision") != "APPROVE":
+                    continue
+                linked_ids_value = record.payload.get("linked_audit_ids", [])
+                linked_ids = (
+                    linked_ids_value
+                    if isinstance(linked_ids_value, list)
+                    else []
+                )
+                linked_id_set = set(linked_ids)
+                linked_audits_current = linked_id_set.issubset(
+                    current_audit_ids
+                )
+                if not linked_audits_current:
+                    current_approval_issues.append(
+                        _graph_issue(
+                            record,
+                            "LINKED_AUDIT_INACTIVE",
+                            "linked audit is stale, revoked, superseded, or invalid",
+                            "linked_audit_ids",
+                        )
+                    )
+                current_linked_claims = [
+                    source_records[audit_id]
+                    for audit_id in linked_ids
+                    if audit_id in current_audit_ids
+                    and audit_id in source_records
+                    and source_records[audit_id].payload.get("audit_kind")
+                    == "CLAIM_VERIFICATION"
+                ]
+                linked_source_status = "UNVERIFIED"
+                if len(current_linked_claims) == 1:
+                    transition = current_linked_claims[0].payload.get(
+                        "status_transition"
+                    )
+                    target = (
+                        transition.get("to")
+                        if isinstance(transition, Mapping)
+                        else None
+                    )
+                    if target in {"PARTIAL", "VERIFIED"}:
+                        linked_source_status = str(target)
+                approval_evidence_invalid = (
+                    linked_source_status != "VERIFIED"
+                    or projected_source.get(content_id) != "VERIFIED"
+                )
+                if approval_evidence_invalid:
+                    current_approval_issues.append(
+                        _graph_issue(
+                            record,
+                            "LINKED_AUDITS_NOT_VERIFIED",
+                            "linked audits do not project VERIFIED",
+                            "linked_audit_ids",
+                        )
+                    )
+                if not linked_audits_current or approval_evidence_invalid:
+                    newly_invalid.add(record.record_id)
+        if not newly_invalid:
+            break
+        issues.extend(current_approval_issues)
+        invalid_review.update(newly_invalid)
+        review_edges, dependency_issues, invalid_review = (
+            _prune_invalid_dependencies(
+                review_records,
+                review_edges,
+                invalid_ids=invalid_review,
+            )
+        )
+        issues.extend(dependency_issues)
 
     invalidated_review_history = {
         record.content_id

@@ -111,7 +111,7 @@ python tools/reconcile_legacy_review_state.py --check
 - 每条当前记录的 `content_id`、canonical 路径和 `body_sha256` 必须指向当前正文；未撤销 `STALE` 记录失败。身份正确且已撤销的旧 hash 记录可作为历史保留，原 auditor/reviewer 不要求仍存在于当前 registry，但使该记录失效的 revocation actor 必须仍获授 `GOVERNANCE_REVIEWER`；历史记录不参与当前证据投影。存在 stale/revoked review 历史时，降级下限为 `IN_REVIEW`，而不是冒充从未审阅。
 - source audit 与 review record 的 `supersedes` 必须解析到同类型、同内容且时间有序的前序记录；环、分叉、未知目标或跨身份取代都 fail closed。
 - 状态驱动的 claim/review 非初始迁移必须有合法 predecessor；`STRUCTURAL` 独立 no-op 不跨 kind 取代 claim chain，也不能改变 `source_status`。
-- 所有 review 的 `linked_audit_ids` 必须存在、早于 review、绑定同一正文，并在各自 `reviewed_at` 时是有效 evidence；`source_status_at_review` 必须由这些历史时点链接实际投影。当前 active approval 的链接还必须在当前 `as-of` 保持 active/current 并共同投影出 `VERIFIED`，不能借用未链接的全局事实审计。
+- 所有 review 的 `linked_audit_ids` 必须存在、早于 review、绑定同一正文，并在各自 `reviewed_at` 时是有效 evidence；`source_status_at_review` 必须由这些历史时点链接实际投影。validator 会先裁剪无效 successor 与依赖边，再对最终暴露的 active approval 复验当前 evidence；复验若产生新的无效节点，就继续裁剪并重算到固定点后才投影。当前 active approval 的链接必须在当前 `as-of` 保持 active/current 并共同投影出 `VERIFIED`，不能借用未链接的全局事实审计。
 - 每条未撤销记录的 auditor/reviewer 都必须在全局 registry 中解析，权威 type 必须匹配记录 type，且记录声明的 role 必须位于 `allowed_roles`；自报 `human-*`、同步篡改 type/role 不能自授信任。author、`FACT_AUDITOR`、approver 的职责分离必须用该权威映射复核；author 可以执行不会提升状态的 `STRUCTURAL_AUDITOR`，但 reviewer 仍须与全部 linked auditors 独立。来源提升还需要锁定的关键主张清单；缺少这些 authority 输入时 fail closed。
 - 只从完整有效记录图计算预期 `source_status` / `review_status`，再与 frontmatter 缓存比较；不匹配以 `SOURCE_STATUS_PROJECTION_MISMATCH` 或 `REVIEW_STATUS_PROJECTION_MISMATCH` 失败，不自动批量重写 Markdown、记录或账本。
 

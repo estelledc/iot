@@ -973,6 +973,18 @@ class RepositoryTrustGraphTests(unittest.TestCase):
     def _issue_codes(result: Any) -> set[str]:
         return {issue.code for issue in result.issues}
 
+    def _invalid_reopen_after_approval(self) -> dict[str, Any]:
+        reopen = _load_yaml(
+            FIXTURE_ROOTS["review"] / "valid-reopen-review.yml"
+        )
+        reopen["review_id"] = "review-20260711-invalid-reopen"
+        reopen["reviewed_at"] = "2026-07-11T09:40:00Z"
+        reopen["supersedes"] = self.approval["review_id"]
+        reopen["source_status_at_review"] = "UNVERIFIED"
+        reopen["linked_audit_ids"] = ["audit-20260711-does-not-exist"]
+        reopen["independence"]["linked_auditor_ids"] = []
+        return reopen
+
     def _validate_graph(
         self,
         *,
@@ -1412,6 +1424,179 @@ class RepositoryTrustGraphTests(unittest.TestCase):
         projection = result.projections[self.content_id]
         self.assertEqual("VERIFIED", projection.source_status)
         self.assertEqual("NEEDS_CHANGES", projection.review_status)
+
+    def test_invalid_successor_cannot_resurface_approval_with_revoked_audit(
+        self,
+    ) -> None:
+        audit = copy.deepcopy(self.verified_audit)
+        revocation = copy.deepcopy(
+            _load_yaml(FIXTURE_ROOTS["source"] / "valid-revoked.yml")[
+                "revocation"
+            ]
+        )
+        revocation["revoked_at"] = "2026-07-11T09:30:00Z"
+        audit["revocation"] = revocation
+
+        source_records = [self._source_entry("revoked-after-approval", audit)]
+        review_records = [
+            self._review_entry("start", copy.deepcopy(self.start_review)),
+            self._review_entry("approval", copy.deepcopy(self.approval)),
+            self._review_entry(
+                "invalid-reopen",
+                self._invalid_reopen_after_approval(),
+            ),
+        ]
+        result = self._validate_graph(
+            source_records=source_records,
+            review_records=review_records,
+        )
+
+        codes = self._issue_codes(result)
+        self.assertIn("LINKED_AUDIT_NOT_FOUND", codes)
+        self.assertIn("LINKED_AUDIT_INACTIVE", codes)
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNVERIFIED", projection.source_status)
+        self.assertEqual("IN_REVIEW", projection.review_status)
+        self.assertEqual(
+            (self.start_review["review_id"],),
+            projection.active_review_ids,
+        )
+
+        from tools import validate_trust_state
+
+        with (
+            mock.patch.object(
+                validate_trust_state,
+                "_load_documents",
+                return_value=self.documents_by_id,
+            ),
+            mock.patch.object(
+                validate_trust_state,
+                "_load_record_entries",
+                side_effect=[
+                    (source_records, []),
+                    (review_records, []),
+                ],
+            ),
+            mock.patch.object(
+                validate_trust_state,
+                "_load_and_validate_legacy_ledger",
+                return_value=(set(), []),
+            ),
+        ):
+            repository_result = validate_trust_state.validate_repository_trust(
+                repo_root=ROOT,
+                baseline_mode=False,
+                actor_authorities=self.actor_authorities,
+                author_ids_by_content=self.authorities,
+                critical_claim_ids_by_content=self.critical_claims,
+                as_of=self.as_of,
+            )
+
+        self.assertEqual(0, repository_result.summary.approved)
+        self.assertEqual(
+            "IN_REVIEW",
+            repository_result.projections[self.content_id].review_status,
+        )
+
+    def test_invalid_successor_can_resurface_approval_with_active_audit(
+        self,
+    ) -> None:
+        result = self._validate_graph(
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", copy.deepcopy(self.approval)),
+                self._review_entry(
+                    "invalid-reopen",
+                    self._invalid_reopen_after_approval(),
+                ),
+            ],
+        )
+
+        codes = self._issue_codes(result)
+        self.assertIn("LINKED_AUDIT_NOT_FOUND", codes)
+        self.assertNotIn("LINKED_AUDIT_INACTIVE", codes)
+        projection = result.projections[self.content_id]
+        self.assertEqual("VERIFIED", projection.source_status)
+        self.assertEqual("HUMAN_APPROVED", projection.review_status)
+        self.assertEqual(
+            (self.approval["review_id"],),
+            projection.active_review_ids,
+        )
+
+    def test_valid_reopen_preserves_suppressed_approval_history(self) -> None:
+        audit = copy.deepcopy(self.verified_audit)
+        revocation = copy.deepcopy(
+            _load_yaml(FIXTURE_ROOTS["source"] / "valid-revoked.yml")[
+                "revocation"
+            ]
+        )
+        revocation["revoked_at"] = "2026-07-11T09:30:00Z"
+        audit["revocation"] = revocation
+        reopen = _load_yaml(
+            FIXTURE_ROOTS["review"] / "valid-reopen-review.yml"
+        )
+        reopen["review_id"] = "review-20260711-valid-reopen"
+        reopen["reviewed_at"] = "2026-07-11T09:25:00Z"
+        reopen["supersedes"] = self.approval["review_id"]
+
+        result = self._validate_graph(
+            source_records=[self._source_entry("revoked-after-reopen", audit)],
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", copy.deepcopy(self.approval)),
+                self._review_entry("valid-reopen", reopen),
+            ],
+        )
+
+        self.assertEqual([], result.issues)
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNVERIFIED", projection.source_status)
+        self.assertEqual("IN_REVIEW", projection.review_status)
+        self.assertEqual(
+            (reopen["review_id"],),
+            projection.active_review_ids,
+        )
+
+    def test_resurfaced_approval_cannot_borrow_superseding_verified_audit(
+        self,
+    ) -> None:
+        original = copy.deepcopy(self.verified_audit)
+        successor = copy.deepcopy(self.verified_audit)
+        successor["audit_id"] = "audit-20260711-claim-verified-refresh"
+        successor["audited_at"] = "2026-07-11T09:30:00Z"
+        successor["status_transition"] = {
+            "from": "VERIFIED",
+            "to": "VERIFIED",
+        }
+        successor["supersedes"] = original["audit_id"]
+
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("verified-original", original),
+                self._source_entry("verified-successor", successor),
+            ],
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", copy.deepcopy(self.approval)),
+                self._review_entry(
+                    "invalid-reopen",
+                    self._invalid_reopen_after_approval(),
+                ),
+            ],
+        )
+
+        codes = self._issue_codes(result)
+        self.assertIn("LINKED_AUDIT_NOT_FOUND", codes)
+        self.assertIn("LINKED_AUDIT_INACTIVE", codes)
+        projection = result.projections[self.content_id]
+        self.assertEqual("VERIFIED", projection.source_status)
+        self.assertEqual((successor["audit_id"],), projection.active_audit_ids)
+        self.assertEqual("IN_REVIEW", projection.review_status)
+        self.assertEqual(
+            (self.start_review["review_id"],),
+            projection.active_review_ids,
+        )
 
     def test_author_cannot_be_the_linked_fact_auditor(self) -> None:
         approval = copy.deepcopy(self.approval)
