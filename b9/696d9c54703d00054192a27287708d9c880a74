@@ -1,0 +1,45 @@
+.github/workflows/ci.yml
+  s_14685fb7bad426::t_eb761942ce2eba 22-23,37-44
+.github/workflows/deploy.yml
+  s_14685fb7bad426::t_55d229e6b72890 23-24,40-47
+data/content-enums.yml
+  s_14685fb7bad426::t_e465b3043083f8 40
+docs/content-schema.md
+  s_14685fb7bad426::t_9bc5c018beea16 78,80,90,99-118,149-151,154
+schemas/trust-authorities.schema.json
+  s_14685fb7bad426::t_c30f628b08d032 1-129
+tests/test_legacy_reconciliation.py
+  s_14685fb7bad426::t_3f27c31c0642c4 4,215-240,286-297,315
+tests/test_repository_policies.py
+  s_14685fb7bad426::t_e50fd3f8da89bb 273-304,327-482
+tests/test_trust_authorities.py
+  s_14685fb7bad426::t_da5e26654e001a 1-378
+tests/test_trust_state_machine.py
+  s_14685fb7bad426::t_725d6dee9f2a91 4,6-8,10,15,20,903-1965
+tools/check_workflow_policy.py
+  s_14685fb7bad426::t_11d09e919fd0f2 15-19,51-176,179-182,193-194
+tools/reconcile_legacy_review_state.py
+  s_14685fb7bad426::t_c95cde165cf0ea 7-8,12-13,120-148,153-157,184-188,389-483,560-564,586-590,595-611
+tools/trust_records.py
+  s_14685fb7bad426::t_49639db8da591b 1,3-5,20,148-196,674-1850
+tools/validate_trust_state.py
+  s_14685fb7bad426::t_fd22ac7b8a584c 1-761
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b9696d9c54703d00054192a27287708d9c880a74",
+  "prompts": {},
+  "sessions": {
+    "s_14685fb7bad426": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_14685fb7bad426",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
