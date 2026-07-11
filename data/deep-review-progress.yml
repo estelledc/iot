@@ -5,8 +5,8 @@ started: '2026-07-10'
 order: layer 8→1, filename asc, batch size 5
 counts:
   total: 642
-  pending: 275
-  in_review: 367
+  pending: 0
+  in_review: 642
 articles:
 - id: 6g-isac-iot
   layer: 8
@@ -2581,1374 +2581,1924 @@ articles:
   layer: 1
   path: docs/foundation/papers/3d-printed-sensor-enclosure.md
   batch: L1-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B01
 - id: 4-20ma-current-loop-industrial
   layer: 1
   path: docs/foundation/papers/4-20ma-current-loop-industrial.md
   batch: L1-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B01
 - id: accelerated-life-testing-iot
   layer: 1
   path: docs/foundation/papers/accelerated-life-testing-iot.md
   batch: L1-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B01
 - id: acoustic-sensor-networks
   layer: 1
   path: docs/foundation/papers/acoustic-sensor-networks.md
   batch: L1-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B01
 - id: active-filter-butterworth-chebyshev
   layer: 1
   path: docs/foundation/papers/active-filter-butterworth-chebyshev.md
   batch: L1-B01
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B01
 - id: adc-calibration-offset-gain-error
   layer: 1
   path: docs/foundation/papers/adc-calibration-offset-gain-error.md
   batch: L1-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B02
 - id: adc-dma-continuous-sampling
   layer: 1
   path: docs/foundation/papers/adc-dma-continuous-sampling.md
   batch: L1-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B02
 - id: adc-reference-voltage-design
   layer: 1
   path: docs/foundation/papers/adc-reference-voltage-design.md
   batch: L1-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B02
 - id: adc-resolution-snr-enob
   layer: 1
   path: docs/foundation/papers/adc-resolution-snr-enob.md
   batch: L1-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B02
 - id: adc-sar-vs-sigma-delta
   layer: 1
   path: docs/foundation/papers/adc-sar-vs-sigma-delta.md
   batch: L1-B02
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B02
 - id: ambient-light-sensor-als
   layer: 1
   path: docs/foundation/papers/ambient-light-sensor-als.md
   batch: L1-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B03
 - id: antenna-diversity-mimo-iot
   layer: 1
   path: docs/foundation/papers/antenna-diversity-mimo-iot.md
   batch: L1-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B03
 - id: antenna-impedance-matching-network
   layer: 1
   path: docs/foundation/papers/antenna-impedance-matching-network.md
   batch: L1-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B03
 - id: anti-aliasing-filter-design
   layer: 1
   path: docs/foundation/papers/anti-aliasing-filter-design.md
   batch: L1-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B03
 - id: arm-cortex-m-architecture-overview
   layer: 1
   path: docs/foundation/papers/arm-cortex-m-architecture-overview.md
   batch: L1-B03
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B03
 - id: arm-trustzone-iot-security
   layer: 1
   path: docs/foundation/papers/arm-trustzone-iot-security.md
   batch: L1-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B04
 - id: automotive-sensor-iot-crossover
   layer: 1
   path: docs/foundation/papers/automotive-sensor-iot-crossover.md
   batch: L1-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B04
 - id: bare-metal-state-machine-pattern
   layer: 1
   path: docs/foundation/papers/bare-metal-state-machine-pattern.md
   batch: L1-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B04
 - id: bare-metal-vs-rtos-decision
   layer: 1
   path: docs/foundation/papers/bare-metal-vs-rtos-decision.md
   batch: L1-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B04
 - id: battery-fuel-gauge-coulomb-counter
   layer: 1
   path: docs/foundation/papers/battery-fuel-gauge-coulomb-counter.md
   batch: L1-B04
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B04
 - id: battery-life-estimation-model
   layer: 1
   path: docs/foundation/papers/battery-life-estimation-model.md
   batch: L1-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B05
 - id: battery-management-bms
   layer: 1
   path: docs/foundation/papers/battery-management-bms.md
   batch: L1-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B05
 - id: biosensor-electrochemical-iot
   layer: 1
   path: docs/foundation/papers/biosensor-electrochemical-iot.md
   batch: L1-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B05
 - id: ble-module-hardware-design
   layer: 1
   path: docs/foundation/papers/ble-module-hardware-design.md
   batch: L1-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B05
 - id: bom-cost-optimization-iot
   layer: 1
   path: docs/foundation/papers/bom-cost-optimization-iot.md
   batch: L1-B05
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B05
 - id: boost-converter-energy-harvesting
   layer: 1
   path: docs/foundation/papers/boost-converter-energy-harvesting.md
   batch: L1-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B06
 - id: bootloader-design-embedded
   layer: 1
   path: docs/foundation/papers/bootloader-design-embedded.md
   batch: L1-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B06
 - id: bridge-circuit-sensor-excitation
   layer: 1
   path: docs/foundation/papers/bridge-circuit-sensor-excitation.md
   batch: L1-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B06
 - id: buck-converter-design-iot
   layer: 1
   path: docs/foundation/papers/buck-converter-design-iot.md
   batch: L1-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B06
 - id: cable-harness-design-iot
   layer: 1
   path: docs/foundation/papers/cable-harness-design-iot.md
   batch: L1-B06
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B06
 - id: can-lin-bus-iot
   layer: 1
   path: docs/foundation/papers/can-lin-bus-iot.md
   batch: L1-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B07
 - id: capacitive-level-sensor-liquid
   layer: 1
   path: docs/foundation/papers/capacitive-level-sensor-liquid.md
   batch: L1-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B07
 - id: capacitive-touch-sensor-design
   layer: 1
   path: docs/foundation/papers/capacitive-touch-sensor-design.md
   batch: L1-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B07
 - id: ce-fcc-certification-iot
   layer: 1
   path: docs/foundation/papers/ce-fcc-certification-iot.md
   batch: L1-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B07
 - id: cellular-cat1-cat4-module
   layer: 1
   path: docs/foundation/papers/cellular-cat1-cat4-module.md
   batch: L1-B07
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B07
 - id: charge-amplifier-piezo-readout
   layer: 1
   path: docs/foundation/papers/charge-amplifier-piezo-readout.md
   batch: L1-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B08
 - id: chip-antenna-vs-pcb-antenna
   layer: 1
   path: docs/foundation/papers/chip-antenna-vs-pcb-antenna.md
   batch: L1-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B08
 - id: chopper-stabilized-amplifier
   layer: 1
   path: docs/foundation/papers/chopper-stabilized-amplifier.md
   batch: L1-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B08
 - id: clock-tree-design-soc-mcu
   layer: 1
   path: docs/foundation/papers/clock-tree-design-soc-mcu.md
   batch: L1-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B08
 - id: color-sensor-tcs34725
   layer: 1
   path: docs/foundation/papers/color-sensor-tcs34725.md
   batch: L1-B08
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B08
 - id: comparator-circuit-threshold-detection
   layer: 1
   path: docs/foundation/papers/comparator-circuit-threshold-detection.md
   batch: L1-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B09
 - id: conducted-emi-filter-design
   layer: 1
   path: docs/foundation/papers/conducted-emi-filter-design.md
   batch: L1-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B09
 - id: conformal-coating-iot-protection
   layer: 1
   path: docs/foundation/papers/conformal-coating-iot-protection.md
   batch: L1-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B09
 - id: connector-selection-iot-harsh-env
   layer: 1
   path: docs/foundation/papers/connector-selection-iot-harsh-env.md
   batch: L1-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B09
 - id: cooperative-vs-preemptive-scheduling
   layer: 1
   path: docs/foundation/papers/cooperative-vs-preemptive-scheduling.md
   batch: L1-B09
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B09
 - id: coral-edge-tpu-integration
   layer: 1
   path: docs/foundation/papers/coral-edge-tpu-integration.md
   batch: L1-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B10
 - id: coriolis-mass-flowmeter
   layer: 1
   path: docs/foundation/papers/coriolis-mass-flowmeter.md
   batch: L1-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B10
 - id: corrosion-sensor-structural-health
   layer: 1
   path: docs/foundation/papers/corrosion-sensor-structural-health.md
   batch: L1-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B10
 - id: cortex-m0-vs-m4-vs-m7
   layer: 1
   path: docs/foundation/papers/cortex-m0-vs-m4-vs-m7.md
   batch: L1-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B10
 - id: crystal-oscillator-selection-iot
   layer: 1
   path: docs/foundation/papers/crystal-oscillator-selection-iot.md
   batch: L1-B10
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B10
 - id: current-sense-resistor-shunt
   layer: 1
   path: docs/foundation/papers/current-sense-resistor-shunt.md
   batch: L1-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B11
 - id: dac-audio-output-iot
   layer: 1
   path: docs/foundation/papers/dac-audio-output-iot.md
   batch: L1-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B11
 - id: data-logging-circular-buffer-flash
   layer: 1
   path: docs/foundation/papers/data-logging-circular-buffer-flash.md
   batch: L1-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B11
 - id: decoupling-capacitor-placement
   layer: 1
   path: docs/foundation/papers/decoupling-capacitor-placement.md
   batch: L1-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B11
 - id: derating-component-reliability
   layer: 1
   path: docs/foundation/papers/derating-component-reliability.md
   batch: L1-B11
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B11
 - id: device-tree-embedded-linux
   layer: 1
   path: docs/foundation/papers/device-tree-embedded-linux.md
   batch: L1-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B12
 - id: digital-twin-sensor-calibration
   layer: 1
   path: docs/foundation/papers/digital-twin-sensor-calibration.md
   batch: L1-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B12
 - id: dma-controller-mcu-optimization
   layer: 1
   path: docs/foundation/papers/dma-controller-mcu-optimization.md
   batch: L1-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B12
 - id: duty-cycling-sensor-node
   layer: 1
   path: docs/foundation/papers/duty-cycling-sensor-node.md
   batch: L1-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B12
 - id: dynamic-voltage-frequency-scaling
   layer: 1
   path: docs/foundation/papers/dynamic-voltage-frequency-scaling.md
   batch: L1-B12
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B12
 - id: eddy-current-sensor-proximity
   layer: 1
   path: docs/foundation/papers/eddy-current-sensor-proximity.md
   batch: L1-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B13
 - id: edge-ai-npu-comparison
   layer: 1
   path: docs/foundation/papers/edge-ai-npu-comparison.md
   batch: L1-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B13
 - id: edge-tpu-benchmark
   layer: 1
   path: docs/foundation/papers/edge-tpu-benchmark.md
   batch: L1-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B13
 - id: eeprom-vs-flash-data-storage
   layer: 1
   path: docs/foundation/papers/eeprom-vs-flash-data-storage.md
   batch: L1-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B13
 - id: electrochemical-gas-sensor-principle
   layer: 1
   path: docs/foundation/papers/electrochemical-gas-sensor-principle.md
   batch: L1-B13
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B13
 - id: electromagnetic-acoustic-transducer
   layer: 1
   path: docs/foundation/papers/electromagnetic-acoustic-transducer.md
   batch: L1-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B14
 - id: electromagnetic-flowmeter-sensor
   layer: 1
   path: docs/foundation/papers/electromagnetic-flowmeter-sensor.md
   batch: L1-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B14
 - id: embedded-fat-filesystem
   layer: 1
   path: docs/foundation/papers/embedded-fat-filesystem.md
   batch: L1-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B14
 - id: embedded-gui-lvgl-framework
   layer: 1
   path: docs/foundation/papers/embedded-gui-lvgl-framework.md
   batch: L1-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B14
 - id: embedded-linux-vs-rtos-iot
   layer: 1
   path: docs/foundation/papers/embedded-linux-vs-rtos-iot.md
   batch: L1-B14
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B14
 - id: emc-fundamentals-iot-device
   layer: 1
   path: docs/foundation/papers/emc-fundamentals-iot-device.md
   batch: L1-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B15
 - id: emi-shielding-enclosure-design
   layer: 1
   path: docs/foundation/papers/emi-shielding-enclosure-design.md
   batch: L1-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B15
 - id: encoder-rotary-absolute-incremental
   layer: 1
   path: docs/foundation/papers/encoder-rotary-absolute-incremental.md
   batch: L1-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B15
 - id: energy-harvesting-iot
   layer: 1
   path: docs/foundation/papers/energy-harvesting-iot.md
   batch: L1-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B15
 - id: environmental-testing-iot-hardware
   layer: 1
   path: docs/foundation/papers/environmental-testing-iot-hardware.md
   batch: L1-B15
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B15
 - id: epaper-display-iot-low-power
   layer: 1
   path: docs/foundation/papers/epaper-display-iot-low-power.md
   batch: L1-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B16
 - id: esd-protection-circuit-design
   layer: 1
   path: docs/foundation/papers/esd-protection-circuit-design.md
   batch: L1-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B16
 - id: esp32-iot-prototyping
   layer: 1
   path: docs/foundation/papers/esp32-iot-prototyping.md
   batch: L1-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B16
 - id: esp32-s3-vs-c3-vs-h2
   layer: 1
   path: docs/foundation/papers/esp32-s3-vs-c3-vs-h2.md
   batch: L1-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B16
 - id: event-camera-dvs-iot
   layer: 1
   path: docs/foundation/papers/event-camera-dvs-iot.md
   batch: L1-B16
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B16
 - id: failure-mode-analysis-fmea-iot
   layer: 1
   path: docs/foundation/papers/failure-mode-analysis-fmea-iot.md
   batch: L1-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B17
 - id: fiber-optic-sensor-iot
   layer: 1
   path: docs/foundation/papers/fiber-optic-sensor-iot.md
   batch: L1-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B17
 - id: flexible-electronics-iot
   layer: 1
   path: docs/foundation/papers/flexible-electronics-iot.md
   batch: L1-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B17
 - id: flexible-pcb-rigid-flex-iot
   layer: 1
   path: docs/foundation/papers/flexible-pcb-rigid-flex-iot.md
   batch: L1-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B17
 - id: flow-sensor-mems-thermal
   layer: 1
   path: docs/foundation/papers/flow-sensor-mems-thermal.md
   batch: L1-B17
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B17
 - id: fpga-hdl-verilog-basics-iot
   layer: 1
   path: docs/foundation/papers/fpga-hdl-verilog-basics-iot.md
   batch: L1-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B18
 - id: fpga-iot-acceleration
   layer: 1
   path: docs/foundation/papers/fpga-iot-acceleration.md
   batch: L1-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B18
 - id: fpga-partial-reconfiguration
   layer: 1
   path: docs/foundation/papers/fpga-partial-reconfiguration.md
   batch: L1-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B18
 - id: fpga-soft-processor-nios-microblaze
   layer: 1
   path: docs/foundation/papers/fpga-soft-processor-nios-microblaze.md
   batch: L1-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B18
 - id: fpga-vs-asic-iot-acceleration
   layer: 1
   path: docs/foundation/papers/fpga-vs-asic-iot-acceleration.md
   batch: L1-B18
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B18
 - id: fram-mram-nvram-comparison
   layer: 1
   path: docs/foundation/papers/fram-mram-nvram-comparison.md
   batch: L1-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B19
 - id: freertos-task-scheduling-deep-dive
   layer: 1
   path: docs/foundation/papers/freertos-task-scheduling-deep-dive.md
   batch: L1-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B19
 - id: functional-safety-sil-iot
   layer: 1
   path: docs/foundation/papers/functional-safety-sil-iot.md
   batch: L1-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B19
 - id: gas-sensor-arrays
   layer: 1
   path: docs/foundation/papers/gas-sensor-arrays.md
   batch: L1-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B19
 - id: gpio-configuration-modes
   layer: 1
   path: docs/foundation/papers/gpio-configuration-modes.md
   batch: L1-B19
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B19
 - id: gps-gnss-module-positioning
   layer: 1
   path: docs/foundation/papers/gps-gnss-module-positioning.md
   batch: L1-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B20
 - id: hall-effect-current-sensing
   layer: 1
   path: docs/foundation/papers/hall-effect-current-sensing.md
   batch: L1-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B20
 - id: hardware-in-the-loop-testing
   layer: 1
   path: docs/foundation/papers/hardware-in-the-loop-testing.md
   batch: L1-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B20
 - id: hardware-security-module-hsm
   layer: 1
   path: docs/foundation/papers/hardware-security-module-hsm.md
   batch: L1-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B20
 - id: humidity-sensor-capacitive-resistive
   layer: 1
   path: docs/foundation/papers/humidity-sensor-capacitive-resistive.md
   batch: L1-B20
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B20
 - id: hw-sw-codesign-iot-system
   layer: 1
   path: docs/foundation/papers/hw-sw-codesign-iot-system.md
   batch: L1-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B21
 - id: i2c-protocol-deep-dive
   layer: 1
   path: docs/foundation/papers/i2c-protocol-deep-dive.md
   batch: L1-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B21
 - id: i2c-vs-spi-selection-guide
   layer: 1
   path: docs/foundation/papers/i2c-vs-spi-selection-guide.md
   batch: L1-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B21
 - id: i3c-next-gen-sensor-bus
   layer: 1
   path: docs/foundation/papers/i3c-next-gen-sensor-bus.md
   batch: L1-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B21
 - id: image-sensor-cmos-iot-vision
   layer: 1
   path: docs/foundation/papers/image-sensor-cmos-iot-vision.md
   batch: L1-B21
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B21
 - id: imu-inertial-navigation
   layer: 1
   path: docs/foundation/papers/imu-inertial-navigation.md
   batch: L1-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B22
 - id: inclination-sensor-tilt-measurement
   layer: 1
   path: docs/foundation/papers/inclination-sensor-tilt-measurement.md
   batch: L1-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B22
 - id: infrared-thermopile-sensor
   layer: 1
   path: docs/foundation/papers/infrared-thermopile-sensor.md
   batch: L1-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B22
 - id: instrumentation-amplifier-ina
   layer: 1
   path: docs/foundation/papers/instrumentation-amplifier-ina.md
   batch: L1-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B22
 - id: interrupt-priority-nvic-design
   layer: 1
   path: docs/foundation/papers/interrupt-priority-nvic-design.md
   batch: L1-B22
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B22
 - id: ip-rating-enclosure-design-iot
   layer: 1
   path: docs/foundation/papers/ip-rating-enclosure-design-iot.md
   batch: L1-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B23
 - id: isolation-amplifier-optocoupler
   layer: 1
   path: docs/foundation/papers/isolation-amplifier-optocoupler.md
   batch: L1-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B23
 - id: jtag-swd-debug-interface
   layer: 1
   path: docs/foundation/papers/jtag-swd-debug-interface.md
   batch: L1-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B23
 - id: lattice-ice40-low-power-fpga
   layer: 1
   path: docs/foundation/papers/lattice-ice40-low-power-fpga.md
   batch: L1-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B23
 - id: ldo-vs-dcdc-power-supply
   layer: 1
   path: docs/foundation/papers/ldo-vs-dcdc-power-supply.md
   batch: L1-B23
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B23
 - id: leakage-current-reduction-iot
   layer: 1
   path: docs/foundation/papers/leakage-current-reduction-iot.md
   batch: L1-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B24
 - id: led-driver-circuit-constant-current
   layer: 1
   path: docs/foundation/papers/led-driver-circuit-constant-current.md
   batch: L1-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B24
 - id: lidar-sensor-tof-principles
   layer: 1
   path: docs/foundation/papers/lidar-sensor-tof-principles.md
   batch: L1-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B24
 - id: linux-kernel-driver-gpio-basic
   layer: 1
   path: docs/foundation/papers/linux-kernel-driver-gpio-basic.md
   batch: L1-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B24
 - id: lithium-battery-charging-profile
   layer: 1
   path: docs/foundation/papers/lithium-battery-charging-profile.md
   batch: L1-B24
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B24
 - id: littlefs-filesystem-embedded
   layer: 1
   path: docs/foundation/papers/littlefs-filesystem-embedded.md
   batch: L1-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B25
 - id: load-cell-hx711-interface
   layer: 1
   path: docs/foundation/papers/load-cell-hx711-interface.md
   batch: L1-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B25
 - id: logic-analyzer-protocol-debug
   layer: 1
   path: docs/foundation/papers/logic-analyzer-protocol-debug.md
   batch: L1-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B25
 - id: lora-chip-architecture
   layer: 1
   path: docs/foundation/papers/lora-chip-architecture.md
   batch: L1-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B25
 - id: lora-module-sx1276-register
   layer: 1
   path: docs/foundation/papers/lora-module-sx1276-register.md
   batch: L1-B25
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B25
 - id: low-noise-pcb-layout-analog
   layer: 1
   path: docs/foundation/papers/low-noise-pcb-layout-analog.md
   batch: L1-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B26
 - id: low-power-design-patterns
   layer: 1
   path: docs/foundation/papers/low-power-design-patterns.md
   batch: L1-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B26
 - id: lvdt-displacement-sensor
   layer: 1
   path: docs/foundation/papers/lvdt-displacement-sensor.md
   batch: L1-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B26
 - id: magnetoresistive-sensor-tmr-gmr
   layer: 1
   path: docs/foundation/papers/magnetoresistive-sensor-tmr-gmr.md
   batch: L1-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B26
 - id: mcu-boot-process-secure-boot
   layer: 1
   path: docs/foundation/papers/mcu-boot-process-secure-boot.md
   batch: L1-B26
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B26
 - id: mcu-memory-map-flash-ram
   layer: 1
   path: docs/foundation/papers/mcu-memory-map-flash-ram.md
   batch: L1-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B27
 - id: mcu-peripheral-multiplexing
   layer: 1
   path: docs/foundation/papers/mcu-peripheral-multiplexing.md
   batch: L1-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B27
 - id: mems-accelerometer-adxl345
   layer: 1
   path: docs/foundation/papers/mems-accelerometer-adxl345.md
   batch: L1-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B27
 - id: mems-barometric-pressure-altimeter
   layer: 1
   path: docs/foundation/papers/mems-barometric-pressure-altimeter.md
   batch: L1-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B27
 - id: mems-energy-harvester-piezo
   layer: 1
   path: docs/foundation/papers/mems-energy-harvester-piezo.md
   batch: L1-B27
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B27
 - id: mems-fabrication-process-survey
   layer: 1
   path: docs/foundation/papers/mems-fabrication-process-survey.md
   batch: L1-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B28
 - id: mems-gyroscope-drift-compensation
   layer: 1
   path: docs/foundation/papers/mems-gyroscope-drift-compensation.md
   batch: L1-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B28
 - id: mems-microphone-design
   layer: 1
   path: docs/foundation/papers/mems-microphone-design.md
   batch: L1-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B28
 - id: mems-oscillator-vs-quartz
   layer: 1
   path: docs/foundation/papers/mems-oscillator-vs-quartz.md
   batch: L1-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B28
 - id: mems-packaging-reliability
   layer: 1
   path: docs/foundation/papers/mems-packaging-reliability.md
   batch: L1-B28
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B28
 - id: mems-sensors-survey
   layer: 1
   path: docs/foundation/papers/mems-sensors-survey.md
   batch: L1-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B29
 - id: microfluidic-sensor-iot-health
   layer: 1
   path: docs/foundation/papers/microfluidic-sensor-iot-health.md
   batch: L1-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B29
 - id: mmwave-radar-sensing
   layer: 1
   path: docs/foundation/papers/mmwave-radar-sensing.md
   batch: L1-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B29
 - id: modbus-rtu-tcp-industrial-iot
   layer: 1
   path: docs/foundation/papers/modbus-rtu-tcp-industrial-iot.md
   batch: L1-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B29
 - id: model-compression-pruning-distillation
   layer: 1
   path: docs/foundation/papers/model-compression-pruning-distillation.md
   batch: L1-B29
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B29
 - id: mosfet-switching-circuit-iot
   layer: 1
   path: docs/foundation/papers/mosfet-switching-circuit-iot.md
   batch: L1-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B30
 - id: mox-metal-oxide-gas-sensor
   layer: 1
   path: docs/foundation/papers/mox-metal-oxide-gas-sensor.md
   batch: L1-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B30
 - id: msp430-ultra-low-power-mcu
   layer: 1
   path: docs/foundation/papers/msp430-ultra-low-power-mcu.md
   batch: L1-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B30
 - id: mtbf-reliability-prediction-iot
   layer: 1
   path: docs/foundation/papers/mtbf-reliability-prediction-iot.md
   batch: L1-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B30
 - id: multi-sensor-fusion
   layer: 1
   path: docs/foundation/papers/multi-sensor-fusion.md
   batch: L1-B30
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B30
 - id: multicore-mcu-amp-smp
   layer: 1
   path: docs/foundation/papers/multicore-mcu-amp-smp.md
   batch: L1-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B31
 - id: multimeter-advanced-measurement
   layer: 1
   path: docs/foundation/papers/multimeter-advanced-measurement.md
   batch: L1-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B31
 - id: nand-flash-wear-leveling-ftl
   layer: 1
   path: docs/foundation/papers/nand-flash-wear-leveling-ftl.md
   batch: L1-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B31
 - id: nbiot-module-hardware-integration
   layer: 1
   path: docs/foundation/papers/nbiot-module-hardware-integration.md
   batch: L1-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B31
 - id: ndir-co2-sensor-design
   layer: 1
   path: docs/foundation/papers/ndir-co2-sensor-design.md
   batch: L1-B31
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B31
 - id: neural-network-quantization-int8
   layer: 1
   path: docs/foundation/papers/neural-network-quantization-int8.md
   batch: L1-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B32
 - id: neuromorphic-sensing
   layer: 1
   path: docs/foundation/papers/neuromorphic-sensing.md
   batch: L1-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B32
 - id: nor-flash-spi-qspi-xip
   layer: 1
   path: docs/foundation/papers/nor-flash-spi-qspi-xip.md
   batch: L1-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B32
 - id: nrf52-ble-soc-internals
   layer: 1
   path: docs/foundation/papers/nrf52-ble-soc-internals.md
   batch: L1-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B32
 - id: ntc-thermistor-linearization
   layer: 1
   path: docs/foundation/papers/ntc-thermistor-linearization.md
   batch: L1-B32
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B32
 - id: nvidia-jetson-nano-orin-iot
   layer: 1
   path: docs/foundation/papers/nvidia-jetson-nano-orin-iot.md
   batch: L1-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B33
 - id: oled-display-ssd1306-interface
   layer: 1
   path: docs/foundation/papers/oled-display-ssd1306-interface.md
   batch: L1-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B33
 - id: one-wire-protocol-ds18b20
   layer: 1
   path: docs/foundation/papers/one-wire-protocol-ds18b20.md
   batch: L1-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B33
 - id: op-amp-selection-iot-sensor
   layer: 1
   path: docs/foundation/papers/op-amp-selection-iot-sensor.md
   batch: L1-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B33
 - id: optical-sensors-iot
   layer: 1
   path: docs/foundation/papers/optical-sensors-iot.md
   batch: L1-B33
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B33
 - id: optocoupler-digital-isolator-comparison
   layer: 1
   path: docs/foundation/papers/optocoupler-digital-isolator-comparison.md
   batch: L1-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B34
 - id: oscilloscope-measurement-techniques
   layer: 1
   path: docs/foundation/papers/oscilloscope-measurement-techniques.md
   batch: L1-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B34
 - id: ota-firmware-update-mcu
   layer: 1
   path: docs/foundation/papers/ota-firmware-update-mcu.md
   batch: L1-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B34
 - id: oversampling-noise-shaping-adc
   layer: 1
   path: docs/foundation/papers/oversampling-noise-shaping-adc.md
   batch: L1-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B34
 - id: particulate-matter-pm25-sensor
   layer: 1
   path: docs/foundation/papers/particulate-matter-pm25-sensor.md
   batch: L1-B34
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B34
 - id: pcb-antenna-design-iot
   layer: 1
   path: docs/foundation/papers/pcb-antenna-design-iot.md
   batch: L1-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B35
 - id: pcb-design-basics-iot
   layer: 1
   path: docs/foundation/papers/pcb-design-basics-iot.md
   batch: L1-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B35
 - id: pcb-dfm-design-for-manufacturing
   layer: 1
   path: docs/foundation/papers/pcb-dfm-design-for-manufacturing.md
   batch: L1-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B35
 - id: pcb-ground-plane-partitioning
   layer: 1
   path: docs/foundation/papers/pcb-ground-plane-partitioning.md
   batch: L1-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B35
 - id: pcb-high-speed-signal-routing
   layer: 1
   path: docs/foundation/papers/pcb-high-speed-signal-routing.md
   batch: L1-B35
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B35
 - id: pcb-stackup-layer-design
   layer: 1
   path: docs/foundation/papers/pcb-stackup-layer-design.md
   batch: L1-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B36
 - id: pcb-thermal-management
   layer: 1
   path: docs/foundation/papers/pcb-thermal-management.md
   batch: L1-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B36
 - id: photodiode-phototransistor-comparison
   layer: 1
   path: docs/foundation/papers/photodiode-phototransistor-comparison.md
   batch: L1-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B36
 - id: pic-microcontroller-iot-legacy
   layer: 1
   path: docs/foundation/papers/pic-microcontroller-iot-legacy.md
   batch: L1-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B36
 - id: piezoelectric-vibration-sensor
   layer: 1
   path: docs/foundation/papers/piezoelectric-vibration-sensor.md
   batch: L1-B36
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B36
 - id: pmic-integrated-power-management
   layer: 1
   path: docs/foundation/papers/pmic-integrated-power-management.md
   batch: L1-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B37
 - id: posix-rtos-nuttx-iot
   layer: 1
   path: docs/foundation/papers/posix-rtos-nuttx-iot.md
   batch: L1-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B37
 - id: potting-compound-sensor-protection
   layer: 1
   path: docs/foundation/papers/potting-compound-sensor-protection.md
   batch: L1-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B37
 - id: power-gating-clock-gating-techniques
   layer: 1
   path: docs/foundation/papers/power-gating-clock-gating-techniques.md
   batch: L1-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B37
 - id: power-integrity-pdn-design
   layer: 1
   path: docs/foundation/papers/power-integrity-pdn-design.md
   batch: L1-B37
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B37
 - id: power-profiler-current-measurement
   layer: 1
   path: docs/foundation/papers/power-profiler-current-measurement.md
   batch: L1-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B38
 - id: power-sequencing-multi-rail
   layer: 1
   path: docs/foundation/papers/power-sequencing-multi-rail.md
   batch: L1-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B38
 - id: pressure-sensor-piezoresistive
   layer: 1
   path: docs/foundation/papers/pressure-sensor-piezoresistive.md
   batch: L1-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B38
 - id: prototype-to-production-checklist
   layer: 1
   path: docs/foundation/papers/prototype-to-production-checklist.md
   batch: L1-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B38
 - id: puf-physical-unclonable-function
   layer: 1
   path: docs/foundation/papers/puf-physical-unclonable-function.md
   batch: L1-B38
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B38
 - id: pwm-motor-control-embedded
   layer: 1
   path: docs/foundation/papers/pwm-motor-control-embedded.md
   batch: L1-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B39
 - id: radar-gesture-recognition-sensor
   layer: 1
   path: docs/foundation/papers/radar-gesture-recognition-sensor.md
   batch: L1-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B39
 - id: radar-level-sensor-fmcw
   layer: 1
   path: docs/foundation/papers/radar-level-sensor-fmcw.md
   batch: L1-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B39
 - id: radiated-emission-reduction
   layer: 1
   path: docs/foundation/papers/radiated-emission-reduction.md
   batch: L1-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B39
 - id: radiation-hardened-sensor-iot
   layer: 1
   path: docs/foundation/papers/radiation-hardened-sensor-iot.md
   batch: L1-B39
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B39
 - id: relay-solid-state-relay-iot
   layer: 1
   path: docs/foundation/papers/relay-solid-state-relay-iot.md
   batch: L1-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B40
 - id: renesas-ra-mcu-iot
   layer: 1
   path: docs/foundation/papers/renesas-ra-mcu-iot.md
   batch: L1-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B40
 - id: resistive-touch-panel-interface
   layer: 1
   path: docs/foundation/papers/resistive-touch-panel-interface.md
   batch: L1-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B40
 - id: reverse-polarity-protection-circuit
   layer: 1
   path: docs/foundation/papers/reverse-polarity-protection-circuit.md
   batch: L1-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B40
 - id: rf-energy-harvesting-rectenna
   layer: 1
   path: docs/foundation/papers/rf-energy-harvesting-rectenna.md
   batch: L1-B40
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B40
 - id: rf-filter-saw-baw-iot
   layer: 1
   path: docs/foundation/papers/rf-filter-saw-baw-iot.md
   batch: L1-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B41
 - id: rf-front-end-lna-pa-design
   layer: 1
   path: docs/foundation/papers/rf-front-end-lna-pa-design.md
   batch: L1-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B41
 - id: rfid-sensing-survey
   layer: 1
   path: docs/foundation/papers/rfid-sensing-survey.md
   batch: L1-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B41
 - id: risc-v-custom-instruction-iot
   layer: 1
   path: docs/foundation/papers/risc-v-custom-instruction-iot.md
   batch: L1-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B41
 - id: risc-v-iot
   layer: 1
   path: docs/foundation/papers/risc-v-iot.md
   batch: L1-B41
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B41
 - id: rpmsg-multicore-communication
   layer: 1
   path: docs/foundation/papers/rpmsg-multicore-communication.md
   batch: L1-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B42
 - id: rtc-real-time-clock-design
   layer: 1
   path: docs/foundation/papers/rtc-real-time-clock-design.md
   batch: L1-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B42
 - id: rtd-pt100-signal-conditioning
   layer: 1
   path: docs/foundation/papers/rtd-pt100-signal-conditioning.md
   batch: L1-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B42
 - id: rtos-comparison
   layer: 1
   path: docs/foundation/papers/rtos-comparison.md
   batch: L1-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B42
 - id: rtos-ipc-mechanisms-survey
   layer: 1
   path: docs/foundation/papers/rtos-ipc-mechanisms-survey.md
   batch: L1-B42
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B42
 - id: rtos-memory-management-pool-heap
   layer: 1
   path: docs/foundation/papers/rtos-memory-management-pool-heap.md
   batch: L1-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B43
 - id: rtos-power-management-framework
   layer: 1
   path: docs/foundation/papers/rtos-power-management-framework.md
   batch: L1-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B43
 - id: rtos-tick-less-idle-mode
   layer: 1
   path: docs/foundation/papers/rtos-tick-less-idle-mode.md
   batch: L1-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B43
 - id: sd-emmc-storage-embedded
   layer: 1
   path: docs/foundation/papers/sd-emmc-storage-embedded.md
   batch: L1-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B43
 - id: sdio-interface-wireless-module
   layer: 1
   path: docs/foundation/papers/sdio-interface-wireless-module.md
   batch: L1-B43
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B43
 - id: secure-element-se-iot
   layer: 1
   path: docs/foundation/papers/secure-element-se-iot.md
   batch: L1-B44
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B44
 - id: sensor-aging-drift-compensation
   layer: 1
   path: docs/foundation/papers/sensor-aging-drift-compensation.md
   batch: L1-B44
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B44
 - id: sensor-calibration-polynomial-fit
   layer: 1
   path: docs/foundation/papers/sensor-calibration-polynomial-fit.md
   batch: L1-B44
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B44
 - id: sensor-data-fusion-kalman-filter
   layer: 1
   path: docs/foundation/papers/sensor-data-fusion-kalman-filter.md
   batch: L1-B44
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B44
 - id: sensor-fault-detection-isolation
   layer: 1
   path: docs/foundation/papers/sensor-fault-detection-isolation.md
   batch: L1-B44
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B44
 - id: sensor-hub-concept-architecture
   layer: 1
   path: docs/foundation/papers/sensor-hub-concept-architecture.md
   batch: L1-B45
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B45
 - id: sensor-network-time-sync-hardware
   layer: 1
   path: docs/foundation/papers/sensor-network-time-sync-hardware.md
   batch: L1-B45
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B45
 - id: sensor-self-test-auto-diagnosis
   layer: 1
   path: docs/foundation/papers/sensor-self-test-auto-diagnosis.md
   batch: L1-B45
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B45
 - id: servo-motor-control-protocol
   layer: 1
   path: docs/foundation/papers/servo-motor-control-protocol.md
   batch: L1-B45
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B45
 - id: sigma-delta-modulator-sensor-readout
   layer: 1
   path: docs/foundation/papers/sigma-delta-modulator-sensor-readout.md
   batch: L1-B45
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B45
 - id: signal-conditioning-amplifier-filter
   layer: 1
   path: docs/foundation/papers/signal-conditioning-amplifier-filter.md
   batch: L1-B46
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B46
 - id: signal-integrity-crosstalk
   layer: 1
   path: docs/foundation/papers/signal-integrity-crosstalk.md
   batch: L1-B46
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B46
 - id: sleep-mode-hierarchy-mcu
   layer: 1
   path: docs/foundation/papers/sleep-mode-hierarchy-mcu.md
   batch: L1-B46
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B46
 - id: smart-sensor-with-integrated-mcu
   layer: 1
   path: docs/foundation/papers/smart-sensor-with-integrated-mcu.md
   batch: L1-B46
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B46
 - id: smt-through-hole-assembly
   layer: 1
   path: docs/foundation/papers/smt-through-hole-assembly.md
   batch: L1-B46
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B46
 - id: soc-power-domain-design
   layer: 1
   path: docs/foundation/papers/soc-power-domain-design.md
   batch: L1-B47
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B47
 - id: soc-vs-mcu-vs-mpu-iot
   layer: 1
   path: docs/foundation/papers/soc-vs-mcu-vs-mpu-iot.md
   batch: L1-B47
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B47
 - id: soil-moisture-sensor-comparison
   layer: 1
   path: docs/foundation/papers/soil-moisture-sensor-comparison.md
   batch: L1-B47
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B47
 - id: solar-energy-harvesting-mppt
   layer: 1
   path: docs/foundation/papers/solar-energy-harvesting-mppt.md
   batch: L1-B47
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B47
 - id: solenoid-valve-driver-circuit
   layer: 1
   path: docs/foundation/papers/solenoid-valve-driver-circuit.md
   batch: L1-B47
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B47
 - id: spectrum-analyzer-rf-debug
   layer: 1
   path: docs/foundation/papers/spectrum-analyzer-rf-debug.md
   batch: L1-B48
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B48
 - id: spi-protocol-modes-timing
   layer: 1
   path: docs/foundation/papers/spi-protocol-modes-timing.md
   batch: L1-B48
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B48
 - id: stepper-motor-driver-iot
   layer: 1
   path: docs/foundation/papers/stepper-motor-driver-iot.md
   batch: L1-B48
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B48
 - id: stm32-hal-driver-architecture
   layer: 1
   path: docs/foundation/papers/stm32-hal-driver-architecture.md
   batch: L1-B48
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B48
 - id: stm32-mcu-family-selection
   layer: 1
   path: docs/foundation/papers/stm32-mcu-family-selection.md
   batch: L1-B48
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B48
 - id: strain-gauge-wheatstone-bridge
   layer: 1
   path: docs/foundation/papers/strain-gauge-wheatstone-bridge.md
   batch: L1-B49
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B49
 - id: sub-ghz-module-cc1310-design
   layer: 1
   path: docs/foundation/papers/sub-ghz-module-cc1310-design.md
   batch: L1-B49
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B49
 - id: supercapacitor-iot-energy-buffer
   layer: 1
   path: docs/foundation/papers/supercapacitor-iot-energy-buffer.md
   batch: L1-B49
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B49
 - id: switched-capacitor-circuit-sensor
   layer: 1
   path: docs/foundation/papers/switched-capacitor-circuit-sensor.md
   batch: L1-B49
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B49
 - id: system-on-module-som-design
   layer: 1
   path: docs/foundation/papers/system-on-module-som-design.md
   batch: L1-B49
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B49
 - id: tactile-sensing-iot
   layer: 1
   path: docs/foundation/papers/tactile-sensing-iot.md
   batch: L1-B50
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B50
 - id: testability-design-iot-hardware
   layer: 1
   path: docs/foundation/papers/testability-design-iot-hardware.md
   batch: L1-B50
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B50
 - id: tflite-micro-model-optimization
   layer: 1
   path: docs/foundation/papers/tflite-micro-model-optimization.md
   batch: L1-B50
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B50
 - id: thermocouple-types-principles
   layer: 1
   path: docs/foundation/papers/thermocouple-types-principles.md
   batch: L1-B50
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B50
 - id: thermoelectric-energy-harvesting
   layer: 1
   path: docs/foundation/papers/thermoelectric-energy-harvesting.md
   batch: L1-B50
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B50
 - id: threadx-azure-rtos-iot
   layer: 1
   path: docs/foundation/papers/threadx-azure-rtos-iot.md
   batch: L1-B51
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B51
 - id: timer-counter-pwm-capture
   layer: 1
   path: docs/foundation/papers/timer-counter-pwm-capture.md
   batch: L1-B51
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B51
 - id: tinyml-anomaly-detection-vibration
   layer: 1
   path: docs/foundation/papers/tinyml-anomaly-detection-vibration.md
   batch: L1-B51
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B51
 - id: tinyml-keyword-spotting-mcu
   layer: 1
   path: docs/foundation/papers/tinyml-keyword-spotting-mcu.md
   batch: L1-B51
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B51
 - id: tinyml-mcu-deployment
   layer: 1
   path: docs/foundation/papers/tinyml-mcu-deployment.md
   batch: L1-B51
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B51
 - id: tof-depth-sensor-vl53l1x
   layer: 1
   path: docs/foundation/papers/tof-depth-sensor-vl53l1x.md
   batch: L1-B52
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B52
 - id: torque-sensor-magnetostrictive
   layer: 1
   path: docs/foundation/papers/torque-sensor-magnetostrictive.md
   batch: L1-B52
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B52
 - id: transimpedance-amplifier-photodiode
   layer: 1
   path: docs/foundation/papers/transimpedance-amplifier-photodiode.md
   batch: L1-B52
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B52
 - id: true-random-number-generator-trng
   layer: 1
   path: docs/foundation/papers/true-random-number-generator-trng.md
   batch: L1-B52
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B52
 - id: uart-rs232-rs485-comparison
   layer: 1
   path: docs/foundation/papers/uart-rs232-rs485-comparison.md
   batch: L1-B52
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B52
 - id: ultrasonic-distance-measurement
   layer: 1
   path: docs/foundation/papers/ultrasonic-distance-measurement.md
   batch: L1-B53
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B53
 - id: usb-otg-embedded-device
   layer: 1
   path: docs/foundation/papers/usb-otg-embedded-device.md
   batch: L1-B53
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B53
 - id: uv-index-sensor-iot
   layer: 1
   path: docs/foundation/papers/uv-index-sensor-iot.md
   batch: L1-B53
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B53
 - id: uwb-module-dw1000-ranging
   layer: 1
   path: docs/foundation/papers/uwb-module-dw1000-ranging.md
   batch: L1-B53
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B53
 - id: vibration-energy-harvesting-piezo
   layer: 1
   path: docs/foundation/papers/vibration-energy-harvesting-piezo.md
   batch: L1-B53
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B53
 - id: voltage-reference-precision-design
   layer: 1
   path: docs/foundation/papers/voltage-reference-precision-design.md
   batch: L1-B54
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B54
 - id: wake-on-radio-lpwan
   layer: 1
   path: docs/foundation/papers/wake-on-radio-lpwan.md
   batch: L1-B54
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B54
 - id: watchdog-timer-system-reliability
   layer: 1
   path: docs/foundation/papers/watchdog-timer-system-reliability.md
   batch: L1-B54
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B54
 - id: water-quality-sensor-array
   layer: 1
   path: docs/foundation/papers/water-quality-sensor-array.md
   batch: L1-B54
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B54
 - id: wearable-sensors
   layer: 1
   path: docs/foundation/papers/wearable-sensors.md
   batch: L1-B54
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B54
 - id: wifi-module-esp-at-firmware
   layer: 1
   path: docs/foundation/papers/wifi-module-esp-at-firmware.md
   batch: L1-B55
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B55
 - id: wireless-charging-iot
   layer: 1
   path: docs/foundation/papers/wireless-charging-iot.md
   batch: L1-B55
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B55
 - id: yocto-buildroot-embedded-linux
   layer: 1
   path: docs/foundation/papers/yocto-buildroot-embedded-linux.md
   batch: L1-B55
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B55
 - id: zephyr-rtos-device-driver-model
   layer: 1
   path: docs/foundation/papers/zephyr-rtos-device-driver-model.md
   batch: L1-B55
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B55
 - id: zigbee-cc2530-hardware-design
   layer: 1
   path: docs/foundation/papers/zigbee-cc2530-hardware-design.md
   batch: L1-B55
-  status: pending
+  status: in_review
+  reviewed_at: '2026-07-10'
+  batch_done: L1-B55
