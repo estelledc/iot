@@ -1,0 +1,31 @@
+docs/content-schema.md
+  s_3f6b14b9c0bf5b::t_6032c9817c86a7 82-87
+tests/test_repository_policies.py
+  s_3f6b14b9c0bf5b::t_27cb0090c38140 203-270
+tests/test_trust_hashing.py
+  s_3f6b14b9c0bf5b::t_dc59415bf90b52 1-554
+tools/trust_records.py
+  s_3f6b14b9c0bf5b::t_e5ae6696a22278 1-774
+tools/validate_review_records.py
+  s_3f6b14b9c0bf5b::t_df7dd67245c4f8 1-51
+tools/validate_source_audits.py
+  s_3f6b14b9c0bf5b::t_fb8b9769b93f4c 1-53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9f20f301ccf298b3ce09cfda92a8598ba5f1359b",
+  "prompts": {},
+  "sessions": {
+    "s_3f6b14b9c0bf5b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_3f6b14b9c0bf5b",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
