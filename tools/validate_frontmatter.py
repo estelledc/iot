@@ -7,27 +7,23 @@ import argparse
 import json
 import sys
 from dataclasses import dataclass
-from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
-import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 from jsonschema.exceptions import SchemaError
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools.iot_domain import LAYER_ID_BY_SLUG, ContentError, parse_document
+from tools.iot_domain.content import parse_frontmatter_bytes
+from tools.iot_domain.paths import ContentPathError, content_identity, iter_content_paths
+
 SCHEMA_PATH = ROOT / "schemas/content-frontmatter.schema.json"
-LAYER_BY_SLUG = {
-    "foundation": 1,
-    "connectivity": 2,
-    "network": 3,
-    "computing": 4,
-    "intelligence": 5,
-    "security": 6,
-    "applications": 7,
-    "frontier": 8,
-}
+LAYER_BY_SLUG = LAYER_ID_BY_SLUG
 
 
 @dataclass(frozen=True)
@@ -35,21 +31,11 @@ class ValidationIssue:
     path: str
     location: str
     message: str
+    code: str = ""
 
     def render(self) -> str:
         suffix = f"::{self.location}" if self.location else ""
         return f"{self.path}{suffix}: {self.message}"
-
-
-def _normalize_yaml(value: Any) -> Any:
-    """Convert YAML-native timestamps into JSON Schema-compatible strings."""
-    if isinstance(value, (date, datetime)):
-        return value.isoformat()
-    if isinstance(value, dict):
-        return {key: _normalize_yaml(item) for key, item in value.items()}
-    if isinstance(value, list):
-        return [_normalize_yaml(item) for item in value]
-    return value
 
 
 def load_schema(path: Path = SCHEMA_PATH) -> dict[str, Any]:
@@ -60,20 +46,12 @@ def load_schema(path: Path = SCHEMA_PATH) -> dict[str, Any]:
 
 def parse_frontmatter(path: Path) -> tuple[dict[str, Any] | None, list[ValidationIssue]]:
     relative = path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else path.as_posix()
-    lines = path.read_text(encoding="utf-8").splitlines()
-    if not lines or lines[0].strip() != "---":
-        return None, [ValidationIssue(relative, "line 1", "missing opening YAML frontmatter delimiter")]
     try:
-        closing = next(index for index, line in enumerate(lines[1:], 1) if line.strip() == "---")
-    except StopIteration:
-        return None, [ValidationIssue(relative, "line 1", "missing closing YAML frontmatter delimiter")]
-    try:
-        payload = yaml.safe_load("\n".join(lines[1:closing]))
-    except yaml.YAMLError as exc:
-        return None, [ValidationIssue(relative, "frontmatter", f"invalid YAML: {exc}")]
-    if not isinstance(payload, dict):
-        return None, [ValidationIssue(relative, "frontmatter", "frontmatter must be a mapping")]
-    return _normalize_yaml(payload), []
+        parts = parse_frontmatter_bytes(path.read_bytes(), path=relative)
+    except ContentError as exc:
+        issue = exc.issue
+        return None, [ValidationIssue(relative, issue.location, issue.message, issue.code)]
+    return parts.frontmatter, []
 
 
 def _json_path(parts: list[Any]) -> str:
@@ -97,22 +75,16 @@ def validate_payload(
         return issues
 
     try:
-        repo_relative = path.relative_to(ROOT)
-    except ValueError:
+        layer, content_id = content_identity(path, repo_root=ROOT)
+    except ContentPathError as exc:
+        issues.append(ValidationIssue(relative, exc.location, exc.message, exc.code))
         return issues
-    parts = repo_relative.parts
-    if len(parts) < 4 or parts[0] != "docs" or parts[2] != "papers":
-        issues.append(ValidationIssue(relative, "path", "content file must live under docs/<layer>/papers"))
-        return issues
-    expected_layer = LAYER_BY_SLUG.get(parts[1])
-    if expected_layer is None:
-        issues.append(ValidationIssue(relative, "path", f"unknown layer slug: {parts[1]}"))
-    elif payload.get("layer") != expected_layer:
+    if payload.get("layer") != layer.id:
         issues.append(
-            ValidationIssue(relative, "layer", f"expected layer {expected_layer} from path, got {payload.get('layer')}")
+            ValidationIssue(relative, "layer", f"expected layer {layer.id} from path, got {payload.get('layer')}")
         )
-    if payload.get("id") != path.stem:
-        issues.append(ValidationIssue(relative, "id", f"expected id {path.stem!r} from filename"))
+    if payload.get("id") != content_id:
+        issues.append(ValidationIssue(relative, "id", f"expected id {content_id!r} from filename"))
     return issues
 
 
@@ -122,10 +94,23 @@ def validate_file(
     *,
     semantic_paths: bool = True,
 ) -> list[ValidationIssue]:
+    relative = path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else path.as_posix()
+    if semantic_paths:
+        try:
+            content_identity(path, repo_root=ROOT)
+        except ContentPathError as exc:
+            return [ValidationIssue(relative, exc.location, exc.message, exc.code)]
     payload, issues = parse_frontmatter(path)
     if payload is None:
         return issues
-    return issues + validate_payload(payload, path, schema, semantic_paths=semantic_paths)
+    issues.extend(validate_payload(payload, path, schema, semantic_paths=semantic_paths))
+    if semantic_paths and not issues:
+        try:
+            parse_document(path, repo_root=ROOT)
+        except ContentError as exc:
+            issue = exc.issue
+            issues.append(ValidationIssue(relative, issue.location, issue.message, issue.code))
+    return issues
 
 
 def validate_fixtures(directory: Path, schema: dict[str, Any]) -> list[ValidationIssue]:
@@ -147,7 +132,7 @@ def validate_fixtures(directory: Path, schema: dict[str, Any]) -> list[Validatio
 
 
 def _paper_paths() -> list[Path]:
-    return sorted(ROOT.glob("docs/*/papers/*.md"))
+    return list(iter_content_paths(repo_root=ROOT))
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -177,7 +162,7 @@ def main(argv: list[str] | None = None) -> int:
         fixture_dir = (ROOT / args.fixtures).resolve()
         issues.extend(validate_fixtures(fixture_dir, schema))
         checked += len(list(fixture_dir.glob("*.md")))
-    paths = _paper_paths() if args.all else [(ROOT / item).resolve() for item in args.path]
+    paths = _paper_paths() if args.all else [(ROOT / item).absolute() for item in args.path]
     for path in paths:
         if not path.is_file():
             issues.append(ValidationIssue(path.as_posix(), "", "file not found"))
