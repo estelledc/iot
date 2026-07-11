@@ -37,6 +37,7 @@ trust_state_machine:
     evidence_authority:
       - schemas/source-audit.schema.json
       - schemas/review-record.schema.json
+      - schemas/trust-authorities.schema.json
   active_record_transitions:
     source_status:
       UNKNOWN:

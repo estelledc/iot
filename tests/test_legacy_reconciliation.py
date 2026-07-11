@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -211,6 +212,32 @@ class LegacyReconciliationTests(unittest.TestCase):
         self.assertEqual(first, output.read_bytes())
         self.assertEqual(before, {path: path.read_bytes() for path in self.documents})
 
+    def test_ledger_write_rejects_symlinked_parent_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as outside_directory:
+            outside = Path(outside_directory)
+            shutil.rmtree(self.root / "data")
+            (self.root / "data").symlink_to(outside, target_is_directory=True)
+
+            with self.assertRaises(self.module.ReconciliationError) as caught:
+                self.module.write_ledger(
+                    repo_root=self.root,
+                    observed_at_commit=OBSERVED_COMMIT,
+                )
+
+            self.assertEqual("UNSAFE_LEDGER_PATH", caught.exception.code)
+            self.assertFalse((outside / self.module.LEDGER_PATH.name).exists())
+
+    def test_trust_record_parent_symlink_is_rejected_before_enumeration(self) -> None:
+        with tempfile.TemporaryDirectory() as outside_directory:
+            outside = Path(outside_directory)
+            source_root = self.root / "data/source-audits"
+            source_root.symlink_to(outside, target_is_directory=True)
+
+            with self.assertRaises(self.module.ReconciliationError) as caught:
+                self._build()
+
+            self.assertEqual("UNSAFE_TRUST_RECORD_ROOT", caught.exception.code)
+
     def test_check_rejects_a_tampered_body_hash(self) -> None:
         self.module.write_ledger(
             repo_root=self.root,
@@ -256,6 +283,18 @@ class LegacyReconciliationTests(unittest.TestCase):
         self.assertEqual(first, output.read_bytes())
         self.assertEqual([], self.module.check_ledger(repo_root=self.root))
 
+    def test_immutable_check_coexists_with_records_but_write_stays_closed(self) -> None:
+        self._init_git()
+        self.module.write_ledger(repo_root=self.root)
+        record = self.root / "data/source-audits/audit-alpha.yml"
+        record.parent.mkdir(parents=True)
+        record.write_text("audit_id: audit-20260711-alpha\n", encoding="utf-8")
+
+        self.assertEqual([], self.module.check_ledger(repo_root=self.root))
+        with self.assertRaises(self.module.ReconciliationError) as caught:
+            self.module.write_ledger(repo_root=self.root)
+        self.assertEqual("TRUST_RECORDS_REQUIRE_T044", caught.exception.code)
+
     def test_uncommitted_canonical_change_is_rejected(self) -> None:
         self._init_git()
         self.documents[0].write_bytes(self.documents[0].read_bytes() + b"changed\n")
@@ -273,7 +312,7 @@ class LegacyReconciliationTests(unittest.TestCase):
 
 
 class RepositoryLegacyLedgerTests(unittest.TestCase):
-    def test_repository_ledger_is_current_and_covers_642_unbound_entries(self) -> None:
+    def test_repository_ledger_provenance_covers_642_unbound_entries(self) -> None:
         from tools import reconcile_legacy_review_state
 
         path = ROOT / reconcile_legacy_review_state.LEDGER_PATH

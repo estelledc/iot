@@ -270,6 +270,38 @@ class DuplicatePolicyTests(unittest.TestCase):
 
 
 class WorkflowPolicyTests(unittest.TestCase):
+    @staticmethod
+    def _workflow_cases():
+        root = check_workflow_policy.ROOT
+        return (
+            (
+                "ci",
+                root / ".github/workflows/ci.yml",
+                "quality",
+                check_workflow_policy.validate_ci,
+            ),
+            (
+                "deploy",
+                root / ".github/workflows/deploy.yml",
+                "build",
+                check_workflow_policy.validate_deploy,
+            ),
+        )
+
+    @staticmethod
+    def _replace_command(workflow, job_name, old, new):
+        replacements = 0
+        for step in workflow["jobs"][job_name]["steps"]:
+            run = step.get("run")
+            if not isinstance(run, str):
+                continue
+            lines = run.splitlines()
+            changed_lines = [new if line.strip() == old else line for line in lines]
+            replacements += sum(line.strip() == old for line in lines)
+            step["run"] = "\n".join(changed_lines)
+        if replacements != 1:
+            raise AssertionError(f"expected one occurrence of {old!r}, got {replacements}")
+
     def test_repository_workflows_follow_policy(self):
         ci = check_workflow_policy.load_workflow(check_workflow_policy.ROOT / ".github/workflows/ci.yml")
         deploy = check_workflow_policy.load_workflow(
@@ -291,6 +323,162 @@ class WorkflowPolicyTests(unittest.TestCase):
             check_workflow_policy.ROOT / ".github/workflows/ci.yml", changed
         )
         self.assertTrue(any("mutable" in error for error in errors))
+
+    def test_each_required_trust_validation_command_is_enforced(self):
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            workflow = check_workflow_policy.load_workflow(path)
+            for command in check_workflow_policy.REQUIRED_TRUST_VALIDATION_COMMANDS:
+                with self.subTest(workflow=workflow_name, command=command):
+                    changed = copy.deepcopy(workflow)
+                    self._replace_command(changed, job_name, command, "")
+                    errors = validator(path, changed)
+                    self.assertTrue(
+                        any(
+                            "missing required command" in error and command in error
+                            for error in errors
+                        ),
+                        errors,
+                    )
+
+    def test_trust_validation_command_order_is_enforced(self):
+        first, second, _ = (
+            check_workflow_policy.REQUIRED_TRUST_VALIDATION_COMMANDS
+        )
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            with self.subTest(workflow=workflow_name):
+                changed = check_workflow_policy.load_workflow(path)
+                self._replace_command(changed, job_name, first, "__SWAP__")
+                self._replace_command(changed, job_name, second, first)
+                self._replace_command(changed, job_name, "__SWAP__", second)
+                errors = validator(path, changed)
+                self.assertTrue(
+                    any("trust validation commands must run in order" in error for error in errors),
+                    errors,
+                )
+
+    def test_trust_validation_commands_cannot_be_wrapped_or_skipped(self):
+        command = check_workflow_policy.REQUIRED_TRUST_VALIDATION_COMMANDS[0]
+        mutations = (
+            (
+                "shell wrapper",
+                lambda step: step.update(run=f"if false; then\n  {command}\nfi"),
+                "missing required command",
+            ),
+            (
+                "step condition",
+                lambda step: step.update({"if": "false"}),
+                "must not have an if condition",
+            ),
+            (
+                "continue on error",
+                lambda step: step.update({"continue-on-error": True}),
+                "must fail closed",
+            ),
+            (
+                "custom shell",
+                lambda step: step.update(shell="bash -c 'exit 0' -- {0}"),
+                "default shell",
+            ),
+            (
+                "working directory",
+                lambda step: step.update({"working-directory": "fake-validator-root"}),
+                "repository root",
+            ),
+            (
+                "step environment",
+                lambda step: step.update(env={"PYTHONPATH": "fake-validator-root"}),
+                "must not override its environment",
+            ),
+        )
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            for mutation_name, mutate, expected in mutations:
+                with self.subTest(workflow=workflow_name, mutation=mutation_name):
+                    changed = check_workflow_policy.load_workflow(path)
+                    step = next(
+                        item
+                        for item in changed["jobs"][job_name]["steps"]
+                        if isinstance(item.get("run"), str)
+                        and item["run"].strip() == command
+                    )
+                    mutate(step)
+                    errors = validator(path, changed)
+                    self.assertTrue(
+                        any(expected in error for error in errors),
+                        errors,
+                    )
+
+    def test_trust_validation_job_cannot_be_conditionally_skipped(self):
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            for field, value, expected in (
+                ("if", "false", "must not conditionally skip"),
+                ("continue-on-error", True, "must not continue"),
+            ):
+                with self.subTest(workflow=workflow_name, field=field):
+                    changed = check_workflow_policy.load_workflow(path)
+                    changed["jobs"][job_name][field] = value
+                    errors = validator(path, changed)
+                    self.assertTrue(
+                        any(expected in error for error in errors),
+                        errors,
+                    )
+
+    def test_trust_validation_defaults_and_environment_are_rejected(self):
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            mutations = (
+                (
+                    "workflow defaults",
+                    lambda workflow: workflow.update(
+                        defaults={"run": {"working-directory": "fake-validator-root"}}
+                    ),
+                    "workflow defaults",
+                ),
+                (
+                    "workflow env",
+                    lambda workflow: workflow.update(
+                        env={"PYTHONPATH": "fake-validator-root"}
+                    ),
+                    "workflow env",
+                ),
+                (
+                    "job defaults",
+                    lambda workflow: workflow["jobs"][job_name].update(
+                        defaults={"run": {"shell": "bash -c 'exit 0' -- {0}"}}
+                    ),
+                    "job quality defaults" if job_name == "quality" else "job build defaults",
+                ),
+                (
+                    "job env",
+                    lambda workflow: workflow["jobs"][job_name].update(
+                        env={"PATH": "fake-validator-root"}
+                    ),
+                    "job quality env" if job_name == "quality" else "job build env",
+                ),
+            )
+            for mutation_name, mutate, expected in mutations:
+                with self.subTest(workflow=workflow_name, mutation=mutation_name):
+                    changed = check_workflow_policy.load_workflow(path)
+                    mutate(changed)
+                    errors = validator(path, changed)
+                    self.assertTrue(
+                        any(expected in error for error in errors),
+                        errors,
+                    )
+
+    def test_full_checkout_history_is_required_for_ledger_provenance(self):
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            with self.subTest(workflow=workflow_name):
+                changed = check_workflow_policy.load_workflow(path)
+                checkout = next(
+                    step
+                    for step in changed["jobs"][job_name]["steps"]
+                    if str(step.get("uses", "")).startswith("actions/checkout@")
+                )
+                checkout["with"] = {"fetch-depth": 1}
+                errors = validator(path, changed)
+                self.assertTrue(
+                    any("fetch-depth: 0" in error for error in errors),
+                    errors,
+                )
 
 
 if __name__ == "__main__":

@@ -20,6 +20,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: '3.11'
@@ -35,7 +37,14 @@ jobs:
           python tools/check_duplicates.py
           python tools/validate_frontmatter.py --schema-only --fixtures
           python tools/validate_frontmatter.py --all
-          python tools/check_workflow_policy.py
+      - name: Validate source audit records
+        run: python tools/validate_source_audits.py --all
+      - name: Validate review records
+        run: python tools/validate_review_records.py --all
+      - name: Validate repository trust graph
+        run: python tools/validate_trust_state.py --all --baseline-mode
+      - name: Validate workflow policy
+        run: python tools/check_workflow_policy.py
       - name: Run repository quality tests
         run: python -m unittest discover -s tests -v
       - name: Check Markdown structure and links

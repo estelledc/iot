@@ -1,16 +1,23 @@
 from __future__ import annotations
 
 import copy
+import io
 import json
+import shutil
+import subprocess
+import tempfile
 import unittest
+from contextlib import redirect_stderr
 from datetime import datetime
 from itertools import product
 from pathlib import Path
 from typing import Any
+from unittest import mock
 
 import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 
+from tools import trust_records
 from tools.iot_domain import LAYERS, parse_document
 
 
@@ -891,6 +898,1069 @@ class TrustSchemaFixtureTests(unittest.TestCase):
             self.assertEqual([], list(validator.iter_errors(f"docs/{slug}/papers/demo.md")))
         for noncanonical in ("platform", "edge-computing"):
             self.assertTrue(list(validator.iter_errors(f"docs/{noncanonical}/papers/demo.md")))
+
+
+class RepositoryTrustGraphTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.content_path = (
+            "docs/connectivity/papers/5g-mmtc-massive-iot-connection.md"
+        )
+        cls.document = parse_document(ROOT / cls.content_path, repo_root=ROOT)
+        cls.content_id = cls.document.content_id
+        cls.documents_by_id = {cls.content_id: cls.document}
+        cls.verified_audit = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-unverified-to-verified.yml"
+        )
+        cls.start_review = _load_yaml(
+            FIXTURE_ROOTS["review"] / "valid-start-review.yml"
+        )
+        cls.approval = _load_yaml(
+            FIXTURE_ROOTS["review"] / "valid-human-approved.yml"
+        )
+        cls.authorities = {
+            cls.content_id: frozenset({"human-content-author"}),
+        }
+        cls.actor_authorities = {
+            "human-content-author": trust_records.ActorAuthority(
+                "human-content-author",
+                "HUMAN",
+                frozenset({"CONTENT_AUTHOR"}),
+            ),
+            "human-fact-auditor": trust_records.ActorAuthority(
+                "human-fact-auditor",
+                "HUMAN",
+                frozenset({"FACT_AUDITOR"}),
+            ),
+            "agent-structural-auditor": trust_records.ActorAuthority(
+                "agent-structural-auditor",
+                "AGENT",
+                frozenset({"STRUCTURAL_AUDITOR"}),
+            ),
+            "human-content-reviewer": trust_records.ActorAuthority(
+                "human-content-reviewer",
+                "HUMAN",
+                frozenset({"REVIEWER"}),
+            ),
+            "human-content-approver": trust_records.ActorAuthority(
+                "human-content-approver",
+                "HUMAN",
+                frozenset({"APPROVER"}),
+            ),
+            "human-governance-reviewer": trust_records.ActorAuthority(
+                "human-governance-reviewer",
+                "HUMAN",
+                frozenset({"GOVERNANCE_REVIEWER"}),
+            ),
+        }
+        cls.critical_claims = {
+            cls.content_id: frozenset(
+                claim["claim_id"]
+                for claim in cls.verified_audit["claim_coverage"]["claims"]
+            ),
+        }
+        cls.as_of = datetime.fromisoformat("2026-07-11T10:00:00+00:00")
+
+    @staticmethod
+    def _source_entry(name: str, payload: dict[str, Any]) -> tuple[Path, dict[str, Any]]:
+        return Path(f"data/source-audits/{name}.yml"), payload
+
+    @staticmethod
+    def _review_entry(name: str, payload: dict[str, Any]) -> tuple[Path, dict[str, Any]]:
+        return Path(f"data/review-records/{name}.yml"), payload
+
+    @staticmethod
+    def _issue_codes(result: Any) -> set[str]:
+        return {issue.code for issue in result.issues}
+
+    def _validate_graph(
+        self,
+        *,
+        source_records: list[tuple[Path, dict[str, Any]]] | None = None,
+        review_records: list[tuple[Path, dict[str, Any]]] | None = None,
+        actor_authorities: dict[str, trust_records.ActorAuthority] | None = None,
+        author_ids_by_content: dict[str, frozenset[str]] | None = None,
+        critical_claim_ids_by_content: dict[str, frozenset[str]] | None = None,
+    ) -> Any:
+        return trust_records.validate_trust_graph(
+            self.documents_by_id,
+            source_records
+            if source_records is not None
+            else [self._source_entry("verified", copy.deepcopy(self.verified_audit))],
+            review_records
+            if review_records is not None
+            else [
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", copy.deepcopy(self.approval)),
+            ],
+            actor_authorities=(
+                self.actor_authorities
+                if actor_authorities is None
+                else actor_authorities
+            ),
+            author_ids_by_content=(
+                self.authorities
+                if author_ids_by_content is None
+                else author_ids_by_content
+            ),
+            critical_claim_ids_by_content=(
+                self.critical_claims
+                if critical_claim_ids_by_content is None
+                else critical_claim_ids_by_content
+            ),
+            as_of=self.as_of,
+        )
+
+    def test_repository_baseline_keeps_642_legacy_entries_unbound(self) -> None:
+        from tools import validate_trust_state
+
+        result = validate_trust_state.validate_repository_trust(
+            repo_root=ROOT,
+            baseline_mode=True,
+            author_ids_by_content=None,
+            critical_claim_ids_by_content=None,
+            as_of=self.as_of,
+        )
+
+        self.assertEqual([], result.issues)
+        self.assertEqual(642, result.summary.canonical_content)
+        self.assertEqual(642, result.summary.legacy_unbound)
+        self.assertEqual(0, result.summary.evidence_bound_review)
+        self.assertEqual(0, result.summary.verified)
+        self.assertEqual(0, result.summary.approved)
+        self.assertEqual(0, result.summary.source_records)
+        self.assertEqual(0, result.summary.review_records)
+
+    def test_valid_verified_and_human_approved_chain_projects_both_axes(self) -> None:
+        result = self._validate_graph()
+
+        self.assertEqual([], result.issues)
+        projection = result.projections[self.content_id]
+        self.assertEqual("VERIFIED", projection.source_status)
+        self.assertEqual("HUMAN_APPROVED", projection.review_status)
+
+    def test_self_reported_human_actors_cannot_create_authority(self) -> None:
+        audit = copy.deepcopy(self.verified_audit)
+        audit["auditor_id"] = "human-forged-auditor"
+        audit["auditor_type"] = "HUMAN"
+        audit["auditor_role"] = "FACT_AUDITOR"
+        source_result = self._validate_graph(
+            source_records=[self._source_entry("forged-auditor", audit)],
+            review_records=[],
+        )
+        self.assertIn("ACTOR_AUTHORITY_MISSING", self._issue_codes(source_result))
+        self.assertEqual(
+            "UNVERIFIED",
+            source_result.projections[self.content_id].source_status,
+        )
+
+        review = copy.deepcopy(self.start_review)
+        review["reviewer_id"] = "human-forged-reviewer"
+        review["reviewer_type"] = "HUMAN"
+        review["reviewer_role"] = "REVIEWER"
+        review_result = self._validate_graph(
+            source_records=[],
+            review_records=[self._review_entry("forged-reviewer", review)],
+        )
+        self.assertIn("ACTOR_AUTHORITY_MISSING", self._issue_codes(review_result))
+        self.assertEqual(
+            "UNREVIEWED",
+            review_result.projections[self.content_id].review_status,
+        )
+
+        approval = copy.deepcopy(self.approval)
+        approval["reviewer_id"] = "human-forged-approver"
+        approval_result = self._validate_graph(
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("forged-approval", approval),
+            ],
+        )
+        self.assertIn(
+            "ACTOR_AUTHORITY_MISSING",
+            self._issue_codes(approval_result),
+        )
+        self.assertEqual(
+            "IN_REVIEW",
+            approval_result.projections[self.content_id].review_status,
+        )
+
+    def test_authoritative_actor_type_and_role_are_enforced(self) -> None:
+        wrong_type = dict(self.actor_authorities)
+        wrong_type["human-fact-auditor"] = trust_records.ActorAuthority(
+            "human-fact-auditor",
+            "AGENT",
+            frozenset({"FACT_AUDITOR"}),
+        )
+        type_result = self._validate_graph(
+            source_records=[
+                self._source_entry("wrong-actor-type", copy.deepcopy(self.verified_audit))
+            ],
+            review_records=[],
+            actor_authorities=wrong_type,
+        )
+        self.assertIn(
+            "ACTOR_AUTHORITY_TYPE_MISMATCH",
+            self._issue_codes(type_result),
+        )
+
+        wrong_role = dict(self.actor_authorities)
+        wrong_role["human-fact-auditor"] = trust_records.ActorAuthority(
+            "human-fact-auditor",
+            "HUMAN",
+            frozenset({"STRUCTURAL_AUDITOR"}),
+        )
+        role_result = self._validate_graph(
+            source_records=[
+                self._source_entry("wrong-actor-role", copy.deepcopy(self.verified_audit))
+            ],
+            review_records=[],
+            actor_authorities=wrong_role,
+        )
+        self.assertIn("ACTOR_ROLE_NOT_ALLOWED", self._issue_codes(role_result))
+        self.assertEqual(
+            "UNVERIFIED",
+            role_result.projections[self.content_id].source_status,
+        )
+
+        wrong_approver_role = dict(self.actor_authorities)
+        wrong_approver_role["human-content-approver"] = (
+            trust_records.ActorAuthority(
+                "human-content-approver",
+                "HUMAN",
+                frozenset({"REVIEWER"}),
+            )
+        )
+        approval_result = self._validate_graph(
+            actor_authorities=wrong_approver_role,
+        )
+        self.assertIn(
+            "ACTOR_ROLE_NOT_ALLOWED",
+            self._issue_codes(approval_result),
+        )
+        self.assertEqual(
+            "IN_REVIEW",
+            approval_result.projections[self.content_id].review_status,
+        )
+
+    def test_content_authors_require_authoritative_author_role(self) -> None:
+        authors = {
+            self.content_id: frozenset({"human-untrusted-author"}),
+        }
+        missing_result = self._validate_graph(
+            source_records=[
+                self._source_entry("missing-author", copy.deepcopy(self.verified_audit))
+            ],
+            review_records=[],
+            author_ids_by_content=authors,
+        )
+        self.assertIn("ACTOR_AUTHORITY_MISSING", self._issue_codes(missing_result))
+
+        actors = dict(self.actor_authorities)
+        actors["human-untrusted-author"] = trust_records.ActorAuthority(
+            "human-untrusted-author",
+            "HUMAN",
+            frozenset({"REVIEWER"}),
+        )
+        role_result = self._validate_graph(
+            source_records=[
+                self._source_entry("wrong-author-role", copy.deepcopy(self.verified_audit))
+            ],
+            review_records=[],
+            actor_authorities=actors,
+            author_ids_by_content=authors,
+        )
+        self.assertIn("ACTOR_ROLE_NOT_ALLOWED", self._issue_codes(role_result))
+
+    def test_author_may_supply_structural_noop_but_not_fact_evidence(self) -> None:
+        structural = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-structural-auditable-noop.yml"
+        )
+        structural["auditor_id"] = "human-content-author"
+        structural["auditor_type"] = "HUMAN"
+        approval = copy.deepcopy(self.approval)
+        approval["linked_audit_ids"].append(structural["audit_id"])
+        approval["independence"]["linked_auditor_ids"].append(
+            "human-content-author"
+        )
+        actors = dict(self.actor_authorities)
+        actors["human-content-author"] = trust_records.ActorAuthority(
+            "human-content-author",
+            "HUMAN",
+            frozenset({"CONTENT_AUTHOR", "STRUCTURAL_AUDITOR"}),
+        )
+
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("verified", copy.deepcopy(self.verified_audit)),
+                self._source_entry("structural-by-author", structural),
+            ],
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", approval),
+            ],
+            actor_authorities=actors,
+        )
+
+        self.assertEqual([], result.issues)
+        self.assertEqual(
+            "HUMAN_APPROVED",
+            result.projections[self.content_id].review_status,
+        )
+
+    def test_revocation_requires_authoritative_governance_actor(self) -> None:
+        revoked = copy.deepcopy(
+            _load_yaml(FIXTURE_ROOTS["source"] / "valid-revoked.yml")
+        )
+        result = self._validate_graph(
+            source_records=[self._source_entry("unauthorized-revocation", revoked)],
+            review_records=[],
+            actor_authorities={},
+            author_ids_by_content={},
+            critical_claim_ids_by_content={},
+        )
+
+        self.assertIn("ACTOR_AUTHORITY_MISSING", self._issue_codes(result))
+        self.assertEqual(
+            "UNVERIFIED",
+            result.projections[self.content_id].source_status,
+        )
+
+    def test_valid_partial_audit_requires_locked_claim_inventory(self) -> None:
+        audit = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-unverified-to-partial.yml"
+        )
+
+        result = self._validate_graph(
+            source_records=[self._source_entry("partial", audit)],
+            review_records=[],
+        )
+
+        self.assertEqual([], result.issues)
+        projection = result.projections[self.content_id]
+        self.assertEqual("PARTIAL", projection.source_status)
+        self.assertEqual((audit["audit_id"],), projection.active_audit_ids)
+
+    def test_structural_noop_root_does_not_require_claim_predecessor(self) -> None:
+        structural = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-structural-auditable-noop.yml"
+        )
+        structural["status_transition"] = {"from": "VERIFIED", "to": "VERIFIED"}
+
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("verified", copy.deepcopy(self.verified_audit)),
+                self._source_entry("structural", structural),
+            ],
+            review_records=[],
+        )
+
+        self.assertEqual([], result.issues)
+        self.assertEqual(
+            "VERIFIED",
+            result.projections[self.content_id].source_status,
+        )
+
+    def test_duplicate_audit_id_fails_closed(self) -> None:
+        first = copy.deepcopy(self.verified_audit)
+        second = copy.deepcopy(self.verified_audit)
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("duplicate-a", first),
+                self._source_entry("duplicate-b", second),
+            ],
+            review_records=[],
+        )
+
+        self.assertIn("DUPLICATE_AUDIT_ID", self._issue_codes(result))
+
+    def test_two_node_audit_supersedes_cycle_fails_closed(self) -> None:
+        first = copy.deepcopy(self.verified_audit)
+        second = copy.deepcopy(self.verified_audit)
+        first["audit_id"] = "audit-20260711-cycle-a"
+        second["audit_id"] = "audit-20260711-cycle-b"
+        first["status_transition"] = {"from": "VERIFIED", "to": "VERIFIED"}
+        second["status_transition"] = {"from": "VERIFIED", "to": "VERIFIED"}
+        first["supersedes"] = second["audit_id"]
+        second["supersedes"] = first["audit_id"]
+
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("cycle-a", first),
+                self._source_entry("cycle-b", second),
+            ],
+            review_records=[],
+        )
+
+        self.assertIn("SUPERSEDES_CYCLE", self._issue_codes(result))
+
+    def test_approver_cannot_be_an_author(self) -> None:
+        approval = copy.deepcopy(self.approval)
+        approval["reviewer_id"] = "human-content-author"
+        result = self._validate_graph(
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", approval),
+            ],
+        )
+
+        self.assertIn("REVIEWER_AUTHOR_CONFLICT", self._issue_codes(result))
+
+    def test_author_cannot_bind_start_review(self) -> None:
+        start = copy.deepcopy(self.start_review)
+        start["reviewer_id"] = "human-content-author"
+
+        result = self._validate_graph(
+            source_records=[],
+            review_records=[self._review_entry("self-review", start)],
+        )
+
+        self.assertIn("REVIEWER_AUTHOR_CONFLICT", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNREVIEWED", projection.review_status)
+        self.assertEqual((), projection.active_review_ids)
+
+    def test_start_review_cannot_bind_with_dangling_audit_link(self) -> None:
+        start = copy.deepcopy(self.start_review)
+        start["linked_audit_ids"] = ["audit-20260711-missing"]
+
+        result = self._validate_graph(
+            source_records=[],
+            review_records=[self._review_entry("dangling-start", start)],
+        )
+
+        self.assertIn("LINKED_AUDIT_NOT_FOUND", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNREVIEWED", projection.review_status)
+        self.assertEqual((), projection.active_review_ids)
+
+    def test_start_review_source_snapshot_cannot_be_self_declared(self) -> None:
+        start = copy.deepcopy(self.start_review)
+        start["source_status_at_review"] = "VERIFIED"
+
+        result = self._validate_graph(
+            source_records=[],
+            review_records=[self._review_entry("false-source-snapshot", start)],
+        )
+
+        self.assertIn("SOURCE_STATUS_AT_REVIEW_MISMATCH", self._issue_codes(result))
+        self.assertEqual(
+            "UNREVIEWED",
+            result.projections[self.content_id].review_status,
+        )
+
+    def test_future_review_record_is_never_active(self) -> None:
+        start = copy.deepcopy(self.start_review)
+        start["reviewed_at"] = "2099-01-01T00:00:00Z"
+
+        result = self._validate_graph(
+            source_records=[],
+            review_records=[self._review_entry("future-start", start)],
+        )
+
+        self.assertIn("RECORD_TIME_IN_FUTURE", self._issue_codes(result))
+        self.assertEqual(
+            "UNREVIEWED",
+            result.projections[self.content_id].review_status,
+        )
+
+    def test_valid_partial_request_changes_chain_uses_linked_snapshot(self) -> None:
+        partial = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-unverified-to-partial.yml"
+        )
+        request_changes = _load_yaml(
+            FIXTURE_ROOTS["review"] / "valid-request-changes.yml"
+        )
+
+        result = self._validate_graph(
+            source_records=[self._source_entry("partial", partial)],
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("request-changes", request_changes),
+            ],
+        )
+
+        self.assertEqual([], result.issues)
+        projection = result.projections[self.content_id]
+        self.assertEqual("PARTIAL", projection.source_status)
+        self.assertEqual("NEEDS_CHANGES", projection.review_status)
+
+    def test_review_snapshot_survives_later_audit_supersession(self) -> None:
+        partial = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-unverified-to-partial.yml"
+        )
+        verified = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-partial-to-verified.yml"
+        )
+        verified["audited_at"] = "2026-07-11T09:16:00Z"
+        request_changes = _load_yaml(
+            FIXTURE_ROOTS["review"] / "valid-request-changes.yml"
+        )
+
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("partial", partial),
+                self._source_entry("verified-later", verified),
+            ],
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("request-changes", request_changes),
+            ],
+        )
+
+        self.assertEqual([], result.issues)
+        projection = result.projections[self.content_id]
+        self.assertEqual("VERIFIED", projection.source_status)
+        self.assertEqual("NEEDS_CHANGES", projection.review_status)
+
+    def test_author_cannot_be_the_linked_fact_auditor(self) -> None:
+        approval = copy.deepcopy(self.approval)
+        approval["independence"]["author_ids"] = ["human-fact-auditor"]
+        result = self._validate_graph(
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", approval),
+            ],
+            author_ids_by_content={
+                self.content_id: frozenset({"human-fact-auditor"}),
+            },
+        )
+
+        self.assertIn("AUTHOR_AUDITOR_CONFLICT", self._issue_codes(result))
+
+    def test_missing_authorities_cannot_project_verified_or_approved(self) -> None:
+        result = trust_records.validate_trust_graph(
+            self.documents_by_id,
+            [self._source_entry("verified", copy.deepcopy(self.verified_audit))],
+            [
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", copy.deepcopy(self.approval)),
+            ],
+            author_ids_by_content=None,
+            critical_claim_ids_by_content=None,
+            as_of=self.as_of,
+        )
+
+        codes = self._issue_codes(result)
+        self.assertIn("AUTHOR_AUTHORITY_MISSING", codes)
+        self.assertIn("CRITICAL_CLAIM_AUTHORITY_MISSING", codes)
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNVERIFIED", projection.source_status)
+        self.assertEqual("UNREVIEWED", projection.review_status)
+        self.assertEqual((), projection.active_review_ids)
+
+    def test_unknown_content_id_reports_stable_code_and_relative_path(self) -> None:
+        audit = copy.deepcopy(self.verified_audit)
+        audit["content_id"] = "missing-content"
+        result = self._validate_graph(
+            source_records=[self._source_entry("unknown-content", audit)],
+            review_records=[],
+        )
+
+        matching = [
+            issue for issue in result.issues if issue.code == "UNKNOWN_CONTENT_ID"
+        ]
+        self.assertEqual(1, len(matching))
+        self.assertEqual("data/source-audits/unknown-content.yml", matching[0].path)
+        self.assertFalse(Path(matching[0].path).is_absolute())
+
+    def test_body_hash_mismatch_excludes_source_from_projection(self) -> None:
+        audit = copy.deepcopy(self.verified_audit)
+        audit["body_sha256"] = "f" * 64
+        result = self._validate_graph(
+            source_records=[self._source_entry("stale-body", audit)],
+            review_records=[],
+        )
+
+        self.assertIn("BODY_HASH_MISMATCH", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNVERIFIED", projection.source_status)
+        self.assertEqual((), projection.active_audit_ids)
+
+    def test_dangling_source_supersedes_target_fails_closed(self) -> None:
+        audit = copy.deepcopy(self.verified_audit)
+        audit["supersedes"] = "audit-20260711-does-not-exist"
+        result = self._validate_graph(
+            source_records=[self._source_entry("dangling-supersedes", audit)],
+            review_records=[],
+        )
+
+        self.assertIn("SUPERSEDES_TARGET_NOT_FOUND", self._issue_codes(result))
+        self.assertEqual(
+            "UNVERIFIED",
+            result.projections[self.content_id].source_status,
+        )
+
+    def test_duplicate_active_source_leaves_are_ambiguous(self) -> None:
+        first = copy.deepcopy(self.verified_audit)
+        second = copy.deepcopy(self.verified_audit)
+        second["audit_id"] = "audit-20260711-second-active-root"
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("active-a", first),
+                self._source_entry("active-b", second),
+            ],
+            review_records=[],
+        )
+
+        matching = [
+            issue
+            for issue in result.issues
+            if issue.code == "DUPLICATE_ACTIVE_SOURCE_RECORD"
+        ]
+        self.assertEqual(2, len(matching))
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNVERIFIED", projection.source_status)
+        self.assertEqual((), projection.active_audit_ids)
+
+    def test_duplicate_active_review_leaves_are_ambiguous(self) -> None:
+        first = copy.deepcopy(self.start_review)
+        second = copy.deepcopy(self.start_review)
+        second["review_id"] = "review-20260711-second-active-root"
+        result = self._validate_graph(
+            source_records=[],
+            review_records=[
+                self._review_entry("active-a", first),
+                self._review_entry("active-b", second),
+            ],
+        )
+
+        matching = [
+            issue
+            for issue in result.issues
+            if issue.code == "DUPLICATE_ACTIVE_REVIEW_RECORD"
+        ]
+        self.assertEqual(2, len(matching))
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNREVIEWED", projection.review_status)
+        self.assertEqual((), projection.active_review_ids)
+
+    def test_approval_linking_missing_audit_stays_in_review(self) -> None:
+        approval = copy.deepcopy(self.approval)
+        approval["linked_audit_ids"] = ["audit-20260711-missing"]
+        result = self._validate_graph(
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", approval),
+            ],
+        )
+
+        self.assertIn("LINKED_AUDIT_NOT_FOUND", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("VERIFIED", projection.source_status)
+        self.assertEqual("IN_REVIEW", projection.review_status)
+
+    def test_approval_linking_revoked_audit_stays_in_review(self) -> None:
+        audit = copy.deepcopy(self.verified_audit)
+        revoked = _load_yaml(FIXTURE_ROOTS["source"] / "valid-revoked.yml")
+        audit["revocation"] = copy.deepcopy(revoked["revocation"])
+        result = self._validate_graph(
+            source_records=[self._source_entry("revoked-audit", audit)],
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", copy.deepcopy(self.approval)),
+            ],
+        )
+
+        self.assertIn("LINKED_AUDIT_INACTIVE", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNVERIFIED", projection.source_status)
+        self.assertEqual("IN_REVIEW", projection.review_status)
+
+    def test_approval_linked_evidence_must_itself_project_verified(self) -> None:
+        structural = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-structural-auditable-noop.yml"
+        )
+        approval = copy.deepcopy(self.approval)
+        approval["linked_audit_ids"] = [structural["audit_id"]]
+        approval["independence"]["linked_auditor_ids"] = [
+            structural["auditor_id"]
+        ]
+
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("verified", copy.deepcopy(self.verified_audit)),
+                self._source_entry("structural", structural),
+            ],
+            review_records=[
+                self._review_entry("start", copy.deepcopy(self.start_review)),
+                self._review_entry("approval", approval),
+            ],
+        )
+
+        self.assertIn("LINKED_AUDITS_NOT_VERIFIED", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("VERIFIED", projection.source_status)
+        self.assertEqual("IN_REVIEW", projection.review_status)
+
+    def test_approval_cannot_depend_on_revoked_predecessor(self) -> None:
+        start = copy.deepcopy(self.start_review)
+        revoked = _load_yaml(FIXTURE_ROOTS["review"] / "valid-revoked.yml")
+        start["revocation"] = copy.deepcopy(revoked["revocation"])
+
+        result = self._validate_graph(
+            review_records=[
+                self._review_entry("revoked-start", start),
+                self._review_entry("approval", copy.deepcopy(self.approval)),
+            ],
+        )
+
+        self.assertIn("SUPERSEDES_PREDECESSOR_REVOKED", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("VERIFIED", projection.source_status)
+        self.assertEqual("IN_REVIEW", projection.review_status)
+        self.assertEqual((), projection.active_review_ids)
+
+    def test_fully_revoked_stale_chain_is_retained_as_history(self) -> None:
+        source = copy.deepcopy(self.verified_audit)
+        source_revocation = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-revoked.yml"
+        )["revocation"]
+        source_revocation["revoked_at"] = "2026-07-11T09:30:00Z"
+        source["body_sha256"] = "f" * 64
+        source["revocation"] = copy.deepcopy(source_revocation)
+
+        review_revocation = _load_yaml(
+            FIXTURE_ROOTS["review"] / "valid-revoked.yml"
+        )["revocation"]
+        start = copy.deepcopy(self.start_review)
+        start["body_sha256"] = "f" * 64
+        start["revocation"] = copy.deepcopy(review_revocation)
+        approval = copy.deepcopy(self.approval)
+        approval["body_sha256"] = "f" * 64
+        approval["revocation"] = copy.deepcopy(review_revocation)
+
+        result = self._validate_graph(
+            source_records=[self._source_entry("revoked-source-history", source)],
+            review_records=[
+                self._review_entry("revoked-start-history", start),
+                self._review_entry("revoked-approval-history", approval),
+            ],
+            actor_authorities={
+                "human-governance-reviewer": trust_records.ActorAuthority(
+                    "human-governance-reviewer",
+                    "HUMAN",
+                    frozenset({"GOVERNANCE_REVIEWER"}),
+                )
+            },
+            author_ids_by_content={},
+            critical_claim_ids_by_content={},
+        )
+
+        self.assertEqual([], result.issues)
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNVERIFIED", projection.source_status)
+        self.assertEqual("IN_REVIEW", projection.review_status)
+        self.assertEqual((), projection.active_audit_ids)
+        self.assertEqual((), projection.active_review_ids)
+
+    def test_stale_review_history_keeps_in_review_floor(self) -> None:
+        start = copy.deepcopy(self.start_review)
+        start["body_sha256"] = "f" * 64
+
+        result = self._validate_graph(
+            source_records=[],
+            review_records=[self._review_entry("stale-start", start)],
+        )
+
+        self.assertIn("BODY_HASH_MISMATCH", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("IN_REVIEW", projection.review_status)
+        self.assertEqual((), projection.active_review_ids)
+
+    def test_noninitial_source_transition_requires_predecessor(self) -> None:
+        successor = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-partial-to-verified.yml"
+        )
+        successor["supersedes"] = None
+
+        result = self._validate_graph(
+            source_records=[self._source_entry("orphan-successor", successor)],
+            review_records=[],
+        )
+
+        self.assertIn("SUPERSEDES_REQUIRED", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNVERIFIED", projection.source_status)
+        self.assertEqual((), projection.active_audit_ids)
+
+    def test_noninitial_review_transition_requires_predecessor(self) -> None:
+        request_changes = _load_yaml(
+            FIXTURE_ROOTS["review"] / "valid-request-changes.yml"
+        )
+        request_changes["supersedes"] = None
+
+        result = self._validate_graph(
+            source_records=[],
+            review_records=[self._review_entry("orphan-review", request_changes)],
+        )
+
+        self.assertIn("SUPERSEDES_REQUIRED", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNREVIEWED", projection.review_status)
+        self.assertEqual((), projection.active_review_ids)
+
+    def test_invalid_predecessor_cannot_promote_valid_successor(self) -> None:
+        predecessor = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-unverified-to-partial.yml"
+        )
+        predecessor["auditor_id"] = "human-content-author"
+        successor = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-partial-to-verified.yml"
+        )
+
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("invalid-predecessor", predecessor),
+                self._source_entry("dependent-successor", successor),
+            ],
+            review_records=[],
+        )
+
+        codes = self._issue_codes(result)
+        self.assertIn("AUTHOR_AUDITOR_CONFLICT", codes)
+        self.assertIn("SUPERSEDES_PREDECESSOR_INVALID", codes)
+        projection = result.projections[self.content_id]
+        self.assertEqual("UNVERIFIED", projection.source_status)
+        self.assertEqual((), projection.active_audit_ids)
+
+    def test_supersession_fork_keeps_predecessor_as_only_effective_leaf(self) -> None:
+        predecessor = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-unverified-to-partial.yml"
+        )
+        first = _load_yaml(
+            FIXTURE_ROOTS["source"] / "valid-claim-partial-to-verified.yml"
+        )
+        second = copy.deepcopy(first)
+        second["audit_id"] = "audit-20260711-claim-partial-verified-fork"
+
+        result = self._validate_graph(
+            source_records=[
+                self._source_entry("fork-root", predecessor),
+                self._source_entry("fork-a", first),
+                self._source_entry("fork-b", second),
+            ],
+            review_records=[],
+        )
+
+        self.assertIn("SUPERSEDES_FORK", self._issue_codes(result))
+        projection = result.projections[self.content_id]
+        self.assertEqual("PARTIAL", projection.source_status)
+        self.assertEqual((predecessor["audit_id"],), projection.active_audit_ids)
+
+    def test_repository_validator_rejects_symlinked_schema_path(self) -> None:
+        from tools import validate_trust_state
+
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            repo_root = base / "repo"
+            outside_schema_root = base / "outside-schemas"
+            outside_schema_root.mkdir(parents=True)
+            for schema_name in (
+                "source-audit.schema.json",
+                "review-record.schema.json",
+            ):
+                shutil.copyfile(
+                    ROOT / "schemas" / schema_name,
+                    outside_schema_root / schema_name,
+                )
+            repo_root.mkdir()
+            (repo_root / "schemas").symlink_to(
+                outside_schema_root,
+                target_is_directory=True,
+            )
+            document_path = repo_root / "docs/network/papers/alpha.md"
+            document_path.parent.mkdir(parents=True)
+            document_path.write_text(
+                "---\n"
+                "schema_version: '1.0'\n"
+                "id: alpha\n"
+                "title: Alpha\n"
+                "layer: 3\n"
+                "source_status: UNVERIFIED\n"
+                "review_status: UNREVIEWED\n"
+                "last_reviewed: UNKNOWN\n"
+                "---\n"
+                "# Alpha\n"
+                "body\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaises(validate_trust_state.TrustStateError) as raised:
+                validate_trust_state.validate_repository_trust(
+                    repo_root=repo_root,
+                    baseline_mode=False,
+                    as_of=self.as_of,
+                )
+
+        self.assertEqual("UNSAFE_AUTHORITY_SCHEMA_PATH", raised.exception.code)
+        self.assertNotIn(directory, raised.exception.message)
+
+    def test_legacy_unbound_promotion_is_rejected_with_relative_path(self) -> None:
+        from tools import validate_trust_state
+
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as directory:
+            repo_root = Path(directory)
+            schema_root = repo_root / "schemas"
+            schema_root.mkdir()
+            for schema_name in (
+                "source-audit.schema.json",
+                "review-record.schema.json",
+                "trust-authorities.schema.json",
+            ):
+                shutil.copyfile(ROOT / "schemas" / schema_name, schema_root / schema_name)
+
+            document_path = repo_root / "docs/network/papers/alpha.md"
+            document_path.parent.mkdir(parents=True)
+            document_path.write_text(
+                "---\n"
+                "schema_version: '1.0'\n"
+                "id: alpha\n"
+                "title: Alpha\n"
+                "layer: 3\n"
+                "source_status: UNVERIFIED\n"
+                "review_status: IN_REVIEW\n"
+                "last_reviewed: '2026-07-10'\n"
+                "---\n"
+                "# Alpha\n"
+                "body\n",
+                encoding="utf-8",
+            )
+            progress_path = repo_root / "data/deep-review-progress.yml"
+            progress_path.parent.mkdir(parents=True)
+            progress_path.write_text(
+                yaml.safe_dump(
+                    {
+                        "schema_version": "1.0",
+                        "counts": {"total": 1, "pending": 0, "in_review": 1},
+                        "articles": [
+                            {
+                                "id": "alpha",
+                                "path": "docs/network/papers/alpha.md",
+                                "layer": 3,
+                                "status": "in_review",
+                            }
+                        ],
+                    },
+                    sort_keys=False,
+                ),
+                encoding="utf-8",
+            )
+            for command in (
+                ("init", "-q"),
+                ("config", "user.name", "IoT Test"),
+                ("config", "user.email", "iot-test@example.invalid"),
+                ("add", "docs", "data/deep-review-progress.yml"),
+                ("commit", "-q", "-m", "legacy observation"),
+            ):
+                subprocess.run(
+                    ["git", "-C", str(repo_root), *command],
+                    check=True,
+                    capture_output=True,
+                )
+            observed_commit = subprocess.run(
+                ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip()
+            from tools import reconcile_legacy_review_state
+
+            ledger = reconcile_legacy_review_state.build_ledger(
+                repo_root=repo_root,
+                observed_at_commit=observed_commit,
+            )
+            ledger_path = repo_root / reconcile_legacy_review_state.LEDGER_PATH
+            ledger_bytes = reconcile_legacy_review_state.render_ledger(ledger)
+            ledger_path.write_bytes(ledger_bytes)
+            document_path.write_text(
+                document_path.read_text(encoding="utf-8").replace(
+                    "source_status: UNVERIFIED",
+                    "source_status: VERIFIED",
+                ),
+                encoding="utf-8",
+            )
+
+            result = validate_trust_state.validate_repository_trust(
+                repo_root=repo_root,
+                baseline_mode=True,
+                author_ids_by_content=None,
+                critical_claim_ids_by_content=None,
+                as_of=self.as_of,
+            )
+            stderr = io.StringIO()
+            with (
+                mock.patch.object(validate_trust_state, "ROOT", repo_root),
+                redirect_stderr(stderr),
+            ):
+                return_code = validate_trust_state.main(
+                    ["--all", "--baseline-mode", "--as-of", "2026-07-11T10:00:00Z"]
+                )
+            cli_error = stderr.getvalue()
+
+            document_path.write_text(
+                document_path.read_text(encoding="utf-8") + "changed body\n",
+                encoding="utf-8",
+            )
+            stale_binding_result = validate_trust_state.validate_repository_trust(
+                repo_root=repo_root,
+                baseline_mode=True,
+                as_of=self.as_of,
+            )
+
+            tampered = copy.deepcopy(ledger)
+            tampered["generated_by"] = "forged-generator"
+            ledger_path.write_bytes(
+                reconcile_legacy_review_state.render_ledger(tampered)
+            )
+            tampered_result = validate_trust_state.validate_repository_trust(
+                repo_root=repo_root,
+                baseline_mode=True,
+                as_of=self.as_of,
+            )
+
+            missing_commit = copy.deepcopy(ledger)
+            missing_commit["observed_at_commit"] = "f" * 40
+            for entry in missing_commit["entries"]:
+                entry["observed_at_commit"] = "f" * 40
+            ledger_path.write_bytes(
+                reconcile_legacy_review_state.render_ledger(missing_commit)
+            )
+            missing_commit_result = validate_trust_state.validate_repository_trust(
+                repo_root=repo_root,
+                baseline_mode=True,
+                as_of=self.as_of,
+            )
+
+        codes = self._issue_codes(result)
+        self.assertIn("SOURCE_STATUS_PROJECTION_MISMATCH", codes)
+        self.assertIn("LEGACY_UNBOUND_PROMOTION", codes)
+        self.assertEqual(0, result.summary.verified)
+        self.assertEqual(0, result.summary.approved)
+        for issue in result.issues:
+            self.assertFalse(Path(issue.path).is_absolute())
+            self.assertNotIn(directory, issue.render())
+        self.assertEqual(1, return_code)
+        self.assertIn("TRUST_STATE_INVALID", cli_error)
+        self.assertIn("SOURCE_STATUS_PROJECTION_MISMATCH", cli_error)
+        self.assertNotIn(directory, cli_error)
+        self.assertNotIn(
+            "LEGACY_LEDGER_PROVENANCE_MISMATCH",
+            self._issue_codes(stale_binding_result),
+        )
+        self.assertIn(
+            "REVIEW_STATUS_PROJECTION_MISMATCH",
+            self._issue_codes(stale_binding_result),
+        )
+        self.assertEqual(0, stale_binding_result.summary.legacy_unbound)
+        self.assertIn(
+            "LEGACY_LEDGER_PROVENANCE_MISMATCH",
+            self._issue_codes(tampered_result),
+        )
+        self.assertIn(
+            "OBSERVED_COMMIT_NOT_FOUND",
+            self._issue_codes(missing_commit_result),
+        )
 
 
 if __name__ == "__main__":

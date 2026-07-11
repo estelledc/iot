@@ -4,9 +4,13 @@
 from __future__ import annotations
 
 import argparse
+import io
+import os
 import re
 import subprocess
 import sys
+import tarfile
+import tempfile
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -113,11 +117,44 @@ def _validate_observed_commit(value: object) -> str:
     return value
 
 
+def _resolve_fixed_repository_path(
+    repo_root: Path,
+    relative_path: Path,
+    *,
+    code: str,
+) -> Path:
+    """Resolve a fixed path without allowing a symlinked parent to escape."""
+
+    if relative_path.is_absolute() or ".." in relative_path.parts:
+        raise ReconciliationError(code, "repository path is not a safe relative path")
+    root = Path(os.path.abspath(repo_root))
+    candidate = Path(os.path.abspath(root / relative_path))
+    try:
+        lexical_relative = candidate.relative_to(root)
+        resolved_root = root.resolve()
+        resolved_relative = candidate.resolve(strict=False).relative_to(resolved_root)
+    except (OSError, RuntimeError, ValueError):
+        raise ReconciliationError(
+            code,
+            "repository path could not be resolved safely",
+        ) from None
+    if lexical_relative != resolved_relative:
+        raise ReconciliationError(
+            code,
+            "repository path must not traverse symbolic links",
+        )
+    return candidate
+
+
 def _assert_no_trust_records(repo_root: Path) -> None:
     """Leave BOUND classification to the cross-record validator in T044."""
 
     for relative_root in TRUST_RECORD_ROOTS:
-        root = repo_root / relative_root
+        root = _resolve_fixed_repository_path(
+            repo_root,
+            relative_root,
+            code="UNSAFE_TRUST_RECORD_ROOT",
+        )
         if root.is_symlink():
             raise ReconciliationError(
                 "UNSAFE_TRUST_RECORD_ROOT",
@@ -144,7 +181,11 @@ def _assert_no_trust_records(repo_root: Path) -> None:
 
 
 def _load_progress(repo_root: Path) -> tuple[dict[str, Mapping[str, Any]], int]:
-    progress_path = repo_root / PROGRESS_PATH
+    progress_path = _resolve_fixed_repository_path(
+        repo_root,
+        PROGRESS_PATH,
+        code="UNSAFE_PROGRESS_PATH",
+    )
     if progress_path.is_symlink():
         raise ReconciliationError(
             "UNSAFE_PROGRESS_PATH",
@@ -345,6 +386,101 @@ def _git(repo_root: Path, *args: str) -> subprocess.CompletedProcess[bytes]:
     )
 
 
+def _assert_observed_commit_ancestor(repo_root: Path, observed_commit: str) -> None:
+    exists = _git(repo_root, "cat-file", "-e", f"{observed_commit}^{{commit}}")
+    if exists.returncode != 0:
+        raise ReconciliationError(
+            "OBSERVED_COMMIT_NOT_FOUND",
+            "ledger observation commit does not exist in repository history",
+        )
+    head = _head_commit(repo_root)
+    ancestor = _git(repo_root, "merge-base", "--is-ancestor", observed_commit, head)
+    if ancestor.returncode == 1:
+        raise ReconciliationError(
+            "OBSERVED_COMMIT_NOT_ANCESTOR",
+            "ledger observation commit is not an ancestor of repository HEAD",
+        )
+    if ancestor.returncode != 0:
+        raise ReconciliationError(
+            "GIT_ANCESTRY_FAILED",
+            "observation commit ancestry could not be checked",
+        )
+
+
+def build_ledger_at_commit(
+    *,
+    repo_root: Path = ROOT,
+    observed_at_commit: str,
+) -> dict[str, Any]:
+    """Rebuild one immutable observation ledger from its recorded Git tree."""
+
+    root = Path(repo_root).absolute()
+    observed = _validate_observed_commit(observed_at_commit)
+    _assert_observed_commit_ancestor(root, observed)
+    archive = _git(
+        root,
+        "archive",
+        "--format=tar",
+        observed,
+        "--",
+        *OBSERVATION_PATHS,
+    )
+    if archive.returncode != 0:
+        raise ReconciliationError(
+            "OBSERVATION_ARCHIVE_FAILED",
+            "immutable observation inputs could not be read from Git history",
+        )
+
+    try:
+        with tempfile.TemporaryDirectory() as directory:
+            snapshot_root = Path(directory)
+            with tarfile.open(fileobj=io.BytesIO(archive.stdout), mode="r:") as bundle:
+                for member in bundle.getmembers():
+                    relative = Path(member.name)
+                    if member.isdir():
+                        continue
+                    if (
+                        not member.isfile()
+                        or relative.is_absolute()
+                        or ".." in relative.parts
+                    ):
+                        raise ReconciliationError(
+                            "OBSERVATION_ARCHIVE_UNSAFE",
+                            "observation archive contains an unsafe entry",
+                        )
+                    is_canonical = (
+                        len(relative.parts) == 4
+                        and relative.parts[0] == "docs"
+                        and relative.parts[2] == "papers"
+                        and relative.suffix == ".md"
+                    )
+                    if relative != PROGRESS_PATH and not is_canonical:
+                        raise ReconciliationError(
+                            "OBSERVATION_ARCHIVE_UNSAFE",
+                            "observation archive contains an unexpected entry",
+                        )
+                    source = bundle.extractfile(member)
+                    if source is None:
+                        raise ReconciliationError(
+                            "OBSERVATION_ARCHIVE_FAILED",
+                            "observation archive entry could not be read",
+                        )
+                    target = snapshot_root / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(source.read())
+            return build_ledger(
+                repo_root=snapshot_root,
+                observed_at_commit=observed,
+            )
+    except ReconciliationError:
+        raise
+    except (OSError, tarfile.TarError):
+        raise ReconciliationError(
+            "OBSERVATION_ARCHIVE_FAILED",
+            "immutable observation inputs could not be reconstructed",
+        ) from None
+
+
 def _head_commit(repo_root: Path) -> str:
     result = _git(repo_root, "rev-parse", "--verify", "HEAD^{commit}")
     if result.returncode != 0:
@@ -421,7 +557,11 @@ def write_ledger(
     """Write the ledger only; canonical Markdown is always read-only."""
 
     root = Path(repo_root).absolute()
-    output = root / LEDGER_PATH
+    output = _resolve_fixed_repository_path(
+        root,
+        LEDGER_PATH,
+        code="UNSAFE_LEDGER_PATH",
+    )
     if output.is_symlink() or (output.exists() and not output.is_file()):
         raise ReconciliationError("UNSAFE_LEDGER_PATH", "migration ledger path must be a regular file")
     observed = (
@@ -443,17 +583,32 @@ def check_ledger(
     """Return deterministic drift messages without modifying repository files."""
 
     root = Path(repo_root).absolute()
-    output = root / LEDGER_PATH
+    output = _resolve_fixed_repository_path(
+        root,
+        LEDGER_PATH,
+        code="UNSAFE_LEDGER_PATH",
+    )
     if output.is_symlink() or (output.exists() and not output.is_file()):
         raise ReconciliationError("UNSAFE_LEDGER_PATH", "migration ledger path must be a regular file")
     if not output.is_file():
         return [f"missing generated ledger: {LEDGER_PATH.as_posix()}"]
-    observed = (
-        observation_commit(repo_root=root, ledger_path=output)
-        if observed_at_commit is None
-        else _validate_observed_commit(observed_at_commit)
-    )
-    expected = render_ledger(build_ledger(repo_root=root, observed_at_commit=observed))
+    if observed_at_commit is None:
+        actual_payload = load_ledger(output)
+        observed = _validate_observed_commit(
+            actual_payload.get("observed_at_commit")
+        )
+        expected_payload = build_ledger_at_commit(
+            repo_root=root,
+            observed_at_commit=observed,
+        )
+    else:
+        # Explicit observations retain the isolated current-tree test/build API.
+        observed = _validate_observed_commit(observed_at_commit)
+        expected_payload = build_ledger(
+            repo_root=root,
+            observed_at_commit=observed,
+        )
+    expected = render_ledger(expected_payload)
     try:
         actual = output.read_bytes()
     except OSError:
