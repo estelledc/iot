@@ -3,26 +3,34 @@ schema_version: '1.0'
 id: edge-causal-reasoning
 title: 边缘因果推理：让 IoT 设备理解"为什么"
 layer: 8
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 25
-prerequisites: UNKNOWN
-tags: []
+reading_time: 28
+prerequisites:
+  - edge-anomaly-detection
+  - reinforcement-learning-edge
+tags:
+- 因果推理
+- 边缘AI
+- 根因分析
+- SCM
+- PCMCI
+- 因果发现
+- 结构因果模型
+- IoT诊断
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 边缘因果推理：让 IoT 设备理解"为什么"
 
-> **难度**：🟡 中级 | **领域**：因果推理、边缘 AI、根因分析 | **阅读时间**：约 25 分钟
+> **难度**：🟡 中级 | **领域**：因果推理、边缘 AI、根因分析 | **阅读时间**：约 28 分钟
 
 ## 日常类比
 
-你注意到每次下雨时，路上的车祸就多了。一个统计模型会说"下雨和车祸相关"（相关性）。但真正有用的是因果理解："下雨导致路面湿滑，湿滑导致刹车距离变长，加上视线不清，所以事故率上升。"这意味着解决方案不是"禁止下雨"，而是改善排水、强制开雾灯、降低限速。
+你注意到每次下雨时路上车祸就多。统计模型会说"下雨和车祸相关"。更有用的是因果理解："下雨→路面湿滑→刹车距离变长，再加视线不清→事故率上升。"对策不是"禁止下雨"，而是排水、雾灯与限速。
 
-在 IoT 系统中也一样。一个温度传感器和振动传感器同时报警——它们是各自独立出了问题？还是振动导致了温度升高？还是第三个因素（比如超负荷运转）同时导致了两者？纯相关性分析（机器学习）告诉你"它们一起出现"，因果推理告诉你"谁导致了谁"以及"干预哪个能解决问题"。
-
-边缘因果推理就是把这种"找原因"的能力部署到靠近数据源的边缘设备上——不需要把海量数据传到云端分析，在本地就能快速定位根因并做出响应。
+物联网（Internet of Things, IoT）里同样：温度与振动同时报警——是各自独立故障、振动导致温升，还是过载这个共同原因？相关性分析告诉你"一起出现"；因果推理告诉你"谁导致谁"以及"干预哪个有效"。边缘因果推理把"找原因"放到靠近数据源的设备上，减少海量上云与长反馈环。
 
 ## 1. 相关性 vs 因果性
 
@@ -31,10 +39,10 @@ last_reviewed: UNKNOWN
 | 维度 | 相关性（Correlation） | 因果性（Causation） |
 |------|---------------------|-------------------|
 | 回答问题 | X 和 Y 一起出现吗 | X 导致了 Y 吗 |
-| 数学工具 | 相关系数、回归 | do-calculus、SCM |
-| 能否指导干预 | 不能（虚假相关） | 能（干预 X 可改变 Y） |
-| 反事实 | 不支持 | 支持（如果 X 没发生...） |
-| 数据需求 | 观测数据 | 观测 + 实验/先验知识 |
+| 数学工具 | 相关系数、回归 | do-演算、结构因果模型（SCM） |
+| 能否指导干预 | 不能（易虚假相关） | 能（干预 X 可改变 Y） |
+| 反事实 | 不支持 | 支持（若 X 未发生…） |
+| 数据需求 | 观测数据 | 观测 + 实验/先验结构 |
 | IoT 价值 | 监测告警 | 根因定位 + 处置建议 |
 
 ### 1.2 IoT 中的虚假相关陷阱
@@ -62,55 +70,51 @@ last_reviewed: UNKNOWN
 
 ### 2.1 Pearl 因果阶梯
 
-```
-因果推理的三个层次：
+Judea Pearl 将因果能力分为三层：
 
+```
 L1 - 观察（Association）："看到X时，Y的概率是多少？"
      P(Y|X)
-     能力：预测、相关分析
-     IoT：看到振动增大，温度升高的概率是多少？
+     IoT：看到振动增大，温度升高的概率？
 
 L2 - 干预（Intervention）："如果我做X，Y会怎样？"
      P(Y|do(X))
-     能力：因果效应估计
-     IoT：如果我降低转速，温度会降多少？
+     IoT：如果降低转速，温度会降多少？
 
 L3 - 反事实（Counterfactual）："如果当时没做X，Y会不同吗？"
      P(Y_x'|X=x, Y=y)
-     能力：归责、根因分析
-     IoT：如果昨天做了维护，今天的故障还会发生吗？
+     IoT：如果昨天做了维护，今天故障还会发生吗？
 ```
 
-### 2.2 结构因果模型（SCM）
+边缘侧多数先落地 L2 的有界干预建议（调参、限流）；L3 多用于事后归责与工单复盘，算力与假设更重。
+
+### 2.2 结构因果模型（SCM）机制
+
+结构因果模型（Structural Causal Model, SCM）用因果图 + 结构方程描述数据生成过程。对变量 \(V_i\)：\(V_i = f_i(\mathrm{PA}_i, U_i)\)，其中 \(\mathrm{PA}_i\) 为父节点，\(U_i\) 为外生噪声。`do(X=x)` 的机制是：**切断 X 的所有入边并固定取值**，再沿图正向传播——这与条件概率 \(P(Y|X=x)\) 不同。
 
 ```python
 import numpy as np
-from scipy import stats
 
 class StructuralCausalModel:
     """结构因果模型 - IoT 系统因果建模"""
     
     def __init__(self):
-        # 定义因果图：节点 -> 其父节点列表
         self.graph = {}
-        # 结构方程：每个变量 = f(父变量, 噪声)
         self.equations = {}
     
     def define_iot_system(self):
         """定义一个典型 IoT 系统的因果结构"""
-        # 因果图
         self.graph = {
-            'workload': [],                    # 外生变量
-            'ambient_temp': [],                # 外生变量
+            'workload': [],
+            'ambient_temp': [],
             'cpu_usage': ['workload'],
-            'fan_speed': ['cpu_usage'],        # 风扇响应CPU
+            'fan_speed': ['cpu_usage'],
             'chip_temp': ['cpu_usage', 'ambient_temp', 'fan_speed'],
             'memory_usage': ['workload'],
             'network_latency': ['cpu_usage', 'memory_usage'],
             'error_rate': ['chip_temp', 'network_latency']
         }
         
-        # 结构方程（数据生成过程）
         self.equations = {
             'workload': lambda noise: noise,
             'ambient_temp': lambda noise: 25 + noise,
@@ -127,7 +131,6 @@ class StructuralCausalModel:
     
     def do_intervention(self, target_var, value, n_samples=1000):
         """do 操作：强制设定某变量并观察下游影响"""
-        # 在因果图中切断 target_var 的所有入边
         results = {}
         for _ in range(n_samples):
             values = self._forward_pass(intervention={target_var: value})
@@ -141,6 +144,8 @@ class StructuralCausalModel:
 
 ### 3.1 从数据中学习因果结构
 
+约束法（如 PC）用条件独立检验删边再定向；评分法（如 GES）搜索高分有向无环图（DAG）；连续优化（如 NOTEARS）把 DAG 约束写入可微目标。物联网时序更常用 Granger 与 PCMCI：在控制自相关与间接路径后检验滞后因果。
+
 ```python
 class CausalDiscovery:
     """因果发现：从观测数据推断因果图"""
@@ -148,100 +153,72 @@ class CausalDiscovery:
     def pc_algorithm(self, data, alpha=0.05):
         """PC 算法（约束法因果发现）"""
         n_vars = data.shape[1]
-        
-        # 1. 从完全图开始
         adj_matrix = np.ones((n_vars, n_vars)) - np.eye(n_vars)
         
-        # 2. 条件独立性检验逐步删边
-        for d in range(n_vars):  # 条件集大小递增
+        for d in range(n_vars):
             for i in range(n_vars):
                 for j in range(n_vars):
                     if adj_matrix[i][j] == 0:
                         continue
-                    # 找 i 的邻居作为条件集候选
-                    neighbors = [k for k in range(n_vars) 
+                    neighbors = [k for k in range(n_vars)
                                 if adj_matrix[i][k] and k != j]
-                    
-                    # 遍历大小为 d 的条件集
                     for cond_set in combinations(neighbors, d):
-                        # 条件独立性检验
                         p_value = self.conditional_independence_test(
-                            data[:, i], data[:, j], 
+                            data[:, i], data[:, j],
                             data[:, list(cond_set)])
-                        
                         if p_value > alpha:
-                            # 条件独立 -> 删除边
                             adj_matrix[i][j] = 0
                             adj_matrix[j][i] = 0
                             break
         
-        # 3. 定向边（V-structure 识别等）
         directed = self.orient_edges(adj_matrix, data)
         return directed
     
     def fci_algorithm(self, data, alpha=0.05):
-        """FCI 算法：允许存在隐变量的因果发现"""
-        # PC 算法假设无隐变量，FCI 放松这个假设
-        # 适合 IoT 场景（很多变量无法观测）
+        """FCI：允许隐变量的因果发现（IoT 常见不可观测混杂）"""
         pass
     
     def granger_causality(self, time_series, max_lag=5):
-        """Granger 因果检验（时序数据）"""
-        # 适合 IoT 时间序列
-        # "X 的过去能帮助预测 Y 的未来，则 X Granger-causes Y"
+        """Granger 因果检验（时序）：过去的 X 是否改善 Y 的预测"""
         n_vars = time_series.shape[1]
         causal_matrix = np.zeros((n_vars, n_vars))
-        
         for i in range(n_vars):
             for j in range(n_vars):
                 if i == j:
                     continue
-                # 检验：X[i] 的滞后值能否改善 X[j] 的预测
                 p_value = self._granger_test(
                     time_series[:, i], time_series[:, j], max_lag)
                 if p_value < 0.05:
-                    causal_matrix[i][j] = 1  # i causes j
-        
+                    causal_matrix[i][j] = 1
         return causal_matrix
 ```
 
 ### 3.2 算法对比
 
-| 算法 | 类型 | 隐变量 | 时序 | 计算复杂度 | IoT 适用性 |
-|------|------|--------|------|-----------|-----------|
-| PC | 约束法 | 不允许 | 否 | O(n^d) | 中（需足够样本）|
-| FCI | 约束法 | 允许 | 否 | O(n^(d+1)) | 高（实际有隐变量）|
-| GES | 评分法 | 不允许 | 否 | O(n^3) | 中 |
-| Granger | 时序 | 不允许 | 是 | O(n^2*T) | 高（IoT时序）|
-| PCMCI | 混合 | 部分 | 是 | O(n^2*d) | 最高（专为时序设计）|
-| NOTEARS | 连续优化 | 不允许 | 否 | O(n^3) | 中 |
+| 算法 | 类型 | 隐变量 | 时序 | 计算复杂度（示意） | IoT 适用性 |
+|------|------|--------|------|-------------------|-----------|
+| PC | 约束法 | 不允许 | 否 | 随条件集指数升 | 中（需足够样本） |
+| FCI | 约束法 | 允许 | 否 | 更高 | 高（有隐混杂） |
+| GES | 评分法 | 不允许 | 否 | 多项式级搜索启发 | 中 |
+| Granger | 时序 | 弱假设 | 是 | 与变量数/滞后相关 | 高 |
+| PCMCI | 混合时序 | 部分 | 是 | 相对可控 | 很高（工业时序） |
+| NOTEARS | 连续优化 | 不允许 | 否 | 矩阵运算密集 | 中（边缘需压缩） |
 
 ## 4. 边缘部署轻量化
 
-### 4.1 边缘因果推理挑战
+### 4.1 云端 vs 边缘约束
 
-```
-云端因果推理 vs 边缘因果推理：
+| 维度 | 云端因果推理 | 边缘因果推理 |
+|------|-------------|-------------|
+| 数据 | 长历史、多源 | 本地流式窗口 |
+| 算力 | GPU/大内存 | MCU/ARM，内存紧 |
+| 延迟 | 分钟–小时可接受 | 秒级甚至更快 |
+| 算法 | 完整 PC/FCI/大图 | 增量、稀疏、查找表 |
+| 通信 | 充足 | 需最小化多节点交换 |
 
-云端：
-- 大数据量、完整历史
-- 高算力（GPU 集群）
-- 离线分析，延迟可接受（分钟-小时）
-- 可用完整 PC/FCI 算法
+### 4.2 轻量方案机制
 
-边缘：
-- 有限数据（本地流式窗口）
-- 受限算力（ARM/RISC-V，<4GB RAM）
-- 实时要求（ms-秒级响应）
-- 需要轻量化因果算法
-
-关键约束：
-- 内存：完整因果图 O(n^2) 空间
-- 计算：条件独立检验是瓶颈
-- 通信：多节点协作需最小通信
-```
-
-### 4.2 轻量因果推理方案
+实用路径：**云端学结构、边缘跑推理**。云端用充足数据做 PCMCI/FCI 得到稀疏图；边缘只保留 Top-K 边、离散化分箱与常见查询的预计算路径。在线侧做：（1）滑动窗口监测边强度漂移；（2）异常时沿图反向追溯父节点；（3）机制变化（父正常子异常）单独告警。
 
 ```python
 class LightweightCausalInference:
@@ -251,14 +228,12 @@ class LightweightCausalInference:
         self.max_vars = max_vars
         self.window = window_size
         self.causal_graph = None
-        self.update_interval = 100  # 每 100 个样本更新一次
+        self.update_interval = 100
     
     def incremental_discovery(self, new_data_point):
         """增量式因果发现（流式更新）"""
         self.buffer.append(new_data_point)
-        
         if len(self.buffer) >= self.update_interval:
-            # 只更新变化显著的边
             changed_edges = self.detect_structure_change(self.buffer)
             if changed_edges:
                 self.causal_graph = self.local_update(
@@ -269,34 +244,21 @@ class LightweightCausalInference:
         """快速根因定位（利用已有因果图）"""
         if self.causal_graph is None:
             return None
-        
-        # 从异常变量出发，沿因果图反向追溯
         root_causes = []
         for var in anomaly_vars:
             parents = self.causal_graph.get_parents(var)
             for parent in parents:
-                # 检查父变量是否也异常
                 if self.is_anomalous(parent):
                     root_causes.append(parent)
                 else:
-                    # 父正常但子异常 -> 可能是此因果链断裂
                     root_causes.append(('mechanism_change', parent, var))
-        
-        # 按影响范围排序
-        ranked = self.rank_by_impact(root_causes)
-        return ranked
+        return self.rank_by_impact(root_causes)
     
     def quantize_for_edge(self, causal_model):
-        """模型量化适配边缘设备"""
-        # 1. 减少变量数（特征选择保留因果关键变量）
+        """特征选择 + 离散化 + 路径缓存"""
         key_vars = self.select_causal_features(causal_model, top_k=10)
-        
-        # 2. 离散化连续变量（减少计算）
         discretized = self.discretize(key_vars, n_bins=5)
-        
-        # 3. 缓存常用推理路径
         cached_paths = self.precompute_common_queries(causal_model)
-        
         return {
             'lite_graph': key_vars,
             'lookup_table': cached_paths,
@@ -306,7 +268,7 @@ class LightweightCausalInference:
 
 ## 5. 因果强化学习
 
-### 5.1 因果 RL 用于 IoT 控制
+因果强化学习（Causal Reinforcement Learning）用因果图缩小有效动作集，并用反事实轨迹做数据增强，减少真实试错——这对昂贵/危险的 IoT 控制尤其有价值。
 
 ```python
 class CausalReinforcementLearning:
@@ -317,107 +279,114 @@ class CausalReinforcementLearning:
         self.actions = action_space
     
     def causal_policy_improvement(self, state, reward_var):
-        """利用因果知识加速策略学习"""
-        # 传统 RL：尝试所有动作，观察奖励（慢）
-        # 因果 RL：利用因果图预判哪些动作有效（快）
-        
-        # 1. 找到奖励变量的因果祖先
         ancestors = self.causal.get_ancestors(reward_var)
-        
-        # 2. 只考虑能影响奖励的动作（因果可达）
-        effective_actions = [a for a in self.actions 
+        effective_actions = [a for a in self.actions
                           if a.target_var in ancestors]
-        
-        # 3. 用因果模型预测每个动作的效果
         predicted_rewards = {}
         for action in effective_actions:
             outcome = self.causal.do_intervention(
                 action.target_var, action.value)
             predicted_rewards[action] = outcome[reward_var]
-        
-        # 4. 选择预测奖励最高的动作
-        best_action = max(predicted_rewards, key=predicted_rewards.get)
-        return best_action
+        return max(predicted_rewards, key=predicted_rewards.get)
     
     def counterfactual_experience(self, trajectory):
-        """反事实经验生成（数据增强）"""
+        """反事实经验生成（模型依赖，需校准）"""
         augmented = []
         for state, action, reward, next_state in trajectory:
-            # 对每个实际经历，生成反事实版本
             for alt_action in self.actions:
                 if alt_action != action:
-                    # "如果当时选了另一个动作会怎样？"
                     cf_next = self.causal.counterfactual(
                         factual={'state': state, 'action': action,
                                 'next_state': next_state},
                         intervention={'action': alt_action})
                     cf_reward = self.compute_reward(cf_next)
                     augmented.append((state, alt_action, cf_reward, cf_next))
-        
-        return augmented  # 无需真实交互就能获得更多训练数据
+        return augmented
 ```
+
+反事实增强质量取决于 SCM 是否校准；错误模型会放大策略偏差，高风险动作仍需真实世界安全层。
 
 ## 6. 应用案例
 
 ### 6.1 工业 IoT 根因分析
 
-| 场景 | 观测现象 | 相关性分析结果 | 因果分析结果 |
-|------|---------|--------------|-------------|
-| 产线质量下降 | 温度高+振动大 | "温度振动相关" | "轴承磨损->振动->温度" |
-| 网络延迟突增 | CPU高+丢包多 | "CPU和丢包相关" | "流量突发->队列满->丢包" |
-| 能耗异常 | 空调+照明同增 | "空调照明相关" | "人员增加->共同上升（非因果）" |
-| 设备故障 | A 停 -> B 停 | "AB 相关" | "电源故障->A停和B停（共因）" |
+| 场景 | 观测现象 | 相关性分析 | 因果分析（示意） |
+|------|---------|-----------|-----------------|
+| 产线质量下降 | 温度高+振动大 | "二者相关" | 轴承磨损→振动→温升 |
+| 网络延迟突增 | CPU 高+丢包多 | "相关" | 流量突发→队列满→丢包 |
+| 能耗异常 | 空调+照明同增 | "相关" | 人员增加为共因 |
+| 设备连锁停机 | A 停→B 停 | "AB 相关" | 电源故障为共因 |
 
-### 6.2 边缘部署效果
+### 6.2 边缘部署效果（案例量级，需独立验证）
 
-```
-某工厂边缘因果推理部署效果：
+公开/厂商案例常见叙事量级（**非普适保证**）：
 
-硬件：NVIDIA Jetson Xavier NX (8GB)
-变量数：35 个传感器
-算法：增量式 PCMCI + 预计算查找表
+| 指标 | 相关性基线（示意） | 因果/图追溯（示意） |
+|------|-------------------|-------------------|
+| 根因定位时间 | 人工数十分钟 | 自动秒级–分钟级 |
+| 定位准确率 | 明显更低 | 更高但仍有误判 |
+| 误报 | 较高 | 可下降一个显著比例 |
+| 资源占用 | — | 需控制在边缘内存预算内 |
 
-性能指标：
-- 根因定位时间：从 15 分钟（人工）降至 3 秒（自动）
-- 准确率：87%（vs 相关性方法 62%）
-- 误报率：降低 45%
-- 内存占用：< 200 MB
-- CPU 占用：< 30%（推理时峰值）
+硬件常为 Jetson 类边缘盒；变量数十个时，宜稀疏图 + 查找表，而非在线完整 PC。
 
-投资回报：
-- 部署成本：5000 元/节点
-- 每月减少停机损失：约 8 万元
-- 回本周期：< 1 个月
-```
+## 7. 局限、挑战与可改进方向
 
-## 7. 实践建议
+### 1. 因果发现样本与非平稳性不足
 
-### 7.1 初学者入门路径
+**局限**：工业过程换型、工况切换使分布漂移，PC/Granger 在短窗上不稳定，边时有时无。
+**改进**：分段/变点后再发现；用领域知识冻结骨架边；边缘只监测边强度，结构重学放云端。
 
-1. **第一周**：阅读 Pearl "The Book of Why" 第 1-3 章，理解因果阶梯
-2. **第二周**：用 Python DoWhy 库做简单因果效应估计实验
-3. **第三周**：学习 PC 算法原理，用 causal-learn 库从模拟数据中发现因果图
-4. **第四周**：在 IoT 时序数据上应用 Granger 因果/PCMCI（tigramite 库）
-5. **进阶**：研究因果 RL（CausalRL）、在边缘设备上部署轻量因果模型
+### 2. 隐混杂导致错误边
 
-### 7.2 具体调优建议
+**局限**：未测的负载、维护事件等混杂会制造虚假因果，干预建议可能有害。
+**改进**：优先 FCI/含隐变量方法；干预前做灵敏度分析；高风险动作先准实验/小流量验证。
 
-- **样本量**：因果发现需要足够样本（PC 算法建议 >500，Granger >1000）
-- **变量选择**：先用领域知识缩小变量范围，再用算法精确发现
-- **时延处理**：IoT 数据有传输延迟，需对齐时间戳后再做因果分析
-- **非平稳性**：工业数据常非平稳，建议分段分析或用变点检测
-- **验证方法**：有条件做 A/B 实验验证发现的因果关系
-- **边缘部署**：预计算常见查询路径做查找表，减少在线计算量
+### 3. 边缘算力与完整算法不匹配
+
+**局限**：条件独立检验组合爆炸，NOTEARS 类矩阵运算在 MCU 上不可行。
+**改进**：变量上限（如数十内）、离散化、增量更新；云端构图边缘推理；预计算高频根因路径。
+
+### 4. 时钟与传输延迟破坏时序因果
+
+**局限**：未对齐时间戳会把传输延迟误当成 Granger 因果。
+**改进**：传感器与网关统一时间同步；分析前做延迟补偿；对网络路径单独建模。
+
+### 5. 责任边界与错误干预
+
+**局限**：自动 `do()` 可能误关阀门/降速，造成产量或安全事故。
+**改进**：动作分级（建议/可逆/不可逆）；不可逆默认人工确认；全链路审计与回滚。
+
+## 8. 实践建议
+
+### 8.1 初学者入门路径
+
+1. **第一周**：Pearl《The Book of Why》因果阶梯
+2. **第二周**：DoWhy 做简单效应估计
+3. **第三周**：causal-learn 跑 PC；理解 V-structure
+4. **第四周**：tigramite 上 PCMCI/Granger 处理 IoT 时序
+5. **进阶**：因果 RL；边缘查找表部署
+
+### 8.2 具体调优建议
+
+- **样本量**：发现阶段尽量充足；不足时以专家图为主
+- **变量选择**：先领域缩圈，再算法精修
+- **时延对齐**：先同步再因果
+- **非平稳**：分段或变点
+- **验证**：能做 A/B 或准实验就做
+- **边缘**：预计算路径，在线只做追溯与漂移检测
 
 ## 参考文献
 
-1. Pearl, J. (2018). The Book of Why: The New Science of Cause and Effect. Basic Books.
-2. Spirtes, P., Glymour, C., & Scheines, R. (2000). Causation, Prediction, and Search. MIT Press.
-3. Runge, J., et al. (2019). Detecting and Quantifying Causal Associations in Large Nonlinear Time Series Datasets. Science Advances.
-4. Peters, J., Janzing, D., & Scholkopf, B. (2017). Elements of Causal Inference. MIT Press.
-5. Granger, C. W. J. (1969). Investigating Causal Relations by Econometric Models and Cross-spectral Methods. Econometrica.
-6. Sharma, A., & Kiciman, E. (2020). DoWhy: An End-to-End Library for Causal Inference. arXiv:2011.04216.
-7. Lu, C., et al. (2022). Causal Reinforcement Learning: An Instrumental Variable Approach. arXiv.
-8. Zheng, X., et al. (2018). DAGs with NO TEARS: Continuous Optimization for Structure Learning. NeurIPS.
-9. Mian, O., et al. (2023). Causal Inference for IoT: A Survey. IEEE IoT Journal.
-10. Budhathoki, K., et al. (2022). Causal Structure-Based Root Cause Analysis of Outliers. ICML.
+[1] J. Pearl and D. Mackenzie, "The Book of Why: The New Science of Cause and Effect," Basic Books, 2018.
+[2] P. Spirtes, C. Glymour, and R. Scheines, "Causation, Prediction, and Search," MIT Press, 2000.
+[3] J. Runge et al., "Detecting and Quantifying Causal Associations in Large Nonlinear Time Series Datasets," Science Advances, 2019.
+[4] J. Peters, D. Janzing, and B. Schölkopf, "Elements of Causal Inference," MIT Press, 2017.
+[5] C. W. J. Granger, "Investigating Causal Relations by Econometric Models and Cross-spectral Methods," Econometrica, 1969.
+[6] A. Sharma and E. Kiciman, "DoWhy: An End-to-End Library for Causal Inference," arXiv:2011.04216, 2020.
+[7] X. Zheng et al., "DAGs with NO TEARS: Continuous Optimization for Structure Learning," NeurIPS, 2018.
+[8] K. Budhathoki et al., "Causal Structure-Based Root Cause Analysis of Outliers," ICML, 2022.
+[9] J. Pearl, "Causality: Models, Reasoning, and Inference," Cambridge University Press, 2009.
+[10] J. Runge, "Causal Network Reconstruction from Time Series: From Theoretical Assumptions to Practical Estimation," Chaos, 2018.
+[11] B. Schölkopf et al., "Toward Causal Representation Learning," Proceedings of the IEEE, 2021.
+[12] M. Nauta et al., "Causal Discovery with Attention-Based Convolutional Neural Networks," Machine Learning, 2019.

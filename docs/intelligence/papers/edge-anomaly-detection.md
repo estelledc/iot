@@ -3,26 +3,38 @@ schema_version: '1.0'
 id: edge-anomaly-detection
 title: 边缘异常检测：Autoencoder 与 Isolation Forest
 layer: 5
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+reading_time: 22
+prerequisites:
+  - model-compression-edge
+tags:
+  - 异常检测
+  - Autoencoder
+  - Isolation Forest
+  - TinyML
+  - 预测性维护
+  - 边缘推理
+  - 半监督
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 边缘异常检测：Autoencoder 与 Isolation Forest
 
-> **难度**：🟡 中级 | **领域**：异常检测、边缘部署、工业 IoT | **阅读时间**：约 20 分钟
+> **难度**：🟡 中级 | **领域**：异常检测、边缘部署、工业物联网 | **阅读时间**：约 22 分钟
 
 ## 日常类比
 
-你是一个经验丰富的质检员，每天检查流水线上的产品。正常产品你见了几万个，已经形成了"正常长什么样"的直觉。当一个异常品出现时，你立刻觉得"不对劲"——不是因为你见过这种缺陷，而是因为它偏离了你对"正常"的认知。
+你是流水线质检员：正常品见过几万个，异常品一出现就觉得"不对劲"——不是因为见过这种缺陷，而是它偏离了"正常"的直觉。
 
-**Autoencoder** 就是这个"学习正常模式"的质检员：它学会把正常数据压缩再还原，遇到异常数据时还原出来的结果会"走样"——重建误差大就是异常。
+**自编码器（Autoencoder, AE）** 像这位质检员：只学正常数据的压缩与还原，异常输入重建误差大。
 
-**Isolation Forest** 的思路不同：它像一个"找独行侠"的社交网络分析师。正常数据聚在一起，很难被单独"隔离"出来；异常数据与众不同，很容易用少数几个条件就能将其隔离。就像找一群人中最独特的那个——穿奇装异服的人，一眼就能挑出来。
+**孤立森林（Isolation Forest, IF）** 像找人群里的独行侠：正常点难隔离，异常点用少数分割就能切开[1]。
+
+## 摘要
+
+工业物联网（Internet of Things, IoT）异常样本稀少且形态多变，半监督（只学正常）是主流范式[3]。本文对比 AE / 变分自编码器（Variational Autoencoder, VAE）、IF、单类支持向量机（One-Class Support Vector Machine, OC-SVM），给出边缘平台选型、振动监测骨架与阈值策略，并讨论局限与改进。文中代码为教学骨架，非生产完备实现。
 
 ## 1. 异常检测分类体系
 
@@ -30,52 +42,48 @@ last_reviewed: UNKNOWN
 
 | 类型 | 定义 | 传感器场景举例 |
 |------|------|--------------|
-| 点异常（Point） | 单个数据点偏离 | 温度突然跳到 200°C |
-| 上下文异常（Contextual） | 在特定上下文中异常 | 夏天暖气温度正常，冬天同样温度偏低 |
-| 集体异常（Collective） | 一组数据点集合起来异常 | 单个心跳正常，但连续 50 个形成了异常节律 |
+| 点异常（Point） | 单个数据点偏离 | 温度突然跳到异常高温 |
+| 上下文异常（Contextual） | 在特定上下文中异常 | 同读数在夏季正常、冬季偏低 |
+| 集体异常（Collective） | 一组点合起来异常 | 单拍心跳正常，连续节律异常 |
 
 ### 1.2 检测范式对比
 
 | 范式 | 方法 | 需要标注 | 适用场景 |
 |------|------|---------|---------|
-| 监督式 | 二分类器 | 需要正常+异常样本 | 已知异常模式 |
+| 监督式 | 二分类器 | 正常+异常样本 | 已知异常模式 |
 | 半监督 | 只学正常模式 | 只需正常样本 | 异常罕见、多样 |
 | 无监督 | 假设异常是少数 | 不需要标注 | 探索性检测 |
 
-在工业 IoT 中，异常样本极其稀少（< 0.1%），且异常形态多变，因此**半监督**（只学正常）是主流。
+工业现场异常往往远少于正常样本，且新故障形态不断出现，因此半监督更常见[3][7]。
 
 ## 2. Autoencoder 重建误差法
 
 ### 2.1 基本原理
 
-Autoencoder 被训练来"压缩再还原"正常数据。当输入异常数据时，由于编码器从未学过这种模式，解码器无法准确还原，产生高重建误差。
+AE 被训练来压缩再还原正常数据；异常输入因未见过，重建误差升高[2][9]。
 
 ```python
 import torch
 import torch.nn as nn
 
 class SensorAutoencoder(nn.Module):
-    """适用于传感器时序数据的 1D 卷积 Autoencoder"""
-    
+    """适用于传感器时序数据的 1D 卷积 Autoencoder（教学骨架）"""
+
     def __init__(self, input_channels=6, seq_len=100, latent_dim=16):
         super().__init__()
-        
-        # 编码器：压缩
         self.encoder = nn.Sequential(
             nn.Conv1d(input_channels, 32, kernel_size=7, padding=3),
             nn.ReLU(),
-            nn.MaxPool1d(2),          # seq_len/2
+            nn.MaxPool1d(2),
             nn.Conv1d(32, 64, kernel_size=5, padding=2),
             nn.ReLU(),
-            nn.MaxPool1d(2),          # seq_len/4
+            nn.MaxPool1d(2),
             nn.Conv1d(64, 128, kernel_size=3, padding=1),
             nn.ReLU(),
-            nn.AdaptiveAvgPool1d(1),  # [B, 128, 1]
+            nn.AdaptiveAvgPool1d(1),
             nn.Flatten(),
-            nn.Linear(128, latent_dim)
+            nn.Linear(128, latent_dim),
         )
-        
-        # 解码器：还原
         self.decoder = nn.Sequential(
             nn.Linear(latent_dim, 128),
             nn.ReLU(),
@@ -89,53 +97,46 @@ class SensorAutoencoder(nn.Module):
             nn.Upsample(size=seq_len),
             nn.ConvTranspose1d(32, input_channels, kernel_size=7, padding=3),
         )
-    
+
     def forward(self, x):
         z = self.encoder(x)
-        x_recon = self.decoder(z)
-        return x_recon, z
-    
+        return self.decoder(z), z
+
     def anomaly_score(self, x):
-        """重建误差作为异常分数"""
         x_recon, _ = self.forward(x)
-        # 每个样本的 MSE
-        score = ((x - x_recon) ** 2).mean(dim=[1, 2])
-        return score
+        return ((x - x_recon) ** 2).mean(dim=[1, 2])
 ```
 
 ### 2.2 训练与阈值设定
 
 ```python
 def train_anomaly_detector(model, normal_dataloader, epochs=100, lr=1e-3):
-    """只用正常数据训练"""
+    """只用正常数据训练；阈值用验证集正常分数估计"""
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    
-    for epoch in range(epochs):
-        total_loss = 0
+    for _ in range(epochs):
         for batch in normal_dataloader:
             x_recon, _ = model(batch)
             loss = nn.MSELoss()(x_recon, batch)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            total_loss += loss.item()
-    
-    # 用验证集的正常数据确定阈值
+
     model.eval()
     scores = []
     with torch.no_grad():
         for batch in normal_dataloader:
             scores.append(model.anomaly_score(batch))
-    
     all_scores = torch.cat(scores)
-    # 阈值 = 均值 + 3 倍标准差（覆盖 99.7% 正常数据）
+    # 均值+3σ 仅当分数近似高斯时合理；否则优先百分位
     threshold = all_scores.mean() + 3 * all_scores.std()
     return threshold
 ```
 
+航天等时序场景常用非参数动态阈值，比固定 3σ 更稳[5]。
+
 ### 2.3 变分 Autoencoder (VAE) 增强
 
-VAE 相比普通 AE 的优势：学习数据的概率分布，异常检测可以同时利用重建误差和 KL 散度。
+VAE 学习潜在分布，异常分数可组合重建误差与 KL 散度（Kullback–Leibler divergence）[2]。
 
 ```python
 class SensorVAE(nn.Module):
@@ -145,84 +146,64 @@ class SensorVAE(nn.Module):
             nn.Conv1d(input_channels, 32, 7, padding=3), nn.ReLU(), nn.MaxPool1d(2),
             nn.Conv1d(32, 64, 5, padding=2), nn.ReLU(), nn.MaxPool1d(2),
             nn.Flatten(),
-            nn.Linear(64 * (seq_len // 4), 256), nn.ReLU()
+            nn.Linear(64 * (seq_len // 4), 256), nn.ReLU(),
         )
         self.fc_mu = nn.Linear(256, latent_dim)
         self.fc_logvar = nn.Linear(256, latent_dim)
-        # decoder 同上...
-    
+        # decoder 与 AE 类似，此处省略
+
     def reparameterize(self, mu, logvar):
         std = torch.exp(0.5 * logvar)
-        eps = torch.randn_like(std)
-        return mu + eps * std
-    
+        return mu + torch.randn_like(std) * std
+
     def anomaly_score(self, x):
-        """重建误差 + KL 散度"""
         h = self.encoder(x)
         mu, logvar = self.fc_mu(h), self.fc_logvar(h)
         z = self.reparameterize(mu, logvar)
         x_recon = self.decoder(z)
-        
         recon_error = ((x - x_recon) ** 2).mean(dim=[1, 2])
         kl_div = -0.5 * (1 + logvar - mu.pow(2) - logvar.exp()).sum(dim=1)
-        
-        return recon_error + 0.1 * kl_div  # 加权组合
+        return recon_error + 0.1 * kl_div
 ```
 
-## 3. Isolation Forest 算法
+## 3. Isolation Forest
 
 ### 3.1 核心直觉
 
-正常点"藏在人群中"，需要很多次分割才能隔离；异常点"与众不同"，几次分割就能隔离。
+正常点"藏在人群中"，平均路径长；异常点易被随机分割隔离，路径短[1]。
 
 ```python
 from sklearn.ensemble import IsolationForest
-import numpy as np
 
-# 基本使用
 def isolation_forest_detector(train_data, test_data, contamination=0.01):
-    """
-    train_data: [n_samples, n_features] 正常训练数据
-    test_data: [n_samples, n_features] 待检测数据
-    contamination: 预期异常比例
-    """
     clf = IsolationForest(
-        n_estimators=100,        # 树的数量
-        max_samples='auto',       # 每棵树的采样数
+        n_estimators=100,
+        max_samples="auto",
         contamination=contamination,
-        random_state=42
+        random_state=42,
     )
-    
     clf.fit(train_data)
-    
-    # 预测：1=正常，-1=异常
-    predictions = clf.predict(test_data)
-    # 异常分数：越小越异常
+    predictions = clf.predict(test_data)  # 1=正常，-1=异常
     scores = clf.decision_function(test_data)
-    
     return predictions, scores
 ```
 
-### 3.2 算法细节
+### 3.2 算法要点
 
-Isolation Forest 的分割过程：
-1. 随机选择一个特征
-2. 在该特征的 [min, max] 之间随机选一个分割点
-3. 重复直到每个点被隔离或达到最大深度
+1. 随机选特征；2. 在 [min, max] 随机切分；3. 重复至隔离或达最大深度。
 
-异常点的**平均路径长度**短（容易被隔离）。
+异常分数：
 
-异常分数公式：
 $$s(x, n) = 2^{-\frac{E(h(x))}{c(n)}}$$
 
-其中 $E(h(x))$ 是样本 x 的平均路径长度，$c(n)$ 是 n 个样本的平均路径长度归一化因子。
+其中 \(E(h(x))\) 为平均路径长度，\(c(n)\) 为归一化因子[1]。
 
-### 3.3 适用于流式数据的变体
+### 3.3 流式变体（示意）
 
 ```python
 class StreamingIsolationForest:
-    """适合 IoT 流式数据的增量 Isolation Forest"""
-    
+    """滑动窗口定期重训；非严格增量 IF"""
+
     def __init__(self, window_size=1000, n_estimators=50, update_interval=100):
         self.window_size = window_size
         self.buffer = []
@@ -230,179 +211,155 @@ class StreamingIsolationForest:
         self.update_interval = update_interval
         self.model = None
         self.sample_count = 0
-    
+
     def update(self, new_sample):
-        """接收新样本，滑动窗口更新"""
         self.buffer.append(new_sample)
         if len(self.buffer) > self.window_size:
             self.buffer.pop(0)
-        
         self.sample_count += 1
-        
-        # 定期重训练模型
         if self.sample_count % self.update_interval == 0 and len(self.buffer) >= 100:
-            data = np.array(self.buffer)
+            import numpy as np
             self.model = IsolationForest(n_estimators=self.n_estimators)
-            self.model.fit(data)
-    
+            self.model.fit(np.array(self.buffer))
+
     def predict(self, sample):
-        """实时预测"""
         if self.model is None:
-            return 0  # 模型未就绪，返回正常
+            return 0.0
         return self.model.decision_function(sample.reshape(1, -1))[0]
 ```
 
 ## 4. One-Class SVM
 
-### 4.1 原理与实现
-
-One-Class SVM 在特征空间中找到一个包围正常数据的"最紧超球面"。
+OC-SVM 在特征空间找包围正常数据的紧边界；对特征尺度敏感，需标准化[6]。
 
 ```python
 from sklearn.svm import OneClassSVM
 from sklearn.preprocessing import StandardScaler
 
-def one_class_svm_detector(train_data, test_data, kernel='rbf', nu=0.01):
-    """
-    nu: 异常比例的上界（也是支持向量比例的下界）
-    """
+def one_class_svm_detector(train_data, test_data, kernel="rbf", nu=0.01):
     scaler = StandardScaler()
     train_scaled = scaler.fit_transform(train_data)
     test_scaled = scaler.transform(test_data)
-    
-    clf = OneClassSVM(kernel=kernel, nu=nu, gamma='scale')
+    clf = OneClassSVM(kernel=kernel, nu=nu, gamma="scale")
     clf.fit(train_scaled)
-    
-    predictions = clf.predict(test_scaled)  # 1=正常, -1=异常
-    scores = clf.decision_function(test_scaled)
-    
-    return predictions, scores
+    return clf.predict(test_scaled), clf.decision_function(test_scaled)
 ```
 
-## 5. 方法对比与选型指南
+## 5. 方法对比与选型
 
-### 5.1 综合对比表
+### 5.1 综合对比（量级示意，非跨论文统一基准）
 
-| 方法 | 准确率(F1) | 推理延迟 | 内存占用 | 训练时间 | 流式支持 | 适用场景 |
-|------|-----------|---------|---------|---------|---------|---------|
-| Autoencoder | 0.92 | 2-5ms | 50-500KB | 分钟级 | 否(需批量) | 复杂时序模式 |
-| VAE | 0.94 | 3-8ms | 100KB-1MB | 分钟级 | 否 | 需要概率解释 |
-| Isolation Forest | 0.88 | 0.1-1ms | 1-10MB | 秒级 | 部分 | 表格特征数据 |
-| One-Class SVM | 0.86 | 0.5-2ms | 5-50MB | 分钟级 | 否 | 小数据集 |
-| LOF | 0.85 | 1-5ms | 10-100MB | 秒级 | 困难 | 局部异常 |
-| LSTM-AE | 0.95 | 5-15ms | 200KB-2MB | 小时级 | 是 | 长序列时序 |
+| 方法 | 相对检测力（示意） | 推理延迟量级 | 内存量级 | 训练 | 流式 | 适用倾向 |
+|------|-------------------|-------------|---------|------|------|---------|
+| Autoencoder | 高（复杂时序） | 数毫秒 | 数十–数百 KB | 分钟级 | 弱 | 复杂时序 |
+| VAE | 高（可概率解释） | 数毫秒 | 百 KB–MB | 分钟级 | 弱 | 需不确定性 |
+| Isolation Forest | 中高（表格特征） | 亚毫秒–毫秒 | MB 级 | 秒级 | 部分 | 手工特征 |
+| One-Class SVM | 中 | 毫秒级 | 数–数十 MB | 分钟级 | 弱 | 小样本 |
+| LOF | 中（局部密度） | 毫秒级 | 较大 | 秒级 | 难 | 局部异常 |
+| LSTM-AE | 很高（长依赖） | 十余毫秒量级 | 数百 KB–MB | 更久 | 较好 | 长序列[9] |
 
-### 5.2 ESP32 / 树莓派部署约束
+绝对 F1 / 延迟强依赖数据集与硬件；跨论文数字不可直接横比[3][4][10]。
 
-| 平台 | RAM | Flash | CPU | 推荐方法 |
-|------|-----|-------|-----|---------|
-| ESP32 | 520KB | 4MB | 240MHz dual-core | Isolation Forest (lite) |
-| ESP32-S3 | 512KB+8MB PSRAM | 16MB | 240MHz | 小型 AE (INT8) |
-| RPi Zero 2W | 512MB | SD卡 | 1GHz quad-core | AE / VAE / IF |
-| RPi 4 (4GB) | 4GB | SD卡 | 1.8GHz quad-core | 所有方法均可 |
+### 5.2 边缘平台约束（硬件规格为公开量级）
 
-## 6. 工业预测性维护案例
+| 平台 | RAM 量级 | Flash/存储 | 推荐倾向 |
+|------|---------|-----------|---------|
+| ESP32 | 约 520KB | 约 4MB | 轻量 IF / 极简规则 |
+| ESP32-S3 | 约 512KB + PSRAM | 约 16MB | INT8 小型 AE[8] |
+| RPi Zero 2W | 约 512MB | SD | AE / IF |
+| RPi 4 | GB 级 | SD | 多数方法可试 |
 
-### 6.1 振动传感器异常检测
+## 6. 工业振动监测骨架
 
 ```python
-# 工业电机振动监测 - 完整流水线
 import numpy as np
 from scipy.fft import fft
 
 class VibrationAnomalyDetector:
-    """工业电机振动异常检测器"""
-    
+    """电机振动：特征 + AE 分数 + 粗诊断（教学）"""
+
     def __init__(self, sampling_rate=1000, window_size=1024):
         self.sampling_rate = sampling_rate
         self.window_size = window_size
         self.autoencoder = SensorAutoencoder(input_channels=3, seq_len=window_size)
         self.threshold = None
-    
+        self.normal_rms = 1.0
+
     def extract_features(self, raw_signal):
-        """提取时频域特征"""
-        features = {}
-        # 时域特征
-        features['rms'] = np.sqrt(np.mean(raw_signal**2))
-        features['peak'] = np.max(np.abs(raw_signal))
-        features['crest_factor'] = features['peak'] / features['rms']
-        features['kurtosis'] = np.mean((raw_signal - raw_signal.mean())**4) / \
-                               (np.std(raw_signal)**4)
-        
-        # 频域特征
-        spectrum = np.abs(fft(raw_signal))[:len(raw_signal)//2]
-        freqs = np.fft.fftfreq(len(raw_signal), 1/self.sampling_rate)[:len(raw_signal)//2]
-        features['dominant_freq'] = freqs[np.argmax(spectrum)]
-        features['spectral_energy'] = np.sum(spectrum**2)
-        
+        features = {
+            "rms": float(np.sqrt(np.mean(raw_signal**2))),
+            "peak": float(np.max(np.abs(raw_signal))),
+        }
+        features["crest_factor"] = features["peak"] / (features["rms"] + 1e-8)
+        features["kurtosis"] = float(
+            np.mean((raw_signal - raw_signal.mean()) ** 4) / (np.std(raw_signal) ** 4 + 1e-8)
+        )
+        spectrum = np.abs(fft(raw_signal))[: len(raw_signal) // 2]
+        freqs = np.fft.fftfreq(len(raw_signal), 1 / self.sampling_rate)[: len(raw_signal) // 2]
+        features["dominant_freq"] = float(freqs[np.argmax(spectrum)])
         return features
-    
+
     def diagnose(self, anomaly_score, features):
-        """根据异常分数和特征给出诊断建议"""
-        if anomaly_score < self.threshold:
+        if self.threshold is None or anomaly_score < self.threshold:
             return "正常运行"
-        
-        if features['kurtosis'] > 5:
-            return "可能存在轴承点蚀（冲击特征明显）"
-        elif features['dominant_freq'] > 500:
-            return "可能存在齿轮磨损（高频异常）"
-        elif features['rms'] > 2 * self.normal_rms:
-            return "可能存在不平衡或松动（整体振动增大）"
-        else:
-            return "异常模式未知，建议人工检查"
+        if features["kurtosis"] > 5:
+            return "可能冲击类故障（如轴承点蚀），需人工确认"
+        if features["dominant_freq"] > 500:
+            return "可能高频磨损相关，需人工确认"
+        if features["rms"] > 2 * self.normal_rms:
+            return "可能不平衡/松动，需人工确认"
+        return "异常模式未知，建议人工检查"
 ```
 
-### 6.2 部署架构
+部署示意：传感器 → 边缘节点特征与推理 → 正常本地记日志 / 异常上报。相对全量上传，边缘筛选通常可显著降低通信能耗，具体比例取决于采样率与上报策略[8]。
 
-```
-传感器 → ESP32 (边缘推理)  →  异常？ →  网关 → 云端
-         ├─ 采集振动数据            │
-         ├─ 提取特征               ├─ 正常：本地记录
-         ├─ 运行 IF/AE 推理        └─ 异常：上报详细数据
-         └─ 判断是否异常
-         
-本地推理延迟: < 10ms
-上报频率: 正常时 1次/分钟，异常时实时
-功耗节省: 相比全量上传节省 95% 通信能耗
-```
+公开基准如 SWaT 可用于复现实验，但与真实产线分布仍有差距[7]。
 
 ## 7. 实践建议
 
-### 7.1 初学者入门路径
+1. 用 sklearn IF 在公开异常基准上跑通评估脚本（精确率/召回/F1）。
+2. 实现全连接 AE，再换 1D CNN AE 处理传感器窗。
+3. 在 SWaT 等工业数据集上对比 IF 与 AE[7]。
+4. 导出开放神经网络交换格式（Open Neural Network Exchange, ONNX），在单板机测 p99 延迟。
+5. 滑动窗口 + 定期重训，并监控概念漂移。
 
-1. **第一步**：用 sklearn 的 IsolationForest 在 KDD Cup 99 数据集上跑通基本流程
-2. **第二步**：实现简单的全连接 Autoencoder，对比与 IF 的效果差异
-3. **第三步**：用 1D CNN Autoencoder 处理真实传感器数据（SWaT 工业数据集）
-4. **第四步**：在树莓派上部署，用 ONNX Runtime 优化推理速度
-5. **第五步**：实现流式检测——滑动窗口 + 增量更新
+**阈值**：百分位（如 99 / 99.9）通常比盲目 3σ 更稳；可用指数加权移动平均（EWMA）跟踪漂移[5]。
 
-### 7.2 具体调优建议
+**架构**：小样本偏全连接；数据充足用 1D CNN；长序列考虑 LSTM-AE[9]；需概率解释用 VAE[2]。
 
-**阈值选择**：
-- 统计法：均值 + 3σ（适合高斯分布）
-- 百分位法：选第 99 或 99.9 百分位（更鲁棒）
-- 动态阈值：用 EWMA 跟踪正常分数的漂移
+**部署**：INT8 量化与知识蒸馏可降体积与延迟，精度损失需实测[8]。
 
-**Autoencoder 架构选择**：
-- 数据量 < 1000 条：用全连接 AE（过拟合风险低）
-- 数据量 > 10000 条：用 1D CNN AE（能学时序模式）
-- 序列很长（> 500 步）：用 LSTM-AE（捕获长依赖）
-- 需要概率解释：用 VAE（可计算异常概率而非仅分数）
+## 8. 局限、挑战与可改进方向
 
-**部署优化**：
-- INT8 量化可将模型大小和推理时间减少 4x
-- 知识蒸馏：用大模型指导小模型，保持精度
-- 特征缓存：对频域特征预计算，避免实时 FFT
+### 1. 阈值与概念漂移
+
+**局限**：固定阈值在工况切换、季节性负载下误报/漏报上升[5]。
+**改进**：动态阈值、分工况模型、漂移检测触发再训练。
+
+### 2. 基准分数不可直接迁移
+
+**局限**：论文 F1 多在清洗后的公开集上；现场噪声、传感器标定与标签定义不同[3][7]。
+**改进**：影子模式标定；按设备分群；报告完整"采样→告警"延迟。
+
+### 3. 微控制器内存墙
+
+**局限**：完整 IF 森林或中等 AE 在无外部 RAM 的 MCU 上难落地[8]。
+**改进**：特征级 IF、深度压缩、网关侧推理 + 终端粗筛。
+
+### 4. 可解释性不足
+
+**局限**：高重建误差不直接对应故障类型，运维难闭环。
+**改进**：结合时频特征规则；注意力/关联差异类模型作辅助解释[10]。
 
 ## 参考文献
 
-1. Liu, F., et al. (2008). "Isolation Forest." *ICDM*.
-2. An, J., & Cho, S. (2015). "Variational Autoencoder based Anomaly Detection using Reconstruction Probability." *SNU Data Mining Center*.
-3. Pang, G., et al. (2021). "Deep Learning for Anomaly Detection: A Review." *ACM Computing Surveys*.
-4. Audibert, J., et al. (2020). "USAD: UnSupervised Anomaly Detection on Multivariate Time Series." *KDD*.
-5. Hundman, K., et al. (2018). "Detecting Spacecraft Anomalies Using LSTMs and Nonparametric Dynamic Thresholding." *KDD*.
-6. Zhao, Y., et al. (2019). "PyOD: A Python Toolbox for Scalable Outlier Detection." *JMLR*.
-7. Goh, J., et al. (2017). "A Dataset to Support Research in the Design of Secure Water Treatment Systems (SWaT)." *CRITIS*.
-8. Li, D., et al. (2023). "TinyAD: Memory-Efficient Anomaly Detection on Microcontrollers." *SenSys*.
-9. Malhotra, P., et al. (2016). "LSTM-based Encoder-Decoder for Multi-sensor Anomaly Detection." *ICML Workshop*.
-10. Xu, H., et al. (2022). "Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy." *ICLR*.
+[1] F. T. Liu et al., "Isolation Forest," ICDM, 2008.
+[2] J. An and S. Cho, "Variational Autoencoder based Anomaly Detection using Reconstruction Probability," SNU Tech. Report, 2015.
+[3] G. Pang et al., "Deep Learning for Anomaly Detection: A Review," ACM Computing Surveys, 2021.
+[4] J. Audibert et al., "USAD: UnSupervised Anomaly Detection on Multivariate Time Series," KDD, 2020.
+[5] K. Hundman et al., "Detecting Spacecraft Anomalies Using LSTMs and Nonparametric Dynamic Thresholding," KDD, 2018.
+[6] Y. Zhao et al., "PyOD: A Python Toolbox for Scalable Outlier Detection," JMLR, 2019.
+[7] J. Goh et al., "A Dataset to Support Research in the Design of Secure Water Treatment Systems (SWaT)," CRITIS, 2017.
+[8] D. Li et al., "TinyAD: Memory-Efficient Anomaly Detection on Microcontrollers," SenSys, 2023.
+[9] P. Malhotra et al., "LSTM-based Encoder-Decoder for Multi-sensor Anomaly Detection," ICML Workshop, 2016.
+[10] H. Xu et al., "Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy," ICLR, 2022.

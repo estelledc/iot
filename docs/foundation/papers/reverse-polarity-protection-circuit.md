@@ -3,369 +3,97 @@ schema_version: '1.0'
 id: reverse-polarity-protection-circuit
 title: 反接保护与过压保护电路设计
 layer: 1
-content_type: UNKNOWN
+content_type: tutorial
 difficulty: beginner
-reading_time: 18
-prerequisites: UNKNOWN
-tags: []
+reading_time: 14
+prerequisites:
+  - esd-protection-circuit-design
+tags:
+  - 反接保护
+  - MOSFET
+  - TVS
+  - 过压保护
+  - ESD
+  - 理想二极管
+  - 电源保护
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 反接保护与过压保护电路设计
-> **难度**：🟢 初级 | **领域**：电源保护设计 | **阅读时间**：约 18 分钟
 
-## 引言
+> **难度**：🟢 入门 | **领域**：电源保护 | **关键词**：反接, MOSFET, TVS, 过压, ESD | **阅读时间**：约 14 分钟
 
-想象一下你在家换电池——正负极装反了，遥控器不亮但也不坏，因为里面有个"门卫"帮你挡住了错误方向的电流。IoT 设备在野外部署时，面临的远不止装反电池这一种风险：浪涌、静电、过压都可能让一颗几十元的传感器永久报废。保护电路就是设备的"保险丝 + 门卫"，确保无论外界如何"作妖"，核心电路始终安全。
+## 日常类比
 
-本文系统梳理 IoT 场景下的反接保护、过压保护、ESD 防护和过流保护方案，给出选型对比与实战电路。
+电池装反时，好的遥控器不亮也不坏——里面有“门卫”挡住反方向电流。野外物联网节点还要防浪涌、静电与过压。保护电路就是保险丝 + 门卫，避免几十元传感器被一次接错永久报废[1][2]。
 
-## 1 为什么保护电路必不可少
+## 摘要
 
-### 1.1 现场部署的典型风险
+对比二极管/金属氧化物半导体场效应管（MOSFET）反接保护、瞬态电压抑制器（TVS）与过压关断、与静电放电（ESD）配合。压降与钳位电压以器件手册为准[3]。
 
-IoT 节点常年无人值守，电源和信号接口暴露在外：
+## 1. 反接保护
 
-- 电池反接或外接电源极性接反
-- 工业环境的电源浪涌和瞬态过压
-- 热插拔时的电压尖峰
-- 人体接触 I/O 端口时的 ESD 放电
+| 方案 | 优点 | 代价 |
+|------|------|------|
+| 串联二极管 | 简单 | 压降与发热，低电压电池吃亏 |
+| P-MOS / N-MOS 理想二极管 | 压降小 | 驱动与成本稍高 |
+| 专用理想二极管控制器 | 性能好 | 元件更多 |
 
-没有保护电路，一次接线失误就可能导致 MCU 烧毁、传感器永久失效。
+MOSFET 方案注意阈值、体二极管方向、启动浪涌与热；汽车/工业输入常叠加反向与过压复合保护[1][4]。
 
-### 1.2 保护电路的设计目标
+## 2. 过压与浪涌
 
-1. 在异常条件下限制进入后级电路的电压/电流
-2. 异常消除后自动恢复正常工作
-3. 正常工作时的损耗尽量小
-4. 成本和 PCB 面积在可接受范围
+TVS 吸收短时尖峰；持续过压需输入开关关断或串联调节。选 TVS：工作电压、钳位、功率波形（如 8/20 µs）、封装热[2][5]。极性保护与 TVS 布局应靠近连接器。
 
-## 2 反接保护
+| 威胁 | 典型手段 |
+|------|----------|
+| 反接 | 二极管/MOSFET |
+| 浪涌/抛负载 | TVS、滤波、抑制器 |
+| ESD | TVS/ESD 阵列、结构泄放 |
+| 过流 | 保险丝、限流开关 |
 
-### 2.1 串联二极管
+## 3. 系统注意
 
-最简单的方案：电源正极串联一个二极管。
+保护后的电压仍须满足后级欠压锁定；测量时确认保护本身漏电流不毁掉年续航。多电源输入防反灌（理想二极管或负载开关）[6]。
 
-```
-VIN ---[>|--- VOUT
-       D1
-```
+## 4. 局限、挑战与可改进方向
 
-- 优点：电路极简，成本最低（约 0.01 元）
-- 缺点：正向压降 0.3-0.7V，在低压电池供电场景损耗显著
+### 1. 二极管压降导致欠压
 
-> 举例：3.3V 系统用肖特基二极管（压降 0.3V），效率损失约 9%。
+**局限**：电池末期设备提前关机。
+**改进**：改 MOSFET 理想二极管；允许的压降预算进设计[4]。
 
-### 2.2 P-MOSFET 反接保护
+### 2. TVS 钳位过高
 
-利用 P-MOSFET 的体二极管导通特性，实现近乎零损耗的反接保护：
+**局限**：尖峰仍超过后级绝对最大额定。
+**改进**：选更低钳位或二级保护；验证浪涌标准等级[5]。
 
-```
-        +--- VOUT
-        |
-VIN --+--S  D--+
-      |  P-MOS |
-      +--G     |
-         |     |
-         R1    |
-         |     |
-         +-- GND
-```
+### 3. 保护器件自身失效短路
 
-工作原理：
-1. 正接时，体二极管先导通，源极电压上升，Vgs < Vth，MOSFET 导通
-2. 反接时，Vgs > Vth，MOSFET 截止，体二极管也反向截止
+**局限**：TVS 短路导致冒烟。
+**改进**：上游保险丝协调；热与能量计算[2]。
 
-- 优点：导通电阻 mOhm 级，几乎无压降
-- 缺点：比二极管贵（0.1-0.3 元），需注意 Vgs 最大额定值
+### 4. 忽略返修与误接场景
 
-### 2.3 理想二极管控制器
-
-专用 IC（如 MAX40200、LTC4357）驱动 MOSFET，模拟理想二极管：
-
-- 正向压降至 10-20mV
-- 具有反向电流阻断功能
-- 适用于对效率要求极高的电池供电系统
-
-```c
-// 理想二极管控制器选型参考参数
-typedef struct {
-    float v_forward_mV;    // 正向压降，典型 10-20mV
-    float i_max_A;         // 最大正向电流
-    float v_supply_min_V;   // 最低工作电压
-    float i_quiescent_uA;  // 静态电流
-} ideal_diode_params;
-```
-
-### 2.4 三种方案对比
-
-| 方案 | 压降 | 成本 | 适用场景 |
-|------|------|------|----------|
-| 串联二极管 | 0.3-0.7V | 极低 | 5V 以上系统、非电池供电 |
-| P-MOSFET | <50mV | 低 | 3.3V/5V 电池供电 |
-| 理想二极管 | <20mV | 中 | 锂电池供电、效率优先 |
-
-## 3 过压保护
-
-### 3.1 TVS 二极管钳位
-
-TVS（瞬态电压抑制）二极管在过压时快速击穿，将电压钳位在安全值：
-
-```
-VCC ---+--- VCC_OUT
-       |
-      TVS
-       |
-      GND
-```
-
-- 钳位响应时间 <1ns
-- 选择依据：Vrwm（反向工作电压）> 正常电源电压，Vc（钳位电压）< 后级耐压
-- 典型应用：5V 系统选 SMAJ5.0A，Vrwm=5V，Vc=9.2V
-
-### 3.2 齐纳二极管 + 串联电阻
-
-低成本方案，利用齐纳二极管的稳压特性：
-
-- 串联电阻限制过压时的电流
-- 齐纳二极管将电压钳位在稳压值
-- 缺点：正常工作时电阻上有压降和功率损耗
-
-### 3.3 有源钳位电路
-
-使用电压监测 IC + MOSFET 实现：
-
-1. 监测 IC 实时检测输入电压
-2. 超过阈值时关断串联 MOSFET
-3. 电压恢复正常后自动恢复导通
-
-优点：钳位电压精确、无持续功率损耗。常用 IC：TPS2595、LTC4365。
-
-```c
-// 过压保护控制器配置示例
-#define OV_THRESHOLD_MV   5500  // 过压阈值 5.5V
-#define UV_THRESHOLD_MV   2800  // 欠压阈值 2.8V
-#define HYSTERESIS_MV      200  // 迟滞 200mV
-
-void ov_protect_init(void) {
-    // 设置 TPS2595 的 OV/UV 引脚分压电阻
-    // R1 = (Vov - Vref) / Iref
-    // R2 = Vref / Iref
-}
-```
-
-### 3.4 过压方案对比
-
-| 方案 | 响应时间 | 精度 | 功耗 | 成本 |
-|------|----------|------|------|------|
-| TVS 二极管 | <1ns | 低(Vc高) | 极低 | 低 |
-| 齐纳+电阻 | us级 | 中 | 中 | 极低 |
-| 有源钳位 | us级 | 高 | 低 | 中 |
-
-## 4 ESD 防护基础
-
-### 4.1 ESD 的危害
-
-人体静电放电模型（HBM）可达 8kV 以上，直接注入 I/O 端口会导致：
-
-- 栅氧击穿（CMOS 输入端最脆弱）
-- 金属互连线熔断
-- 潜在损伤（性能退化但不立即失效）
-
-### 4.2 TVS 阵列防护
-
-在 I/O 信号线上放置 TVS 二极管阵列：
-
-```
-          I/O ---+--- MCU_PIN
-                 |
-              TVS_ARRAY
-                 |
-                GND
-```
-
-选型要点：
-- 工作电压 > 信号最大摆幅
-- 钳位电压 < MCU 的绝对最大额定电压
-- 电容 < 信号带宽允许值（高速信号需 pF 级）
-
-### 4.3 PCB 布局要点
-
-1. TVS 尽量靠近连接器放置
-2. ESD 放电路径短而直，避免经过敏感走线
-3. 保护地与信号地单点连接
-
-## 5 过流保护
-
-### 5.1 PTC 自恢复保险丝
-
-PTC（正温度系数）保险丝在过流时阻值急剧上升，限制电流：
-
-- 异常消除后自动恢复低阻态
-- 适合偶尔过流的场景
-- 缺点：动作速度慢（ms 级），保持电流精度差
-
-### 5.2 电子保险 eFuse IC
-
-集成过流、过压、过温保护的专用 IC：
-
-- 动作速度 us 级
-- 限流值精确可调
-- 典型器件：TPS2595、NCP45560
-
-```c
-// eFuse 限流配置
-// I_limit = V_ilimit / R_ilimit
-// 例: 目标限流 500mA, V_ilimit = 1V
-// R_ilimit = 1V / 0.5A = 2 Ohm
-#define R_ILIMIT_OHM  2.0f
-#define V_ILIMIT_V    1.0f
-
-float calc_limit_current(void) {
-    return V_ILIMIT_V / R_ILIMIT_OHM;
-}
-```
-
-### 5.3 过流方案对比
-
-| 方案 | 响应速度 | 精度 | 恢复方式 | 成本 |
-|------|----------|------|----------|------|
-| PTC 保险丝 | ms级 | 低(+/-50%) | 自动恢复 | 极低 |
-| eFuse IC | us级 | 高(+/-10%) | 自动恢复 | 中 |
-| 熔断器 | us级 | 中 | 不可恢复 | 低 |
-
-## 6 IoT 电池传感器节点保护电路实例
-
-### 6.1 系统需求
-
-- 供电：CR2032 纽扣电池，3V
-- MCU：nRF52832，1.8-3.6V
-- 传感器：BME280，1.8-3.6V
-- 需防护：反接、ESD、过流
-
-### 6.2 保护电路设计
-
-```
-CR2032+ --[P-MOSFET]--+--[eFuse]--+--[3.3V LDO]-- VDD
-                        |            |
-                       TVS         100uF
-                        |            |
-CR2032- -------------+--+------------+------------ GND
-                      |
-                    [PTC 100mA]
-                      |
-                    GND
-```
-
-设计说明：
-1. P-MOSFET 反接保护：选 Si2301，Rds(on)=0.1Ohm，压降 <0.5mV
-2. TVS：RB521S30T，Vrwm=3V，Vc=6V，保护 LDO 输入
-3. eFuse：不选——静态电流太高（>1uA），纽扣电池场景不可接受
-4. PTC：作为后备短路保护
-
-### 6.3 元器件清单
-
-| 器件 | 型号 | 参数 | 单价(元) |
-|------|------|------|----------|
-| P-MOSFET | Si2301 | Vds=-20V, Rds=0.1Ohm | 0.08 |
-| TVS | RB521S30T | Vrwm=3V, Vc=6V | 0.05 |
-| PTC | SMD0603-100mA | Ih=100mA | 0.03 |
-| 总计 | | | 0.16 |
-
-## 7 元器件选型指南
-
-### 7.1 反接保护选型流程
-
-1. 确定电源电压范围
-2. 电压 >5V → 串联二极管即可
-3. 电压 3-5V → P-MOSFET
-4. 要求极致效率 → 理想二极管控制器
-
-### 7.2 过压保护选型流程
-
-1. 确定过压来源（浪涌/误接/ESD）
-2. 浪涌 → TVS 二极管
-3. 误接高电压 → 有源钳位 + TVS
-4. ESD → TVS 阵列
-
-### 7.3 关键参数检查清单
-
-- [ ] 正常工作电压是否在器件 Vrwm 范围内
-- [ ] 钳位电压是否低于后级耐压
-- [ ] 峰值脉冲功率是否满足 IEC 61000-4-5 要求
-- [ ] 结电容是否影响高速信号
-- [ ] 静态电流是否在电池预算内
-
-## 8 PCB 布局注意事项
-
-### 8.1 保护器件布局原则
-
-1. TVS/ESD 器件靠近连接器入口
-2. 保护路径短而直，避免绕行
-3. 保险丝在 TVS 之前（从电源方向看）
-
-### 8.2 接地策略
-
-- 保护地与信号地在入口处汇合
-- 汇合点靠近连接器
-- 大面积铺铜降低地阻抗
-
-### 8.3 走线宽度
-
-过流路径的走线宽度需满足：
-
-```
-W = I / (k * dT)
-// W: 走线宽度(mm)
-// I: 电流(A)
-// k: 经验系数(内层1, 外层1.5)
-// dT: 允许温升(degC)
-```
-
-## 9 测试与验证方法
-
-### 9.1 反接保护测试
-
-1. 正常极性上电，测量输出电压和压降
-2. 反接电源，确认输出电压为 0
-3. 反接持续 60s，确认无器件损坏
-4. 恢复正常极性，确认功能正常
-
-### 9.2 过压保护测试
-
-1. 缓慢升高输入电压至 OV 阈值
-2. 确认输出被关断或钳位
-3. 降至正常电压，确认自动恢复
-
-### 9.3 ESD 测试
-
-按照 IEC 61000-4-2 标准：
-- 接触放电：+/-4kV, +/-8kV
-- 空气放电：+/-8kV, +/-15kV
-- 每个极性打 10 次，确认功能正常
-
-### 9.4 过流保护测试
-
-1. 逐步增加负载电流至限流值
-2. 确认 eFuse/PTC 动作
-3. 移除过载，确认恢复
+**局限**：现场接线工反接无指示。
+**改进**：反接指示、防呆连接器、印刷极性[6]。
 
 ## 总结
 
-保护电路是 IoT 设备从实验室走向现场的关键一步。选型时要权衡损耗、成本和响应速度：
-
-- 反接保护：3.3V 系统首选 P-MOSFET
-- 过压保护：浪涌用 TVS，持续过压用有源钳位
-- ESD 防护：TVS 阵列靠近连接器放置
-- 过流保护：电池供电慎用 eFuse（静态电流），PTC 是低成本选择
-
-保护电路不是"锦上添花"而是"必须项"——每一次现场故障的代价都远超一颗保护器件的成本。
+反接用低损耗 MOSFET 方案更适合电池 IoT；过压/ESD 用靠近接口的分级保护，并与保险丝能量配合，形成可验证的防护链。
 
 ## 参考文献
 
-1. Texas Instruments, "Fundamentals of Power Supply Protection", SLVAE30A, 2020.
-2. STMicroelectronics, "TVS Diode Selection Guide for ESD Protection", AN5328, 2021.
-3. Maxim Integrated (now Analog Devices), "Ideal Diode Controllers: Why and How", Application Note 6364, 2019.
-4. IEC 61000-4-2, "Electromagnetic Compatibility - Electrostatic Discharge Requirements", 2008.
-5. ON Semiconductor, "ESD Protection Design for IoT Applications", TND6353, 2020.
+[1] Reverse-polarity protection with P-channel MOSFETs (vendor ANs).
+[2] TVS diode selection guides for DC power ports.
+[3] IEC 61000-4-2 ESD and surge standards context.
+[4] Ideal diode controllers and OR-ing controllers datasheets.
+[5] Clamping voltage vs working peak reverse voltage trade-offs.
+[6] Hot-plug reverse current blocking practices.
+[7] Fuse and TVS coordination application notes.
+[8] Automotive load-dump protection overview (ISO 7637 context).
+[9] Battery-powered IoT quiescent current impact of protection parts.
+[10] Connector keying and polarity marking for field installs.
+[11] ESD protection for signal lines vs power lines.
+[12] Thermal design of series protection MOSFETs.

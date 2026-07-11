@@ -3,450 +3,188 @@ schema_version: '1.0'
 id: honeypot-deception-iot
 title: IoT 蜜罐与诱骗技术
 layer: 6
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 18
-prerequisites: UNKNOWN
-tags: []
+reading_time: 20
+prerequisites:
+  - intrusion-detection-edge
+  - network-traffic-anomaly-ml
+  - ics-protocol-security
+tags:
+- 蜜罐
+- 诱骗技术
+- 威胁情报
+- Cowrie
+- Conpot
+- MQTT
+- T-Pot
+- IoT安全
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # IoT 蜜罐与诱骗技术
 
-> **难度**：🟡 中级 | **领域**：威胁情报、入侵检测 | **阅读时间**：约 18 分钟
+> **难度**：🟡 中级 | **领域**：威胁情报、入侵检测 | **阅读时间**：约 20 分钟
 
 ## 日常类比
 
-警察抓小偷有一种经典手法：在商场里放一个看起来很值钱但实际装了 GPS 追踪器的"诱饵包"。小偷偷走后，警察能追踪到他的窝点，还能了解他的作案手法。
+商场里放一个看起来很值钱、实际带追踪器的“诱饵包”：小偷拿走后，警察能摸清手法与窝点。
 
-蜜罐（Honeypot）就是网络安全领域的"诱饵包"。它伪装成一个真实的 IoT 设备（比如一个看起来有默认密码的摄像头），吸引攻击者来"偷"。攻击者的每一步操作都被详细记录：他用什么工具扫描、尝试什么密码、上传什么恶意软件。这些情报帮助防御者了解最新的攻击趋势，提前加固真实设备。
+蜜罐（Honeypot）就是网络里的诱饵包：伪装成带弱口令的摄像头或开放 Telnet 的路由器，记录扫描、撞库、下载的恶意样本。情报用来更新真实设备的防护，而不是“钓鱼执法式”主动诱人犯罪。
 
-## 1. 蜜罐分类
+## 摘要
 
-### 1.1 按交互程度分类
+本文梳理物联网（Internet of Things, IoT）蜜罐的交互分级、Cowrie/Conpot/IoTPOT 等系统、诱骗（Deception）技术中的蜜令牌/蜜网段，以及威胁情报产出与隔离部署。强调法律伦理边界，并给出局限与可执行改进。攻击时间线与 Top 密码等来自公开蜜罐研究的**典型模式**，随年份与暴露面变化。
+
+## 1 分类
+
+### 1.1 按交互程度
 
 | 类型 | 交互深度 | 复杂度 | 情报价值 | 风险 |
-|------|---------|--------|---------|------|
-| 低交互 | 模拟服务响应 | 低 | 扫描/探测数据 | 极低 |
-| 中交互 | 模拟部分功能 | 中 | 攻击手法 | 低 |
-| 高交互 | 真实或近真实系统 | 高 | 完整攻击链 | 中高 |
+|------|----------|--------|----------|------|
+| 低交互 | 模拟横幅/固定响应 | 低 | 扫描与撞库字典 | 极低 |
+| 中交互 | 部分命令/协议状态 | 中 | 手法与工具链 | 低 |
+| 高交互 | 真实或近真实系统 | 高 | 完整攻击链与 0-day 苗头 | 中高（逃逸） |
 
-### 1.2 按部署目的分类
+### 1.2 按目的
 
-**研究型蜜罐**：
-- 目标：收集攻击情报、研究新型威胁
-- 部署位置：互联网直接暴露
-- 典型用户：安全研究机构、CERT
+| 类型 | 目标 | 部署位置 |
+|------|------|----------|
+| 研究型 | 互联网威胁态势 | 公网暴露 |
+| 生产型 | 内网横向检测、拖延 | OT/IoT 网段旁路 |
 
-**生产型蜜罐**：
-- 目标：检测内网入侵、延缓攻击者
-- 部署位置：企业内网、IoT 网段
-- 典型用户：企业安全团队
+IoT 特需：模拟 Telnet/MQTT/CoAP/Modbus 等；伪造 banner 与 MAC 前缀；BusyBox 命令集；单机多实例规模化[1][9]。
 
-### 1.3 IoT 蜜罐的特殊需求
+## 2 IoT 专用蜜罐
 
-- 模拟特定协议（Telnet、MQTT、CoAP、Modbus）
-- 伪装设备指纹（banner、MAC 地址前缀）
-- 模拟固件行为（BusyBox 命令集）
-- 支持大规模部署（一台服务器模拟数百设备）
+| 蜜罐 | 交互 | 协议侧重 | 维护 |
+|------|------|----------|------|
+| Cowrie | 中–高 | SSH/Telnet | 活跃[2] |
+| IoTPOT | 中 | 多架构 Telnet | 研究遗产[1] |
+| Conpot | 中 | Modbus/S7/IPMI 等 | 活跃[7] |
+| Dionaea | 中 | SMB/HTTP/FTP 等 | 活跃 |
+| HoneyThing / ThingPot 等 | 低–中 | TR-069/MQTT/CoAP | 多已停滞或研究向 |
+| T-Pot | 平台 | 多蜜罐集成 | 活跃[5] |
 
-## 2. IoT 专用蜜罐系统
+低/中交互蜜罐可被指纹识别而遭绕过或回避[3]；提高逼真度与“智能交互”是持续课题[4]。
 
-### 2.1 主流 IoT 蜜罐对比
+### 部署要点（Cowrie 类）
 
-| 蜜罐 | 交互级别 | 模拟协议 | 语言 | 维护状态 |
-|------|---------|---------|------|---------|
-| Cowrie | 中-高 | SSH/Telnet | Python | 活跃 |
-| HoneyThing | 低-中 | TR-069/HTTP | Python | 停滞 |
-| IoTPOT | 中 | Telnet(多架构) | C/Python | 研究项目 |
-| Conpot | 中 | Modbus/S7/IPMI | Python | 活跃 |
-| Dionaea | 中 | SMB/HTTP/FTP | Python/C | 活跃 |
-| ThingPot | 低 | MQTT/CoAP/HTTP | Go | 研究项目 |
+- 容器化监听高位端口再 DNAT 到 22/23，避免与真实管理口冲突
+- 日志进 ELK/SIEM，原始会话与下载样本分权存储
+- 主机只出站到日志通道，禁止扫内网（见第 5 节隔离）
 
-### 2.2 Cowrie 部署配置
+### MQTT 等应用层蜜罐
 
-```yaml
-# docker-compose.yml - Cowrie IoT 蜜罐部署
-version: '3.8'
-services:
-  cowrie:
-    image: cowrie/cowrie:latest
-    ports:
-      - "2222:2222"   # SSH 蜜罐
-      - "2223:2223"   # Telnet 蜜罐
-    volumes:
-      - ./cowrie-data:/cowrie/cowrie-git/var
-      - ./cowrie.cfg:/cowrie/cowrie-git/etc/cowrie.cfg
-    environment:
-      - COWRIE_TELNET_ENABLED=yes
-    restart: unless-stopped
-  
-  # ELK 日志分析
-  elasticsearch:
-    image: elasticsearch:8.12.0
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-    ports:
-      - "9200:9200"
-  
-  kibana:
-    image: kibana:8.12.0
-    ports:
-      - "5601:5601"
-    depends_on:
-      - elasticsearch
-```
+实现 CONNACK/SUBACK 等最小状态机即可收集扫描与异常 PUBLISH；完整 broker 仿真成本更高，但情报更富。务必与真实消息总线网段隔离。
 
-```ini
-# cowrie.cfg - 模拟 IoT 设备配置
-[honeypot]
-hostname = DLink-Router
-# 模拟 BusyBox 环境
-shell = busybox
+## 3 诱骗技术（Deception）
 
-[telnet]
-enabled = true
-listen_port = 2223
+不止单蜜罐，而是让攻击者难区分真假资产：
 
-# 设置弱密码吸引攻击者
-[userdb]
-# 格式: username:uid:password
-root:0:admin
-root:0:123456
-admin:0:admin
-support:0:support
+| 诱饵 | 描述 | 信号 |
+|------|------|------|
+| 蜜罐设备 | 仿摄像头/PLC/传感器 | 任意连接可告警 |
+| 蜜令牌 | 假 API Key/口令 | 一经使用即告警 |
+| 蜜文件 | 假配置/密钥文件 | 访问即告警 |
+| 蜜网段 | 未用 IP/VLAN | 触达即告警 |
+| 蜜 DNS | 假内部名 | 解析即告警 |
 
-# 模拟文件系统
-[filesystem]
-# 使用预制的 IoT 设备文件系统镜像
-contents = share/cowrie/fs.pickle
-```
+生产网与诱骗网地址规划要可运营：避免诱饵误成业务依赖；白名单扫描器，减少自扰。
 
-### 2.3 MQTT 蜜罐实现
+## 4 威胁情报
 
-```python
-# 简易 MQTT 蜜罐 - 记录所有连接和消息
-import asyncio
-import json
-import logging
-from datetime import datetime
+| 维度 | 内容 | 用途 |
+|------|------|------|
+| 网络 | 源 IP、端口序、扫描节奏 | 基础设施聚类 |
+| 认证 | 用户名/密码组合 | 更新设备禁用字典 |
+| 载荷 | 样本、脚本、URL | 恶意软件分析 |
+| 行为 | 命令序列、横向尝试 | 映射 ATT&CK/ICS 技术[6] |
+| 时间 | 昼夜与突发 | 运营窗口与自动化程度 |
 
-class MQTTHoneypot:
-    def __init__(self, host='0.0.0.0', port=1883):
-        self.host = host
-        self.port = port
-        self.logger = logging.getLogger('mqtt_honeypot')
-        self.connections = []
-    
-    async def handle_client(self, reader, writer):
-        addr = writer.get_extra_info('peername')
-        self.logger.info(f"新连接: {addr}")
-        
-        event = {
-            'timestamp': datetime.utcnow().isoformat(),
-            'src_ip': addr[0],
-            'src_port': addr[1],
-            'protocol': 'mqtt',
-            'events': []
-        }
-        
-        try:
-            while True:
-                data = await asyncio.wait_for(
-                    reader.read(4096), timeout=30.0
-                )
-                if not data:
-                    break
-                
-                # 解析 MQTT 包类型
-                pkt_type = (data[0] & 0xF0) >> 4
-                event['events'].append({
-                    'type': self._pkt_type_name(pkt_type),
-                    'raw_hex': data.hex()[:200],
-                    'time': datetime.utcnow().isoformat()
-                })
-                
-                # 对 CONNECT 包回复 CONNACK（接受连接）
-                if pkt_type == 1:  # CONNECT
-                    connack = bytes([0x20, 0x02, 0x00, 0x00])
-                    writer.write(connack)
-                    await writer.drain()
-                
-                # 对 SUBSCRIBE 回复 SUBACK
-                elif pkt_type == 8:  # SUBSCRIBE
-                    msg_id = data[2:4]
-                    suback = bytes([0x90, 0x03]) + msg_id + bytes([0x00])
-                    writer.write(suback)
-                    await writer.drain()
-                    
-        except asyncio.TimeoutError:
-            pass
-        finally:
-            # 记录完整会话
-            self._save_event(event)
-            writer.close()
-    
-    def _pkt_type_name(self, pkt_type):
-        names = {1: 'CONNECT', 3: 'PUBLISH', 8: 'SUBSCRIBE',
-                 12: 'PINGREQ', 14: 'DISCONNECT'}
-        return names.get(pkt_type, f'UNKNOWN({pkt_type})')
-    
-    def _save_event(self, event):
-        with open('mqtt_honeypot.jsonl', 'a') as f:
-            f.write(json.dumps(event) + '\n')
-    
-    async def start(self):
-        server = await asyncio.start_server(
-            self.handle_client, self.host, self.port
-        )
-        self.logger.info(f"MQTT 蜜罐启动: {self.host}:{self.port}")
-        async with server:
-            await server.serve_forever()
-```
+### 典型攻击阶段（公网 IoT 暴露面，示意）
 
-## 3. 诱骗技术（Deception Technology）
+1. **扫描**：Banner 抓取，常盯 Telnet/SSH/HTTP
+2. **撞库**：`admin/admin`、`root/vizxv` 等经典组合反复出现（具体 Top‑N 随数据集变）
+3. **侦察**：`uname`、`/proc/cpuinfo` 判架构
+4. **投递**：wget/curl 或 echo+base64 写 Mirai 变种、挖矿等
+5. **持久化**：crontab、替换二进制、清日志
 
-### 3.1 超越传统蜜罐
+情报宜用 STIX 等结构化导出，共享前脱敏[9]。
 
-现代诱骗技术不只是单个蜜罐，而是构建完整的"虚假网络"：
+## 5 部署架构与隔离
 
 ```
-真实网络                    诱骗层
-┌──────────┐              ┌──────────────────┐
-│ 真实设备  │              │ 虚假设备 (蜜罐)   │
-│ 10.0.1.x │              │ 10.0.2.x         │
-├──────────┤              ├──────────────────┤
-│ 真实服务  │              │ 虚假服务          │
-│ MQTT真实  │              │ MQTT蜜罐          │
-├──────────┤              ├──────────────────┤
-│ 真实数据  │              │ 诱饵数据          │
-│ 传感器值  │              │ 假传感器值        │
-└──────────┘              └──────────────────┘
-         ↑                         ↑
-         │    攻击者无法区分         │
-         └─────────────────────────┘
+中央 SIEM/ELK
+    ↑ 仅日志 VPN
+节点：公网研究 / 家庭旁路 / 工业隔离区
+    各跑 Cowrie、MQTT、Conpot 等
 ```
 
-### 3.2 诱饵类型
+硬隔离建议：
 
-| 诱饵 | 描述 | 检测信号 |
-|------|------|---------|
-| 蜜罐设备 | 模拟 IoT 设备 | 任何连接即告警 |
-| 蜜令牌 | 假的 API Key/密码 | 使用即告警 |
-| 蜜文件 | 假的配置文件 | 访问即告警 |
-| 蜜网段 | 未使用的 IP 段 | 任何流量即告警 |
-| 蜜 DNS | 假的内部域名 | 解析即告警 |
+- Docker：`--cap-drop ALL`、只读根、CPU/内存限额
+- 蜜罐网与生产网禁止路由；日志采集器单向桥接
+- 高交互样本分析在一次性沙箱，不在蜜罐宿主机解包执行
 
-### 3.3 IoT 网络中的诱骗部署
-
-```python
-# 自动化诱骗部署脚本
-import ipaddress
-import subprocess
-
-class IoTDeceptionDeployer:
-    def __init__(self, network='10.0.1.0/24'):
-        self.network = ipaddress.ip_network(network)
-        self.decoys = []
-    
-    def deploy_fake_devices(self, count=20):
-        """在网络中部署虚假 IoT 设备"""
-        # 找出未使用的 IP
-        used_ips = self._scan_active_ips()
-        available = [ip for ip in self.network.hosts() 
-                     if str(ip) not in used_ips]
-        
-        for ip in available[:count]:
-            decoy = {
-                'ip': str(ip),
-                'type': self._random_device_type(),
-                'services': []
-            }
-            
-            # 配置虚假 ARP 响应
-            self._setup_arp_response(ip, decoy['type'])
-            
-            # 启动对应服务
-            if decoy['type'] == 'camera':
-                decoy['services'] = ['rtsp:554', 'http:80']
-            elif decoy['type'] == 'plc':
-                decoy['services'] = ['modbus:502', 'http:80']
-            elif decoy['type'] == 'sensor':
-                decoy['services'] = ['mqtt:1883', 'coap:5683']
-            
-            self.decoys.append(decoy)
-        
-        return self.decoys
-    
-    def _random_device_type(self):
-        import random
-        return random.choice(['camera', 'plc', 'sensor', 
-                            'gateway', 'thermostat'])
-```
-
-## 4. 威胁情报收集
-
-### 4.1 数据收集维度
-
-| 维度 | 收集内容 | 分析价值 |
-|------|---------|---------|
-| 网络层 | 源 IP、扫描模式、端口序列 | 攻击基础设施识别 |
-| 认证层 | 用户名/密码组合 | 凭证字典更新 |
-| 载荷层 | 恶意软件样本、脚本 | 恶意软件分析 |
-| 行为层 | 命令序列、横向移动 | TTPs 提取 |
-| 时间层 | 攻击时间分布 | 攻击者画像 |
-
-### 4.2 攻击者行为分析
-
-基于 2024 年 IoT 蜜罐数据的典型攻击模式：
-
-```
-阶段 1: 扫描 (0-5 秒)
-  → Shodan/Censys 风格的 banner 抓取
-  → 目标: Telnet(23), SSH(22), HTTP(80/8080)
-
-阶段 2: 暴力破解 (5-60 秒)
-  → Top 10 密码: admin/admin, root/root, 
-    admin/123456, root/vizxv, default/default
-  → 平均尝试 15-30 组凭证
-
-阶段 3: 初始访问 (1-5 分钟)
-  → 执行 uname -a, cat /proc/cpuinfo
-  → 确认架构 (MIPS/ARM/x86)
-
-阶段 4: 载荷投递 (5-10 分钟)
-  → wget/curl 下载恶意二进制
-  → 或通过 echo + base64 写入
-  → 主要: Mirai 变种, 挖矿程序
-
-阶段 5: 持久化 (10+ 分钟)
-  → 修改 crontab
-  → 替换系统二进制
-  → 清除日志
-```
-
-### 4.3 情报输出格式（STIX）
-
-```json
-{
-  "type": "indicator",
-  "spec_version": "2.1",
-  "id": "indicator--a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "created": "2025-01-15T08:00:00Z",
-  "name": "Mirai Variant C2 Server",
-  "pattern": "[ipv4-addr:value = '185.220.101.xxx']",
-  "pattern_type": "stix",
-  "valid_from": "2025-01-15T08:00:00Z",
-  "labels": ["malicious-activity"],
-  "description": "IoT 蜜罐捕获的 Mirai 变种 C2 通信地址"
-}
-```
-
-## 5. 部署架构
-
-### 5.1 分布式蜜罐网络
-
-```
-                    ┌─────────────────┐
-                    │  中央分析平台    │
-                    │  (SIEM/ELK)     │
-                    └────────┬────────┘
-                             │ VPN/加密通道
-              ┌──────────────┼──────────────┐
-              │              │              │
-    ┌─────────┴──┐  ┌───────┴────┐  ┌─────┴───────┐
-    │ 节点 A     │  │ 节点 B     │  │ 节点 C      │
-    │ 云服务器   │  │ 家庭网络   │  │ 工业网络    │
-    │ 公网 IP    │  │ NAT 后     │  │ 隔离网段    │
-    ├────────────┤  ├────────────┤  ├─────────────┤
-    │ Cowrie     │  │ MQTT蜜罐   │  │ Conpot      │
-    │ HTTP蜜罐  │  │ CoAP蜜罐   │  │ Modbus蜜罐  │
-    │ Telnet蜜罐│  │ UPnP蜜罐   │  │ S7comm蜜罐  │
-    └────────────┘  └────────────┘  └─────────────┘
-```
-
-### 5.2 安全隔离
-
-```bash
-# 使用 Docker 网络隔离蜜罐
-# 蜜罐只能向外发送日志，不能访问内网
-
-# 创建隔离网络
-docker network create --internal honeypot-internal
-docker network create honeypot-external
-
-# 蜜罐容器：只连接外部网络（接收攻击）
-docker run --network honeypot-external \
-  --cap-drop ALL \
-  --read-only \
-  --memory 256m \
-  --cpus 0.5 \
-  cowrie/cowrie
-
-# 日志收集器：桥接两个网络
-docker run --network honeypot-internal \
-  --network honeypot-external \
-  filebeat
-```
-
-## 6. 法律与伦理考量
-
-### 6.1 法律风险
+## 6 法律与伦理
 
 | 问题 | 说明 | 建议 |
 |------|------|------|
-| 引诱犯罪 | 蜜罐是否构成"钓鱼执法" | 被动等待，不主动引诱 |
-| 数据隐私 | 记录攻击者 IP 是否侵犯隐私 | 遵循当地数据保护法 |
-| 跨境问题 | 攻击者来自其他国家 | 与 CERT 合作 |
-| 恶意软件存储 | 收集的样本是否合法持有 | 安全存储，限制访问 |
+| 引诱犯罪 | 主动教唆 vs 被动暴露 | 只被动等待，不发攻击载荷给第三方 |
+| 隐私 | 记录 IP/载荷 | 遵守当地个保法与留存期限 |
+| 跨境 | 攻击者境外 | 走 CERT/ISAC 渠道 |
+| 样本持有 | 恶意软件管控 | 加密存储、访问审计 |
 
-### 6.2 最佳实践
+上线前做法务评审；对外共享做脱敏与流量协议。
 
-- 在公司法务审核后部署
-- 不主动向攻击者发送数据
-- 日志保留期限符合法规要求
-- 与行业 ISAC 共享情报时脱敏处理
+## 7 局限、挑战与可改进方向
 
-## 7. 实践建议
+### 1. 指纹识别导致“聪明攻击者不上钩”
 
-### 7.1 初学者入门路径
+**局限**：固定 banner、异常快的 shell、缺失真实文件系统特征，会被系统性指纹后绕开[3]。
+**改进**：真实设备流量与延迟建模；定期轮换指纹；中高交互与低交互混布。
 
-1. 在虚拟机中部署 Cowrie，观察 24 小时内的攻击
-2. 分析日志：统计 Top 10 密码、攻击来源国
-3. 部署 T-Pot（集成多种蜜罐的一体化平台）
-4. 编写自定义 MQTT/CoAP 蜜罐
-5. 将蜜罐数据接入 ELK 做可视化分析
+### 2. 高交互逃逸与横向风险
 
-### 7.2 具体调优建议
+**局限**：真实内核/容器逃逸可打到宿主机或跳板进生产网。
+**改进**：物理或云账号级隔离；无内网路由；高交互仅研究区；内核利用样本自动销毁实例。
 
-**提高真实度**：
-- 使用真实设备的 banner 和指纹（从 Shodan 收集）
-- 模拟真实的响应延迟（不要太快）
-- 添加"正常"的背景流量
-- 定期更新模拟的固件版本号
+### 3. 情报噪声与自动化扫描占比过高
 
-**降低误报**：
-- 白名单内部扫描器 IP
-- 区分自动化扫描和人工攻击
-- 设置告警阈值（单次连接不告警，持续攻击才告警）
+**局限**：互联网绝大多数是僵尸扫描，人工 APT 信号被淹没。
+**改进**：会话长度/命令多样性评分；与商业/开源威胁情报碰撞；只对“下载样本+交互命令”提级告警。
 
-**规模化部署**：
-- 使用 T-Pot 或 MHN（Modern Honey Network）统一管理
-- 每个网段至少部署 2-3 个蜜罐
-- 混合不同类型（SSH + MQTT + HTTP）
-- 定期轮换 IP 和设备类型
+### 4. OT/IoT 协议蜜罐逼真度不足
+
+**局限**：Modbus/S7 模拟寄存器与真实工艺对不上，内网攻击者一眼识破。
+**改进**：录制真实只读工艺影子数据；与数字孪生只读副本联动；严格只读，防止诱饵被当成控制器误操作。
+
+### 5. 运营成本与法律不确定
+
+**局限**：7×24 值守、样本分析、跨境合规使中小团队难持续。
+**改进**：优先 T-Pot 类集成平台[5]；外包分析但保留原始日志所有权；先生产型低交互内网诱饵，再开研究型公网节点。
+
+## 8 实践路径（简）
+
+1. 虚拟机跑 Cowrie，观察 24–72 h 日志
+2. 统计口令与来源，更新真实设备禁用列表
+3. 上 T-Pot 或等价集成平台
+4. 按需加 MQTT/Conpot
+5. 接入 SIEM，写隔离与样本处理 runbook
 
 ## 参考文献
 
-1. Pa, Y.M.P. et al. "IoTPOT: A Novel Honeypot for Revealing Current IoT Threats." Journal of Information Processing, 2016.
-2. Oosterhof, M. "Cowrie SSH/Telnet Honeypot." GitHub, 2024.
-3. Vetterl, A. & Clayton, R. "Bitter Harvest: Systematically Fingerprinting Low- and Medium-interaction Honeypots." USENIX WOOT, 2018.
-4. Luo, T. et al. "IoTCandyJar: Towards an Intelligent-Interaction IoT Honeypot." Black Hat USA, 2017.
-5. T-Pot Project. "T-Pot: The All In One Multi Honeypot Platform." GitHub/Telekom Security, 2024.
-6. MITRE ATT&CK. "ICS Techniques." 2024.
-7. Conpot Team. "Conpot: ICS/SCADA Honeypot." Documentation, 2024.
-8. Dowling, S. et al. "A ZigBee Honeypot to Assess IoT Cyberattack Behaviour." IEEE PIMRC, 2017.
-9. Hakim, M.S. et al. "A Survey on IoT Honeypots: Techniques, Threats, and Opportunities." IEEE Access, 2023.
-10. Spitzner, L. "Honeypots: Tracking Hackers." Addison-Wesley, 2003.
+[1] Y. M. P. Pa et al., "IoTPOT: A Novel Honeypot for Revealing Current IoT Threats," Journal of Information Processing, 2016.
+[2] M. Oosterhof, "Cowrie SSH/Telnet Honeypot," GitHub, 持续维护.
+[3] A. Vetterl and R. Clayton, "Bitter Harvest: Systematically Fingerprinting Low- and Medium-interaction Honeypots," USENIX WOOT, 2018.
+[4] T. Luo et al., "IoTCandyJar: Towards an Intelligent-Interaction IoT Honeypot," Black Hat USA, 2017.
+[5] Deutsche Telekom Security, "T-Pot: The All In One Multi Honeypot Platform," GitHub, 2024.
+[6] MITRE, "ATT&CK for ICS," 近年版本.
+[7] Conpot 项目文档, ICS/SCADA Honeypot, 近年版本.
+[8] S. Dowling et al., "A ZigBee Honeypot to Assess IoT Cyberattack Behaviour," IEEE PIMRC, 2017.
+[9] M. S. Hakim et al., "A Survey on IoT Honeypots: Techniques, Threats, and Opportunities," IEEE Access, 2023.
+[10] L. Spitzner, "Honeypots: Tracking Hackers," Addison-Wesley, 2003.
+[11] ENISA, 蜜罐与威胁情报共享相关指导, 近年版本.
+[12] OASIS, "STIX/TAXII" 规范, 2.x.

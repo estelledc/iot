@@ -3,353 +3,104 @@ schema_version: '1.0'
 id: zigbee-coordinator-router-enddevice
 title: Zigbee协调器/路由器/终端设备角色分析
 layer: 2
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: beginner
-reading_time: 18
-prerequisites: UNKNOWN
-tags: []
+reading_time: 16
+prerequisites:
+  - zigbee-3-0-protocol-stack
+tags:
+  - Zigbee
+  - 协调器
+  - 路由器
+  - 终端设备
+  - Mesh角色
+  - 信任中心
+  - 低功耗
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # Zigbee协调器/路由器/终端设备角色分析
-> **难度**：🟢 初级 | **领域**：Zigbee网络基础 | **阅读时间**：约 18 分钟
 
-## 引言
+> **难度**：🟢 初级 | **领域**：Zigbee 网络基础 | **阅读时间**：约 16 分钟
 
-想象一个公司的组织架构: 有一个总经理(协调器)负责创建公司、制定规则; 有若干部门经理(路由器)负责上传下达、扩展管理范围; 还有大量普通员工(终端设备)只需做好自己的事，不用操心信息怎么传递。Zigbee 网络中的三种设备角色就是这样的关系。
+## 日常类比
 
-理解这三种角色是掌握 Zigbee 网络的基础。每种角色有不同的能力、功耗特征和硬件要求。选错角色会导致网络不稳定、功耗过高或覆盖不足。
+公司组织：总经理创建公司、定规则（协调器 Coordinator）；部门经理上传下达、扩展覆盖（路由器 Router）；员工做好本职、不负责传话（终端 End Device）。角色选错——让“员工”通宵传话——网络不稳或电池速死[1][2]。
 
-## 1. 三种设备角色概览
+## 摘要
 
-### 1.1 角色定义
+对比三角色在建网、路由、子设备接纳、休眠与信任中心上的能力边界，并给出供电与部署建议。子设备容量与表项上限依栈实现，**勿把理论最大值当设计值**[3][5]。
 
-Zigbee 网络中每个节点必须扮演以下三种角色之一:
+## 1. 能力矩阵
 
-- 协调器(Coordinator): 创建网络、分配地址、管理安全密钥，每个网络有且仅有一个
-- 路由器(Router): 转发消息、扩展网络覆盖、维护路由表，数量不限但必须常供电
-- 终端设备(End Device): 叶子节点，不转发消息，可以休眠省电，通常电池供电
+| 能力 | 协调器 | 路由器 | 终端 |
+|------|--------|--------|------|
+| 创建网络 | 是 | 否 | 否 |
+| 路由转发 | 是 | 是 | 否 |
+| 允许子节点加入 | 是 | 是 | 否 |
+| 可深睡 | 否 | 否 | 是 |
+| 信任中心（典型） | 是 | 否 | 否 |
 
-### 1.2 能力对比
+每网通常一个协调器；路由器扩展射频覆盖与子树；终端挂到父节点，由父缓存下行[1][4]。
 
-```
-| 能力           | 协调器 | 路由器 | 终端设备 |
-|----------------|--------|--------|----------|
-| 创建网络       | Yes    | No     | No       |
-| 路由转发       | Yes    | Yes    | No       |
-| 允许子设备加入 | Yes    | Yes    | No       |
-| 可以休眠       | No     | No     | Yes      |
-| 电池供电       | No     | No     | Yes      |
-| 维护路由表     | Yes    | Yes    | No       |
-| 信任中心功能   | Yes    | No     | No       |
-```
+## 2. 协调器
 
-## 2. 协调器(Coordinator)详解
+扫描信道、选 PAN ID、分配短地址、管理密钥与准入。同时可作路由器参与转发。故障时整网管理面受创，故 Hub 供电与备份重要[2]。
 
-### 2.1 协调器的职责
+## 3. 路由器
 
-协调器是网络的"创始人"，负责:
+必须常供电（灯、插座、有电线关是常见载体）。邻居过少会形成脆弱桥；过多子设备可能触达栈表项上限。部署目标：关键路径上有冗余路由，避免单点走廊[3][5]。
 
-1. 网络形成: 扫描可用信道，选择干扰最小的，生成唯一PAN ID
-2. 信任中心: 管理网络安全密钥的生成和分发
-3. 地址分配: 为加入的设备分配16位短地址
-4. 设备准入: 控制哪些设备可以加入网络
-5. 路由参与: 同时作为路由器参与消息转发
+## 4. 终端
 
-### 2.2 网络形成过程
+电池传感/遥控典型角色：不中继，与父节点同步唤醒取缓存。父节点丢失需重关联，期间可能丢下行；父节点应选稳定市电路由[4]。
 
-```python
-# 协调器启动流程伪代码
-def coordinator_startup():
-    # 信道扫描，选择最安静的信道
-    channel_energy = {}
-    for channel in range(11, 27):  # 802.15.4信道11-26
-        channel_energy[channel] = scan_channel_energy(channel)
-    best_channel = min(channel_energy, key=channel_energy.get)
-
-    # 生成PAN ID(避免与附近网络冲突)
-    nearby_pans = scan_existing_networks(best_channel)
-    pan_id = generate_unique_pan_id(exclude=nearby_pans)
-
-    # 形成网络并生成安全密钥
-    form_network(channel=best_channel, pan_id=pan_id)
-    network_key = generate_aes128_key()
-    store_trust_center_key(network_key)
-    start_routing()
-```
-
-### 2.3 信任中心功能
-
-协调器作为信任中心(Trust Center)管理网络安全:
-
-- 新设备加入时通过预共享的链路密钥(Install Code)安全分发网络密钥
-- 可以更新网络密钥(Key Rotation)
-- 可以撤销设备的网络访问权限
-- 维护所有设备的安全状态信息
-
-### 2.4 协调器的局限性
-
-- 单点故障: 掉线后新设备无法加入，但已有设备间通信不受影响
-- 必须常供电: 不能使用电池
-- 位置固定: 一旦形成网络，更换协调器需要重新组网
-
-## 3. 路由器(Router)详解
-
-### 3.1 路由器的职责
-
-路由器是网络的"骨干"，负责:
-
-1. 消息转发: 接收并转发不是发给自己的消息
-2. 路由发现: 参与AODV路由发现过程，建立路由表
-3. 网络扩展: 每个路由器扩展网络的物理覆盖范围
-4. 子设备管理: 为终端设备提供"父节点"服务
-5. 消息缓存: 为休眠的子终端设备暂存消息
-
-### 3.2 AODV路由机制
-
-Zigbee 使用 AODV(Ad-hoc On-demand Distance Vector)路由:
-
-```
-路由发现过程:
-  A(源) -> B(路由器) -> C(路由器) -> D(目标)
-
-  1. A广播RREQ: "谁知道怎么到D?"
-  2. B转发RREQ，记录"A在我左边"
-  3. C转发RREQ，记录"B在我左边"
-  4. D收到RREQ，回复RREP给C
-  5. C转发RREP给B，B转发给A
-  6. A获得路由: A->B->C->D，开始单播数据
-```
-
-每个路由器维护路由表(通常20-40条)，超出时使用树状路由作为后备。
-
-### 3.3 路由器作为父节点
-
-路由器为终端设备提供"父节点"服务:
-
-- 维护子设备列表(Child Table)
-- 为休眠子设备缓存待接收的消息
-- 响应子设备的轮询(Poll)请求
-- 子设备数量上限: 通常6-20个(取决于实现)
-
-### 3.4 硬件要求
-
-必须常供电(市电或持续电源)，射频模块始终处于接收状态，典型功耗30-100mA(持续)。常见路由器设备: 智能插座、智能灯泡、中继器、有线供电的传感器。
-
-## 4. 终端设备(End Device)详解
-
-### 4.1 终端设备的特点
-
-终端设备是网络的"叶子节点": 不参与路由转发、不维护路由表、可进入深度休眠、必须有一个父节点(路由器或协调器)、通过轮询父节点获取待接收消息。
-
-### 4.2 休眠与唤醒机制
-
-终端设备的核心优势是可以休眠:
-
-```
-工作周期:
-  休眠(1-60秒)     唤醒      休眠(1-60秒)     唤醒
-  |_______________|__|______|_______________|__|______
-
-功耗对比:
-  - 休眠态: 1-10uA(仅RTC和RAM保持)
-  - 接收态: 10-20mA
-  - 发送态: 15-30mA
-  - 轮询一次耗时: 5-20ms
-```
-
-### 4.3 轮询(Polling)机制
-
-```python
-# 终端设备轮询逻辑伪代码
-def end_device_poll_cycle():
-    while True:
-        sleep(poll_interval)  # 休眠等待(如3秒)
-        wake_up()
-        # 向父节点发送Data Request
-        response = send_data_request(parent_address)
-        if response.has_pending_data:
-            data = receive_from_parent()
-            process_data(data)
-        if has_outgoing_data():
-            send_data(parent_address, outgoing_data)
-        enter_sleep()
-```
-
-### 4.4 轮询间隔的权衡
-
-轮询间隔是响应速度和电池寿命之间的核心权衡:
-
-| 轮询间隔 | 响应延迟 | CR2032寿命 | 适用场景 |
-|----------|----------|------------|----------|
-| 250ms | 小于500ms | 约3个月 | 需要快速响应 |
-| 1秒 | 小于2秒 | 约1年 | 一般传感器 |
-| 5秒 | 小于10秒 | 约3年 | 环境监测 |
-| 30秒 | 小于1分钟 | 约5年 | 极低频报告 |
-
-终端设备发送消息不需要等待轮询周期: 事件触发(如门打开)时立即唤醒发送。
-
-## 5. 父子关系管理
-
-### 5.1 父节点选择
-
-终端设备加入网络时按优先级选择父节点:
-
-1. 信号质量(LQI): 选择信号最强的路由器
-2. 剩余容量: 路由器的子设备表未满
-3. 网络深度: 优先选择深度较浅的路由器(减少跳数)
-
-### 5.2 父节点失效处理
-
-当父节点掉线时终端设备成为"孤儿":
-
-1. 连续N次轮询无响应(如3次)
-2. 判定父节点失效
-3. 发起孤儿扫描或重新加入(Rejoin)
-4. 寻找新的可用父节点
-5. 与新父节点建立关系，恢复通信
-
-注意: 恢复期间终端设备无法收发消息。
-
-### 5.3 消息缓存机制
-
-父节点为休眠子设备缓存消息: 缓存大小通常1-3条/子设备，超时通常7.68秒后丢弃。超出限制的消息将被丢弃，这是终端设备可能丢消息的主要原因。
-
-## 6. 地址分配机制
-
-### 6.1 两种地址
-
-每个 Zigbee 设备有两种地址:
-
-- IEEE地址(64位): 全球唯一，出厂烧录，类似MAC地址
-- 网络地址(16位): 加入网络时分配，用于网络内通信
-
-### 6.2 Zigbee 3.0随机分配
-
-```python
-def assign_network_address():
-    while True:
-        candidate = random.randint(0x0001, 0xFFF7)
-        # 0x0000保留给协调器
-        # 0xFFF8-0xFFFF保留给广播等特殊用途
-        if not address_in_use(candidate):
-            return candidate
-```
-
-早期Zigbee使用分布式地址分配(CSkip算法)，Zigbee 3.0已转向随机分配以简化实现。
-
-## 7. 网络容量规划
-
-### 7.1 容量瓶颈
-
-- 路由表大小: 每个路由器20-40条，超出后依赖树状路由(效率低)
-- 子设备容量: 每个路由器6-20个子设备
-- 带宽: 250kbps共享，设备越多可用带宽越少
-- 网络深度: 最大15跳，限制网络物理范围
-- 轮询流量: 终端设备越多，轮询开销越大
-
-### 7.2 规划建议
-
-```
-小型网络(家庭): 1协调器 + 5-10路由器 + 20-50终端设备
-  协调器=网关, 路由器=灯泡/插座, 终端设备=传感器/遥控器
-
-中型网络(办公): 1协调器 + 20-50路由器 + 100-200终端设备
-  需要规划路由器分布确保覆盖，注意子设备容量均衡
-
-大型网络(工业): 多个子网络 + 网关互联
-  单网络不超过500设备，通过IP网关连接多个Zigbee网络
-```
-
-## 8. 常见问题与解决
-
-### 8.1 终端设备丢消息
-
-原因: 轮询间隔过长导致父节点缓存超时丢弃; 父节点缓存已满拒绝新消息。
-解决: 缩短轮询间隔(牺牲电池); 发送端增加重试; 对时间敏感命令使用绑定确保可靠送达。
-
-### 8.2 路由器掉电导致网络分裂
-
-原因: 该路由器是网络中的"桥梁节点"，其后方设备和子终端设备全部离线。
-解决: 部署冗余路由器避免单点桥梁; 确保每个区域有多条路由路径; 使用不会断电的设备(如灯泡)作为路由器。
-
-### 8.3 协调器单点故障
-
-影响: 已有设备间通信不受影响，但新设备无法加入，安全密钥无法更新。
-缓解: 协调器使用UPS供电; 定期备份网络状态; 某些平台支持协调器迁移(如zigbee2mqtt备份恢复)。
-
-### 8.4 网络深度过大
-
-原因: 消息需经过太多跳才能到达目标，延迟高丢包率高。
-解决: 中间位置增加路由器; 重新规划拓扑减少最大深度。
-
-## 9. 设备角色选择指南
-
-### 9.1 决策树
-
-```
-设备是否常供电(市电)?
-  +-- Yes: 是否需要创建/管理网络? -> Yes: 协调器 / No: 路由器
-  +-- No(电池供电): 终端设备
-```
-
-### 9.2 常见设备角色映射
-
-| 设备类型 | 典型角色 | 原因 |
+| 设备例子 | 推荐角色 | 原因 |
 |----------|----------|------|
-| 网关/Hub | 协调器 | 管理网络，常供电 |
-| 智能灯泡 | 路由器 | 常供电，扩展覆盖 |
-| 智能插座 | 路由器 | 常供电，扩展覆盖 |
-| 温湿度传感器 | 终端设备 | 电池供电，需休眠 |
-| 门窗传感器 | 终端设备 | 电池供电，事件触发 |
-| 无线开关 | 终端设备 | 电池供电，按需唤醒 |
-| 智能门锁 | 终端设备 | 电池供电，需省电 |
+| 网关/Hub | 协调器 | 建网与密钥 |
+| 智能灯/插座 | 路由器 | 市电 + 扩覆盖 |
+| 门窗/温湿度 | 终端 | 电池寿命 |
+| 电池墙贴开关当路由 | 错误 | 无法持续中继 |
 
-### 9.3 编译时配置
+## 5. 局限、挑战与可改进方向
 
-大多数 Zigbee SoC 的角色在固件编译时确定:
+### 1. 路由密度不足
 
-```c
-// Silicon Labs EmberZNet配置示例
-// 协调器
-#define EMBER_AF_PLUGIN_NETWORK_CREATOR
-// 路由器
-#define EMBER_AF_PLUGIN_NETWORK_STEERING
-// 终端设备(休眠)
-#define EMBER_AF_PLUGIN_END_DEVICE_SUPPORT
-#define EMBER_AF_PLUGIN_IDLE_SLEEP
-```
+**局限**：大户型只有几个路由，末端不稳。
+**改进**：按平面图强制市电路由密度；验收抽测多跳 PER。
 
-## 10. 网络拓扑最佳实践
+### 2. 终端挂错父节点
 
-### 10.1 理想拓扑
+**局限**：挂到边缘弱链路父节点，频繁丢包。
+**改进**：安装时看 LQI/RSSI；允许重新入网优化父选择。
 
-```
-                [R]----[R]----[R]
-               / |      |      | \
-             [R] |     [C]     | [R]
-               \ |      |      | /
-                [R]----[R]----[R]
+### 3. 协调器不可替换认知
 
-  [C]=协调器  [R]=路由器  终端设备挂在各路由器下(未画出)
-```
+**局限**：用户随意断电网关导致全屋失控。
+**改进**：UPS/说明文档；评估支持备份的商业 Hub。
 
-关键原则: 路由器之间有多条路径(冗余); 协调器不在网络边缘; 路由器间距不超过有效通信距离的70%。
+### 4. 角色与 Matter/Thread 混淆
 
-### 10.2 避免的拓扑
+**局限**：把 Thread Router/SED 概念直接套用。
+**改进**：培训区分协议角色名；混网项目画清角色图。
 
-- 链状: [C]---[R]---[R]---[R]---[R] (任一故障切断后方)
-- 星状过载: 所有设备直连协调器(子设备容量耗尽)
+## 6. 实践要点
 
-## 总结
-
-Zigbee 三种设备角色各司其职: 协调器负责建网和安全管理，路由器负责扩展覆盖和消息转发，终端设备负责低功耗数据采集。核心设计原则是常供电设备做路由器形成Mesh骨干，电池设备做终端设备通过休眠延长寿命，协调器选择可靠位置避免单点故障，路由器部署要有冗余路径。
+1. 设计阶段先标市电可路由点，再铺电池终端。
+2. 监控子设备数、邻居数与路由表使用率。
+3. 不要把电池设备配置成路由器。
 
 ## 参考文献
 
-1. Zigbee Alliance, "Zigbee PRO Stack Profile Specification", Revision 27, 2021
-2. Zigbee Alliance, "Zigbee 3.0 Base Device Behavior Specification", 2020
-3. Silicon Labs, "UG103.02: Zigbee Fundamentals - Network Architecture", 2022
-4. Texas Instruments, "Z-Stack Developer's Guide - Network Formation and Device Types", 2021
-5. NXP, "JN-UG-3113: Zigbee 3.0 Stack User Guide", 2020
+[1] CSA, Zigbee Specification — device types / node capabilities.
+[2] CSA, Trust center and network formation documentation.
+[3] Silicon Labs / NXP Zigbee routing table and child table limits (stack AN).
+[4] IEEE 802.15.4, parent-child and indirect transmission concepts.
+[5] Zigbee deployment best-practice guides (vendor / alliance).
+[6] Mesh self-healing behavior notes for router failure scenarios.
+[7] Power-supply requirements for FFDs vs RFDs in 802.15.4 terms.
+[8] Smart-home hub high-availability recommendations.
+[9] LQI/RSSI based parent selection literature in Zigbee nets.
+[10] Comparison with Thread Router / SED roles (conceptual contrast).
+[11] CSA certification notes affecting role behavior consistency.

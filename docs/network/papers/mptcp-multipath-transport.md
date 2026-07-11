@@ -3,407 +3,173 @@ schema_version: '1.0'
 id: mptcp-multipath-transport
 title: 多路径传输 MPTCP 在 IoT 中的应用
 layer: 3
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+reading_time: 22
+prerequisites:
+  - low-latency-transport
+  - quic-iot-applicability
+tags:
+- MPTCP
+- 多路径传输
+- TCP
+- WiFi+蜂窝
+- 调度器
+- 故障切换
+- RFC 8684
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 多路径传输 MPTCP 在 IoT 中的应用
 
-> **难度**：🟡 中级 | **领域**：传输协议、多路径、移动通信 | **阅读时间**：约 20 分钟
+> **难度**：🟡 中级 | **领域**：传输协议、多路径、移动通信 | **阅读时间**：约 22 分钟
 
 ## 日常类比
 
-想象你要搬家，有很多箱子要从旧家运到新家。传统 TCP 就像只雇了一辆搬家车——不管你家有几条路可以走，所有箱子都只能排队装上这一辆车，走同一条路线。如果这条路堵车了（网络拥塞），所有箱子都得等。
+搬家时传统 TCP（Transmission Control Protocol）像只雇一辆车、只走一条路：堵车则全停。多路径 TCP（Multipath TCP, MPTCP）像同时雇几辆车——一辆走 Wi‑Fi、一辆走蜂窝——箱子按路况分配；一条路封了，其余车继续运。对同时连工厂 Wi‑Fi 与 5G 专网的工业设备，这既可聚合带宽，也可在断链时少停机[1][6]。
 
-MPTCP 就像同时雇了三辆搬家车：一辆走高速（WiFi），一辆走国道（4G LTE），一辆走省道（5G）。每辆车独立运行，箱子被分配到最快的路线上。如果高速突然封路，其他两辆车继续运输，搬家不会中断。更聪明的是，调度员（路径调度器）会根据实时路况动态分配箱子——快的路多分一些，慢的路少分一些。
+## 摘要
 
-对于 IoT 设备来说，MPTCP 尤其有价值：一台工业机器人同时连着工厂 WiFi 和 5G 专网，MPTCP 既能聚合两条链路的带宽，又能在其中一条断开时无缝切换到另一条——这就是"不停机"的网络冗余。
+梳理 MPTCP（RFC 8684）的子流、数据序列号（Data Sequence Number, DSN）映射、路径管理与调度器，说明中间设备兼容与回退，以及 Wi‑Fi+蜂窝在移动/工业 IoT 中的用法。文中吞吐、切换时延与功耗为公开实验或示意量级，硬件与内核版本不同须复测，不可直接横比[2][3][7]。
 
-## 1. MPTCP 架构原理
+## 1 架构原理
 
 ### 1.1 协议栈位置
 
-```
-应用层: HTTP / MQTT / CoAP (无需修改)
-          |
-传输层: MPTCP (RFC 8684)
-          | 管理多条子流
-        TCP Subflow 1 (WiFi)
-        TCP Subflow 2 (LTE)
-        TCP Subflow 3 (5G)
-          |
-网络层: IP (每条子流可用不同 IP 地址)
-```
+应用仍见单一 TCP 字节流；内核用多条子流（subflow）走不同 IP/接口。应用层（HTTP / MQTT / CoAP 等）通常无需改协议语义[1]。
 
-MPTCP 对应用层完全透明——应用只看到一个 TCP 连接，底层的多路径管理由内核自动完成。
+| 层次 | 角色 |
+|------|------|
+| 应用 | 普通 TCP socket（或 `IPPROTO_MPTCP`） |
+| MPTCP | 连接级调度、DSN 重组 |
+| TCP 子流 | 每路径独立拥塞控制 |
+| IP | 每子流可不同地址 |
 
-### 1.2 连接建立过程
+### 1.2 连接与子流加入
 
-```
-三次握手 + MPTCP 能力协商:
+初始子流用 `MP_CAPABLE` 协商密钥；后续接口用 `MP_JOIN` + HMAC 加入，防路径注入[1][9]。对端或中间盒不认选项时，连接可回退为普通 TCP，对应用透明[9]。
 
-Client (WiFi IP: 10.0.0.1)          Server (IP: 203.0.113.1)
-   |                                      |
-   |--- SYN + MP_CAPABLE(Key_A) -------->|  1. 初始子流建立
-   |<-- SYN-ACK + MP_CAPABLE(Key_B) ----|
-   |--- ACK + MP_CAPABLE --------------->|
-   |                                      |
-   |  [初始子流建立完成, 应用开始传输]      |
-   |                                      |
-Client (LTE IP: 100.64.1.1)              |
-   |--- SYN + MP_JOIN(Token_B, Nonce) -->|  2. 新增子流
-   |<-- SYN-ACK + MP_JOIN(HMAC) ---------|
-   |--- ACK + MP_JOIN(HMAC) ------------>|
-   |                                      |
-   |  [第二条子流加入, 开始负载分配]       |
-```
+### 1.3 两层序列号
 
-### 1.3 数据序列号映射
+子流有本地 TCP 序号；连接级用 DSN 与数据序列信号（Data Sequence Signal, DSS）映射，接收端按 DSN 重组后交付有序字节流，避免异构路径乱序破坏应用语义[1][2]。
 
-MPTCP 维护两层序列号：
+## 2 子流与路径管理
 
-```
-应用数据: [Byte 0 ~ Byte 999] (Data Sequence Number, DSN)
-                | 调度器分配
-子流1 (WiFi):  [Byte 0-499]   -> Subflow Seq 1-500
-子流2 (LTE):   [Byte 500-999] -> Subflow Seq 1-500
+### 2.1 Path Manager 策略
 
-DSS (Data Sequence Signal) 映射:
-  Subflow Seq | DSN (Data Seq Number)
-      1       |        0           <- 子流1第1个字节 = 全局第0个字节
-      1       |        500         <- 子流2第1个字节 = 全局第500个字节
+| 策略 | 行为 | IoT 倾向 |
+|------|------|----------|
+| fullmesh | 本地×远端地址全互联 | 固定网关带宽聚合 |
+| ndiffports | 同 IP 多端口子流 | 绕过部分中间盒限制 |
+| binder / 绑定接口 | 指定网卡 | 安全分区 |
+| userspace PM | 用户态策略 | 自定义省电/备份 |
 
-接收端根据 DSN 重组数据, 向应用层交付有序字节流
-```
+Linux 可用 `ip mptcp endpoint`、`ip mptcp limits` 配置端点与子流上限；`ss -M` 观察子流状态[10]。
 
-## 2. 子流管理
+### 2.2 生命周期（示意）
 
-### 2.1 Path Manager（路径管理器）
+设备常以 Wi‑Fi 建主子流，移动中加入蜂窝；信号变差时调度器迁流，断链后关闭坏子流、恢复后再 `MP_JOIN`。备份标志（backup）可让蜂窝仅握手维持，主路径故障再承载，以换功耗[6][7]。
 
-Path Manager 决定何时创建、删除子流：
+## 3 调度器
 
-| 策略 | 行为 | IoT 适用场景 |
-|------|------|-------------|
-| fullmesh | 所有本地IP x 所有远端IP | 带宽聚合（固定网关） |
-| ndiffports | 同一IP创建N条子流 | 绕过中间设备限制 |
-| binder | 绑定特定接口 | 安全敏感场景 |
-| userspace | 应用层控制 | IoT 自定义策略 |
-
-```python
-# Linux MPTCP 路径管理器配置
-import subprocess
-
-# 查看当前 MPTCP 配置
-subprocess.run(["sysctl", "net.mptcp.enabled"])  # 1 = 启用
-
-# 添加 MPTCP 端点
-subprocess.run(["ip", "mptcp", "endpoint", "add",
-                "10.0.0.1", "dev", "wlan0", "subflow", "signal"])
-subprocess.run(["ip", "mptcp", "endpoint", "add",
-                "100.64.1.1", "dev", "wwan0", "subflow", "signal"])
-
-# 设置最大子流数
-subprocess.run(["ip", "mptcp", "limits", "set", "subflows", "4",
-                "add_addr_accepted", "2"])
-
-# 查看 MPTCP 连接状态
-subprocess.run(["ss", "-M"])  # 显示 MPTCP 子流信息
-```
-
-### 2.2 子流生命周期
-
-```
-子流状态机:
-[关闭] -> MP_CAPABLE/MP_JOIN -> [建立中] -> 握手完成 -> [活跃]
-                                                          |
-                                                     网络故障/策略
-                                                          |
-                                                     [备用/降级]
-                                                          |
-                                                     REMOVE_ADDR/RST
-                                                          |
-                                                        [关闭]
-
-IoT 场景典型流程:
-1. 设备启动: WiFi 子流建立 (主)
-2. 移动中: 4G 子流加入 (备)
-3. WiFi 信号弱: 调度器将流量移到 4G
-4. WiFi 断开: WiFi 子流关闭, 4G 继续
-5. WiFi 恢复: WiFi 子流重建, 恢复双路径
-```
-
-## 3. 调度器算法
-
-### 3.1 主要调度算法对比
-
-| 调度器 | 原理 | 优势 | 劣势 | IoT 适用 |
+| 调度器 | 思路 | 优势 | 代价 | IoT 场景 |
 |--------|------|------|------|----------|
-| minRTT | 选RTT最小的子流 | 低延迟 | 可能浪费带宽 | 实时控制 |
-| Round-Robin | 轮流分配 | 公平利用 | 不适应异构路径 | 负载均衡 |
-| Redundant | 所有子流发送相同数据 | 超高可靠性 | 浪费带宽 | 关键告警 |
-| BLEST | 考虑缓冲区和延迟 | 避免队头阻塞 | 计算开销 | 通用 |
-| ECF | 最早完成优先 | 吞吐量优化 | 预测不准 | 大文件传输 |
+| minRTT | 选平滑 RTT 最小且有窗的子流 | 低延迟 | 慢路径易闲置 | 实时控制 |
+| Round-Robin | 轮转 | 简单 | 异构路径易乱序 | 少用 |
+| Redundant | 全路径同发 | 高可靠 | 带宽×N | 急停/告警 |
+| BLEST | 估阻塞与缓冲 | 减队头阻塞 | 算力略高 | 通用吞吐 |
+| ECF | 最早完成优先 | 吞吐导向 | 依赖预测 | 大块传输 |
 
-### 3.2 minRTT 调度器实现原理
+异构路径上 minRTT 常把多数流量放在低 RTT 链路上；关键指令可用 Redundant，但须接受冗余开销[4][5]。
 
-```c
-/* minRTT 调度器简化逻辑 */
-struct mptcp_subflow *select_subflow(struct mptcp_connection *mpc) {
-    struct mptcp_subflow *best = NULL;
-    uint32_t min_rtt = UINT32_MAX;
-    
-    list_for_each_entry(sf, &mpc->subflows, list) {
-        if (!subflow_is_active(sf))
-            continue;
-        if (!subflow_has_window(sf))  /* 拥塞窗口有空间 */
-            continue;
-        
-        /* 选择 smoothed RTT 最小的子流 */
-        if (sf->srtt < min_rtt) {
-            min_rtt = sf->srtt;
-            best = sf;
-        }
-    }
-    
-    return best;  /* 如果所有子流都满, 返回 NULL 等待 */
-}
+## 4 中间设备与回退
 
-/* IoT 场景: WiFi RTT=5ms, 4G RTT=50ms
- * minRTT 会把 90%+ 流量放 WiFi
- * 4G 只在 WiFi 拥塞窗口满时使用 */
-```
+| 中间设备 | 典型问题 | 应对 |
+|----------|----------|------|
+| NAT | 改地址/端口 | `ADD_ADDR` 等用 HMAC 校验[1] |
+| 防火墙 | 剥未知 TCP 选项 | 回退普通 TCP[9] |
+| 代理 | 终止 TCP | 该路径失效，其他子流可续 |
+| IDS | 多路径误报 | 规则升级/白名单 |
 
-### 3.3 Redundant 调度器
+渐进部署：不支持 MPTCP 的路径不应比单路径 TCP 更差——这是 IoT 广域落地的前提[6][9]。
 
-```c
-/* Redundant 调度器 - 关键 IoT 场景 */
-void send_redundant(struct mptcp_connection *mpc, struct sk_buff *skb) {
-    /* 同一数据在所有活跃子流上都发送一份 */
-    list_for_each_entry(sf, &mpc->subflows, list) {
-        if (subflow_is_active(sf)) {
-            struct sk_buff *clone = skb_clone(skb);
-            tcp_send(sf, clone);
-        }
-    }
-    /* 接收端去重: 只接受第一个到达的副本 */
-}
+## 5 移动 / 工业 IoT 用法
 
-/* 适用场景:
- * - 工业控制指令 (停机命令不能丢)
- * - 紧急告警 (必须确保送达)
- * - 带宽开销 = N x 数据量 (N=子流数)
- * - 可靠性 = 1 - (1-p1)(1-p2)...(1-pN) */
-```
+### 5.1 Wi‑Fi + 蜂窝
 
-## 4. 中间设备兼容性问题
+仓库 AGV 等场景：Wi‑Fi 覆盖不全、蜂窝作备份或聚合。公开与实验室材料常报告：相对 TCP 重连，已建立备份子流的切换可到数十毫秒量级；冗余调度可接近“无感”，但射频同时活跃时功耗明显上升——具体数依赖芯片与策略，文中不作绝对承诺[3][7]。
 
-### 4.1 MPTCP 面临的中间设备挑战
+### 5.2 性能解读注意
 
-| 中间设备 | 问题 | MPTCP 应对 |
-|---------|------|-----------|
-| NAT | 修改IP/端口,破坏MPTCP令牌 | ADD_ADDR使用HMAC验证 |
-| 防火墙 | 丢弃MPTCP选项(未知TCP选项) | 回退到普通TCP |
-| 代理 | 终止TCP连接 | 子流独立,不影响其他 |
-| IDS | 误报多路径为攻击 | 白名单/升级规则库 |
+带宽“聚合效率”、failover 毫秒数、瓦级功耗等，多来自特定板卡（如单板机 + USB 模组）与 iperf 类工具；生产网关须按目标内核（建议关注上游合入后的稳定版本线）与真实 MQTT/控制负载复测[2][10]。
 
-### 4.2 回退机制
+| 目标 | 更稳妥的配置倾向 |
+|------|------------------|
+| 不停机 | 蜂窝 backup + 已 JOIN 子流 |
+| 吞吐 | fullmesh + BLEST/ECF，限子流数 |
+| 省电 | backup、拉长 keepalive、避免双射频常开 |
+| 关键指令 | Redundant 或应用层双发 |
 
-```
-MPTCP 渐进式回退:
+## 6 Linux 实现要点
 
-1. 发送 SYN + MP_CAPABLE
-2. 如果 SYN-ACK 不含 MP_CAPABLE:
-   -> 中间设备剥离了 MPTCP 选项
-   -> 自动回退为普通 TCP (对应用透明)
-3. 如果子流 JOIN 失败:
-   -> 只使用初始子流
-   -> 仍是普通 TCP 语义
+上游约自 5.6 合入 MPTCP v1；其后路径管理、用户态 PM、BPF 调度与 sockopt 逐步补齐，较新长期支持内核更适合生产评估[10]。IoT 发行版（Yocto/Buildroot/OpenWrt 等）需显式打开相关配置。可用 `mptcpize` 包装未改代码的进程，或显式 `IPPROTO_MPTCP`[6][10]。
 
-对 IoT 的意义:
-- 即使部分网络路径不支持 MPTCP, 连接仍然可用
-- 不会比普通 TCP 更差
-- 渐进式部署, 无需全网升级
-```
+苹果等消费端产品线曾公开使用 MPTCP 改善切换体验，说明多路径在移动侧有商用先例，但不等于工业协议栈默认可用[8]。
 
-## 5. MPTCP 在移动 IoT 中的应用
+## 7 实践建议（精简）
 
-### 5.1 WiFi + Cellular 聚合场景
+- 子流上限设小（如 2），先 Wi‑Fi 主 + 蜂窝 backup。
+- 实时控制优先 minRTT；固件大包再试 BLEST/ECF；急停评估 Redundant。
+- 传输层 HMAC 不替代 TLS：弱蜂窝链路上仍应端到端加密[1]。
+- 验收必做：拔网线/关 Wi‑Fi、弱网丢包、双路径功耗曲线。
 
-```
-场景: 自动导引车 (AGV) 在智能仓库中运行
+## 8 局限、挑战与可改进方向
 
-网络环境:
-- 工厂 WiFi: 覆盖 80% 区域, RTT 5-20ms, 带宽 50Mbps
-- 5G 专网: 覆盖 100% 区域, RTT 10-30ms, 带宽 100Mbps
-- WiFi 存在盲区 (货架遮挡)
+### 1. 中间盒与选项剥离
 
-MPTCP 配置:
-- 主子流: WiFi (低延迟)
-- 备子流: 5G (高覆盖)
-- 调度器: minRTT (优先 WiFi)
+**局限**：部分运营商 NAT/防火墙丢弃 MPTCP 选项，多路径能力静默消失。  
+**改进**：探测与指标暴露（是否真正多路径）；关键业务准备应用层多归或 MPQUIC 等备选；与网络侧白名单协同[3][9]。
 
-效果:
-- 正常区域: WiFi 传输控制指令, 5G 待命
-- 盲区切换: WiFi 断开 -> 5G 无缝接管 (切换时间 < 50ms)
-- 大文件传输: 聚合两条路径带宽 (理论 150Mbps)
-```
+### 2. 异构路径队头阻塞与调度误判
 
-### 5.2 性能基准数据
+**局限**：高延迟路径乱序导致接收缓冲膨胀；调度器预测偏差浪费快路径。  
+**改进**：选用 BLEST 类调度；限制慢路径用途为 backup；应用层避免单连接塞巨流[4][5]。
 
-```
-测试平台: Raspberry Pi 4 + USB WiFi + 4G Dongle
-Linux 5.15, MPTCP v1, iperf3
+### 3. 功耗与射频成本
 
-带宽聚合测试:
-  WiFi 单独:        45.2 Mbps
-  4G 单独:          28.7 Mbps
-  MPTCP (minRTT):   62.4 Mbps (聚合效率 85%)
-  MPTCP (RR):       58.1 Mbps (聚合效率 79%)
-  理论上限:         73.9 Mbps
+**局限**：双连接维持抬高 IoT 网关能耗与模组成本。  
+**改进**：backup 端点、按场景关闭次射频、与业务空闲联动；度量焦耳/字节而非只看 Mbps[7]。
 
-切换延迟测试 (WiFi -> 4G failover):
-  TCP 重连:          3200ms (TCP 超时 + 重连)
-  MPTCP (backup):    47ms (子流切换)
-  MPTCP (redundant): 0ms (已在 4G 上发送)
+### 4. 嵌入式/MCU 生态薄
 
-功耗测量 (1小时持续传输):
-  WiFi 单独:   2.1W
-  4G 单独:     3.8W
-  MPTCP 双路:  5.2W (两个射频同时活跃)
-  MPTCP 备份:  2.3W (4G 子流仅握手维持)
-```
+**局限**：完整 MPTCP 多在通用 Linux；MCU TCP 栈鲜有对等实现。  
+**改进**：多路径放在网关；终端用单路径 + 网关侧聚合；关注 MPQUIC/应用多连接在受限设备上的可行性[3][7]。
 
-### 5.3 Failover 场景详解
+## 9 总结
 
-```python
-# MPTCP 故障切换场景模拟
-import time
-
-class MPTCPFailoverSimulator:
-    def __init__(self):
-        self.subflows = {
-            "wifi": {"active": True, "rtt_ms": 8, "bandwidth_mbps": 50},
-            "lte":  {"active": True, "rtt_ms": 45, "bandwidth_mbps": 30}
-        }
-        self.scheduler = "minRTT"
-    
-    def simulate_wifi_failure(self):
-        """WiFi 突然断开"""
-        # 1. WiFi 子流检测到失败 (RTO 超时, 约 200ms)
-        self.subflows["wifi"]["active"] = False
-        
-        # 2. 调度器立即切换到 LTE (无需重连)
-        # MPTCP: 已建立的 LTE 子流直接承载数据
-        # TCP:   需要重新三次握手 + TLS
-        
-        failover_time_ms = 47  # 实测 47ms
-        print(f"MPTCP 切换完成: {failover_time_ms}ms")
-        print(f"对比 TCP 重连: ~3200ms")
-    
-    def simulate_wifi_recovery(self):
-        """WiFi 恢复"""
-        # 路径管理器检测到 WiFi 接口恢复
-        # 自动发起 MP_JOIN 重建子流
-        self.subflows["wifi"]["active"] = True
-```
-
-## 6. Linux 内核 MPTCP 实现
-
-### 6.1 内核支持状态
-
-```
-Linux MPTCP 发展时间线:
-- Linux 5.6  (2020.03): 首次合入上游内核 (MPTCP v1, RFC 8684)
-- Linux 5.10: 加入 fullmesh 路径管理器
-- Linux 5.19: 支持 userspace PM (用户态路径管理)
-- Linux 6.1:  BPF 可编程调度器接口
-- Linux 6.6:  完整 sockopt 支持, 生产就绪
-- Linux 6.8+: 持续优化性能和功能
-
-IoT 系统适配:
-- Yocto/Buildroot: 开启 CONFIG_MPTCP=y
-- OpenWrt: 内核 5.15+ 默认支持 MPTCP
-- Android 12+: 底层支持, OEM 可选启用
-- Apple iOS/macOS: Siri, Apple Music 已使用 MPTCP
-```
-
-### 6.2 使用示例
-
-```bash
-# Linux MPTCP 配置命令
-
-# 1. 检查 MPTCP 支持
-sysctl net.mptcp.enabled  # 输出 1 表示启用
-
-# 2. 添加 MPTCP 端点
-ip mptcp endpoint add 192.168.1.100 dev wlan0 subflow signal
-ip mptcp endpoint add 10.0.0.100 dev eth0 subflow signal
-
-# 3. 设置路径管理器
-ip mptcp limits set subflows 4 add_addr_accepted 2
-
-# 4. 应用层启用 MPTCP (无需修改应用代码)
-# 方法1: 使用 mptcpize 包装器
-mptcpize run curl https://example.com/data
-
-# 方法2: 在 Python 代码中显式使用
-# import socket
-# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 262)
-# 262 = IPPROTO_MPTCP
-
-# 5. 监控 MPTCP 连接
-ss -M  # 显示 MPTCP 信息
-nstat | grep Mptcp  # 统计计数器
-```
-
-## 7. 实践建议
-
-### 7.1 初学者入门路径
-
-1. **概念理解**（1天）：理解 MPTCP 的子流、DSN 映射、路径管理器
-2. **环境搭建**（1天）：Linux 6.1+ 内核，确认 `sysctl net.mptcp.enabled=1`
-3. **基础实验**（2天）：用 `mptcpize` + iperf3 测试双路径带宽聚合
-4. **调度器对比**（2天）：分别测试 minRTT、Round-Robin、BLEST 效果
-5. **故障切换**（2天）：`ip link set wlan0 down` 模拟接口故障，观察切换
-6. **IoT 应用**（1周）：在 RPi 上配置 WiFi+4G MPTCP，部署 MQTT 客户端
-
-### 7.2 具体调优建议
-
-**路径管理：**
-- IoT 网关建议使用 fullmesh（接口少、都要用）
-- 移动设备建议 WiFi=主 + 蜂窝=backup（省电）
-- `ip mptcp limits set subflows 2`：限制最大子流数，避免资源浪费
-
-**调度器选择：**
-- 实时控制（延迟敏感）: minRTT
-- 视频传输（吞吐量）: BLEST 或 ECF
-- 关键指令（可靠性）: Redundant
-- 通用场景: minRTT（默认，适用面最广）
-
-**功耗优化：**
-- 备份子流设置 `backup` 标志，仅在主子流故障时激活
-- 蜂窝接口配置 `ip mptcp endpoint add ... backup`
-- 调整 TCP keepalive 间隔，减少 4G 接口唤醒频率
-
-**安全考虑：**
-- MPTCP 使用 HMAC-SHA256 验证子流加入请求
-- ADD_ADDR 验证防止路径注入攻击
-- 建议配合 TLS 使用，防止数据在弱子流上被窃听
+MPTCP 把“多网卡”做成对应用透明的连接级能力，适合 Wi‑Fi+蜂窝的移动与工业网关。价值在故障切换与可选聚合；代价是中间盒、调度与功耗。选型先定义是“备份不停机”还是“吞吐聚合”，再选调度器与验收口径。
 
 ## 参考文献
 
-1. Ford, A., et al. "TCP Extensions for Multipath Operation with Multiple Addresses." RFC 8684, IETF, 2020.
-2. Paasch, C., et al. "Multipath TCP: From Theory to Practice." NETWORKING, 2012.
-3. De Coninck, Q., Bonaventure, O. "MultipathTester: Comparing MPTCP and MPQUIC in Mobile Environments." IFIP Networking, 2019.
-4. Ferlin, S., et al. "BLEST: Blocking Estimation-based MPTCP Scheduler." IFIP Networking, 2016.
-5. Lim, Y., et al. "ECF: An MPTCP Path Scheduler to Manage Heterogeneous Paths." ACM CoNEXT, 2017.
-6. Bonaventure, O., et al. "Multipath TCP Deployments." ACM SIGCOMM CCR, 2020.
-7. Coninck, Q., Bonaventure, O. "MPTCP in IoT: Lessons Learned." IEEE IoT Magazine, 2024.
-8. Apple Inc. "Multipath TCP on iOS and macOS." WWDC 2017/2019 Sessions.
-9. Hesmans, B., et al. "Are TCP Extensions Middlebox-proof?" HotMiddlebox Workshop, 2013.
-10. Barre, S., et al. "MultiPath TCP: From Theory to Practice." Linux Kernel Implementation, 2024.
+[1] A. Ford et al., "TCP Extensions for Multipath Operation with Multiple Addresses," RFC 8684, IETF, 2020.
+
+[2] C. Paasch et al., "Multipath TCP: From Theory to Practice," IFIP NETWORKING, 2012.
+
+[3] Q. De Coninck and O. Bonaventure, "MultipathTester: Comparing MPTCP and MPQUIC in Mobile Environments," IFIP Networking, 2019.
+
+[4] S. Ferlin et al., "BLEST: Blocking Estimation-based MPTCP Scheduler," IFIP Networking, 2016.
+
+[5] Y. Lim et al., "ECF: An MPTCP Path Scheduler to Manage Heterogeneous Paths," ACM CoNEXT, 2017.
+
+[6] O. Bonaventure et al., "Multipath TCP Deployments," ACM SIGCOMM CCR, 2020.
+
+[7] Q. De Coninck and O. Bonaventure, "MPTCP in IoT: Lessons Learned," IEEE IoT Magazine, 2024.
+
+[8] Apple Inc., "Multipath TCP on iOS and macOS," WWDC Sessions, 2017/2019.
+
+[9] B. Hesmans et al., "Are TCP Extensions Middlebox-proof?" HotMiddlebox, 2013.
+
+[10] Multipath TCP Linux upstream documentation / kernel networking docs, MPTCP, 2024.
+
+[11] S. Barré et al., "MultiPath TCP: From Theory to Practice," implementation notes, 2011–2024.

@@ -3,315 +3,102 @@ schema_version: '1.0'
 id: zigbee-green-power-energy-harvest
 title: Zigbee Green Power能量采集设备协议
 layer: 2
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+reading_time: 17
+prerequisites:
+  - zigbee-3-0-protocol-stack
+tags:
+  - Zigbee
+  - Green Power
+  - 能量采集
+  - GPD
+  - 无电池
+  - 压电
+  - ZGP
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # Zigbee Green Power能量采集设备协议
-> **难度**：🟡 中级 | **领域**：Zigbee绿色能源 | **阅读时间**：约 20 分钟
 
-## 引言
+> **难度**：🟡 中级 | **领域**：Zigbee 绿色能源 | **阅读时间**：约 17 分钟
 
-想象你家里有一个不需要电池、不需要接电线的开关。你按下按钮的那一瞬间，手指的机械能就被转化成电能，足够发送一条无线信号给灯泡。这正是 Zigbee Green Power(绿色能源)协议要解决的问题。
+## 日常类比
 
-在传统无线传感器网络中，电池是最大的维护负担。一栋写字楼里几百个传感器，每隔两三年逐个更换电池，人工成本远超设备本身。Green Power 协议让设备从环境中"收割"能量，彻底摆脱电池依赖。
+按墙开关的瞬间，手指动能变成电，刚够“喊一句开灯”——这就是 Zigbee Green Power（ZGP）：能量采集设备（Green Power Device, GPD）不靠电池长驻网，而靠代理（Proxy/Sink）把极简帧翻译进 Zigbee 网络[1][2]。
 
-## 1. Green Power的设计动机
+## 摘要
 
-### 1.1 电池更换的痛点
+说明 GPD 约束（少状态、短发包、不路由）、与标准设备差异、能量源量级及安全配对要点。微焦能量与通信次数为物理量级，**强依赖采集器与帧长**[3][5]。
 
-物联网设备部署规模从几十到几万不等，电池更换带来多重问题:
+## 1. 为何需要 ZGP
 
-- 人工成本: 传感器分布在天花板、管道等难以触及的位置，更换一次电池的人工费可能超过设备本身
-- 环境污染: 数以万计的废旧电池需要回收处理
-- 可靠性: 电池耗尽导致设备静默失效，用户可能长期不知情
-- 规模受限: 维护成本随设备数量线性增长，限制了部署密度
+规模化部署中换电池的人工与失效静默成本高。许多人机接口每天仅数次短报文，适合“收割一点、发送一点”[1]。
 
-### 1.2 能量采集的可行性
+| 能量源 | 特征 | 典型用途 |
+|--------|------|----------|
+| 压电/动能 | 按压瞬时能量 | 无电池开关 |
+| 光能 | 可持续但依赖光照 | 窗边传感 |
+| 温差 | 需温梯度 | 暖通旁 |
+| RF 收集 | 通常更弱 | 近发射源场景 |
 
-关键洞察: 很多物联网设备并不需要持续通信。一个开关每天可能只按几次，每次通信只需发送几十字节。能量采集技术恰好能提供这种"少量但足够"的能量:
+## 2. GPD vs 标准节点
 
-| 能量来源 | 单次可用能量 | 适用场景 |
-|----------|-------------|----------|
-| 动能/压电 | 100-300uJ | 按钮开关、振动传感器 |
-| 太阳能 | 持续充电 | 窗边传感器、户外设备 |
-| 温差发电 | 10-100uJ/s | 暖通管道、散热器旁 |
-| RF射频 | 1-10uJ/s | 基站附近设备 |
+| 项 | 标准 Zigbee 设备 | GPD |
+|----|------------------|-----|
+| 供电 | 市电/电池 | 采集为主 |
+| 路由 | 路由/终端角色 | 不参与路由 |
+| 入网 | 标准关联 | 专用 GP 佣兵/配对流程 |
+| 状态 | 可维护会话 | 极简或近无状态 |
+| 帧 | 完整栈开销 | 极简以省能量 |
 
-### 1.3 协议设计约束
+网络侧需 Green Power Proxy/Sink（常在灯、网关或专用节点）接收并转换[2][4]。
 
-Green Power 设备(GPD)的核心设计约束:
+## 3. 工程要点
 
-- 断电后不保留任何状态(或仅保留极少量)
-- 单次能量足够发送1-3个数据包
-- 不参与网络路由，不维护路由表
-- 不执行标准的网络加入流程
-- 帧结构极简，最大化能量利用效率
+1. 单次按压能量预算决定能否重传；失败时用户体验是“偶发不亮”。
+2. 安全：出厂密钥/现场配对不当会导致伪造开关；遵循规范佣兵与加密选项[1][6]。
+3. 代理覆盖：GPD 射频预算紧，代理密度与位置比普通终端更关键。
 
-## 2. Green Power设备(GPD)架构
+## 4. 局限、挑战与可改进方向
 
-### 2.1 GPD与标准设备对比
+### 1. 能量边界被营销夸大
 
-```
-标准Zigbee设备:
-  - 网络层: 维护路由表、邻居表
-  - 安全层: 存储网络密钥、帧计数器
-  - 应用层: ZCL集群、绑定表
-  - 状态: 持久化存储所有上述信息
+**局限**：宣称“永不没电”忽略黑暗、老化与多次重传。
+**改进**：按最坏按压能量与信道占用验收；必要时混合微型储能。
 
-Green Power设备:
-  - 无网络层状态
-  - 无路由能力
-  - 无持久化存储(或极少)
-  - 仅发送预定义的短帧
-```
+### 2. 依赖代理生态
 
-### 2.2 GPD工作流程
+**局限**：网络无合格 Proxy/Sink 则 GPD 孤立。
+**改进**：BOM 明确代理角色；混品牌前测互通。
 
-GPD 的生命周期极其简单:
+### 3. 安全配对体验差
 
-1. 能量事件发生(如按钮按下)
-2. 采集电路将机械能/光能/热能转为电能
-3. 电容充电到足够电压(通常1.8V以上)
-4. 微控制器启动，执行预编程的发送逻辑
-5. 射频模块发送1-3个 Green Power 帧
-6. 能量耗尽，设备断电
+**局限**：现场配对复杂导致弱安全配置。
+**改进**：标准化安装流程；禁止长期明文模式。
 
-整个过程在毫秒级完成。设备不等待响应(单向通信模式)，不维护连接状态。
+### 4. 与 Matter 无电池设备路径并行
 
-### 2.3 硬件组成
+**局限**：生态向 Matter 迁移时 ZGP 设备需 Bridge。
+**改进**：新品评估 Matter 路径；存量建 Bridge 清单。
 
-典型的 GPD 硬件非常精简:
+## 5. 实践要点
 
-```
-+------------------+     +-------------+     +----------+
-| 能量采集器       | --> | 电源管理    | --> | MCU+RF   |
-| (压电/太阳能等)  |     | (整流+储能) |     | (SoC)    |
-+------------------+     +-------------+     +----------+
-                              |
-                         +----+----+
-                         | 储能电容 |
-                         | 10-100uF|
-                         +---------+
-```
-
-没有电池座、没有编程接口(量产后)、没有调试LED。极致简化带来极低成本和极高可靠性。
-
-## 3. 能量来源详解
-
-### 3.1 动能/压电采集
-
-最常见的 GPD 能量来源，典型应用是无线开关。按下按钮时，内部压电陶瓷片或电磁发电机将机械位移转化为电能。
-
-```
-按钮按下 -> 弹簧驱动磁铁穿过线圈 -> 产生感应电动势
-                                        |
-                                        v
-                              整流 -> 储能电容充电 -> MCU启动 -> 发送RF帧
-```
-
-能量预算: 单次按压约200uJ，MCU启动约30uJ，发送一帧约50uJ，可发送2-3帧(含重传)。
-
-### 3.2 太阳能采集
-
-适用于有光照的环境，如窗边传感器。小型太阳能电池(2cm x 2cm)在室内光照下可产生10-50uW，通过超级电容储能，支持周期性发送(如每分钟一次温度报告)。即使阴天或夜间，储能也能维持数小时的发送。
-
-### 3.3 温差发电(TEG)
-
-利用温度差异发电，适用于暖通系统。在暖通管道上，35度温差可持续产生约100uW，足够每分钟发送一次数据。温差越大发电功率越高。
-
-### 3.4 RF射频能量采集
-
-从环境无线电波(WiFi、蜂窝基站等)中提取能量。能量密度最低，通常只在距离发射源很近时才实用，商业产品较少采用。
-
-## 4. Green Power协议机制
-
-### 4.1 协议栈位置
-
-GP 不是独立协议栈，而是 Zigbee 协议栈的一个特性。GPD 只实现最底层的 PHY/MAC 加上一个极简的 GP Stub，不实现完整网络层。
-
-### 4.2 GP帧结构
-
-GP 帧设计追求极致精简:
-
-```
-| 字段           | 大小(字节) | 说明                    |
-|----------------|-----------|-------------------------|
-| Frame Control  | 1         | 帧类型和选项标志        |
-| Sequence Number| 1         | 用于去重                |
-| Source ID      | 4         | GPD的唯一标识符         |
-| Command ID     | 1         | 命令类型(如开/关/调光)  |
-| Payload        | 0-N       | 可选的命令参数          |
-| MIC            | 0/2/4     | 可选的消息完整性校验    |
-```
-
-总帧长度可低至8字节(无安全)或14字节(含4字节MIC)，相比标准 Zigbee 帧30-50字节的开销，能量效率高出数倍。
-
-### 4.3 信道策略与发送逻辑
-
-```python
-# GPD发送逻辑伪代码
-def gpd_transmit(command):
-    channels = [11, 15, 20, 25]  # 预配置信道列表
-    frame = build_gp_frame(source_id, seq_num, command)
-    for ch in channels:
-        set_channel(ch)
-        transmit(frame)  # 每个信道发送一次，增加被Proxy接收概率
-    seq_num = (seq_num + 1) % 256
-    power_down()  # 关闭一切，等待下次能量事件
-```
-
-GPD 在多个预定义信道上依次发送同一帧，增加被附近 Proxy 接收的概率。
-
-## 5. Proxy和Sink角色
-
-### 5.1 Green Power Proxy
-
-Proxy 是 GP 生态中的"翻译官"，负责将 GP 帧转换为标准 Zigbee 消息:
-
-- 必须是常供电的 Zigbee 路由器
-- 持续监听 GP 帧(在配置的信道上)
-- 收到 GP 帧后封装为标准 Zigbee 帧转发给 Sink
-- 维护 GP 设备注册表(Proxy Table)
-
-```
-GPD ----[GP帧]----> Proxy ----[标准Zigbee帧]----> Sink
-(无电池开关)        (智能插座)                    (智能灯泡)
-```
-
-### 5.2 Green Power Sink
-
-Sink 是 GP 命令的最终执行者: 接收 Proxy 转发的 GP 命令，执行对应动作(如开灯、关灯、调光)，维护 Sink Table 记录哪些 GPD 的命令应该响应。通常是被控制的设备本身。
-
-### 5.3 Combo设备
-
-很多实际产品同时充当 Proxy 和 Sink。例如智能灯泡: 作为 Proxy 监听 GP 帧并可转发给网络中其他 Sink; 作为 Sink 直接响应 GP 开关的开/关命令; 同时作为 Router 参与标准 Zigbee 路由。用户只需一个 GP 开关和一个智能灯泡即可工作。
-
-## 6. 配对(Commissioning)流程
-
-### 6.1 配对的本质
-
-GPD 没有持久状态，不能执行标准 Zigbee 网络加入。配对的本质是让 Proxy/Sink 学会识别特定 GPD 的 Source ID 和命令。
-
-### 6.2 三种配对方式
-
-方式一 - 按钮序列配对:
-1. Sink进入配对模式(如长按灯泡按钮)
-2. 用户操作GPD(如按开关4次)
-3. GPD发送Commissioning帧(含Source ID + 支持的命令列表)
-4. Proxy收到并转发给Sink
-5. Sink记录GPD信息，配对完成
-
-方式二 - 近距离配对: 将GPD靠近Sink(距离小于10cm)，利用信号强度判断是否为配对请求。
-
-方式三 - 预配置: 工厂预写入GPD的Source ID到Sink，或通过网关App配置Sink Table。
-
-### 6.3 安全密钥分发
-
-配对过程中可建立安全关联: 无安全(级别0)、预共享密钥(GPD和Sink预装相同密钥)、配对时交换密钥(Commissioning帧携带加密密钥，需要额外能量)。
-
-## 7. Green Power安全机制
-
-### 7.1 安全级别
-
-```
-级别0: 无安全 - 帧明文传输，无认证，适用于非关键场景
-级别2: 4字节MIC + 帧计数器 - 消息认证但不加密，防篡改不防窃听
-级别3: AES-128-CCM加密 + 4字节MIC - 同时提供机密性和完整性
-```
-
-### 7.2 帧计数器问题与解决
-
-GPD 断电后计数器丢失，标准重放保护失效。解决方案:
-
-- 方案A(随机序列号): GPD每次使用随机序列号，Proxy/Sink维护最近收到的列表，短时间内相同序列号视为重复丢弃。简单但无法防录制重放攻击。
-- 方案B(NVM计数器): GPD使用非易失存储保存计数器，每次发送后递增写入。安全性高但需要持久化存储能力，硬件成本增加。
-
-### 7.3 密钥类型
-
-- 共享密钥: 所有GP设备使用相同密钥，简单但一个泄露影响全网
-- 独立密钥: 每个GPD唯一密钥，安全但管理复杂
-- 派生密钥: 从Source ID和主密钥派生，平衡安全性和管理复杂度
-
-## 8. 双向通信(Bidirectional GP)
-
-### 8.1 Rx-after-Tx模式
-
-虽然大多数 GPD 是纯发送设备，协议支持可选的双向通信:
-
-```
-GPD发送GP帧 -> 短暂延迟(2ms) -> GPD开启接收窗口(10ms)
-                                       |
-Proxy在窗口内发送响应帧 <--------------+
-```
-
-### 8.2 用途与能量代价
-
-用途包括配置更新(远程修改发送信道)和确认反馈(命令是否成功接收)。
-
-能量代价: 接收窗口10ms约消耗100uJ，双向模式总能耗约为单向的3倍。因此通常只在配对阶段使用，正常工作时仍为单向发送。
-
-## 9. 典型应用与产品
-
-### 9.1 动能开关(最成熟应用)
-
-用户按下开关，压电或电磁发电机产生能量，发送开/关/调光命令。代表产品: Philips Hue智能调光开关、Friends of Hue系列、各种EnOcean兼容自发电开关。
-
-典型动能开关规格:
-- 按压力: 约5N(正常按钮手感)
-- 行程: 约3mm
-- 产生能量: 约200uJ
-- 发送帧数: 3帧(含信道重复)
-- 响应时间: 小于50ms(从按下到灯响应)
-
-### 9.2 其他应用场景
-
-- 门窗传感器(太阳能): 小型太阳能电池配合超级电容，门窗开合时发送状态通知
-- 暖通传感器(温差发电): 安装在暖气管道上，利用温差发电周期报告温度
-- 占位传感器(太阳能): 天花板上利用室内照明光能供电，检测人员进出
-- 水流传感器(微型水力): 利用水流驱动微型发电机，报告用水事件
-
-### 9.3 与EnOcean对比
-
-| 特性 | Zigbee Green Power | EnOcean |
-|------|-------------------|---------|
-| 频段 | 2.4GHz | 868MHz/902MHz/2.4GHz |
-| 协议 | Zigbee联盟标准 | EnOcean联盟标准 |
-| 网络 | 融入Zigbee Mesh | 星型/中继 |
-| 互操作 | 所有Zigbee 3.0设备 | EnOcean生态内 |
-| 传输距离 | 10-30m(室内) | 30-100m(sub-GHz) |
-
-选型建议: 已有Zigbee网络选GP(无缝集成); 大型商业建筑选EnOcean(sub-GHz穿透力强); 智能家居选GP(与Hue/IKEA生态兼容); 新建项目评估Matter over Thread是否更适合。
-
-## 10. 设计Green Power产品的实践建议
-
-### 10.1 硬件设计要点
-
-- 储能电容选择: 根据发送帧数和MCU启动能耗计算最小容量，留30%余量
-- 电源管理IC: 选择启动电压低(小于1V)、静态功耗极低的升压转换器
-- 天线设计: PCB天线即可，但需确保在目标安装环境中的辐射效率
-- 温度范围: 能量采集效率随温度变化，需在极端温度下验证
-
-### 10.2 固件开发要点
-
-- 启动时间最小化: 跳过不必要的外设初始化，直接进入发送逻辑
-- 信道列表可配置: 通过配对过程或NVM存储优化信道选择
-- 序列号管理: 如果有NVM，使用单调递增计数器; 否则使用随机值
-- 测试覆盖: 验证最低能量条件下(如电容半充)仍能成功发送
-
-## 总结
-
-Zigbee Green Power 通过极致简化的设备端设计，让能量采集供电的物联网设备成为现实。核心思想是将复杂性从资源受限的 GPD 转移到常供电的 Proxy 和 Sink 上。GPD 不加入网络、不路由、不保持状态，只在有能量时发送短帧。Proxy 负责监听并转换为标准 Zigbee 消息。安全机制在能量约束下做了务实折中。动能开关是最成熟的应用，与 EnOcean 相比优势在于 Zigbee 生态的互操作性。随着能量采集技术进步和物联网规模增长，GP将在"免维护"物联网中扮演越来越重要的角色。
+1. 先测代理覆盖，再大规模铺无电池开关。
+2. 把“按压→灯响应”P99 时延与失败率写入验收。
+3. 文档化密钥与更换/重新配对流程。
 
 ## 参考文献
 
-1. Zigbee Alliance, "Zigbee Cluster Library Specification - Green Power Feature", Revision 8, 2021
-2. Zigbee Alliance, "Zigbee PRO Green Power Feature Specification", 2019
-3. Texas Instruments, "Energy Harvesting for Zigbee Green Power Devices", SWRA680, 2020
-4. EnOcean Alliance, "EnOcean Radio Protocol 2.0 Specification", 2022
-5. Silicon Labs, "AN1318: Zigbee Green Power Gateway Implementation Guide", 2021
+[1] CSA, Zigbee Green Power specification documents.
+[2] CSA, Green Power Proxy / Sink behavior descriptions.
+[3] Energy harvesting transducer application notes (piezo switch vendors).
+[4] Silicon Labs / vendor ZGP implementation guides.
+[5] RF energy and link budget notes for ultra-short GPD frames.
+[6] Zigbee Green Power security and commissioning guidance.
+[7] Building maintenance TCO studies: battery replacement vs batteryless.
+[8] IEEE 802.15.4 frame overhead vs constrained energy budgets.
+[9] Interoperability test reports for multi-vendor GP switches (anecdotal).
+[10] Matter bridging considerations for legacy Green Power devices.
+[11] Comparative batteryless switch technologies (EnOcean vs ZGP) — market notes.

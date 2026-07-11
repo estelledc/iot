@@ -3,401 +3,157 @@ schema_version: '1.0'
 id: llm-quantization-gptq-awq
 title: 大模型推理量化：GPTQ 与 AWQ
 layer: 5
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 22
-prerequisites: UNKNOWN
-tags: []
+reading_time: 24
+prerequisites:
+  - model-compression-edge
+  - neural-network-quantization-int8
+tags:
+- GPTQ
+- AWQ
+- LLM量化
+- PTQ
+- INT4
+- GGUF
+- QLoRA
+- 边缘推理
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 大模型推理量化：GPTQ 与 AWQ
 
-> **难度**：🟡 中级 | **领域**：模型压缩、大语言模型、边缘推理 | **阅读时间**：约 22 分钟
+> **难度**：🟡 中级 | **领域**：模型压缩、大语言模型、边缘推理 | **关键词**：GPTQ, AWQ, PTQ, INT4 | **阅读时间**：约 24 分钟
 
 ## 日常类比
 
-想象你要搬家，有一整面墙的书（模型权重）。每本书都是精装硬皮版（FP16，每个参数 2 字节）。你的新公寓书架只有原来的四分之一大（边缘设备内存）。
+整面墙精装书（FP16 权重）要搬进只有四分之一书架的公寓（边缘内存）。GPTQ 像逐本压缩并微调邻书位置补偿信息损失；AWQ 先看你常翻哪 1% 的书（激活显著通道），对其加保护再大胆压其余——空间省了，阅读体验往往仍可用[1][2]。
 
-GPTQ 的做法像是：逐本检查每本书，把不太重要的换成口袋平装版（4-bit），但对于那些你经常翻阅的关键参考书，会特别小心地保留关键内容。它还会在压缩一本书时，微调旁边几本书的摆放位置来补偿信息损失。
+## 摘要
 
-AWQ 则更聪明：它先观察你平时最常翻哪些书（激活感知），发现只有 1% 的书被频繁使用。对这 1% 的关键书籍保持高精度，其余 99% 大胆压缩。这样整体空间省了，但阅读体验几乎不变。
+对比训练后量化（Post-Training Quantization, PTQ）路线下的 GPTQ 与 AWQ，并对照 GGUF、bitsandbytes、SmoothQuant 等。困惑度（Perplexity, PPL）、耗时与 tokens/s 来自公开论文或社区报告量级，换模型/换板会变，部署须实测。
 
-## 1. 量化基础回顾
+## 1 量化基础
 
-### 1.1 为什么需要量化
+### 1.1 为何需要
 
-一个 7B 参数的 LLM 在不同精度下的内存需求：
+| 精度 | 每参数 | 7B 量级 | 13B 量级 | 70B 量级 |
+|------|--------|---------|----------|----------|
+| FP32 | 4 B | ~28 GB | ~52 GB | ~280 GB |
+| FP16 | 2 B | ~14 GB | ~26 GB | ~140 GB |
+| INT8 | 1 B | ~7 GB | ~13 GB | ~70 GB |
+| INT4 | 0.5 B | ~3.5 GB | ~6.5 GB | ~35 GB |
 
-| 精度 | 每参数字节 | 7B 模型大小 | 13B 模型大小 | 70B 模型大小 |
-|------|-----------|------------|-------------|-------------|
-| FP32 | 4 B | 28 GB | 52 GB | 280 GB |
-| FP16 | 2 B | 14 GB | 26 GB | 140 GB |
-| INT8 | 1 B | 7 GB | 13 GB | 70 GB |
-| INT4 | 0.5 B | 3.5 GB | 6.5 GB | 35 GB |
-| 3-bit | 0.375 B | 2.6 GB | 4.9 GB | 26.3 GB |
-
-Jetson Orin Nano 只有 8 GB 统一内存，要跑 7B 模型必须至少 INT4。
+上表为参数存储粗算，不含 KV Cache 与运行时碎片。Jetson Orin Nano 等约 8 GB 统一内存跑 7B，通常至少需要约 4-bit 权重[3]。
 
 ### 1.2 PTQ vs QAT
 
-| 特性 | 训练后量化 (PTQ) | 量化感知训练 (QAT) |
-|------|-----------------|-------------------|
-| 需要训练数据 | 少量校准集 (128-1024 样本) | 完整训练集 |
-| 计算成本 | 几分钟到几小时 | 数天到数周 |
-| 精度恢复 | 中等 | 最佳 |
-| 适用场景 | 部署阶段快速压缩 | 精度要求极高 |
-| 代表方法 | GPTQ, AWQ, SmoothQuant | QLoRA, LLM-QAT |
+| 特性 | PTQ | 量化感知训练（QAT） |
+|------|-----|---------------------|
+| 数据 | 少量校准集 | 完整训练集 |
+| 成本 | 分钟–小时级 | 天–周级 |
+| 精度 | 中–好 | 通常最佳 |
+| LLM 主流 | GPTQ, AWQ, SmoothQuant[1][2][4] | LLM-QAT 等，成本高 |
 
-对于大模型，QAT 的计算成本通常不可接受，因此 PTQ 是主流选择。
+## 2 GPTQ
 
-## 2. GPTQ 算法详解
+目标近似 \(\min \|WX - Q(W)X\|_2^2\)：逐列量化并用 Hessian 信息补偿后续列误差（Optimal Brain Quantization 思路）[1]。实践要点：列排序、lazy batch 更新、分组量化（常见 group_size=128）。
 
-### 2.1 核心思想：最优脑量化
+校准样本量论文常用约 128 条量级；7B 在 A100 上量化常为数分钟至十余分钟量级，视实现而定[1]。
 
-GPTQ 基于 Optimal Brain Quantization (OBQ) 框架，核心目标是最小化量化误差：
+## 3 AWQ
 
-```
-min ||WX - Q(W)X||^2
-```
+观察：少数与大激活对应的权重通道对输出影响大（论文称约 1% 量级显著通道）[2]。通过逐通道缩放放大重要权重再量化，反缩放后保护显著方向，且可用标准 GEMM，硬件友好。
 
-其中 W 是原始权重，Q(W) 是量化后的权重，X 是校准数据的激活值。
+### GPTQ vs AWQ（公开报告量级）
 
-### 2.2 算法流程
+| 特性 | GPTQ[1] | AWQ[2] |
+|------|---------|--------|
+| 策略 | Hessian 误差补偿 | 激活感知缩放 |
+| 校准 | ~128 样本 | ~128 样本 |
+| 7B 量化时间 | 常略长 | 常略短 |
+| LLaMA-7B 4-bit PPL | 论文约 5.85 量级 | 论文约 5.78 量级 |
+| 推理 | 依赖专用 kernel | 标准 GEMM 友好 |
+| 内存 | 需 Hessian 相关结构 | 主要需激活统计 |
 
-```python
-import torch
-import numpy as np
+PPL 数字绑定具体模型与评测集，换 Llama-2/3 或领域数据会漂移[1][2][5]。
 
-def gptq_quantize_layer(W, X, bits=4, group_size=128):
-    """
-    GPTQ 逐列量化算法简化实现
-    W: [out_features, in_features] 权重矩阵
-    X: [n_samples, in_features] 校准数据激活
-    """
-    rows, cols = W.shape
-    Q = torch.zeros_like(W)  # 量化后的权重
-    
-    # 计算 Hessian: H = 2 * X^T @ X
-    H = 2 * X.T @ X  # [in_features, in_features]
-    H_inv = torch.linalg.cholesky_inv(torch.linalg.cholesky(
-        H + 1e-6 * torch.eye(cols)  # 正则化确保正定
-    ))
-    
-    # 按列处理
-    for col in range(cols):
-        w = W[:, col].clone()
-        d = H_inv[col, col]  # Hessian 逆的对角元素
-        
-        # 量化当前列
-        q = quantize_to_nbit(w, bits)
-        Q[:, col] = q
-        
-        # 关键步骤：用 Hessian 信息补偿后续列的误差
-        error = (w - q) / d
-        W[:, col+1:] -= error.unsqueeze(1) * H_inv[col, col+1:].unsqueeze(0)
-    
-    return Q
+## 4 其他方案
 
-def quantize_to_nbit(w, bits, group_size=128):
-    """对称量化到 n-bit"""
-    max_val = w.abs().max()
-    scale = max_val / (2**(bits-1) - 1)
-    q = torch.round(w / scale).clamp(-(2**(bits-1)), 2**(bits-1) - 1)
-    return q * scale
-```
+| 方法 | 位宽 | 框架 | 备注 |
+|------|------|------|------|
+| GGUF q4_k_m 等[6] | 混合约 4–5 bit | llama.cpp | CPU/Metal/CUDA 生态成熟 |
+| bitsandbytes NF4[3] | 4 | HF Transformers | 加载即用；双重量化可选 |
+| SmoothQuant[4] | 常 W8A8 | 研究/部分引擎 | 迁激活 outlier 到权重 |
+| OmniQuant 等[7] | 可变 | 研究 | 可学习量化参数 |
+| KV 量化（如 KIVI）[8] | KV 可至 2–4 bit | 研究/集成中 | 长上下文内存关键 |
 
-### 2.3 GPTQ 的关键优化
+### WikiText 类 PPL 对照（示意，非排行榜）
 
-- **列排序**：按 Hessian 对角线元素排序，先量化"容易"的列（对角元素大的列量化误差影响小）
-- **Lazy Batch Updates**：累积多列的误差补偿，一次性更新，减少内存访问次数
-- **分组量化 (Group Quantization)**：每 128 列共享一组 scale/zero-point，平衡精度和额外存储开销
+| 方法 | 位宽 | PPL 量级 | 权重大小量级 |
+|------|------|----------|--------------|
+| FP16 | 16 | ~5.5 | ~14 GB |
+| GPTQ | 4 | ~5.8–5.9 | ~3.6 GB |
+| AWQ | 4 | ~5.7–5.8 | ~3.6 GB |
+| GGUF q4_k_m | ~4.5 | 常接近上列 | ~4 GB |
+| 3-bit 诸方法 | 3 | 常明显升高 | ~2.7–3 GB |
 
-## 3. AWQ 算法详解
+## 5 边缘部署要点
 
-### 3.1 核心观察：1% 的显著权重
+### 5.1 内存预算
 
-AWQ 的关键发现：在 LLM 中，只有约 1% 的权重通道对模型输出有显著影响，这些通道对应着激活值较大的输入特征。
+总内存 ≈ 权重量化大小 + KV Cache（常 FP16，除非另量化）+ 激活与碎片。7B、4-bit、ctx≈2048 时，权重约 3.5 GB 量级，KV 可达约 1 GB 量级，合计常需约 5 GB+ 余量——8 GB 设备可行但紧张[3][11]。
 
-```python
-def find_salient_channels(activations, threshold_percentile=99):
-    """
-    找到激活值显著的通道
-    activations: [n_samples, in_features]
-    """
-    # 计算每个通道的平均激活幅度
-    channel_importance = activations.abs().mean(dim=0)  # [in_features]
-    
-    # 找到 top 1% 的通道
-    threshold = torch.quantile(channel_importance, threshold_percentile / 100)
-    salient_mask = channel_importance > threshold
-    
-    return salient_mask, channel_importance
-```
+### 5.2 位宽与任务
 
-### 3.2 激活感知缩放
+公开 scaling 观察：8→4 bit 对许多生成任务可接受；3 bit 及以下在数学/代码上退化更明显；混合精度（嵌入/lm_head 更高位）可改善均值位宽与质量折中[5][9]。
 
-AWQ 不是简单地跳过显著权重的量化，而是通过缩放来保护它们：
+### 5.3 QLoRA
 
-```python
-def awq_scale_search(W, X, bits=4, n_grid=20):
-    """
-    AWQ 缩放因子搜索
-    对显著通道乘以 s > 1（放大权重，缩小激活），减少量化误差
-    """
-    importance = X.abs().mean(dim=0)  # [in_features]
-    
-    best_scale = torch.ones(W.shape[1])
-    best_error = float('inf')
-    
-    # 网格搜索最优缩放因子
-    for ratio in torch.linspace(0, 1, n_grid):
-        # 缩放因子：重要通道放大
-        scale = importance.pow(ratio).clamp(min=1e-4)
-        
-        # 应用缩放：W_scaled = W * diag(s)
-        W_scaled = W * scale.unsqueeze(0)
-        
-        # 量化缩放后的权重
-        W_quant = quantize_to_nbit(W_scaled, bits)
-        
-        # 反缩放得到最终量化权重
-        W_final = W_quant / scale.unsqueeze(0)
-        
-        # 计算量化误差
-        error = ((W @ X.T) - (W_final @ X.T)).pow(2).mean()
-        
-        if error < best_error:
-            best_error = error
-            best_scale = scale
-    
-    return best_scale
-```
+在 4-bit 基座上挂 LoRA 适配器微调，可训练参数远小于全量，消费级 GPU 常可完成[3]。边缘推理仍需合并或保留适配器加载路径。
 
-### 3.3 AWQ vs GPTQ 对比
+## 6 实践建议
 
-| 特性 | GPTQ | AWQ |
-|------|------|-----|
-| 核心策略 | Hessian 引导的误差补偿 | 激活感知的权重缩放 |
-| 校准数据量 | 128 样本 | 128 样本 |
-| 量化时间 (7B) | ~10 分钟 (A100) | ~5 分钟 (A100) |
-| 4-bit PPL (LLaMA-7B) | 5.85 | 5.78 |
-| 硬件友好性 | 需要特殊 kernel | 标准 GEMM 即可 |
-| 推理速度 | 依赖 kernel 实现 | 通常更快 1.2-1.5x |
-| 内存开销 | 需存 Hessian | 只需激活统计 |
+- GPU 服务优先试 AWQ/vLLM 生态；CPU/多后端优先 GGUF[2][6]。
+- 校准数据尽量贴近下游分布。
+- 验收看下游任务，不只看 PPL。
+- 不同工具的“4-bit”不可互换；注意 chat template。
+- Jetson 上 llama.cpp CUDA 常需源码编译[6]。
 
-## 4. 其他量化方案对比
+## 7 局限、挑战与可改进方向
 
-### 4.1 GGML/GGUF (llama.cpp)
+### 1. 校准集与域偏移
 
-llama.cpp 使用自定义的量化格式，专为 CPU 推理优化：
+**局限**：通用 C4/Wiki 校准在垂直术语、代码、多语言上可能次优。
+**改进**：用目标域无标签文本做校准；固定黄金集做回归。
 
-```bash
-# 使用 llama.cpp 量化模型
-./quantize ./models/llama-7b-f16.gguf ./models/llama-7b-q4_k_m.gguf q4_k_m
+### 2. Kernel 与可移植性
 
-# 常用量化级别
-# q4_0: 最基础的 4-bit，每 32 权重共享 1 个 scale
-# q4_k_m: 混合精度 4-bit，attention 层用更高精度
-# q5_k_m: 5-bit 混合，精度接近 FP16
-# q3_k_s: 3-bit，极端压缩
-```
+**局限**：GPTQ 速度强依赖 kernel；MCU/NPU 工具链支持参差。
+**改进**：优先选目标运行时原生格式（TRT-LLM、GGUF、厂商 INT4）；抽象“量化产物”与“运行时”接口[10]。
 
-### 4.2 bitsandbytes
+### 3. 低于 4-bit 与激活量化
 
-```python
-# bitsandbytes 4-bit 量化加载
-from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+**局限**：权重量化不等于激活/KV 也低比特；端到端 W4A4 仍难。
+**改进**：权重 4-bit + INT8 KV；关注 BiLLM 等极低比特研究但谨慎上生产[9]。
 
-quantization_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_quant_type="nf4",       # NormalFloat4 量化类型
-    bnb_4bit_compute_dtype=torch.float16,
-    bnb_4bit_use_double_quant=True,   # 双重量化：量化 scale 本身
-)
+### 4. 评测单一
 
-model = AutoModelForCausalLM.from_pretrained(
-    "meta-llama/Llama-2-7b-hf",
-    quantization_config=quantization_config,
-    device_map="auto"
-)
-# 内存占用: ~3.9 GB (vs FP16 的 14 GB)
-```
-
-### 4.3 量化质量对比 (LLaMA-2-7B, WikiText-2 PPL)
-
-| 方法 | 位宽 | PPL | 模型大小 | 推理框架 |
-|------|------|-----|----------|----------|
-| FP16 基准 | 16 | 5.47 | 14 GB | PyTorch |
-| GPTQ | 4 | 5.85 | 3.6 GB | AutoGPTQ |
-| AWQ | 4 | 5.78 | 3.6 GB | vLLM/TGI |
-| GGUF q4_k_m | 4.5 | 5.72 | 4.1 GB | llama.cpp |
-| bitsandbytes NF4 | 4 | 5.82 | 3.9 GB | HF Transformers |
-| GPTQ | 3 | 6.61 | 2.7 GB | AutoGPTQ |
-| GGUF q3_k_s | 3 | 6.45 | 2.9 GB | llama.cpp |
-
-## 5. 边缘设备实战部署
-
-### 5.1 Jetson Orin 部署 7B 模型
-
-```bash
-# 在 Jetson Orin Nano (8GB) 上部署 Llama-2-7B-Q4
-# 使用 llama.cpp 的 CUDA 后端
-
-# 编译 llama.cpp with CUDA
-cmake -B build -DGGML_CUDA=ON
-cmake --build build --config Release -j$(nproc)
-
-# 运行推理
-./build/bin/llama-cli \
-    -m models/llama-2-7b-q4_k_m.gguf \
-    -n 128 \
-    -ngl 33 \       # 所有层 offload 到 GPU
-    --ctx-size 2048 \
-    -p "Explain IoT edge computing in simple terms:"
-
-# 实测性能 (Jetson Orin Nano, 8GB):
-# - 首 token 延迟: ~180 ms
-# - 生成速度: ~12 tokens/s (q4_k_m)
-# - 内存占用: ~5.2 GB (模型 + KV cache)
-# - 功耗: ~12W
-```
-
-### 5.2 内存预算计算
-
-```python
-def estimate_memory(params_b, bits, ctx_len, n_layers, d_model, n_heads):
-    """估算 LLM 推理内存需求"""
-    # 模型权重
-    model_mem = params_b * 1e9 * bits / 8  # bytes
-    
-    # KV Cache (FP16)
-    head_dim = d_model // n_heads
-    kv_per_layer = 2 * ctx_len * d_model * 2  # K和V, FP16
-    kv_total = kv_per_layer * n_layers
-    
-    # 激活内存 (推理时较小)
-    activation_mem = 2 * ctx_len * d_model * 2  # 约 2 层的激活
-    
-    total = model_mem + kv_total + activation_mem
-    return {
-        "model_gb": model_mem / 1e9,
-        "kv_cache_gb": kv_total / 1e9,
-        "activation_gb": activation_mem / 1e9,
-        "total_gb": total / 1e9
-    }
-
-# LLaMA-2-7B, 4-bit, ctx=2048
-mem = estimate_memory(
-    params_b=7, bits=4, ctx_len=2048,
-    n_layers=32, d_model=4096, n_heads=32
-)
-# model: 3.5 GB, kv_cache: 1.0 GB, total: ~4.6 GB
-# 适合 8GB Jetson Orin Nano
-```
-
-### 5.3 Perplexity 退化分析
-
-量化位宽与困惑度的关系呈非线性：
-
-```
-PPL 退化率 (相对 FP16)
-|
-15%|                              * 2-bit
-|
-10%|                    * 3-bit
-|
-5% |          * 4-bit
-|
-2% |  * 5-bit
-1% |* 8-bit
-|_________________________________
-   8    5    4    3    2    位宽
-
-关键发现：
-- 8->4 bit: PPL 增加 ~7% (可接受)
-- 4->3 bit: PPL 增加 ~15% (任务相关)
-- 3->2 bit: PPL 增加 >30% (通常不可用)
-- 混合精度 (attention 8-bit + FFN 4-bit) 可在 4.5-bit 均值下接近 8-bit 精度
-```
-
-## 6. 高级技巧
-
-### 6.1 混合精度量化策略
-
-```python
-# 不同层使用不同位宽
-layer_config = {
-    "embed_tokens": 8,        # 嵌入层保持高精度
-    "lm_head": 8,             # 输出层保持高精度
-    "self_attn.q_proj": 4,    # 注意力投影 4-bit
-    "self_attn.k_proj": 4,
-    "self_attn.v_proj": 4,
-    "self_attn.o_proj": 4,
-    "mlp.gate_proj": 4,       # FFN 层 4-bit (参数最多)
-    "mlp.up_proj": 4,
-    "mlp.down_proj": 4,
-    "input_layernorm": 16,    # LayerNorm 保持 FP16
-    "post_attention_layernorm": 16,
-}
-# 平均位宽约 4.3 bit，但关键层精度有保障
-```
-
-### 6.2 量化后微调 (QLoRA)
-
-```python
-from peft import LoraConfig, get_peft_model
-
-# 在 4-bit 量化模型上添加 LoRA adapter
-lora_config = LoraConfig(
-    r=16,
-    lora_alpha=32,
-    target_modules=["q_proj", "v_proj", "k_proj", "o_proj"],
-    lora_dropout=0.05,
-    bias="none",
-    task_type="CAUSAL_LM"
-)
-
-model = get_peft_model(model, lora_config)
-# 可训练参数: ~10M (vs 7B 总参数)
-# 训练内存: ~6 GB (可在单张消费级 GPU 上完成)
-```
-
-## 7. 实践建议
-
-### 7.1 初学者入门路径
-
-1. **第一步**：用 bitsandbytes 加载 4-bit 模型，感受量化效果
-2. **第二步**：用 llama.cpp 在本地 CPU 跑 GGUF 模型，理解不同量化级别
-3. **第三步**：学习 GPTQ 原理，用 AutoGPTQ 量化自己的模型
-4. **第四步**：对比 AWQ 和 GPTQ 在目标任务上的表现
-5. **第五步**：在边缘设备上部署，测量实际延迟和精度
-
-### 7.2 具体调优建议
-
-- **选择量化方法**：GPU 推理优先 AWQ（kernel 优化好）；CPU 推理优先 GGUF（llama.cpp 生态成熟）
-- **校准数据**：使用与目标任务相似的数据做校准，通用场景用 C4/WikiText
-- **分组大小**：group_size=128 是精度和速度的最佳平衡点；64 更精确但更慢
-- **评估指标**：不要只看 PPL，务必在下游任务上评估（PPL 低不代表任务表现好）
-- **KV Cache 优化**：对长上下文场景，考虑 KV cache 也做量化（INT8 KV cache 几乎无损）
-
-### 7.3 常见陷阱
-
-- 不同量化工具的 4-bit 不完全等价——GPTQ 的 4-bit 和 GGUF 的 q4_0 精度差异明显
-- 量化后的模型对 prompt 格式更敏感，确保使用正确的 chat template
-- Jetson 上 llama.cpp 的 CUDA 后端需要手动编译，pip 安装的版本通常只有 CPU
-- 3-bit 量化在数学推理和代码生成任务上退化严重，这些任务建议至少 4-bit
+**局限**：只报 PPL 会掩盖指令遵循与安全退化。
+**改进**：任务套件 + 延迟/功耗/热节流联合验收。
 
 ## 参考文献
 
-1. Frantar, E. et al. "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers." ICLR 2023.
-2. Lin, J. et al. "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration." MLSys 2024.
-3. Dettmers, T. et al. "QLoRA: Efficient Finetuning of Quantized Language Models." NeurIPS 2023.
-4. Dettmers, T. et al. "The case for 4-bit precision: k-bit Inference Scaling Laws." ICML 2023.
-5. Xiao, G. et al. "SmoothQuant: Accurate and Efficient Post-Training Quantization for LLMs." ICML 2023.
-6. Gerganov, G. "llama.cpp: Inference of LLaMA model in pure C/C++." GitHub, 2023-2025.
-7. Shao, W. et al. "OmniQuant: Omnidirectionally Calibrated Quantization for Large Language Models." ICLR 2024.
-8. Liu, Z. et al. "KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache." ICML 2024.
-9. Huang, W. et al. "BiLLM: Pushing the Limit of Post-Training Quantization for LLMs." ACL 2024.
-10. NVIDIA. "TensorRT-LLM: A TensorRT Toolbox for Optimized LLM Inference." 2024.
+[1] E. Frantar et al., "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers," ICLR, 2023.
+[2] J. Lin et al., "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration," MLSys, 2024.
+[3] T. Dettmers et al., "QLoRA: Efficient Finetuning of Quantized Language Models," NeurIPS, 2023.
+[4] G. Xiao et al., "SmoothQuant," ICML, 2023.
+[5] T. Dettmers et al., "The case for 4-bit precision: k-bit Inference Scaling Laws," ICML, 2023.
+[6] G. Gerganov et al., "llama.cpp / GGUF," GitHub, 2023–2025.
+[7] W. Shao et al., "OmniQuant," ICLR, 2024.
+[8] Z. Liu et al., "KIVI: Asymmetric KV Cache Quantization," ICML, 2024.
+[9] W. Huang et al., "BiLLM," ACL, 2024.
+[10] NVIDIA, "TensorRT-LLM," 2024.
+[11] W. Kwon et al., "PagedAttention / vLLM," SOSP, 2023.
+[12] B. Jacob et al., "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference," CVPR, 2018.

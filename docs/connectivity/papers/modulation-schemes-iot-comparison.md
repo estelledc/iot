@@ -3,345 +3,111 @@ schema_version: '1.0'
 id: modulation-schemes-iot-comparison
 title: IoT调制方式对比：FSK/LoRa/OFDM/CSS
 layer: 2
-content_type: UNKNOWN
+content_type: comparison
 difficulty: intermediate
-reading_time: 20
+reading_time: 18
 prerequisites: UNKNOWN
-tags: []
+tags:
+  - 调制
+  - FSK
+  - LoRa
+  - CSS
+  - OFDM
+  - OOK
+  - 链路预算
+  - LPWAN
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # IoT调制方式对比：FSK/LoRa/OFDM/CSS
-> **难度**：🟡 中级 | **领域**：数字调制 | **阅读时间**：约 20 分钟
 
-## 引言
+> **难度**：🟡 中级 | **领域**：数字调制 | **阅读时间**：约 18 分钟
 
-调制就像选择用什么方式传递消息。假设你和对岸的朋友约定了灯光信号: 如果用开关灯(亮=1, 灭=0)来传信息,这就是最简单的幅度调制; 如果用灯光闪烁的快慢来传信息,这就是频率调制; 如果约定灯光在不同时刻亮起来代表不同含义,这就是相位调制。
+## 日常类比
 
-在IoT无线通信中,调制方式的选择直接决定了设备能传多远、传多快、耗多少电。不同的IoT应用场景需要在这三者之间做出不同的权衡。
+对岸灯光约定：亮灭传比特像幅度键控；闪烁快慢像频移；何时亮像相移。IoT 选调制，就是在**距离、速率、功耗、复杂度**间权衡；电池设备更偏恒包络与高功率效率[1][5]。
 
-## 1. 调制的基本概念
+## 摘要
 
-### 1.1 什么是数字调制
+对比 OOK、FSK/GFSK、PSK/QAM、LoRa CSS 与 OFDM 的机制与适用边界，并给出灵敏度/带宽直觉与选型流程。灵敏度 dBm 与覆盖公里数为典型量级，**随芯片、带宽、编码与天线而变**[2][4]。
 
-将数字数据(0和1的比特流)编码到模拟载波信号上:
+## 1. 基本权衡
 
-```
-载波信号: s(t) = A * cos(2*pi*f*t + phi)
+载波 \(A\cos(2\pi ft+\phi)\) 可变幅度/频率/相位。IoT 常优先：功率效率、实现成本、抗干扰；频谱效率往往次之。
 
-三个可变参数:
-- A (幅度) -> 幅度调制 (ASK/OOK/QAM)
-- f (频率) -> 频率调制 (FSK)
-- phi (相位) -> 相位调制 (PSK)
-- 组合多个 -> QAM (幅度+相位)
-```
+## 2. 主要体制
 
-### 1.2 核心权衡
+| 调制 | 要点 | 典型去向 |
+|------|------|----------|
+| OOK | 极简能量检测，抗扰弱 | 遥控、唤醒接收 |
+| FSK/GFSK | 恒包络，功放可高效 | Sigfox/Z-Wave/wM-Bus 等 |
+| BPSK/QPSK/… | 功率↔频谱效率阶梯 | NB-IoT/LTE-M 等 |
+| CSS (LoRa) | 啁啾位置编码，SF 换灵敏度 | LoRaWAN |
+| OFDM | 多子载波，PAPR 高 | Wi-Fi、蜂窝下行等 |
 
-每种调制方式都在以下维度之间做权衡: 频谱效率(bit/s/Hz)、功率效率(达到目标误码率所需SNR)、实现复杂度、抗干扰能力。
+LoRa：SF 升高则符号更长、速率降、灵敏度改善（约数 dB/档的经验叙事）[2]。OFDM：抗多径与高频谱效率，但峰均比迫使功放回退，电池设备不友好[1][3]。
 
-IoT设备的特殊需求: 电池供电(需高功率效率)、低成本(需简单实现)、长距离(需高灵敏度)、低数据率(频谱效率非首要)、抗干扰(ISM频段干扰多)。
+## 3. 对比表
 
-## 2. OOK开关键控
+| 维度 | OOK | FSK | CSS | OFDM |
+|------|-----|-----|-----|------|
+| 复杂度 | 极低 | 低 | 中 | 高 |
+| 距离潜力 | 短 | 中–长 | 很长（低速时） | 短–中（常） |
+| 速率 | 极低 | 低 | 低 | 高 |
+| 功放 | 简单 | 恒包络友好 | 恒包络友好 | 需线性 |
 
-### 2.1 原理
+灵敏度直觉：热噪底 \(-174+10\log_{10}(B)\) dBm，再加噪声系数与所需 SNR。窄带换灵敏度、牺牲速率——LPWAN 常用策略[1][2][4]。
 
-```
-调制规则:
-- 数据位 = 1: 发送载波 (开)
-- 数据位 = 0: 不发送 (关)
+## 4. 选型指引
 
-接收: 能量检测, 不需要相位同步
-```
+| 需求 | 更常见选择 |
+|------|------------|
+| 远距+小包+长电池 | CSS 或窄带 FSK |
+| 蜂窝覆盖+移动/QoS | NB-IoT/LTE-M（蜂窝调制与重复） |
+| 高吞吐+有电 | Wi-Fi OFDM |
+| 极低成本近距 | OOK/FSK |
 
-### 2.2 特性
+混合系统很常见：传感走 LPWAN，视频走 Wi-Fi，勿强求单一调制打天下[5]。
 
-优势: 接收器极其简单(只需包络检测器), 功耗极低(0位时不发射), 成本极低。劣势: 灵敏度差, 抗干扰弱, 频谱效率低(1 bit/s/Hz)。
+## 5. 局限、挑战与可改进方向
 
-典型应用: 简单遥控器(车库门, 无线门铃)、低成本Sub-GHz传感器、唤醒接收器。数据速率通常1-10kbps。
+### 1. 只看灵敏度忽略法规占空比
 
-## 3. FSK频移键控
+**局限**：链路预算够但法定空中时间不够。
+**改进**：同步算占空比/跳频约束与网关容量。
 
-### 3.1 原理
+### 2. 高阶调制迷信
 
-```
-二进制FSK:
-- 数据位 = 1: 频率 f1 = fc + delta_f
-- 数据位 = 0: 频率 f0 = fc - delta_f
+**局限**：室内短距也上高阶 QAM，功耗与鲁棒性变差。
+**改进**：按边缘 SNR 选最低够用阶数；启用 AMC 时验证回退。
 
-调制指数 h = 2*delta_f / 数据速率
-h < 1: 窄带FSK, 频谱效率高
-h >= 1: 宽带FSK, 性能更好
-```
+### 3. 把 LoRa SF 当无限旋钮
 
-### 3.2 GFSK高斯频移键控
+**局限**：SF12 覆盖好但空中时间与冲突升。
+**改进**：ADR/人工限 SF；容量与电池联合评估。
 
-GFSK在调制前对数据进行高斯滤波,频谱更紧凑,带外辐射低,相位连续。蓝牙使用BT=0.5的GFSK。
+### 4. OFDM 用于纽扣电池
 
-### 3.3 FSK在IoT中的应用
+**局限**：PAPR 与基带复杂度拖垮续航。
+**改进**：有电再用 Wi-Fi；电池侧改 BLE/FSK/CSS。
 
-```
-使用FSK的IoT协议:
-- Sigfox: 超窄带FSK, 100Hz带宽, 100bps
-- Z-Wave: FSK, 9.6/40/100kbps
-- Wireless M-Bus: FSK/GFSK, 智能抄表
+## 6. 实践要点
 
-FSK优势: 恒包络(功放效率高), 实现简单, 功率效率好(比OOK灵敏度高3dB), 对频率偏移容忍
-```
-
-## 4. PSK相移键控
-
-### 4.1 基本形式
-
-```
-BPSK: 2个相位(0度/180度), 1 bit/s/Hz, 最佳功率效率
-QPSK: 4个相位, 2 bit/s/Hz, 功率效率比BPSK差3dB
-8PSK: 3 bit/s/Hz
-16QAM: 4 bit/s/Hz (幅度+相位组合)
-```
-
-### 4.2 高阶调制的代价
-
-每增加一阶,所需SNR增加约3-6dB,对相位噪声和非线性更敏感,接收器复杂度增加。
-
-### 4.3 PSK在IoT中的应用
-
-```
-NB-IoT: 上行pi/4-QPSK或pi/2-BPSK, 下行QPSK
-LTE-M: QPSK到16QAM, 自适应调制
-WiFi: 最高1024QAM (WiFi 6)
-```
-
-## 5. LoRa CSS调制
-
-### 5.1 工作原理
-
-```
-基本啁啾: 频率在符号时间内从f_min线性扫到f_max
-数据编码: 通过啁啾的起始频率位置编码数据
-- SF7: 128个可能位置, 每符号7位
-- SF12: 4096个可能位置, 每符号12位
-
-解调: 接收信号乘以下啁啾(解啁啾) -> FFT找峰值 -> 峰值位置即数据
-```
-
-### 5.2 LoRa各SF参数
-
-| SF | 位/符号 | 符号时间 | 数据速率 | 灵敏度 |
-|---|---|---|---|---|
-| 7 | 7 | 1.02ms | 5470bps | -123dBm |
-| 9 | 9 | 4.10ms | 1760bps | -129dBm |
-| 10 | 10 | 8.19ms | 977bps | -132dBm |
-| 12 | 12 | 32.8ms | 293bps | -137dBm |
-
-每增加1个SF: 灵敏度改善约3dB, 数据速率减半, 覆盖距离增加约40%。
-
-### 5.3 CSS独特优势
-
-对比FSK: 可容忍20%频率偏移(FSK仅几%), 多普勒鲁棒, 恒包络(功放饱和区工作), 抗多径。对比DSSS: 同步更简单(前导码即标准啁啾), 不需精确码同步。
-
-## 6. OFDM正交频分复用
-
-### 6.1 基本原理
-
-```
-将高速数据流分成N个低速并行流
-每个低速流调制一个子载波
-子载波之间正交(互不干扰)
-并行传输实现高总数据率
-
-关键: 子载波间隔 delta_f = 1/T_symbol
-每子载波可用不同调制(BPSK到1024QAM)
-```
-
-### 6.2 优势
-
-- 抗多径: 每个子载波经历平坦衰落, 循环前缀消除符号间干扰
-- 高频谱效率: 子载波紧密排列(正交允许重叠), 自适应调制
-- 灵活性: 可关闭部分子载波, 支持OFDMA多用户复用
-
-### 6.3 劣势
-
-```
-高峰均比(PAPR):
-- 多个子载波叠加产生高峰值
-- 功放需大线性范围(回退6-12dB)
-- 功放效率低(10-20%), 功耗高
-
-复杂度高:
-- 需FFT/IFFT运算, 精确时频同步
-- 信道估计和均衡
-- 对频率偏移敏感(导致子载波间干扰)
-```
-
-### 6.4 OFDM在IoT中的应用
-
-WiFi(802.11a/g/n/ac/ax): 子载波64-2048, 数据率6Mbps到9.6Gbps, 适合高数据率短距离IoT。802.11ah(WiFi HaLow): 专为IoT设计, Sub-GHz, 覆盖约1km。LTE-M/NB-IoT下行也使用OFDM。
-
-## 7. 调制方式综合对比
-
-### 7.1 性能对比表
-
-| 调制方式 | 复杂度 | 覆盖距离 | 数据速率 | 功耗 | 频谱效率 |
-|---|---|---|---|---|---|
-| OOK | 极低 | 短 | 极低 | 极低 | 低 |
-| FSK/GFSK | 低 | 中-长 | 低 | 低 | 低 |
-| CSS(LoRa) | 中 | 极长 | 低 | 中 | 低 |
-| QPSK | 中 | 中 | 中 | 中 | 中 |
-| OFDM | 高 | 短-中 | 高 | 高 | 高 |
-
-### 7.2 灵敏度对比
-
-```
-接收灵敏度(典型值):
-- OOK 1kbps: 约-110dBm
-- FSK 600bps: 约-130dBm
-- LoRa SF12 125kHz: -137dBm
-- QPSK 15kHz(NB-IoT): -141dBm(含重复)
-- OFDM WiFi 6Mbps: -82dBm
-
-每改善6dB灵敏度, 自由空间距离翻倍
-LoRa比WiFi灵敏度好55dB, 距离差约560倍
-```
-
-### 7.3 功率效率
-
-```
-恒包络调制(FSK, CSS):
-- 功放可工作在饱和区, 效率40-60%
-- 适合电池供电IoT
-
-变包络调制(OFDM, QAM):
-- 功放必须线性(回退6-12dB), 效率10-25%
-- 功耗是恒包络的2-4倍
-- 适合插电设备
-
-这就是LPWAN选择恒包络, WiFi/LTE选择OFDM的根本原因
-```
-
-## 8. 灵敏度与覆盖距离的关系
-
-### 8.1 灵敏度的决定因素
-
-```
-接收灵敏度 = 热噪声底 + 噪声系数 + 所需SNR
-热噪声底 = -174 + 10*log10(带宽) dBm
-
-LoRa SF12 125kHz:
--174 + 51 + 6(NF) - 20(SNR) = -137dBm
-
-WiFi 20MHz 64QAM:
--174 + 73 + 5(NF) + 20(SNR) = -76dBm
-```
-
-### 8.2 带宽与灵敏度的权衡
-
-窄带宽意味着更好的灵敏度但更低的数据率。带宽减半: 噪声底降低3dB, 灵敏度改善3dB, 但数据率也减半。LPWAN的核心策略就是用极低数据率换取极高灵敏度和覆盖距离。
-
-```
-带宽与灵敏度的关系:
-
-LoRa SF12在不同带宽下:
-- 125kHz: 灵敏度-137dBm, 数据率293bps
-- 250kHz: 灵敏度-134dBm, 数据率586bps
-- 500kHz: 灵敏度-131dBm, 数据率1172bps
-
-带宽减半 -> 灵敏度改善3dB -> 距离增加约40%
-但数据率也减半
-
-这就是LoRaWAN默认使用125kHz的原因:
-用最低带宽换取最高灵敏度
-```
-
-## 9. 如何为IoT应用选择调制方式
-
-### 9.1 决策矩阵
-
-```
-长距离 + 低数据率 + 长电池:
--> LoRa CSS 或 FSK (智慧农业, 环境监测, 资产追踪)
-
-中等距离 + 中等数据率 + 蜂窝覆盖:
--> QPSK (NB-IoT/LTE-M) (智能电表, 车联网, 共享单车)
-
-短距离 + 高数据率 + 有电源:
--> OFDM (WiFi/WiFi HaLow) (安防摄像头, 智能家居网关)
-
-极短距离 + 极低成本 + 极简单:
--> OOK 或 FSK (无线门铃, 遥控器, 简单传感器)
-```
-
-### 9.2 混合方案
-
-实际IoT系统常使用多种调制: 门窗传感器用LoRa(长电池低数据率), 温控器用BLE(中等距离低功耗), 摄像头用WiFi OFDM(高数据率有电源)。
-
-### 9.3 调制选择的决策流程
-
-```
-决策流程:
-1. 距离需求 > 5km?
-   -> 是: LoRa CSS 或 Sigfox FSK (LPWAN)
-   -> 否: 继续
-
-2. 有持续电源?
-   -> 是: 考虑WiFi OFDM (高数据率)
-   -> 否: 继续
-
-3. 数据率需求 > 1Mbps?
-   -> 是: WiFi OFDM
-   -> 否: 继续
-
-4. 需要蜂窝覆盖?
-   -> 是: NB-IoT QPSK 或 LTE-M
-   -> 否: 继续
-
-5. 电池寿命 > 5年?
-   -> 是: LoRa CSS 或 FSK
-   -> 否: BLE或Zigbee
-
-6. 成本极敏感?
-   -> 是: OOK 或 FSK
-```
-
-## 10. 实际案例分析
-
-### 10.1 智慧农业场景
-
-土壤传感器需要5km覆盖, 每小时1次数据(约20字节), 10年电池寿命(2400mAh)。
-
-### 10.2 方案对比
-
-```
-方案A - LoRa CSS SF10:
-- 灵敏度-132dBm, 链路预算149dB, 覆盖约8km > 5km
-- 空中时间370ms, PA电流90mA
-- 电池寿命: 约12年 > 10年
-
-方案B - FSK 1.2kbps:
-- 灵敏度-125dBm, 链路预算142dB, 覆盖约4km < 5km
-- 不满足距离要求, 需降低速率到300bps
-- 降低速率后空中时间增加4倍, 电池寿命降至8年 < 10年
-
-方案C - WiFi HaLow OFDM:
-- 灵敏度-100dBm, 覆盖约0.5km, 远不满足
-- 功耗高, 电池寿命约2年
-```
-
-### 10.3 结论
-
-LoRa CSS是最佳选择: 覆盖距离满足(8km > 5km有余量), 电池寿命满足(12年 > 10年), 成本适中(芯片约2-3美元)。FSK在相同功耗下无法达到同样覆盖, OFDM完全不适合远距离低功耗场景。
-
-## 总结
-
-IoT调制方式的选择本质上是在覆盖距离、数据速率和功耗之间做权衡。OOK最简单但性能最差; FSK是低功耗IoT的经典选择; LoRa CSS通过啁啾扩频实现了极高处理增益和灵敏度,是LPWAN最佳选择; OFDM提供最高频谱效率但功耗高,适合有电源的高带宽场景。
-
-恒包络调制(FSK/CSS)允许功放工作在高效率饱和区,这对电池供电IoT设备至关重要。选择调制方式时,应首先明确应用核心需求,然后在满足需求前提下选择最简单成熟的方案。
+1. 先写清距离、日报文量、供电，再选调制族。
+2. 用目标模组测 PER–功率曲线，不抄宣传灵敏度。
+3. 多技术共存时做带内干扰与共存测试。
 
 ## 参考文献
 
-- Proakis, J.G. "Digital Communications", 5th Edition, McGraw-Hill, 2007
-- Semtech. "LoRa Modulation Basics", Application Note AN1200.22, 2015
-- IEEE 802.11ah Standard for Sub 1 GHz License Exempt Operation, 2017
-- 3GPP TS 36.211 "Physical Channels and Modulation for NB-IoT", Release 14
-- Raza, U. et al. "Low Power Wide Area Networks: An Overview", IEEE Communications Surveys and Tutorials, 2017
+[1] Proakis, J. G., Digital Communications (modulation chapters).
+[2] Semtech, LoRa Modulation Basics, AN1200.22.
+[3] IEEE 802.11ah / Wi-Fi HaLow materials for Sub-GHz OFDM IoT.
+[4] 3GPP TS 36.211 (and related), NB-IoT physical channels and modulation.
+[5] Raza, U. et al., "Low Power Wide Area Networks: An Overview," IEEE COMST, 2017.
+[6] Bluetooth Core Specification, GFSK related clauses.
+[7] Sigfox technical documentation (UNB FSK/DBPSK narratives).
+[8] IEEE 802.15.4 modulation options overview.
+[9] OFDM PAPR and PA efficiency literature for battery devices.
+[10] LoRaWAN Regional Parameters (duty cycle / channel plans context).
+[11] Sklar / other digital comm textbooks on FSK vs PSK power efficiency.

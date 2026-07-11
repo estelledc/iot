@@ -3,238 +3,186 @@ schema_version: '1.0'
 id: indoor-positioning-survey
 title: 室内定位技术综述
 layer: 7
-content_type: UNKNOWN
+content_type: survey
 difficulty: beginner
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+reading_time: 26
+prerequisites:
+  - uwb-positioning
+  - ble-direction-finding-aoa-aod
+tags:
+  - 室内定位
+  - UWB
+  - BLE AoA
+  - WiFi RTT
+  - VLP
+  - 融合定位
+  - Channel Sounding
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 室内定位技术综述
 
-> **难度**：🟢 入门 | **领域**：民生与健康 | **关键词**：UWB, BLE AoA, WiFi RTT, VLP, RFID, 融合定位
+> **难度**：🟢 入门 | **领域**：定位与导航、智慧空间 | **阅读时间**：约 26 分钟
 
-## 摘要
+## 日常类比
 
-GPS 能让你在户外精确到 3 米以内找到自己的位置，但一走进商场、医院、地下车库，GPS 信号就几乎消失了。室内定位（Indoor Positioning System, IPS）要解决的就是"在没有 GPS 的地方，怎么知道人或物在哪"这个问题。本文对当前主流的室内定位技术——UWB、BLE AoA/AoD、WiFi RTT/FTM、可见光定位（VLP）、RFID——进行全面对比，分析各技术的精度、成本、基础设施需求和适用场景，并探讨多技术融合的定位方案。
+户外用全球定位系统（Global Positioning System, GPS）找路，像在空旷操场看太阳和路牌——天空开阔，参照物稳定。一进商场、医院、地下车库，就像钻进没有窗户的迷宫：卫星信号被楼板挡住，还在金属货架之间来回反弹，距离读数会"骗人"。
 
-## 1 引言：室内定位为什么这么难？
+室内定位系统（Indoor Positioning System, IPS）要回答的是：没有 GPS 时，人和物在哪？超宽带（Ultra-Wideband, UWB）、蓝牙到达角、Wi-Fi 往返时延、可见光与射频识别（Radio Frequency Identification, RFID）各像不同工具——卷尺、指南针、已有电灯与廉价贴纸——精度、成本与施工量不同，常常要组合使用。
 
-户外定位靠 GPS，但室内定位面临三个根本性困难：
+## 一句话总结
 
-**信号遮挡与反射**：建筑物的墙壁、地板、天花板会阻挡或反射无线信号。一面普通混凝土墙就能让 GPS 信号衰减 20-30 dB，使其完全不可用。更麻烦的是多径效应——信号经过多次反射后从不同路径到达接收器，导致距离测量出现严重偏差。
+本综述对比 UWB、蓝牙低功耗（Bluetooth Low Energy, BLE）到达角/出发角（Angle of Arrival / Angle of Departure, AoA/AoD）、Wi-Fi 精细授时测量（Fine Timing Measurement, FTM/RTT）、可见光定位（Visible Light Positioning, VLP）与 RFID 的精度–成本–基础设施权衡，并讨论融合滤波与 2024–2025 标准进展；市场与精度数字来自报告与论文，现场应以勘测验收为准 [1][4]。
 
-**缺乏基础设施**：GPS 有 30+ 颗卫星全球覆盖，但室内没有现成的定位基础设施。每种室内定位技术都需要额外部署硬件（信标、接入点、锚点），这带来了成本和施工的问题。
+## 1 室内定位为什么难？
 
-**精度需求多样**：不同应用对精度的要求差异巨大——商场导航只需 3-5m，仓库资产追踪需要 1m，自动导引车（AGV）需要 10cm，手术室器械定位需要 1cm。没有一种技术能通吃所有场景。
+**遮挡与多径**：混凝土墙可使 GNSS 信号衰减数十 dB；反射路径使基于飞行时间的测距出现偏差 [1]。
 
-Markets and Markets 2024 年的报告预测，全球室内定位市场将从 2024 年的 125 亿美元增长到 2029 年的 382 亿美元，CAGR 为 25.1%。
+**缺基础设施**：每种技术通常要额外部署锚点/信标/改造灯具，带来成本与施工。
+
+**精度需求多样**：商场导航约数米即可；仓储资产约 1 m；自动导引车（Automated Guided Vehicle, AGV）常要分米甚至厘米；手术器械可能要厘米级——没有单一技术通吃。
+
+市场研究机构对全球室内定位市场给出高速增长预测（例如从约百亿美元增至数百亿、年复合增长率约两成量级），口径随定义（硬件/软件/服务）变化，仅作产业热度参考 [4]。
 
 ## 2 主流技术详解
 
-### 2.1 UWB（超宽带）
+### 2.1 UWB
 
-UWB 是当前精度最高的室内无线定位技术。IEEE 802.15.4z 标准定义了安全测距协议。
+IEEE 802.15.4z 定义安全测距等增强。UWB 发射极窄脉冲（亚纳秒–数纳秒），带宽常 >500 MHz，时间分辨率高，可测飞行时间（Time of Flight, ToF）；双向测距（Two-Way Ranging, TWR）或到达时间差（Time Difference of Arrival, TDoA）解算位置 [3][7]。
 
-**工作原理**：UWB 发射极短的脉冲信号（持续时间 < 2ns），对应的带宽超过 500 MHz。超宽的带宽带来极高的时间分辨率——可以精确测量信号飞行时间（ToF），误差小于 1ns（对应距离误差约 30cm）。通过多个锚点的距离测量（TWR, Two-Way Ranging）或到达时间差（TDoA），可以解算出二维或三维位置。
+- **精度**：视距（Line of Sight, LOS）常见约 10–30 cm；非视距（Non-Line of Sight, NLOS）可退化到约 0.3–1 m
+- **优势**：抗多径相对强、可安全测距（STS 等）
+- **劣势**：专用锚点成本与密度；单锚覆盖常约数十米
+- **成本示意**：锚点数十–数百美元，标签十–五十美元；万平米仓库锚点数十个量级，硬件总成本数千–两万美元量级（视密度）
 
-**典型精度**：10-30cm（LOS 环境），30-100cm（NLOS 环境）。
+代表：手机 UWB 芯片、NXP/Qorvo 模组等。
 
-**优势**：精度高、抗多径能力强（窄脉冲可以区分直射路径和反射路径）、低功耗（脉冲占空比极低）、支持安全测距（802.15.4z 的 STS 机制防止距离伪造）。
+### 2.2 BLE AoA/AoD
 
-**劣势**：需要部署专用锚点（UWB 信标），基础设施成本较高；芯片成本虽在下降但仍高于 BLE；覆盖范围有限（单锚点 30-50m）。
+蓝牙 5.1 方向寻找：天线阵列测相位差得入射角。AoA 适合大量廉价标签 + 贵定位器；AoD 适合基础设施发射、手机接收导航 [1]。
 
-**代表产品**：Apple AirTag/U1 芯片、Samsung Galaxy 系列、NXP Trimension SR150/SR040、Qorvo DW3000 系列。
+- **精度**：开阔约 0.5–1 m，复杂环境约 1–3 m
+- **优势**：手机生态、标签便宜、功耗极低
+- **劣势**：多径敏感；阵列定位器单价较高
 
-**成本参考**：UWB 锚点 $50-200/个，标签 $10-50/个。覆盖 10,000 平方米的仓库约需 40-80 个锚点，硬件总成本 $5,000-20,000。
+### 2.3 Wi-Fi RTT/FTM
 
-### 2.2 BLE AoA/AoD（蓝牙到达角/出发角定位）
+基于 IEEE 802.11mc 等：手机与接入点（Access Point, AP）交换 FTM，用 RTT/2×光速估距，多 AP 三边定位 [5]。
 
-蓝牙 5.1 引入的方向寻找（Direction Finding）功能，通过测量信号到达角度（AoA, Angle of Arrival）或出发角度（AoD, Angle of Departure）来实现定位。
+- **精度**：Wi-Fi 6/6E 常见约 1–2 m；更宽带宽（Wi-Fi 7 的 320 MHz）有望进一步改善，但仍受多径制约
+- **优势**：复用已有 AP；Android 对 RTT API 有支持
+- **劣势**：需 AP 支持 FTM；功耗高于 BLE
 
-**工作原理**：BLE 5.1 定位器配备天线阵列（通常 4x4 = 16 个天线元件）。当信号到达阵列时，不同天线元件接收到的相位差与信号入射角成正比。通过测量相位差可以计算出信号的到达方向（方位角 + 仰角）。两个以上定位器的角度交叉即可确定位置。
+### 2.4 VLP
 
-AoA 模式：信标是简单的 BLE 发射器（便宜），定位器是复杂的天线阵列接收器（贵）。适合"追踪大量廉价标签"的场景。
+LED 以人眼难察频率调制 ID/位置；摄像头或光电接收解码。高精度模式可达分米级，ID 近似定位约米级 [8]。
 
-AoD 模式：定位器是复杂的天线阵列发射器，接收端（手机/标签）是简单接收器。适合"手机导航"场景——基础设施（定位器）投入一次，所有手机都能定位。
+- **优势**：无射频干扰友好；可借照明改造
+- **劣势**：需 LOS；驱动改造；终端支持有限
 
-**典型精度**：0.5-1m（开阔环境），1-3m（复杂环境）。
+### 2.5 RFID
 
-**优势**：利用已有 BLE 生态（智能手机原生支持 BLE）、标签成本低（$2-10/个）、功耗极低（纽扣电池工作 1-3 年）。
+无源超高频标签靠读写器供能回 ID；可用接收信号强度（Received Signal Strength Indicator, RSSI）或相位粗定位。有源标签精度与距离更好但需电池。
 
-**劣势**：精度不如 UWB、AoA 定位器（天线阵列）单价较高（$100-500/个）、对多径敏感（反射信号干扰角度测量）。
-
-### 2.3 WiFi RTT/FTM（WiFi 往返时间测量）
-
-WiFi RTT（Round-Trip Time）基于 IEEE 802.11mc 标准（WiFi FTM, Fine Timing Measurement），通过测量 WiFi 信号在手机和接入点之间的往返时间来计算距离。
-
-**工作原理**：手机向 WiFi AP 发送 FTM 请求，AP 精确记录接收时间和发送响应时间，手机收到响应后计算往返时间。RTT/2 * 光速 = 距离。多个 AP 的距离测量做三边定位。
-
-**典型精度**：1-2m（WiFi 6/6E），3-5m（WiFi 5）。WiFi 7 的 320 MHz 带宽预计将精度提升到 < 1m。
-
-**优势**：利用已有 WiFi 基础设施（不需要额外部署硬件）、覆盖范围大（单 AP 30-50m）、Android 9+ 原生支持。
-
-**劣势**：精度中等、需要 AP 支持 FTM 协议（老旧 AP 不支持）、功耗较高（WiFi 模块耗电）。
-
-**关键进展**：WiFi 6E/7 的更宽带宽（160/320 MHz）提升了时间分辨率，2024 年 Cisco Catalyst 系列 AP 已全线支持 FTM。Google 2024 年在 Android 15 中增强了 WiFi RTT API，支持 FTM Responder 模式。
-
-### 2.4 VLP（可见光定位）
-
-利用 LED 灯具作为定位信标，通过光信号实现定位。
-
-**工作原理**：LED 灯以人眼不可察觉的频率（通常 > 1 kHz）闪烁，编码各自的唯一 ID 或位置信息。手机摄像头或专用光电接收器捕获闪烁模式，解码后获取灯具 ID，再通过灯具已知位置计算自身位置。高级方案使用光信号的强度差或到达角进行精确定位。
-
-**典型精度**：10-50cm（高精度模式），1-3m（基于 ID 的近似定位）。
-
-**优势**：精度高、无射频干扰（医院、飞机等对 RF 敏感的环境友好）、可利用已有照明设施。
-
-**劣势**：需要视线通畅（LOS）、依赖灯具改造（需要将普通 LED 驱动替换为支持调制的驱动）、目前终端支持少。
-
-**代表方案**：Philips（Signify）的 Indoor Positioning 系统是全球最大的 VLP 商用部署，已在 Carrefour、Target 等零售商的数百家门店使用。
-
-### 2.5 RFID 定位
-
-利用无源或有源 RFID 标签实现资产定位和追踪。
-
-**工作原理**：无源 UHF RFID 标签（无电池，靠读写器的射频能量驱动）被读写器激活时，返回自身 ID。通过多个读写器的信号强度（RSSI）或相位差（Phase-based）可以估算标签位置。有源 RFID 标签有电池，主动发送信号，定位精度更高。
-
-**典型精度**：无源 RFID 1-3m，有源 RFID 0.5-2m（依赖部署密度）。
-
-**优势**：标签成本极低（无源标签 < $0.1/个）、可同时识别数百个标签、标签无需维护（无源无电池）。
-
-**劣势**：读写器覆盖范围有限（无源 3-10m，有源 30-100m）、实时性差（扫描周期通常秒级）、精度一般。
+- **精度**：无源约 1–3 m（强依赖密度）；有源约 0.5–2 m
+- **优势**：无源标签成本极低、可批量盘点
+- **劣势**：实时性与精度一般
 
 ## 3 技术全面对比
 
-| 维度 | UWB | BLE AoA | WiFi RTT | VLP | RFID (无源) |
-|------|-----|---------|----------|-----|-------------|
-| 精度 | 10-30cm | 0.5-1m | 1-2m | 10-50cm | 1-3m |
-| 覆盖范围/锚点 | 30-50m | 30-50m | 30-50m | 灯具间距 | 3-10m |
-| 功耗（标签侧） | 低 | 极低 | 高 | 无需标签 | 零（无源） |
-| 标签成本 | $10-50 | $2-10 | 免费（手机） | 免费（手机） | < $0.1 |
-| 基础设施成本 | 高 | 中-高 | 低（复用WiFi） | 中 | 中 |
-| 终端支持 | iPhone/部分安卓 | 所有智能手机 | Android 9+ | 需摄像头 | 需专用标签 |
-| 实时性 | < 100ms | 100-500ms | 200-1000ms | 100-500ms | 1-5s |
-| 抗多径能力 | 强 | 弱-中 | 弱 | 强（LOS） | 弱 |
-| 3D 定位 | 支持 | 支持 | 有限 | 支持 | 不支持 |
-| 安全测距 | 支持（802.15.4z） | 不支持 | 不支持 | 不支持 | 不支持 |
-| 典型场景 | 工业AGV/仓储/安全 | 资产追踪/导航 | 商场/机场导航 | 零售/博物馆 | 库存管理 |
+| 维度 | UWB | BLE AoA | Wi-Fi RTT | VLP | RFID（无源） |
+|------|-----|---------|-----------|-----|--------------|
+| 精度 | 约 10–30 cm | 约 0.5–1 m | 约 1–2 m | 约 10–50 cm | 约 1–3 m |
+| 覆盖/锚点 | 约 30–50 m | 约 30–50 m | 约 30–50 m | 灯具间距 | 约 3–10 m |
+| 标签功耗 | 低 | 极低 | 高（手机 Wi-Fi） | 可无标签 | 零 |
+| 标签成本 | 中 | 低 | 手机复用 | 手机复用 | 极低 |
+| 基础设施 | 高 | 中–高 | 低（复用） | 中 | 中 |
+| 实时性 | 优 | 良 | 中 | 良 | 较差 |
+| 抗多径 | 强 | 弱–中 | 弱 | 强（需 LOS） | 弱 |
+| 安全测距 | 支持（4z） | 传统不支持 | 不支持 | 不支持 | 不支持 |
+| 典型场景 | AGV/仓储 | 资产/导航 | 商场/机场 | 零售/博物馆 | 库存盘点 |
 
 ## 4 场景选型指南
 
-不同场景对定位系统的需求差异很大，选型需要综合考虑精度、成本、覆盖、功耗和终端兼容性五个维度：
+| 场景 | 核心需求 | 推荐倾向 |
+|------|----------|----------|
+| 商场/机场导航 | 大覆盖、手机可用、成本可控 | Wi-Fi RTT + BLE AoD |
+| 仓库资产追踪 | 大量标签、约 1 m | BLE AoA；要亚米则 UWB |
+| 工业 AGV | <10 cm、<100 ms | UWB + IMU 紧耦合 |
+| 医院敏感区 | 低 RF 干扰 | VLP + 一般区 BLE |
+| 大规模盘点 | 极低标签成本 | 无源 RFID |
 
-### 4.1 商场/机场室内导航
+零售盘点效率提升可达一个数量级以上（视原流程），以企业案例为准。
 
-核心需求：覆盖面积大、手机直接可用、成本可控。精度 3-5m 足够引导到店铺/登机口。
+## 5 融合定位
 
-推荐方案：WiFi RTT（复用已有 AP）+ BLE AoD（补充方向指引）。成本最低，无需用户安装额外硬件。
+| 融合方案 | 互补逻辑 | 典型精度（示意） |
+|----------|----------|------------------|
+| UWB + IMU | 绝对校准 + 短时航迹 | 约 10–20 cm |
+| BLE + Wi-Fi | 粗定位 + 房间级精化 | 约 1–3 m |
+| UWB + BLE | 关键区高精度 / 一般区低成本 | 自适应 |
+| VLP + BLE | 灯下精定位 / 过道补盲 | 约 0.2–1 m |
+| Wi-Fi + 地磁 | 初始定位 + 指纹航迹 | 约 2–5 m |
 
-### 4.2 仓库资产追踪
-
-核心需求：同时追踪大量资产（数百到数千个标签）、精度 1m 左右。
-
-推荐方案：BLE AoA（标签便宜、电池寿命长）。如果需要亚米级精度，用 UWB。
-
-### 4.3 工业 AGV/机器人导航
-
-核心需求：精度 < 10cm、实时性 < 100ms、高可靠性。
-
-推荐方案：UWB（精度和实时性最优）。通常与 IMU/里程计做紧耦合融合。
-
-### 4.4 医院/手术室
-
-核心需求：无射频干扰（部分区域禁止强 RF 信号）、设备/人员追踪。
-
-推荐方案：VLP（无 RF 干扰）用于手术室等敏感区域 + BLE 用于一般区域。
-
-### 4.5 大规模库存盘点
-
-核心需求：标签成本极低、批量识别。
-
-推荐方案：RFID 无源标签。Walmart、ZARA 等零售商已大规模使用，单次盘点效率提升 20-30 倍。
-
-## 5 融合定位：1+1 > 2
-
-单一技术都有短板——UWB 精度高但贵，WiFi 便宜但精度一般，BLE 标签便宜但多径敏感。融合定位的思路是用多种技术互补，取长补短。
-
-### 5.1 常见融合组合
-
-| 融合方案 | 优势互补逻辑 | 典型精度 |
-|----------|-------------|----------|
-| UWB + IMU | UWB 提供绝对位置校准，IMU 在 UWB 信号丢失时维持航迹 | 10-20cm |
-| BLE + WiFi | WiFi 做粗定位（区域级），BLE 做精定位（房间级） | 1-3m |
-| UWB + BLE | UWB 用于关键区域高精度，BLE 用于一般区域低成本覆盖 | 10cm-1m（自适应） |
-| VLP + BLE | VLP 在灯光覆盖区高精度定位，BLE 在过道/楼梯等补盲 | 20cm-1m |
-| WiFi + 地磁 | WiFi 做初始定位，地磁指纹做行人航迹追踪 | 2-5m |
-
-### 5.2 融合算法
-
-主流的融合定位算法包括：
-
-**扩展卡尔曼滤波（EKF）**：将不同传感器的观测建模为非线性观测方程，通过卡尔曼滤波进行最优状态估计。计算量小、实时性好，是工程中最常用的方案。
-
-**粒子滤波（PF）**：用一组随机粒子表示位置的概率分布，适合高度非线性和非高斯噪声场景。精度优于 EKF 但计算量大。
-
-**图优化（Graph SLAM）**：将定位问题建模为因子图，所有历史观测作为约束，全局优化求解最优轨迹。精度最高但不适合实时。
-
-**深度学习方法**：用 LSTM/Transformer 直接从多源原始信号学习位置映射。2024-2025 年的研究显示，基于 Transformer 的融合定位在复杂室内环境中比 EKF 精度提升 30-40%，但需要大量标注训练数据。
+算法：扩展卡尔曼滤波（Extended Kalman Filter, EKF）工程常用；粒子滤波适合强非线性；图优化精度高但偏离线；深度学习融合在复杂室内可优于经典滤波，但需大量标注 [6][10]。
 
 ## 6 部署实践要点
 
-### 6.1 站点勘测（Site Survey）
+- **站点勘测**：平面图、墙体材质、多径热点；可用 Ekahau/iBwave 等辅助
+- **密度经验**：UWB 锚点间距常约 15–20 m（保证可见 ≥3）；BLE AoA 定位器更密；Wi-Fi 还受容量规划约束
+- **坐标系**：本地原点 + 必要时与户外 GNSS 衔接
 
-部署室内定位系统前，必须进行站点勘测：绘制建筑平面图、标注墙壁材质和厚度、确定锚点/AP 安装位置、测量信号覆盖和多径情况。自动化勘测工具（如 Ekahau、iBwave）可以显著加速这一过程。
+## 7 标准与产业进展（2024–2025）
 
-### 6.2 锚点部署密度
+- **IEEE 802.15.4z / FiRa**：安全测距与互操作认证推进 [3][7]
+- **Bluetooth 6.0 Channel Sounding**：基于相位的测距，目标缩小与 UWB 的精度差距，生态设备基数大 [2]
+- **Wi-Fi 7**：更宽带宽改善 RTT 时间分辨率；多链路可稳定测距 [5]
+- **3GPP**：新空口定位增强、载波相位与旁路链路等方向，使基站兼作锚点 [9]
+- **消费地图**：厂商室内 AR 导航覆盖场馆数持续增加（以产品公告为准）
 
-经验法则：UWB 锚点间距 15-20m（保证任意位置至少看到 3 个锚点）；BLE AoA 定位器间距 8-12m；WiFi AP 间距 15-25m（取决于带宽需求）。实际密度需根据建筑结构和精度需求调整。
+## 局限、挑战与可改进方向
 
-### 6.3 坐标系与地图
+### 1. NLOS 仍是主误差源
 
-室内定位需要一个统一的坐标系。常见做法是以建筑入口或某个固定锚点为原点，建立本地坐标系。如果需要与户外 GPS 坐标衔接（如室内外无缝导航），需要做坐标系转换。
+**局限**：人体遮挡、墙体、金属货架使 ToF/角度误差陡增 [1]。
+**改进**：NLOS 识别与剔除；UWB+IMU；地图约束与粒子滤波。
 
-## 7 标准与产业进展（2024-2025）
+### 2. 部署与运维成本被低估
 
-**IEEE 802.15.4z（UWB）**：2024 年发布增强修正案，改进了安全测距协议（STS, Scrambled Timestamp Sequence），增加了对 Multi-anchor Ranging 的原生支持。FiRa 联盟（成员包括 Apple、Samsung、NXP、Qorvo）推动了 UWB 互操作性认证。
+**局限**：锚点校准、电池更换、位置漂移导致精度缓慢恶化。
+**改进**：供电优先有线锚点；健康心跳与自标定；运维 SLA 写入合同。
 
-**Bluetooth 6.0（2024 年 8 月发布）**：引入了 Channel Sounding 功能——蓝牙终于可以像 UWB 一样做基于相位的精确测距（不仅仅是 RSSI）。理论精度可达 10cm 级别，有望大幅缩小 BLE 与 UWB 的精度差距。这是室内定位领域 2024 年最重要的技术突破。
+### 3. 隐私与合规
 
-**WiFi 7（802.11be）**：320 MHz 带宽提升了 RTT 的时间分辨率，WiFi 定位精度有望从 1-2m 提升到亚米级。多链路操作（MLO）还提供了更稳定的测距链路。
+**局限**：连续轨迹属敏感个人信息，受 GDPR 等约束。
+**改进**：目的限定与最短留存；默认聚合热力而非个体轨迹；显式同意。
 
-**Google Indoor Maps**：2024 年新增了"Live View Indoor"功能，在支持的商场/机场中提供 AR 室内导航。目前支持全球 1,000+ 个场馆。
+### 4. 单技术指标难复现
 
-## 8 挑战与展望
+**局限**：厂商"10 cm"多在空旷 LOS 实验室；商场实测可能差一个数量级。
+**改进**：按场景验收（分位数误差、可用性）；公开测试路线与遮挡条件。
 
-### 8.1 当前挑战
+### 5. 标准碎片化
 
-**NLOS（非视距）问题**：所有基于信号传播的定位技术在 NLOS 场景下精度都会显著下降。人体遮挡、墙壁阻隔、金属反射都会引入定位误差。NLOS 识别和补偿是室内定位最核心的工程挑战。
-
-**部署成本与运维**：基础设施的安装、校准和持续维护是制约大规模推广的主要因素。电池更换（BLE/UWB 标签）、固件升级、锚点位置偏移都需要持续投入。
-
-**隐私顾虑**：室内定位系统可以精确追踪人的行动轨迹，引发隐私担忧。GDPR 和各国隐私法规对位置数据的采集和使用有严格限制。
-
-### 8.2 未来方向
-
-**蓝牙 6.0 Channel Sounding**：如前所述，这可能是改变室内定位格局的技术——BLE 的生态优势（数十亿设备）+ UWB 级别的精度，有望实现"人手一个定位终端"的愿景。
-
-**5G 定位**：3GPP R18 引入了多项定位增强：载波相位定位（Carrier Phase Positioning）精度目标 < 10cm、Sidelink 定位（终端间直接测距）。5G 基站本身就成为定位锚点，无需额外部署。
-
-**AI 辅助定位**：用深度学习模型融合多源信号、自动适应环境变化、预测和补偿 NLOS 误差。2024-2025 年的研究趋势是用大规模预训练模型（类似 NLP 领域的 Foundation Model）来学习无线信号传播的通用规律。
-
-**感知-通信-定位一体化**：6G 愿景下，通信基站同时承担通信、感知（雷达）和定位三重功能，室内定位将成为网络的"内建能力"而非"附加系统"。
+**局限**：UWB/BLE/Wi-Fi 生态互操作仍不完善。
+**改进**：优先认证产品（FiRa 等）；融合层抽象多种测距源；关注 Channel Sounding 成熟度再押注单一路线。
 
 ## 参考文献
 
-1. Zafari, F., et al. "A Survey of Indoor Localization Systems and Technologies: Current Status and Future Trends." IEEE Communications Surveys and Tutorials, vol. 26, no. 3, 2024, pp. 1834-1879.
-2. Bluetooth SIG. "Bluetooth Core Specification 6.0: Channel Sounding." 2024.
-3. IEEE Std 802.15.4z-2020/Amd 2024. "Enhanced Ultra-Wideband Physical Layer."
-4. Markets and Markets. "Indoor Location Market: Global Forecast to 2029." 2024.
-5. Feng, D., et al. "WiFi FTM-Based Indoor Positioning: A Comprehensive Study." IEEE Internet of Things Journal, vol. 11, no. 15, 2024, pp. 26789-26804.
-6. Chen, L., et al. "Deep Learning for Indoor Positioning: A Comprehensive Survey." ACM Computing Surveys, vol. 56, no. 8, 2024, pp. 1-42.
-7. FiRa Consortium. "UWB Indoor Positioning Interoperability Specification v2.0." 2024.
-8. Signify (Philips). "Visible Light Communication Indoor Positioning: Retail Case Studies." 2024.
-9. 3GPP TR 38.857 v18.0.0. "Study on NR Positioning Enhancements." 2024.
-10. Pei, L., et al. "Fusion of UWB and IMU for Robust Indoor Navigation: A Tightly-Coupled Approach." IEEE Transactions on Instrumentation and Measurement, vol. 73, 2024, pp. 1-14.
+[1] F. Zafari et al., "A Survey of Indoor Localization Systems and Technologies," IEEE Communications Surveys & Tutorials, 2024.
+[2] Bluetooth SIG, "Bluetooth Core Specification 6.0: Channel Sounding," 2024.
+[3] IEEE Std 802.15.4z, "Enhanced Ultra-Wideband Physical Layer," 2020/Amd updates.
+[4] Markets and Markets, "Indoor Location Market: Global Forecast to 2029," 2024.
+[5] D. Feng et al., "WiFi FTM-Based Indoor Positioning: A Comprehensive Study," IEEE Internet of Things Journal, 2024.
+[6] L. Chen et al., "Deep Learning for Indoor Positioning: A Comprehensive Survey," ACM Computing Surveys, 2024.
+[7] FiRa Consortium, "UWB Indoor Positioning Interoperability Specification," 2024.
+[8] Signify (Philips), "Visible Light Communication Indoor Positioning: Retail Case Studies," 2024.
+[9] 3GPP TR 38.857, "Study on NR Positioning Enhancements," Rel-18, 2024.
+[10] L. Pei et al., "Fusion of UWB and IMU for Robust Indoor Navigation," IEEE TIM, 2024.
+[11] Y. Gu et al., "A Survey of Indoor Positioning Systems," IEEE Communications Surveys & Tutorials, earlier foundational survey.
+[12] D. Dardari et al., "Indoor Tracking: Theory, Methods, and Technologies," IEEE Transactions on Vehicular Technology.
+[13] S. He and S.-H. G. Chan, "Wi-Fi Fingerprint-Based Indoor Positioning: Recent Advances and Comparisons," IEEE Communications Surveys & Tutorials.
+[14] A. Alarifi et al., "Ultra Wideband Indoor Positioning Technologies: Analysis and Recent Advances," Sensors.
+[15] M. Ji et al., "Analysis of Bluetooth 5.1 Angle of Arrival for Indoor Localization," IEEE Access.
+[16] P. Bahl and V. Padmanabhan, "RADAR: An In-Building RF-based User Location and Tracking System," IEEE INFOCOM (经典指纹定位).

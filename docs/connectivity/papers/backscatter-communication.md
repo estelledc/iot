@@ -3,320 +3,114 @@ schema_version: '1.0'
 id: backscatter-communication
 title: 反向散射通信：迈向零功耗物联网
 layer: 2
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: survey
+difficulty: advanced
+reading_time: 22
+prerequisites:
+  - backscatter-communication-ambient-iot
+  - link-budget-calculation-lpwan
+tags:
+  - 反向散射
+  - 零功耗
+  - RFID
+  - WiFi Backscatter
+  - Ambient IoT
+  - 能量收集
+  - 超低功耗
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 反向散射通信：迈向零功耗物联网
 
-> 难度：🔴 研究前沿 | 领域：超低功耗通信 | 更新：2025-06
+> **难度**：🔴 高级 | **领域**：超低功耗通信 | **阅读时间**：约 22 分钟
 
----
+## 日常类比
 
-## 一句话总结
+照镜子并不“发光”：灯的光照到你，身体反射后镜子里才有像。传统无线要自带“手电筒”（振荡器+功放），发射毫秒级蓝牙低功耗（Bluetooth Low Energy, BLE）往往比微控制器跑一秒更耗电。反向散射（Backscatter）改“借光”：用射频开关改天线阻抗，把环境里已有的 Wi-Fi/BLE/蜂窝/电视信号调制成数据，通信功耗可从毫瓦（mW）量级降到微瓦（μW）量级——具体倍数随占空比与实现变化，不宜写死“必降 1000 倍”[1][3][9]。
 
-反向散射（Backscatter）通信让设备不需要自己产生无线信号——它"反射"环境中已有的 WiFi、蓝牙或蜂窝信号来传输数据，功耗低至微瓦（μW）级别。这是实现"零功耗物联网"的最有希望的技术路线之一，正在从学术论文走向实际产品。
+## 摘要
 
----
+综述单基地/双基地/环境反向散射架构，Wi-Fi、BLE、LoRa 反向散射路线，功耗对比与多标签/机器学习解码前沿，并指向第三代合作伙伴计划（3rd Generation Partnership Project, 3GPP）Ambient IoT。距离、速率、电池年数为研究原型或厂商宣传量级，**非通用 SLA**[5][8][9]。
 
-## 从日常场景说起
+## 1 三种架构
 
-你照镜子的时候，其实并没有"发光"——是灯发出的光照在你身上，你的身体"反射"了光线，镜子里才能看到你。
+| 架构 | 载波来源 | 优点 | 局限 |
+|------|----------|------|------|
+| 单基地（Monostatic） | 读写器自发自收 | 系统简单、标签极便宜 | 自干扰；超高频射频识别（UHF RFID）典型约数米量级 |
+| 双基地（Bistatic） | 发射与接收分离 | 自干扰小，距离可至数十米量级 | 专用基础设施成本 |
+| 环境（Ambient） | 已有 Wi-Fi/广播/蜂窝 | 少专用载波源 | 信号不可控，解调难 |
 
-反向散射通信的原理完全一样。传统无线通信中，设备需要一个发射机来产生射频信号——这个发射机是功耗的大头（发射 1 毫秒的蓝牙信号消耗的电量比一个微控制器运行 1 秒还多）。反向散射则取消了发射机，改为"反射"环境中已有的射频信号（如附近路由器发出的 WiFi 信号）。通过精心控制反射的方式（改变天线的阻抗），设备可以把数据"调制"到反射信号上。
+UHF RFID 代表：EPC Gen2 / ISO 18000-6C[10]。Ambient 概念由华盛顿大学等在 SIGCOMM 2013 提出[1]。
 
-结果就是：设备的通信功耗从毫瓦（mW）级降到**微瓦（μW）级**——降低了 1000 倍以上。
+## 2 Wi-Fi / BLE / LoRa 反向散射
 
-这意味着什么？一个纽扣电池可以让设备通信运行 **10-20 年**。或者更极端地，设备可以从环境中（光、热、振动、射频）收集能量，完全不需要电池就能工作。
+**Wi-Fi**：标签以 MHz 量级切换阻抗，把入射信号频移到另一信道，使普通 Wi-Fi 接收机解码（Passive Wi-Fi、Interscatter 等）[2][3][4]。
 
----
+| 指标 | 传统 Wi-Fi SoC（示意） | Wi-Fi 反向散射原型（示意） |
+|------|------------------------|----------------------------|
+| 发送功耗 | 约数百 mW 量级 | 约十余 μW 量级 |
+| 数据率 | 数十～数百 Mbps | 约 1–11 Mbps 量级（研究） |
+| 距离 | 数十米量级 | 约数米至数十米量级 |
 
-## 反向散射的三种架构
+**BLE**：反射并整形为广播包，手机可直接收——适合智能标签、贴片传感等近场交互[4]。
 
-### 1. 单基地反向散射（Monostatic Backscatter）
+**LoRa**：高灵敏度（可在负 SNR 量级解调）利于极弱反射；LoRea 等报告室外约数百米、后续工作宣称公里量级——依赖载波布局与调制，需独立复现[5][6][7]。
 
-这是最传统的架构，也是 RFID 的工作方式。
+## 3 硬件与功耗
 
-```
-        ┌──────────┐
-        │  Reader  │ ─── 发射连续载波 ──→ ┌─────┐
-        │ (读写器) │ ←── 接收反射信号 ─── │ Tag │
-        └──────────┘                     └─────┘
-```
+典型标签：印刷天线 + 射频开关（约 1–10 μW 量级）+ 低功耗微控制器 + 可选传感器/能量采集。没有振荡器与功放是功耗断崖的主因。
 
-Reader 自己发射一个连续波（Continuous Wave, CW），Tag 反射这个信号并在反射信号上调制数据。Reader 发射和接收共用同一位置。
+| 技术 | 通信功耗量级 | 备注 |
+|------|--------------|------|
+| Wi-Fi / NB-IoT 发送 | 约 10² mW | 占空比决定寿命 |
+| BLE / LoRa 有源 | 约数～数十 mW | 低占空比可至年 |
+| Wi-Fi/BLE/LoRa 反向散射 | 约数～十余 μW | 研究/产品宣称 |
+| 被动 UHF RFID | 近 0（射频供能） | 依赖读写器场强 |
 
-- 优点：系统简单、Tag 成本极低（几分钱）
-- 缺点：Reader 需要同时发射和接收，自干扰严重；覆盖范围有限（UHF RFID 典型 3-10 米）
-- 代表系统：UHF RFID（EPC Gen2 / ISO 18000-6C）
+纽扣电池“十年”叙事假设极低占空比与理想休眠，须用焦耳/日模型核算[8][9]。
 
-### 2. 双基地反向散射（Bistatic Backscatter）
+## 4 前沿与应用
 
-发射器和接收器分开放置，减少自干扰。
+机器学习端到端解码、多标签碰撞（传统 EPC Q 算法效率有限）、全双工自干扰消除扩距、多跳中继等仍在会议系统阶段，论文名与数字随年份变化，选型时核对原始实验条件[11][12][13]。
 
-```
-┌────────────┐                     ┌──────────────┐
-│ Carrier    │ ─── 连续载波 ──→    │              │
-│ Emitter    │               ┌─────┤  Receiver    │
-│ (载波发射) │               │ Tag │              │
-└────────────┘               └─────┤  (接收反射)  │
-                                   └──────────────┘
-```
+应用：Wiliot 类无电池 BLE 传感贴纸（冷链/零售试点）；体内反向散射传感；土壤埋入式 UHF 传感。IEEE 802.11ba 唤醒无线电（Wake-Up Radio, WUR）偏超低功耗**接收**；反向散射偏超低功耗**发送**，可互补[14]。3GPP Rel-19 Ambient IoT 研究把蜂窝基础设施作射频源，目标海量低成本终端[9]。
 
-- 优点：发射器和接收器分离，自干扰大幅减少，通信距离可达数十米
-- 缺点：需要专用的载波发射器和接收器，部署成本增加
-- 应用：研究系统、部分工业 RFID 部署
+## 5 局限、挑战与可改进方向
 
-### 3. 环境反向散射（Ambient Backscatter）
+### 1. 双重路径损耗
 
-这是最激动人心的变体——Tag 反射的不是专用载波，而是环境中已有的射频信号（WiFi、BLE、蜂窝、电视广播等）。
+**局限**：源→标签→接收两次传播，功率近似随距离四次方衰减，距离难与有源比[5][10]。
+**改进**：双基地布局、靠近接收机部署、定向天线、必要时有源中继。
 
-```
-┌──────────┐     WiFi 信号
-│  WiFi AP │ ─────────────────→ ┌─────┐
-│ (路由器) │                    │ Tag │ ──反射──→ ┌──────────┐
-└──────────┘ ─────────────────→ └─────┘          │ Receiver │
-              (AP 本来就在发信号,                  │ (任何WiFi│
-               Tag 不需要专用载波)                 │  设备)   │
-                                                  └──────────┘
-```
+### 2. 环境载波不可控
 
-- 优点：不需要任何专用基础设施——WiFi AP 到处都有
-- 缺点：环境信号不可控（强度波动、调制方式复杂），解调难度大
-- 代表性工作：华盛顿大学 2013 年 SIGCOMM 论文首次提出 Ambient Backscatter 概念
+**局限**：Wi-Fi 间歇、蜂窝结构复杂，吞吐抖动大[1][2]。
+**改进**：多源融合；关键链路保留专用激励器。
 
----
+### 3. 标准化与安全滞后
 
-## WiFi 反向散射
+**局限**：除 RFID 外互操作弱；明文反射易伪造/窃听[9][10]。
+**改进**：跟进 3GPP Ambient IoT；物理层密钥/PUF 与应用层鉴权。
 
-WiFi 反向散射是近年学术界和产业界最活跃的方向。目标是让 IoT Tag 的反射信号能被**普通的 WiFi 设备**（手机、笔记本）直接接收和解码，无需专用接收器。
+### 4. 宣传数字外推
 
-### 工作原理
-
-核心思想：Tag 通过快速切换天线阻抗（匹配 ↔ 短路，频率可达 MHz 级），将入射的 WiFi 信号"频移"到一个新的 WiFi 信道上。
-
-```
-WiFi AP 发射信号 @ Channel 1 (2412 MHz)
-    │
-    ▼
-Tag 以频率 f_shift 切换天线阻抗
-    │
-    ▼
-反射信号出现在 Channel 6 (2437 MHz) ← 频移了 25 MHz
-    │
-    ▼
-普通 WiFi 接收机在 Channel 6 收到信号并解码
-```
-
-这个技术由华盛顿大学 Shyam Gollakota 团队在 2016 年提出（发表在 SIGCOMM），被称为 **Passive WiFi**。后续改进版 **WiFi Backscatter**、**Interscatter**、**FreeRider** 等进一步优化了性能。
-
-### 关键性能指标
-
-| 指标 | 传统 WiFi (ESP32) | WiFi 反向散射 (研究原型) |
-|------|-------------------|------------------------|
-| 发送功耗 | ~200 mW | ~15 μW |
-| 功耗比 | 1× | 1/13,000× |
-| 数据速率 | 54-300+ Mbps | 1-11 Mbps |
-| 通信距离 | 30-100 m | 5-30 m |
-| 延迟 | < 10 ms | < 10 ms |
-| 是否需要专用接收器 | 否 | 否（普通 WiFi 设备即可） |
-| 成本 | $2-5 (WiFi SoC) | <$0.5 (简单射频开关) |
-
-关键突破：15 μW 的发送功耗意味着一个纽扣电池（CR2032，225 mAh）可以支持 WiFi 反向散射设备连续工作 **数年**。
-
----
-
-## BLE 反向散射
-
-蓝牙低功耗（BLE）反向散射的目标是让 Tag 的反射信号能被**普通的智能手机**（BLE 接收器）解码。
-
-### 技术路线
-
-**Interscatter**（华盛顿大学，2016 年 SIGCOMM）：Tag 将 WiFi 信号（2.4 GHz）反射并频移到 BLE 频段（也在 2.4 GHz，但不同信道），生成符合 BLE 广播包格式的信号。手机的蓝牙芯片可以直接收到这个"假冒"的 BLE 广播包并解码。
-
-**BLE Backscatter**（后续多个团队改进）：进一步优化了 Tag 的调制电路，使得反射的 BLE 包完全符合 BLE 5.0 标准，能被所有 BLE 设备识别。
-
-### 应用前景
-
-BLE 反向散射 + 智能手机 = 下一代近场交互：
-
-- **智能标签**：超市商品上贴一个比 NFC 更便宜的反向散射标签，手机经过时自动读取价格、过期日、营养信息（无需手动扫码）
-- **医疗传感器**：贴在皮肤上的一次性传感器，通过 BLE 反向散射把体温/血糖数据传到手机
-- **环境传感**：分布在建筑中的数百个微型温湿度标签，手机或智能音箱走过就能收集数据
-
----
-
-## LoRa 反向散射
-
-LoRa 反向散射是广域物联网领域的新方向。目标是把反向散射的超低功耗和 LoRa 的超远距离结合起来。
-
-### 为什么 LoRa 适合反向散射？
-
-LoRa 信号的最大优势是高灵敏度——接收机可以在 SNR = -20 dB 的条件下解调（信号比噪声弱 100 倍）。这意味着反向散射信号即使非常微弱，LoRa 接收机也能检测到。
-
-2018 年，华盛顿大学团队发表了 **LoRea** 系统（NSDI 2018），实现了：
-- Tag 功耗：~10 μW
-- 通信距离：475 米（室外）
-- 数据速率：几百 bps
-- Tag 成本：< $0.5
-
-2023-2024 年的后续工作将距离扩展到 **1-2 km**（通过优化调制方案和载波源位置）。这让 LoRa 反向散射在农业、环境监测等大面积部署场景中具备实用价值。
-
----
-
-## 超低功耗设计：微瓦级通信是怎么做到的？
-
-### 反向散射 Tag 的硬件架构
-
-一个典型的反向散射 Tag 包含：
-
-```
-┌─────────────────────────────────┐
-│       天线 (印刷天线/PCB)       │
-├─────────────────────────────────┤
-│   射频开关 (RF Switch)          │ ← 核心器件，切换天线阻抗
-│   (FET 或 PIN 二极管)           │    功耗 ~1-10 μW
-├─────────────────────────────────┤
-│   微控制器 (MCU)                │ ← 控制调制、数据处理
-│   (MSP430 / ARM Cortex-M0+)    │    功耗 ~5-50 μW (活动态)
-├─────────────────────────────────┤
-│   传感器 (可选)                 │ ← 温度/湿度/加速度
-│                                 │    功耗 ~1-10 μW
-├─────────────────────────────────┤
-│   能量采集 (可选)               │ ← 光伏/RF 采集/热电
-│   (太阳能电池/整流天线)          │    提供 10-100 μW
-└─────────────────────────────────┘
-```
-
-关键是**没有射频振荡器和功放**——传统无线发射机的这两个组件消耗了 90% 以上的射频功耗。反向散射用一个简单的 RF 开关替代了整个发射链路。
-
-### 功耗对比
-
-| 技术 | 通信功耗 | 量级 | 电池寿命 (CR2032) |
-|------|---------|------|------------------|
-| WiFi (802.11n) | ~200 mW | 10⁵ μW | ~小时级 (持续) |
-| BLE 5.x | ~10 mW | 10⁴ μW | ~年级 (低占空比) |
-| LoRa (SF7, 14dBm) | ~50 mW | 5×10⁴ μW | ~年级 (低占空比) |
-| NB-IoT | ~200 mW (发送) | 2×10⁵ μW | ~年级 (PSM) |
-| WiFi 反向散射 | ~15 μW | 10¹ μW | ~10+ 年 (持续) |
-| BLE 反向散射 | ~5 μW | 10⁰ μW | ~15+ 年 (持续) |
-| LoRa 反向散射 | ~10 μW | 10¹ μW | ~10+ 年 (持续) |
-| UHF RFID (被动) | 0 μW (从射频采集) | 0 | ∞ (无电池) |
-
----
-
-## 近期学术前沿 (2024-2025)
-
-### 机器学习增强解码
-
-反向散射信号弱、多径干扰严重，传统解调器性能受限。近年来多个研究团队引入机器学习来提升解码性能：
-
-**DeepBackscatter**（MIT, MobiCom 2024）：使用深度学习模型（轻量级 CNN）对反向散射信号进行端到端解码。在信噪比 -15 dB 的条件下，误码率比传统匹配滤波器降低了 10×。模型在接收端运行（如网关或手机），不增加 Tag 端功耗。
-
-**NeuralRFID**（清华大学, NSDI 2024）：利用 Transformer 模型处理多 Tag 碰撞问题。传统 RFID 在多个 Tag 同时反射时需要时分复用（一次只读一个），NeuralRFID 可以同时解码 3-5 个碰撞 Tag 的信号，吞吐量提升 3-5×。
-
-### 多 Tag 协议
-
-当成百上千个反向散射 Tag 在同一区域时，它们可能同时反射信号导致碰撞。传统 RFID 用 Anti-collision 协议（如 EPC Gen2 的 Q 算法）解决这个问题，但效率只有 ~34%。
-
-**Chorus**（CMU, SIGCOMM 2023）：利用 LoRa 反向散射的 CSS 调制特性，让不同 Tag 使用不同的扩频因子（SF），实现类似 CDMA 的码分复用。理论上可以在同一频段同时支持 6 个 Tag（SF7-SF12 各一个），实际测试中 4 个并发 Tag 的解码成功率 > 90%。
-
-**TurboScatter**（浙江大学, MobiCom 2024）：使用全双工自干扰消除技术，让反向散射接收器在接收 Tag 信号的同时不受载波源的干扰。通信距离从 20 米扩展到 50 米。
-
-### 超远距离反向散射
-
-**LongScatter**（Georgia Tech, NSDI 2025）：通过在载波源和接收器之间引入 LoRa 反向散射中继（本身也是零功耗设备），实现了 **3 km** 的反向散射通信距离。中继 Tag 将入射信号反射并频移，下一级中继继续频移并反射。每级中继引入约 10 dB 的信号损耗，但 LoRa 接收机的高灵敏度（-137 dBm）提供了足够的链路预算。
-
----
-
-## 实际应用案例
-
-### 智能标签与零售
-
-**Wiliot**（以色列创业公司）：推出了全球首款商用"无电池蓝牙传感器"——一个邮票大小的贴纸，从环境 RF 能量中采集电力，通过 BLE 反向散射广播温度和位置信息。
-
-- 芯片面积：< 10 mm²
-- 功耗：< 5 μW
-- 供电方式：RF 能量采集（从环境中的 WiFi/BLE/蜂窝信号中采集）
-- 通信方式：BLE 5.0 广播（兼容标准 BLE 接收器）
-- 成本：目标 < $0.10/个（大规模量产后）
-- 应用：食品冷链追踪、药品温度监测、零售库存管理
-
-Wiliot 的 Tag 已经在几个大型零售商和食品供应链中试点。2024 年 Wiliot 与 PepsiCo 合作，在饮料供应链中部署了数百万个无电池传感标签。
-
-### 医疗植入设备
-
-反向散射对于体内植入的医疗设备特别有价值——植入设备更换电池意味着一次手术。
-
-**In-body Backscatter**（MIT, 2018）：使用低频反向散射（UHF 频段，可穿透人体组织 ~10 cm）实现了体内传感器向体外设备的数据传输。传感器无需电池，从体外射频源获取能量。
-
-潜在应用：
-- 血糖持续监测传感器（取代每两周更换一次的 Dexcom G7）
-- 心脏起搏器的状态数据回传
-- 药物释放装置的控制信号
-
-### 土壤监测
-
-**WISP-Soil**（华盛顿大学）：将反向散射传感器埋入土壤中，监测湿度、温度、pH 值。太阳能电池无法在地下使用，但 UHF 信号可以穿透 10-20 cm 土层。传感器从地面的 Reader 发出的射频信号中采集能量并回传数据。
-
----
-
-## 反向散射的挑战与未来
-
-### 当前挑战
-
-| 挑战 | 现状 | 研究方向 |
-|------|------|---------|
-| 通信距离 | WiFi 反向散射 ~30m, LoRa ~1-3km | 多跳中继、波束赋形 |
-| 数据速率 | 典型 kbps 到低 Mbps | 高阶调制、MIMO 反向散射 |
-| 多 Tag 冲突 | 效率 ~34% (EPC Gen2) | ML 解码、CDMA、NOMA |
-| 标准化 | 几乎没有 (除 RFID) | IEEE 802.11ba (WUR 相关) |
-| 环境信号可用性 | 依赖附近有 WiFi AP 等 | 多源融合、增强载波 |
-| 安全性 | 物理层安全弱 | 物理层密钥、PUF |
-
-### 与 IEEE 802.11ba (Wake-Up Radio) 的关系
-
-IEEE 802.11ba 定义了 WiFi 唤醒无线电（WUR, Wake-Up Radio）标准。WUR 是一个超低功耗的接收器（< 1 mW），持续监听唤醒信号。当 AP 需要向设备发送数据时，先通过 WUR 唤醒设备，设备再启动主 WiFi 射频接收数据。
-
-WUR 和反向散射的理念相似（超低功耗），但方向不同：
-- WUR：超低功耗**接收**（设备被动等待唤醒）
-- 反向散射：超低功耗**发送**（设备主动传数据）
-
-两者结合可以实现"双向超低功耗通信"：设备用 WUR 接收指令，用反向散射发送数据。
-
-### 未来展望：零功耗物联网
-
-3GPP 在 Release 19 中开始研究 "Ambient IoT"——利用环境能量和反向散射实现零功耗蜂窝物联网终端。目标是让类似 RFID 标签的超低成本设备接入 5G 网络。
-
-如果 Ambient IoT 成功标准化，未来的物联网可能是这样的：
-
-- 每个商品出厂时贴一个 $0.05 的反向散射标签
-- 标签从环境 RF 信号中采集能量，不需要电池
-- 通过 5G 基站的信号反射，标签可以传输少量数据（ID、温度、位置）
-- 基站覆盖范围内的所有标签自动联网
-
-这将把物联网连接数从目前的百亿级推向**万亿级**——地球上几乎每一个"物"都可以联网。
-
----
+**局限**：把实验室峰值速率/距离写进产品承诺[3][8]。
+**改进**：按目标场景复现 PER、占空比与能量收集功率密度。
 
 ## 参考文献
 
-1. V. Liu et al., "Ambient Backscatter: Wireless Communication Out of Thin Air," ACM SIGCOMM, 2013.
-2. B. Kellogg et al., "Wi-Fi Backscatter: Internet Connectivity for RF-Powered Devices," ACM SIGCOMM, 2014.
-3. B. Kellogg et al., "Passive Wi-Fi: Bringing Low Power to Wi-Fi Transmissions," USENIX NSDI, 2016.
-4. V. Iyer et al., "Inter-Technology Backscatter: Towards Internet Connectivity for Implanted Devices," ACM SIGCOMM, 2016.
-5. P. Zhang et al., "LoRea: A Backscatter Architecture that Achieves a Long Communication Range," USENIX NSDI, 2018.
-6. A. Varshney et al., "LoRa Backscatter: Enabling the Vision of Ubiquitous Connectivity," ACM HotNets, 2017.
-7. Y. Peng et al., "PLoRa: A Passive Long-Range Data Network from Ambient LoRa Transmissions," ACM SIGCOMM, 2018.
-8. Wiliot. "Battery-Free Bluetooth Sensing Platform," wiliot.com, 2024.
-9. 3GPP. "TR 38.848: Study on Ambient IoT in 5G," Release 19, 2024.
-10. S. Thomas and M. S. Reynolds, "QAM Backscatter for Passive UHF RFID Tags," IEEE RFID, 2012.
-11. J. Zhao et al., "NeuralRFID: Deep Learning for RFID Anti-Collision," USENIX NSDI, 2024.
-12. X. Wang et al., "TurboScatter: Full-Duplex Backscatter with Self-Interference Cancellation," ACM MobiCom, 2024.
-13. R. Duan et al., "LongScatter: Multi-Hop LoRa Backscatter for Kilometer-Range IoT," USENIX NSDI, 2025.
-14. IEEE. "IEEE 802.11ba-2021: Wake-Up Radio Amendment," 2021.
+[1] V. Liu et al., Ambient Backscatter: Wireless Communication Out of Thin Air, ACM SIGCOMM, 2013.
+[2] B. Kellogg et al., Wi-Fi Backscatter, ACM SIGCOMM, 2014.
+[3] B. Kellogg et al., Passive Wi-Fi, USENIX NSDI, 2016.
+[4] V. Iyer et al., Inter-Technology Backscatter, ACM SIGCOMM, 2016.
+[5] P. Zhang et al., LoRea, USENIX NSDI, 2018.
+[6] A. Varshney et al., LoRa Backscatter, ACM HotNets, 2017.
+[7] Y. Peng et al., PLoRa, ACM SIGCOMM, 2018.
+[8] Wiliot, Battery-Free Bluetooth Sensing Platform, 厂商资料, 2024.
+[9] 3GPP TR 38.848 / 相关 Ambient IoT 研究, Release 19.
+[10] S. Thomas and M. S. Reynolds, QAM Backscatter for Passive UHF RFID, IEEE RFID, 2012.
+[11] J. Zhao et al., NeuralRFID 等深度学习防碰撞工作, NSDI 等, 2024.
+[12] X. Wang et al., TurboScatter 等全双工反向散射, MobiCom 等, 2024.
+[13] 多跳/远距 LoRa 反向散射研究（NSDI 等会议系统）.
+[14] IEEE 802.11ba-2021, Wake-Up Radio.

@@ -3,237 +3,142 @@ schema_version: '1.0'
 id: split-computing
 title: 分割计算：DNN 端-边最优切分
 layer: 5
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: technical_analysis
+difficulty: advanced
+reading_time: 24
+prerequisites:
+  - collaborative-inference-survey
+  - model-compression-edge
+tags:
+- 分割计算
+- Neurosurgeon
+- SPINN
+- 早退
+- 端边协同
+- DNN切分
+- 特征隐私
+- 延迟优化
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 分割计算：DNN 端-边最优切分
 
-> 难度：🟡 进阶 | 前置知识：了解深度神经网络的层级结构（卷积层、全连接层、激活函数）
+> **难度**：🟠 进阶 | **领域**：边缘推理 / 模型切分 | **阅读时间**：约 24 分钟
 
-## 论文信息
+## 日常类比
 
-- **主题**：分割计算（Split Computing）——将深度学习模型在设备端和边缘服务器之间切分，两端各执行一部分，以优化延迟、能耗和隐私
-- **核心问题**：在 DNN 的哪一层切开，设备跑前半段、服务器跑后半段，才能让整体延迟最小？
-- **涵盖范围**：Neurosurgeon (2017) → DADS (2020) → SPINN (2022) → 早退机制 → 最新进展 (2024-2025)
+翻译一封长信：自己英语一般（弱设备），朋友是专家但联络要时间（网络 + 服务器）。全自己翻慢且易错；整封拍照发给朋友则传输重。折中：自己先标关键词做「粗翻」，只寄压缩后的粗翻稿请朋友精修——这就是分割计算（Split Computing）：深度神经网络（Deep Neural Network, DNN）前几层在端侧提特征，中间张量往往小于原始输入，后半段在边缘/云完成[1][5]。
 
-## 1 分割计算的直觉
+## 摘要
 
-### 1.1 一个日常类比
+本文说明端–边切分点选择（Neurosurgeon、DADS、SPINN 等）、早退（Early Exit）、特征隐私与面向大语言模型（Large Language Model, LLM）的新约束，并给出局限与改进。加速比与能耗降幅来自各论文实验设定，换模型与链路后需重测。
 
-假设你要给一封信做翻译。你会英语但不太好（设备端），你有个翻译专家朋友但联系他需要时间（网络传输 + 服务器计算）。怎么做最高效？
+## 1 为何有效
 
-方案 A——全部自己翻：慢，而且可能翻错。
-
-方案 B——全部发给朋友：要先把整封信拍照发过去（传输大量原始数据），等朋友翻完再发回来。如果信很长、网络很慢，光传输就要很久。
-
-方案 C（分割计算）——自己先做一遍粗翻（把关键词标出来），只把粗翻稿发给朋友精修。粗翻稿比原始信件小得多（数据被"压缩"了），朋友只需要精修而不用从头翻（计算量减少了）。
-
-这就是分割计算的本质：利用 DNN 天然的层级结构，前面几层在设备端执行（提取特征 = "粗翻"），中间产生的特征图比原始数据小得多，传输后由服务器完成后续层的计算。
-
-### 1.2 为什么分割计算有效
-
-DNN 有一个关键特性：随着层的深入，数据量先增后减。以一个图像分类 CNN 为例：
-
-```
-输入: 224×224×3 = 150,528 (原始像素)
-Conv1: 112×112×64 = 802,816 (特征增多，体积反而变大)
-Conv3: 56×56×128 = 401,408
-Conv5: 28×28×256 = 200,704
-Conv7: 14×14×512 = 100,352
-Pool:  7×7×512 = 25,088
-FC:    4,096
-Output: 1,000 (分类概率)
-```
-
-可以看到，网络的中间层存在"瓶颈点"——数据量比输入小得多。如果在这些瓶颈点切分，传输的数据量可以比传输原始输入减少 5-10 倍。
-
-但这不是唯一的考量。选择切分点还需要权衡：
-- 设备端计算了更多层 → 设备端延迟增加，但传输量可能减少
-- 设备端计算了更少层 → 传输量更大，但服务器承担更多计算
-- 网络带宽高时 → 传输不是瓶颈，可以早点切（传输更多数据也无妨）
-- 网络带宽低时 → 传输是瓶颈，应该在设备端多算几层以减少传输量
-
-### 1.3 分割计算 vs 协作推理
-
-分割计算和协作推理（参见 [协作推理全景](collaborative-inference-survey.md)）都是将 DNN 拆分到多台设备上执行，但它们解决的核心问题不同：
+CNN 等网络随层深入，激活体积常先增后减，存在相对输入更小的瓶颈层；在瓶颈附近切分可显著减传输。权衡仍在：端侧多算 → 端延迟升、传输可能降；带宽高时可更早切。与协作推理对比：
 
 | 维度 | 分割计算 | 协作推理 |
 |------|---------|---------|
-| 核心动机 | 设备能力不足 + 网络带宽有限 | 模型太大，单设备装不下 |
-| 设备角色 | 端 (弱设备) + 边 (强服务器) | 多台对等设备 |
-| 切分方式 | 在某一层切成两段 | 按层切成多段（流水线） |
-| 优化目标 | 延迟 / 能耗 / 隐私 的联合优化 | 延迟 / 吞吐量 最大化 |
-| 代表系统 | Neurosurgeon, SPINN | Jupiter, EdgeShard |
+| 动机 | 单端算力不足 + 带宽紧 | 单机装不下整模 |
+| 角色 | 弱端 + 强边/云 | 多台对等或流水线 |
+| 切分 | 常单点两段 | 多层多段 |
+| 目标 | 延迟/能耗/隐私联合 | 延迟/吞吐 |
+| 代表 | Neurosurgeon、SPINN[1][3] | Jupiter、EdgeShard 等 |
 
-## 2 切分点选择：核心算法
+## 2 切分点算法
 
-### 2.1 Neurosurgeon (2017, ASPLOS)
+**Neurosurgeon**：对每层测端延迟 \(t_{device}\)、云延迟 \(t_{server}\)、输出传输 \(t_{transfer}\)，穷举切分点 \(k\) 最小化
 
-Neurosurgeon 是分割计算领域的开山之作。它的核心贡献是：**将切分点选择建模为一个优化问题，通过逐层延迟建模自动找到最优切分点**。
+\[
+\sum_{l=1}^{k} t_{device}(l) + t_{transfer}(k) + \sum_{l=k+1}^{L} t_{server}(l)
+\]
 
-**方法**：对 DNN 的每一层，分别测量在移动设备上的计算延迟 $t_{device}(l)$ 和在服务器上的计算延迟 $t_{server}(l)$，以及该层输出数据的传输延迟 $t_{transfer}(l)$。然后穷举所有可能的切分点 $k$，计算总延迟：
+最优 \(k\) 强依赖带宽与端算力：带宽高时切点偏前，带宽极低时「全本地」可能优于任何切分。论文在 AlexNet 等设定下报告相对纯云可达约数倍延迟改善与可观能耗下降量级——**非跨模型保证**[1]。
 
-```
-总延迟(k) = Σ_{l=1}^{k} t_device(l) + t_transfer(k) + Σ_{l=k+1}^{L} t_server(l)
-```
+**DADS**：运行时测带宽，查「带宽→切分点」表做动态切换；并扩展到有向无环图（Directed Acyclic Graph, DAG）结构（如含跳跃连接的网络）[2]。
 
-选择使总延迟最小的 k 作为最优切分点。
+**SPINN**：水平切分 + 垂直早退联合；简单样本可在端侧浅层退出，难样本再上云；并支持先出粗结果再精修的渐进推理。相对纯切分，论文报告平均延迟可再降约三成量级（设定相关）[3]。
 
-**关键发现**：最优切分点高度依赖网络带宽和设备计算能力。在 WiFi 条件下（50Mbps），大多数 CNN 的最优切分点在中间层（如 ResNet-50 的第 3-4 个残差块之后）；在 4G 条件下（10Mbps），最优切分点后移（设备端做更多计算以减少传输量）；在 LTE 条件下（5Mbps），全部在设备端执行可能反而比分割更快（因为传输任何中间结果都太慢了）。
+| 系统 | 年份 | 切分 | 早退 | 动态 | DAG | 延迟/能耗（论文量级） |
+|------|------|------|------|------|-----|----------------------|
+| Neurosurgeon | 2017 | 单点 | 否 | 否 | 否 | 约 2–3× 延迟改善量级；能耗明显降[1] |
+| DADS | 2019/2020 | 动态单点 | 否 | 是 | 是 | 进一步动态收益[2] |
+| SPINN | 2020 | 切分+早退 | 是 | 是 | 有限 | 平均延迟再降一截[3] |
+| BranchyNet 等 | 2016+ | — | 是 | — | — | 早退奠基[4] |
 
-**实验结果**：在 AlexNet 上，Neurosurgeon 相比纯云端推理减少了 3.1x 延迟和 40% 能耗；相比纯设备端推理减少了 2.0x 延迟。
+## 3 早退
 
-### 2.2 DADS (2020, SEC)
+观察：多数输入「简单」，仅少数需全深度。ImageNet 等设定下，文献报告相当比例样本可在较浅层以高置信度正确分类；工业质检「绝大多数正常品」时早退更吃香[4][5]。策略含：置信度/熵阈值、可学习退出头、预算感知调阈值。端侧早退直接省焦耳；具体毫焦/次与「电池翻倍」类表述必须对本板测量，不可照搬他文。
 
-DADS（Dynamic Adaptive DNN Surgery）在 Neurosurgeon 基础上解决了两个问题：
+## 4 隐私
 
-**动态适应**：网络带宽不是静态的——WiFi 信号强度波动、蜂窝网络在移动中切换。DADS 在运行时持续监测网络带宽，根据当前条件动态调整切分点，而不是使用离线计算的固定切分点。
+传中间特征而非原图，但浅层特征可被反演逼近原输入[8]。对策：校准噪声、切分点瓶颈压缩、可学习噪声层（如 Shredder）、对抗重建惩罚[9]。
 
-**多分支架构支持**：Neurosurgeon 只支持线性 DNN（层按顺序执行）。DADS 扩展到了 DAG 结构的模型（如 Inception、ResNet 的跳跃连接），通过将 DAG 转化为等价的序列化执行图来寻找切分点。
+| 切分位置 | 传输量 | 端算力 | 隐私 | 精度倾向 |
+|---------|--------|--------|------|---------|
+| 很浅 | 大 | 少 | 差 | 高 |
+| 中间瓶颈 | 小 | 中 | 中 | 高 |
+| 很深 | 很小 | 多 | 较好 | 高 |
+| 浅层+噪声/瓶颈 | 视设计 | 中 | 较好 | 中–高 |
 
-**自适应算法**：DADS 维护一个"带宽-切分点"查找表——对每个带宽区间预计算好最优切分点。运行时只需测量当前带宽，查表即可得到切分策略，开销极小（< 1ms）。
+## 5 LLM 新约束
 
-### 2.3 SPINN (2022, MobiSys)
+自回归与键值缓存（Key-Value Cache, KV Cache）使切分需同步缓存；Transformer 层间激活尺寸常近似恒定，缺少 CNN 式明显瓶颈；端侧层数过多会撑爆内存。实践上更多按算力/内存动态决定本地层数，或按注意力与前馈网络（Feed-Forward Network, FFN）对硬件友好度分工——相关系统仍快速演进，需跟进最新评测[5][6]。
 
-SPINN（Split Computing and Early Exiting at the Edge）将两个优化维度统一在一个框架中：**水平切分**（split computing，设备-服务器分割）+ **垂直切分**（early exit，在中间层直接输出结果）。
+## 6 实验表（示意，来自文献设定）
 
-**早退机制（Early Exit）**：在 DNN 的多个中间层添加分类头（classification head），当中间层的预测置信度超过阈值时，直接输出结果，不再继续执行后续层。这对于"简单"输入特别有效——一张清晰的猫照片可能在第 3 层就被准确分类了，不需要跑完全部 50 层。
+| 模型 | WiFi 倾向 | 蜂窝较差时倾向 | 相对纯云延迟 |
+|------|-----------|----------------|--------------|
+| 经典 CNN（AlexNet/VGG 等） | 中部切 | 切点后移或全本地 | 约数倍改善量级[1] |
+| ResNet 类 | 中前–中后随带宽变 | 更靠后 | 约数倍量级 |
+| MobileNet 类 | 视带宽 | 常更易全本地 | 改善幅度常小于大 CNN |
+| BERT-base 类 | 中部层 | 后移或全本地 | 约两倍量级（设定相关） |
 
-**联合优化**：SPINN 同时考虑在哪一层切分（split）和在哪些层设置早退点（exit），通过联合优化最小化平均推理延迟。对于简单输入，设备端就能直接输出结果（延迟极低）；对于困难输入，设备端提取特征后发给服务器完成推理。
+| 设定 | 平均退出深度（相对全深） | 延迟降低（示意） | 精度损失（示意） |
+|------|--------------------------|------------------|------------------|
+| 简单视觉集 | 约三到四成深度 | 可观 | 很小 |
+| ImageNet 类 | 约一半深度量级 | 中等偏好 | 小幅 |
+| 工业缺陷（正常品为主） | 更浅 | 更大 | 很小（若阈值得当） |
 
-**自适应渐进推理**：SPINN 还支持一种"渐进式"推理模式——设备端先用浅层模型快速给出一个初步结果，同时将特征发往服务器做更深层的推理。用户先看到粗略结果，几百毫秒后看到精确结果。这种体验设计在移动应用中很受欢迎。
+## 7 局限、挑战与可改进方向
 
-**实验结果**：在 ResNet-56 上，SPINN 相比纯分割计算减少了 ~35% 的平均延迟（因为大量简单输入在设备端就被早退处理了）；在带宽波动环境下（4G/WiFi 混合），SPINN 的延迟方差也显著更低。
+### 1. 延迟模型与真机偏差
 
-### 2.4 三大系统对比
+**局限**：层独立加和忽略缓存、调度与驱动开销，预测切点可偏约一成以上。
+**改进**：在线校准层耗时；切点附近做短时 A/B；把传输模型换成实测带宽分布而非均值。
 
-| 系统 | 年份/会议 | 切分策略 | 早退支持 | 动态适应 | DAG 模型 | 延迟优化 | 能耗优化 |
-|------|---------|---------|---------|---------|---------|---------|---------|
-| Neurosurgeon | 2017 ASPLOS | 单点切分 | 否 | 否 | 否 | 2-3.1x | 40%↓ |
-| DADS | 2020 SEC | 动态单点切分 | 否 | 是 | 是 | 2.5-4x | 35%↓ |
-| SPINN | 2022 MobiSys | 切分 + 早退 | 是 | 是 | 有限 | 3-5x | 45%↓ |
-| DEFER | 2023 | 分布式早退 | 是 | 是 | 否 | 3.5-6x | 50%↓ |
-| AutoSplit | 2024 | 自动化切分 | 可选 | 是 | 是 | 4-7x | - |
+### 2. 单切分点表达力不足
 
-## 3 早退机制深入
+**局限**：只允许「前缀在端、后缀在边」，无法表达交错执行。
+**改进**：在复杂度可控前提下探索多切分或与流水线协作推理融合；先用启发式限搜索空间。
 
-### 3.1 为什么早退有效
+### 3. 动态/条件计算难切
 
-早退基于一个实证观察：**大多数输入是"简单"的**。在 ImageNet 数据集中，超过 60% 的图像可以在 ResNet 的前 1/3 层就被正确分类（置信度 > 95%）。只有约 15% 的"困难"图像（如遮挡、模糊、罕见类别）需要完整的网络深度。
+**局限**：混合专家（Mixture-of-Experts, MoE）、动态路由使静态切点表失效。
+**改进**：按最大激活路径做保守切分；运行时再协商；或改为整段卸载。
 
-在 IoT 场景中，这个比例可能更极端。一个工厂质检摄像头一天中 99% 的时间拍到的是"正常"产品——这些图像在浅层就能被快速识别。只有偶尔出现的缺陷品需要深层网络仔细分析。
+### 4. 隐私与瓶颈目标冲突
 
-### 3.2 早退策略类型
+**局限**：为减传输选浅瓶颈，却最易被特征反演。
+**改进**：强制最小切分深度或瓶颈+噪声；对反演攻击做回归测试；敏感数据默认更深切或全本地。
 
-**基于置信度的早退**：在每个早退点计算分类概率的熵或最大类别概率，超过阈值则退出。简单直接，但阈值的选择是个难题——太高则很少能早退（失去意义），太低则错误率上升。
+### 5. LLM/多模态栈不成熟
 
-**基于学习的早退**：训练一个小型的"退出决策网络"，输入当前层的特征，输出"退出/继续"的二元决策。这个决策网络可以学到比简单置信度阈值更复杂的退出策略。
+**局限**：CNN 时代结论直接套到 LLM 会误判内存与同步成本。
+**改进**：单独建 KV/激活账本；优先量化与投机解码等，切分作补充而非唯一手段。
 
-**预算感知的早退**：根据延迟/能耗预算动态调整退出阈值——预算紧张时（电池低、网络慢）降低阈值以加速退出，预算充足时提高阈值以保证精度。
+## 参考文献
 
-### 3.3 早退在 IoT 中的特殊价值
-
-IoT 设备的能耗约束使得早退格外有价值。在电池供电的设备上，每多执行一层网络就多消耗能量。早退不仅减少延迟，更直接延长了设备的电池寿命。
-
-实验数据：在一个 ARM Cortex-A72 上运行 MobileNetV2，完整推理消耗约 15mJ/次。使用早退机制后，平均只需要执行 40% 的层，能耗降至约 7mJ/次——电池寿命延长了 2x。
-
-## 4 隐私保护：分割计算的额外价值
-
-### 4.1 特征空间隐私
-
-分割计算有一个常被忽视的优势：**传输的是中间特征而非原始数据**。中间特征是原始输入经过多层非线性变换后的抽象表示，理论上包含的原始信息越来越少。
-
-但"理论上"和"实际上"有差距。Dosovitskiy & Brox (2016) 证明了从 CNN 的中间特征可以近似重建原始输入图像——特别是浅层特征，重建质量相当高。这意味着在浅层切分虽然传输量小，但隐私保护效果差。
-
-### 4.2 特征混淆技术
-
-为了在分割计算中增强隐私保护，研究者提出了多种特征混淆方法：
-
-**噪声注入**：在传输的特征中添加校准噪声（类似差分隐私）。噪声量需要平衡隐私保护（噪声越大，重建原始输入越难）和推理精度（噪声越大，后续层的计算误差越大）。
-
-**特征降维**：在切分点添加一个瓶颈层（bottleneck layer），将高维特征压缩到低维空间。压缩过程自然丢弃部分信息，起到隐私保护作用。Shredder (2020) 通过训练一个"可学习噪声层"实现了隐私-精度的帕累托最优。
-
-**对抗训练**：训练模型时加入一个对抗性的"重建器"——如果重建器能从中间特征恢复原始输入，则惩罚模型。这迫使模型学习"隐私友好"的中间表示。
-
-### 4.3 隐私-延迟-精度三方权衡
-
-| 切分位置 | 传输数据量 | 设备端计算 | 隐私保护 | 推理精度 |
-|---------|-----------|-----------|---------|---------|
-| 非常浅（第1-2层） | 大 | 少 | 差 | 高 |
-| 中间（最佳瓶颈） | 小 | 中 | 中 | 高 |
-| 深层（倒数几层） | 很小 | 多 | 好 | 高 |
-| 加噪声的浅层 | 大 | 少 | 好 | 中-高 |
-| 加瓶颈的中间层 | 很小 | 中 | 好 | 中-高 |
-
-## 5 面向 LLM 的分割计算
-
-### 5.1 新挑战
-
-传统分割计算主要针对 CNN 分类模型，但 LLM 带来了新的挑战：
-
-**自回归性质**：LLM 的每个 token 生成都依赖前面的所有 token，导致分割点不能简单地在层之间选择——还需要考虑 KV Cache 的跨设备同步。
-
-**层间均匀性**：CNN 的各层差异很大（卷积、池化、全连接），中间数据量变化明显，容易找到瓶颈点。但 Transformer 的每一层结构几乎相同（Self-Attention + FFN），中间激活值大小恒定（= hidden_size × seq_len），没有明显的瓶颈点。
-
-**KV Cache 存储**：切分点之前的层在设备端执行，其 KV Cache 也存储在设备端。如果设备端执行了太多层，KV Cache 可能把设备内存撑满。
-
-### 5.2 LLM 分割的新方案
-
-**EdgeSplit (2024)**：专门为 Transformer 模型设计的分割计算框架。它的核心观察是：虽然 Transformer 层间激活值大小恒定，但不同层的计算强度（attention vs FFN）对硬件的利用效率不同。EdgeSplit 在移动设备端运行 attention 密集的前几层（attention 在移动 GPU 上可以并行），在服务器端运行 FFN 密集的后几层（FFN 需要大量内存带宽）。
-
-**Layer-wise Adaptive Loading**：不固定切分点，而是根据设备当前的内存和计算状态动态决定加载和执行多少层。设备先尝试加载尽可能多的层到内存中执行，内存不足时才将剩余层发往服务器。
-
-## 6 实验数据
-
-### 6.1 不同模型的最优切分点
-
-| 模型 | 总层数 | WiFi 最优切分 | 4G 最优切分 | 3G 最优切分 | 切分延迟 vs 云端 |
-|------|--------|-------------|-----------|-----------|--------------|
-| AlexNet | 8 | 第4层后 | 第6层后 | 全部本地 | 3.1x↓ |
-| VGG-16 | 16 | 第10层后 | 第13层后 | 全部本地 | 2.4x↓ |
-| ResNet-50 | 50 | 第16层后 | 第28层后 | 第40层后 | 2.8x↓ |
-| MobileNetV2 | 53 | 第20层后 | 第35层后 | 全部本地 | 1.8x↓ |
-| BERT-base | 12 | 第6层后 | 第9层后 | 全部本地 | 2.2x↓ |
-
-### 6.2 早退在不同数据集上的效果
-
-| 数据集 | 平均退出深度 (vs 总深度) | 平均延迟降低 | 精度损失 |
-|--------|----------------------|------------|---------|
-| CIFAR-10 (ResNet-56) | 38% | 55% | -0.3% |
-| ImageNet (ResNet-50) | 45% | 42% | -0.8% |
-| SVHN (MobileNetV2) | 30% | 62% | -0.2% |
-| 工业缺陷检测 | 25% | 68% | -0.1% |
-
-## 7 技术局限与展望
-
-### 7.1 当前局限
-
-**建模精度**：延迟预测模型通常假设各层独立，忽略了内存缓存、流水线效应等硬件级交互。实际切分后的延迟可能与预测值有 10-20% 的偏差。
-
-**单切分点限制**：大多数方法只支持一个切分点（设备跑前半段，服务器跑后半段）。更灵活的方案——比如设备跑第 1-5 层和第 20-25 层，服务器跑第 6-19 层——理论上可以进一步优化但算法复杂度大增。
-
-**不支持动态模型**：随着动态网络（如 MoE、动态路由网络）的兴起，传统的固定切分策略不再适用——模型在运行时会根据输入选择不同的计算路径。
-
-### 7.2 未来方向
-
-**与协作推理的融合**：分割计算（设备-服务器二分）和协作推理（多设备流水线）可以结合——多台设备先各自执行一部分层（分割计算思路），然后难以处理的部分通过流水线方式协作完成。
-
-**自适应切分 + 早退 + 模型压缩的联合优化**：目前这三种技术通常独立使用，联合优化（如：在不同层使用不同量化精度 + 在最优点切分 + 在多个点设置早退）是一个有前景但未充分探索的方向。
-
-## 8 参考文献
-
-- Kang, Y., et al. "Neurosurgeon: Collaborative Intelligence Between the Cloud and Mobile Edge." ASPLOS 2017.
-- Hu, C., et al. "Dynamic Adaptive DNN Surgery for Inference Acceleration on the Edge." IEEE INFOCOM 2019.
-- Laskaridis, S., et al. "SPINN: Synergistic Progressive Inference of Neural Networks over Device and Cloud." MobiCom 2020.
-- Teerapittayanon, H., et al. "BranchyNet: Fast Inference via Early Exiting from Deep Neural Networks." ICPR 2016.
-- Matsubara, Y., et al. "Split Computing and Early Exiting for Deep Neural Networks: A Survey." ACM Computing Surveys 2023.
-- Shao, J., Zhang, J. "Communication-Computation Trade-off in Resource-Constrained Edge Inference." IEEE Communications Magazine 2020.
-- Li, E., et al. "Edge AI: On-Demand Accelerating Deep Neural Network Inference via Edge Computing." IEEE Transactions on Wireless Communications 2020.
-- Dosovitskiy, A., Brox, T. "Inverting Visual Representations with Convolutional Networks." CVPR 2016.
-- Mireshghallah, F., et al. "Shredder: Learning Noise Distributions to Protect Inference Privacy." ASPLOS 2020.
+[1] Y. Kang et al., "Neurosurgeon: Collaborative Intelligence Between the Cloud and Mobile Edge," ASPLOS, 2017.
+[2] C. Hu et al., "Dynamic Adaptive DNN Surgery for Inference Acceleration on the Edge," IEEE INFOCOM, 2019.
+[3] S. Laskaridis et al., "SPINN: Synergistic Progressive Inference of Neural Networks over Device and Cloud," MobiCom, 2020.
+[4] S. Teerapittayanon et al., "BranchyNet: Fast Inference via Early Exiting from Deep Neural Networks," ICPR, 2016.
+[5] Y. Matsubara et al., "Split Computing and Early Exiting for Deep Neural Networks: A Survey," ACM Computing Surveys, 2023.
+[6] J. Shao and J. Zhang, "Communication-Computation Trade-off in Resource-Constrained Edge Inference," IEEE Communications Magazine, 2020.
+[7] E. Li et al., "Edge AI: On-Demand Accelerating Deep Neural Network Inference via Edge Computing," IEEE Transactions on Wireless Communications, 2020.
+[8] A. Dosovitskiy and T. Brox, "Inverting Visual Representations with Convolutional Networks," CVPR, 2016.
+[9] F. Mireshghallah et al., "Shredder: Learning Noise Distributions to Protect Inference Privacy," ASPLOS, 2020.
+[10] A. E. Eshratifar et al., "JointDNN: An Efficient Training and Inference Engine for Intelligent Mobile Cloud Computing Services," IEEE Transactions on Mobile Computing, 2019.
+[11] M. Almeida et al., "EmBench: Quantifying Performance Variations of Deep Neural Networks across Modern Commodity Devices," EMDL Workshop, 2019.
+[12] J. Chen and X. Ran, "Deep Learning With Edge Computing: A Review," Proceedings of the IEEE, 2019.

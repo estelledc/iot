@@ -3,267 +3,212 @@ schema_version: '1.0'
 id: federated-learning-privacy
 title: 联邦学习隐私保护：从梯度泄露到多重防御
 layer: 6
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: technical_analysis
+difficulty: advanced
+reading_time: 28
+prerequisites:
+  - differential-privacy-iot
+  - tee-edge-computing
+  - secure-multiparty-computation
+tags:
+- 联邦学习
+- 梯度泄露
+- 差分隐私
+- 安全聚合
+- 同态加密
+- TEE
+- 隐私计算
+- IoT
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 联邦学习隐私保护：从梯度泄露到多重防御
 
-> 难度：🟠 挑战 | 领域：隐私计算/联邦学习 | 更新：2025-06
+> **难度**：🟠 进阶 | **领域**：隐私计算 / 联邦学习 | **阅读时间**：约 28 分钟
 
----
+## 日常类比
 
-## 一句话总结
+假设你和邻居各自有智能摄像头，厂商想训练“入侵检测”模型。传统做法是把画面上传云端——画面里有家人与生活习惯，多数人不会同意。
 
-联邦学习号称"数据不出本地"，但攻击者仍可从模型梯度中恢复原始数据。本文剖析梯度泄露攻击的原理，对比三大防御技术（差分隐私、安全聚合、同态加密），并探讨 FL+DP+TEE 联合方案在 IoT 场景的实际部署。
+联邦学习（Federated Learning, FL）的承诺是：画面不出本地，只上传“模型学到的更新”（梯度）。问题在于：梯度本身可能泄密——攻击者有时能从梯度反推训练样本。
 
----
+这就像只告诉别人“这道菜卡路里的变化量”，对方却能猜出你吃了什么。
 
-## 从日常场景说起
+## 摘要
 
-假设你和 99 个邻居各自家里都有智能摄像头，厂商想训练一个"入侵者检测"AI 模型。传统做法是把所有摄像头画面上传到云端——但你肯定不愿意，因为画面里有你的家人、生活习惯、甚至银行卡密码。
+FL 宣称“数据不出本地”，但梯度泄露攻击可在一定条件下恢复原始样本。本文梳理标准 FL 流程与物联网（Internet of Things, IoT）约束，对比差分隐私（Differential Privacy, DP）、安全聚合（Secure Aggregation）与同态加密（Homomorphic Encryption, HE）三类防御，并讨论与可信执行环境（Trusted Execution Environment, TEE）的组合部署边界。
 
-联邦学习的承诺是：画面不出你家，只把"模型学到的东西"（梯度）传到云端聚合。听起来完美？问题是，研究人员发现梯度本身就是一个"泄密者"——攻击者可以从梯度中反向还原出你家的摄像头画面。
+## 1 联邦学习基础
 
-这就像你只告诉别人"这道菜的卡路里变化量"，但对方竟能猜出你吃了什么。
+### 1.1 标准流程（FedAvg）
 
----
+经典架构见 McMahan 等[2]：
 
-## 联邦学习基础回顾
+1. 服务器下发当前全局模型
+2. 客户端用本地数据训练，得到梯度或模型差
+3. 客户端上传更新
+4. 服务器聚合并更新全局模型
+5. 重复至收敛
 
-### 标准 FL 流程
-
-联邦学习的经典架构（FedAvg，McMahan et al., 2017）：
-
-1. 服务器将当前全局模型发送给各客户端
-2. 每个客户端用本地数据训练若干轮，计算梯度更新
-3. 客户端将梯度（或模型差异）上传到服务器
-4. 服务器聚合所有梯度，更新全局模型
-5. 重复直到收敛
-
-### IoT 联邦学习的特殊挑战
+### 1.2 IoT 联邦学习的特殊挑战
 
 | 挑战 | 传统 FL（手机/PC） | IoT FL |
 |------|-------------------|--------|
-| 算力 | 多核 CPU/GPU | MCU/低端 ARM |
-| 通信 | WiFi/4G (Mbps) | LPWAN (kbps) |
+| 算力 | 多核 CPU/GPU | MCU / 低端 ARM |
+| 通信 | Wi‑Fi/蜂窝（Mbps 级） | LPWAN（kbps 级） |
 | 数据分布 | 轻度 Non-IID | 严重 Non-IID（异构传感器） |
-| 设备可用性 | 高（手机大部分在线） | 低（电池供电、间歇连接） |
-| 参与设备数 | 数百到数千 | 可达数十万 |
-| 模型规模 | 数十 MB | 必须压缩到 KB-MB 级 |
+| 设备可用性 | 相对稳定在线 | 电池供电、间歇连接 |
+| 参与规模 | 数百到数千量级 | 可达更大规模，但掉线率高 |
+| 模型规模 | 数十 MB 常见 | 常需压缩到 KB–MB |
 
----
+## 2 梯度泄露：为何“只传梯度”仍不安全
 
-## 梯度泄露攻击：为什么"只传梯度"不安全？
+### 2.1 DLG（Deep Leakage from Gradients）
 
-### DLG 攻击（Deep Leakage from Gradients）
+Zhu 等提出的 DLG[1] 核心思路：
 
-2019 年 Zhu et al. 提出的开创性工作。攻击原理：
+1. 攻击者获得某客户端真实梯度 \(G_{\text{real}}\)
+2. 随机初始化假数据 \(x'\)、假标签 \(y'\)
+3. 前向得到假梯度 \(G_{\text{fake}}\)
+4. 最小化 \(G_{\text{real}}\) 与 \(G_{\text{fake}}\) 的距离
+5. 迭代后 \(x'\) 逼近真实样本
 
-1. 攻击者（恶意服务器或窃听者）获取到一个客户端上传的真实梯度 G_real
-2. 攻击者随机初始化一个"假数据" x' 和"假标签" y'
-3. 用假数据通过相同模型前向传播，得到"假梯度" G_fake
-4. 优化目标：最小化 G_real 和 G_fake 之间的距离
-5. 迭代优化后，x' 逼近真实训练数据 x
+### 2.2 攻击演进（能力与假设，非排行榜）
 
-这就像是一道"逆向工程题"：知道了函数的输出变化量（梯度），反推输入（训练数据）。
-
-### 攻击演进
-
-| 攻击方法 | 年份 | 恢复能力 | 假设条件 | 计算成本 |
+| 攻击方法 | 年份 | 恢复侧重 | 常见假设 | 相对成本 |
 |----------|------|----------|----------|----------|
-| DLG | 2019 | 低分辨率图像 | 已知模型架构 | 中 |
-| iDLG | 2020 | 精确恢复标签 | 批量大小=1 | 低 |
-| InvertGrad | 2020 | 高分辨率图像 | 已知 BN 统计量 | 高 |
-| APRIL | 2022 | 批量数据恢复 | 线性层分析 | 中 |
-| LAMP | 2023 | 文本序列恢复 | Transformer 模型 | 高 |
-| GradInversion+ | 2024 | 多模态数据恢复 | 多轮观察 | 很高 |
-| FedRecover | 2024 | 跨轮累积恢复 | 持续监听多轮梯度 | 高 |
+| DLG | 2019 | 低分辨率图像 | 已知模型结构 | 中 |
+| iDLG | 2020 | 标签更易精确恢复 | 常假设小 batch | 低 |
+| InvertGrad | 2020 | 更高分辨率图像 | 常依赖 BN 等统计 | 高 |
+| APRIL | 2022 | 批量恢复 | 线性层分析 | 中 |
+| LAMP | 2023 | 文本序列 | Transformer | 高 |
+| GradInversion 类 / 多轮累积 | 近年 | 多模态、跨轮 | 多轮观察 | 很高 |
 
-### 攻击效果量化
+公开论文中的峰值信噪比（Peak Signal-to-Noise Ratio, PSNR）强依赖数据集、batch、模型与优化器；**勿把某一表格的绝对 dB 当作可复现保证**。定性规律较稳：batch 越大通常越难像素级还原；小 batch、已知结构时风险更高[1][9]。
 
-在 CIFAR-10 数据集上，不同攻击方法恢复图像的 PSNR（峰值信噪比，越高越好）：
+## 3 防御一：差分隐私（DP）
 
-| 方法 | Batch=1 | Batch=8 | Batch=64 |
-|------|---------|---------|----------|
-| DLG | 28.3 dB | 18.7 dB | 12.1 dB |
-| InvertGrad | 35.6 dB | 24.3 dB | 16.8 dB |
-| GradInversion+ | 38.2 dB | 29.1 dB | 21.5 dB |
+### 3.1 原理
 
-PSNR > 30 dB 意味着恢复图像与原图几乎无法区分。即使 batch 较大，最新攻击仍能获取有意义的信息。
+上传前对梯度加校准噪声，使“含你数据”与“不含你数据”的输出分布在 \((\varepsilon,\delta)\)-DP 意义下不可区分[3]。典型做法是 DP-SGD：裁剪范数后加高斯噪声。
 
----
+### 3.2 关键参数
 
-## 防御技术一：差分隐私（DP）
+| 参数 | 含义 | 常见量级（示意） | 对模型影响 |
+|------|------|------------------|------------|
+| \(\varepsilon\) | 隐私预算（越小越私） | 约 1–10 | 越小精度压力越大 |
+| \(\delta\) | 失败概率 | 常取 \(10^{-5}\)–\(10^{-7}\) 量级 | 通常固定 |
+| Clip norm \(C\) | 梯度裁剪阈值 | 任务相关 | 过小丢信息 |
+| Noise multiplier | 噪声倍率 | 约 0.5–2 | 越大噪声越多 |
 
-### 原理
+### 3.3 IoT 场景下的效用权衡
 
-在梯度上传前，向梯度中添加精确校准的噪声，使得攻击者无法区分"有你的数据"和"没你的数据"时产生的梯度差异。
+在异常检测等任务上，文献与复现实验常报告：无 DP 时攻击恢复质量较高；\(\varepsilon\) 收紧后恢复质量下降、分类指标也下降。具体 F1/PSNR 数字随数据集变化大，部署应以**自有验证集 + 隐私审计**为准，而不是照搬某一公开表[3][6]。
 
-数学表达：对于隐私预算 epsilon 和梯度 g，发布 g + N(0, sigma^2 * S^2) 其中 S 是灵敏度（梯度范围），sigma 由 epsilon 决定。
+**优点**：可证明隐私、实现相对轻（加噪）。**缺点**：精度必有代价；IoT 本地样本本就稀少时，过强 DP 可能使模型不可用。
 
-### 关键参数
+## 4 防御二：安全聚合（Secure Aggregation）
 
-| 参数 | 含义 | 典型取值 | 对模型的影响 |
-|------|------|----------|-------------|
-| epsilon | 隐私预算（越小越私密） | 1-10 | 越小精度越低 |
-| delta | 隐私失败概率 | 1e-5 到 1e-7 | 通常固定 |
-| Clip norm C | 梯度裁剪阈值 | 0.1-10 | 过小损失梯度信息 |
-| Noise multiplier | 噪声系数 | 0.5-2.0 | 越大噪声越多 |
+### 4.1 原理
 
-### DP-SGD 在 IoT FL 中的表现
+服务器只看到“多客户端更新的聚合”，看不到个体梯度。即使服务器好奇，也难直接窥探单设备数据[4]。
 
-在 IoT 异常检测任务（CIC-IoT-2023 数据集）上的实验结果：
+### 4.2 主要方案
 
-| epsilon | 模型精度 (F1) | 隐私保护强度 | 攻击恢复 PSNR |
-|---------|--------------|-------------|--------------|
-| 无 DP | 0.943 | 无 | 35.6 dB |
-| epsilon=10 | 0.921 | 弱 | 22.3 dB |
-| epsilon=3 | 0.887 | 中 | 15.7 dB |
-| epsilon=1 | 0.834 | 强 | 11.2 dB |
-| epsilon=0.5 | 0.761 | 很强 | 8.4 dB |
+- **秘密共享**：梯度拆分，凑齐份额才能恢复聚合。
+- **掩码（Masking）**：成对协商随机掩码，聚合后相消。
+- **加法同态**：密文上求和，再解密聚合结果。
 
-epsilon=3 是一个常见的实用平衡点：精度下降约 6%，但攻击恢复能力大幅削弱。
+### 4.3 协议对比（定性）
 
-### 优缺点
+| 方案 | 通信轮次（量级） | 掉线容错 | 通信复杂度（量级） | 威胁模型要点 |
+|------|------------------|----------|--------------------|---------------|
+| Google SecAgg[4] | 多轮 | 部分掉线 | 偏高（常含 \(O(n^2)\) 项） | 主要防好奇服务器看个体 |
+| SecAgg+ 等改进 | 更少轮 | 更高容错目标 | 常降到 \(O(n\log n)\) 量级 | 仍需看具体假设 |
+| LightSecAgg 等轻量设计[5] | 更少轮 | 面向资源受限 | 目标 \(O(n)\) 量级 | 半诚实等模型需核对论文 |
 
-优点：数学可证明的隐私保证、实现简单、计算开销小（只加噪声）。缺点：模型精度不可避免地下降，IoT 场景下数据本就稀少，加噪后可能导致模型不可用。
+IoT 打破“客户端稳定在线、能做重公钥运算”的假设。轻量安全聚合用伪随机函数等替代昂贵协商，是资源受限场景的方向之一[5]；具体“每客户端额外 KB 数”以论文实验设置为准，跨平台不可直接外推。
 
----
+## 5 防御三：同态加密（HE）
 
-## 防御技术二：安全聚合（Secure Aggregation）
+允许在密文上聚合梯度，解密得聚合结果。BatchCrypt 等用 SIMD 打包降低加解密次数[8]。
 
-### 原理
+| 方案 | 类型 | 支持运算 | 密文膨胀（量级） | IoT 可行性 |
+|------|------|----------|------------------|------------|
+| Paillier | 加法同态 | 加法 | 较低（约数倍） | 网关侧勉强可考虑 |
+| CKKS / BFV | 近似/精确 FHE 族 | 加+乘 | 常数十倍量级 | 终端侧通常过重 |
+| TFHE | 比特级 FHE | 布尔/门 | 很高 | 终端侧基本不可行 |
 
-确保服务器只能看到"所有客户端梯度的聚合结果"，而看不到任何单个客户端的梯度。即使服务器是恶意的，也无法窥探个体数据。
+对 Cortex-M 级 MCU，大整数公钥加密整段高维梯度往往不可接受；常见折中是：梯度稀疏化后再加密、加密卸载到边缘网关、或仅用轻量加法 HE。
 
-### 主要方案
+## 6 联合防御：FL + DP + TEE
 
-**秘密共享（Secret Sharing）**：每个客户端将梯度拆成 n 份，分发给其他客户端。服务器收集到足够的"份"后才能恢复聚合结果，但无法恢复个体梯度。Google 在 2017 年的 FL 论文中首次大规模应用此方案。
+单一手段各有短板：DP 伤精度、安全聚合不防恶意客户端投毒、HE 过重。组合是工程常态。
 
-**同态加密的部分应用**：客户端用公钥加密梯度后上传，服务器在密文上做聚合（加法同态），然后用联合私钥解密聚合结果。
+| 方案 | 隐私侧重 | 精度代价 | 算力/通信 | 主要覆盖威胁 |
+|------|----------|----------|-----------|--------------|
+| 纯 FL | 弱 | 基准 | 基准 | 几乎无 |
+| FL + DP | \(\varepsilon\)-DP | 常见数个百分点量级 | 加噪开销小 | 梯度反演 |
+| FL + SecAgg | 聚合隐私 | 通常接近 0 | 协议开销明显 | 好奇服务器 |
+| FL + HE | 密文计算 | 通常接近 0 | 很高 | 好奇服务器 |
+| FL + DP + TEE | DP + 硬件隔离 | 常介于纯 DP 与无 DP 之间 | 中等 | 反演 + 部分恶意主机 |
 
-**掩码方案（Masking）**：每对客户端协商一个随机掩码，上传时加掩码，聚合后掩码相消。
+**TEE 角色**：客户端在 TrustZone/SGX 等内训练并加噪；服务器在 TEE 内聚合；远程证明校验代码完整性。TEE 不是万能：侧信道、接口滥用、证明供应链仍需单独评估。
 
-### 安全聚合协议对比
+产业案例（Apple 输入建议、Google Gboard SecAgg、工业预测维护试点）说明组合可行，但公开材料中的 \(\varepsilon\) 与“精度损失百分之几”多为场景特定口径，**不宜当作通用 SLA**。
 
-| 方案 | 通信轮次 | 容错能力 | 通信开销 | 抗合谋 |
-|------|----------|----------|----------|--------|
-| Google SecAgg (2017) | 4 轮 | 容忍 30% 掉线 | O(n^2) | 不抗服务器 |
-| SecAgg+ (2022) | 3 轮 | 容忍 50% 掉线 | O(n log n) | 不抗服务器 |
-| TurboAgg (2023) | 2 轮 | 容忍 30% 掉线 | O(n) | 部分 |
-| FLASHE (2024) | 2 轮 | 容忍 40% 掉线 | O(n) | 抗 t-合谋 |
-| LightSecAgg (2024) | 2 轮 | 容忍 50% 掉线 | O(n) | 半诚实模型 |
+## 7 IoT 通信优化与隐私的交叉
 
-### IoT 适配挑战
+| 压缩技术 | 压缩比（量级） | 精度影响 | 与 DP | 与 SecAgg |
+|----------|----------------|----------|-------|-----------|
+| Top-K 稀疏 | 约 10–100× | 通常较轻 | 兼容需重算灵敏度 | 需协议适配 |
+| QSGD 等量化 | 约数倍–十余倍 | 通常较轻 | 较兼容 | 较兼容 |
+| SignSGD | 约 32×（相对 FP32） | 中等 | 部分 | 较兼容 |
+| 低秩/参数分解（如 FedPara 思路）[7] | 可达很高 | 任务相关 | 维数降低或利于噪声 | 需个案验证 |
 
-传统安全聚合协议假设客户端在线稳定、有足够算力做密码学运算。IoT 设备打破了这些假设：电池供电设备可能随时休眠、MCU 做一次 Diffie-Hellman 需要数秒、LPWAN 的上行带宽极有限。
+## 8 局限、挑战与可改进方向
 
-LightSecAgg（IEEE S&P 2024）专门针对资源受限场景优化：将密钥协商从 O(n^2) 降到 O(n)，并用轻量级的伪随机函数替代昂贵的公钥运算。在 100 个 Cortex-M4 节点的实验中，每轮聚合的额外通信开销仅 2.4 KB/客户端。
+### 1. 理论隐私与实测隐私不一致
 
----
+**局限**：声称满足某 \(\varepsilon\) 的系统，经成员推断/梯度反演审计后，实际泄露可能更强[6]。
+**改进**：把隐私审计纳入发布门禁；报告攻击成功率与恢复质量，而不仅报告公式 \(\varepsilon\)。
 
-## 防御技术三：同态加密（HE）
+### 2. IoT 掉线与安全聚合冲突
 
-### 原理
+**局限**：高掉线率使多轮 SecAgg 失败或回退到弱模式，隐私保证“纸面成立、链路失效”。
+**改进**：选容错更高的轻量协议；网关代理聚合；明确掉线阈值下的降级策略与告警。
 
-同态加密允许在密文上直接进行计算，解密后的结果等同于在明文上计算的结果。对联邦学习：客户端加密梯度上传，服务器在密文上做聚合，最终解密得到聚合梯度。
+### 3. 恶意客户端投毒未被隐私原语覆盖
 
-### HE 方案对比
+**局限**：DP/SecAgg/HE 主要防“看数据”，不防“投坏更新”拖垮全局模型。
+**改进**：鲁棒聚合（中位数、Krum 等）+ 异常客户端检测；与 TEE 远程证明绑定参与资格。
 
-| 方案 | 类型 | 支持运算 | 密文膨胀 | 计算开销 | IoT 可行性 |
-|------|------|----------|----------|----------|-----------|
-| Paillier | 加法同态 | 加法 | 2x | 低 | 勉强（需 2048-bit） |
-| CKKS | 近似全同态 | 加法+乘法 | 20-50x | 高 | 困难 |
-| BFV | 精确全同态 | 加法+乘法 | 20-50x | 高 | 困难 |
-| TFHE | 全同态 | 任意布尔 | 100x+ | 很高 | 不可行 |
+### 4. 终端算力撑不起 HE/重密码学
 
-### 在 FL 中的实际应用
+**局限**：MCU 上全量 HE 或 \(O(n^2)\) 密钥协商不可行。
+**改进**：加密与协商上移边缘网关；终端只做稀疏更新 + 本地 DP；跨厂联合用安全多方计算（MPC）补位。
 
-BatchCrypt（USENIX ATC 2020）将多个梯度值编码为一个密文的不同"槽位"（SIMD 打包），大幅降低加解密次数。在 100 维梯度向量上，相比朴素 Paillier 加密，通信开销降低 66x，计算时间降低 23x。
+### 5. Non-IID 与个性化隐私预算难运维
 
-然而对 IoT 设备（如 Cortex-M4 @ 168MHz），一次 Paillier 2048-bit 加密仍需约 15ms，加密一个 10K 维的梯度需要 150 秒——显然不可接受。
+**局限**：异构传感器分布使收敛慢；统一 \(\varepsilon\) 对医疗与气象一刀切不合理。
+**改进**：按数据敏感级分配预算；个性化/聚类 FL；用可解释的效用–隐私曲线做产品决策。
 
-解决思路：梯度压缩（Top-K/Random-K 稀疏化后再加密）、卸载加密到网关（边缘设备代理加密）、使用更轻量的加法 HE 变体。
+## 9 前沿简记
 
----
-
-## 联合防御：FL + DP + TEE
-
-单一防御都有短板：DP 损害精度、安全聚合不防恶意客户端、HE 太重。2024-2025 年的趋势是组合多种技术：
-
-### TEE 加持的联邦学习
-
-TEE（可信执行环境，如 ARM TrustZone、Intel SGX）提供硬件级别的隔离：即使操作系统被攻破，TEE 内的计算和数据仍然安全。
-
-**架构设计**：
-- 客户端侧：模型训练在 TEE 中执行，梯度在 TEE 内加噪（DP）后才离开安全区域
-- 服务器侧：聚合在 TEE 中执行，服务器管理员也无法看到个体梯度
-- 验证机制：远程证明（Remote Attestation）确保两端 TEE 完整性
-
-### 三位一体方案效果
-
-| 方案 | 隐私保证 | 精度损失 | 计算开销 | 通信开销 | 防御的攻击类型 |
-|------|----------|----------|----------|----------|---------------|
-| 纯 FL | 无 | 0% | 基准 | 基准 | 无 |
-| FL + DP | epsilon-DP | 5-15% | +10% | +0% | 梯度泄露 |
-| FL + SecAgg | 聚合隐私 | 0% | +30% | +50% | 好奇服务器 |
-| FL + HE | 计算隐私 | 0% | +500% | +2000% | 好奇服务器 |
-| FL + DP + TEE | epsilon-DP + 硬件隔离 | 3-8% | +20% | +5% | 梯度泄露 + 恶意服务器 |
-| FL + DP + SecAgg + TEE | 全方位 | 3-8% | +40% | +60% | 多种威胁 |
-
-### 实际部署案例
-
-**Apple 差分隐私联邦学习**：iPhone 上的输入法建议使用 FL + Local DP (epsilon=8)，在隐私和输入预测质量间取得平衡。
-
-**Google Gboard**：使用 SecAgg + FL，确保 Google 服务器无法看到任何单个用户的输入习惯。
-
-**工业 IoT 案例（Siemens, 2024）**：工厂设备预测性维护使用 FL + DP (epsilon=5) + TrustZone，在 ARM Cortex-A53 边缘网关上运行，10 个工厂联合训练，精度损失仅 4%。
-
----
-
-## IoT 联邦学习的通信优化
-
-IoT 设备的上行带宽极其有限（NB-IoT 仅 66 kbps），必须大幅压缩上传的梯度：
-
-| 压缩技术 | 压缩比 | 精度影响 | 与 DP 兼容 | 与 SecAgg 兼容 |
-|----------|--------|----------|-----------|---------------|
-| Top-K 稀疏化 | 10-100x | 轻微 | 是 | 需适配 |
-| 随机量化 (QSGD) | 4-8x | 轻微 | 是 | 是 |
-| SignSGD | 32x | 中度 | 部分 | 是 |
-| 结构化剪枝 | 5-20x | 中度 | 是 | 是 |
-| 知识蒸馏 | 100x+ | 中度 | 不适用 | 不适用 |
-
-FedPara（ICLR 2024）提出用低秩分解表示模型参数，将通信量降低到全模型的 2-5%，同时保持 98% 以上的精度。与 DP 结合时，由于低秩空间维度更低，相同噪声水平下精度损失更小。
-
----
-
-## 2024-2025 前沿进展
-
-**隐私审计（Privacy Auditing）**：不再盲目信任理论隐私保证，而是通过实际攻击实验验证系统的真实隐私水平。Nasr et al. (IEEE S&P 2024) 提出的审计框架发现，很多 FL 系统的实际隐私保护弱于理论声称。
-
-**个性化隐私预算**：不同客户端根据自己的数据敏感度设置不同的 epsilon。医疗数据设 epsilon=1，公共天气数据设 epsilon=50。
-
-**后量子联邦学习**：格基加密（Lattice-based）替代传统公钥加密，为未来量子计算机威胁做准备。
-
-**无服务器 FL（Decentralized FL）**：去掉中心服务器，设备间直接交换模型更新，消除服务器作为单点攻击目标。
-
----
+隐私审计框架[6]、个性化 \(\varepsilon\)、格基后量子安全聚合、去中心化 FL（去掉单点服务器）是 2024–2025 常见方向；落地仍受 IoT 带宽与证明链约束。
 
 ## 参考文献
 
-1. Zhu, L., Liu, Z., and Han, S. "Deep Leakage from Gradients." NeurIPS, 2019.
-2. McMahan, B., et al. "Communication-Efficient Learning of Deep Networks from Decentralized Data." AISTATS, 2017.
-3. Abadi, M., et al. "Deep Learning with Differential Privacy." CCS, 2016.
-4. Bonawitz, K., et al. "Practical Secure Aggregation for Privacy-Preserving Machine Learning." CCS, 2017.
-5. So, J., et al. "LightSecAgg: A Lightweight and Versatile Design for Secure Aggregation in Federated Learning." IEEE S&P, 2024.
-6. Nasr, M., et al. "Tight Auditing of Differentially Private Machine Learning." IEEE S&P, 2024.
-7. Hyeon-Woo, N., et al. "FedPara: Low-Rank Hadamard Product for Communication-Efficient Federated Learning." ICLR, 2024.
-8. Zhang, C., et al. "BatchCrypt: Efficient Homomorphic Encryption for Cross-Silo Federated Learning." USENIX ATC, 2020.
-9. Xu, R., et al. "FedRecover: Recovering Training Data from Federated Learning Models." NDSS, 2024.
-10. Siemens AG. "Privacy-Preserving Federated Learning for Industrial IoT." Siemens Technical Report, 2024.
+[1] L. Zhu, Z. Liu, and S. Han, "Deep Leakage from Gradients," NeurIPS, 2019.
+[2] B. McMahan et al., "Communication-Efficient Learning of Deep Networks from Decentralized Data," AISTATS, 2017.
+[3] M. Abadi et al., "Deep Learning with Differential Privacy," ACM CCS, 2016.
+[4] K. Bonawitz et al., "Practical Secure Aggregation for Privacy-Preserving Machine Learning," ACM CCS, 2017.
+[5] J. So et al., "LightSecAgg: A Lightweight and Versatile Design for Secure Aggregation in Federated Learning," IEEE S&P, 2022/相关版本.
+[6] M. Nasr et al., "Tight Auditing of Differentially Private Machine Learning," IEEE S&P, 2023/2024.
+[7] N. Hyeon-Woo et al., "FedPara: Low-Rank Hadamard Product for Communication-Efficient Federated Learning," ICLR, 2022/2024 相关版本.
+[8] C. Zhang et al., "BatchCrypt: Efficient Homomorphic Encryption for Cross-Silo Federated Learning," USENIX ATC, 2020.
+[9] 梯度反演与恢复类工作综述/代表作（含 InvertGrad、多轮累积恢复等），USENIX/NDSS 等，2019–2024.
+[10] R. Xu et al., "FedRecover: Recovering from Poisoning Attacks in Federated Learning using History," / 相关恢复与攻击分析工作，NDSS 等，2022–2024.（题目与范围以正式出版为准）
+[11] H. B. McMahan et al. / Apple & Google 差分隐私与联邦学习工程白皮书与公开技术博客，2017–2024.
+[12] ENISA / NIST 隐私增强技术与联邦学习风险提示类报告，近年版本.

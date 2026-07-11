@@ -3,335 +3,133 @@ schema_version: '1.0'
 id: dtls-tls13-comparison
 title: DTLS 与 TLS 1.3 在 IoT 协议安全中的对比
 layer: 3
-content_type: UNKNOWN
+content_type: comparison
 difficulty: intermediate
 reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+prerequisites:
+  - iot-app-protocols
+  - coap-lwm2m-constrained
+tags:
+- DTLS
+- TLS
+- IoT安全
+- PSK
+- mbedTLS
+- CoAP
+- MQTT
+- 握手
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # DTLS 与 TLS 1.3 在 IoT 协议安全中的对比
 
-> **难度**：🟡 中级 | **领域**：网络安全、IoT 协议 | **阅读时间**：约 20 分钟
+> **难度**：🟡 中级 | **领域**：协议安全、IoT | **阅读时间**：约 20 分钟
 
 ## 日常类比
 
-TLS 像挂号信服务：你把信交给邮局，邮局确保信按顺序送达、不被篡改、不被偷看。但如果信丢了，邮局会一直尝试重新投递（TCP 重传），你必须等前一封到了才能收下一封。
+TLS（Transport Layer Security）像挂号信走铁路：有序、可靠、按轨送达（TCP）。DTLS（Datagram TLS）像加密快递走公路：每包独立，可能乱序或丢失（UDP），但单包仍可保密与完整性保护。CoAP/LwM2M 选 UDP 图轻量，DTLS 是其常见安全外壳；网关北向 MQTT/HTTPS 则多用 TLS 1.3。
 
-DTLS 更像带加密的快递包裹：每个包裹独立投递，不保证顺序，也可能丢失（UDP 特性），但每个包裹本身是加密且防篡改的。对 IoT 来说，很多协议（CoAP、LwM2M）选择 UDP 是因为它轻量且延迟低——DTLS 就是给这些 UDP 协议加上安全外壳的方案。
+## 摘要
 
-打个更直接的比喻：TLS 1.3 是高铁的安检系统（快速、流畅，但必须沿着铁轨走），DTLS 1.3 则是无人机投递的安检系统（灵活、独立，适合不走寻常路的场景）。
+对比 TLS 1.3（RFC 8446）与 DTLS 1.3（RFC 9147）在握手、记录层、分片与 IoT 密码套件/认证上的差异，并给出 CoAP+DTLS 与 MQTT+TLS 选型框架。握手毫秒数、RAM/Flash 占用随 MCU、库裁剪与证书链变化，表中数为公开或常见量级示意[1][2][4][5][9]。
 
-## 1. 协议基础对比
+## 1 基础对比
 
-### 1.1 设计目标差异
-
-| 维度 | TLS 1.3 (RFC 8446) | DTLS 1.3 (RFC 9147) |
-|------|--------------------|--------------------|
-| 传输层 | TCP (可靠、有序) | UDP (不可靠、无序) |
-| 主要用途 | HTTPS, MQTT, AMQP | CoAP, LwM2M, RTP |
-| 握手往返 | 1-RTT (0-RTT 可选) | 2-3 RTT (有重传机制) |
-| 记录层保序 | 依赖 TCP | 自带序列号 + 重放保护 |
-| 分片处理 | TCP 处理 | 自行分片握手消息 |
-| 发布时间 | 2018 | 2022 |
-| IoT 核心场景 | 网关上行通信 | 设备端直连 |
-
-### 1.2 协议栈位置对比
+| 维度 | TLS 1.3 | DTLS 1.3 |
+|------|---------|----------|
+| 传输 | TCP | UDP |
+| 典型上层 | HTTPS、MQTT、AMQP | CoAP、LwM2M、部分实时媒体 |
+| 握手 | 1-RTT，可选 0-RTT | 需处理丢包重传；往返往往更多变 |
+| 记录序 | 依赖 TCP | 显式序列号与重放窗 |
+| 握手大消息 | 靠 TCP 分段 | 自行分片并按片重传 |
+| 标准 | RFC 8446（2018） | RFC 9147（2022） |
 
 ```
-TLS 1.3 栈:                    DTLS 1.3 栈:
-┌────────────────┐             ┌────────────────┐
-│  MQTT / HTTP   │             │  CoAP / LwM2M  │
-├────────────────┤             ├────────────────┤
-│    TLS 1.3     │             │   DTLS 1.3     │
-├────────────────┤             ├────────────────┤
-│      TCP       │             │      UDP       │
-├────────────────┤             ├────────────────┤
-│      IP        │             │      IP        │
-└────────────────┘             └────────────────┘
+MQTT/HTTP  → TLS 1.3 → TCP → IP
+CoAP/LwM2M → DTLS    → UDP → IP
 ```
 
-## 2. TLS 1.3 关键改进
+## 2 TLS 1.3 对 IoT 的意义
 
-### 2.1 握手流程简化
+相对 TLS 1.2，1.3 去掉多余往返、简化密码套件、更强调 AEAD。蜂窝 RTT 较大时，少 1 个 RTT 可缩短连接建立与射频开启时间；具体省电比例随「每日握手次数 × 射频电流」变化，不宜用单一「省 33%」作承诺[1][9]。
 
-TLS 1.3 相比 TLS 1.2 减少了一个 RTT：
+0-RTT 可降时延，但有重放风险：**控制类指令（开阀、跳闸）不应走 0-RTT**[10]。
 
-```
-TLS 1.2 (2-RTT):                TLS 1.3 (1-RTT):
-Client        Server            Client        Server
-  |--ClientHello-->|              |--ClientHello-->|
-  |<-ServerHello---|              |  (含 key_share)|
-  |<-Certificate---|              |<-ServerHello---|
-  |<-ServerHelloDone|             |<-EncryptedExts-|
-  |--ClientKeyExch->|             |<-Certificate---|
-  |--ChangeCipher-->|             |<-Finished------|
-  |--Finished------>|             |--Finished----->|
-  |<-ChangeCipher--|              |===加密数据=====>|
-  |<-Finished------|
-  |===加密数据=====>|
+## 3 DTLS 核心机制
 
-RTT 减少: 2-RTT → 1-RTT (0-RTT 可选但有安全风险)
-```
+- **重传状态机**：握手飞行消息超时指数退避（RFC 建议量级：初始约 1s，上限可达数十秒，次数有上限）[2]。
+- **分片**：证书链常超 UDP/IPv6 路径 MTU，按 fragment offset/length 切开，丢片只重传该片。
+- **记录头**：1.3 倾向更紧凑的变长头，省链路字节[2]。
+- **Connection ID** 等扩展改善地址变更/NAT 后的关联（见 RFC 9146 等）[3]。
 
-### 2.2 IoT 关键数据：握手时间影响
+## 4 密码套件与认证
 
-```
-假设 RTT = 100ms (典型蜂窝网络):
-- TLS 1.2 完整握手: ~300ms (3 RTT含TCP)
-- TLS 1.3 完整握手: ~200ms (2 RTT含TCP)
-- TLS 1.3 恢复握手: ~100ms (1 RTT, PSK)
-- TLS 1.3 0-RTT: ~0ms (有重放风险)
+TLS/DTLS 1.3 强制实现族常见：`TLS_AES_128_GCM_SHA256`、`TLS_AES_256_GCM_SHA384`、`TLS_CHACHA20_POLY1305_SHA256`。有 AES 硬件加速偏 GCM；无加速可评估 ChaCha20-Poly1305；极受限节点常退回 PSK + CCM-8 等历史套件（注意版本与合规）[1][4]。
 
-对 IoT 电池寿命的影响:
-- 每次握手的无线电激活时间: ~500ms-2s
-- 电流消耗: 蜂窝 120mA, Wi-Fi 80mA, BLE 15mA
-- 每天连接 100 次，TLS 1.3 vs 1.2 省电 ~33%
-```
+| 特性 | PSK | X.509 证书 |
+|------|-----|------------|
+| 握手与代码体积 | 通常更轻 | 更重 |
+| 密钥管理 | 预共享、轮换难 | CA/PKI，规模化更好 |
+| 身份 | 共享秘密 | 独立公钥身份 |
+| 适用 | 小规模/电表类 | 网关与大规模设备舰队 |
 
-## 3. DTLS 1.3 核心机制
+Cortex-M 类公开基准常显示：对称加解密微秒–数十微秒级/KB；ECDHE 数百毫秒量级；PSK 握手远快于完整证书链——以本板 mbedTLS/wolfSSL 实测为准[4][5]。
 
-### 3.1 解决 UDP 的不可靠性
-
-DTLS 必须自行处理 TCP 自动处理的问题：
-
-```python
-# DTLS 记录层格式（简化）
-class DTLSRecord:
-    """DTLS 1.3 统一报文头格式"""
-
-    def __init__(self):
-        # 固定头 (1 byte flags)
-        self.content_type = 0x17      # application_data
-        self.epoch = 0                # 密钥世代 (2 bits)
-        self.sequence_number = 0      # 防重放 (变长, 8-48 bits)
-        self.length = 0               # 载荷长度
-
-    def encode_header(self) -> bytes:
-        """DTLS 1.3 使用变长头减少开销"""
-        # 短头格式 (常见情况, 3-5 bytes)
-        flags = 0x20  # 0b001xxxxx = 短头
-        flags |= (self.epoch & 0x03) << 0
-        seq_bytes = self.sequence_number.to_bytes(2, 'big')
-        return bytes([flags]) + seq_bytes + self.length.to_bytes(2, 'big')
-
-class DTLSRetransmission:
-    """DTLS 握手消息重传状态机"""
-
-    def __init__(self):
-        self.initial_timeout_ms = 1000   # RFC 建议 1s
-        self.max_timeout_ms = 60000      # 最大 60s
-        self.current_timeout_ms = 1000
-        self.retransmit_count = 0
-
-    def on_timeout(self):
-        """指数退避重传"""
-        self.retransmit_count += 1
-        self.current_timeout_ms = min(
-            self.current_timeout_ms * 2,
-            self.max_timeout_ms
-        )
-        return self.retransmit_count < 7  # 最多重传 7 次
-
-    def on_ack(self):
-        """收到 ACK, 重置计时器"""
-        self.current_timeout_ms = self.initial_timeout_ms
-        self.retransmit_count = 0
-```
-
-### 3.2 握手消息分片
-
-UDP 有 MTU 限制（通常 1280 bytes for IPv6），而证书链可能超过 MTU：
-
-```
-DTLS 握手消息分片:
-原始 Certificate 消息: 3500 bytes
-
-分片 1: [HandshakeHeader | fragment_offset=0    | fragment_length=1200 | data...]
-分片 2: [HandshakeHeader | fragment_offset=1200 | fragment_length=1200 | data...]
-分片 3: [HandshakeHeader | fragment_offset=2400 | fragment_length=1100 | data...]
-
-每个分片独立成一个 UDP 数据报，可独立重传
-```
-
-## 4. 密码套件选择
-
-### 4.1 IoT 推荐密码套件
-
-```
-TLS/DTLS 1.3 强制实现:
-- TLS_AES_128_GCM_SHA256        (通用，硬件加速广泛)
-- TLS_AES_256_GCM_SHA384        (高安全需求)
-- TLS_CHACHA20_POLY1305_SHA256  (无 AES 硬件加速时更快)
-
-IoT 推荐选择矩阵:
-┌──────────────────┬─────────────┬──────────────────┬──────────────┐
-│ 设备类型         │ 有 AES 加速  │ 无 AES 加速       │ 极度受限     │
-├──────────────────┼─────────────┼──────────────────┼──────────────┤
-│ ESP32            │ AES-128-GCM │ -                │ -            │
-│ STM32L4         │ AES-128-GCM │ -                │ -            │
-│ nRF52840        │ -           │ ChaCha20-Poly1305│ -            │
-│ 8-bit MCU       │ -           │ -                │ PSK only     │
-│ Linux Gateway   │ AES-256-GCM │ -                │ -            │
-└──────────────────┴─────────────┴──────────────────┴──────────────┘
-```
-
-### 4.2 性能基准测试
-
-使用 mbedTLS 3.5 在 ARM Cortex-M4 (168MHz) 上的实测：
-
-| 操作 | AES-128-GCM | ChaCha20-Poly1305 | AES-128-CCM |
-|------|------------|-------------------|-------------|
-| 加密 1KB | 42 us | 89 us | 45 us |
-| 解密 1KB | 43 us | 91 us | 46 us |
-| ECDHE P-256 密钥交换 | 320 ms | 320 ms | 320 ms |
-| Ed25519 签名验证 | 48 ms | 48 ms | 48 ms |
-| PSK 握手总时间 | 12 ms | 15 ms | 13 ms |
-| 证书握手总时间 | 680 ms | 695 ms | 682 ms |
-| RAM 占用 | 12 KB | 10 KB | 11 KB |
-| 代码大小 | 45 KB | 38 KB | 42 KB |
-
-## 5. PSK vs 证书认证
-
-### 5.1 两种模式对比
-
-| 特性 | Pre-Shared Key (PSK) | X.509 证书 |
-|------|---------------------|------------|
-| 握手 RTT | 1 RTT (DTLS 1.3) | 2+ RTT |
-| RAM 占用 | ~5 KB | ~15-30 KB |
-| 代码大小 | ~25 KB | ~60-80 KB |
-| 密钥管理 | 需预分发 | PKI 基础设施 |
-| 设备认证 | 对称（双方共享秘密） | 非对称（独立身份） |
-| 规模适应性 | 差（N^2 密钥） | 好（CA 签发） |
-| IoT 部署建议 | 小规模/受限设备 | 大规模/网关级 |
-
-### 5.2 PSK 模式实现（mbedTLS）
-
-```c
-// mbedTLS DTLS PSK 客户端配置（CoAP 设备端）
-#include "mbedtls/ssl.h"
-#include "mbedtls/net_sockets.h"
-#include "mbedtls/timing.h"
-
-int setup_dtls_psk_client(mbedtls_ssl_context *ssl,
-                          mbedtls_ssl_config *conf)
-{
-    int ret;
-
-    // PSK 密钥和标识
-    const unsigned char psk[] = {
-        0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-        0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10
-    };
-    const char psk_identity[] = "sensor-device-001";
-
-    mbedtls_ssl_config_init(conf);
-    ret = mbedtls_ssl_config_defaults(conf,
-        MBEDTLS_SSL_IS_CLIENT,
-        MBEDTLS_SSL_TRANSPORT_DATAGRAM,  // DTLS
-        MBEDTLS_SSL_PRESET_DEFAULT);
-
-    // 设置最低版本为 DTLS 1.2 (TLS 1.2 equivalent)
-    mbedtls_ssl_conf_min_version(conf,
-        MBEDTLS_SSL_MAJOR_VERSION_3,
-        MBEDTLS_SSL_MINOR_VERSION_3);
-
-    // 配置 PSK
-    ret = mbedtls_ssl_conf_psk(conf,
-        psk, sizeof(psk),
-        (const unsigned char *)psk_identity,
-        strlen(psk_identity));
-
-    // 仅允许 PSK 密码套件
-    static const int ciphersuites[] = {
-        MBEDTLS_TLS_PSK_WITH_AES_128_CCM_8,  // 最小开销
-        MBEDTLS_TLS_PSK_WITH_AES_128_GCM_SHA256,
-        0
-    };
-    mbedtls_ssl_conf_ciphersuites(conf, ciphersuites);
-
-    // DTLS 特有：设置超时回调
-    mbedtls_ssl_set_timer_cb(ssl, &timer,
-        mbedtls_timing_set_delay,
-        mbedtls_timing_get_delay);
-
-    // DTLS 特有：设置 MTU
-    mbedtls_ssl_set_mtu(ssl, 1280);  // IPv6 最小 MTU
-
-    return 0;
-}
-```
-
-## 6. CoAP+DTLS vs MQTT+TLS 决策框架
-
-### 6.1 完整对比
+## 5 CoAP+DTLS vs MQTT+TLS
 
 | 维度 | CoAP + DTLS | MQTT + TLS |
-|------|------------|-----------|
-| 传输层 | UDP | TCP |
-| 安全层 | DTLS 1.2/1.3 | TLS 1.2/1.3 |
-| 消息模型 | 请求/响应 (REST) | 发布/订阅 |
-| 最小报文 | 4B header + DTLS | 2B header + TLS |
-| 连接维护 | 无状态(可选观察) | 长连接 + keepalive |
-| NAT 穿透 | 需定期发包 | TCP 连接保持 |
-| 适合场景 | 低频查询、受限设备 | 高频推送、事件驱动 |
-| 内存需求 | ~15-25 KB | ~30-50 KB |
-| 典型设备 | NB-IoT 传感器 | 智能家居网关 |
+|------|-------------|------------|
+| 传输 | UDP | TCP |
+| 消息模型 | REST 请求/响应 + Observe | Pub/Sub |
+| 连接 | 偏无连接；观察需状态 | 长连接 + keepalive |
+| NAT | 需保活/队列模式 | TCP 保活相对直观 |
+| 内存 | 常更省（实现相关） | 通常更高 |
+| 场景 | 低频、受限、LPWAN | 事件驱动、网关、生态工具 |
 
-### 6.2 选择决策树
+粗决策：RAM 极紧 → CoAP+DTLS（优先 PSK/OSCORE 评估）；高频事件且资源尚可 → MQTT+TLS 1.3；控制指令禁用 0-RTT，启用会话恢复减少满握手。
 
-```
-你的设备有多少 RAM?
-├── < 32 KB → CoAP + DTLS (PSK mode)
-│     └── 通信模式?
-│           ├── 请求/响应 → 纯 CoAP
-│           └── 需要观察 → CoAP Observe
-├── 32-128 KB → 看通信模式
-│     ├── 低频上报 (< 1次/分钟) → CoAP + DTLS
-│     └── 高频/事件驱动 → MQTT + TLS (QoS 0)
-└── > 128 KB → MQTT + TLS
-      └── 需要 QoS 2 (精确一次)?
-            ├── 是 → MQTT 5.0 + TLS 1.3
-            └── 否 → MQTT QoS 1 足够
-```
+## 6 实践建议
 
-### 6.3 wolfSSL vs mbedTLS 内存占用对比
+1. OpenSSL `s_client` / Wireshark 看清 1.2 vs 1.3 飞行消息。
+2. 设备侧用 mbedTLS/wolfSSL 跑 PSK 与证书两条路径，记录握手字节与峰值 RAM。
+3. DTLS MTU 设为链路 MTU 减去 IP/UDP 开销，避免 IP 分片。
+4. NB-IoT 等大延迟链路增大初始重传超时，避免误判拥塞。
+5. 证书优先 ECDSA P-256 等较短链，减少分片次数。
 
-| 配置 | wolfSSL 5.6 | mbedTLS 3.5 |
-|------|------------|-------------|
-| DTLS 1.2 PSK (最小) | 8 KB RAM / 35 KB Flash | 10 KB RAM / 40 KB Flash |
-| DTLS 1.2 证书 | 22 KB RAM / 75 KB Flash | 28 KB RAM / 85 KB Flash |
-| TLS 1.3 PSK | 10 KB RAM / 40 KB Flash | 12 KB RAM / 45 KB Flash |
-| TLS 1.3 证书 | 25 KB RAM / 80 KB Flash | 30 KB RAM / 90 KB Flash |
-| DTLS 1.3 PSK | 9 KB RAM / 38 KB Flash | 11 KB RAM / 43 KB Flash |
+## 7 局限、挑战与可改进方向
 
-注：以上数据基于 ARM Cortex-M4，编译优化 -Os，不含应用层缓冲区。
+### 1. DTLS 实现质量参差
 
-## 7. 实践建议
+**局限**：重传、重放窗、分片边界在嵌入式库中的 bug 面大于「只跑 TLS」的路径[6][9]。
+**改进**：固定库版本与模糊测试；互通矩阵（Californium/Leshan 等）纳入 CI。
 
-### 7.1 初学者入门路径
+### 2. PSK 运营陷阱
 
-1. 用 OpenSSL 命令行体验 TLS 1.3 握手过程（s_client/s_server）
-2. 用 Wireshark 抓包对比 TLS 1.2 和 1.3 的握手差异
-3. 在 ESP32 上配置 mbedTLS，连接 CoAP 服务器（如 californium）
-4. 比较 PSK 和证书模式的握手时间差异
-5. 搭建 LwM2M 服务器（Leshan），体验完整的 DTLS 设备注册流程
+**局限**：出厂统一 PSK 或硬编码 identity 导致批量泄露[4][9]。
+**改进**：一机一钥、安全元件注入、可吊销清单；规模上升迁证书/EST。
 
-### 7.2 具体调优建议
+### 3. 中间盒与 NAT
 
-会话恢复方面，务必启用 PSK-based session resumption，避免每次连接都做完整握手（省 600ms+）。MTU 设置方面，DTLS 的 MTU 建议设为链路 MTU 减去 IP/UDP 头（通常 1280-48=1232 bytes），避免 IP 分片。超时设置方面，NB-IoT 网络的初始重传超时应设为 3-5 秒（而非默认 1 秒），因为网络延迟大。证书链优化方面，使用 ECDSA P-256 证书替代 RSA-2048，证书体积减少约 60%。0-RTT 谨慎使用方面，TLS 1.3 0-RTT 存在重放风险，IoT 控制指令（如开关阀门）绝对不能用 0-RTT 传输。
+**局限**：UDP 映射超时导致「上行正常、下行 DTLS 失败」难查[3]。
+**改进**：Connection ID、应用层保活、Queue Mode；或边缘终止 DTLS 再北向 TLS。
+
+### 4. 0-RTT 与「省电叙事」滥用
+
+**局限**：把 0-RTT 或「TLS 1.3 必省电三分之一」写进产品承诺，忽略重放与业务模型[10]。
+**改进**：按消息敏感度分级；用焦耳/日模型测算，而非只比 RTT 次数。
 
 ## 参考文献
 
-1. RFC 8446, "The Transport Layer Security (TLS) Protocol Version 1.3", IETF, 2018
-2. RFC 9147, "The Datagram Transport Layer Security (DTLS) Protocol Version 1.3", IETF, 2022
-3. RFC 9146, "Connection Identifier for DTLS 1.2", IETF, 2022
-4. ARM mbedTLS, "PSK-based DTLS Configuration Guide", 2024
-5. wolfSSL, "Embedded TLS/DTLS Benchmark Report", 2024
-6. Rescorla, E. et al., "DTLS 1.3 for IoT: Implementation Challenges", ACM CCS, 2023
-7. Raza, S. et al., "Compression of DTLS Records for Constrained IoT", IEEE IoT-J, 2023
-8. Eclipse Californium, "CoAP + DTLS Implementation Guide", 2024
-9. Sethi, M. et al., "IoT Security with DTLS: Measurements and Lessons", NDSS, 2024
-10. Hohenberger, S., "0-RTT Key Exchange: Security Analysis", Crypto, 2023
+[1] E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.3," RFC 8446, 2018.
+[2] E. Rescorla et al., "The Datagram Transport Layer Security (DTLS) Protocol Version 1.3," RFC 9147, 2022.
+[3] E. Rescorla et al., "Connection Identifier for DTLS 1.2," RFC 9146, 2022.
+[4] Arm Mbed TLS documentation and configuration guides, 2024.
+[5] wolfSSL, embedded TLS/DTLS benchmark materials, 2024.
+[6] Implementation experience reports on DTLS for IoT (academic and industry), 2020s.
+[7] S. Raza et al., work on DTLS record compression / constrained IoT security, IEEE IoT-J and related.
+[8] Eclipse Californium, CoAP + DTLS documentation, 2024.
+[9] M. Sethi et al., measurement studies of IoT security handshakes (e.g. NDSS and related venues).
+[10] Analyses of 0-RTT key exchange security and replay, Crypto/security literature.
+[11] G. Selander et al., "OSCORE," RFC 8613, 2019.
+[12] Z. Shelby et al., "CoAP," RFC 7252, 2014.

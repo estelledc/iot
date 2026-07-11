@@ -3,445 +3,117 @@ schema_version: '1.0'
 id: pmic-integrated-power-management
 title: 集成PMIC电源管理芯片选型与设计
 layer: 1
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+reading_time: 16
+prerequisites:
+  - buck-converter-design-iot
+  - battery-management-bms
+  - power-sequencing-multi-rail
+tags:
+  - PMIC
+  - 电源管理
+  - Buck
+  - LDO
+  - 电池充电
+  - 电量计
+  - I2C
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 集成PMIC电源管理芯片选型与设计
-> **难度**: 黄 中级 | **领域**: 集成电源管理 | **阅读时间**: 约 20 分钟
 
-## 引言
+> **难度**：🟡 中级 | **领域**：集成电源管理 | **关键词**：PMIC, Buck, LDO, 充电, 电量计 | **阅读时间**：约 16 分钟
 
-想象你开一家小餐馆。如果你每道菜都从种菜开始,那需要雇很多农民、买很多地,成本极高。但如果你去批发市场采购半成品,厨房只需要简单加工,效率和成本就大不一样。
+## 日常类比
 
-PMIC(Power Management IC)就是电源设计的"批发市场"。它把多个Buck、LDO、电池充电器、电量计等功能集成在一颗芯片里,你不需要分别采购和布局十几颗独立IC,只需要一颗PMIC就能管理整个系统的供电。对于IoT设备来说,PCB面积寸土寸金,BOM越少可靠性越高,PMIC的价值就特别突出。
+开小餐馆若每道菜从种菜开始，成本极高；去批发市场买半成品再加工更划算。电源管理集成电路（Power Management IC, PMIC）就是电源设计的“批发市场”：把多路降压（Buck）、低压差线性稳压器（Low-Dropout Regulator, LDO）、充电器与电量计等装进一颗芯片，省板面积与焊接点[1][2]。
 
-本文系统讲解PMIC的架构、选型要点、典型IC对比,以及可穿戴IoT设备的设计实例,帮助你在项目早期做出正确的PMIC选型决策。
-
-## 1. PMIC概念与优势
+## 摘要
 
-### 1.1 什么是PMIC
-
-PMIC(Power Management IC)是将多种电源管理功能集成在单颗芯片中的集成电路。典型功能包括:
-
-- 多路Buck降压转换器
-- 多路LDO线性稳压器
-- 电池充电管理(锂电池/锂聚合物)
-- 电量计(Fuel Gauge)
-- 电池保护(过充/过放/过流/短路)
-- USB接口管理(VBUS检测,OTG)
-- 电压监测与复位
-- 看门狗定时器
-- GPIO控制
-- 动态电压调节(DVS)
+梳理 PMIC 相对分立方案的取舍、典型架构（电源路径、上电时序）、常见 IoT 器件对比，以及可穿戴级选型要点。电流、静态电流（Iq）与价格为公开资料常见量级，以现行数据手册为准[3][4]。
 
-### 1.2 PMIC vs 分立方案对比
+## 1. 概念与对比
 
-| 对比维度 | PMIC | 分立方案 |
-|----------|------|----------|
-| BOM元件数 | 少(1颗PMIC+少量外围) | 多(每个功能1颗IC) |
-| PCB面积 | 小(单颗IC) | 大(多颗IC+外围) |
-| 功耗(Iq) | 可能较高(多路同时工作) | 可逐路优化,更低 |
-| 设计灵活度 | 受限于IC内部配置 | 完全自由组合 |
-| 成本 | IC单价高,总BOM可能低 | IC单价低,总BOM可能高 |
-| 上电时序 | 内置,软件可配 | 需外部电路或手动设计 |
-| 开发周期 | 短(少验证) | 长(多验证) |
-
-### 1.3 PMIC的核心价值
-
-1. **BOM精简**: 一颗IC替代5-10颗分立IC,减少供应链风险
-2. **上电时序**: 内置可编程上电顺序,避免MCU因电源时序错误损坏
-3. **PCB面积**: 小型IoT设备(如智能手表)PCB面积<400mm2,分立方案放不下
-4. **系统可靠性**: 元件越少,焊接点越少,故障率越低
-5. **软件可配**: 通过I2C动态调整输出电压、开关各路电源、读取电量
-
-## 2. 典型PMIC架构
-
-### 2.1 通用架构框图
-
-```
-                   +-----------------------------------+
-                   |            PMIC 内部              |
-                   |                                    |
-VBUS/USB ---+----- | Buck1 (1.2V/1.8V) --> MCU Core   |
-            |      | Buck2 (3.3V)      --> MCU I/O    |
-Battery ----+----- | Buck3 (1.1V)      --> RF/Flash   |
-            |      | LDO1  (3.3V)      --> Sensor     |
-            |      | LDO2  (1.8V)      --> Audio     |
-            |      |                                    |
-            |      | [Battery Charger] <-- VBUS       |
-            |      | [Fuel Gauge]      <-- Battery    |
-            |      | [Power Path Mgmt]                 |
-            |      | [ADC / Monitor]                    |
-            |      | [I2C Control Interface]            |
-            |      | [Sequencer / FSM]                  |
-            +----- |-----------------------------------|
-                   +-----------------------------------+
-```
-
-### 2.2 电源路径管理
-
-PMIC的一个重要功能是电源路径管理(Power Path Management),决定系统由电池供电还是USB供电:
-
-1. USB接入时: 优先用USB给系统供电,同时USB给电池充电
-2. USB断开时: 自动切换到电池供电,无缝切换
-3. 电池电量低时: USB先给系统供电,系统稳定后剩余电流给电池充电
-
-这避免了传统方案中"USB先充电再给系统"导致系统启动延迟的问题。
-
-### 2.3 上电时序控制
-
-多路电源必须按特定顺序上电,否则MCU可能损坏或工作异常:
-
-```
-典型上电时序:
-  t0: VDD_CORE (1.2V) 上电
-  t1: VDD_IO (3.3V) 上电  (延迟5ms)
-  t2: VDD_RF (1.1V) 上电  (延迟10ms)
-  t3: VDD_FLASH (3.3V) 上电 (延迟15ms)
-  t4: RESET 释放            (延迟50ms)
-```
-
-PMIC内部的状态机(FSM)自动管理这个时序,无需外部延时电路或MCU GPIO控制。
-
-## 3. 常见IoT PMIC详解
-
-### 3.1 AXP192 / AXP2101 (X-Powers)
-
-ESP32生态最常用的PMIC:
-
-**AXP192**:
-- 3路Buck: DCDC1(1.8V/100mA), DCDC2(1.2-1.4V/1600mA), DCDC3(0.7-3.5V/700mA)
-- 3路LDO: LDO1(1.8V/30mA), LDO2(1.8-3.3V/200mA), LDO3(1.8-3.3V/200mA)
-- 电池充电: 不可充锂电池/锂聚合物,充电电流可调
-- I2C接口: 0x34
-- 封装: QFN-48 (6x6mm)
-- 应用: M5Stack, LilyGO T-Beam等ESP32开发板
-
-**AXP2101**(升级版):
-- 5路Buck + 6路LDO + 1路DLDO
-- 支持更大电流输出
-- 更低Iq
-- 封装: QFN-56 (5.5x5.5mm)
-
-特点:
-- 功能丰富,覆盖IoT大部分供电需求
-- 社区生态好,ESP-IDF/Arduino有成熟驱动
-- 价格低(约1-2美元)
-- 适合ESP32系列和类似MCU
-
-### 3.2 BQ25895 + BQ27441 (Texas Instruments)
-
-TI的经典组合方案: BQ25895负责充电和电源路径,BQ27441负责电量计。
-
-**BQ25895**(充电IC):
-- 输入: USB 5V(BC1.2检测)
-- 充电: 锂电池,最大5A充电电流
-- 电源路径: 自动USB/电池切换
-- I2C接口
-- 封装: WQFN-24 (3.5x3.5mm)
-
-**BQ27441**(电量计):
-- 基于阻抗追踪(Impedance Track)算法
-- 精度: +/-1%(校准后)
-- I2C接口
-- 封装: WQFN-12 (2.5x2.5mm)
-
-特点:
-- 充电性能强,支持快充
-- 电量计精度高
-- 需要两颗IC,但各自功能专精
-- 适合对充电和电量精度要求高的设备
-
-### 3.3 nPM1300 (Nordic Semiconductor)
-
-nRF系列专属PMIC:
-
-- 2路Buck: Buck1(1.8-3.3V/500mA), Buck2(0.8-3.3V/500mA)
-- 2路LDO: LDO1(1.0-3.3V/50mA), LDO2(1.0-3.3V/50mA)
-- 电池充电: 锂电池,充电电流可调(最大400mA)
-- 燃料表(电流积分法)
-- USB VBUS检测
-- 看门狗定时器
-- GPIO和LED驱动
-- I2C接口: 0x6B
-- 封装: aQFN-48 (4.5x3.5mm)
-- Iq: 约5uA(所有使能路开启)
-
-特点:
-- 与nRF52832/nRF52840/nRF5340完美匹配
-- 内置nRF专用的上电时序预设
-- 看门狗功能: MCU死机时自动复位
-- 极简外围: 仅需2个电感+4个电容
-- Nordic Devicetree和驱动完善
-
-### 3.4 PMIC对比总结
-
-| 参数 | AXP192 | AXP2101 | BQ25895+BQ27441 | nPM1300 |
-|------|--------|---------|------------------|---------|
-| Bucks | 3 | 5 | 0+0 | 2 |
-| LDOs | 3 | 6+1 | 0+0 | 2 |
-| 电池充电 | 有 | 有 | 有(5A) | 有(400mA) |
-| 电量计 | 简单 | 有 | 高精度 | 有(积分法) |
-| I2C地址 | 0x34 | 0x34 | 0x6A+0x55 | 0x6B |
-| 封装mm | 6x6 | 5.5x5.5 | 3.5x3.5+2.5x2.5 | 4.5x3.5 |
-| 适合MCU | ESP32 | ESP32 | 通用 | nRF52/53 |
-| 价格 | 低 | 低 | 高 | 中 |
-
-## 4. I2C配置接口
-
-### 4.1 寄存器映射与配置
-
-PMIC通过I2C接口进行配置,典型寄存器包括:
-- 状态寄存器(0x00-0x01): 电池状态、充电状态、故障标志(只读)
-- Buck输出电压(0x10-0x13): 设置各Buck的输出电压和使能
-- LDO输出电压(0x20-0x21): 设置各LDO的输出电压和使能
-- 充电控制(0x30-0x32): 充电使能、充电电压和电流设置
-- GPIO配置(0x40): GPIO方向和功能
-- 上电时序(0x50): 选择预设时序或自定义延迟
-- 芯片ID(0xFF): 唯一标识,启动时验证通信
-
-### 4.2 配置代码示例
-
-以nPM1300为例,通过I2C配置PMIC:
-
-```
-// nPM1300 I2C配置示例(伪代码)
-#define PMIC_ADDR  0x6B
-
-void pmic_init(void) {
-    // 验证通信
-    if (i2c_read(PMIC_ADDR, 0x00) != 0x51) return;
-
-    // Buck1: 1.8V使能, Buck2: 3.3V使能
-    i2c_write(PMIC_ADDR, 0x04, 0x0A); i2c_write(PMIC_ADDR, 0x05, 0x01);
-    i2c_write(PMIC_ADDR, 0x06, 0x24); i2c_write(PMIC_ADDR, 0x07, 0x01);
-
-    // LDO1: 3.0V使能(给传感器)
-    i2c_write(PMIC_ADDR, 0x08, 0x1E); i2c_write(PMIC_ADDR, 0x09, 0x01);
-
-    // 充电: 4.2V, 200mA
-    i2c_write(PMIC_ADDR, 0x30, 0x02);
-    i2c_write(PMIC_ADDR, 0x31, 0x2C); i2c_write(PMIC_ADDR, 0x32, 0x04);
-}
-```
-
-### 4.3 运行时动态调节
-
-PMIC的I2C接口支持运行时动态调整:
-- 动态电压调节(DVS): 根据MCU负载调整核心电压,降低功耗
-- 按需开关: 不使用的外设电源路关闭,节省Iq
-- 电量读取: 实时读取电池剩余电量和电压
-- 中断处理: 电池低电量、充电完成、USB插入等事件
-
-## 5. 电池管理集成
-
-### 5.1 充电管理
-
-PMIC内置的充电管理遵循CC-CV(恒流-恒压)曲线:
-
-```
-  电流
-   ^
-   |   CC阶段    CV阶段
-   |  +------+--------+
-   |  | 恒流 |  逐渐减小|
-   |  |      |          \
-   |  |      |           \
-   +--+------+------------+--> 电压
-      3.0V   4.2V(截止)
-```
-
-CC阶段: 电池电压低于4.2V时,以恒定电流(如200mA)充电
-CV阶段: 电池电压达到4.2V后,保持电压不变,电流逐渐减小
-充电完成: 电流降至截止电流(如20mA),充电结束
-
-### 5.2 电量计
-
-PMIC中的电量计有三种主要方法:
-
-| 方法 | 原理 | 精度 | 成本 |
-|------|------|------|------|
-| 电压查表法 | 测电池电压,查OCV-SOC表 | 低(+/-10%) | 零(软件实现) |
-| 库仑计法(电流积分) | 积分充放电电流 | 中(+/-5%) | 低(采样电阻) |
-| 阻抗追踪法 | 建模电池阻抗,实时校正 | 高(+/-1-3%) | 高(算法+校准) |
-
-AXP192使用简单的电压查表法,nPM1300使用库仑计法,BQ27441使用阻抗追踪法。
-
-### 5.3 电池保护
-
-PMIC内置电池保护,无需外部保护板:
-- 过充保护: 电池电压超过4.35V时切断充电
-- 过放保护: 电池电压低于2.5V时切断放电
-- 过流保护: 放电电流超过阈值时断开
-- 温度保护: NTC热敏电阻监测电池温度,超温停止充电
-
-## 6. 保护与安全机制
-
-- 热关断: 芯片温度>125C时所有输出关闭,>110C时充电电流降额
-- 看门狗: MCU定期通过I2C"喂狗",超时未喂狗则PMIC复位整个系统
-- 欠压锁定(UVLO): 输入电压低于2.8-3.0V时拒绝启动,防止电池深度放电
-- 过充保护: 电池电压超过4.35V时切断充电
-- 温度保护: NTC监测电池温度,超温停止充电
-
-## 7. PMIC选型标准
-
-### 7.1 选型决策矩阵
-
-```
-选型优先级(IoT场景):
-
-1. 输入电压范围
-   - 锂电池: 3.0-4.2V
-   - USB: 5V
-   - 太阳能: 0.3-5.5V(需配合Boost)
-
-2. 输出电压路数
-   - MCU核心: 1.2V/1.8V(Buck)
-   - MCU I/O: 3.3V(Buck或LDO)
-   - RF: 1.1V/3.3V
-   - 传感器: 3.3V/5.0V(LDO)
-   - 至少需要2-3路不同电压
-
-3. 静态电流(Iq)
-   - 关键: Iq决定了睡眠状态下的电池寿命
-   - 目标: 全路使能Iq < 10uA
-   - 仅一路使能Iq < 5uA
-
-4. 充电需求
-   - 是否需要USB充电?
-   - 充电电流: 穿戴设备100-400mA,手机500-2000mA
-   - 是否需要电量计?
-
-5. 封装与PCB面积
-   - 可穿戴: 优先aQFN, <5x5mm
-   - 便携设备: QFN 5x5-7x7mm
-
-6. MCU生态匹配
-   - nRF系列: nPM1300(最佳匹配)
-   - ESP32系列: AXP192/AXP2101
-   - STM32: STPMIC1(ST官方PMIC)
-   - 通用: 分立方案更灵活
-```
-
-### 7.2 决策流程
-
-```
-1. 列出所有需要的电压轨和电流
-2. 确定是否需要电池充电和电量计
-3. 确定PCB面积预算
-4. 匹配MCU生态(有无官方PMIC)
-5. 比较候选PMIC的Iq和效率
-6. 评估外围元件数量和成本
-7. 选择最合适的PMIC或分立方案
-```
-
-## 8. 实战设计: 可穿戴IoT设备
-
-### 8.1 系统需求
-
-- 功能: 心率+步数监测,BLE广播
-- MCU: nRF52832
-- 传感器: MAX30102(心率)+LIS3DH(加速度)
-- 显示: 1.3寸OLED(3.3V, 20mA峰值)
-- 电池: 100mAh锂聚合物
-- 充电: USB-C, 5V
-- PCB面积: <30mm x 20mm(600mm2)
-- 续航目标: 7天
-
-### 8.2 电压轨分析
-
-| 电压轨 | 电压 | 最大电流 | 平均电流 | 适合类型 |
-|--------|------|---------|---------|----------|
-| nRF52832 Core | 1.2V | 15mA | 3mA | Buck |
-| nRF52832 I/O + OLED + 传感器 | 3.3V | 50mA | 8mA | Buck |
-| 电池充电 | - | 200mA | - | 充电IC |
-
-### 8.3 PMIC选型
-
-选择nPM1300:
-- 2路Buck覆盖1.2V和3.3V需求
-- 内置电池充电(400mA,满足200mA需求)
-- 内置电量计(库仑计法)
-- 与nRF52832完美匹配
-- 封装4.5x3.5mm,适合小PCB
-- 外围仅2个电感+4个电容
-
-### 8.4 电路设计
-
-```
-USB-C 5V ---+--- nPM1300 VBUS
-             |
-100mAh ---+--- nPM1300 BAT
-           |
-           +--- Buck1(1.2V) ---> nRF52832 VDD_CORE
-           +--- Buck2(3.3V) ---> nRF52832 VDD_IO
-           |                    +-- MAX30102 VDD
-           |                    +-- LIS3DH VDD
-           |                    +-- OLED VDD
-           +--- LDO1(3.0V) ---> MAX30102 LED(可选)
-           +--- I2C <--------> nRF52832 I2C0
-```
-
-BOM:
-
-| 元件 | 型号 | 封装 | 数量 |
-|------|------|------|------|
-| U1 | nPM1300 | aQFN-48 | 1 |
-| L1 | MLC1005-2R2K | 0402 | 1 (Buck1, 2.2uH) |
-| L2 | MLC1005-2R2K | 0402 | 1 (Buck2, 2.2uH) |
-| C1 | GRM155R60J475M | 0402 | 1 (4.7uF) |
-| C2 | GRM155R60J475M | 0402 | 1 (4.7uF) |
-| C3 | GRM155R60J106M | 0402 | 1 (10uF) |
-| C4 | GRM155R60J106M | 0402 | 1 (10uF) |
-| R1 | 4.7kOhm | 0402 | 1 (I2C上拉) |
-| R2 | 4.7kOhm | 0402 | 1 (I2C上拉) |
-
-总元件数: 1 PMIC + 2 电感 + 4 电容 + 2 电阻 = 9个元件
-
-### 8.5 功耗与续航估算
-
-```
-// 工作模式功耗
-P_active = 3.3V x 15mA + 1.2V x 5mA = 55.5mW
-// 1%占空比(每100ms工作1ms)
-
-// 睡眠模式功耗
-P_sleep = 3.3V x 1.5uA + nPM1300 Iq(5uA) = 21.45uW
-// 99%时间
-
-// 平均功耗
-P_avg = 55.5mW x 0.01 + 0.021mW x 0.99 = 0.577mW
-
-// 电池容量
-E_bat = 3.7V x 100mAh = 370mWh
-
-// 续航
-T = 370mWh / 0.577mW = 641h = 26.7天
-// 考虑电量计误差和电池老化,实际约7-14天
-```
-
-### 8.6 关键设计注意事项
-
-1. I2C上拉电阻: nPM1300和nRF52832共用I2C总线,上拉电阻放在4.7kOhm
-2. 电池NTC: 100mAh锂电池需要NTC温度监测,连接到PMIC的TS引脚
-3. USB VBUS检测: nPM1300自动检测VBUS插入,无需MCU干预
-4. 看门狗: 启用看门狗防止固件死机导致设备无响应
-5. 低电量中断: 设置3.3V低电量阈值,MCU收到中断后保存数据并安全关机
+PMIC 常见能力：多路 Buck/LDO、锂电充电与保护、电量计、USB/VBUS 管理、电压监测与复位、看门狗、动态电压调节（Dynamic Voltage Scaling, DVS）、I2C 配置[1]。
+
+| 维度 | PMIC | 分立方案 |
+|------|------|----------|
+| BOM / 面积 | 少、紧凑 | 多 IC、占板 |
+| Iq 优化 | 多路同开时可能偏高 | 可逐路极致优化 |
+| 上电时序 | 常内置可编程 | 需外电路或 GPIO |
+| 灵活度 | 受内部拓扑限制 | 自由组合 |
+| 周期 | 验证面少、上手快 | 联调与布局更重 |
+
+## 2. 架构要点
+
+典型路径：VBUS/电池 → 充电器与电源路径管理（Power Path）→ Buck/LDO 分轨 → 监测与 I2C。USB 接入时优先给系统供电并充电；断开后无缝切电池，避免“先充满再启动”的延迟[3][5]。
+
+多轨须按数据手册顺序上电（常先内核再 I/O/射频），由片内状态机完成，减少外部延时网络[6]。
+
+## 3. 常见器件量级对比
+
+| 参数 | AXP192/2101 系 | BQ25895+电量计 | nPM1300 |
+|------|----------------|----------------|---------|
+| 转换器 | 多路 Buck+LDO | 充电/路径为主 | 2 Buck + 2 LDO 量级 |
+| 充电 | 有 | 可至数安级快充 | 数百 mA 量级 |
+| 电量计 | 偏电压/简化 | 阻抗追踪类高精度 | 库仑计类 |
+| 生态 | ESP 开发板常见 | 通用 TI 生态 | Nordic nRF 匹配 |
+| 倾向 | 消费原型/小系统 | 充电精度优先 | 低功耗 BLE 节点 |
+
+电量估计：电压查表误差大；库仑计中等；阻抗追踪需校准、精度更高——数字以厂商条件为准[4][7]。
+
+## 4. 选型与实践
+
+优先列清电压轨与峰值/平均电流、是否 USB 充电、PCB 面积、目标睡眠 Iq，再匹配 MCU 生态（如 nRF↔nPM、ESP↔AXP、STM32↔STPMIC）[1][8]。运行时用 I2C 关断闲置轨、读电量、响应低电/插拔中断。
+
+可穿戴示意：小容量锂电 + 双 Buck 覆盖内核与 3.3 V 外设 + 内置充电；续航须按占空比与整机睡眠电流实测，文中天数仅为量级[9]。
+
+| 检查项 | 要点 |
+|--------|------|
+| 热与保护 | 热关断、NTC 充电温度窗、过充过放 |
+| 看门狗 | MCU 喂狗失败时复位系统 |
+| 布局 | 电感/电容紧靠、电池与 VBUS 走线短粗 |
+| 何时不用 PMIC | 仅 1–2 轨且极致 Iq → 分立更合适 |
+
+## 5. 局限、挑战与可改进方向
+
+### 1. 集成度与极致 Iq 冲突
+
+**局限**：多路常开时静态电流难压到分立最优。
+**改进**：睡眠关断闲置轨；单轨场景改分立 LDO/Buck[2][9]。
+
+### 2. 厂商锁定与供货
+
+**局限**：寄存器与时序绑定特定 PMIC，二供困难。
+**改进**：抽象电源驱动层；关键轨预留分立备选 footprint[8]。
+
+### 3. 电量计精度依赖校准
+
+**局限**：未校准或温度漂移导致 SOC 偏差大。
+**改进**：出厂学习周期；选阻抗追踪方案并按 AN 校准[4][7]。
+
+### 4. 上电时序误配损坏风险
+
+**局限**：自定义时序错误可致闩锁或异常复位。
+**改进**：优先用手册预设；示波器验证各轨与复位释放顺序[6]。
 
 ## 总结
 
-PMIC将多个电源管理功能集成在一颗芯片中,对IoT设备的价值在于: 减少BOM和PCB面积、内置上电时序和电池管理、通过I2C实现软件可配置的灵活控制。选型时需优先确认电压轨需求、充电需求和MCU生态匹配度,再比较Iq、封装和外围元件数量。PMIC不是万能的: 如果只需要1-2路电源且对Iq有极致要求,分立LDO/Buck可能更合适。但对于多电压轨、需要充电管理的典型IoT产品,PMIC往往是正确的设计选择。
+多轨、需充电与小面积的 IoT 产品，PMIC 常缩短设计与提高可靠性；选型以轨需求、Iq、生态与保护闭环为准，并用整机电流验证续航。
 
 ## 参考文献
 
-1. Nordic Semiconductor. "nPM1300 Product Specification", 2023.
-2. X-Powers. "AXP2101 Advanced Power Management Unit Datasheet", 2022.
-3. Texas Instruments. "BQ25895 I2C Controlled 5A Fast Charge Switch Mode Buck Charger", Datasheet, 2021.
-4. STMicroelectronics. "STPMIC1 Power Management IC for Application Processors", Datasheet, 2020.
-5. Yeates K, Ruiz J. "Integrated Power Management for Wearable IoT Devices", IEEE TCAS-II, 2022.
+[1] Nordic Semiconductor, nPM1300 Product Specification.
+[2] X-Powers, AXP2101 Advanced Power Management Unit Datasheet.
+[3] Texas Instruments, BQ25895 Fast Charge Switch-Mode Buck Charger Datasheet.
+[4] Texas Instruments, Impedance Track / fuel gauge application notes.
+[5] Power-path management concepts in USB-powered portable systems (vendor ANs).
+[6] Multi-rail power sequencing and latch-up avoidance (PMIC / sequencer ANs).
+[7] Battery fuel gauging methods: OCV, coulomb counting, model-based.
+[8] STMicroelectronics, STPMIC1 Power Management IC Datasheet.
+[9] Wearable IoT power budget and duty-cycle lifetime estimation practice.
+[10] I2C-controlled DVS and rail enable strategies for low-power MCUs.
+[11] Li-ion CC-CV charging and NTC charge-temperature windows.
+[12] PCB layout guidelines for multi-buck PMICs (inductor hot loop).

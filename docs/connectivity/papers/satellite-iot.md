@@ -3,287 +3,107 @@ schema_version: '1.0'
 id: satellite-iot
 title: 卫星物联网：天地一体的连接覆盖
 layer: 2
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: survey
+difficulty: intermediate
+reading_time: 18
+prerequisites:
+  - cellular-iot-evolution-2g-5g
+tags:
+  - 卫星物联网
+  - NTN
+  - LEO
+  - D2S
+  - NB-IoT
+  - 天地一体
+  - 混合连接
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 卫星物联网：天地一体的连接覆盖
 
-> 难度：🟠 挑战 | 领域：卫星通信 · 广域物联网 | 更新：2025-06
+> **难度**：🟡 中级 | **领域**：卫星通信 · 广域物联网 | **阅读时间**：约 18 分钟
 
----
+## 日常类比
 
-## 一句话总结
+远洋冷藏箱要定时上报温度，但公海没有手机基站。传统海事卫星模组与按条计费对低价传感器往往不经济。卫星物联网方向是：用更接近地面窄带物联网（NB-IoT）/LoRa 成本结构的终端，在无覆盖区仍能回传小数据[1][2]。
 
-地面蜂窝网络只覆盖了地球陆地面积的约 20%（海洋、沙漠、极地、深山几乎无信号）。卫星物联网通过 LEO 卫星星座将 NB-IoT/LoRa 信号延伸到地球每一个角落，实现真正的"全球无盲区"连接。3GPP NTN 标准和直连卫星（D2S）技术正在让普通 IoT 终端无需改造就能接入卫星网络。
+## 摘要
 
----
+地面蜂窝难以覆盖海洋、沙漠、极地等广阔区域。低地球轨道（LEO）星座与第三代合作伙伴计划（3GPP）非地面网络（NTN）推动“蜂窝协议上星”和直连卫星（Direct-to-Satellite, D2S）。本文综述轨道选择、传统卫星物联网与 NTN、透明/再生架构、应用与成本边界。连接数与价格预测来自市场报告叙事，**不作承诺**[9][10]。
 
-## 从日常场景说起
+## 1. 轨道与系统类型
 
-一艘远洋货轮在太平洋中央航行。船上的冷藏集装箱里装着新西兰牛肉，温度传感器需要每 30 分钟上报一次数据——如果温度超标，岸上的公司要立刻知道。
+| 轨道 | 高度叙事 | 时延 | IoT 含义 |
+|------|----------|------|----------|
+| GEO | ~36000 km | 大 | 终端更难做小低功耗 |
+| MEO | 中间 | 中 | 较少作海量低成本 IoT |
+| LEO | 约 300–2000 km | 相对小 | 更利小天线与链路预算 |
 
-问题是：太平洋中央没有手机基站。传统方案是用海事卫星电话（Iridium、Inmarsat），但一个卫星通信模块要 $200+，通信费 $1/条消息。一个集装箱加几十美元的传感器，配几百美元的卫星模块？经济上完全不可行。
+传统系统（如短突发、单向简易、VHF 小数据等）多用专用协议与模组。NTN（Rel-17 起）目标是让 NB-IoT/LTE-M 类终端经适配连卫星，复用芯片与运营生态[1][2]。
 
-卫星物联网要解决的就是这个问题：**用和地面 NB-IoT/LoRa 差不多便宜的模组，直接连卫星**。2024-2025 年，这个目标正在变成现实。
+## 2. NTN 关键适配
 
----
+| 挑战 | 原因 | 方向 |
+|------|------|------|
+| 大时延 | 星地距离 | 扩展定时提前/HARQ 等定时 |
+| 多普勒 | LEO 高速运动 | GNSS+星历预补偿 |
+| 大小区 | 波束覆盖广 | 随机接入与波束资源扩展 |
 
-## LEO 卫星星座：为什么是低轨？
+透明转发：星上变频放大，基站功能在关口站。再生：星上部分/全部基站功能，利于缺关口站几何，但卫星更复杂。手机应急卫星消息与物联网 NTN 芯片同属 D2S 热潮，能力与资费完全不同，不可混用指标。
 
-### 轨道高度与物联网的关系
+## 3. 天地一体与应用
 
-| 轨道类型 | 高度 | 单程延迟 | 覆盖特点 | 代表系统 |
-|----------|------|---------|---------|---------|
-| GEO (地球同步轨道) | 35,786 km | ~270 ms | 3 颗覆盖全球（除极地） | Inmarsat, 天通一号 |
-| MEO (中轨道) | 2,000-35,000 km | 30-150 ms | 10-20 颗全球覆盖 | O3b (SES) |
-| LEO (低轨道) | 300-2,000 km | 1-15 ms | 需要数百到数千颗 | Starlink, OneWeb, Iridium |
+双模模组：有地面走蜂窝（通常更便宜），无覆盖切卫星。应用：海运冷链与渔船、偏远农牧、油气电力管线、灾后传感器。LoRa 星上网关等非 3GPP 路径以免授权与极低速率为特点，服务质量与标准成熟度不同[6]。
 
-物联网选 LEO 的原因：
+| 成本项 | 传统专用卫星 IoT 叙事 | NTN 复用叙事 |
+|--------|----------------------|--------------|
+| 模组 | 明显更高 | 接近蜂窝模组目标 |
+| 连接/消息 | 按系统套餐 | 预期低于传统但高于纯地面 |
+| 天线 | 常专用 | 力争复用 |
 
-1. **延迟低**：LEO 往返延迟 < 30 ms，GEO 要 > 540 ms。虽然 IoT 不需要太低延迟，但短延迟意味着握手建连更快、电池消耗更少。
-2. **链路预算友好**：卫星越近，信号衰减越小，地面设备发射功率越低、天线越小。LEO 的自由空间损耗比 GEO 低约 30 dB——对于只有小天线的 IoT 设备来说，这 30 dB 是生死之差。
-3. **频率复用**：LEO 覆盖区小（一颗卫星约覆盖直径几百公里的区域），不同卫星可以复用同一频率，系统总容量更高。
+## 4. 局限、挑战与可改进方向
 
-LEO 的代价是需要大量卫星组成星座才能实现全球不间断覆盖。一个典型的 LEO 星座需要几百到几千颗卫星。
+### 1. 切换与覆盖缝
 
----
+**局限**：Rel-17 级天地切换未必“秒级无感”，常需重搜[1]。
+**改进**：业务层重试与缓存；跟踪 Rel-18/19 移动性增强。
 
-## 主要卫星物联网系统
+### 2. 频谱与干扰
 
-### 传统卫星 IoT 服务
+**局限**：S/L 等频段需与地面系统协调[7]。
+**改进**：按认证频段选型；部署区做共存评估。
 
-| 系统 | 运营商 | 卫星数 | 轨道 | IoT 能力 | 模组价格 | 消息成本 |
-|------|--------|--------|------|---------|---------|---------|
-| Iridium | Iridium Comm. | 66+6 | LEO 780km | SBD (340字节/条) | $50-100 | ~$0.05-0.15/条 |
-| Globalstar | Globalstar | 48 | LEO 1,414km | Simplex (9字节/条) | $20-50 | ~$0.01-0.05/条 |
-| ORBCOMM | ORBCOMM | 36 (OG1/OG2) | LEO 750km | M2M (数据+定位) | $30-80 | 包月 $5-15 |
-| Swarm (SpaceBee) | SpaceX (收购) | 150+ | LEO 450-550km | VHF 数据 (192字节) | ~$5 (曾经最低) | $5/月/设备 |
+### 3. LEO 补网成本
 
-这些传统系统各有特色，但共同的问题是：**专用协议、专用模组、专用天线**。设备厂商要单独设计卫星通信模块，不能复用已有的蜂窝 IoT 模组。
+**局限**：卫星寿命短于 GEO，需持续发射替换。
+**改进**：合同评估运营商补网能力与服务连续性条款。
 
-### 新一代：3GPP NTN（非地面网络）
+### 4. 市场数字误用
 
-3GPP 在 Release 17（2022 年）中引入了 NTN（Non-Terrestrial Networks）标准化工作。核心思想是：**让已有的 NB-IoT 和 LTE-M 设备通过卫星通信，不改终端硬件、不改协议**。
+**局限**：把预测连接数与“模组 $x”当采购依据[9]。
+**改进**：以试点实测 TCO 与在网率为准；预测仅作背景。
 
-这是一个革命性的转变。意味着一个 $3 的 NB-IoT 模组，加上固件升级，就可能同时支持地面基站和卫星连接。
+## 5. 实践要点
 
-### NTN 的技术挑战
-
-卫星通信和地面基站有几个根本性差异，需要在协议层面做适配：
-
-**1. 传播延迟**
-
-LEO 卫星高度 ~600 km，往返传播延迟约 4-8 ms（取决于仰角）。这比地面 NB-IoT 的 < 1 ms 往返延迟大了一个数量级。
-
-影响：
-- HARQ（混合自动重传）定时器需要延长。地面 NB-IoT 的 HARQ 往返通常 8 ms，卫星场景需要扩展到 20-50 ms。
-- 随机接入（RACH）过程中的定时提前（Timing Advance）补偿范围需要从地面的 ~1 ms 扩展到 ~20 ms。
-- 3GPP 的解决方案：在 Release 17 中引入了预补偿机制，终端使用 GNSS（GPS）定位估算到卫星的距离，预先调整发送时间。
-
-**2. 多普勒频移**
-
-LEO 卫星以 ~7.6 km/s 的速度绕地球运行。对于 S 波段（2 GHz）信号，最大多普勒频移可达 ±24 kHz。NB-IoT 的子载波间隔只有 15 kHz——频移比子载波还宽。
-
-影响：
-- 如果不补偿，信号会完全偏移到相邻子载波，无法解调
-- 3GPP 的解决方案：终端利用 GNSS 位置和卫星星历数据预计算多普勒频移，在发送前预补偿。预补偿后残余频移控制在 ±1 kHz 以内，不影响解调。
-
-**3. 大覆盖区域**
-
-一颗 LEO 卫星的覆盖区域直径可达 500-1000 km（取决于仰角和波束宽度）。覆盖区域内的设备数量可能比一个地面基站多几个数量级。
-
-影响：
-- NPRACH（随机接入）冲突概率急剧上升
-- 3GPP 的解决方案：扩展 NPRACH 资源配置、引入更多前导码序列、支持多波束空间分割
-
-### NTN 部署架构
-
-NTN 有两种卫星转发架构：
-
-**透明转发（Transparent/Bent-pipe）**：卫星只做信号放大和频率转换，所有基站功能在地面。
-
-```
-IoT 设备 ──无线信号──→ LEO 卫星 ──馈电链路──→ 地面网关站 ──→ 地面 5G 核心网
-                       (仅转发)                (完整 gNB)
-```
-
-优点：卫星简单便宜、容易升级（改地面软件即可）。
-缺点：需要在卫星覆盖区内有地面网关站，限制了覆盖范围。
-
-**再生转发（Regenerative）**：卫星上运行完整或部分基站功能（gNB）。
-
-```
-IoT 设备 ──无线信号──→ LEO 卫星 ──星间链路──→ 其他卫星 ──→ 地面网关站
-                       (含 gNB)                            ↓
-                                                        核心网
-```
-
-优点：不需要地面网关站在覆盖区内，通过星间链路（ISL）实现全球覆盖。
-缺点：卫星复杂、昂贵、升级困难。
-
----
-
-## 直连卫星（D2S）IoT
-
-D2S（Direct-to-Satellite）是当前卫星 IoT 最热门的方向。目标是让普通手机和 IoT 设备不需要任何额外硬件就能连卫星。
-
-### 消费领域：手机直连卫星
-
-Apple iPhone 14（2022）率先实现了卫星 SOS——通过 Globalstar 卫星发送紧急求救短信。华为 Mate 50 同年推出了天通卫星通话功能。到 2025 年，多个手机品牌支持卫星消息或通话：
-
-| 品牌 | 卫星系统 | 功能 | 频段 |
-|------|---------|------|------|
-| Apple iPhone 14+ | Globalstar | 紧急 SOS + Find My | L/S 波段 |
-| Huawei Mate 50+ | 天通一号 (GEO) | 短信 + 语音 | S 波段 |
-| Samsung Galaxy S25 | 未公开 | 紧急 SOS | — |
-| Qualcomm Snapdragon 8 Gen 3 | 多系统 | 卫星消息 | — |
-| MediaTek 天玑 9400 | 多系统 | 卫星消息 + NTN | — |
-
-### IoT 领域：NB-IoT over Satellite
-
-对于 IoT 设备，NTN 的价值更大。几个关键进展：
-
-**高通 212S / 9205S**：首批支持 NTN NB-IoT 的基带芯片，2024 年发布。一个模组同时支持地面 NB-IoT 和卫星 NB-IoT，芯片自动检测有无地面网络——有则走地面，无则走卫星。
-
-**联发科 MT6825**：支持 3GPP NTN Release 17 NB-IoT，面向资产追踪和农业传感器。
-
-**Skylo + Qualcomm 合作**：Skylo 提供 NTN 卫星连接平台，与高通芯片集成，面向全球物流追踪。
-
----
-
-## 混合天地一体架构
-
-未来的物联网不是"地面 OR 卫星"，而是"地面 AND 卫星"的融合架构：
-
-```
-┌─────────────────────────────────────────────────────┐
-│                    云平台 / 核心网                    │
-├─────────────────────────────────────────────────────┤
-│          │                         │                │
-│    ┌─────▼──────┐           ┌──────▼───────┐        │
-│    │ 地面基站    │           │ 卫星网关站    │        │
-│    │ (NB-IoT/   │           │ (NTN gNB)    │        │
-│    │  5G/LoRa)  │           │              │        │
-│    └─────▲──────┘           └──────▲───────┘        │
-│          │                         │                │
-│    地面覆盖区域              卫星覆盖区域             │
-│    (城市/乡镇)              (海洋/沙漠/极地)         │
-│          │                         │                │
-│    ┌─────▼──────┐           ┌──────▼───────┐        │
-│    │  IoT 设备   │           │  IoT 设备    │        │
-│    │ (双模模组)  │           │ (双模模组)   │        │
-│    └────────────┘           └──────────────┘        │
-└─────────────────────────────────────────────────────┘
-```
-
-关键理念是"双模模组"——设备内置一个既支持地面 NB-IoT/5G 又支持卫星 NTN 的芯片。在城市有基站的地方走地面网络（便宜、速率高）；在偏远地区自动切换到卫星（贵一点，但总比完全没信号好）。
-
----
-
-## 应用场景
-
-### 海洋物联网
-
-全球 90% 的贸易货物通过海运运输，但公海没有蜂窝覆盖。卫星物联网的海洋应用包括：
-
-- **冷链集装箱监测**：每 30 分钟上报温度/湿度/门开关状态。全球约 500 万个冷藏集装箱，潜在市场巨大。
-- **渔船追踪**：实时定位 + 渔获量上报。中国已要求远洋渔船安装北斗定位终端。
-- **海洋浮标**：监测海水温度、盐度、波高、洋流。现有的 Argo 浮标网络（~4,000 个）使用 Iridium 卫星上报。
-
-### 农业物联网
-
-大规模农场（如澳大利亚、巴西、阿根廷的百万亩级牧场/农场）远离城市，蜂窝覆盖有限。
-
-- **牲畜追踪**：牛羊佩戴卫星 IoT 项圈，定位 + 健康监测。澳大利亚牧场面积可达数千平方公里。
-- **灌溉控制**：土壤湿度传感器通过卫星上报，云端决策后下发灌溉指令。
-- **气象监测**：偏远地区的微气象站。
-
-### 基础设施监测
-
-- **油气管道**：跨越沙漠和山区的管道，数千公里，每隔几百米一个监测点
-- **电力线路**：高压输电线路巡检点，通常在无人区
-- **桥梁/大坝**：结构健康监测传感器，部分在偏远山区
-
-### 应急救灾
-
-灾害（地震、洪水、飓风）可能摧毁地面通信基础设施。卫星物联网在灾后场景中提供应急连接：
-- 临时部署的传感器通过卫星上报水位、气体浓度、结构位移
-- 救援人员的定位和状态报告
-
----
-
-## 成本分析与市场预测
-
-### 当前卫星 IoT 成本结构
-
-| 成本项 | 传统卫星 IoT (Iridium 等) | NTN NB-IoT (预估 2025-2026) |
-|--------|--------------------------|---------------------------|
-| 模组成本 | $50-200 | $5-15 (复用蜂窝模组) |
-| 月连接费 | $5-20/设备 | $1-3/设备 (预估) |
-| 数据费 | $0.05-0.15/条 | $0.001-0.01/条 (预估) |
-| 天线 | 专用卫星天线 $10-30 | 复用蜂窝天线 $0 |
-| 总 TCO (3年/设备) | $300-1000 | $50-150 (预估) |
-
-NTN NB-IoT 的成本优势来自"复用"——复用蜂窝芯片、复用蜂窝天线、复用运营商核心网。但卫星带宽成本仍高于地面网络，所以连接费不会像地面 NB-IoT 那么便宜（地面 NB-IoT 在中国约 $1/年/设备）。
-
-### 市场预测 (2025-2030)
-
-| 指标 | 2024 | 2027 (预测) | 2030 (预测) |
-|------|------|------------|------------|
-| 卫星 IoT 连接数 | ~2000 万 | ~1 亿 | ~5 亿 |
-| NTN NB-IoT 占比 | < 5% | ~30% | ~60% |
-| 模组均价 | $30-80 | $10-20 | $5-10 |
-| 主要增长领域 | 物流/海运 | 农业/基建 | 泛行业 |
-
-数据来源：ABI Research "Satellite IoT Market Analysis 2025-2030"、NSR "Non-GEO Satellite IoT Markets" 报告综合。
-
----
-
-## 技术挑战与未来方向
-
-### 星地无缝切换
-
-当设备从地面网络覆盖区移动到卫星覆盖区时（如火车进入山区隧道出口），需要无缝切换。当前 Release 17 NTN 还不完全支持"秒级切换"——设备通常需要重新搜索和接入。Release 18/19 正在改进这一点。
-
-### 频谱协调
-
-卫星 IoT 使用的频段需要和地面系统协调，避免互相干扰：
-- S 波段（2 GHz）：需要和地面 LTE 协调
-- L 波段（1.5 GHz）：传统卫星通信频段，较拥挤
-- Sub-GHz（非授权频段）：LoRa 卫星（如 Lacuna Space）使用 ISM 频段，需遵守功率限制
-
-### LEO 卫星寿命
-
-LEO 卫星因大气阻力和辐射环境，寿命通常只有 5-7 年（GEO 可达 15-20 年）。这意味着运营商需要持续发射新卫星替换退役卫星，运营成本较高。SpaceX 的 Starlink 卫星设计寿命约 5 年，每年需要发射数百颗补充。
-
-### LoRa 卫星 IoT
-
-除了 3GPP NTN，LoRa 技术也在探索卫星方向：
-
-- **Lacuna Space**：在 LEO 卫星上安装 LoRa 网关，地面 LoRa 设备直连卫星。由于 LoRa 的高灵敏度（-137 dBm @ SF12），即使卫星在 500 km 高空，地面设备也能以 14 dBm 功率成功通信。
-- **EchoStar Mobile**：通过 S 波段 GEO 卫星提供 LoRa 连接服务（欧洲市场）。
-- 优势：不依赖运营商、不需要 SIM 卡、设备成本极低
-- 劣势：无 QoS 保证、非标准化、数据量极小（每天几十字节）
-
----
+1. 先区分“专用卫星物联网”与“3GPP NTN 双模”，再谈复用红利。
+2. 公海/荒漠试点验证仰角、时延与功耗，再规模化。
+3. 默认地面优先、卫星补盲的混合架构控制成本。
 
 ## 参考文献
 
-1. 3GPP. "TR 38.811: Study on New Radio (NR) to Support Non-Terrestrial Networks," Release 17, 2022.
-2. 3GPP. "TR 36.763: Study on Narrow-Band Internet of Things (NB-IoT) / enhanced Machine Type Communication (eMTC) Support for Non-Terrestrial Networks (NTN)," Release 17, 2022.
-3. 3GPP. "TS 38.101-5: NR User Equipment Radio Transmission and Reception; Part 5: Satellite Access," Release 17, 2023.
-4. Qualcomm. "Snapdragon X75/212S: NTN Satellite Connectivity for IoT," Product Brief, 2024.
-5. MediaTek. "MT6825: 3GPP NTN NB-IoT Chipset," Product Brief, 2024.
-6. Lacuna Space. "LoRa-Based Satellite IoT: Network Architecture and Performance," White Paper, 2024.
-7. M. Giordani and M. Zorzi, "Non-Terrestrial Networks in the 6G Era: Challenges and Opportunities," IEEE Network, vol. 35, no. 2, 2021.
-8. X. Lin et al., "5G New Radio Evolution Meets Satellite Communications: Opportunities, Challenges, and Solutions," IEEE Communications Standards Magazine, vol. 5, no. 1, 2021.
-9. ABI Research. "Satellite IoT Market Analysis 2025-2030," Q1 2025.
-10. NSR (Northern Sky Research). "Non-GEO Satellite IoT Markets, 4th Edition," 2024.
-11. SpaceX. "Starlink Direct-to-Cell: Architecture and Capabilities," 2024.
-12. Skylo Technologies. "NTN as a Service: Bridging Cellular and Satellite IoT," White Paper, 2024.
+[1] 3GPP TR 38.811, Study on NR to support NTN.
+[2] 3GPP TR 36.763, NB-IoT/eMTC support for NTN.
+[3] 3GPP TS 38.101-5, NR UE — satellite access (as applicable).
+[4] Giordani, M. and Zorzi, M., "Non-Terrestrial Networks in the 6G Era," IEEE Network, 2021.
+[5] Lin, X. et al., "5G NR Evolution Meets Satellite Communications," IEEE Commun. Standards Mag., 2021.
+[6] Lacuna Space / LoRa-from-space public architecture materials.
+[7] ITU/3GPP frequency arrangement discussions for NTN bands.
+[8] Qualcomm / MediaTek NTN IoT product briefs (vendor-specific).
+[9] ABI Research satellite IoT market analyses (forecasts non-binding).
+[10] NSR Non-GEO satellite IoT market reports (forecasts non-binding).
+[11] Fraire et al., Direct-to-Satellite IoT survey, IEEE COMST, 2022.
+[12] Skylo / MNO partnership overviews (commercial context).
+[13] Legacy MSS IoT (Iridium/Globalstar/ORBCOMM) service documentation for baseline comparison.
+[14] Transparent vs regenerative payload architecture notes.
+[15] Hybrid terrestrial–satellite IoT operational case studies (treat KPIs as case-bound).

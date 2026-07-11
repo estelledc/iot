@@ -3,317 +3,137 @@ schema_version: '1.0'
 id: iot-massive-access-random-access
 title: 大规模IoT随机接入与拥塞控制
 layer: 2
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: advanced
 reading_time: 22
-prerequisites: UNKNOWN
-tags: []
+prerequisites:
+  - grant-free-access-massive-iot
+  - lpwan-capacity-planning-dense
+tags:
+  - 随机接入
+  - RACH
+  - ACB
+  - EAB
+  - 拥塞控制
+  - mMTC
+  - NB-IoT
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 大规模IoT随机接入与拥塞控制
-> **难度**: 高级 | **领域**: 大规模接入 | **阅读时间**: 约 22 分钟
 
-## 引言
+> **难度**：高级 | **领域**：大规模接入 | **阅读时间**：约 22 分钟
 
-想象一场大型演唱会结束后,五万名观众同时拿起手机发朋友圈。每个人都在争抢有限的网络资源,结果所有人都发不出去——这就是"接入拥塞"。在物联网世界中,这个问题被放大了数百倍:一个基站可能需要同时服务数十万个设备,而传统的随机接入机制从未为如此大规模的并发设计过。
+## 日常类比
 
-本文系统分析大规模IoT随机接入面临的核心挑战,从3GPP RACH过载机制入手,逐步剖析接入类别限制(ACB)、扩展接入限制(EAB)、退避机制等拥塞控制方案,并探讨5G时代的两步RACH优化以及免竞争传输方案。
+演唱会散场万人同时发朋友圈，基站像只有几十个窗口的售票处——这就是随机接入拥塞。蜂窝物联网里，一个小区可能面对远超传统语音设计的并发；不加控制会“越重试越堵”[1][2]。
 
-理解这些机制,对于设计能承载百万级设备的IoT网络至关重要。
+## 摘要
 
-## 1. 大规模接入问题的本质
+分析随机接入信道（Random Access Channel, RACH）过载、接入类别限制（Access Class Barring, ACB）、扩展接入限制（Extended Access Barring, EAB）、退避、窄带 RACH、两步 RACH 与免竞争/预配置授权。碰撞概率与案例设备数为**教学近似**，以 3GPP 与现网参数为准[1][3]。
 
-### 1.1 问题规模
+## 1 问题本质
 
-传统蜂窝网络RACH(随机接入信道)设计目标是支持一个小区内数百个人类用户的偶发接入。然而5G mMTC场景要求单基站支持每平方公里100万设备。
+传统 RACH 假设小区内数百人偶发接入；大规模机器类通信（mMTC）目标密度可到每平方公里百万量级（需求目标）[1]。
 
-| 场景 | 设备密度 | 接入特征 | RACH设计假设 |
-|------|----------|----------|--------------|
-| 传统人类通信 | 数百/小区 | 随机、低并发 | Poisson到达 |
-| 智慧城市IoT | 数万/小区 | 周期性、中并发 | 可预测 |
-| 事件驱动IoT | 数十万/小区 | 突发、高并发 | Beta分布突发 |
+| 场景 | 密度倾向 | 到达特征 |
+|------|----------|----------|
+| 人类通信 | 较低 | 近似泊松 |
+| 智慧城市 | 高 | 周期可预测 |
+| 事件驱动 | 极高 | Beta 类突发 |
 
-### 1.2 为什么传统RACH不够用
+前导码有限（常用约数十个量级）时，同时尝试数上升，碰撞概率急剧恶化——公式为近似，用于建立直觉[2][4]。
 
-LTE RACH四步握手中,问题集中在第一步:有限前导码(通常54个)面对大量设备同时请求,碰撞概率急剧上升。当超过30个设备同时尝试时,系统几乎无法正常工作:
+## 2 过载与分层控制
 
-```
-碰撞概率近似: P ≈ 1 - e^(-N*(N-1)/(2*M))
-M=54, N=10: P≈0.60
-M=54, N=30: P≈0.9998
-M=54, N=100: 全部碰撞
-```
+碰撞 → 重试 → 更多碰撞，可致拥塞崩溃。
 
-## 2. 3GPP RACH过载与级联效应
-
-### 2.1 过载的恶性循环
-
-```
-初始突发 → 大量碰撞 → 碰撞设备重试 → 更多碰撞
-    ^                                         |
-    +─── 重试累积,负载持续增大 ←─────────────+
-```
-
-这种正反馈如果不加控制,会导致"拥塞崩溃"——积压重试持续维持过载。
-
-### 2.2 3GPP拥塞控制分层框架
-
-| 层级 | 机制 | 作用位置 |
-|------|------|----------|
-| 接入前 | ACB/EAB | UE侧(发起前过滤) |
-| 接入中 | 退避机制 | UE侧(碰撞后等待) |
-| 核心网 | 拥塞控制 | MME/AMF(拒绝/延迟) |
-| 应用层 | 分组调度 | 应用服务器(错峰) |
-
-## 3. 接入类别限制(ACB)
-
-### 3.1 基本原理
-
-基站通过SIB2广播两个参数,概率性筛选允许接入的设备:
-- `ac-BarringFactor`: 允许概率 p (0.05~0.95)
-- `ac-BarringTime`: 被限制设备等待时间 T (4~512秒)
-
-```python
-import random
-
-def acb_check(barring_factor, barring_time, access_class):
-    """ACB接入检查算法"""
-    # 高优先级类别(11-15)免检
-    if access_class >= 11:
-        return True, 0
-    # 随机数与barring_factor比较
-    if random.uniform(0, 1) < barring_factor:
-        return True, 0  # 允许接入
-    else:
-        wait = (0.7 + 0.6 * random.uniform(0, 1)) * barring_time
-        return False, wait  # 禁止,需等待
-```
-
-### 3.2 动态ACB
-
-静态参数无法适应负载快速变化。动态ACB根据实时负载调整:负载增加则降低factor(更少通过),负载减少则提高factor。调整受SIB更新周期限制(80-640ms)。
-
-## 4. 扩展接入限制(EAB)
-
-### 4.1 EAB vs ACB
-
-EAB专为延迟容忍型IoT设计,比ACB更激进:
-
-| 特性 | ACB | EAB |
-|------|-----|-----|
-| 目标设备 | 所有设备 | 仅延迟容忍IoT |
-| 限制方式 | 概率性 | 完全禁止 |
-| 粒度 | 按概率 | 按接入类别(0-9位图) |
-| 典型场景 | 日常负载调节 | 紧急情况释放资源 |
-
-### 4.2 EAB位图与分级策略
-
-基站通过SIB14广播10比特位图,每比特对应一个接入类别。运营商预配置设备类别实现优先级:
-- 类别0-3: 最低优先级(月度抄表)
-- 类别4-6: 中等优先级(日报告)
-- 类别7-9: 较高优先级(交通监控)
-- 类别11-15: 紧急/特权(永不限制)
-
-## 5. 退避机制
-
-### 5.1 基本退避
-
-碰撞后设备必须等待随机退避时间再重试:
-
-```
-退避时间 = random(0, BI) 个子帧
-BI(Backoff Indicator): 基站通过RAR消息广播
-取值: 0, 10, 20, 30, 40, 60, 80, 120, 160, 240, 320, 480, 960 ms
-```
-
-### 5.2 指数退避
-
-固定退避在持续高负载下不够有效。指数退避让间隔随失败次数增长:
-
-```python
-def exponential_backoff(attempt, bi_base, max_attempts=10):
-    """指数退避: 退避窗口指数增长"""
-    if attempt >= max_attempts:
-        return -1  # 放弃接入
-    window = bi_base * (2 ** min(attempt, 6))  # 上限64倍
-    return random.uniform(0, window)
-
-# 示例退避序列(bi_base=20ms):
-# 尝试0: [0, 20ms]
-# 尝试1: [0, 40ms]
-# 尝试2: [0, 80ms]
-# 尝试3: [0, 160ms]
-# 尝试6+: [0, 1280ms] (上限)
-```
-
-### 5.3 退避与ACB协同
-
-两级过滤形成互补:
-1. 第一级(ACB): 概率性过滤,减少同时尝试的设备数
-2. 第二级(退避): 碰撞后在时间上分散重试
-
-两者结合可以将突发到达有效平滑为近似均匀到达。关键在于参数协调: ACB factor决定了进入RACH的设备数,退避窗口决定了碰撞设备重试的分散程度。
-
-## 6. 前导码设计与NB-IoT NPRACH
-
-### 6.1 前导码数量的权衡
-
-增加前导码降低碰撞概率,但占用更多时频资源且增加检测复杂度。3GPP支持分组(专用/IoT/普通/大数据)以区分不同设备类型。
-
-### 6.2 NB-IoT NPRACH设计
-
-NB-IoT定义了专用窄带PRACH,针对IoT优化:
-- 可配置周期: 40ms到2560ms
-- 重复次数: 1~128次(增强覆盖)
-- 覆盖等级: CE Level 0/1/2对应不同路损
-
-```
-NPRACH配置示例:
-CE0: 周期=160ms, 重复=1, 子载波=12
-CE1: 周期=320ms, 重复=4, 子载波=24
-CE2: 周期=640ms, 重复=64, 子载波=48
-```
-
-## 7. 5G两步RACH
-
-### 7.1 动机与流程
-
-四步RACH对IoT小数据信令开销过大。5G NR R16引入两步简化:
-
-```
-四步: UE→Msg1→gNB→Msg2→UE→Msg3→gNB→Msg4 (4个RTT)
-两步: UE→MsgA(前导码+数据)→gNB→MsgB(响应+解决) (2个RTT)
-```
-
-### 7.2 对IoT的优势
-
-- 时延减半: 从4个RTT减少到2个RTT
-- 功耗降低: 更少的收发模式切换
-- 适合小数据: 传感器上报场景完美匹配
-- 回退机制: 碰撞时可自动回退到四步RACH保证可靠性
-
-### 7.3 触发条件
-
-并非所有场景都适合两步RACH,基站通过配置控制:
-- 信号强度门限: 只有RSRP超过阈值(信号好)才允许两步
-- MsgA资源: 需要额外配置PUSCH资源承载数据部分
-
-## 8. 拥塞崩溃场景分析
-
-### 8.1 崩溃过程
-
-当所有设备同时唤醒(如地震触发10万传感器),碰撞率99%+,退避后重试叠加新到达,系统完全瘫痪。以纯ALOHA近似:
-
-```
-吞吐量 S = G * e^(-G)
-G>1时: S < 0.368, G>5时: S < 0.034
-```
-
-### 8.2 防止崩溃的策略
-
-| 策略 | 机制 | 效果 |
+| 层级 | 机制 | 位置 |
 |------|------|------|
-| 时间分散 | 随机延迟唤醒 | 突发变均匀到达 |
-| 优先级分类 | 紧急优先,其余延后 | 保障关键设备 |
-| 预配置接入 | 提前分配资源 | 消除碰撞 |
-| 拉模式 | 基站轮询设备 | 完全消除碰撞 |
+| 接入前 | ACB/EAB | UE 过滤 |
+| 接入中 | 退避 | 碰撞后等待 |
+| 核心网 | 拥塞控制 | MME/AMF |
+| 应用 | 错峰 | 服务器 |
 
-## 9. 预配置接入与免竞争方案
+**ACB**：SIB 广播 `ac-BarringFactor` 与 `ac-BarringTime`，概率放行；高优先级接入类别可免检。动态 ACB 随负载调因子，受系统信息更新周期限制[3]。
 
-### 9.1 预配置授权(Pre-configured Grant)
+**EAB**：面向延迟容忍 IoT，可按类别位图更强硬限制，紧急时给人类/高优先级腾资源。
 
-周期性上报的IoT设备,基站预先分配固定上行资源:
-- 设备在预定时刻直接发送数据,无需RACH
-- 适合周期固定、数据量可预测的场景(如每10分钟上报温度)
-- 代价: 未使用时资源浪费
+**退避**：RAR 指示 Backoff Indicator；指数退避拉大重试窗。ACB 减同时尝试数，退避在时间上打散重试——参数需协同[2]。
 
-### 9.2 半持续调度(SPS)
+## 3 NB-IoT 与 5G 两步 RACH
 
-介于动态调度和预配置之间:
+窄带物理随机接入信道（NPRACH）可配周期、重复与覆盖等级（CE0/1/2）。两步 RACH（MsgA/MsgB）减信令往返，利小数据与功耗；需较好信道与额外资源，失败可回退四步[5]。
 
-```
-配置流程:
-1. 基站通过RRC配置SPS周期(如每100ms)
-2. 通过DCI激活SPS
-3. 设备按周期自动发送,无需每次请求调度
-4. 基站可通过DCI修改或释放
-```
+## 4 免竞争路径
 
-### 9.3 免授权传输(Configured Grant)
+| 方案 | 效率 | 灵活性 | 碰撞 | 适用 |
+|------|------|--------|------|------|
+| 预配置授权 | 低（易闲置） | 低 | 无 | 严格周期 |
+| 半持续调度 SPS | 中 | 中 | 无 | 半固定周期 |
+| 免授权 + NOMA | 高 | 高 | 可能 | 随机小数据 |
 
-5G NR为URLLC和IoT引入:
-- 类型1: RRC配置,持续有效
-- 类型2: DCI激活/去激活
-- 允许多设备使用相同资源,通过NOMA(非正交多址)区分
+## 5 地震传感示意
 
-### 9.4 三种方案对比
+十万级设备同时醒：无控制时过载倍数可达极端。EAB 先放行高优先级类别 + 动态 ACB + 退避，用数十秒到数分钟换“全体同时成功”。要点：分级、时间换容量、多机制协同、灾害场景预规划[1][2]。
 
-| 方案 | 资源效率 | 灵活性 | 碰撞 | 适用 |
-|------|----------|--------|------|------|
-| 预配置授权 | 低(浪费) | 低 | 无 | 严格周期设备 |
-| SPS | 中 | 中 | 无 | 半固定周期 |
-| 免授权+NOMA | 高 | 高 | 可能 | 随机到达小数据 |
+## 6 机制对照
 
-## 10. 实际案例: 地震触发大规模NB-IoT上报
+| 技术 | 时机 | 思想 | 代价 |
+|------|------|------|------|
+| ACB | 接入前 | 概率减载 | 延迟↑ |
+| EAB | 接入前 | 禁低优先级 | 容忍业务更慢 |
+| 退避 | 碰撞后 | 时间分散 | 单次更慢 |
+| 两步 RACH | 接入中 | 少往返 | 条件苛刻 |
+| 预配置/免授权 | 事前 | 少竞争 | 资源预留 |
 
-### 10.1 场景
+## 7 局限、挑战与可改进方向
 
-10万个NB-IoT地震传感器,正常每小时上报一次。地震发生时全部同时唤醒。
+### 1. 参数难自适应
 
-### 10.2 无控制时的灾难
+**局限**：静态 ACB 因子在突发前后都不合适。
+**改进**：负载估计驱动动态 ACB；与应用层错峰联动[2]。
 
-```python
-num_devices = 100000
-preambles = 48  # NPRACH可用前导码
-rach_period_ms = 640
-opportunities_per_sec = 1000 / rach_period_ms  # 1.56次/秒
-devices_per_opportunity = num_devices / opportunities_per_sec  # 64103
-overload_factor = devices_per_opportunity / preambles  # 1335x过载
-# 系统完全瘫痪
-```
+### 2. 仿真乐观
 
-### 10.3 EAB + 动态ACB + 退避三层协同
+**局限**：忽略核心网信令与重传积压。
+**改进**：端到端模型含 MME/AMF；用现网计数器校准[1]。
 
-```
-t=0-10s:   EAB允许类别7-9(1000设备), ACB=0.3
-           有效到达: ~192设备/时机, 关键数据10秒内送达
+### 3. 预配置浪费
 
-t=10-30s:  EAB允许类别4-9(10000设备), ACB=0.1
-           有效到达: ~32设备/时机, 强震区30秒内送达
+**局限**：周期资源在静默期空转。
+**改进**：SPS/Configured Grant 可释放；混合动态调度[5]。
 
-t=30-120s: EAB全开放(90000设备), ACB=0.05
-           有效到达: ~32设备/时机, 2分钟内全部送达
-```
+### 4. 优先级配置错误
 
-### 10.4 关键经验
+**局限**：抄表与告警同类，EAB 一刀切误伤。
+**改进**：入网前规划接入类别；合同明确告警豁免。
 
-1. 分级是必须的: 不是所有数据都同等紧急
-2. 时间换容量: 将突发分散到更长时间窗口
-3. 多机制协同: 单一机制无法应对极端场景
-4. 预规划: 灾害场景必须在网络规划阶段考虑
+## 8 总结
 
-## 总结
-
-大规模IoT随机接入的核心挑战在于有限无线资源与海量设备并发需求的根本矛盾。碰撞概率随设备数非线性恶化,需要在接入前主动控制负载。本文涵盖的关键技术形成了完整的拥塞控制体系:
-
-| 技术 | 作用时机 | 核心思想 | 代价 |
-|------|----------|----------|------|
-| ACB | 接入前 | 概率过滤减少同时尝试 | 增加接入延迟 |
-| EAB | 接入前 | 完全阻止低优先级设备 | 延迟容忍设备等更久 |
-| 退避 | 碰撞后 | 分散重试避免持续碰撞 | 增加单次接入时间 |
-| 两步RACH | 接入中 | 合并消息减少信令 | 需好信道条件 |
-| 预配置/免授权 | 接入前 | 消除竞争需求 | 资源预留开销 |
-
-从设计原则来看,所有方案共享一个核心思想: 将时间维度的突发转化为平滑的均匀到达。无论是ACB的概率分散、EAB的分级延后、退避的随机等待,还是预配置的周期分配,本质上都在用"时间"换取"容量"。
-
-未来6G将引入基于AI的预测性拥塞控制(在突发前预判并预防)、大规模MIMO的空间复用增益(同一时间服务更多设备)、以及新型非正交多址技术(允许碰撞但通过信号处理分离),进一步提升系统容纳大规模IoT设备的能力。
+大规模接入的核心是把突发抹平：接入前减载、碰撞后分散、能预配置则少竞争。工程上多机制叠加，并用现网指标验证，而非只看理论吞吐峰值。
 
 ## 参考文献
 
-1. 3GPP TR 37.868, "Study on RAN Improvements for Machine-type Communications," Release 11, 2011.
-2. A. Laya, L. Alonso, and J. Alonso-Zarate, "Is the Random Access Channel of LTE and LTE-A Suitable for M2M Communications?" IEEE Communications Surveys & Tutorials, vol. 16, no. 1, pp. 4-16, 2014.
-3. 3GPP TS 36.321, "Medium Access Control (MAC) protocol specification," Release 16.
-4. C. H. Wei, R. G. Cheng, and S. L. Tsao, "Modeling and Estimation of One-Shot Random Access for Finite-User Multichannel Slotted ALOHA Systems," IEEE Comm. Letters, vol. 16, no. 8, 2012.
-5. 3GPP TS 38.321, "NR; Medium Access Control (MAC) protocol specification," Release 16, 2020.
+[1] 3GPP TR 37.868, "Study on RAN Improvements for Machine-type Communications," Rel-11.
+
+[2] A. Laya et al., "Is the Random Access Channel of LTE and LTE-A Suitable for M2M Communications?" IEEE Communications Surveys & Tutorials, 2014.
+
+[3] 3GPP TS 36.321, "E-UTRA MAC protocol specification."
+
+[4] C. H. Wei et al., "Modeling and Estimation of One-Shot Random Access for Finite-User Multichannel Slotted ALOHA," IEEE Communications Letters, 2012.
+
+[5] 3GPP TS 38.321, "NR MAC protocol specification," Rel-16+.
+
+[6] 3GPP TR 45.820, "Cellular System Support for Ultra-Low Complexity and Low Throughput IoT."
+
+[7] 3GPP TS 36.331, "E-UTRA RRC" (ACB/EAB related SIBs).
+
+[8] M. Hasan et al., "Random Access for Machine-to-Machine Communication in LTE-Advanced Networks," IEEE Communications Magazine, related MTC surveys.
+
+[9] 3GPP TS 38.300, "NR overall description" (two-step RACH overview).
+
+[10] ITU-R M.2410 / IMT-2020 mMTC related requirements notes.
+
+[11] F. Adelantado et al., "Understanding the Limits of LoRaWAN," IEEE Communications Magazine, 2017 (ALOHA intuition for unlicensed massive access).

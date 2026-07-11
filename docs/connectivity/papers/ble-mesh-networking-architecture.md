@@ -3,452 +3,145 @@ schema_version: '1.0'
 id: ble-mesh-networking-architecture
 title: BLE Mesh组网架构与消息转发机制
 layer: 2
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
 reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+prerequisites:
+  - ble-gatt-profile-custom-service
+  - ble-security-pairing-bonding
+tags:
+  - BLE Mesh
+  - 受控洪泛
+  - Relay
+  - Friend
+  - Provisioning
+  - 发布订阅
+  - NetKey
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # BLE Mesh组网架构与消息转发机制
+
 > **难度**：🟡 中级 | **领域**：BLE Mesh网络 | **阅读时间**：约 20 分钟
 
-## 引言
+## 日常类比
 
-想象一个大型办公楼里的对讲机系统。每个人收到一条消息后，如果不是发给自己的，就对着自己的对讲机重新广播一遍——这样即使两个人距离很远、中间隔了好几面墙，只要中间有其他人"接力"转发，消息最终也能送达。BLE Mesh 的"受控洪泛"（Managed Flooding）机制就是这个原理：每个中继节点收到消息后重新广播，依靠网络中的多条路径确保消息到达目的地。
+大楼对讲机：听到非本机呼叫就再广播一遍，靠多人接力把话传到远处。蓝牙低功耗（Bluetooth Low Energy, BLE）Mesh 的受控洪泛（Managed Flooding）类似——中继重播，用缓存与生存时间（Time To Live, TTL）防止死循环。它简单、多路径，但大规模下空口占用上升[1][5]。
 
-2017 年蓝牙技术联盟发布了 BLE Mesh 规范，将 BLE 从点对点（或一对多广播）扩展为多对多的 mesh 网络拓扑。与 Zigbee、Thread 等基于路由表的 mesh 方案不同，BLE Mesh 选择了洪泛转发——结构更简单，不需要维护路由表，但在大规模网络中面临独特的挑战。
+## 摘要
 
-## 1. BLE Mesh 协议栈架构
+本文梳理 Mesh 分层、洪泛规则、节点角色、地址与入网（Provisioning）、双层密钥，以及与 Zigbee 路由型 Mesh 的选型。节点规模与时延数字多为社区与白皮书经验区间，**随消息率与中继密度变化**[3][5]。
 
-### 1.1 分层模型
+## 1. 协议栈
 
-BLE Mesh 协议栈建立在标准 BLE 广播通信之上，自底向上分为七层：
+| 层 | 职责 |
+|----|------|
+| Model | 应用行为（开关、传感器等） |
+| Foundation | 配置、健康 |
+| Access | AppKey、Opcode |
+| Transport | 分段/重组、确认 |
+| Network | NetKey、中继、TTL、缓存 |
+| Bearer | 广播承载 / GATT 承载 |
+| BLE Core | 广播或连接 |
 
-```
-+-------------------------------------------+
-|          模型层 (Model Layer)              |
-|  定义应用行为：开关、调光、传感器...       |
-+-------------------------------------------+
-|         基础模型层 (Foundation)            |
-|  配置、健康检测等管理模型                  |
-+-------------------------------------------+
-|         访问层 (Access Layer)              |
-|  加解密(AppKey)、Opcode路由               |
-+-------------------------------------------+
-|         传输层 (Transport Layer)           |
-|  分段/重组、确认机制                       |
-+-------------------------------------------+
-|         网络层 (Network Layer)             |
-|  加解密(NetKey)、中继、TTL管理            |
-+-------------------------------------------+
-|        承载层 (Bearer Layer)               |
-|  广播承载 / GATT承载                       |
-+-------------------------------------------+
-|        BLE 广播/连接 (BLE Core)            |
-+-------------------------------------------+
-```
+广播承载是主力；通用属性配置文件（GATT）承载供手机等接入[1]。
 
-### 1.2 各层职责详解
+## 2. 受控洪泛
 
-**承载层（Bearer Layer）**：负责将 mesh 数据包映射到底层 BLE 机制。有两种承载方式：
+节点收包后：查缓存→查 TTL→NetKey 解密→本机则上送→若为 Relay 则 TTL-1 再播。消息标识通常含源地址、序列号与 IV Index[1]。
 
-- **广播承载（Advertising Bearer）**：利用 BLE 广播包发送 mesh 消息，是主要的通信方式
-- **GATT 承载（GATT Bearer）**：通过 BLE 连接和 GATT 特征值传输，用于不支持广播承载的设备（如手机）
+| 机制 | 作用 | 误用后果 |
+|------|------|----------|
+| Message Cache | 抑环路 | 缓存过小致重复洪泛 |
+| TTL | 限跳数 | 过大浪费空口 |
+| 随机转发延迟 | 减碰撞 | 过长增时延 |
 
-**网络层（Network Layer）**：核心功能层，负责：
-
-- 使用 NetKey 进行网络级加解密
-- 管理消息中继（Relay）
-- 维护消息缓存避免重复转发
-- 处理 TTL（Time to Live）倒计数
-
-**传输层（Transport Layer）**：处理消息的分段和重组。BLE 广播包有效载荷有限（约 29 字节），超长消息需要拆分成多个段（Segment）传输，接收端重组后交给上层。
-
-**访问层（Access Layer）**：使用 AppKey 进行应用级加解密，并根据操作码（Opcode）将消息路由到正确的模型。
-
-**模型层（Model Layer）**：定义设备的具体功能行为，如灯的开关、亮度调节、传感器的数据上报等。
-
-## 2. 受控洪泛机制
-
-### 2.1 基本原理
-
-BLE Mesh 的洪泛转发遵循以下规则：
-
-```
-节点收到广播消息:
-  1. 检查消息缓存 --> 如果已处理过，丢弃（防止无限循环）
-  2. 检查 TTL --> 如果 TTL=0 或 TTL=1，不转发
-  3. 网络层解密 --> 如果解密失败（不属于本网络），丢弃
-  4. 检查目的地址 --> 如果是发给自己的，上送应用层处理
-  5. 如果本节点是 Relay --> TTL-1，重新广播
-```
-
-### 2.2 消息缓存（Message Cache）
-
-每个节点维护一个消息缓存（通常存储最近 N 条消息的标识），用于判断是否已经处理过某条消息：
-
-```c
-// 消息唯一标识由以下字段组合
-struct mesh_msg_id {
-    uint16_t src_addr;   // 源地址
-    uint32_t seq_num;    // 序列号（每条消息递增）
-    uint32_t iv_index;   // IV Index（防重放）
-};
-```
-
-如果收到的消息标识已存在于缓存中，说明这条消息已经处理或转发过，直接丢弃。这是防止消息在网络中无限循环的关键机制。
-
-### 2.3 TTL（Time to Live）
-
-TTL 限制消息在网络中的最大跳数：
-
-- **TTL=0**：消息不会被中继，只有直接接收范围内的节点能收到
-- **TTL=1**：可以被接收但不会被中继转发
-- **TTL=2~127**：每经过一个中继节点 TTL 减 1，直到 TTL=1 停止转发
-
-选择合适的 TTL 值很重要：太小可能无法覆盖整个网络，太大会增加不必要的网络流量。
-
-### 2.4 洪泛的优缺点
-
-**优点**：
-- 无需维护路由表，实现简单
-- 天然的多路径冗余，单节点故障不影响网络
-- 新节点加入不需要重新计算路由
-- 消息延迟可预测（最大 = TTL x 转发延迟）
-
-**缺点**：
-- 网络流量随节点数增长（每条消息被多次重播）
-- 大规模网络中广播碰撞概率增加
-- 无法做到精确的带宽控制
-- 不适合高频率数据传输
+**优点**：无路由表、多路径、入网简单。**缺点**：流量随节点与 TTL 放大，不适高频遥测[5]。
 
 ## 3. 节点角色
 
-### 3.1 四种节点类型
-
-BLE Mesh 定义了四种功能角色，一个物理设备可以同时承担多种角色：
-
-| 角色 | 功能 | 典型设备 |
+| 角色 | 功能 | 典型供电 |
 |------|------|----------|
-| 普通节点 | 收发自己的消息 | 灯泡、开关 |
-| 中继节点（Relay） | 转发其他节点的消息 | 插座、常供电设备 |
-| 低功耗节点（LPN） | 大部分时间休眠 | 电池传感器 |
-| 友元节点（Friend） | 为 LPN 缓存消息 | 常供电设备 |
-| 代理节点（Proxy） | GATT 桥接非 mesh 设备 | 网关、Hub |
+| 普通节点 | 收发本机消息 | 视产品 |
+| Relay | 转发 | 常需市电 |
+| Low Power Node (LPN) | 长睡 | 电池 |
+| Friend | 为 LPN 缓存 | 市电 |
+| Proxy | GATT↔Mesh | 网关/Hub |
 
-### 3.2 中继节点（Relay Node）
+LPN 通过 Friend Poll 取缓存；Proxy 使手机作配置器（Provisioner）[1][4]。
 
-中继节点是 mesh 网络的"骨干"。它监听所有网络消息，对需要转发的消息进行 TTL 递减后重新广播。关键设计考虑：
+## 4. 地址与模型
 
-- **中继密度**：太少会有覆盖盲区，太多会增加碰撞
-- **随机延迟**：中继转发前加入 0-10ms 随机延迟，减少多个中继同时发送的碰撞
-- **供电要求**：中继节点必须始终在线监听，通常需要市电供电
+| 范围 | 类型 |
+|------|------|
+| 0x0001–0x7FFF | 单播（元素） |
+| 0x8000–0xBFFF | 虚拟地址 |
+| 0xC000–0xFFFF | 组播；0xFFFF 全网 |
 
-### 3.3 低功耗节点与友元节点（LPN & Friend）
+通信多为发布–订阅：开关发布到组地址，灯订阅同组。标准模型含 Generic OnOff、Level、Sensor、Lightness 等[2]。
 
-LPN-Friend 机制是 BLE Mesh 解决电池设备功耗问题的方案：
+## 5. 入网与安全
 
-```
-Friend Node                      LPN (Low Power Node)
-(常供电)                         (电池供电)
-    |                                 |
-    |<-- Friend Request --------------|  (LPN寻找Friend)
-    |                                 |
-    |-- Friend Offer ---------------->|  (协商参数)
-    |                                 |
-    |   [Friend建立消息队列]          |  [LPN进入深度休眠]
-    |   [缓存发给LPN的消息]           |      ...
-    |                                 |  [定时唤醒]
-    |<-- Friend Poll -----------------|  (LPN查询新消息)
-    |                                 |
-    |-- Friend Update --------------->|  (返回缓存的消息)
-    |                                 |  [处理后再次休眠]
-```
+Provisioning：信标→邀请→能力→认证（OOB/输入输出/静态/无）→分发 NetKey、IV Index、单播地址；AppKey 后续配置。DevKey 仅设备与 Provisioner 共享[1]。
 
-LPN 的轮询间隔可以设置为秒级甚至分钟级，休眠期间电流可降至微安级别。
+| 密钥 | 范围 | 用途 |
+|------|------|------|
+| NetKey | 全网 | 网络层、中继可见头 |
+| AppKey | 应用域 | 端到端载荷 |
+| DevKey | 单设备 | 安全配置 |
 
-### 3.4 代理节点（Proxy Node）
+SEQ + IV Index 防重放。无 OOB 入网仅适测试[1][6]。
 
-代理节点使手机等不支持 BLE Mesh 广播承载的设备也能参与 mesh 网络：
+## 6. 规模与对比
 
-- 手机通过标准 BLE GATT 连接到代理节点
-- 代理节点将 GATT 连接上的数据转换为 mesh 广播消息
-- 反之亦然，将 mesh 消息通过 GATT 转发给手机
-
-这使得智能手机可以作为 mesh 网络的配置器（Provisioner）和控制端。
-
-## 4. 地址体系
-
-### 4.1 三种地址类型
-
-BLE Mesh 使用 16 位地址空间，分为三类：
-
-```
-地址范围        类型          用途
-0x0000         未分配        无效地址
-0x0001-0x7FFF  单播地址      标识具体节点的元素(Element)
-0x8000-0xBFFF  虚拟地址      基于128位标签的哈希
-0xC000-0xFFFF  组播地址      预定义或自定义组
-0xFFFF         全节点广播    发给网络中所有节点
-```
-
-### 4.2 单播地址（Unicast Address）
-
-每个节点在入网时被分配唯一的单播地址。一个节点可以有多个元素（Element），每个元素有自己的单播地址。例如一个双路开关可能有：
-
-- 节点地址：0x0001
-- 元素0（开关1）：0x0001
-- 元素1（开关2）：0x0002
-
-### 4.3 组播地址（Group Address）
-
-组播地址实现了一对多通信。节点可以订阅一个或多个组地址：
-
-```
-场景：客厅所有灯订阅组地址 0xC001
-
-开关发送 "Generic OnOff Set: ON" 到 0xC001
-  --> 客厅灯A（订阅了0xC001）：开灯
-  --> 客厅灯B（订阅了0xC001）：开灯
-  --> 卧室灯C（未订阅0xC001）：忽略
-```
-
-### 4.4 虚拟地址（Virtual Address）
-
-虚拟地址基于 128 位 UUID 标签（Label UUID）的哈希值生成。它提供了更大的地址空间和更灵活的分组方式，同一个虚拟地址可以跨越不同的网络。
-
-## 5. 入网配置（Provisioning）
-
-### 5.1 入网流程
-
-将未入网设备（Unprovisioned Device）加入 mesh 网络的过程称为 Provisioning：
-
-```
-Provisioner                    未入网设备
-(通常是手机App)                (新设备)
-    |                              |
-    |<-- Unprovisioned Beacon -----|  (设备广播自己的存在)
-    |                              |
-    |-- Provisioning Invite ------>|  (邀请入网)
-    |<-- Provisioning Capabilities-|  (报告自身能力)
-    |                              |
-    |== 认证阶段 ==================|
-    |   (OOB/输入/输出/静态)       |
-    |                              |
-    |== 密钥分发 ==================|
-    |   NetKey + IV Index +        |
-    |   Unicast Address            |
-    |                              |
-    |-- Provisioning Complete ---->|  (入网成功)
-```
-
-### 5.2 认证方法
-
-入网过程中的认证防止未授权设备加入网络：
-
-- **输出 OOB**：设备显示数字或闪灯，用户在手机上确认
-- **输入 OOB**：用户在设备上输入手机显示的数字
-- **静态 OOB**：使用预共享的静态值（如印在设备上的二维码）
-- **无 OOB**：不做额外认证（安全性最低，仅用于测试）
-
-### 5.3 入网后的密钥配置
-
-入网完成后，设备获得：
-
-- **NetKey**：网络密钥，用于网络层加解密
-- **DevKey**：设备密钥，仅 Provisioner 和该设备知道，用于安全配置
-- **单播地址**：该设备在网络中的唯一标识
-
-AppKey 需要在入网后通过配置流程额外分发。
-
-## 6. 安全机制
-
-### 6.1 双层加密
-
-BLE Mesh 采用强制的双层加密，所有消息必须加密后才能发送：
-
-```
-应用数据
-    |
-    v
-[AppKey 加密] --> 应用层加密（端到端）
-    |
-    v
-[NetKey 加密] --> 网络层加密（逐跳）
-    |
-    v
-空中传输
-```
-
-**网络层加密（NetKey）**：所有属于同一网络的节点共享 NetKey。中继节点需要解密网络层以读取 TTL 和目的地址，判断是否转发，然后重新加密发出。
-
-**应用层加密（AppKey）**：端到端加密，中继节点无法解密应用数据内容。不同功能域可以使用不同的 AppKey（如照明和安防用不同的 AppKey），实现应用隔离。
-
-### 6.2 密钥类型总结
-
-| 密钥 | 范围 | 用途 | 谁拥有 |
-|------|------|------|--------|
-| NetKey | 整个网络 | 网络层加解密、认证 | 所有入网节点 |
-| AppKey | 应用域 | 应用层加解密 | 同一功能域节点 |
-| DevKey | 单个设备 | 设备配置（绑定AppKey等） | 设备 + Provisioner |
-
-### 6.3 防重放攻击
-
-BLE Mesh 使用两个机制防止重放攻击：
-
-- **序列号（SEQ）**：每个节点维护递增的序列号，接收端拒绝旧序列号的消息
-- **IV Index**：全网维护的 32 位计数器，周期性递增。序列号用尽时通过 IV Index 更新重置
-
-## 7. 模型与发布-订阅
-
-### 7.1 模型概念
-
-模型（Model）定义了节点的具体功能行为。BLE Mesh 规范定义了一系列标准模型：
-
-| 模型 | 功能 | 典型应用 |
-|------|------|----------|
-| Generic OnOff | 开/关控制 | 灯、插座 |
-| Generic Level | 级别控制（-32768~32767） | 调光、风速 |
-| Sensor | 传感器数据上报 | 温度、湿度 |
-| Light Lightness | 灯光亮度 | 智能灯 |
-| Light CTL | 色温控制 | 可调色温灯 |
-| Scene | 场景存储和恢复 | 场景面板 |
-
-此外还支持厂商自定义模型（Vendor Model），使用厂商分配的 Company ID。
-
-### 7.2 发布-订阅模式
-
-BLE Mesh 采用发布-订阅（Publish-Subscribe）通信模式，实现了设备间的松耦合：
-
-```c
-// 概念示例：开关和灯的配置
-// 开关节点配置：
-//   Generic OnOff Client 模型
-//   发布地址: 0xC001 (客厅灯组)
-
-// 灯节点配置：
-//   Generic OnOff Server 模型
-//   订阅地址: 0xC001 (客厅灯组)
-
-// 效果：开关按下 -> 发布 OnOff Set 到 0xC001
-//       -> 所有订阅 0xC001 的灯收到并响应
-```
-
-这种设计的优势：开关不需要知道有多少灯，灯也不需要知道有多少开关。添加新灯只需让它订阅同一组地址即可。
-
-### 7.3 操作码（Opcode）
-
-每个模型的消息通过操作码（Opcode）区分：
-
-```
-1字节Opcode:  0x00-0x7F (SIG定义，共128个)
-2字节Opcode:  0x8000-0xBFFF (SIG定义，扩展)
-3字节Opcode:  0xC0XXXX (厂商自定义，含Company ID)
-```
-
-## 8. 网络规模与性能
-
-### 8.1 可扩展性限制
-
-BLE Mesh 基于洪泛的特性决定了它的规模上限：
-
-- **理论最大节点数**：32767（单播地址空间）
-- **实际建议规模**：100-200 个节点表现良好
-- **消息频率限制**：节点不应超过每秒 1-2 条消息
-
-### 8.2 影响网络性能的因素
-
-```
-网络负载 = 节点数 x 消息频率 x 平均TTL x 中继节点比例
-```
-
-当网络负载超过信道容量时，碰撞增加导致：
-- 消息丢失率上升
-- 端到端延迟增加
-- 部分节点可能"饿死"（消息始终被碰撞覆盖）
-
-### 8.3 优化策略
-
-- **合理规划中继密度**：不是所有节点都需要做中继
-- **优化 TTL 值**：设为网络直径（最大跳数）即可，不要用最大值 127
-- **减少消息频率**：使用发布周期（Publish Period）控制上报频率
-- **分网络隔离**：不同区域使用不同 NetKey 形成独立子网
-
-## 9. 实际案例：智能照明系统
-
-### 9.1 系统架构
-
-```
-手机App (Provisioner)
-    |
-    | GATT连接
-    v
-[代理节点/网关] ---- Mesh网络 ---- [开关A]
-    |                                   |
-    |                               (发布到0xC001)
-    |                                   |
-    |---- [中继节点1] ---- [中继节点2] ----|
-    |         |                 |
-    |     [灯泡1]          [灯泡2]        [灯泡3]
-    |   (订阅0xC001)    (订阅0xC001)   (订阅0xC001)
-```
-
-### 9.2 消息流转过程
-
-用户按下开关A，发送 Generic OnOff Set（ON）到组地址 0xC001：
-
-1. 开关A 构造消息，AppKey 加密，NetKey 加密，TTL=5，广播发出
-2. 中继节点1 收到，解密网络层，检查缓存（新消息），TTL 减为 4，重新广播
-3. 灯泡1 收到，解密网络层，发现目的地址 0xC001 匹配自己的订阅，上送应用层处理，开灯
-4. 中继节点2 收到中继节点1 转发的包，继续转发（TTL=3）
-5. 灯泡2、灯泡3 收到并响应
-
-整个过程耗时约 20-50ms（取决于跳数和随机延迟）。
-
-## 10. BLE Mesh 与 Zigbee Mesh 对比
-
-### 10.1 技术架构对比
+经验上，照明类网络在约百级节点、低消息率时更稳；理论单播空间远大于此，但洪泛使**实际瓶颈在空口而非地址**[3][5]。
 
 | 维度 | BLE Mesh | Zigbee Mesh |
 |------|----------|-------------|
-| 路由方式 | 受控洪泛 | 路由表（AODV） |
-| 路由维护 | 无需维护 | 需要路由发现和更新 |
-| 单点故障 | 无（多路径冗余） | 路由节点故障需重新发现 |
-| 带宽效率 | 低（消息被多次转发） | 高（点对点路由） |
-| 适合规模 | 小中型（100-200节点） | 中大型（可达数百节点） |
-| 延迟 | 较低（广播并行） | 中等（逐跳路由） |
-| 手机支持 | 直接支持（BLE原生） | 需要网关转换 |
-| 功耗（中继） | 中等 | 较低（不需要持续监听广播） |
+| 转发 | 受控洪泛 | 路由表 |
+| 手机 | 原生 BLE 易接入 | 常需网关 |
+| 带宽效率 | 较低 | 较高 |
+| 规模叙事 | 中小 | 可更大 |
 
-### 10.2 选型建议
+## 7. 局限、挑战与可改进方向
 
-选择 BLE Mesh 的场景：
-- 需要手机直接控制（无需额外网关硬件）
-- 网络规模在 200 节点以内
-- 已有 BLE 芯片基础，希望复用
-- 部署简单性优先于带宽效率
+### 1. 洪泛放大
 
-选择 Zigbee Mesh 的场景：
-- 大规模网络（数百节点以上）
-- 高频数据传输需求
-- 已有 Zigbee 生态设备
-- 对带宽效率要求高
+**局限**：高发布率 × 高中继比 → 碰撞与丢包上升[5]。
+**改进**：精简 Relay；TTL≈网络直径；分区 NetKey；降 Publish Period。
 
-## 总结
+### 2. 中继供电与密度
 
-BLE Mesh 通过在 BLE 广播层之上构建受控洪泛网络，为物联网设备提供了一种简洁而实用的多对多通信方案。它的核心设计哲学是"简单可靠优先于极致效率"——没有复杂的路由表维护，没有单点故障风险，任何节点都可以随时加入或离开而不影响网络整体运行。
+**局限**：过稀有盲区，过密空口争用。
+**改进**：按平面图规划常电插座作 Relay；现场测跳数与成功率。
 
-需要记住的关键点：消息缓存防止循环、TTL 限制跳数、双层加密保障安全、发布-订阅解耦设备、LPN-Friend 机制解决功耗、实际部署建议不超过 200 节点。
+### 3. 入网与密钥生命周期
 
-理解了这些核心机制后，在实际项目中需要根据具体场景（网络规模、消息频率、功耗约束、手机交互需求）来决定是否选择 BLE Mesh，以及如何合理规划中继节点密度和 TTL 值。
+**局限**：弱认证入网、密钥轮换缺失导致长期风险[6]。
+**改进**：强制 OOB；限制 Provisioner；规划 Key Refresh。
+
+### 4. LPN 时延
+
+**局限**：长 Poll 间隔省电但下行命令变慢。
+**改进**：按业务设 Poll；紧急下行改友好节点侧指示或短间隔模式。
+
+## 8. 实践要点
+
+1. 先画供电点再开 Relay，而不是默认全开。
+2. 用组地址做场景，避免开关单播枚举所有灯。
+3. 压测用“节点数×每秒消息×平均 TTL”估算负载。
 
 ## 参考文献
 
-1. Bluetooth SIG. "Mesh Profile Specification v1.0." 2017. https://www.bluetooth.com/specifications/specs/mesh-profile-1-0/
-2. Bluetooth SIG. "Mesh Model Specification v1.0." 2017. https://www.bluetooth.com/specifications/specs/mesh-model-1-0/
-3. Silvair. "Understanding Bluetooth Mesh - A Practical Guide." Silvair White Paper, 2019.
-4. Nordic Semiconductor. "nRF5 SDK for Mesh Documentation." https://infocenter.nordicsemi.com/topic/com.nordic.infocenter.meshsdk/
-5. Darroudi, S.M. and Gomez, C. "Bluetooth Low Energy Mesh Networks: A Survey." Sensors, 2017.
+[1] Bluetooth SIG, "Mesh Profile Specification."
+[2] Bluetooth SIG, "Mesh Model Specification."
+[3] Silvair, "Understanding Bluetooth Mesh" practical guides / white papers.
+[4] Nordic Semiconductor, nRF SDK for Mesh / nRF Connect SDK Mesh docs.
+[5] Darroudi, S. M. and Gomez, C., "Bluetooth Low Energy Mesh Networks: A Survey," Sensors, 2017.
+[6] Bluetooth SIG, Mesh security / provisioning related sections and best practices.
+[7] Zigbee Alliance / Connectivity Standards Alliance materials for mesh routing comparison.
+[8] Bluetooth SIG, Mesh Protocol / bearer (advertising vs GATT) documentation.
+[9] Academic/industry evaluations of managed flooding scalability in BLE Mesh.
+[10] Bluetooth SIG, Mesh Device Properties / model opcode overviews.
+[11] Zephyr Project, Bluetooth Mesh subsystem documentation.

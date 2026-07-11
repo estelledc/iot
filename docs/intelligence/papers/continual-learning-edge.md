@@ -3,260 +3,173 @@ schema_version: '1.0'
 id: continual-learning-edge
 title: 边缘持续学习：学新知识不忘旧知识
 layer: 5
-content_type: UNKNOWN
-difficulty: UNKNOWN
-reading_time: UNKNOWN
-prerequisites: UNKNOWN
-tags: []
+content_type: technical_analysis
+difficulty: advanced
+reading_time: 28
+prerequisites:
+  - on-device-training
+tags:
+- 持续学习
+- 灾难性遗忘
+- EWC
+- 经验回放
+- 概念漂移
+- PackNet
+- 边缘AI
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 边缘持续学习：学新知识不忘旧知识
 
-> 难度：🟠 挑战 | 前置知识：了解神经网络训练过程、过拟合概念、迁移学习基础
+> **难度**：🟠 挑战 | **领域**：持续学习（Continual Learning, CL）、边缘智能 | **阅读时间**：约 28 分钟
 
-## 论文信息
+## 日常类比
 
-- **主题**：持续学习（Continual Learning, CL）/ 增量学习（Incremental Learning）在边缘设备上的实现——让模型不断学习新任务和新数据，同时不遗忘已学会的旧知识
-- **核心问题**：神经网络有一个致命的弱点——学新东西时会"忘掉"旧东西。这在持续运行、环境不断变化的 IoT 场景中是个严重问题
-- **涵盖范围**：灾难性遗忘机制 → EWC/PackNet/Replay 三大策略 → 面向 IoT 的内存高效 CL → 概念漂移检测 (2017-2025)
+只有一块白板的老师：第一学期写满数学，第二学期擦一部分写物理，第三学期再擦写化学。期末化学还行、物理勉强、数学几乎没了——这就是**灾难性遗忘**（Catastrophic Forgetting）。
 
-## 1 什么是灾难性遗忘
+神经网络参数空间像这块白板：用新数据梯度更新时，会覆盖旧任务学到的权重配置。物联网（IoT）设备还常**不能**把历史数据全存下来重训，必须在"只看新数据"时既学会新知识又保住旧能力[1]。
 
-### 1.1 日常类比
+## 摘要
 
-想象你是一个只有一块白板的老师。第一学期你在白板上画满了数学公式，学生们学会了数学。第二学期要教物理——你只能擦掉一部分数学公式来给物理腾出空间。等第三学期教化学时，数学和物理的内容又被擦掉了一些。
+本文梳理边缘场景下的持续/增量学习：遗忘机制，正则化（EWC/SI/MAS）、架构（PackNet/SupSup）、回放（ER/DER++）三大策略，内存高效回放与概念漂移检测，以及 LoRA/提示式 CL 等进展，并给出 IoT 选型与局限改进[1][4][10]。
 
-到期末考试时，学生们化学不错，物理勉强，数学基本全忘了——这就是"灾难性遗忘"（Catastrophic Forgetting）。
+## 1 灾难性遗忘
 
-神经网络就像这块白板——容量有限的参数空间需要编码所有学过的知识。当你用新数据训练网络时，梯度下降会修改已有的权重来适应新任务，但这些修改会覆盖掉之前为旧任务学到的权重配置。
+形式化：先在任务 A 得到 \(\theta_A^*\)，再在 B 上标准 SGD 只优化 \(L_B\)，得到的 \(\theta_B^*\) 可能远离 \(\theta_A^*\)，A 上性能骤降。
 
-### 1.2 形式化理解
+教学示意：ResNet 类模型在 CIFAR 前后半类顺序训练时，旧类准确率可从高位跌至近随机——遗忘主要来自优化覆盖，而非单纯模型过小[1]。
 
-假设一个模型先在任务 A 上训练达到最优权重 θ_A*，然后在任务 B 上训练。标准 SGD 优化不考虑 θ_A*——它只关心 B 的损失函数。训练完 B 后，模型收敛到 θ_B*，但 θ_B* 和 θ_A* 可能相距甚远，导致模型在任务 A 上的性能大幅下降。
-
-实验数据：一个 ResNet-18 先在 CIFAR-10 的前 5 类上训练（准确率 95%），然后在后 5 类上训练。训练完后 5 类后，前 5 类的准确率从 95% 暴跌到 ~20%——几乎等于随机猜。这不是模型太小的问题——即使用更大的模型，遗忘程度也几乎不变。
-
-### 1.3 为什么 IoT 场景特别受影响
-
-物联网设备面临的是一个**非平稳的数据流**（non-stationary data stream）——数据分布持续变化，且旧数据通常不可重访。
-
-**季节变化**：户外摄像头春夏秋冬看到的场景截然不同。春天学会识别的花朵，到了冬天可能全忘了。
-
-**设备更替**：工厂更换了一批新传感器，数据特征发生变化。模型需要适应新传感器，但不能忘记如何处理老传感器的数据（因为老传感器还在使用）。
-
-**任务增量**：智能家居系统上线时只识别"开灯/关灯"两个语音命令，用户希望逐步增加"调温度"、"放音乐"等新命令——但不能让模型在学新命令时忘掉旧命令。
-
-**关键约束**：IoT 设备通常没有足够的存储空间来保留所有历史数据用于联合训练。模型必须能在"只看到新数据"的条件下学习新知识而不遗忘旧知识。
+IoT 特有压力：非平稳数据流、旧数据不可重访；季节变化、传感器更换、语音命令增量等。存储不足以保留全历史联合训练。
 
 ## 2 三大策略家族
 
-持续学习的方法大致分为三个家族，每个家族用不同的策略来对抗遗忘：
+### 2.1 正则化：保护重要权重
 
-### 2.1 正则化方法：给重要权重加"保护罩"
+**EWC**（Elastic Weight Consolidation）：用 Fisher 信息对角近似衡量权重对旧任务重要性，新任务损失加二次惩罚，锁住重要参数[1]。
 
-核心思想：识别出对旧任务很重要的权重参数，在学习新任务时限制对这些参数的修改。
+\[
+L = L_{\text{new}} + \frac{\lambda}{2}\sum_i F_i(\theta_i-\theta_{A,i}^*)^2
+\]
 
-**EWC (Elastic Weight Consolidation, 2017, DeepMind)**
+在 Permuted MNIST 等基准上可显著降遗忘；但每任务存 Fisher 与最优权重，任务增多时存储线性涨——MCU 不友好。
 
-EWC 是正则化方法的奠基工作。它的灵感来自贝叶斯学习理论：旧任务的训练结果可以被视为"先验知识"，新任务的训练应该在这个先验基础上更新，而非从零开始。
+**SI**（Synaptic Intelligence）：训练中在线累积重要性，免离线 Fisher[2]。**MAS**：对输出敏感度作重要性，可少依赖任务标签[相关 2018 工作]。
 
-具体做法：用 Fisher 信息矩阵（FIM）的对角近似来衡量每个权重对旧任务的重要性。Fisher 信息量大的参数 = 该参数的小变化会大幅影响旧任务的输出 = 对旧任务很重要 = 应该被"锁住"。
+### 2.2 架构：专属参数子集
 
-在学习新任务时，EWC 在损失函数中添加正则项：
+**PackNet**：训完剪枝→冻结重要权重→剩余容量训新任务；旧任务零遗忘，但容量逐渐耗尽[3]。**SupSup**：每任务二值掩码，推理按任务 ID 激活子网络。
 
-```
-L_total = L_new_task + (λ/2) × Σ_i F_i × (θ_i - θ_A*_i)²
-```
+### 2.3 回放：小缓冲重温
 
-其中 F_i 是参数 i 的 Fisher 信息量，θ_A* 是旧任务的最优权重。这个正则项的作用是：对旧任务重要的参数（F_i 大）被强力约束在 θ_A* 附近，不重要的参数（F_i 小）可以自由调整以适应新任务。
+**ER**：固定缓冲 + reservoir sampling，新 batch 混旧样本。小缓冲即可大幅抬平均准确率（相对裸微调）[4]。**GDumb**：几乎只维护缓冲并周期性重训，质疑复杂方法必要性[5]。**DER++**：回放 logits 做蒸馏，常优于硬标签 ER[4]。
 
-**EWC 的效果与局限**：在 Permuted MNIST（经典持续学习基准）上，EWC 将遗忘率从 ~80% 降低到 ~5%。但 EWC 需要存储每个旧任务的 Fisher 矩阵和最优权重——随着任务数增加，存储开销线性增长。对于内存受限的 IoT 设备，这是一个问题。
+### 2.4 对比
 
-**SI (Synaptic Intelligence, 2017)**：EWC 的"在线"变体——不需要离线计算 Fisher 矩阵，而是在训练过程中在线积累每个参数的"重要性分数"。每次梯度更新时，累计每个参数对损失函数降低的贡献，贡献大的参数在后续任务中被保护。
+| 维度 | 正则化 (EWC/SI) | 架构 (PackNet) | 回放 (ER/DER++) |
+|------|-----------------|----------------|-----------------|
+| 遗忘 | 中（软约束） | 近零（硬冻结） | 低（视缓冲） |
+| 额外存储 | Fisher/分数 | 掩码 | 数据/特征 |
+| 任务数 | 无硬限，质量降 | 容量耗尽 | 无硬限 |
+| 任务 ID | 常需要 | 推理常需要 | 可不需要 |
+| 实现 | 中 | 高 | 低 |
+| IoT | 存储可控时好 | 掩码管理复杂 | 视缓冲预算 |
 
-**MAS (Memory Aware Synapses, 2018)**：类似 SI，但使用参数对模型输出（而非损失函数）的敏感度作为重要性度量。优势是不需要任务标签，适合无监督持续学习。
+Split-CIFAR-100 等基准上，DER++ 类回放常处前列；精确数字随协议而变，横比须固定缓冲与划分[4][5]。
 
-### 2.2 架构方法：给每个任务分配专属参数
+## 3 IoT 内存高效 CL
 
-核心思想：不共享所有参数，而是为每个任务分配独立的参数子集。
+224×224 RGB 约百 KB 量级，数百张即可达数十 MB，可能大于 MobileNet 级模型。
 
-**PackNet (2018, CVPR)**
+| 手法 | 思想 | 优点 | 风险 |
+|------|------|------|------|
+| 特征回放 | 存中间特征 | 体积小一个数量级以上 | 特征随骨干更新而过时 |
+| 生成式回放 | 小 VAE/GAN 记分布 | 存模型非样本 | 训练难、模式崩塌 |
+| 量化回放 | INT4/INT2 存样本 | 实现简单 | 效用略降 |
 
-PackNet 的方法非常直觉：
+| 设备（示意） | 可用内存量级 | 原始图像缓冲 | 特征缓冲 |
+|--------------|--------------|---------------|----------|
+| MCU（数百 KB–数 MB） | 极紧 | 几乎不可行 | 数十–数千条特征 |
+| ESP32 类 | 数 MB | 极少图像 | 更可行 |
+| Jetson / RPi | GB 级 | 可较大缓冲 | 充裕 |
 
-1. 在任务 A 上训练完整网络
-2. 对网络进行剪枝（去掉不重要的权重），保留对任务 A 必要的权重子集（如 30%）
-3. "冻结"这些权重（永远不再修改）
-4. 在任务 B 上，只用剩余的 70% 权重训练
-5. 重复：剪枝 → 冻结 → 训练下一个任务
+MCU 上特征回放几乎是默认选项；网关级才考虑原图 ER。
 
-PackNet 的优势是**零遗忘**——旧任务的权重被物理冻结，不可能被修改。劣势是每个新任务可用的"容量"越来越小——第一个任务用了 30%，第二个任务在剩余 70% 中用 30%（= 21%），第三个任务只有 49% × 30% = 14.7% 可用......最终模型容量会被"填满"。
+## 4 概念漂移
 
-**SupSup (Supermasks in Superposition, 2020)**：为每个任务学习一个二值掩码（mask），不同任务的掩码可以重叠。推理时根据任务 ID 加载对应掩码，"激活"不同的参数子集。相当于一个网络中"寄居"了多个子网络，各自互不干扰。
+持续学习常假设任务边界已知；真实 IoT 多为渐进/无标注分布变化（Concept Drift）[10]。
 
-### 2.3 回放方法：存储并重温旧数据
+| 类型 | 例子 |
+|------|------|
+| 渐进 | 传感器老化偏置 |
+| 突变 | 换产线/换镜头 |
+| 循环 | 季节性外观变化 |
 
-核心思想：维护一个小型的"记忆缓冲区"（memory buffer），存储少量旧任务的代表性样本。学习新任务时，混合回放旧样本，防止遗忘。
+| 方法 | 原理 | 开销 |
+|------|------|------|
+| ADWIN[11] | 自适应窗口统计检验 | 低 |
+| Page-Hinkley | 累积和检均值偏移 | 极低 |
+| DDM | 监测错误率突增 | 低 |
+| KSWIN | KS 检验窗口 | 中 |
 
-**经验回放（Experience Replay, ER）**
+闭环：漂移检测 → 触发微调/回放/更新基线；无漂移则不浪费算力。
 
-最简单的回放方法：维护一个固定大小的缓冲区（如 500 条样本），学新任务时随机采样旧样本混入训练 batch。缓冲区满时，用 reservoir sampling 策略替换旧样本，保证每个类别的代表性。
+## 5 前沿（简）
 
-效果出奇地好——在 Split-CIFAR-100（20 个 5-way 分类任务）上，仅 500 条样本的 ER 就将平均准确率从 16%（无回放）提升到 58%。更大的缓冲区效果更好，但边际递减。
+O-LoRA 等：每任务新 LoRA、旧适配器冻结[12]。L2P/DualPrompt：提示池 + 冻骨干，近零改权重遗忘[6][7]。CLS-ER：互补学习系统双模型蒸馏[8]。联邦类增量 FedCIL：多设备不同增量类别[13]。
 
-**GDumb (2020)**：一种"极简"回放方法——完全不做增量训练，只是不断维护缓冲区。每次需要预测时，从缓冲区中提取所有样本重新训练一个新模型。在缓冲区足够大时效果极好，且实现极其简单。
+## 6 实验对比（示意）
 
-**DER++ (Dark Experience Replay++, 2021)**：在回放旧样本时，不仅回放输入和标签，还回放当时模型的 logits（软标签）。这等于把知识蒸馏的思想引入回放——旧样本的 logits 包含了当时模型的"暗知识"，回放时用这些 logits 做蒸馏比只用硬标签更有效。在 Split-CIFAR-100 上，DER++ 以 500 条缓冲区达到 72% 准确率——比 ER 的 58% 高出 14 个百分点。
+| 方法 | 缓冲 | 相对裸微调 | 遗忘 |
+|------|------|------------|------|
+| Fine-tune | 0 | 基准最差 | 很高 |
+| EWC/SI | 0 | 小幅改善 | 高 |
+| PackNet | 0 | 高（容量内） | 近 0 |
+| ER / DER++ | 小–中 | 通常最好档 | 中–低 |
+| 特征 ER | 特征 | 略低于原图 ER | 中 |
 
-### 2.4 三大策略对比
+工业质检类模拟：云端全量重训为上界；边缘 ER/EWC/特征回放在内存与更新时延间折中——具体 mAP/时延以现场数据为准。
 
-| 维度 | 正则化 (EWC/SI/MAS) | 架构 (PackNet/SupSup) | 回放 (ER/DER++) |
-|------|-------|------|------|
-| 遗忘程度 | 中（软约束） | 零（硬约束） | 低（取决于缓冲大小） |
-| 额外存储 | Fisher矩阵（中） | 掩码（低） | 数据缓冲区（中-高） |
-| 任务数限制 | 无（但质量下降） | 有（容量耗尽） | 无 |
-| 需要任务 ID | EWC/SI 需要 | 推理时需要 | 不需要 |
-| 精度（10任务后） | ~65% (S-CIFAR-100) | ~70% (S-CIFAR-100) | ~72% (DER++, S-CIFAR-100) |
-| 实现复杂度 | 中 | 高 | 低 |
-| IoT 适用性 | 好（存储可控） | 中（掩码管理复杂） | 取决于缓冲大小 |
+## 7 局限、挑战与可改进方向
 
-## 3 面向 IoT 的内存高效持续学习
+### 1. 无标签流占主导
 
-### 3.1 挑战：缓冲区太大了
+**局限**：传感器流常无类别标签，有监督 CL 基准难直接迁移。
+**改进**：自监督表示 + 漂移触发；半监督/活跃学习标少量关键帧；与对比学习管线结合。
 
-回放方法效果最好，但对 IoT 设备来说，存储数百上千条样本的内存开销可能无法承受。一张 224×224 的 RGB 图像占 ~150KB，500 张就是 ~75MB——比一个 MobileNetV2 模型还大。
+### 2. 任务边界未知
 
-### 3.2 压缩回放
+**局限**：错检漂移导致误更新或漏更新，造成静默遗忘。
+**改进**：多检测器投票；更新前在缓冲上做保留集校验；失败则回滚检查点。
 
-**特征回放（Feature Replay）**：不存储原始图像，而是存储模型中间层的特征向量。一个 ResNet-18 在 pool5 之后的特征向量只有 512 维 (2KB)，比原始图像 (150KB) 小 75 倍。回放时从特征向量开始前向传播（跳过前面的层），还能节省计算。
+### 3. 回放隐私与存储合规
 
-缺点是：特征是当前模型计算出来的——当模型随着新任务更新后，旧特征可能"过时"（与更新后的模型不兼容）。需要定期更新缓冲区中的特征，或使用固定的特征提取器（冻结前面的层）。
-
-**生成式回放（Generative Replay）**：训练一个小型生成模型（如 VAE 或 GAN）来"记忆"旧数据的分布。需要回放时，生成伪样本而非存储真实样本。存储一个生成模型（~1MB）比存储数百张图像更节省空间。
-
-**量化回放**：将缓冲区中的样本量化到 INT4 甚至 INT2 精度，大幅减少存储空间。实验显示，INT4 量化后的回放样本仍能保持 90% 以上的回放效果。
-
-### 3.3 IoT 场景的内存预算
-
-| 设备 | 可用 SRAM | 模型大小 | 剩余给缓冲区 | 可存样本数（原始） | 可存样本数（特征） |
-|------|---------|---------|------------|---------------|----------------|
-| STM32H7 | 512KB | 256KB | 256KB | ~1 张图像 | ~128 条特征 |
-| ESP32-S3 | 8MB | 2MB | 6MB | ~40 张图像 | ~3000 条特征 |
-| Jetson Nano | 4GB | 500MB | 3.5GB | ~23000 张图像 | 全量存储 |
-| RPi 5 | 8GB | 500MB | 7.5GB | ~50000 张图像 | 全量存储 |
-
-从表中可以看出：在 MCU 级设备上，特征回放几乎是唯一可行的选择；在 Jetson/RPi 级设备上，原始图像回放也可以接受。
-
-## 4 概念漂移：当数据分布自己在变
-
-### 4.1 什么是概念漂移
-
-持续学习假设新任务是"明确切换"的——你知道从任务 A 切换到了任务 B。但在真实的 IoT 环境中，数据分布的变化通常是**渐进的和无标注的**——这就是概念漂移（Concept Drift）。
-
-**渐进漂移（Gradual Drift）**：传感器随着老化，数据特征慢慢偏移。今天的"正常读数"范围是 20-25°C，一年后可能漂移到 21-26°C。
-
-**突变漂移（Sudden Drift）**：工厂更换了一条生产线，产品外观突然变化。
-
-**循环漂移（Recurring Drift）**：季节性变化——数据分布在春夏秋冬之间循环。
-
-### 4.2 漂移检测方法
-
-| 方法 | 原理 | 适用场景 | 计算开销 |
-|------|------|---------|---------|
-| ADWIN | 维护自适应窗口，比较新旧窗口的统计量 | 在线流数据 | 低 |
-| Page-Hinkley | 累积和检验，检测均值偏移 | 单变量监测 | 极低 |
-| DDM | 跟踪分类错误率，突增时报警 | 分类任务 | 低 |
-| KSWIN | Kolmogorov-Smirnov 检验窗口 | 多变量数据 | 中 |
-| 基于聚类的漂移检测 | 监测数据聚类结构的变化 | 无标签数据 | 中-高 |
-
-### 4.3 漂移感知的持续学习
-
-漂移检测 + 持续学习可以形成一个闭环系统：
-
-```
-数据流输入 → 漂移检测器 → 是否检测到漂移？
-                               │
-                    否 ←————————┤
-                    ↓            ↓ 是
-               正常推理      触发模型更新
-                              ├── 微调 LoRA
-                              ├── 回放缓冲区混合训练
-                              └── 更新漂移检测基线
-```
-
-这种设计避免了不必要的模型更新（没有漂移时不浪费计算），同时确保在数据分布变化时能及时适应。
-
-## 5 前沿进展（2024-2025）
-
-### 5.1 LoRA 与持续学习的结合
-
-O-LoRA (2024) 将 LoRA 适配器与持续学习结合——每个新任务学习一个新的 LoRA 适配器，所有旧 LoRA 适配器被冻结。推理时根据任务选择对应的 LoRA，或将多个 LoRA 加权融合。这种方法在 LLM 的持续指令微调中效果很好——学新指令不忘旧指令。
-
-### 5.2 基于提示的持续学习
-
-L2P (Learning to Prompt, 2022, CVPR) 和 DualPrompt (2022, ECCV) 将 prompt tuning 引入持续学习——维护一个"提示池"（prompt pool），为每个任务学习特定的提示。模型权重完全冻结，只更新提示参数。由于不修改模型权重，理论上实现了零遗忘。
-
-### 5.3 生物启发的持续学习
-
-人脑不会灾难性遗忘——因为大脑有"互补学习系统"（CLS）：海马体快速学习新经验（类似缓冲区），新皮层慢速整合为长期记忆。CLS-ER (2022) 直接模拟这个双系统架构——维护一个快速学习的"工作模型"和一个慢速更新的"语义记忆模型"，两者之间通过蒸馏传递知识。
-
-## 6 实验对比
-
-### 6.1 标准基准上的方法对比
-
-在 Split-CIFAR-100（20 个 5-way 分类任务，依次学习）上：
-
-| 方法 | 缓冲区大小 | 最终平均准确率 | 遗忘率 | 额外存储 |
-|------|-----------|-------------|-------|---------|
-| Fine-tuning（裸微调） | 0 | 16.3% | 85% | 0 |
-| EWC | 0 | 25.1% | 68% | Fisher矩阵 |
-| SI | 0 | 27.8% | 65% | 重要性分数 |
-| PackNet | 0 | 69.7% | 0% | 掩码 |
-| ER | 500 | 57.6% | 32% | 500×3KB |
-| DER++ | 500 | 72.1% | 18% | 500×3KB + logits |
-| GDumb | 500 | 45.2% | - | 500×3KB |
-| ER + 特征回放 | 500 (特征) | 53.4% | 36% | 500×2KB |
-
-### 6.2 IoT 场景模拟
-
-在一个模拟的工业质检任务上（10 种缺陷类型逐步出现，每次出现新缺陷类型 = 一个新任务）：
-
-| 方法 | 设备 | 内存开销 | 10类全出现后的准确率 | 平均更新时间 |
-|------|------|---------|-------------------|------------|
-| 全量重训练 | 云端 GPU | 不限 | 95.2%（上界） | 2小时 |
-| ER (100样本) | Jetson Nano | 150KB | 82.3% | 5分钟 |
-| EWC | Jetson Nano | 200KB | 71.5% | 3分钟 |
-| 特征回放 | ESP32-S3 | 50KB | 74.8% | 15分钟 |
-| PackNet | Jetson Nano | 100KB | 78.6% | 8分钟 |
-
-## 7 技术挑战与展望
-
-### 7.1 无标签持续学习
-
-IoT 数据流通常没有标签——传感器不知道当前数据属于什么类别。无监督/自监督持续学习是一个重要但困难的研究方向。LUMP (2021) 通过混合增强和一致性正则化实现了无标签的持续表示学习，但效果仍远不如有标签方法。
-
-### 7.2 任务边界检测
-
-在真实的 IoT 数据流中，"任务切换"通常是无标注的——模型需要自动检测数据分布的变化并触发相应的持续学习机制。将概念漂移检测与持续学习策略端到端整合，是走向自主边缘智能的关键一步。
-
-### 7.3 联邦持续学习
-
-将持续学习与联邦学习结合——多个边缘设备各自面临不同的数据分布变化，通过联邦聚合共享"如何不遗忘"的知识。FedCIL (2023) 提出了联邦类增量学习框架，但如何在通信受限条件下高效传输持续学习相关的信息（如 Fisher 矩阵、回放样本的特征）仍是开放问题。
-
-## 8 参考文献
-
-- Kirkpatrick, J., et al. "Overcoming catastrophic forgetting in neural networks (EWC)." PNAS 2017.
-- Zenke, F., Poole, B., Ganguli, S. "Continual Learning through Synaptic Intelligence (SI)." ICML 2017.
-- Mallya, A., Lazebnik, S. "PackNet: Adding Multiple Tasks to a Single Network by Iterative Pruning." CVPR 2018.
-- Buzzega, P., et al. "Dark Experience for General Continual Learning: a Strong, Simple Baseline (DER++)." NeurIPS 2020.
-- Prabhu, A., Torr, P., Dokania, P. "GDumb: A Simple Approach that Questions Our Progress in Continual Learning." ECCV 2020.
-- Wang, Z., et al. "Learning to Prompt for Continual Learning (L2P)." CVPR 2022.
-- Wang, Z., et al. "DualPrompt: Complementary Prompting for Rehearsal-free Continual Learning." ECCV 2022.
-- Arani, E., et al. "Learning Fast, Learning Slow: A General Continual Learning Method based on Complementary Learning System (CLS-ER)." ICLR 2022.
-- Wiewel, F., Yang, B. "Entropy-based Growing and Pruning for Continual Learning." IEEE Access 2021.
-- Gama, J., et al. "A Survey on Concept Drift Adaptation." ACM Computing Surveys 2014.
-- Bifet, A., Gavaldà, R. "Learning from Time-Changing Data with Adaptive Windowing (ADWIN)." SDM 2007.
-- Qi, D., et al. "Better Generalization with Semantic IDs: A Case Study in Ranking (O-LoRA for CL)." arXiv 2024.
-- Dong, J., et al. "Federated Class-Incremental Learning (FedCIL)." CVPR 2023.
+**局限**：原图缓冲可能含人脸/工位隐私，与"数据不出域"政策冲突。
+**改进**：特征/合成回放；缓冲加密与最短留存；联邦 CL 只传统计或适配器[13]。
+
+### 4. 与设备端训练栈割裂
+
+**局限**：LoRA/量化训练工具链与 CL 缓冲、Fisher 会计未统一。
+**改进**：在 on-device-training 栈上挂统一"记忆模块"API；优先 LoRA+小回放。
+
+### 5. 基准乐观
+
+**局限**：清晰任务边界与平衡类别高估真实 IoT 表现。
+**改进**：用含渐进漂移的现场日志评测；报告遗忘、缓冲字节、更新焦耳三联指标[10]。
+
+## 参考文献
+
+[1] J. Kirkpatrick et al., "Overcoming catastrophic forgetting in neural networks," PNAS, 2017.
+[2] F. Zenke, B. Poole, S. Ganguli, "Continual Learning Through Synaptic Intelligence," ICML, 2017.
+[3] A. Mallya and S. Lazebnik, "PackNet: Adding Multiple Tasks to a Single Network by Iterative Pruning," CVPR, 2018.
+[4] P. Buzzega et al., "Dark Experience for General Continual Learning: a Strong, Simple Baseline," NeurIPS, 2020.
+[5] A. Prabhu, P. Torr, P. Dokania, "GDumb: A Simple Approach that Questions Our Progress in Continual Learning," ECCV, 2020.
+[6] Z. Wang et al., "Learning to Prompt for Continual Learning," CVPR, 2022.
+[7] Z. Wang et al., "DualPrompt: Complementary Prompting for Rehearsal-free Continual Learning," ECCV, 2022.
+[8] E. Arani et al., "Learning Fast, Learning Slow: A General Continual Learning Method based on Complementary Learning System," ICLR, 2022.
+[9] F. Wiewel and B. Yang, "Entropy-based Sample Selection for Experience Replay," 相关持续学习工作, 2021.
+[10] J. Gama et al., "A Survey on Concept Drift Adaptation," ACM Computing Surveys, 2014.
+[11] A. Bifet and R. Gavaldà, "Learning from Time-Changing Data with Adaptive Windowing," SDM, 2007.
+[12] X. Wang et al., "Orthogonal Subspace Learning for Language Model Continual Learning (O-LoRA)," 相关工作 / arXiv, 2023–2024.
+[13] J. Dong et al., "Federated Class-Incremental Learning," CVPR, 2023.
+[14] G. I. Parisi et al., "Continual Lifelong Learning with Neural Networks: A Review," Neural Networks, 2019.

@@ -3,396 +3,144 @@ schema_version: '1.0'
 id: cellular-iot-evolution-2g-5g
 title: 蜂窝IoT演进：从2G到5G的技术路线
 layer: 2
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: beginner
-reading_time: 18
+reading_time: 20
 prerequisites: UNKNOWN
-tags: []
+tags:
+  - 蜂窝IoT
+  - NB-IoT
+  - LTE-M
+  - RedCap
+  - 5G-mMTC
+  - 2G退网
+  - 设备类别
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 蜂窝IoT演进：从2G到5G的技术路线
-> **难度**: 初级 | **领域**: 蜂窝演进 | **阅读时间**: 约 18 分钟
 
-## 引言
+> **难度**：🟢 入门 | **领域**：蜂窝演进 | **阅读时间**：约 20 分钟
 
-想象你经营一个快递公司，最早用自行车送货(2G时代)——速度慢但能到，后来换成摩托车(3G)——快了但油耗大，再后来用上了电动面包车(4G)——又快又能装，现在开始部署无人配送车(5G)——不仅快，还能自己开。但并不是所有包裹都需要无人配送车来送，寄一封信用自行车就够了。蜂窝IoT的演进也是这样: 每一代技术都更强大，但IoT设备需要的往往不是最快的速度，而是最合适的"配送方式"。
+## 日常类比
 
-蜂窝网络从1G语音时代发展到5G万物互联时代，每一代都为IoT带来了新的可能。但真正为IoT"量身定制"的蜂窝技术，是4G时代才出现的NB-IoT和LTE-M。本文将梳理蜂窝IoT从2G到5G的完整演进脉络，帮助你理解每一代技术的IoT定位、设备类别的划分逻辑，以及2G/3G退网后IoT设备的迁移路径。
+经营快递时，自行车（2G）能到但慢，摩托车（3G）更快却更耗油，面包车（4G）又快又能装，无人车（5G）能力最强。寄一封信不必上无人车——蜂窝物联网（Internet of Things, IoT）同理：每一代更强，设备真正需要的往往是最合适的连接档位，而非峰值速率。
 
-## 1. 2G时代: M2M的起点
+## 摘要
 
-### 1.1 GSM/GPRS与早期M2M
+本文梳理蜂窝 IoT 从第二代移动通信（2G）机器对机器（Machine-to-Machine, M2M）到第五代（5G）海量机器类通信（massive Machine-Type Communications, mMTC）/超可靠低时延通信（Ultra-Reliable Low-Latency Communications, URLLC）与精简能力（Reduced Capability, RedCap）的演进。重点说明长期演进（Long Term Evolution, LTE）设备类别、窄带物联网（Narrowband IoT, NB-IoT）与 LTE-M（Cat-M1）定位，以及 2G/3G 退网后的迁移路径。速率、覆盖与成本数字以标准与行业报告量级表述，并指向参考文献[1][3][5]。
 
-蜂窝IoT的故事始于2G时代的GSM(全球移动通信系统)和GPRS(通用分组无线服务)。虽然这些技术是为手机通话和短信设计的，但IoT的先驱者(当时称为M2M，机器对机器通信)发现它们也能用来连接"物"。
+## 1. 2G：M2M 起点
 
-最早的蜂窝IoT应用场景:
+全球移动通信系统（Global System for Mobile Communications, GSM）与通用分组无线服务（General Packet Radio Service, GPRS）本为话音与短信设计，却被早期 M2M 用来连“物”：车载追踪、销售点终端（Point of Sale, POS）、自动售货机等以小包、间歇上报为主[5]。
 
-```
-2G时代的典型M2M应用:
+| 参数 | GSM（电路交换数据） | GPRS | EDGE（2.5G） |
+|------|---------------------|------|--------------|
+| 峰值速率量级 | 约 9.6 kbps | 约数十–百余 kbps | 约数百 kbps |
+| 时延量级 | 数百毫秒以上 | 数百毫秒 | 约 200–300 ms |
+| 典型频段 | 900/1800 MHz 等 | 同 GSM | 同 GSM |
+| IoT 定位 | 极简遥测 | 早期主流 M2M | 速率略升 |
 
-车辆追踪器:
-  GSM/GPRS模组 + GPS模块
-  每隔30秒发送一个GPS坐标(约50字节)
-  使用GPRS数据通道，速率约40-170kbps
+2G 存量设备仍以亿级量级存在于部分市场，但多国运营商已关停或计划关停 2G，频谱重耕为 4G/NB-IoT；北美、日澳等已基本完成，欧洲多国窗口约在 2020 年代中后期，具体以当地运营商公告为准[5][9]。
 
-POS刷卡机:
-  通过GPRS连接银行服务器
-  每笔交易发送约200字节数据
-  交易完成时间: 3-5秒
+## 2. 3G：对多数 IoT 不友好的过客
 
-自动售货机:
-  每天通过短信上报库存状态
-  12条短信(每种商品一条)
-```
+通用移动通信系统（Universal Mobile Telecommunications System, UMTS）/高速分组接入（High Speed Packet Access, HSPA）把速率推到数十 Mbps 量级，但模组功耗与成本相对 GPRS 明显上升，对“小包、长寿命电池”场景往往过剩。车载信息娱乐、远程视频、企业级 POS 等带宽敏感场景曾使用 3G；大量低速率 IoT 则直接跳过 3G 留在 2G[5]。
 
-### 1.2 2G IoT的技术参数
+3G 频谱对运营商价值高，退网往往快于 2G：美日等已关停，欧洲与部分亚洲市场亦在加速，迁移目标多为 LTE Cat-1/LTE-M/NB-IoT[9]。
 
-| 参数 | GSM(CSD) | GPRS | EDGE(2.5G) |
-|------|----------|------|-----------|
-| 最大速率 | 9.6kbps | 170kbps | 384kbps |
-| 延迟 | 500ms+ | 300-500ms | 200-300ms |
-| 频段 | 900/1800MHz | 同GSM | 同GSM |
-| 模组成本 | 极低 | 低 | 低 |
-| 功耗 | 中等 | 中等 | 中等 |
-| 覆盖 | 全球广泛 | 全球广泛 | 广泛 |
+## 3. 4G：为 IoT 量身定制
 
-### 1.3 2G的遗产与退网
+第三代合作伙伴计划（3rd Generation Partnership Project, 3GPP）自 Release 12 起在 LTE 内定义低成本机器类通信用户设备，Release 13 推出 LTE-M（Cat-M1）与 NB-IoT（Cat-NB1）[1][2][3]。
 
-2G在IoT领域有着庞大的存量设备基础，估计全球仍有数亿台2G IoT设备在运行。但2G网络正在全球范围内逐步关闭:
+| 类别 | 下行峰值量级 | 上行峰值量级 | 定位 | 3GPP 版本 |
+|------|--------------|--------------|------|-----------|
+| Cat-4 | 约 150 Mbps | 约 50 Mbps | 智能手机 | Rel-8 |
+| Cat-1 | 约 10 Mbps | 约 5 Mbps | 中速 IoT | Rel-8 |
+| Cat-0 | 约 1 Mbps | 约 1 Mbps | 低速 IoT | Rel-12 |
+| Cat-M1 | 约 1 Mbps | 约 1 Mbps | LPWAN 移动向 | Rel-13 |
+| Cat-NB1 | 约数十 kbps | 约数十 kbps | 大规模固定传感 | Rel-13 |
+| Cat-NB2 | 约百余 kbps | 约百余 kbps | NB 增强 | Rel-14 |
 
-```
-2G退网时间表(部分):
+**LTE-M**：约 1.4 MHz 带宽；扩展非连续接收（extended Discontinuous Reception, eDRX）与省电模式（Power Saving Mode, PSM）拉长休眠；覆盖增强靠重复传输，代价是时延上升。适合共享出行、可穿戴、物流追踪、需一定移动性或语音（Voice over LTE, VoLTE）的终端[2]。
 
-已关闭:
-  澳大利亚 Telstra: 2016年12月
-  日本 全运营商: 2012年前
-  美国 AT&T: 2017年1月
-  美国 T-Mobile: 2022年12月
+**NB-IoT**：约 200 kHz 带宽；最大耦合损耗（Maximum Coupling Loss, MCL）相对 GSM/LTE 可提升约 20 dB 量级，利于地下室/井盖等深覆盖；单小区连接密度目标为数万量级（依部署与业务模型）[3]。适合表计、固定环境监测等。
 
-计划关闭:
-  中国移动: 逐步退网中(2G频段重耕为NB-IoT/4G)
-  欧洲多国: 2025-2030年间
-  印度: 暂无明确计划
+## 4. 5G：mMTC、URLLC 与 RedCap
 
-影响:
-  大量存量2G IoT设备面临"断网"风险
-  需要迁移到4G LTE-M或NB-IoT
-```
+| 场景 | 目标倾向 | IoT 含义 |
+|------|----------|----------|
+| 增强移动宽带（eMBB） | 极高峰值速率 | 手机/高清媒体为主 |
+| mMTC | 每平方公里百万级连接量级 | NB-IoT/LTE-M 纳入 5G 体系延续 |
+| URLLC | 毫秒级时延、极高可靠性 | 工业控制、部分车联网 |
 
-## 2. 3G时代: IoT的过客
+3GPP 明确将 NB-IoT/LTE-M 作为 5G mMTC 组成部分，并经后续版本与 5G 核心网、非地面网络（Non-Terrestrial Network, NTN）等增强衔接——既有 LPWAN 投资不因“5G 换代”自动作废[3][5]。
 
-### 2.1 UMTS/HSPA
+| 参数 | 4G LTE 典型 | 5G URLLC 目标量级 |
+|------|-------------|-------------------|
+| 端到端时延 | 约 10–50 ms | 约 1 ms 量级（场景相关） |
+| 可靠性 | 约 99.9% 量级 | 约 99.999% 量级 |
+| 确定性 | 较弱 | 更强调有界时延/抖动 |
 
-3G(UMTS/HSPA)将数据速率提升到了数十Mbps级别，但对于IoT来说，3G的地位比较尴尬——速度提升了但功耗也大幅增加，而且模组成本比2G贵得多。
+Release 17 RedCap（NR-Light）填补 NB-IoT/LTE-M 与完整新空口（New Radio, NR）之间的空白：带宽与天线数相对完整 NR 精简，下行峰值可达约百 Mbps 量级，面向工业传感、可穿戴、中等视频等[4][10]。
 
-```
-3G对IoT的"不友好":
+| 参数 | LTE-M | RedCap（Rel-17） | 完整 NR |
+|------|-------|------------------|---------|
+| 最大带宽量级 | 1.4 MHz | 约 20 MHz（FR1） | 可达 100 MHz 量级 |
+| 下行峰值量级 | 约 1 Mbps | 约 150 Mbps | Gbps 量级 |
+| 天线数 | 1 | 1–2 | 可达 4 |
+| 模组成本倾向 | 较低 | 中等 | 较高 |
 
-2G GPRS模组:
-  功耗: 发射峰值 ~1W
-  成本: ~3美元
-  速率: 170kbps
-  对IoT: 够用
+## 5. 选型与退网迁移
 
-3G UMTS模组:
-  功耗: 发射峰值 ~2W (翻倍!)
-  成本: ~8-15美元 (贵了2-5倍!)
-  速率: 384kbps-42Mbps
-  对IoT: 速率过剩，功耗太高
+| 区域倾向 | 2G/3G 状态（概览） | 常见迁移目标 |
+|----------|-------------------|--------------|
+| 北美 | 多已关停 | LTE-M / Cat-1 |
+| 欧洲 | 2020 年代中后期窗口 | NB-IoT / LTE-M |
+| 中国 | 逐步退网与重耕 | NB-IoT 为主推之一 |
+| 日韩 | 多已关停 | LTE-M / Cat-1 |
+| 东南亚等 | 进度不一 | 依运营商路线 |
 
-结论: 大部分IoT场景不需要3G的速率
-      但要承受3G的高功耗和高成本
-      -> 很多IoT应用直接跳过3G，留在2G
-```
+决策维度：数据量与时延、是否需连接态切换、是否需语音、成本与覆盖。固定、极低成本、深覆盖偏 NB-IoT；移动、交互、语音偏 LTE-M；中高速率中等成本看 RedCap/Cat-1。硬件替换与多模模组是两类迁移手段，后者可降低退网窗口风险但抬高单机成本[5][9]。
 
-### 2.2 3G在IoT中的有限应用
+## 6. 案例要点：车队追踪 2G→LTE-M
 
-3G在IoT中的应用主要集中在需要较高带宽的场景: 车载信息娱乐系统(需要下载地图和多媒体)、远程视频监控(需要上传视频流)、ATM机和企业级POS(需要加密通道和快速响应)。
+物流车队需周期上报全球定位系统（Global Positioning System, GPS）点、行驶中保持连接。NB-IoT 连接态移动性弱，高速场景易断连；Cat-1 性能过剩、模组更贵。LTE-M 在移动性、速率与成本之间更匹配。迁移收益除规避退网外，还包括更低时延与运营商 IoT 套餐结构变化——具体资费因地而异，需以合同测算[2][5]。
 
-### 2.3 3G退网
+## 7. 局限、挑战与可改进方向
 
-3G的退网速度甚至比2G更快，因为3G频谱对运营商来说价值很高(可以重耕为4G/5G)，而3G IoT设备基数远小于2G:
+### 1. 退网时间表碎片化
 
-```
-3G退网进度:
+**局限**：同一品牌设备在不同国家面临不同关停节奏，全球 SKU 难统一。
+**改进**：新部署优先多模或目标技术直上；存量按国家建迁移清单与备件窗口。
 
-已关闭:
-  美国 AT&T: 2022年2月
-  美国 Verizon(CDMA): 2022年12月
-  美国 T-Mobile(UMTS): 2022年7月
-  日本 KDDI: 2022年3月
+### 2. “5G IoT”叙事与现网能力错位
 
-加速关闭中:
-  中国联通: WCDMA逐步退网
-  欧洲运营商: 2025-2028年
-```
+**局限**：宣传常把 URLLC/eMBB 指标直接套到表计类业务，造成选型过度。
+**改进**：按业务把需求映射到 NB-IoT/LTE-M/RedCap/URLLC；以覆盖实测与 SLA 为准，而非代际口号。
 
-## 3. 4G时代: IoT的黄金时代
+### 3. 覆盖增强与时延/功耗权衡不透明
 
-### 3.1 LTE为IoT而变
+**局限**：重复传输提升 MCL，但拉长空口占用与能耗，数据表峰值易误导。
+**改进**：在目标 MCL 下测端到端时延与电池模型；区分“能连上”与“业务可接受”。
 
-4G LTE(Long Term Evolution)是第一代认真对待IoT需求的蜂窝技术。3GPP从Release 12开始，在LTE框架内专门为IoT设计了多个设备类别，并在Release 13中推出了两项革命性技术: LTE-M(Cat-M1)和NB-IoT(Cat-NB1)。
+### 4. RedCap 生态与价格仍在爬坡
 
-### 3.2 LTE设备类别演进
-
-LTE通过定义不同的UE Category(设备类别)来适配不同需求:
-
-| 类别 | 下行峰值 | 上行峰值 | 天线数 | 定位 | 3GPP版本 |
-|------|---------|---------|--------|------|---------|
-| Cat-4 | 150Mbps | 50Mbps | 2 | 智能手机 | Rel-8 |
-| Cat-1 | 10Mbps | 5Mbps | 1 | 中速IoT | Rel-8 |
-| Cat-0 | 1Mbps | 1Mbps | 1 | 低速IoT | Rel-12 |
-| Cat-M1 | 1Mbps | 1Mbps | 1 | LPWAN IoT | Rel-13 |
-| Cat-NB1 | 27kbps | 63kbps | 1 | 大规模IoT | Rel-13 |
-| Cat-NB2 | 127kbps | 159kbps | 1 | 增强IoT | Rel-14 |
-
-```
-设备类别简化路径:
-
-Cat-4(手机级) -> 太贵太耗电
-  |
-Cat-1(精简版) -> 降低复杂度，单天线
-  |
-Cat-0(IoT入门) -> 半双工，进一步简化
-  |
-  +-> Cat-M1(LTE-M): 1.4MHz带宽，支持移动性和VoLTE
-  |
-  +-> Cat-NB1(NB-IoT): 200kHz带宽，极简设计，最低成本
-```
-
-### 3.3 LTE-M(Cat-M1)详解
-
-LTE-M是为"需要移动性的IoT设备"设计的:
-
-```
-LTE-M 关键特性:
-
-带宽: 1.4MHz (LTE的1/20到1/14)
-  -> 射频芯片更简单，成本更低
-
-eDRX(扩展非连续接收):
-  传统LTE: 每1.28秒检查一次寻呼 -> 费电
-  eDRX:    每40分钟检查一次寻呼 -> 省电
-  
-  [醒来检查][......长达40分钟休眠......][醒来检查]
-
-PSM(节电模式):
-  设备主动进入深度休眠，不接收寻呼
-  需要发送数据时自行醒来
-  休眠时功耗: <5uA (接近关机)
-
-覆盖增强:
-  通过重复传输增加15dB覆盖
-  代价: 延迟增加(重复传输耗时)
-```
-
-LTE-M适合的场景: 共享单车/电动车(需要移动中的连接切换)、可穿戴医疗设备(需要语音报警能力)、物流追踪器(移动+定期上报)、POS终端(需要较快的交互响应)。
-
-### 3.4 NB-IoT(Cat-NB1)详解
-
-NB-IoT是为"固定部署的海量传感器"设计的:
-
-```
-NB-IoT 关键特性:
-
-带宽: 仅200kHz (约LTE的1/100)
-  -> 模组成本可低至2美元
-
-覆盖增强: MCL 164dB
-  比GSM多20dB -> 穿透力极强(地下室/井盖)
-  
-  覆盖对比:
-  GSM:    MCL 144dB
-  LTE:    MCL 142dB
-  NB-IoT: MCL 164dB (+20dB = 信号强100倍)
-
-连接密度:
-  每小区支持约50000个NB-IoT设备
-  适合智慧城市海量传感器部署
-
-功耗模型:
-  发送一次数据(200字节): ~200mJ
-  PSM休眠功耗: <5uA
-  5Wh电池寿命: 10年+(每天发2次)
-```
-
-NB-IoT适合的场景: 智能水表/气表/电表(固定位置、计费数据)、智慧城市传感器(停车检测、井盖监测)、环境监测(空气质量、水质)、智能农业(土壤监测)。
-
-## 4. 5G时代: IoT的三大支柱
-
-### 4.1 5G的三大场景
-
-5G并不是单一技术的升级，而是定义了三大应用场景，其中两个直接服务IoT:
-
-```
-5G 三大场景:
-
-              增强移动宽带(eMBB)
-              峰值20Gbps, VR/8K视频
-                   /\
-                  /  \
-                 /    \
-                /  5G  \
-               /________\
-              /          \
-海量机器通信              超可靠低延迟
-(mMTC)                   (URLLC)
-每km2百万设备             延迟<1ms, 可靠性99.999%
-智能城市/农业             工业控制/自动驾驶
-
-eMBB: 手机用户为主
-mMTC: 大规模IoT (NB-IoT/LTE-M的演进)
-URLLC: 关键任务IoT (工厂/医疗/车联网)
-```
-
-### 4.2 5G mMTC: NB-IoT/LTE-M的延续
-
-5G并没有抛弃NB-IoT和LTE-M，而是将它们正式纳入5G标准体系:
-
-```
-NB-IoT/LTE-M 在5G中的定位:
-
-3GPP的明确声明:
-  "NB-IoT和LTE-M是5G mMTC的组成部分"
-  
-  Release 13: NB-IoT v1 / LTE-M v1
-  Release 14: NB-IoT v2 / LTE-M v2 (增强)
-  Release 15: 被纳入5G NR标准框架
-  Release 16: 与5G核心网集成
-  Release 17: 进一步增强(卫星NTN支持)
-
-意味着:
-  - 现有NB-IoT/LTE-M设备不会"被淘汰"
-  - 运营商可以在5G核心网下继续运营NB-IoT/LTE-M
-  - 投资NB-IoT/LTE-M的IoT方案是安全的
-```
-
-### 4.3 5G URLLC: 工业IoT的使能者
-
-URLLC(Ultra-Reliable Low-Latency Communications)是5G对工业IoT最重要的贡献:
-
-| 参数 | 4G LTE | 5G URLLC |
-|------|--------|----------|
-| 端到端延迟 | 10-50ms | <1ms |
-| 可靠性 | 99.9% | 99.999% |
-| 抖动 | 不确定 | <1ms |
-| 确定性 | 低 | 高 |
-
-URLLC使能的典型场景包括工厂自动化(机械臂协同控制需要小于1ms延迟，5G URLLC可以无线替代有线以太网)、远程手术(操控机器人需延迟小于10ms且可靠性达99.999%)、自动驾驶V2X(车辆间紧急制动协调需延迟小于10ms)。
-
-### 4.4 5G RedCap: 中间地带
-
-3GPP在Release 17中引入了RedCap(Reduced Capability)，也称NR-Light，填补了NB-IoT/LTE-M与完整5G NR之间的空白:
-
-```
-5G设备能力光谱:
-
-NB-IoT    LTE-M    RedCap    完整NR
-  |         |        |         |
-  +----+----+---+----+----+----+
-       |        |         |
-    超低成本  中等成本   高成本
-    极低速率  中等速率   高速率
-    极低功耗  中等功耗   高功耗
-    
-RedCap定位:
-  - 下行: 150Mbps (比LTE-M快150倍)
-  - 上行: 50Mbps
-  - 带宽: 20MHz (FR1)
-  - 天线: 1-2根 (完整NR需要4根)
-  - 适合: 工业传感器、可穿戴、视频监控
-```
-
-RedCap的关键参数:
-
-| 参数 | LTE-M | RedCap(Rel-17) | 完整NR |
-|------|-------|----------------|--------|
-| 最大带宽 | 1.4MHz | 20MHz | 100MHz |
-| 下行峰值 | 1Mbps | 150Mbps | 数Gbps |
-| 天线数 | 1 | 1-2 | 4 |
-| 半双工 | 支持 | 支持 | 不适用 |
-| 模组成本估计 | 5-8美元 | 10-15美元 | 25+美元 |
-| 目标场景 | LPWAN | 中等IoT | 手机/CPE |
-
-## 5. 设备类别完整图谱
-
-### 5.1 从Cat-0到RedCap的演进逻辑
-
-整个蜂窝IoT设备类别的演进遵循一个清晰的逻辑: 为不同需求层次的IoT设备找到最合适的"性能/成本"平衡点。从Cat-4(手机级、高成本)到Cat-1(中速IoT)到RedCap(中等成本)到LTE-M(低成本)到NB-IoT(极低成本)，成本和复杂度递减，适用场景从高速设备过渡到海量低速传感器。
-
-### 5.2 选择设备类别的决策
-
-选择设备类别的决策流程: 需要视频传输或高速数据选RedCap或Cat-1; 设备需要移动(车辆/穿戴)选LTE-M; 需要极致低功耗和低成本选NB-IoT; 其他情况按速率需求在LTE-M和Cat-1之间选择。
-
-## 6. 2G/3G退网与迁移路径
-
-### 6.1 退网时间线
-
-全球2G/3G退网正在加速推进:
-
-| 区域 | 2G状态 | 3G状态 | 推荐迁移目标 |
-|------|--------|--------|-------------|
-| 北美 | 已关/关闭中 | 已关闭 | LTE-M |
-| 欧洲 | 2025-2030 | 2025-2028 | NB-IoT/LTE-M |
-| 中国 | 逐步退网 | 退网中 | NB-IoT(主推) |
-| 日本韩国 | 已关闭 | 已关/关闭中 | LTE-M/Cat-1 |
-| 东南亚 | 未定 | 2025-2030 | NB-IoT |
-
-### 6.2 迁移策略
-
-从2G迁移到4G IoT技术时，需要从五个维度评估需求: 数据量(小于1KB选NB-IoT，超过1KB选LTE-M)、移动性(固定选NB-IoT，移动选LTE-M)、延迟(秒级可接受选NB-IoT，亚秒级选LTE-M)、语音(不需要选NB-IoT，需要选LTE-M)、成本敏感度(极敏感选NB-IoT)。
-
-迁移方式有两种: 硬件替换(推荐)是直接更换通信模组，可获得所有新特性但需现场施工; 多模设备(预防性)是新部署时使用多模模组，2G退网后自动切换，但模组成本略高。
-
-## 7. 实际案例: 车队追踪从2G到4G的迁移
-
-### 7.1 背景
-
-某物流公司有3000辆货车安装了基于2G GPRS的追踪器，运行了8年。随着运营商宣布2G即将退网，公司需要将追踪系统迁移到新技术。
-
-### 7.2 需求与技术选型
-
-车队追踪的核心需求是每30秒上报GPS位置(50字节)、支持行驶中的连续追踪(移动性)、双向通信和可选的语音通话。覆盖要求全国高速公路和城市，车载12V供电不担心功耗。
-
-候选方案中，NB-IoT不支持移动性切换，车辆高速行驶时频繁断连，不适合。Cat-1速率10Mbps但模组成本比LTE-M高2-3倍，性能过剩。最终选择LTE-M(Cat-M1)，它支持移动性切换、功耗适中、1Mbps速率对追踪场景完全够用。
-
-### 7.4 迁移效果
-
-| 指标 | 2G GPRS(旧) | LTE-M Cat-M1(新) |
-|------|------------|-------------------|
-| 模组成本 | 3美元 | 7美元 |
-| 数据速率 | 170kbps | 1Mbps |
-| 位置上报延迟 | 2-5秒 | 0.5-1秒 |
-| 移动性切换 | 不需要(2G小区大) | 支持(4G小区切换) |
-| 覆盖 | 优秀(2G覆盖广) | 良好(4G覆盖不断完善) |
-| PSM/eDRX | 不支持 | 支持(停车时省电) |
-| 网络寿命 | 1-3年(即将退网) | 15年+(4G长期运营) |
-| 月服务费 | 5元/车 | 3元/车(IoT套餐更便宜) |
-
-迁移的关键收益不仅是避免了2G退网的风险，还获得了更低的延迟、更可靠的连接，以及更低的月度运营成本(运营商对NB-IoT/LTE-M提供了更优惠的IoT套餐)。
-
-## 8. 未来展望: 6G与IoT
-
-### 8.1 6G愿景
-
-虽然6G仍在早期研究阶段(预计2030年前后商用)，但已经有几个与IoT相关的愿景方向:
-
-关键方向包括感知与通信融合(ISAC，基站同时承担通信和雷达感知)、亚太赫兹通信(为IoT提供极高带宽短距离通信)、AI原生网络(边缘实时推理减少数据上传)、空天地一体化(卫星+高空平台+地面基站实现全球无缝连接)。
-
-## 总结
-
-蜂窝IoT的演进是一个从"通用技术勉强适配IoT"到"专门为IoT量身定制"的过程。2G时代的GPRS虽然能用但并非为IoT设计，3G时代功耗和成本太高导致IoT大多跳过，4G时代的NB-IoT和LTE-M终于为IoT提供了最优解，5G时代则通过mMTC、URLLC和RedCap三个维度全面覆盖了从低成本传感器到关键任务工业控制的所有IoT需求。
-
-对于IoT开发者来说，当前最重要的决策是在NB-IoT和LTE-M之间选择: 固定部署、极低成本、海量连接选NB-IoT; 移动设备、需要语音或较高带宽选LTE-M。两者都已被纳入5G标准，投资是安全的。同时需要关注2G/3G退网时间表，及时规划存量设备的迁移方案。
-
-展望未来，5G RedCap将填补中等复杂度IoT设备的空白，URLLC将推动工业IoT的无线化转型，而6G将带来更加颠覆性的IoT能力——但那已经是2030年之后的故事了。
+**局限**：相对 NB-IoT/LTE-M，模组供给、认证与资费成熟度因地而异。
+**改进**：中高带宽需求做 Cat-1 vs RedCap 双轨试点；关注 Rel-18 进一步降能力变体。
 
 ## 参考文献
 
-1. 3GPP, "Study on Provision of Low-Cost Machine-Type Communications (MTC) User Equipment Based on LTE," 3GPP TR 36.888, Release 12, 2013.
-2. R. Ratasuk, N. Mangalvedhe, A. Ghosh, and B. Vejlgaard, "Narrowband LTE-M System for M2M Communication," IEEE VTC Fall, 2014.
-3. Y.-P. E. Wang et al., "A Primer on 3GPP Narrowband Internet of Things," IEEE Communications Magazine, vol. 55, no. 3, pp. 117-123, 2017.
-4. 3GPP, "NR; Study on Support of Reduced Capability NR Devices," 3GPP TR 38.875, Release 17, 2021.
-5. GSMA, "5G IoT Use Cases and Device Roadmap," GSMA Intelligence, 2022.
+[1] 3GPP, "Study on Provision of Low-Cost Machine-Type Communications (MTC) User Equipment Based on LTE," TR 36.888.
+[2] R. Ratasuk et al., "Narrowband LTE-M System for M2M Communication," IEEE VTC Fall, 2014.
+[3] Y.-P. E. Wang et al., "A Primer on 3GPP Narrowband Internet of Things," IEEE Communications Magazine, 2017.
+[4] 3GPP, "Study on Support of Reduced Capability NR Devices," TR 38.875, Rel-17.
+[5] GSMA, "Mobile IoT / 5G IoT use cases and device roadmap," GSMA Intelligence / Mobile IoT 相关报告.
+[6] 3GPP, "Evolved Universal Terrestrial Radio Access (E-UTRA); User Equipment (UE) radio access capabilities," TS 36.306.
+[7] 3GPP, "NR; Overall description," TS 38.300（含 mMTC/URLLC 相关能力描述）.
+[8] ITU-R, "IMT-2020 / 5G 场景与能力框架" 相关建议书（eMBB/mMTC/URLLC）.
+[9] GSMA / 各国运营商公开材料, "2G/3G sunset and IoT migration guidance," 多年度更新.
+[10] 3GPP, "NR; User Equipment (UE) radio access capabilities," TS 38.306（RedCap 能力项）.
+[11] 3GPP, "LTE; Evolved Universal Terrestrial Radio Access (E-UTRA) and Evolved Universal Terrestrial Radio Access Network (E-UTRAN); Overall description," TS 36.300.
+[12] Ericsson / Nokia 等, "Cellular IoT in the 5G era" 白皮书（NB-IoT/LTE-M 与 5G 核心网集成论述）.

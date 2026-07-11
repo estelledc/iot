@@ -3,416 +3,148 @@ schema_version: '1.0'
 id: multimodal-edge-perception
 title: 多模态边缘感知
 layer: 5
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
-reading_time: 20
-prerequisites: UNKNOWN
-tags: []
+reading_time: 22
+prerequisites:
+  - edge-ai-video-analytics
+  - multi-sensor-fusion
+  - model-compression-edge
+tags:
+- 多模态
+- 传感器融合
+- CLIP
+- MobileCLIP
+- 音视频融合
+- 边缘感知
+- 晚期融合
+- 缺失模态
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 多模态边缘感知
 
-> **难度**：🟡 中级 | **领域**：多模态学习、传感器融合、边缘计算 | **阅读时间**：约 20 分钟
+> **难度**：🟡 中级 | **领域**：多模态学习、传感器融合、边缘计算 | **关键词**：CLIP, 融合策略, 音视频, 缺失模态 | **阅读时间**：约 22 分钟
 
 ## 日常类比
 
-人类感知世界从来不是单一通道的。你走进一家餐厅，眼睛看到菜品外观（视觉），鼻子闻到香味（嗅觉），耳朵听到锅铲声（听觉），综合这些信息你才能判断"这家店不错"。如果只靠一种感官，判断就不可靠——照片好看但可能是预制菜，香味浓但可能是调料过重。
+进餐厅时眼看、鼻闻、耳听一起判断“值不值得吃”；只靠照片容易被预制菜骗。多模态边缘感知让物联网（Internet of Things, IoT）设备用视觉、音频、振动等通道互补，但“大脑”很小——要在有限算力下决定融什么、何时融、缺一路传感器时如何降级[1][5]。
 
-多模态边缘感知就是让 IoT 设备像人一样"多感官"协作。一个智能零售摄像头不仅看到货架（视觉），还能听到顾客对话（音频），结合两者才能准确判断"顾客对这个商品感兴趣"。挑战在于：边缘设备的"大脑"很小，如何在有限算力下融合多种感官信息？
+## 摘要
 
-## 1. 多模态融合基础
+梳理早期/晚期/混合融合，轻量视觉-语言（Vision-Language）模型，音视频与多传感器融合，以及计算预算与缺失模态。准确率与延迟为公开论文或示例配置的量级，跨数据集与板级差异大。
 
-### 1.1 融合架构分类
+## 1 融合基础
 
-```
-早期融合 (Early Fusion)
-  视觉特征 ─┐
-  音频特征 ─┼─ [拼接] ─→ [统一模型] ─→ 输出
-  文本特征 ─┘
+| 策略 | 做法 | 计算 | 精度倾向 | 边缘适用 |
+|------|------|------|----------|----------|
+| 早期融合 | 特征拼接进统一模型 | 较低 | 中 | 好（需对齐） |
+| 晚期融合 | 各模态独立预测再合并 | 中 | 中 | 最好（可独立降级） |
+| 混合/注意力融合 | 交叉注意力等[4] | 高 | 常最高 | 需压缩 |
 
-晚期融合 (Late Fusion)
-  视觉特征 ─→ [视觉模型] ─→ 视觉预测 ─┐
-  音频特征 ─→ [音频模型] ─→ 音频预测 ─┼─ [决策融合] ─→ 输出
-  文本特征 ─→ [文本模型] ─→ 文本预测 ─┘
+晚期融合灵活：某一传感器掉线时可去掉该支路。注意力融合表达力强，但 Transformer 式跨模态注意力在 Nano 级设备上往往过重，可用浅 MLP/门控代替[4]。
 
-混合融合 (Hybrid Fusion)
-  视觉特征 ─→ [视觉编码器] ─┐
-  音频特征 ─→ [音频编码器] ─┼─ [交叉注意力] ─→ [解码器] ─→ 输出
-  文本特征 ─→ [文本编码器] ─┘
-```
+## 2 视觉-语言边缘化
 
-### 1.2 各融合策略对比
+CLIP 将图像与文本对比学习到共享嵌入空间，支持零样本分类[1]。SigLIP 用 sigmoid 损失替代 softmax 对比，训练更稳[2]。MobileCLIP / TinyCLIP 等把参数压到约千万级以适配边缘[3]。
 
-| 策略 | 计算量 | 精度 | 灵活性 | 边缘适用性 |
-|------|--------|------|--------|-----------|
-| 早期融合 | 低 | 中 | 低（需同步输入） | 好 |
-| 晚期融合 | 中 | 中 | 高（模态独立） | 最好 |
-| 混合融合 | 高 | 最高 | 中 | 需优化 |
-| 注意力融合 | 最高 | 最高 | 高 | 需大幅压缩 |
+| 模型 | 参数量级 | ImageNet 0-shot 量级 | 边缘延迟倾向 |
+|------|----------|----------------------|--------------|
+| CLIP ViT-B/32 | ~150M | ~60%+ | 数十 ms 级（视板） |
+| SigLIP ViT-B/16 | ~150M | 常略高于同级 CLIP | 类似 |
+| MobileCLIP-S0/S1 | ~10–20M | 约 50–60% 量级 | 数–十余 ms 级 |
+| 更小 ViT/CNN 变体 | <10M | 常明显更低 | 数 ms 级 |
 
-## 2. 视觉-语言模型在边缘
+零样本部署技巧：类别文本嵌入预计算一次，在线只跑图像塔。零售货架等可用短语类别（空货架/倒塌/取货）做开放词表检测，但仍需现场标定阈值与混淆类[1][3]。
 
-### 2.1 CLIP 及其轻量变体
+## 3 音视频与事件检测
 
-CLIP (Contrastive Language-Image Pre-training) 通过对比学习将图像和文本映射到同一向量空间：
+音视频互补：玻璃破碎偏音频；跌倒偏视觉；碰撞两者皆强。下表为**示意性**融合增益模式，非统一基准分数。
 
-```python
-import torch
-import torch.nn as nn
+| 事件类型 | 主模态倾向 | 融合价值 |
+|----------|------------|----------|
+| 玻璃破碎 | 音频 | 视觉易漏，融合增益大 |
+| 人员跌倒 | 视觉 | 音频弱，融合增益有限 |
+| 车辆碰撞 | 双强 | 融合常明显 |
+| 婴儿哭声 | 音频 | 视觉几乎无助 |
 
-class LightCLIP(nn.Module):
-    """轻量级 CLIP 变体，适合边缘部署"""
-    
-    def __init__(self, image_dim=512, text_dim=384, embed_dim=256):
-        super().__init__()
-        # 轻量视觉编码器 (MobileNetV3-Small)
-        self.image_encoder = MobileNetV3Small(output_dim=image_dim)
-        # 轻量文本编码器 (TinyBERT-4L)
-        self.text_encoder = TinyBERT4L(output_dim=text_dim)
-        
-        # 投影到共享空间
-        self.image_proj = nn.Linear(image_dim, embed_dim)
-        self.text_proj = nn.Linear(text_dim, embed_dim)
-        
-        # 可学习温度参数
-        self.temperature = nn.Parameter(torch.ones([]) * 0.07)
-    
-    def encode_image(self, images):
-        features = self.image_encoder(images)
-        projected = self.image_proj(features)
-        return projected / projected.norm(dim=-1, keepdim=True)
-    
-    def encode_text(self, texts):
-        features = self.text_encoder(texts)
-        projected = self.text_proj(features)
-        return projected / projected.norm(dim=-1, keepdim=True)
-    
-    def forward(self, images, texts):
-        image_embeds = self.encode_image(images)
-        text_embeds = self.encode_text(texts)
-        
-        # 对比学习损失
-        logits = (image_embeds @ text_embeds.T) / self.temperature
-        return logits
+实现上需时间对齐（视觉 15–30 fps vs 音频 16 kHz）：缓冲窗 + 时间戳；交叉注意力可用视觉 query、音频 key/value，但边缘优先晚期加权[4]。
 
-# 边缘部署规格
-# 参数量: ~8M (vs CLIP ViT-B/32 的 151M)
-# RPi 4 推理: ~60 ms/图 + ~30 ms/文本
-# 精度: ImageNet zero-shot top-1 ~45% (vs CLIP 的 63%)
-```
+## 4 IoT 多传感器融合
 
-### 2.2 SigLIP 轻量变体
+温度、振动、电流、声学等异构输入：各模态小编码器 → 注意力/门控加权 → 分类（正常/警告/故障）。模型可达数十 KB 量级，适合高端 MCU；关键是**缺失模态**：用掩码重归一化权重或学习默认向量，避免整网失效。
 
-SigLIP 用 sigmoid 损失替代 softmax 对比损失，训练更稳定且支持更大 batch：
+| 设计点 | 建议 |
+|--------|------|
+| 主模态 | 信息量最大、最稳的一路优先 |
+| 异步 | 缓冲区对齐，容忍百 ms 级抖动需按 SLA 定 |
+| 降级 | 任一传感器故障仍可输出，并上报告警 |
+| 功耗 | 夜间可关摄像头只留声学等 |
 
-| 模型 | 参数量 | ImageNet 0-shot | 推理延迟(Jetson Nano) |
-|------|--------|----------------|---------------------|
-| CLIP ViT-B/32 | 151M | 63.2% | 45 ms |
-| CLIP ViT-B/16 | 150M | 68.3% | 120 ms |
-| SigLIP ViT-B/16 | 150M | 70.1% | 120 ms |
-| MobileCLIP-S0 | 11M | 58.1% | 8 ms |
-| MobileCLIP-S1 | 21M | 61.3% | 15 ms |
-| TinyCLIP ViT-8M | 8M | 41.1% | 5 ms |
+## 5 计算预算（示意）
 
-### 2.3 零样本分类在边缘的应用
+Jetson Nano 5W 级多模态流水线示例（数字为量级，非承诺）：
 
-```python
-class EdgeZeroShotClassifier:
-    """边缘零样本图像分类器"""
-    
-    def __init__(self, model_path, categories):
-        self.model = load_onnx_clip(model_path)
-        # 预计算类别文本嵌入（部署时一次性计算）
-        self.text_embeddings = self._precompute_text(categories)
-        self.categories = categories
-    
-    def _precompute_text(self, categories):
-        """预计算所有类别的文本嵌入"""
-        prompts = [f"a photo of {cat}" for cat in categories]
-        embeddings = self.model.encode_text(prompts)
-        return embeddings  # 存储在内存中，避免重复计算
-    
-    def classify(self, image):
-        """对单张图片进行零样本分类"""
-        image_embedding = self.model.encode_image(image)
-        similarities = image_embedding @ self.text_embeddings.T
-        
-        top_idx = similarities.argmax()
-        confidence = similarities[0, top_idx]
-        return self.categories[top_idx], float(confidence)
+| 模块 | 延迟量级 | 内存量级 | 预算占比倾向 |
+|------|----------|----------|--------------|
+| 轻量视觉 | ~10 ms | ~10 MB | 高 |
+| 轻量音频 CNN | 数 ms | 数 MB | 低 |
+| 轻量文本塔 | 十余 ms | 数十 MB | 高（可预计算则降） |
+| 融合头 | 数 ms | ~1 MB | 低 |
 
-# 应用：智能零售货架监控
-classifier = EdgeZeroShotClassifier(
-    "mobileclip_s0.onnx",
-    categories=["空货架", "商品摆放整齐", "商品倒塌", "顾客取货"]
-)
-# Jetson Nano: ~10 ms/帧，支持 100 FPS 实时分类
-```
+自适应策略：主模态置信度高则跳过辅模态，省电省时；低置信再开门控[5]。
 
-## 3. 音视频融合
+## 6 应用速览
 
-### 3.1 音视频同步与对齐
+| 场景 | 模态 | 融合 | 设备倾向 |
+|------|------|------|----------|
+| 智能零售 | 视觉+音频+压力 | 晚期 | Jetson Nano 级 |
+| 辅助驾驶感知 | Camera+LiDAR(+IMU) | 早期/BEV[6] | Orin 级 |
+| 设备预测维护 | 振动+电流+声 | 门控 | MCU/网关 |
 
-```python
-class AudioVisualFusion(nn.Module):
-    """音视频融合模块，用于事件检测"""
-    
-    def __init__(self, audio_dim=128, visual_dim=256, fusion_dim=128):
-        super().__init__()
-        # 音频编码器 (轻量 CNN)
-        self.audio_encoder = nn.Sequential(
-            nn.Conv1d(1, 32, kernel_size=80, stride=40),  # 原始波形输入
-            nn.ReLU(),
-            nn.Conv1d(32, 64, kernel_size=3, stride=2),
-            nn.ReLU(),
-            nn.AdaptiveAvgPool1d(1),
-            nn.Flatten(),
-            nn.Linear(64, audio_dim)
-        )
-        
-        # 视觉编码器 (MobileNetV3 特征)
-        self.visual_proj = nn.Linear(visual_dim, fusion_dim)
-        self.audio_proj = nn.Linear(audio_dim, fusion_dim)
-        
-        # 交叉注意力融合
-        self.cross_attn = nn.MultiheadAttention(
-            embed_dim=fusion_dim, num_heads=4, batch_first=True
-        )
-        
-        # 分类头
-        self.classifier = nn.Linear(fusion_dim, 10)  # 10 类事件
-    
-    def forward(self, audio, visual_features):
-        # 编码
-        audio_feat = self.audio_proj(self.audio_encoder(audio)).unsqueeze(1)
-        visual_feat = self.visual_proj(visual_features).unsqueeze(1)
-        
-        # 交叉注意力：视觉 query，音频 key/value
-        fused, _ = self.cross_attn(visual_feat, audio_feat, audio_feat)
-        
-        # 残差连接
-        output = fused.squeeze(1) + visual_feat.squeeze(1)
-        return self.classifier(output)
-```
+BEV 融合等可显著抬 mAP，但延迟与算力同步上升，须按车规/工业 SLA 取舍[6]。
 
-### 3.2 应用场景：智能安防
+## 7 实践建议
 
-| 事件类型 | 仅视觉准确率 | 仅音频准确率 | 融合准确率 | 提升 |
-|----------|-------------|-------------|-----------|------|
-| 玻璃破碎 | 72% | 95% | 98% | +3% |
-| 人员跌倒 | 88% | 30% | 92% | +4% |
-| 异常聚集 | 85% | 45% | 90% | +5% |
-| 车辆碰撞 | 78% | 82% | 94% | +12% |
-| 婴儿哭泣 | 10% | 93% | 95% | +2% |
+1. 先单模态 baseline，再晚期融合，最后才上复杂交叉注意力。
+2. 训练数据时间戳严格对齐；秒级错位会学到伪相关。
+3. 不要默认“模态越多越好”——噪声辅模态会拖累主模态。
+4. 边缘慎用大跨模态 Transformer；优先 MLP/门控 + 模型压缩专题中的量化/蒸馏。
 
-## 4. 传感器融合与深度学习
+## 8 局限、挑战与可改进方向
 
-### 4.1 IoT 多传感器融合架构
+### 1. 对齐与标注成本
 
-```python
-class IoTSensorFusion(nn.Module):
-    """IoT 多传感器融合网络"""
-    
-    def __init__(self, sensor_configs):
-        """
-        sensor_configs: dict of {sensor_name: input_dim}
-        例如: {"temperature": 1, "vibration": 3, "acoustic": 128, "current": 1}
-        """
-        super().__init__()
-        self.encoders = nn.ModuleDict()
-        hidden_dim = 64
-        
-        for name, input_dim in sensor_configs.items():
-            self.encoders[name] = nn.Sequential(
-                nn.Linear(input_dim, hidden_dim),
-                nn.LayerNorm(hidden_dim),
-                nn.ReLU(),
-                nn.Linear(hidden_dim, hidden_dim)
-            )
-        
-        n_sensors = len(sensor_configs)
-        # 注意力权重学习：哪个传感器更重要
-        self.attention = nn.Sequential(
-            nn.Linear(hidden_dim * n_sensors, n_sensors),
-            nn.Softmax(dim=-1)
-        )
-        
-        self.classifier = nn.Sequential(
-            nn.Linear(hidden_dim, 32),
-            nn.ReLU(),
-            nn.Linear(32, 4)  # 正常/警告/故障/紧急
-        )
-    
-    def forward(self, sensor_data):
-        """
-        sensor_data: dict of {sensor_name: tensor}
-        """
-        encoded = []
-        for name, encoder in self.encoders.items():
-            feat = encoder(sensor_data[name])
-            encoded.append(feat)
-        
-        # 拼接所有传感器特征
-        concat = torch.cat(encoded, dim=-1)
-        
-        # 学习注意力权重
-        weights = self.attention(concat)  # [batch, n_sensors]
-        
-        # 加权融合
-        stacked = torch.stack(encoded, dim=1)  # [batch, n_sensors, hidden]
-        fused = (stacked * weights.unsqueeze(-1)).sum(dim=1)
-        
-        return self.classifier(fused)
+**局限**：多模态同步采集、标注贵；实验室对齐在现场时钟漂移下失效。
+**改进**：硬件触发/PTP 级同步；自监督对齐损失；现场用少量标定窗重估偏移。
 
-# 模型大小: ~50KB (适合 MCU 部署)
-# STM32H7 推理: ~2 ms
-```
+### 2. 融合不等于增益
 
-### 4.2 缺失模态处理
+**局限**：辅模态噪声大或域偏移时，融合低于最佳单模态。
+**改进**：门控/置信度融合；在线监测辅模态质量，差则自动摘除。
 
-边缘场景中传感器可能故障或断连，需要优雅降级：
+### 3. 开放词汇与轻量 CLIP 精度墙
 
-```python
-class RobustFusion(nn.Module):
-    """支持模态缺失的鲁棒融合"""
-    
-    def forward(self, sensor_data, available_mask):
-        """
-        available_mask: [batch, n_sensors] 布尔张量
-        True = 传感器可用, False = 缺失
-        """
-        encoded = []
-        for i, (name, encoder) in enumerate(self.encoders.items()):
-            if name in sensor_data:
-                feat = encoder(sensor_data[name])
-            else:
-                # 缺失模态用学习到的默认向量替代
-                feat = self.default_vectors[name].expand(batch_size, -1)
-            encoded.append(feat)
-        
-        # 只对可用传感器计算注意力
-        weights = self.attention(torch.cat(encoded, dim=-1))
-        weights = weights * available_mask.float()
-        weights = weights / (weights.sum(dim=-1, keepdim=True) + 1e-8)
-        
-        stacked = torch.stack(encoded, dim=1)
-        fused = (stacked * weights.unsqueeze(-1)).sum(dim=1)
-        return self.classifier(fused)
-```
+**局限**：MobileCLIP 等零样本 Top-1 与大 CLIP 仍有明显差距[3]。
+**改进**：目标域短语蒸馏；文本塔预计算 + 图像塔 QAT；关键类改闭集小头。
 
-## 5. 计算预算分配
+### 4. 缺失模态与概念漂移
 
-### 5.1 多模态计算开销分析
-
-在 Jetson Nano (5W 模式) 上的典型计算预算：
-
-| 模态 | 模型 | 延迟 | 内存 | 占总预算 |
-|------|------|------|------|----------|
-| 视觉 | MobileNetV3-Small | 8 ms | 12 MB | 40% |
-| 音频 | 1D-CNN (自定义) | 3 ms | 2 MB | 15% |
-| 文本 | TinyBERT-4L | 15 ms | 30 MB | 35% |
-| 融合层 | MLP + Attention | 2 ms | 1 MB | 10% |
-| **总计** | - | **28 ms** | **45 MB** | **100%** |
-
-### 5.2 动态计算分配
-
-```python
-class AdaptiveMultimodal(nn.Module):
-    """根据输入难度动态分配计算资源"""
-    
-    def __init__(self):
-        super().__init__()
-        # 轻量级门控网络，决定是否需要额外模态
-        self.gate = nn.Sequential(
-            nn.Linear(64, 16),
-            nn.ReLU(),
-            nn.Linear(16, 3),  # 3 个模态的开关
-            nn.Sigmoid()
-        )
-        self.confidence_threshold = 0.85
-    
-    def forward(self, primary_features, secondary_inputs):
-        """
-        先用主模态（最快的）做初步判断，
-        置信度不够时再启用辅助模态
-        """
-        # 主模态快速推理
-        primary_pred = self.primary_head(primary_features)
-        confidence = primary_pred.softmax(dim=-1).max(dim=-1).values
-        
-        # 高置信度直接返回（省电省时）
-        if confidence.mean() > self.confidence_threshold:
-            return primary_pred
-        
-        # 低置信度时启用辅助模态
-        gate_values = self.gate(primary_features)
-        # 只激活门控值 > 0.5 的模态
-        # 这样简单场景只用 1 个模态，复杂场景用 2-3 个
-        ...
-```
-
-## 6. 实际应用案例
-
-### 6.1 智能零售：视觉+音频+位置
-
-```
-场景：无人货架商品识别与顾客行为分析
-
-输入模态：
-- 摄像头 (640x480, 15fps): 商品识别、手势检测
-- 麦克风阵列: 顾客语音意图（"这个多少钱"）
-- 压力传感器: 商品被拿起/放下
-
-融合策略：晚期融合（各模态独立处理，决策层合并）
-设备：Jetson Nano + USB 摄像头 + MEMS 麦克风
-总延迟：< 100 ms（满足实时交互）
-```
-
-### 6.2 自动驾驶辅助：Camera + LiDAR + IMU
-
-| 融合方案 | mAP | 延迟 | 适用设备 |
-|----------|-----|------|----------|
-| Camera only | 42.3% | 15 ms | Jetson Nano |
-| Camera + LiDAR (早期) | 58.7% | 35 ms | Jetson Orin |
-| Camera + LiDAR (BEV融合) | 64.2% | 55 ms | Jetson Orin |
-| Camera + LiDAR + IMU | 66.1% | 60 ms | Jetson Orin |
-
-## 7. 实践建议
-
-### 7.1 初学者入门路径
-
-1. **第一步**：用 OpenCV + PyAudio 采集视频和音频数据
-2. **第二步**：分别训练单模态分类器，建立 baseline
-3. **第三步**：实现简单的晚期融合（加权平均预测概率）
-4. **第四步**：尝试特征级融合（拼接 + MLP）
-5. **第五步**：在边缘设备上部署，测量多模态 vs 单模态的精度提升和延迟开销
-
-### 7.2 具体调优建议
-
-- **模态优先级**：先确定哪个模态信息量最大，作为主模态；其他作为辅助
-- **异步处理**：不同模态采样率不同（视觉 30fps vs 音频 16kHz），用缓冲区对齐
-- **降级策略**：任何一个传感器故障时系统仍能工作，只是精度下降
-- **功耗管理**：非必要时关闭辅助模态传感器（如夜间关闭摄像头，只用音频）
-- **数据对齐**：多模态训练数据的时间戳对齐非常重要，1 秒的偏差就可能导致训练失败
-
-### 7.3 常见陷阱
-
-- 不要假设所有模态同等重要——通常 80% 的信息来自 1-2 个主模态
-- 融合不一定比单模态好——如果辅助模态噪声大，反而会拖累主模态
-- 边缘设备上避免使用 Transformer 做跨模态注意力——计算量太大，用简单 MLP 融合即可
-- 多模态模型的训练数据需要严格对齐，否则模型学到的是噪声关联
+**局限**：训练时偶发缺失与部署时长期单传感器失效分布不同。
+**改进**：训练显式随机丢模态；部署健康度心跳；漂移时触发再校准或云端教师更新。
 
 ## 参考文献
 
-1. Radford, A. et al. "Learning Transferable Visual Models From Natural Language Supervision." ICML 2021.
-2. Zhai, X. et al. "Sigmoid Loss for Language Image Pre-Training." ICCV 2023.
-3. Vasu, P. et al. "MobileCLIP: Fast Image-Text Models through Multi-Modal Reinforced Training." CVPR 2024.
-4. Nagrani, A. et al. "Attention Bottlenecks for Multimodal Fusion." NeurIPS 2021.
-5. Liang, P. et al. "MultiBench: Multiscale Benchmarks for Multimodal Representation Learning." NeurIPS 2021.
-6. Liu, Z. et al. "BEVFusion: Multi-Task Multi-Sensor Fusion with Unified Bird's-Eye View." ICRA 2023.
-7. Girdhar, R. et al. "ImageBind: One Embedding Space To Bind Them All." CVPR 2023.
-8. Wu, Y. et al. "Multimodal Large Language Models for Edge Devices: A Survey." arXiv 2024.
-9. Xu, H. et al. "mPLUG-Owl: Modularization Empowers Large Language Models with Multimodality." arXiv 2023.
-10. Howard, A. et al. "Searching for MobileNetV3." ICCV 2019.
+[1] A. Radford et al., "Learning Transferable Visual Models From Natural Language Supervision (CLIP)," ICML, 2021.
+[2] X. Zhai et al., "Sigmoid Loss for Language Image Pre-Training (SigLIP)," ICCV, 2023.
+[3] P. Vasu et al., "MobileCLIP," CVPR, 2024.
+[4] A. Nagrani et al., "Attention Bottlenecks for Multimodal Fusion," NeurIPS, 2021.
+[5] P. Liang et al., "MultiBench," NeurIPS, 2021.
+[6] Z. Liu et al., "BEVFusion," ICRA, 2023.
+[7] R. Girdhar et al., "ImageBind," CVPR, 2023.
+[8] Y. Wu et al., "Multimodal Large Language Models for Edge Devices: A Survey," arXiv, 2024.
+[9] H. Xu et al., "mPLUG-Owl," arXiv, 2023.
+[10] A. Howard et al., "Searching for MobileNetV3," ICCV, 2019.
+[11] S. Han, H. Mao, W. J. Dally, "Deep Compression," ICLR, 2016.
+[12] B. Jacob et al., "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference," CVPR, 2018.

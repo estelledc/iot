@@ -3,14 +3,23 @@ schema_version: '1.0'
 id: elderly-home-care
 title: 老年人居家看护物联网
 layer: 7
-content_type: UNKNOWN
+content_type: technical_analysis
 difficulty: intermediate
 reading_time: 25
-prerequisites: UNKNOWN
-tags: []
+prerequisites:
+  - wearable-sensors
+  - mmwave-radar-sensing
+tags:
+  - 智慧养老
+  - 跌倒检测
+  - ADL
+  - 毫米波雷达
+  - 隐私保护
+  - 边缘计算
+  - 非侵入监测
 source_status: UNVERIFIED
-review_status: UNREVIEWED
-last_reviewed: UNKNOWN
+review_status: IN_REVIEW
+last_reviewed: '2026-07-10'
 ---
 # 老年人居家看护物联网
 
@@ -18,49 +27,52 @@ last_reviewed: UNKNOWN
 
 ## 日常类比
 
-想象你的父母独自住在老家。你每天打电话问"吃饭了没""睡得好不好"，但一天只有几分钟的沟通窗口，中间发生了什么你完全不知道。如果老人半夜起来上厕所摔了一跤，可能要等到第二天你打电话才知道——这几个小时的空窗期可能就是生与死的差距。
+想象父母独自住在老家。你每天打电话问"吃饭了没""睡得好不好"，但一天只有几分钟窗口，中间发生了什么你完全不知道。若老人半夜起夜摔倒，可能要等到第二天打电话才发现——这几个小时的空窗期可能就是生与死的差距。
 
-老年人居家看护物联网要做的事情，就是把"每天打一个电话"升级成"24 小时贴身管家"——但这个管家不是真的站在旁边盯着（那样老人也不舒服），而是通过分布在家里各处的传感器，"听"动静、"看"活动、"量"体征，在不打扰日常生活的前提下判断"一切正常"还是"需要干预"。一旦发现异常——跌倒、长时间不活动、心率突变——系统立刻通知家人或急救中心。
+老年人居家看护物联网（Internet of Things, IoT）要做的，是把"每天打一个电话"升级成"24 小时贴身管家"：不是真人盯着（老人也不舒服），而是用分布在家里的传感器"听"动静、"看"活动、"量"体征，在不打扰日常的前提下判断"一切正常"还是"需要干预"。一旦发现跌倒、长时间不活动、心率突变等异常，立刻通知家人或急救中心。
 
-这套系统的核心挑战不是技术本身有多难（传感器、算法都是成熟的），而是如何平衡"安全"和"隐私"。老人不喜欢被摄像头盯着，也不愿意戴一堆设备。好的解决方案是"无感知"的——你几乎忘记它的存在，但它一直在默默工作。
+核心挑战往往不在传感器与算法是否成熟，而在**安全与隐私的平衡**：老人不喜欢被摄像头盯着，也不愿戴一堆设备。好的方案尽量"无感知"——几乎忘记它的存在，但它一直在默默工作。
+
+## 一句话总结
+
+居家看护 IoT 用穿戴式惯性测量单元（Inertial Measurement Unit, IMU）、毫米波雷达与环境传感器做被动监测，结合日常活动（Activities of Daily Living, ADL）异常检测与分级告警，在尽量少侵入隐私的前提下缩短跌倒与失能事件的发现时间；文中准确率、人口与成本数字多为公开材料或实验室量级，部署前需用目标人群实测校准。
 
 ## 1 为什么居家看护是刚需
 
-### 1.1 老龄化的数字现实
+### 1.1 老龄化与跌倒风险
 
-中国 65 岁以上人口已超过 2.17 亿（2024 年统计），其中超过 4,000 万独居或空巢老人。全球范围内，WHO 统计 60 岁以上人口将在 2050 年达到 21 亿。
+中国 65 岁以上人口规模已达数亿量级（国家统计口径随年份更新）[10]；全球 60 岁以上人口在本世纪中叶将进一步显著增长（世界卫生组织 World Health Organization, WHO 口径）[1]。独居/空巢老人比例高，使"无人发现"成为独立风险因素。
 
-跌倒是老年人意外伤害的首要原因：全球每年约 68.4 万人死于跌倒，其中 80% 是 65 岁以上老人。更关键的是跌倒后的"黄金救援时间"——如果老人跌倒后 1 小时内得到救治，死亡率降低 80%。但独居老人跌倒后平均被发现时间超过 12 小时。
+跌倒是老年人意外伤害的重要原因之一。WHO 等机构持续发布跌倒相关事实摘要：全球每年有大量跌倒相关死亡，其中高龄人群占比很高 [1]。更关键的是跌倒后的**发现与救援时延**——文献与临床经验普遍强调尽早干预可改善结局，但独居场景下发现时间可能长达数小时甚至更久，具体中位数因研究样本而异，不宜当作全国统一常数 [1][9]。
 
 ### 1.2 传统方案的局限
 
-| 方案 | 覆盖率 | 局限 |
-|------|--------|------|
-| 家人同住 | 高 | 年轻人工作压力大，空间不够 |
-| 养老院 | 中 | 费用高，老人抗拒离家 |
-| 保姆 | 中 | 人力成本持续上涨，服务质量不一 |
-| 紧急呼叫按钮 | 低 | 需要老人主动按下，昏迷/瘫痪时无效 |
+| 方案 | 覆盖率（示意） | 局限 |
+|------|----------------|------|
+| 家人同住 | 高 | 年轻人工作与住房约束大 |
+| 养老院 | 中 | 费用高，部分老人抗拒离家 |
+| 保姆 | 中 | 人力成本高，质量不一 |
+| 紧急呼叫按钮 | 低 | 需主动按下，昏迷/瘫痪时无效 |
 | 定期电话回访 | 低 | 只覆盖通话时段 |
 
-物联网方案的核心优势：**被动监测**——不需要老人做任何操作，系统自动感知、自动判断、自动报警。
+物联网方案的核心优势是**被动监测**：不要求老人操作，系统自动感知、判断与报警。
 
 ## 2 跌倒检测技术
 
 ### 2.1 基于加速度计的穿戴式检测
 
-最成熟的方案是在腰部或手腕佩戴一个含三轴加速度计 + 三轴陀螺仪的设备（如手环、吊坠）。跌倒过程有一个标志性信号模式：
+较成熟的方案是在腰部或手腕佩戴含三轴加速度计 + 三轴陀螺仪的设备（手环、吊坠等）。跌倒过程常见标志性模式：
 
-1. **自由落体阶段**：加速度突然接近 0g（约 200-500ms）
-2. **撞击阶段**：加速度出现尖峰（通常 > 3g，严重跌倒可达 6-8g）
-3. **静止阶段**：撞击后加速度回到 1g 附近，但姿态发生变化（从直立变为水平）
+1. **自由落体阶段**：合成加速度短时接近 0g（约数百毫秒量级）
+2. **撞击阶段**：加速度尖峰（常大于数个 g，严重跌倒可更高）
+3. **静止阶段**：撞击后回到约 1g，但姿态由直立变为接近水平
 
-传统阈值算法用"合成加速度 > 阈值"来判断，但误报率高——拍桌子、坐沙发动作也可能触发。现在主流做法是用 ML 模型：
+阈值算法（"合成加速度 > 阈值"）误报高——拍桌子、猛坐沙发也可能触发。主流做法是用机器学习（Machine Learning, ML）在滑动窗口上提取特征：
 
 ```python
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 
-# 从 6 轴 IMU 数据中提取特征
 def extract_features(window):
     """
     window: shape (N, 6) — [ax, ay, az, gx, gy, gz]
@@ -68,84 +80,78 @@ def extract_features(window):
     """
     acc = window[:, :3]
     gyro = window[:, 3:]
-    
-    acc_mag = np.linalg.norm(acc, axis=1)  # 合成加速度
-    
+    acc_mag = np.linalg.norm(acc, axis=1)
+
     features = {
         'acc_mag_max': acc_mag.max(),
         'acc_mag_min': acc_mag.min(),
         'acc_mag_std': acc_mag.std(),
         'acc_mag_range': acc_mag.max() - acc_mag.min(),
         'gyro_mag_max': np.linalg.norm(gyro, axis=1).max(),
-        'sma': np.sum(np.abs(acc)) / len(acc),  # 信号幅度面积
+        'sma': np.sum(np.abs(acc)) / len(acc),
         'post_impact_angle': np.arccos(
-            acc[-1, 2] / np.linalg.norm(acc[-1])
-        ) * 180 / np.pi,  # 撞击后身体角度
+            acc[-1, 2] / (np.linalg.norm(acc[-1]) + 1e-8)
+        ) * 180 / np.pi,
     }
     return features
 
-# 训练：用 SisFall / MobiAct 公开数据集
-# 典型准确率：Random Forest 95-97%, LSTM 97-99%
+# 训练常用公开集：SisFall / MobiAct 等
+# 实验室准确率常报 95%+，真实居家会因佩戴依从性与类跌倒动作下降
 ```
+
+公开数据集上随机森林、长短期记忆网络（Long Short-Term Memory, LSTM）等常报很高准确率 [2][9]；真实居家因佩戴依从性、类跌倒动作与个体差异，现场指标通常更保守，需单独验收。
 
 ### 2.2 非穿戴式跌倒检测
 
-很多老人不愿意戴手环（忘记充电、觉得丑、洗澡要摘），所以非穿戴方案是重要补充：
+很多老人不愿戴手环（忘记充电、觉得丑、洗澡要摘），非穿戴是重要补充：
 
-**毫米波雷达**（如 TI IWR6843）：发射 60-64GHz 毫米波，通过反射信号的多普勒频移和距离变化检测人体动作。可以穿透衣物，不受光线影响，不采集图像所以隐私友好。Vayyar 的 Walabot HOME 产品用这个方案，检测范围约 7 米。
+**毫米波雷达**（如 TI IWR6843）：发射约 60 GHz 频段毫米波，用多普勒与距离变化检测人体动作；可穿透衣物、不受光线影响，不采集图像，隐私相对友好 [8]。商用产品（如 Vayyar 相关方案）检测距离多为数米量级，以厂商白皮书与现场标定为准 [3]。
 
-**环境传感器融合**：PIR（被动红外）+ 振动传感器 + 声音传感器组合。PIR 检测有无活动，振动传感器检测地板冲击（跌倒撞地），声音传感器检测异常声响（喊叫、碰撞声）。三者融合的准确率约 90-93%。
+**环境传感器融合**：被动红外（Passive Infrared, PIR）+ 振动 + 声音。PIR 判有无活动，振动捕地板冲击，声音捕喊叫/碰撞。融合准确率在部分研究中可达约九成量级，但依赖布局与阈值，不能直接照搬 [6][9]。
 
-| 方案 | 准确率 | 隐私性 | 佩戴要求 | 成本 |
-|------|--------|--------|----------|------|
-| 加速度计手环 | 95-99% | 高 | 需要佩戴 | 200-500 元 |
-| 毫米波雷达 | 92-96% | 高 | 无 | 800-2000 元 |
-| 摄像头 + AI | 97-99% | 低 | 无 | 300-800 元 |
-| 环境传感器融合 | 88-93% | 高 | 无 | 500-1000 元 |
+| 方案 | 准确率（示意/文献量级） | 隐私性 | 佩戴要求 | 成本量级（示意） |
+|------|-------------------------|--------|----------|------------------|
+| 加速度计手环 | 高（实验室常 >95%） | 高 | 需佩戴 | 数百元 |
+| 毫米波雷达 | 较高 | 高 | 无 | 千元级 |
+| 摄像头 + AI | 高 | 低 | 无 | 数百元 |
+| 环境传感器融合 | 中–高 | 高 | 无 | 数百–千元 |
 
 ## 3 日常活动识别（ADL）
 
 ### 3.1 为什么 ADL 很重要
 
-ADL（Activities of Daily Living）是评估老人自理能力的医学标准，包括 6 项基本活动：进食、穿衣、洗浴、如厕、移动、保持个人卫生。老人如果某一项 ADL 出现退化（比如开始不按时吃饭、不出卧室），往往预示着健康问题。
-
-传统评估靠护理人员定期上门打分，频率低且主观。IoT 方案可以实现连续自动评估。
+ADL 是评估老人自理能力的医学标准，基本项通常包括进食、穿衣、洗浴、如厕、移动、个人卫生。某一项持续退化（不按时吃饭、不出卧室）往往预示健康问题。传统靠护理人员定期上门打分，频率低且主观；IoT 可做连续自动评估 [5][6]。
 
 ### 3.2 传感器部署方案
 
 ```
-厨房: 水流传感器(水龙头) + 柜门传感器 + 电器功率计(微波炉/电饭煲)
+厨房: 水流传感器 + 柜门传感器 + 电器功率计
 卧室: 床压传感器 + PIR + 光照传感器
-浴室: 水流传感器 + 门磁传感器 + 温湿度传感器
-客厅: PIR + 沙发压力传感器 + 电视功率计
-大门: 门磁传感器 + 智能门锁
-药箱: 开合传感器 + 重量传感器
+浴室: 水流 + 门磁 + 温湿度
+客厅: PIR + 沙发压力 + 电视功率计
+大门: 门磁 + 智能门锁
+药箱: 开合 + 重量传感器
 ```
 
-通过这些传感器的时序组合，可以推断出日常活动模式：
-
-- 早上 7:00 起床（床压传感器释放）→ 去卫生间（PIR 触发）→ 刷牙洗脸（水流持续 3-5 分钟）→ 去厨房做早餐（电饭煲通电）
-- 如果某天早上 10:00 还没离开床，或者连续 3 天没用过厨房，系统标记为异常
+时序组合可推断模式：起床（床压释放）→ 卫生间（PIR）→ 洗漱（水流持续数分钟）→ 厨房（电饭煲通电）。若某日上午很晚仍未离床，或连续多日未进厨房，系统标记异常。
 
 ### 3.3 模式异常检测
 
 ```python
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 class ADLMonitor:
     def __init__(self):
-        self.baseline = {}  # 学习 2 周建立基线
+        self.baseline = {}  # 建议学习约 2 周建立个人基线
         self.alert_thresholds = {
-            'wake_up_delay': timedelta(hours=2),     # 比平常晚起 2 小时
-            'no_kitchen_days': 2,                     # 连续 2 天没进厨房
-            'bathroom_too_long': timedelta(minutes=45), # 卫生间待超过 45 分钟
-            'no_movement_hours': 4,                   # 白天连续 4 小时无活动
+            'wake_up_delay': timedelta(hours=2),
+            'no_kitchen_days': 2,
+            'bathroom_too_long': timedelta(minutes=45),
+            'no_movement_hours': 4,
         }
-    
+
     def check_anomaly(self, today_events):
         alerts = []
-        
-        # 检查起床时间
         wake_time = self._get_wake_time(today_events)
         if wake_time and self.baseline.get('avg_wake_time'):
             delay = wake_time - self.baseline['avg_wake_time']
@@ -155,31 +161,27 @@ class ADLMonitor:
                     'severity': 'medium',
                     'message': f'比平常晚起 {delay}',
                 })
-        
-        # 检查白天活动间隔
-        gaps = self._find_inactivity_gaps(today_events)
-        for gap in gaps:
+        for gap in self._find_inactivity_gaps(today_events):
             if gap['duration'] > self.alert_thresholds['no_movement_hours']:
                 alerts.append({
                     'type': 'prolonged_inactivity',
                     'severity': 'high',
                     'message': f'{gap["start"]}~{gap["end"]} 无活动',
                 })
-        
         return alerts
 ```
+
+阈值必须按个人基线与家属偏好配置；统一全国标准会制造告警疲劳。
 
 ## 4 生命体征非侵入式监测
 
 ### 4.1 无感知生理指标采集
 
-目标是在老人完全无感知的情况下持续监测核心生理指标：
+**睡眠期间**：床垫下压电薄膜（如 Emfit 类方案）可通过体表微振动提取心率（心冲击图 Ballistocardiography, BCG）、呼吸率、睡眠分期与离床事件；精度以产品说明书与临床对照为准，常见宣传为数 bpm / 数次每分钟量级。
 
-**睡眠期间**：床垫下放置压电薄膜传感器（如 Emfit QS），通过体表微振动提取：心率（BCG 心冲击图，精度 ±2 bpm）、呼吸率（±1 次/分钟）、睡眠分期（浅睡/深睡/REM）、离床事件。
+**日间静坐**：椅/沙发压力阵列，或毫米波雷达在约 1–2 m 距离提取呼吸与心率 [8]。
 
-**日间静坐**：椅子/沙发内嵌压力传感器阵列，提取心率和坐姿。或者用毫米波雷达（非接触式），在 1-2 米距离内提取呼吸率和心率。
-
-**厕所**：智能马桶盖（如日本 TOTO 的 Flowsky 产品原型）可以分析尿液成分，监测血糖代理指标和泌尿系统健康。
+**厕所**：智能马桶盖原型可分析尿液成分作代理指标——多数仍处产品/研究阶段，不宜当作已普及医疗诊断。
 
 ### 4.2 异常预警逻辑
 
@@ -189,36 +191,29 @@ class VitalSignsAlert:
         'heart_rate': {'low': 50, 'high': 120, 'unit': 'bpm'},
         'resp_rate': {'low': 10, 'high': 25, 'unit': '次/min'},
         'spo2': {'low': 90, 'high': 100, 'unit': '%'},
-        'hr_variability_drop': 30,  # HRV 下降超过 30% 预警
+        'hr_variability_drop': 0.3,
     }
-    
+
     def evaluate(self, vitals, baseline):
         risk_score = 0
-        
         if vitals['heart_rate'] > self.THRESHOLDS['heart_rate']['high']:
-            risk_score += 3  # 心动过速
+            risk_score += 3
         if vitals['heart_rate'] < self.THRESHOLDS['heart_rate']['low']:
-            risk_score += 4  # 心动过缓更危险
-        
-        # HRV 趋势分析 —— 连续 3 天 HRV 下降可能预示感染
+            risk_score += 4
         hrv_change = (vitals['hrv'] - baseline['hrv_7day_avg']) / baseline['hrv_7day_avg']
-        if hrv_change < -0.3:
+        if hrv_change < -self.THRESHOLDS['hr_variability_drop']:
             risk_score += 2
-        
-        # risk_score >= 5 自动通知家属
-        # risk_score >= 8 自动拨打 120
+        # 分数阈值需临床顾问与家属共同设定；示例：>=5 通知家属，>=8 拨打急救
         return risk_score
 ```
 
+上述阈值仅为工程示意，不能替代医嘱。
+
 ## 5 用药提醒与依从性追踪
 
-### 5.1 系统架构
+老年人常见多重用药；WHO 等材料指出慢性病用药依从性整体不理想，老年人群依从率常被概括为约半数量级，具体因病种与地区差异大 [1]。
 
-老年人常见多重用药（平均每人 5-8 种药），漏服或重复服药都是严重问题。WHO 统计老年人用药依从率只有约 50%。
-
-智能药盒方案：每个药格装有微型称重传感器 + LED 指示灯 + 蜂鸣器。到服药时间，对应药格 LED 闪烁 + 蜂鸣提醒。老人取出药物后，重量变化确认已取药。如果 30 分钟未取药，通知家属。如果同一药格短时间内被打开两次（可能重复服药），立即报警。
-
-### 5.2 通信链路
+智能药盒：药格称重 + LED + 蜂鸣。到点提醒；重量变化确认取药；超时通知家属；短时重复开合可提示可能重复服药。
 
 ```
 药盒(BLE) → 床头网关(WiFi) → 云端
@@ -230,88 +225,105 @@ class VitalSignsAlert:
                         仍未响应 → 通知社区工作者
 ```
 
+蓝牙低功耗（Bluetooth Low Energy, BLE）链路需考虑网关掉线与老人拒接电话时的升级策略。
+
 ## 6 隐私保护与系统设计
 
 ### 6.1 隐私分级框架
 
-居家看护最大的非技术障碍是隐私。很多老人和家属对"被监控"有强烈抵触情绪。需要建立分级框架：
+| 隐私等级 | 传感器类型 | 采集信息 | 用户接受度（示意） |
+|----------|-----------|----------|-------------------|
+| L1 低侵入 | 门磁、PIR、功率计 | 只知"有活动" | 高 |
+| L2 中等 | 加速度计、雷达 | 知"在做什么"类推断 | 中 |
+| L3 高侵入 | 摄像头、麦克风 | 看到/听到具体内容 | 低 |
 
-| 隐私等级 | 传感器类型 | 采集的信息 | 用户接受度 |
-|----------|-----------|-----------|-----------|
-| L1 低侵入 | 门磁、PIR、功率计 | 只知道"有活动" | 高（>90%） |
-| L2 中等 | 加速度计、雷达 | 知道"在做什么" | 中（60-80%） |
-| L3 高侵入 | 摄像头、麦克风 | 看到/听到具体内容 | 低（<30%） |
-
-设计原则：**能用 L1 就不用 L2，能用 L2 就不用 L3**。
+原则：**能用 L1 不用 L2，能用 L2 不用 L3** [6]。
 
 ### 6.2 边缘计算保隐私
 
-即使使用摄像头，也可以通过边缘 AI 保护隐私——原始视频在本地处理，只上传分析结果：
+即使使用摄像头，也可在边缘做姿态估计，只上传结构化结果：
 
 ```python
-# 边缘设备上运行（如 Jetson Nano）
-import cv2
-
-def process_frame_locally(frame):
-    """
-    原始视频帧绝不离开本地设备
-    只上传结构化结果
-    """
-    # 姿态检测（骨架提取）
+def process_frame_locally(frame, pose_model, fall_detector):
+    """原始视频帧不离开本地；只上传结构化结果"""
     skeleton = pose_model.detect(frame)
-    
-    # 跌倒判断（基于骨架而非原始图像）
     is_fallen = fall_detector.predict(skeleton)
-    
-    # 上传的只有：时间戳 + 是否跌倒 + 骨架坐标
-    # 没有任何原始图像
-    result = {
+    return {
         'timestamp': time.time(),
         'fallen': is_fallen,
-        'skeleton': skeleton.tolist(),  # 只有关节点坐标
+        'skeleton': skeleton.tolist(),
     }
-    return result
 ```
+
+骨架坐标仍可能被重建为行为轨迹，需配合访问控制、留存期限与知情同意。
 
 ## 7 商用系统与实践建议
 
-### 7.1 主流商用产品对比
+### 7.1 主流商用产品对比（公开材料摘要）
 
-| 产品 | 核心技术 | 特点 | 价格区间 |
-|------|----------|------|----------|
-| CarePredict Tempo | 腕带+BLE信标 | ADL 自动识别，抑郁检测 | $500+/月（机构） |
-| Vayyar Home | 毫米波雷达 | 无穿戴跌倒检测，安装即用 | $300 一次性 |
-| Lively (GreatCall) | 紧急按钮+活动传感器 | 简单易用，老人接受度高 | $25/月 |
-| Apple Watch Ultra | IMU+心率+血氧 | 跌倒检测+ECG+SOS | 约 5,999 元 |
-| 华为穿戴设备 | IMU+心率+血氧 | 中文生态好，价格合理 | 1,000-2,500 元 |
+| 产品 | 核心技术 | 特点 | 价格口径（示意） |
+|------|----------|------|------------------|
+| CarePredict Tempo | 腕带 + BLE 信标 | ADL 识别等 | 机构订阅制 [4] |
+| Vayyar Home | 毫米波雷达 | 无穿戴跌倒检测 | 一次性硬件 [3] |
+| Lively 等 | 紧急按钮 + 活动传感 | 简单易用 | 月费制 |
+| Apple Watch 等 | IMU + 心率 + 血氧 | 跌倒检测 + SOS | 消费级手表价 [7] |
+| 国产穿戴 | IMU + 心率 + 血氧 | 中文生态 | 千元级 |
+
+价格与功能随型号与地区变化快，采购前以厂商报价与本地售后为准。
 
 ### 7.2 初学者入门路径
 
-1. **第一步**：用 Arduino Nano + MPU6050（加速度计/陀螺仪）做一个最简跌倒检测原型，阈值算法即可
-2. **第二步**：加入 BLE 通信（ESP32），把数据发到手机 APP
-3. **第三步**：收集真实数据（让家人模拟日常活动 + 跌倒），训练 ML 模型替代阈值
-4. **第四步**：增加环境传感器（门磁、PIR），实现简单的 ADL 识别
-5. **进阶**：尝试毫米波雷达方案（TI IWR6843 评估板），对比穿戴 vs 非穿戴方案的优劣
+1. Arduino/ESP32 + MPU6050 做阈值跌倒检测原型
+2. 加入 BLE，推送到手机
+3. 用家人模拟数据训练 ML，替代阈值
+4. 增加门磁/PIR，做简单 ADL
+5. 进阶：毫米波评估板，对比穿戴 vs 非穿戴
 
-### 7.3 部署调优建议
+### 7.3 部署调优
 
-**传感器布局**：PIR 传感器避免对着窗户（阳光直射会误触发），门磁传感器用 3M 胶粘贴（不破坏装修），床压传感器放在床垫下方（完全无感知）。
+- **布局**：PIR 避免对窗；门磁用胶粘；床压放床垫下
+- **告警分级**：轻度延迟通知，中度立即通知家属，重度跌倒直连急救 + 家属；告警疲劳是系统失败主因
+- **基线**：至少约 2 周学习期
+- **电源**：门磁/PIR 纽扣电池可撑较长时间；手环需定期充电——尽量减少要老人操心的设备
 
-**告警策略**：不要一有异常就报警，设置分级延迟——轻度异常（起床晚了 1 小时）等 30 分钟再通知；中度异常（4 小时无活动）立即通知家属；重度异常（跌倒检测触发）直接拨打 120 + 通知家属。告警疲劳是系统失败的主因——如果每天都收到 5 条"误报"，家属很快就会关掉通知。
+## 局限、挑战与可改进方向
 
-**数据基线**：系统需要至少 2 周的"学习期"来建立个人基线。每个老人的作息不同，不能用统一标准。
+### 1. 实验室准确率难迁移到真实居家
 
-**电源方案**：门磁/PIR 用纽扣电池可以撑 1-2 年；加速度计手环每周充一次；床压传感器用 USB 供电。尽量减少需要老人操心充电的设备。
+**局限**：SisFall 等数据集上的 95%+ 准确率，在真实居家因佩戴依从性、类跌倒动作与个体差异显著下降 [2][9]。
+**改进**：用目标用户家庭做前瞻性验收；报告灵敏度/特异度/误报率而非单一准确率；穿戴与雷达互补。
+
+### 2. 告警疲劳导致通知被关闭
+
+**局限**：阈值过松或基线未个性化时，家属每天收到多条误报后关闭推送。
+**改进**：分级延迟与确认窗口；按个人基线自适应阈值；对"已确认误报"做在线负反馈。
+
+### 3. 隐私与伦理接受度不足
+
+**局限**：摄像头方案准确但接受度低；即使边缘只传骨架，仍可能泄露行为模式 [6]。
+**改进**：默认 L1/L2；摄像头仅作可选增强并本地处理；书面知情同意与数据最短留存。
+
+### 4. 急救链路不可靠
+
+**局限**：WiFi/手机欠费、老人拒接、社区无人响应时，告警无法闭环。
+**改进**：双通道通信（蜂窝备份）；明确升级矩阵（家属→社区→120）；定期演练与心跳自检。
+
+### 5. 医疗声明与产品合规边界模糊
+
+**局限**：消费级设备若暗示"诊断/急救替代"，可能触及医疗器械监管。
+**改进**：文案区分健康提示与医疗诊断；高风险功能走合规路径；与社区医疗协议绑定责任边界。
 
 ## 参考文献
 
-1. WHO. Falls - Key Facts. World Health Organization, 2024.
-2. Mauldin T, Canby M, et al. SmartFall: A Smartwatch-Based Fall Detection System Using Deep Learning. Sensors, 2018, 18(10): 3363.
-3. Vayyar. Walabot HOME Fall Detection Technology White Paper. 2023.
-4. CarePredict. Tempo AI-Powered Senior Care Platform Technical Overview. 2024.
-5. Kaye J, et al. Intelligent Systems for Assessing Aging Changes (ISAAC). IEEE Pervasive Computing, 2011.
-6. Rashidi P, Mihailidis A. A Survey on Ambient-Assisted Living Tools for Older Adults. IEEE JBHI, 2013, 17(3): 579-590.
-7. Apple. Fall Detection and Emergency SOS on Apple Watch. Apple Support, 2024.
-8. Texas Instruments. IWR6843 Single-Chip mmWave Sensor for Vital Signs Monitoring. Application Note, 2023.
-9. Patel S, et al. A Review of Wearable Sensors and Systems for Monitoring and Detection of Falls. Biomedical Engineering Online, 2012, 11: 27.
-10. 国家统计局. 第七次全国人口普查主要数据. 2024 年更新.
+[1] WHO, "Falls: Key Facts," World Health Organization, 2024.
+[2] T. Mauldin et al., "SmartFall: A Smartwatch-Based Fall Detection System Using Deep Learning," Sensors, vol. 18, no. 10, 2018.
+[3] Vayyar, "Walabot HOME Fall Detection Technology White Paper," 2023.
+[4] CarePredict, "Tempo AI-Powered Senior Care Platform Technical Overview," 2024.
+[5] J. Kaye et al., "Intelligent Systems for Assessing Aging Changes (ISAAC)," IEEE Pervasive Computing, 2011.
+[6] P. Rashidi and A. Mihailidis, "A Survey on Ambient-Assisted Living Tools for Older Adults," IEEE JBHI, vol. 17, no. 3, 2013.
+[7] Apple, "Fall Detection and Emergency SOS on Apple Watch," Apple Support, 2024.
+[8] Texas Instruments, "IWR6843 Single-Chip mmWave Sensor for Vital Signs Monitoring," Application Note, 2023.
+[9] S. Patel et al., "A Review of Wearable Sensors and Systems for Monitoring and Detection of Falls," Biomedical Engineering Online, vol. 11, 2012.
+[10] 国家统计局, "第七次全国人口普查主要数据," 更新材料, 2024.
+[11] Emfit, "QS Sleep Tracker Technical Overview," Product Documentation, 2023.
+[12] M. Mubashir et al., "A Survey on Fall Detection: Principles and Approaches," Neurocomputing, vol. 100, 2013.
