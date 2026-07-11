@@ -1,0 +1,30 @@
+schema_version: "1.0"
+review_id: review-20260711-semantic-author-auditor-overlap
+content_id: 5g-mmtc-massive-iot-connection
+content_path: docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
+body_sha256: 244c184a66f32c3ed9a294cc4471386f43afc7942198ef699d209034f00ebbee
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-content-approver
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-11T09:20:00Z'
+linked_audit_ids:
+  - audit-20260711-claim-unverified-verified
+review_checks:
+  - check_id: evidence-traceable
+    result: PASS
+    evidence: Declared author and fact-auditor identities must be disjoint.
+independence:
+  author_ids:
+    - human-fact-auditor
+  linked_auditor_ids:
+    - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: A fact auditor cannot also be the declared content author.
+supersedes: review-20260711-start-review
+revocation: null

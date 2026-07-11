@@ -1,0 +1,30 @@
+schema_version: "1.0"
+review_id: review-20260711-request-changes
+content_id: 5g-mmtc-massive-iot-connection
+content_path: docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
+body_sha256: 244c184a66f32c3ed9a294cc4471386f43afc7942198ef699d209034f00ebbee
+decision: REQUEST_CHANGES
+status_transition:
+  from: IN_REVIEW
+  to: NEEDS_CHANGES
+source_status_at_review: PARTIAL
+reviewer_id: human-content-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-11T09:15:00Z'
+linked_audit_ids:
+  - audit-20260711-claim-unverified-partial
+review_checks:
+  - check_id: critical-claims-complete
+    result: FAIL
+    evidence: A critical latency claim remains unverified.
+independence:
+  author_ids:
+    - human-content-author
+  linked_auditor_ids:
+    - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: Review requests changes instead of overclaiming approval.
+supersedes: review-20260711-start-review
+revocation: null

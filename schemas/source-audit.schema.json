@@ -1,0 +1,800 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://estelledc.github.io/iot/schemas/source-audit.schema.json",
+  "title": "IoT Reading Station source audit record",
+  "description": "Immutable evidence record for structural or claim-level source audits. Frontmatter source_status is a derived cache, not approval evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audit_id",
+    "content_id",
+    "content_path",
+    "body_sha256",
+    "audit_kind",
+    "outcome",
+    "status_transition",
+    "auditor_id",
+    "auditor_type",
+    "auditor_role",
+    "audited_at",
+    "source_references",
+    "structural_checks",
+    "claim_coverage",
+    "notes",
+    "supersedes",
+    "revocation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "audit_id": {
+      "type": "string",
+      "pattern": "^audit-[0-9]{8}-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "content_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "content_path": {
+      "$ref": "#/$defs/content_path"
+    },
+    "body_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "audit_kind": {
+      "enum": [
+        "STRUCTURAL",
+        "CLAIM_VERIFICATION"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "AUDITABLE",
+        "PARTIAL",
+        "VERIFIED",
+        "NEEDS_CHANGES",
+        "ERROR"
+      ]
+    },
+    "status_transition": {
+      "$ref": "#/$defs/source_status_transition"
+    },
+    "auditor_id": {
+      "type": "string",
+      "pattern": "^(human|agent)-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "auditor_type": {
+      "enum": [
+        "HUMAN",
+        "AGENT"
+      ]
+    },
+    "auditor_role": {
+      "enum": [
+        "STRUCTURAL_AUDITOR",
+        "FACT_AUDITOR"
+      ]
+    },
+    "audited_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_references": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source_reference"
+      },
+      "uniqueItems": true
+    },
+    "structural_checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/structural_check"
+      },
+      "uniqueItems": true
+    },
+    "claim_coverage": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/claim_coverage"
+        }
+      ]
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "supersedes": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+        "type": "string",
+        "pattern": "^audit-[0-9]{8}-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        }
+      ]
+    },
+    "revocation": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/revocation"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "audit_kind": {
+            "const": "STRUCTURAL"
+          }
+        },
+        "required": [
+          "audit_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "outcome": {
+            "enum": [
+              "AUDITABLE",
+              "NEEDS_CHANGES",
+              "ERROR"
+            ]
+          },
+          "auditor_role": {
+            "const": "STRUCTURAL_AUDITOR"
+          },
+          "structural_checks": {
+            "minItems": 1
+          },
+          "claim_coverage": {
+            "type": "null"
+          },
+          "status_transition": {
+            "$ref": "#/$defs/source_noop_transition"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "audit_kind": {
+            "const": "CLAIM_VERIFICATION"
+          }
+        },
+        "required": [
+          "audit_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "outcome": {
+            "enum": [
+              "PARTIAL",
+              "VERIFIED",
+              "NEEDS_CHANGES",
+              "ERROR"
+            ]
+          },
+          "auditor_role": {
+            "const": "FACT_AUDITOR"
+          },
+          "source_references": {
+            "minItems": 1
+          },
+          "structural_checks": {
+            "maxItems": 0
+          },
+          "claim_coverage": {
+            "$ref": "#/$defs/claim_coverage"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "audit_kind": {
+            "const": "CLAIM_VERIFICATION"
+          },
+          "outcome": {
+            "const": "PARTIAL"
+          }
+        },
+        "required": [
+          "audit_kind",
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status_transition": {
+            "$ref": "#/$defs/source_to_partial_transition"
+          },
+          "claim_coverage": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/claim_coverage"
+              },
+              {
+                "properties": {
+                  "scope": {
+                    "const": "PARTIAL"
+                  },
+                "claims": {
+                  "items": {
+                    "properties": {
+                      "result": {
+                        "enum": [
+                          "VERIFIED",
+                          "UNVERIFIED"
+                        ]
+                      }
+                    }
+                  },
+                  "contains": {
+                    "properties": {
+                        "result": {
+                          "const": "VERIFIED"
+                        }
+                      },
+                      "required": [
+                        "result"
+                      ]
+                    },
+                    "minContains": 1
+                  },
+                  "uncovered_claim_ids": {
+                    "minItems": 1
+                  },
+                  "blocking_issue_ids": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "audit_kind": {
+            "const": "CLAIM_VERIFICATION"
+          },
+          "outcome": {
+            "const": "VERIFIED"
+          }
+        },
+        "required": [
+          "audit_kind",
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "auditor_id": {
+            "type": "string",
+            "pattern": "^human-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "auditor_type": {
+            "const": "HUMAN"
+          },
+          "status_transition": {
+            "$ref": "#/$defs/source_to_verified_transition"
+          },
+          "claim_coverage": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/claim_coverage"
+              },
+              {
+                "properties": {
+                  "scope": {
+                    "const": "ALL_CRITICAL_CLAIMS"
+                  },
+                  "claims": {
+                    "minItems": 1,
+                    "items": {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/claim_result"
+                        },
+                        {
+                          "properties": {
+                            "result": {
+                              "const": "VERIFIED"
+                            },
+                            "reference_ids": {
+                              "minItems": 1
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "uncovered_claim_ids": {
+                    "maxItems": 0
+                  },
+                  "blocking_issue_ids": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "audit_kind": {
+            "const": "CLAIM_VERIFICATION"
+          },
+          "outcome": {
+            "enum": [
+              "NEEDS_CHANGES",
+              "ERROR"
+            ]
+          }
+        },
+        "required": [
+          "audit_kind",
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status_transition": {
+            "$ref": "#/$defs/source_noop_transition"
+          },
+          "claim_coverage": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/claim_coverage"
+              },
+              {
+                "properties": {
+                  "blocking_issue_ids": {
+                    "minItems": 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "audit_kind": { "const": "STRUCTURAL" },
+          "outcome": { "const": "AUDITABLE" }
+        },
+        "required": ["audit_kind", "outcome"]
+      },
+      "then": {
+        "properties": {
+          "structural_checks": {
+            "items": {
+              "allOf": [
+                { "$ref": "#/$defs/structural_check" },
+                { "properties": { "result": { "const": "PASS" } } }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "audit_kind": { "const": "STRUCTURAL" },
+          "outcome": { "const": "NEEDS_CHANGES" }
+        },
+        "required": ["audit_kind", "outcome"]
+      },
+      "then": {
+        "properties": {
+          "structural_checks": {
+            "contains": {
+              "properties": { "result": { "const": "FAIL" } },
+              "required": ["result"]
+            },
+            "minContains": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "audit_kind": { "const": "STRUCTURAL" },
+          "outcome": { "const": "ERROR" }
+        },
+        "required": ["audit_kind", "outcome"]
+      },
+      "then": {
+        "properties": {
+          "structural_checks": {
+            "contains": {
+              "properties": { "result": { "const": "ERROR" } },
+              "required": ["result"]
+            },
+            "minContains": 1
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "content_path": {
+      "type": "string",
+      "pattern": "^docs/(foundation|connectivity|network|computing|intelligence|security|applications|frontier)/papers/[a-z0-9]+(?:-[a-z0-9]+)*\\.md$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_status": {
+      "enum": [
+        "UNKNOWN",
+        "UNVERIFIED",
+        "PARTIAL",
+        "VERIFIED"
+      ]
+    },
+    "source_status_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/source_status"
+        },
+        "to": {
+          "$ref": "#/$defs/source_status"
+        }
+      }
+    },
+    "source_noop_transition": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/source_unknown_noop"
+        },
+        {
+          "$ref": "#/$defs/source_unverified_noop"
+        },
+        {
+          "$ref": "#/$defs/source_partial_noop"
+        },
+        {
+          "$ref": "#/$defs/source_verified_noop"
+        }
+      ]
+    },
+    "source_unknown_noop": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source_status_transition"
+        },
+        {
+          "properties": {
+            "from": {
+              "const": "UNKNOWN"
+            },
+            "to": {
+              "const": "UNKNOWN"
+            }
+          }
+        }
+      ]
+    },
+    "source_unverified_noop": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source_status_transition"
+        },
+        {
+          "properties": {
+            "from": {
+              "const": "UNVERIFIED"
+            },
+            "to": {
+              "const": "UNVERIFIED"
+            }
+          }
+        }
+      ]
+    },
+    "source_partial_noop": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source_status_transition"
+        },
+        {
+          "properties": {
+            "from": {
+              "const": "PARTIAL"
+            },
+            "to": {
+              "const": "PARTIAL"
+            }
+          }
+        }
+      ]
+    },
+    "source_verified_noop": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source_status_transition"
+        },
+        {
+          "properties": {
+            "from": {
+              "const": "VERIFIED"
+            },
+            "to": {
+              "const": "VERIFIED"
+            }
+          }
+        }
+      ]
+    },
+    "source_to_partial_transition": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source_status_transition"
+        },
+        {
+          "properties": {
+            "from": {
+              "enum": [
+                "UNKNOWN",
+                "UNVERIFIED",
+                "PARTIAL"
+              ]
+            },
+            "to": {
+              "const": "PARTIAL"
+            }
+          }
+        }
+      ]
+    },
+    "source_to_verified_transition": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source_status_transition"
+        },
+        {
+          "properties": {
+            "from": {
+              "enum": [
+                "UNKNOWN",
+                "UNVERIFIED",
+                "PARTIAL",
+                "VERIFIED"
+              ]
+            },
+            "to": {
+              "const": "VERIFIED"
+            }
+          }
+        }
+      ]
+    },
+    "source_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference_id",
+        "uri",
+        "snapshot_sha256",
+        "retrieved_at"
+      ],
+      "properties": {
+      "reference_id": {
+        "type": "string",
+        "pattern": "^src-[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "uri": {
+        "type": "string",
+        "format": "uri",
+        "pattern": "^https://"
+        },
+        "snapshot_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "structural_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "result",
+        "evidence"
+      ],
+      "properties": {
+        "check_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "ERROR"
+          ]
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "claim_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "result",
+        "reference_ids",
+        "notes"
+      ],
+      "properties": {
+      "claim_id": {
+        "type": "string",
+        "pattern": "^claim-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "result": {
+          "enum": [
+            "VERIFIED",
+            "UNVERIFIED",
+            "BLOCKED"
+          ]
+        },
+      "reference_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^src-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "const": "VERIFIED"
+              }
+            },
+            "required": [
+              "result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reference_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "claim_coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "claims",
+        "uncovered_claim_ids",
+        "blocking_issue_ids"
+      ],
+      "properties": {
+        "scope": {
+          "enum": [
+            "PARTIAL",
+            "ALL_CRITICAL_CLAIMS"
+          ]
+        },
+        "claims": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/claim_result"
+          },
+          "uniqueItems": true
+        },
+      "uncovered_claim_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^claim-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+      "blocking_issue_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^issue-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "revocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revoked_at",
+        "by_actor_id",
+        "by_actor_type",
+        "by_role",
+        "reason_code",
+        "reason"
+      ],
+      "properties": {
+        "revoked_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+      "by_actor_id": {
+        "type": "string",
+        "pattern": "^human-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "by_actor_type": {
+          "const": "HUMAN"
+        },
+        "by_role": {
+          "const": "GOVERNANCE_REVIEWER"
+        },
+        "reason_code": {
+          "enum": [
+            "BODY_CHANGED",
+            "SOURCE_INVALIDATED",
+            "AUDIT_ERROR",
+            "POLICY_VIOLATION",
+            "OTHER"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

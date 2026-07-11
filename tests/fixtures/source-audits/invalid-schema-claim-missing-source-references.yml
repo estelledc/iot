@@ -1,0 +1,34 @@
+schema_version: "1.0"
+audit_id: audit-20260711-invalid-missing-sources
+content_id: 5g-mmtc-massive-iot-connection
+content_path: docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
+body_sha256: 244c184a66f32c3ed9a294cc4471386f43afc7942198ef699d209034f00ebbee
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-11T08:20:00Z'
+source_references: []
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+    - claim_id: claim-mmtc-density
+      result: VERIFIED
+      reference_ids:
+        - src-3gpp-mmtc
+      notes: The primary source supports this critical claim.
+    - claim_id: claim-mmtc-latency
+      result: VERIFIED
+      reference_ids:
+        - src-3gpp-mmtc
+      notes: The primary source supports this critical claim.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: All critical claims are verified with no uncovered or blocking items.
+supersedes: null
+revocation: null

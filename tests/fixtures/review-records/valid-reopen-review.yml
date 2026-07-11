@@ -1,0 +1,30 @@
+schema_version: "1.0"
+review_id: review-20260711-reopen-review
+content_id: 5g-mmtc-massive-iot-connection
+content_path: docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
+body_sha256: 244c184a66f32c3ed9a294cc4471386f43afc7942198ef699d209034f00ebbee
+decision: START_REVIEW
+status_transition:
+  from: HUMAN_APPROVED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-content-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-11T09:10:00Z'
+linked_audit_ids:
+  - audit-20260711-claim-unverified-verified
+review_checks:
+  - check_id: reopen-reason-recorded
+    result: PASS
+    evidence: A new review is required after a policy change.
+independence:
+  author_ids:
+    - human-content-author
+  linked_auditor_ids:
+    - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: Reopens a previously approved item while preserving history.
+supersedes: review-20260710-approved-prior
+revocation: null

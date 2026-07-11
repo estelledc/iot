@@ -1,0 +1,442 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://estelledc.github.io/iot/schemas/review-record.schema.json",
+  "title": "IoT Reading Station review record",
+  "description": "Immutable review decision record. HUMAN_APPROVED requires an independent human approver and current VERIFIED source evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "review_id",
+    "content_id",
+    "content_path",
+    "body_sha256",
+    "decision",
+    "status_transition",
+    "source_status_at_review",
+    "reviewer_id",
+    "reviewer_type",
+    "reviewer_role",
+    "reviewed_at",
+    "linked_audit_ids",
+    "review_checks",
+    "independence",
+    "notes",
+    "supersedes",
+    "revocation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "review_id": {
+      "type": "string",
+      "pattern": "^review-[0-9]{8}-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "content_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "content_path": {
+      "$ref": "#/$defs/content_path"
+    },
+    "body_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "decision": {
+      "enum": [
+        "START_REVIEW",
+        "REQUEST_CHANGES",
+        "APPROVE"
+      ]
+    },
+    "status_transition": {
+      "$ref": "#/$defs/review_status_transition"
+    },
+    "source_status_at_review": {
+      "$ref": "#/$defs/source_status"
+    },
+    "reviewer_id": {
+      "type": "string",
+      "pattern": "^human-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "reviewer_type": {
+      "const": "HUMAN"
+    },
+    "reviewer_role": {
+      "enum": [
+        "REVIEWER",
+        "APPROVER"
+      ]
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "linked_audit_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^audit-[0-9]{8}-[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "uniqueItems": true
+    },
+    "review_checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/review_check"
+      },
+      "uniqueItems": true
+    },
+    "independence": {
+      "$ref": "#/$defs/independence"
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "supersedes": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+        "type": "string",
+        "pattern": "^review-[0-9]{8}-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        }
+      ]
+    },
+    "revocation": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/revocation"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "START_REVIEW"
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status_transition": {
+            "$ref": "#/$defs/start_review_transition"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "REQUEST_CHANGES"
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status_transition": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/review_status_transition"
+              },
+              {
+                "properties": {
+                  "from": {
+                    "const": "IN_REVIEW"
+                  },
+                  "to": {
+                    "const": "NEEDS_CHANGES"
+                  }
+                }
+              }
+            ]
+          },
+          "review_checks": {
+            "contains": {
+              "properties": {
+                "result": {
+                  "const": "FAIL"
+                }
+              },
+              "required": [
+                "result"
+              ]
+            },
+            "minContains": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "APPROVE"
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status_transition": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/review_status_transition"
+              },
+              {
+                "properties": {
+                  "from": {
+                    "const": "IN_REVIEW"
+                  },
+                  "to": {
+                    "const": "HUMAN_APPROVED"
+                  }
+                }
+              }
+            ]
+          },
+          "source_status_at_review": {
+            "const": "VERIFIED"
+          },
+          "reviewer_type": {
+            "const": "HUMAN"
+          },
+          "reviewer_role": {
+            "const": "APPROVER"
+          },
+          "linked_audit_ids": {
+            "minItems": 1
+          },
+          "review_checks": {
+            "minItems": 1,
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/review_check"
+                },
+                {
+                  "properties": {
+                    "result": {
+                      "const": "PASS"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "independence": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/independence"
+              },
+              {
+                "properties": {
+                  "author_ids": {
+                    "minItems": 1
+                  },
+                  "linked_auditor_ids": {
+                    "minItems": 1
+                  },
+                  "reviewer_is_author": {
+                    "const": false
+                  },
+                  "reviewer_is_linked_auditor": {
+                    "const": false
+                  }
+                }
+              }
+            ]
+          },
+          "supersedes": {
+            "$ref": "#/$defs/identifier"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "content_path": {
+      "type": "string",
+      "pattern": "^docs/(foundation|connectivity|network|computing|intelligence|security|applications|frontier)/papers/[a-z0-9]+(?:-[a-z0-9]+)*\\.md$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_status": {
+      "enum": [
+        "UNKNOWN",
+        "UNVERIFIED",
+        "PARTIAL",
+        "VERIFIED"
+      ]
+    },
+    "review_status": {
+      "enum": [
+        "UNKNOWN",
+        "UNREVIEWED",
+        "IN_REVIEW",
+        "HUMAN_APPROVED",
+        "NEEDS_CHANGES"
+      ]
+    },
+    "review_status_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/review_status"
+        },
+        "to": {
+          "$ref": "#/$defs/review_status"
+        }
+      }
+    },
+    "start_review_transition": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/review_status_transition"
+        },
+        {
+          "properties": {
+            "from": {
+              "enum": [
+                "UNKNOWN",
+                "UNREVIEWED",
+                "NEEDS_CHANGES",
+                "HUMAN_APPROVED"
+              ]
+            },
+            "to": {
+              "const": "IN_REVIEW"
+            }
+          }
+        }
+      ]
+    },
+    "review_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "result",
+        "evidence"
+      ],
+      "properties": {
+        "check_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "independence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "author_ids",
+        "linked_auditor_ids",
+        "reviewer_is_author",
+        "reviewer_is_linked_auditor"
+      ],
+      "properties": {
+      "author_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^(human|agent)-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+      "linked_auditor_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^(human|agent)-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+        "reviewer_is_author": {
+          "type": "boolean"
+        },
+        "reviewer_is_linked_auditor": {
+          "type": "boolean"
+        }
+      }
+    },
+    "revocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revoked_at",
+        "by_actor_id",
+        "by_actor_type",
+        "by_role",
+        "reason_code",
+        "reason"
+      ],
+      "properties": {
+        "revoked_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+      "by_actor_id": {
+        "type": "string",
+        "pattern": "^human-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "by_actor_type": {
+          "const": "HUMAN"
+        },
+        "by_role": {
+          "const": "GOVERNANCE_REVIEWER"
+        },
+        "reason_code": {
+          "enum": [
+            "BODY_CHANGED",
+            "SOURCE_INVALIDATED",
+            "REVIEW_ERROR",
+            "POLICY_VIOLATION",
+            "OTHER"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}
