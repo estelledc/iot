@@ -1,0 +1,111 @@
+ROADMAP.md
+  s_36ac19229f6828::t_5da0cb96428753 122,124
+data/content-enums.yml
+  s_36ac19229f6828::t_ad889d939e9b2c 32-150
+docs/content-schema.md
+  s_36ac19229f6828::t_e8df7926992d44 40-81
+docs/superpowers/plans/2026-07-10-m2-trust-baseline.md
+  s_36ac19229f6828::t_164647ead09a16 3-4
+schemas/review-record.schema.json
+  s_36ac19229f6828::t_fd9bd2c472fc6c 1-442
+schemas/source-audit.schema.json
+  s_36ac19229f6828::t_8e15ef85479f44 1-800
+tests/fixtures/review-records/invalid-schema-agent-approver.yml
+  s_36ac19229f6828::t_e718c7c635f30e 1-33
+tests/fixtures/review-records/invalid-schema-approve-failed-check.yml
+  s_36ac19229f6828::t_36053204827da5 1-33
+tests/fixtures/review-records/invalid-schema-approve-missing-independence.yml
+  s_36ac19229f6828::t_59a06c4918fe03 1-26
+tests/fixtures/review-records/invalid-schema-approve-missing-linked-audits.yml
+  s_36ac19229f6828::t_a460cc6250c698 1-32
+tests/fixtures/review-records/invalid-schema-direct-approve.yml
+  s_36ac19229f6828::t_561db19e2a1716 1-33
+tests/fixtures/review-records/invalid-schema-non-approver.yml
+  s_36ac19229f6828::t_70161d965f9f85 1-33
+tests/fixtures/review-records/invalid-schema-partial-approve.yml
+  s_36ac19229f6828::t_b6d25679dea397 1-33
+tests/fixtures/review-records/invalid-schema-revocation-missing-reason.yml
+  s_36ac19229f6828::t_cf9d61fce45cb8 1-35
+tests/fixtures/review-records/semantic-invalid-author-auditor-overlap.yml
+  s_36ac19229f6828::t_0f82f2a89737fd 1-30
+tests/fixtures/review-records/semantic-invalid-body-hash-mismatch.yml
+  s_36ac19229f6828::t_a1e33b474fbc63 1-33
+tests/fixtures/review-records/semantic-invalid-dangling-audit.yml
+  s_36ac19229f6828::t_5225fa95e837ab 1-33
+tests/fixtures/review-records/semantic-invalid-dangling-review.yml
+  s_36ac19229f6828::t_0c19332f70c1e2 1-30
+tests/fixtures/review-records/semantic-invalid-linked-auditor-approval.yml
+  s_36ac19229f6828::t_a6df372dda77a6 1-33
+tests/fixtures/review-records/semantic-invalid-linked-auditor-set-mismatch.yml
+  s_36ac19229f6828::t_5ce70f09111962 1-33
+tests/fixtures/review-records/semantic-invalid-self-approval.yml
+  s_36ac19229f6828::t_9adcb16eb60b01 1-33
+tests/fixtures/review-records/semantic-invalid-time-order.yml
+  s_36ac19229f6828::t_e362a6f8635d32 1-36
+tests/fixtures/review-records/valid-human-approved.yml
+  s_36ac19229f6828::t_4910eda6af50a3 1-33
+tests/fixtures/review-records/valid-reopen-review.yml
+  s_36ac19229f6828::t_39671439e36507 1-30
+tests/fixtures/review-records/valid-request-changes.yml
+  s_36ac19229f6828::t_fee72d75da7f31 1-30
+tests/fixtures/review-records/valid-revoked.yml
+  s_36ac19229f6828::t_956ac1adc7f8b8 1-36
+tests/fixtures/review-records/valid-start-review.yml
+  s_36ac19229f6828::t_90405ef09c0caf 1-28
+tests/fixtures/source-audits/invalid-schema-claim-missing-coverage.yml
+  s_36ac19229f6828::t_e984032acbe6c4 1-23
+tests/fixtures/source-audits/invalid-schema-claim-missing-source-references.yml
+  s_36ac19229f6828::t_62c837a12e275b 1-34
+tests/fixtures/source-audits/invalid-schema-revocation-missing-reason.yml
+  s_36ac19229f6828::t_a92b5d0e76c72e 1-38
+tests/fixtures/source-audits/invalid-schema-structural-to-partial.yml
+  s_36ac19229f6828::t_4f763e21831817 1-23
+tests/fixtures/source-audits/invalid-schema-structural-verified.yml
+  s_36ac19229f6828::t_7e68b06e05cba8 1-23
+tests/fixtures/source-audits/invalid-schema-verified-blocking.yml
+  s_36ac19229f6828::t_ef9cb031cd05f9 1-39
+tests/fixtures/source-audits/invalid-schema-verified-uncovered.yml
+  s_36ac19229f6828::t_f0a512ea93bf77 1-39
+tests/fixtures/source-audits/semantic-invalid-body-hash-mismatch.yml
+  s_36ac19229f6828::t_bd2ddef0c92377 1-38
+tests/fixtures/source-audits/semantic-invalid-dangling-reference.yml
+  s_36ac19229f6828::t_4e86b57db3fe94 1-38
+tests/fixtures/source-audits/semantic-invalid-overlapping-claim.yml
+  s_36ac19229f6828::t_381ea06ed61974 1-34
+tests/fixtures/source-audits/semantic-invalid-time-order.yml
+  s_36ac19229f6828::t_4d9023ae6d448a 1-39
+tests/fixtures/source-audits/valid-claim-partial-to-verified.yml
+  s_36ac19229f6828::t_fb5962573f3044 1-38
+tests/fixtures/source-audits/valid-claim-unknown-to-partial.yml
+  s_36ac19229f6828::t_10efb8941505a2 1-34
+tests/fixtures/source-audits/valid-claim-unverified-to-partial.yml
+  s_36ac19229f6828::t_900aa7f8807082 1-34
+tests/fixtures/source-audits/valid-claim-unverified-to-verified.yml
+  s_36ac19229f6828::t_de5eca8fea4f67 1-38
+tests/fixtures/source-audits/valid-revoked.yml
+  s_36ac19229f6828::t_10906d9c991378 1-39
+tests/fixtures/source-audits/valid-structural-auditable-noop.yml
+  s_36ac19229f6828::t_ff68bd32bd5994 1-23
+tests/fixtures/source-audits/valid-structural-needs-changes-noop.yml
+  s_36ac19229f6828::t_2840108b58e133 1-23
+tests/test_trust_state_machine.py
+  s_36ac19229f6828::t_f09d1f58d0d516 1-897
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "720fa5e8fc10c816935cfa3f01bcf38ebb7e0734",
+  "prompts": {},
+  "sessions": {
+    "s_36ac19229f6828": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_36ac19229f6828",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
