@@ -1,0 +1,37 @@
+tests/test_iot_domain.py
+  s_ba277d127dc906::t_6c44dd54edb1fc 1-339
+tools/content_inventory.py
+  s_ba277d127dc906::t_96a080fe585d40 21-25,91-93,96
+tools/generate_layer_catalogs.py
+  s_ba277d127dc906::t_21144c090e4ec0 16-17,24-25,27-35,37,46,58,70-74,76,82
+tools/iot_domain/__init__.py
+  s_ba277d127dc906::t_502f3382d46e64 1-45
+tools/iot_domain/content.py
+  s_ba277d127dc906::t_c4f55233a1ebfa 1-402
+tools/iot_domain/layers.py
+  s_ba277d127dc906::t_475d4868692fda 1-69
+tools/iot_domain/paths.py
+  s_ba277d127dc906::t_ed7b4ce6f708d9 1-130
+tools/migrate_frontmatter.py
+  s_ba277d127dc906::t_728cf2faa3f718 19-22,40,44-45,49-53,68,70,100-108,111,113,118-125,137,142,147
+tools/validate_frontmatter.py
+  s_ba277d127dc906::t_9bad215c0ec9b6 18-24,26,34,50-54,78-80,82,84,86-87,97-102,106-113,135,165
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c9be5afa442cb8d4ea92c087dcaf670ff47244a1",
+  "prompts": {},
+  "sessions": {
+    "s_ba277d127dc906": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_ba277d127dc906",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
