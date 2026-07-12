@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T046
-status: CLOSING
+status: COMPLETE
 objective: >-
   按 M2 可信基线计划，对 8 层每层导航精选前 3 篇（共 24 篇）canonical 文档执行
   STRUCTURAL shadow audit，建立跨层结构审计覆盖。继承 IOT-T045 已完成的 5 篇
@@ -171,16 +171,17 @@ selection:
 progress:
   completed_batches: 2
   completed_articles: 29
-  completed_commits: 2
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: ALL_SLICES_COMPLETE
-  last_external_delta: STRUCTURAL_SHADOW_BATCH2
+  last_result: GOAL_COMPLETE
+  last_external_delta: GOAL_CLOSE_PASSED
 activation:
   ref: 8617f894d9997d7f698925dd9b1540a59feedbb7
   activated_at: '2026-07-12T06:30:00Z'
 next_action:
-  kind: RUN_GOAL_CLOSE_CHECKS
+  kind: NONE
   requires_activation: false
   instruction: >-
-    All 29 articles (5 T045 legacy + 24 M2 sample) have STRUCTURAL AUDITABLE no-op
-    records. Run EVERY_SLICE + GOAL_CLOSE gates, transition to CLOSING then COMPLETE.
+    IOT-T046 complete: 29 STRUCTURAL AUDITABLE no-op records (5 T045 legacy + 24 M2
+    8-layer×3 sample). source_records=29, legacy_unbound=642, verified=0, approved=0.
+    No content, frontmatter, review records, VERSION, or schema changes were made.
