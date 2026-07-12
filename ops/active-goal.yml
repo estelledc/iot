@@ -171,12 +171,12 @@ selection:
 progress:
   completed_batches: 2
   completed_articles: 29
-  completed_commits: 3
+  completed_commits: 4
   no_external_delta_batches: 0
   last_result: GOAL_COMPLETE
-  last_external_delta: GOAL_CLOSE_PASSED
+  last_external_delta: GOAL_CLOSE_PASSED_AND_ORIGIN_MAIN_INTEGRATED
 activation:
-  ref: 8617f894d9997d7f698925dd9b1540a59feedbb7
+  ref: 6fda3ae88c5cfbcf62ee432d3457ba12fa94ae5e
   activated_at: '2026-07-12T06:30:00Z'
 next_action:
   kind: NONE
@@ -184,4 +184,5 @@ next_action:
   instruction: >-
     IOT-T046 complete: 29 STRUCTURAL AUDITABLE no-op records (5 T045 legacy + 24 M2
     8-layer×3 sample). source_records=29, legacy_unbound=642, verified=0, approved=0.
-    No content, frontmatter, review records, VERSION, or schema changes were made.
+    Origin main site/workflow updates were integrated in PR branch after goal close;
+    no content, frontmatter, review records, VERSION, or schema changes were made by IOT-T046.
