@@ -16,6 +16,20 @@ def _prepared_fixture(payload: dict) -> dict:
     prepared["review_after"] = "FIRST_SLICE_ACCEPTANCE"
     prepared["external_outcome"]["d_axis"] = "D0"
     prepared["superseded_by"] = None
+    prepared["scope"] = {
+        "task_id": payload["goal_id"],
+        "mode": payload["scope"]["mode"],
+        "first_batch_articles": 1,
+        "max_articles": 5,
+    }
+    prepared["budget"] = {
+        "max_batches": 2,
+        "max_articles": 5,
+        "max_commits": 2,
+        "max_wall_minutes": 180,
+        "max_parallel_agents": 2,
+        "max_parallel_writers": 1,
+    }
     prepared["selection"] = {
         "policy": payload["selection"]["policy"],
         "selected_articles": [],
@@ -56,7 +70,7 @@ class RepositoryActiveGoalTests(unittest.TestCase):
             [],
             check_active_goal.validate_payload(self.live_payload, self.schema),
         )
-        self.assertEqual("IOT-T045", self.live_payload["goal_id"])
+        self.assertEqual("IOT-T046", self.live_payload["goal_id"])
         self.assertFalse(
             any(self.live_payload["external_action_authority"].values())
         )

@@ -1,31 +1,34 @@
 schema_version: "1.0"
-goal_id: IOT-T045
-status: COMPLETE
+goal_id: IOT-T046
+status: PREPARED
 objective: >-
-  先用 1 篇 canonical 内容完成 STRUCTURAL shadow audit 接管试点；首批独立验收
-  通过后，同一 goal 内最多扩到 5 篇，并始终保持来源与人工审阅状态不升格。
+  按 M2 可信基线计划，对 8 层每层导航精选前 3 篇（共 24 篇）canonical 文档执行
+  STRUCTURAL shadow audit，建立跨层结构审计覆盖。继承 IOT-T045 已完成的 5 篇
+  foundation/connectivity 审计，持续保持来源状态与人工审阅状态不升格。
 scope:
-  task_id: IOT-T045
+  task_id: IOT-T046
   mode: STRUCTURAL_SHADOW_AUDIT
-  first_batch_articles: 1
-  max_articles: 5
-activated_by: "USER_DIRECT_SESSION_20260712"
+  first_batch_articles: 11
+  max_articles: 29
+activated_by: "PENDING_DEDICATED_AGENT_LAUNCH"
 review_after: FIRST_SLICE_ACCEPTANCE
 budget:
-  max_batches: 2
-  max_articles: 5
-  max_commits: 2
-  max_wall_minutes: 180
+  max_batches: 4
+  max_articles: 29
+  max_commits: 4
+  max_wall_minutes: 240
   max_parallel_agents: 2
   max_parallel_writers: 1
 external_outcome:
   definition: >-
-    当前未授权远端动作时，形成可独立审查的本地 IOT-T045 change set；
-    若后续单独授权 PR，则以目标 commit 的 GitHub quality CI 结论作为外部结果。
+    当前未授权远端动作时，形成可独立审查的本地 IOT-T046 change set；
+    覆盖 8 层共 24 篇 M2 抽样文档的 STRUCTURAL shadow audit，加上 IOT-T045
+    遗留 5 篇，共 29 篇 source audit 记录。若后续单独授权 PR，则以目标 commit
+    的 GitHub quality CI 结论作为外部结果。
   d_axis: D0
   satisfies_when:
-    - 首批 1 篇有合法、可复验且不升格的 STRUCTURAL audit 记录。
-    - trust 投影继续如实报告 642 legacy_unbound、0 verified、0 approved。
+    - 24 篇 M2 抽样文档均有合法、可复验且不升格的 STRUCTURAL audit 记录。
+    - trust 投影如实报告 613 legacy_unbound、0 verified、0 approved。
     - 正文、frontmatter、review records 和版本均无改动。
 external_action_authority:
   commit: false
@@ -34,24 +37,24 @@ external_action_authority:
   merge: false
   deploy: false
 stop_conditions:
-  - 首批 1 篇未通过独立验收。
+  - 首批 11 篇未通过独立验收。
   - 任何正文、frontmatter、review record、VERSION 或历史祖先关系发生意外变化。
   - verified、approved 或 evidence_bound_review 在没有对应权威证据时增加。
   - 需要修改 schema、trust 工具或放宽现有门禁才能继续。
   - 工作树出现不属于本 goal 的重叠改动，或上游发生未解释分叉。
   - 需要 commit、push、PR、merge、deploy 或人工批准，但对应动作未授权。
-  - 预算耗尽、范围将扩展到 IOT-T046+，或连续 3 个批次没有 external delta。
+  - 预算耗尽、范围将扩展到 IOT-T047+，或连续 3 个批次没有 external delta。
   - blocker 超过 1 个工作日且没有 follow-up。
 superseded_by: null
 baseline:
-  prepared_at_ref: 5ac6f9cfb3b0e1b8b54db4304e0b544799481480
+  prepared_at_ref: 5dc299180ce0a001def8191dc43f18415af854cb
   remote_main_ref: f9c61f60675b894ce8e3c00a2500d7915a61b234
   required_history_ancestor: 9f20f301ccf298b3ce09cfda92a8598ba5f1359b
   expected_inventory:
     canonical_content: 642
     plan_topics: 1761
   expected_trust:
-    source_records: 0
+    source_records: 5
     review_records: 0
     legacy_unbound: 642
     evidence_bound_review: 0
@@ -73,11 +76,11 @@ acceptance_checks:
   - id: source_records
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_source_audits.py --all
-    expectation: STRUCTURAL records valid; first slice checks exactly 1 record.
+    expectation: STRUCTURAL records valid; batch size matches goal progress.
   - id: review_records
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_review_records.py --all
-    expectation: checked=0 throughout IOT-T045.
+    expectation: checked=0 throughout IOT-T046.
   - id: migration_ledger
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/reconcile_legacy_review_state.py --check
@@ -88,7 +91,7 @@ acceptance_checks:
     expectation: verified=0 approved=0 evidence_bound_review=0.
   - id: targeted_tests
     cadence: EVERY_SLICE
-    command: .tmp/agent-venv/bin/python -m unittest tests.test_trust_authorities tests.test_trust_state_machine -v
+    command: .tmp/agent-venv/bin/python -m unittest tests.test_trust_authorities tests.test_trust_state_machine tests.test_active_goal -v
     expectation: all targeted trust tests pass.
   - id: full_tests
     cadence: GOAL_CLOSE
@@ -122,36 +125,24 @@ forbidden_mutations:
   - .github/workflows/
 selection:
   policy: >-
-    激活时先从 canonical docs 内容中选择恰好 1 篇不存在当前 source audit 的对象，
-    写明仓库内证据和选择理由；不得从标题推断事实。首批通过后才可追加，总数不超过 5。
-  selected_articles:
-    - docs/foundation/papers/3d-printed-sensor-enclosure.md
-    - docs/foundation/papers/4-20ma-current-loop-industrial.md
-    - docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
-    - docs/connectivity/papers/5g-network-slicing-iot-vertical.md
-    - docs/connectivity/papers/5g-nr-redcap-iot-device.md
-  rationale: >-
-    按 content_id 字典序遍历 642 篇 canonical 文档，首篇选择 3d-printed-sensor-enclosure
-    （foundation 层第一篇，source_records=0，frontmatter 完整可解析、body_h1 与 frontmatter_title
-    一致）。首批通过 EVERY_SLICE 门禁后，追加 content_id 序接下来的 4 篇无 audit 文档：
-    4-20ma-current-loop-industrial（foundation）、5g-mmtc-massive-iot-connection、
-    5g-network-slicing-iot-vertical、5g-nr-redcap-iot-device（connectivity）。
-    5 篇均满足 frontmatter 可解析、body hash 绑定、fence 平衡、frontmatter-body 一致性四项结构检查，
-    且覆盖 foundation 和 connectivity 两层，共 5 篇达到 max_articles 上限。
+    激活时从 IOT-T045 遗留的 5 篇 foundation/connectivity 审计出发，追加 M2 抽样
+    清单中每层 1 篇（共 6 篇），首批总计 11 篇，覆盖全部 8 层。首批通过
+    EVERY_SLICE 门禁后按层扩展到 24 篇 M2 样本；总数不超过 29 篇（含遗留 5 篇）。
+  selected_articles: []
+  rationale: null
 progress:
-  completed_batches: 2
-  completed_articles: 5
+  completed_batches: 0
+  completed_articles: 0
   completed_commits: 0
-  no_external_delta_batches: 2
-  last_result: ALL_SLICES_COMPLETE
+  no_external_delta_batches: 0
+  last_result: NOT_STARTED
   last_external_delta: NONE
 activation:
-  ref: b410845ddba0325cddb7f0f7ab57b9323a04286d
-  activated_at: '2026-07-12T01:53:33Z'
+  ref: null
+  activated_at: null
 next_action:
-  kind: NONE
-  requires_activation: false
+  kind: ACTIVATE_AND_RUN_FIRST_SLICE
+  requires_activation: true
   instruction: >-
-    IOT-T045 已完成。5 篇 canonical 文档均完成 STRUCTURAL AUDITABLE no-op shadow audit。
-    所有 EVERY_SLICE 和 GOAL_CLOSE 门禁通过。change set 尚未提交、未 push、未开 PR，
-    需要用户单独授权才能进行远端动作。
+    Activate the bounded first slice: freeze 11 articles (5 legacy + 6 new M2
+    cross-layer samples), set activation ref, and run STRUCTURAL audits.

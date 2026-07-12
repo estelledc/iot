@@ -238,11 +238,12 @@ def validate_repository_state(
 
     selected_set = set(selected)
     record_content_paths: list[str] = []
+    is_prepared = payload["status"] == "PREPARED"
     for record in source_records:
         content_path = record.get("content_path")
         if isinstance(content_path, str):
             record_content_paths.append(content_path)
-        if content_path not in selected_set:
+        if not is_prepared and content_path not in selected_set:
             errors.append("REPOSITORY:source-audits:record-outside-selection")
         if (
             record.get("audit_kind") != "STRUCTURAL"
@@ -259,7 +260,7 @@ def validate_repository_state(
         if record.get("supersedes") is not None:
             errors.append("REPOSITORY:source-audits:supersession-outside-pilot")
 
-    if len(source_records) > len(selected):
+    if not is_prepared and len(source_records) > len(selected):
         errors.append("REPOSITORY:source-audits:records-exceed-selection")
     if len(record_content_paths) != len(set(record_content_paths)):
         errors.append("REPOSITORY:source-audits:duplicate-content-record")
