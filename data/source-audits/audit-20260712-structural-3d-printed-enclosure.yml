@@ -1,0 +1,32 @@
+schema_version: "1.0"
+audit_id: audit-20260712-structural-3d-printed-enclosure
+content_id: 3d-printed-sensor-enclosure
+content_path: docs/foundation/papers/3d-printed-sensor-enclosure.md
+body_sha256: 4bb71a43f2756216002dfb860fd04c753e2529c39732bb4cd0be7861d95b4308
+audit_kind: STRUCTURAL
+outcome: AUDITABLE
+status_transition:
+  from: UNVERIFIED
+  to: UNVERIFIED
+auditor_id: agent-structural-auditor
+auditor_type: AGENT
+auditor_role: STRUCTURAL_AUDITOR
+audited_at: '2026-07-12T01:53:33Z'
+source_references: []
+structural_checks:
+  - check_id: frontmatter-parses
+    result: PASS
+    evidence: YAML frontmatter parses without duplicate keys or type errors; all required fields present.
+  - check_id: body-hash-bound
+    result: PASS
+    evidence: Body SHA256 4bb71a43f2756216002dfb860fd04c753e2529c39732bb4cd0be7861d95b4308 matches canonical content hash bound by ContentDocument parser.
+  - check_id: markdown-fence-balance
+    result: PASS
+    evidence: All code fences (```/~~~) are properly opened and closed; no dangling fences detected.
+  - check_id: frontmatter-body-consistency
+    result: PASS
+    evidence: frontmatter_title matches body_h1 exactly; layer=foundation, content_type=technical_analysis consistent with document path.
+claim_coverage: null
+notes: Structural shadow audit proves only that the document is structurally auditable; source_status remains UNVERIFIED. No claim verification or content review is performed or implied.
+supersedes: null
+revocation: null
