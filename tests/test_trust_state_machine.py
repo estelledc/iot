@@ -1031,7 +1031,6 @@ class RepositoryTrustGraphTests(unittest.TestCase):
             baseline_mode=True,
             author_ids_by_content=None,
             critical_claim_ids_by_content=None,
-            as_of=self.as_of,
         )
 
         self.assertEqual([], result.issues)
@@ -1040,7 +1039,10 @@ class RepositoryTrustGraphTests(unittest.TestCase):
         self.assertEqual(0, result.summary.evidence_bound_review)
         self.assertEqual(0, result.summary.verified)
         self.assertEqual(0, result.summary.approved)
-        self.assertEqual(0, result.summary.source_records)
+        expected_source_records = len(
+            list((ROOT / "data/source-audits").rglob("*.yml"))
+        )
+        self.assertEqual(expected_source_records, result.summary.source_records)
         self.assertEqual(0, result.summary.review_records)
 
     def test_valid_verified_and_human_approved_chain_projects_both_axes(self) -> None:

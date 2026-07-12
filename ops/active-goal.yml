@@ -1,0 +1,145 @@
+schema_version: "1.0"
+goal_id: IOT-T045
+status: PREPARED
+objective: >-
+  先用 1 篇 canonical 内容完成 STRUCTURAL shadow audit 接管试点；首批独立验收
+  通过后，同一 goal 内最多扩到 5 篇，并始终保持来源与人工审阅状态不升格。
+scope:
+  task_id: IOT-T045
+  mode: STRUCTURAL_SHADOW_AUDIT
+  first_batch_articles: 1
+  max_articles: 5
+activated_by: "PENDING_DEDICATED_AGENT_LAUNCH"
+review_after: FIRST_SLICE_ACCEPTANCE
+budget:
+  max_batches: 2
+  max_articles: 5
+  max_commits: 2
+  max_wall_minutes: 180
+  max_parallel_agents: 2
+  max_parallel_writers: 1
+external_outcome:
+  definition: >-
+    当前未授权远端动作时，形成可独立审查的本地 IOT-T045 change set；
+    若后续单独授权 PR，则以目标 commit 的 GitHub quality CI 结论作为外部结果。
+  d_axis: D0
+  satisfies_when:
+    - 首批 1 篇有合法、可复验且不升格的 STRUCTURAL audit 记录。
+    - trust 投影继续如实报告 642 legacy_unbound、0 verified、0 approved。
+    - 正文、frontmatter、review records 和版本均无改动。
+external_action_authority:
+  commit: false
+  push: false
+  open_pr: false
+  merge: false
+  deploy: false
+stop_conditions:
+  - 首批 1 篇未通过独立验收。
+  - 任何正文、frontmatter、review record、VERSION 或历史祖先关系发生意外变化。
+  - verified、approved 或 evidence_bound_review 在没有对应权威证据时增加。
+  - 需要修改 schema、trust 工具或放宽现有门禁才能继续。
+  - 工作树出现不属于本 goal 的重叠改动，或上游发生未解释分叉。
+  - 需要 commit、push、PR、merge、deploy 或人工批准，但对应动作未授权。
+  - 预算耗尽、范围将扩展到 IOT-T046+，或连续 3 个批次没有 external delta。
+  - blocker 超过 1 个工作日且没有 follow-up。
+superseded_by: null
+baseline:
+  prepared_at_ref: 5ac6f9cfb3b0e1b8b54db4304e0b544799481480
+  remote_main_ref: f9c61f60675b894ce8e3c00a2500d7915a61b234
+  required_history_ancestor: 9f20f301ccf298b3ce09cfda92a8598ba5f1359b
+  expected_inventory:
+    canonical_content: 642
+    plan_topics: 1761
+  expected_trust:
+    source_records: 0
+    review_records: 0
+    legacy_unbound: 642
+    evidence_bound_review: 0
+    verified: 0
+    approved: 0
+acceptance_checks:
+  - id: active_goal_contract
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/check_active_goal.py
+    expectation: ACTIVE_GOAL_OK
+  - id: content_inventory
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/content_inventory.py --check
+    expectation: canonical_content=642 and plan_topics=1761.
+  - id: history_ancestry
+    cadence: EVERY_SLICE
+    command: git merge-base --is-ancestor 9f20f301ccf298b3ce09cfda92a8598ba5f1359b HEAD
+    expectation: exits 0; trust migration observation remains in current history.
+  - id: source_records
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_source_audits.py --all
+    expectation: STRUCTURAL records valid; first slice checks exactly 1 record.
+  - id: review_records
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_review_records.py --all
+    expectation: checked=0 throughout IOT-T045.
+  - id: migration_ledger
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/reconcile_legacy_review_state.py --check
+    expectation: entries=642 and legacy_unbound=642.
+  - id: trust_projection
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_trust_state.py --all --baseline-mode
+    expectation: verified=0 approved=0 evidence_bound_review=0.
+  - id: targeted_tests
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python -m unittest tests.test_trust_authorities tests.test_trust_state_machine -v
+    expectation: all targeted trust tests pass.
+  - id: full_tests
+    cadence: GOAL_CLOSE
+    command: .tmp/agent-venv/bin/python -m unittest discover -s tests -v
+    expectation: full suite passes with no regression.
+  - id: strict_build
+    cadence: GOAL_CLOSE
+    command: .tmp/agent-venv/bin/python -m mkdocs build --strict --site-dir .tmp/site-agent-goal
+    expectation: strict build succeeds.
+  - id: diff_check
+    cadence: EVERY_SLICE
+    command: git diff --check
+    expectation: no whitespace errors.
+allowed_mutations:
+  - ops/active-goal.yml
+  - data/source-audits/
+  - data/trust-authorities.yml
+  - tests/fixtures/source-audits/
+  - tests/test_structural_shadow_audit.py
+forbidden_mutations:
+  - ops/active-goal.lock.json
+  - docs/<layer>/papers/
+  - papers/
+  - data/review-records/
+  - data/trust-migration-ledger.yml
+  - schemas/
+  - tools/
+  - plans/
+  - ROADMAP.md
+  - VERSION
+  - .github/workflows/
+selection:
+  policy: >-
+    激活时先从 canonical docs 内容中选择恰好 1 篇不存在当前 source audit 的对象，
+    写明仓库内证据和选择理由；不得从标题推断事实。首批通过后才可追加，总数不超过 5。
+  selected_articles: []
+  rationale: null
+progress:
+  completed_batches: 0
+  completed_articles: 0
+  completed_commits: 0
+  no_external_delta_batches: 0
+  last_result: NOT_STARTED
+  last_external_delta: NONE
+activation:
+  ref: null
+  activated_at: null
+next_action:
+  kind: ACTIVATE_AND_RUN_FIRST_SLICE
+  requires_activation: true
+  instruction: >-
+    等方式变更已形成独立 Git 基线，且用户在独立 agent 会话中明确启动 IOT-T045；
+    重新验证实时基线，冻结 1 篇选择，写入 activation ref 后把状态改为 ACTIVE，
+    再开始任何业务写入。
