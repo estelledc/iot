@@ -312,6 +312,13 @@ body,
     font-family: var(--jx-font-mono);
     font-size: var(--jx-fs-xs);
     list-style: none;
+    transition: transform var(--jx-duration-press) var(--jx-ease-out),
+                color var(--jx-duration-fast) var(--jx-ease-out),
+                background-color var(--jx-duration-fast) var(--jx-ease-out);
+  }
+
+  .iot-global-nav .jx-site-nav__menu summary:active {
+    transform: scale(var(--jx-press-scale));
   }
 
   .iot-global-nav .jx-site-nav__menu summary::-webkit-details-marker {
@@ -525,11 +532,14 @@ body,
   .jx-footer-custom__stamp { text-align: start; }
 }
 
-/* ═══ Reduce motion ═══ */
+/* ═══ Reduced motion keeps immediate semantic color feedback ═══ */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  .iot-global-nav .jx-site-nav__menu summary,
+  .iot-global-nav .jx-site-nav__menu summary:active {
+    transform: none;
+    transition-property: color, background-color;
+    transition-duration: var(--jx-duration-fast);
+    transition-timing-function: var(--jx-ease-out);
   }
 }
 

@@ -90,9 +90,26 @@ class HomepageSourceTruthTests(unittest.TestCase):
         self.assertIn("assets/css/jx/tokens.css", config)
         self.assertIn("assets/css/jx/components.css", config)
         self.assertEqual(
-            "2.1.0",
+            "2.2.0",
             (root / "docs/assets/css/jx/VERSION").read_text(encoding="utf-8").strip(),
         )
+
+    def test_home_interactions_are_pointer_safe_and_motion_reduced(self) -> None:
+        root = content_inventory.ROOT
+        template = (root / "overrides/home.html").read_text(encoding="utf-8")
+        override = (root / "docs/assets/css/jx-override.css").read_text(encoding="utf-8")
+        for marker in (
+            "@media (hover: hover) and (pointer: fine)",
+            ".iot-stack-map a:focus-visible",
+            ".iot-stack-map a:active",
+            ".iot-layer-card:focus-visible",
+            ".iot-layer-card:active",
+            "@media (prefers-reduced-motion: reduce)",
+        ):
+            self.assertIn(marker, template)
+        self.assertIn(".iot-global-nav .jx-site-nav__menu summary:active", override)
+        self.assertNotIn("transition: all", template)
+        self.assertNotIn("animation-duration: 0.01ms", override)
 
     def test_home_keeps_material_mobile_drawer_available(self) -> None:
         root = content_inventory.ROOT
