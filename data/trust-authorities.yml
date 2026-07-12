@@ -1,0 +1,8 @@
+schema_version: "1.0"
+authority_kind: "TRUST_PROJECTION_AUTHORITY"
+actors:
+  - actor_id: agent-structural-auditor
+    actor_type: AGENT
+    allowed_roles:
+      - STRUCTURAL_AUDITOR
+entries: []

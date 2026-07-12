@@ -1,0 +1,451 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://estelledc.github.io/iot/schemas/active-goal.schema.json",
+  "title": "IoT bounded agent goal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "goal_id",
+    "status",
+    "objective",
+    "scope",
+    "activated_by",
+    "review_after",
+    "budget",
+    "external_outcome",
+    "external_action_authority",
+    "stop_conditions",
+    "superseded_by",
+    "baseline",
+    "acceptance_checks",
+    "allowed_mutations",
+    "forbidden_mutations",
+    "selection",
+    "progress",
+    "activation",
+    "next_action"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "goal_id": {
+      "$ref": "#/$defs/taskId"
+    },
+    "status": {
+      "enum": [
+        "PREPARED",
+        "ACTIVE",
+        "CLOSING",
+        "PAUSED",
+        "BLOCKED",
+        "COMPLETE",
+        "SUPERSEDED"
+      ]
+    },
+    "objective": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id",
+        "mode",
+        "first_batch_articles",
+        "max_articles"
+      ],
+      "properties": {
+        "task_id": {
+          "$ref": "#/$defs/taskId"
+        },
+        "mode": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "first_batch_articles": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_articles": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      }
+    },
+    "activated_by": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "review_after": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_batches",
+        "max_articles",
+        "max_commits",
+        "max_wall_minutes",
+        "max_parallel_agents",
+        "max_parallel_writers"
+      ],
+      "properties": {
+        "max_batches": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_articles": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_commits": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_wall_minutes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_parallel_agents": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_parallel_writers": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      }
+    },
+    "external_outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "definition",
+        "d_axis",
+        "satisfies_when"
+      ],
+      "properties": {
+        "definition": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "d_axis": {
+          "enum": [
+            "D0",
+            "D1",
+            "D2",
+            "D3",
+            "D4"
+          ]
+        },
+        "satisfies_when": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        }
+      }
+    },
+    "external_action_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "push",
+        "open_pr",
+        "merge",
+        "deploy"
+      ],
+      "properties": {
+        "commit": {
+          "type": "boolean"
+        },
+        "push": {
+          "type": "boolean"
+        },
+        "open_pr": {
+          "type": "boolean"
+        },
+        "merge": {
+          "type": "boolean"
+        },
+        "deploy": {
+          "type": "boolean"
+        }
+      }
+    },
+    "stop_conditions": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "superseded_by": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/taskId"
+        }
+      ]
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prepared_at_ref",
+        "remote_main_ref",
+        "required_history_ancestor",
+        "expected_inventory",
+        "expected_trust"
+      ],
+      "properties": {
+        "prepared_at_ref": {
+          "$ref": "#/$defs/commitRef"
+        },
+        "remote_main_ref": {
+          "$ref": "#/$defs/commitRef"
+        },
+        "required_history_ancestor": {
+          "$ref": "#/$defs/commitRef"
+        },
+        "expected_inventory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "canonical_content",
+            "plan_topics"
+          ],
+          "properties": {
+            "canonical_content": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "plan_topics": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "expected_trust": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_records",
+            "review_records",
+            "legacy_unbound",
+            "evidence_bound_review",
+            "verified",
+            "approved"
+          ],
+          "properties": {
+            "source_records": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "review_records": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "legacy_unbound": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "evidence_bound_review": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "verified": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "approved": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "acceptance_checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "cadence",
+          "command",
+          "expectation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "cadence": {
+            "enum": [
+              "EVERY_SLICE",
+              "GOAL_CLOSE"
+            ]
+          },
+          "command": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "expectation": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        }
+      }
+    },
+    "allowed_mutations": {
+      "$ref": "#/$defs/repositoryPathArray"
+    },
+    "forbidden_mutations": {
+      "$ref": "#/$defs/repositoryPathArray"
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "selected_articles",
+        "rationale"
+      ],
+      "properties": {
+        "policy": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "selected_articles": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^docs/(foundation|connectivity|network|computing|intelligence|security|applications|frontier)/papers/[a-z0-9][a-z0-9-]*\\.md$"
+          }
+        },
+        "rationale": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          ]
+        }
+      }
+    },
+    "progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "completed_batches",
+        "completed_articles",
+        "completed_commits",
+        "no_external_delta_batches",
+        "last_result",
+        "last_external_delta"
+      ],
+      "properties": {
+        "completed_batches": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "completed_articles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "completed_commits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "no_external_delta_batches": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_result": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "last_external_delta": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "activated_at"
+      ],
+      "properties": {
+        "ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/commitRef"
+            }
+          ]
+        },
+        "activated_at": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "format": "date-time"
+            }
+          ]
+        }
+      }
+    },
+    "next_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "requires_activation",
+        "instruction"
+      ],
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "requires_activation": {
+          "type": "boolean"
+        },
+        "instruction": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "taskId": {
+      "type": "string",
+      "pattern": "^IOT-T[0-9]{3}$"
+    },
+    "commitRef": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "positiveInteger": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "repositoryPathArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?!/).+$"
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+schema_version: "1.0"
+review_id: review-20260711-human-approved-revoked
+content_id: 5g-mmtc-massive-iot-connection
+content_path: docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
+body_sha256: 244c184a66f32c3ed9a294cc4471386f43afc7942198ef699d209034f00ebbee
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-content-approver
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-11T09:25:00Z'
+linked_audit_ids:
+  - audit-20260711-claim-unverified-verified
+review_checks:
+  - check_id: evidence-traceable
+    result: PASS
+    evidence: Every critical claim linked to a current source audit at review time.
+independence:
+  author_ids:
+    - human-content-author
+  linked_auditor_ids:
+    - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: The immutable historical approval is excluded from current projection.
+supersedes: review-20260711-start-review
+revocation:
+  revoked_at: '2026-07-11T09:30:00Z'
+  by_actor_id: human-governance-reviewer
+  by_actor_type: HUMAN
+  by_role: GOVERNANCE_REVIEWER
+  reason_code: BODY_CHANGED
+  reason: The content body changed after approval.

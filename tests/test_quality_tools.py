@@ -164,6 +164,165 @@ class MarkdownQualityToolTests(unittest.TestCase):
         target.write_text("# 开始\n", encoding="utf-8")
         self.assertEqual([], check_markdown_links.check_file(source, check_anchors=True))
 
+    def test_published_doc_link_outside_docs_dir_fails(self) -> None:
+        source = self.root / "docs" / "plans" / "review.md"
+        target = self.root / "data" / "progress.yml"
+        source.parent.mkdir(parents=True)
+        target.parent.mkdir(parents=True)
+        target.write_text("status: done\n", encoding="utf-8")
+        source.write_text("[progress](../../data/progress.yml)\n", encoding="utf-8")
+        errors = check_markdown_links.check_file(
+            source,
+            check_anchors=True,
+            published=True,
+        )
+        self.assertEqual(1, len(errors))
+        self.assertIn("published link target outside docs_dir", errors[0])
+        self.assertIn("docs/plans/review.md", errors[0])
+
+    def test_published_reference_link_outside_docs_dir_fails(self) -> None:
+        source = self.root / "docs" / "plans" / "review.md"
+        target = self.root / "data" / "progress.yml"
+        source.parent.mkdir(parents=True)
+        target.parent.mkdir(parents=True)
+        target.write_text("status: done\n", encoding="utf-8")
+        source.write_text(
+            "[progress][state]\n\n[state]: ../../data/progress.yml\n",
+            encoding="utf-8",
+        )
+        errors = check_markdown_links.check_file(
+            source,
+            check_anchors=True,
+            published=True,
+        )
+        self.assertEqual(1, len(errors))
+        self.assertIn("published link target outside docs_dir", errors[0])
+
+    def test_published_shortcut_reference_outside_docs_dir_fails(self) -> None:
+        source = self.root / "docs" / "plans" / "review.md"
+        target = self.root / "data" / "progress.yml"
+        source.parent.mkdir(parents=True)
+        target.parent.mkdir(parents=True)
+        target.write_text("status: done\n", encoding="utf-8")
+        source.write_text(
+            "[progress]\n\n[progress]: ../../data/progress.yml\n",
+            encoding="utf-8",
+        )
+        errors = check_markdown_links.check_file(
+            source,
+            check_anchors=True,
+            published=True,
+        )
+        self.assertEqual(1, len(errors))
+        self.assertIn("published link target outside docs_dir", errors[0])
+
+    def test_inline_code_is_not_treated_as_shortcut_reference(self) -> None:
+        source = self.root / "docs" / "plans" / "review.md"
+        target = self.root / "data" / "progress.yml"
+        source.parent.mkdir(parents=True)
+        target.parent.mkdir(parents=True)
+        target.write_text("status: done\n", encoding="utf-8")
+        source.write_text(
+            "Use `[progress]` as a literal.\n"
+            "Use `a multiline literal\n[progress]\nthat stays code`.\n"
+            "Python-Markdown also treats ````[progress]` as code.\n\n"
+            "[progress]: ../../data/progress.yml\n",
+            encoding="utf-8",
+        )
+        self.assertEqual(
+            [],
+            check_markdown_links.check_file(
+                source,
+                check_anchors=True,
+                published=True,
+            ),
+        )
+
+    def test_published_link_outside_repository_reports_boundary(self) -> None:
+        source = self.root / "docs" / "plans" / "review.md"
+        source.parent.mkdir(parents=True)
+        source.write_text("[outside](../../../outside.md)\n", encoding="utf-8")
+        errors = check_markdown_links.check_file(
+            source,
+            check_anchors=True,
+            published=True,
+        )
+        self.assertEqual(1, len(errors))
+        self.assertIn("published link target outside docs_dir", errors[0])
+        self.assertIn("<outside repository>", errors[0])
+
+    def test_nonclosing_fence_info_cannot_hide_published_link(self) -> None:
+        source = self.root / "docs" / "plans" / "review.md"
+        guide = self.root / "docs" / "guide.md"
+        target = self.root / "data" / "progress.yml"
+        source.parent.mkdir(parents=True)
+        target.parent.mkdir(parents=True)
+        guide.write_text("# Guide\n", encoding="utf-8")
+        target.write_text("status: done\n", encoding="utf-8")
+        source.write_text(
+            "```markdown\n"
+            "```not-a-closing-fence\n"
+            "[example](../guide.md)\n"
+            "```\n"
+            "[progress](../../data/progress.yml)\n",
+            encoding="utf-8",
+        )
+        errors = check_markdown_links.check_file(
+            source,
+            check_anchors=True,
+            published=True,
+        )
+        self.assertEqual(1, len(errors))
+        self.assertIn("published link target outside docs_dir", errors[0])
+
+    def test_published_symlink_source_cannot_escape_docs_dir(self) -> None:
+        source = self.root / "docs" / "linked.md"
+        outside_source = self.root / "data" / "source.md"
+        target = self.root / "data" / "target.yml"
+        source.parent.mkdir(parents=True)
+        outside_source.parent.mkdir(parents=True)
+        outside_source.write_text("[target](../data/target.yml)\n", encoding="utf-8")
+        target.write_text("status: done\n", encoding="utf-8")
+        source.symlink_to(outside_source)
+        errors = check_markdown_links.check_file(
+            source,
+            check_anchors=True,
+            published=True,
+        )
+        self.assertEqual(1, len(errors))
+        self.assertIn("published link target outside docs_dir", errors[0])
+
+    def test_repository_markdown_can_link_to_repository_data(self) -> None:
+        source = self.root / "README.md"
+        target = self.root / "data" / "progress.yml"
+        target.parent.mkdir(parents=True)
+        target.write_text("status: done\n", encoding="utf-8")
+        source.write_text("[progress](data/progress.yml)\n", encoding="utf-8")
+        self.assertEqual(
+            [],
+            check_markdown_links.check_file(
+                source,
+                check_anchors=True,
+                published=True,
+            ),
+        )
+
+    def test_published_iot_absolute_directory_and_anchor_pass(self) -> None:
+        source = self.root / "docs" / "index.md"
+        guide = self.root / "docs" / "guide" / "index.md"
+        source.parent.mkdir(parents=True)
+        guide.parent.mkdir(parents=True)
+        source.write_text("[guide](/iot/guide/#开始)\n", encoding="utf-8")
+        guide.write_text("# 开始\n", encoding="utf-8")
+        self.assertEqual(
+            [],
+            check_markdown_links.check_file(
+                source,
+                check_anchors=True,
+                published=True,
+            ),
+        )
+
     def test_heading_swallowed_by_bare_fence_fails(self) -> None:
         source = self.root / "broken.md"
         source.write_text("```\nnot code\n## swallowed\n```\n", encoding="utf-8")

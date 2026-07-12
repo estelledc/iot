@@ -12,6 +12,11 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 ACTION_REF = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-f]{40}$")
+REQUIRED_TRUST_VALIDATION_COMMANDS = (
+    "python tools/validate_source_audits.py --all",
+    "python tools/validate_review_records.py --all",
+    "python tools/validate_trust_state.py --all --baseline-mode",
+)
 
 
 def load_workflow(path: Path) -> dict:
@@ -43,8 +48,138 @@ def validate_action_refs(path: Path, workflow: dict) -> list[str]:
     return errors
 
 
+def validate_trust_validation_commands(
+    path: Path,
+    workflow: dict,
+    *,
+    job_name: str,
+) -> list[str]:
+    jobs = workflow.get("jobs", {})
+    job = jobs.get(job_name, {}) if isinstance(jobs, dict) else {}
+    if not isinstance(job, dict):
+        return [f"{path}: job {job_name} must be a mapping"]
+
+    errors: list[str] = []
+    if "defaults" in workflow:
+        errors.append(
+            f"{path}: workflow defaults must not redirect trust validation"
+        )
+    if "env" in workflow:
+        errors.append(
+            f"{path}: workflow env must not override trust validation"
+        )
+    if "if" in job:
+        errors.append(
+            f"{path}: job {job_name} must not conditionally skip trust validation"
+        )
+    if str(job.get("continue-on-error", "false")).lower() not in {"false", ""}:
+        errors.append(
+            f"{path}: job {job_name} must not continue on trust validation errors"
+        )
+    if "defaults" in job:
+        errors.append(
+            f"{path}: job {job_name} defaults must not redirect trust validation"
+        )
+    if "env" in job:
+        errors.append(
+            f"{path}: job {job_name} env must not override trust validation"
+        )
+    steps = job.get("steps", [])
+    if not isinstance(steps, list):
+        return [*errors, f"{path}: job {job_name} steps must be a sequence"]
+
+    positions: list[int] = []
+    for command in REQUIRED_TRUST_VALIDATION_COMMANDS:
+        occurrences = [
+            (index, step)
+            for index, step in enumerate(steps)
+            if isinstance(step, dict)
+            and isinstance(step.get("run"), str)
+            and step["run"].strip() == command
+        ]
+        if not occurrences:
+            errors.append(
+                f"{path}: job {job_name} is missing required command: {command}"
+            )
+            continue
+        if len(occurrences) > 1:
+            errors.append(
+                f"{path}: job {job_name} must run required command exactly once: "
+                f"{command}"
+            )
+        position, step = occurrences[0]
+        positions.append(position)
+        if "if" in step:
+            errors.append(
+                f"{path}: required command step must not have an if condition: "
+                f"{command}"
+            )
+        if str(step.get("continue-on-error", "false")).lower() not in {
+            "false",
+            "",
+        }:
+            errors.append(
+                f"{path}: required command step must fail closed: {command}"
+            )
+        if "shell" in step:
+            errors.append(
+                f"{path}: required command step must use the default shell: {command}"
+            )
+        if "working-directory" in step:
+            errors.append(
+                f"{path}: required command step must run at repository root: {command}"
+            )
+        if "env" in step:
+            errors.append(
+                f"{path}: required command step must not override its environment: "
+                f"{command}"
+            )
+
+    if len(positions) == len(REQUIRED_TRUST_VALIDATION_COMMANDS) and positions != sorted(
+        positions
+    ):
+        errors.append(
+            f"{path}: job {job_name} trust validation commands must run in order: "
+            + " -> ".join(REQUIRED_TRUST_VALIDATION_COMMANDS)
+        )
+    return errors
+
+
+def validate_full_history_checkout(
+    path: Path,
+    workflow: dict,
+    *,
+    job_name: str,
+) -> list[str]:
+    jobs = workflow.get("jobs", {})
+    job = jobs.get(job_name, {}) if isinstance(jobs, dict) else {}
+    steps = job.get("steps", []) if isinstance(job, dict) else []
+    checkout_steps = [
+        step
+        for step in steps
+        if isinstance(step, dict)
+        and str(step.get("uses", "")).startswith("actions/checkout@")
+    ]
+    if len(checkout_steps) != 1:
+        return [f"{path}: job {job_name} must contain exactly one checkout step"]
+    checkout_with = checkout_steps[0].get("with", {})
+    if (
+        not isinstance(checkout_with, dict)
+        or str(checkout_with.get("fetch-depth")) != "0"
+    ):
+        return [
+            f"{path}: job {job_name} checkout must set fetch-depth: 0 "
+            "for immutable ledger ancestry validation"
+        ]
+    return []
+
+
 def validate_ci(path: Path, workflow: dict) -> list[str]:
     errors = validate_action_refs(path, workflow)
+    errors.extend(
+        validate_trust_validation_commands(path, workflow, job_name="quality")
+    )
+    errors.extend(validate_full_history_checkout(path, workflow, job_name="quality"))
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append(f"{path}: global permissions must be contents: read")
     triggers = workflow.get("on", {})
@@ -55,6 +190,8 @@ def validate_ci(path: Path, workflow: dict) -> list[str]:
 
 def validate_deploy(path: Path, workflow: dict) -> list[str]:
     errors = validate_action_refs(path, workflow)
+    errors.extend(validate_trust_validation_commands(path, workflow, job_name="build"))
+    errors.extend(validate_full_history_checkout(path, workflow, job_name="build"))
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append(f"{path}: global permissions must be contents: read")
 

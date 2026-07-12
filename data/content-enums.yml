@@ -29,6 +29,126 @@ review_status:
   NEEDS_CHANGES: 人工审查发现必须修复的问题。
   UNKNOWN: 历史审阅状态无法判断。
 
+trust_state_machine:
+  schema_version: "1.0"
+  frontmatter_semantics:
+    source_status: DERIVED_CACHE
+    review_status: DERIVED_CACHE
+    evidence_authority:
+      - schemas/source-audit.schema.json
+      - schemas/review-record.schema.json
+      - schemas/trust-authorities.schema.json
+  active_record_transitions:
+    source_status:
+      UNKNOWN:
+        - UNKNOWN
+        - PARTIAL
+        - VERIFIED
+      UNVERIFIED:
+        - UNVERIFIED
+        - PARTIAL
+        - VERIFIED
+      PARTIAL:
+        - PARTIAL
+        - VERIFIED
+      VERIFIED:
+        - VERIFIED
+    review_status:
+      UNKNOWN:
+        - IN_REVIEW
+      UNREVIEWED:
+        - IN_REVIEW
+      IN_REVIEW:
+        - NEEDS_CHANGES
+        - HUMAN_APPROVED
+      NEEDS_CHANGES:
+        - IN_REVIEW
+      HUMAN_APPROVED:
+        - IN_REVIEW
+  promotion_requirements:
+    source_status:
+      PARTIAL:
+        audit_kind: CLAIM_VERIFICATION
+        coverage_scope: PARTIAL
+        minimum_verified_claims: 1
+        minimum_uncovered_claims: 1
+        maximum_blocking_issues: 0
+      VERIFIED:
+        audit_kind: CLAIM_VERIFICATION
+        auditor_type: HUMAN
+        coverage_scope: ALL_CRITICAL_CLAIMS
+        all_claims_verified: true
+        minimum_references_per_claim: 1
+        maximum_uncovered_claims: 0
+        maximum_blocking_issues: 0
+      STRUCTURAL:
+        maximum_source_status_effect: NO_CHANGE
+    review_status:
+      HUMAN_APPROVED:
+        decision: APPROVE
+        source_status_at_review: VERIFIED
+        reviewer_type: HUMAN
+        reviewer_role: APPROVER
+        reviewer_must_be_independent: true
+        minimum_linked_audits: 1
+        all_review_checks_pass: true
+        body_hash_must_match: true
+  record_lifecycle:
+    active: ACTIVE
+    superseded: SUPERSEDED
+    revoked: REVOKED
+    body_hash_mismatch: STALE
+  temporal_ordering:
+    source_evidence: RETRIEVED_AT_LTE_AUDITED_AT
+    source_revocation: AUDITED_AT_LTE_REVOKED_AT
+    review_predecessor: PREDECESSOR_REVIEWED_AT_LTE_REVIEWED_AT
+    linked_audit: AUDITED_AT_LTE_REVIEWED_AT
+    review_revocation: REVIEWED_AT_LTE_REVOKED_AT
+  production_projection_gate:
+    enabled: true
+    mode: FAIL_CLOSED
+    on_missing_authority: KEEP_DEFAULT
+    default_source_status: UNVERIFIED
+    default_review_status: IN_REVIEW
+    required_authorities:
+      - CURRENT_BODY_HASH
+      - AUTHORITATIVE_AUTHOR_ACTOR_MAPPING
+      - LOCKED_CRITICAL_CLAIM_INVENTORY
+      - CROSS_RECORD_REFERENCE_VALIDATION
+  derived_invalidation:
+    BODY_HASH_MISMATCH:
+      source_record_effect: STALE
+      review_record_effect: STALE
+      source_status_projection: RECOMPUTE_FROM_ACTIVE_EVIDENCE
+      default_source_status_projection: UNVERIFIED
+      review_status_projection: RECOMPUTE_FROM_ACTIVE_EVIDENCE
+      default_review_status_projection: IN_REVIEW
+      preserve_history: true
+    SOURCE_REFERENCE_INVALIDATED:
+      source_record_effect: RECOMPUTE
+      review_record_effect: STALE_IF_LINKED
+      source_status_projection: RECOMPUTE_FROM_ACTIVE_EVIDENCE
+      maximum_source_status_projection: PARTIAL
+      review_status_projection: IN_REVIEW
+      preserve_history: true
+    AUDIT_REVOKED:
+      source_record_effect: REVOKED
+      review_record_effect: STALE_IF_LINKED
+      source_status_projection: RECOMPUTE_FROM_ACTIVE_EVIDENCE
+      review_status_projection: IN_REVIEW
+      preserve_history: true
+    REVIEW_REVOKED:
+      source_record_effect: NO_CHANGE
+      review_record_effect: REVOKED
+      source_status_projection: NO_CHANGE
+      review_status_projection: IN_REVIEW
+      preserve_history: true
+    RECORD_SUPERSEDED:
+      source_record_effect: SUPERSEDED_IF_SOURCE_RECORD
+      review_record_effect: SUPERSEDED_IF_REVIEW_RECORD
+      projection_rule: EXCLUDE_SUPERSEDED_RECORD
+      preserve_history: true
+
 migration_rules:
   - 只允许从路径、文件名、H1 和显式可见元信息提取确定值。
   - 不能确认的 content_type、difficulty、reading_time、prerequisites、source_status、review_status 使用 UNKNOWN。

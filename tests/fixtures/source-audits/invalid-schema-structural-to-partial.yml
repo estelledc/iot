@@ -1,0 +1,23 @@
+schema_version: "1.0"
+audit_id: audit-20260711-invalid-structural-partial
+content_id: 5g-mmtc-massive-iot-connection
+content_path: docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
+body_sha256: 244c184a66f32c3ed9a294cc4471386f43afc7942198ef699d209034f00ebbee
+audit_kind: STRUCTURAL
+outcome: AUDITABLE
+status_transition:
+  from: UNVERIFIED
+  to: PARTIAL
+auditor_id: agent-structural-auditor
+auditor_type: AGENT
+auditor_role: STRUCTURAL_AUDITOR
+audited_at: '2026-07-11T08:00:00Z'
+source_references: []
+structural_checks:
+  - check_id: citations-traceable
+    result: PASS
+    evidence: Every citation has a stable locator.
+claim_coverage: null
+notes: Structural audit proves auditability only and does not elevate source status.
+supersedes: null
+revocation: null

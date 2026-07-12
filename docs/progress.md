@@ -37,7 +37,7 @@ python tools/generate_layer_catalogs.py --check
 ## 当前决策
 
 - M1 治理基线已完成：frontmatter 全量覆盖、八层 catalog 可发现、CI `--all` 启用。
-- **下一步执行 M2 可信基线**：可执行步骤见 [M2 可信基线推进计划](superpowers/plans/2026-07-10-m2-trust-baseline.md)（审计 schema → 24 篇抽样报告 → 清单可统计 → 部署验收 → v0.3.0）。M2 完成前不启动 M3–M4。
+- **M2 仍是当前方向，但历史计划不是 agent 执行队列**：[M2 可信基线推进计划](superpowers/plans/2026-07-10-m2-trust-baseline.md) 已保留为历史输入。独立 agent 只从仓库根 `AGENTS.md` 与 `ops/active-goal.yml` 接管有限目标；当前目标未激活前不得写业务文件。M2 完成前不启动 M3–M4。
 - **全量正文深审战役（`IOT-T034`）已完成**：642/642 篇 `review_status: IN_REVIEW`；进度见 [全量正文深审计划](superpowers/plans/2026-07-10-full-deep-review.md) 与 `data/deep-review-progress.yml`。与 M2 来源审计正交（正文已深审仍可为 `source_status: UNVERIFIED`）。
 - 实施记录（M1）见 [M1 治理基线计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)。
 

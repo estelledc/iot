@@ -18,21 +18,15 @@ from typing import Any, Callable
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools.iot_domain import LAYERS, iter_content_documents
+
 DATA_PATH = Path("data/content-inventory.json")
 REVIEW_BASELINE_COMMIT = "2a18aec69793494156ffca67848ca0639c145fe4"
 START_MARKER = "<!-- content-inventory:start -->"
 END_MARKER = "<!-- content-inventory:end -->"
-
-LAYERS = (
-    (1, "foundation", "感知与硬件", "layer1-foundation.json"),
-    (2, "connectivity", "无线接入", "layer2-connectivity.json"),
-    (3, "network", "网络协议", "layer3-network.json"),
-    (4, "computing", "计算平台", "layer4-computing.json"),
-    (5, "intelligence", "边缘智能", "layer5-intelligence.json"),
-    (6, "security", "安全与隐私", "layer6-security.json"),
-    (7, "applications", "综合应用", "layer7-applications.json"),
-    (8, "frontier", "前沿方向", "layer8-frontier.json"),
-)
 
 
 def _load_plan(path: Path) -> list[dict[str, Any]]:
@@ -94,9 +88,12 @@ def content_inventory() -> dict[str, Any]:
     nav_paths = _nav_paper_paths()
     layers: list[dict[str, Any]] = []
     structural_paths = [ROOT / "mkdocs.yml"]
+    papers_by_layer = {layer.slug: [] for layer in LAYERS}
+    for document in iter_content_documents(repo_root=ROOT):
+        papers_by_layer[document.layer.slug].append(document.path)
 
     for layer_id, slug, name, plan_name in LAYERS:
-        paper_paths = sorted((ROOT / "docs" / slug / "papers").glob("*.md"))
+        paper_paths = papers_by_layer[slug]
         plan_path = ROOT / "plans" / plan_name
         index_path = ROOT / "docs" / slug / "index.md"
         catalog_file = ROOT / "docs" / slug / "catalog.md"

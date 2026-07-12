@@ -1,5 +1,7 @@
 # M2 可信基线 Implementation Plan
 
+> **SUPERSEDED 状态语义：** 本文保留为历史实施输入，不得继续执行其中“STRUCTURAL 审计把 `source_status` 升为 `PARTIAL`”或 Task 3 → Task 4 的自动升格步骤。当前机器合同与迁移规则以 [`docs/content-schema.md`](../../content-schema.md)、`schemas/source-audit.schema.json` 和 `schemas/review-record.schema.json` 为准。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 把「文件存在 ≠ 技术事实已验证」替换为机器可读的来源审计事实：24 篇抽样报告入库、清单可统计、`HUMAN_APPROVED` 绑定正文 hash、Pages 部署验收有据可查。

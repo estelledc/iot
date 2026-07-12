@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://estelledc.github.io/iot/schemas/trust-authorities.schema.json",
+  "title": "IoT Reading Station trust projection authorities",
+  "description": "Global actor authorities plus body-bound authors and locked critical-claim inventories consumed by the repository trust graph.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "authority_kind",
+    "actors",
+    "entries"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "authority_kind": {
+      "const": "TRUST_PROJECTION_AUTHORITY"
+    },
+    "actors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/actor_authority"
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/authority_entry"
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "content_path": {
+      "type": "string",
+      "pattern": "^docs/(foundation|connectivity|network|computing|intelligence|security|applications|frontier)/papers/[a-z0-9]+(?:-[a-z0-9]+)*\\.md$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "actor_id": {
+      "type": "string",
+      "pattern": "^(human|agent)-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^claim-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "actor_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor_id",
+        "actor_type",
+        "allowed_roles"
+      ],
+      "properties": {
+        "actor_id": {
+          "$ref": "#/$defs/actor_id"
+        },
+        "actor_type": {
+          "enum": [
+            "HUMAN",
+            "AGENT"
+          ]
+        },
+        "allowed_roles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "CONTENT_AUTHOR",
+              "STRUCTURAL_AUDITOR",
+              "FACT_AUDITOR",
+              "REVIEWER",
+              "APPROVER",
+              "GOVERNANCE_REVIEWER"
+            ]
+          }
+        }
+      }
+    },
+    "authority_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_id",
+        "content_path",
+        "body_sha256",
+        "author_ids"
+      ],
+      "properties": {
+        "content_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "content_path": {
+          "$ref": "#/$defs/content_path"
+        },
+        "body_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "author_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/actor_id"
+          }
+        },
+        "critical_claim_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/claim_id"
+          }
+        }
+      }
+    }
+  }
+}
