@@ -481,5 +481,13 @@ class WorkflowPolicyTests(unittest.TestCase):
                 )
 
 
+class PublicDiscoveryTests(unittest.TestCase):
+    def test_robots_points_to_public_sitemap(self):
+        robots = (Path(__file__).resolve().parents[1] / "docs" / "robots.txt").read_text(encoding="utf-8")
+        self.assertIn("User-agent: *", robots)
+        self.assertIn("Allow: /", robots)
+        self.assertIn("Sitemap: https://estelledc.github.io/iot/sitemap.xml", robots)
+
+
 if __name__ == "__main__":
     unittest.main()

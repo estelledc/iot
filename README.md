@@ -1,6 +1,16 @@
 # IoT Reading Station
 
-物联网论文阅读站——覆盖边缘计算、协作推理、联邦学习、智能感知等 IoT 相关方向。
+从传感器、无线接入到边缘智能与 6G 前沿的中文 IoT 全栈学习站。八层技术地图先回答“一个方向在系统里的什么位置”，再把读者带到可追溯的教程、论文阅读与工程对比。
+
+[在线学习站](https://estelledc.github.io/iot/) · [学习路线](https://estelledc.github.io/iot/roadmap/) · [事实与审核口径](https://estelledc.github.io/iot/progress/) · [发布规则](docs/architecture/release-policy.md)
+
+## 对外展示摘要
+
+- **问题**：IoT 横跨硬件、连接、协议、计算、智能、安全与应用；单篇阅读很容易失去依赖关系和学习顺序。
+- **系统**：Markdown 源真相 → frontmatter schema 与确定性清单 → 自动 catalog、搜索与 MkDocs Pages → CI 结构、链接和发布门禁。
+- **可核查证据**：8 层技术体系；642 个内容文件已全部进入可发现目录；M1 治理基线已完成。
+- **协作分工**：Jason 负责分层、里程碑、发布门禁与验收判断；AI 辅助研究、初稿、批量深审和站点实现，不能自行授予 `VERIFIED` 或 `HUMAN_APPROVED`。
+- **当前局限**：全量来源审计仍是 `NOT_TRACKED`；642/642 正文处于 `IN_REVIEW`，不表示技术事实已经人工验证；Pages 运行状态需针对目标 commit 单独验收。
 
 <!-- content-inventory:start -->
 ## 当前内容基线

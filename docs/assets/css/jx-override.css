@@ -4,6 +4,29 @@
 
 /* ═══ Global Reset ═══ */
 :root {
+  /* IoT satellite values layered over the vendored Jason DS v2 tokens. */
+  --jx-rule-strong: rgba(22, 24, 29, 0.18);
+  --iot-layer-1: #1a7a5c;
+  --iot-layer-2: #2563eb;
+  --iot-layer-3: #7c3aed;
+  --iot-layer-4: #dc2626;
+  --iot-layer-5: #ea580c;
+  --iot-layer-6: #4f46e5;
+  --iot-layer-7: #0891b2;
+  --iot-layer-8: #be185d;
+  --iot-grid: rgba(31, 111, 120, 0.055);
+  --iot-glow: rgba(31, 111, 120, 0.13);
+  --iot-console: #0c1415;
+  --iot-console-hover: rgba(125, 226, 216, 0.07);
+  --iot-console-ink: #e9f3f1;
+  --iot-console-muted: #829896;
+  --iot-console-line: rgba(204, 239, 234, 0.11);
+  --iot-console-line-strong: rgba(125, 226, 216, 0.32);
+  --iot-console-signal: #7de2d8;
+  --iot-console-good: #8be6a5;
+  --iot-console-good-bg: rgba(84, 192, 116, 0.13);
+  --iot-console-warn: #f0bf72;
+  --iot-console-warn-bg: rgba(240, 191, 114, 0.12);
   --md-primary-fg-color: var(--jx-accent);
   --md-primary-bg-color: var(--jx-paper);
   --md-accent-fg-color: var(--jx-accent);
@@ -21,6 +44,7 @@
 @media (prefers-color-scheme: dark) {
   :root,
   [data-md-color-scheme="default"] {
+    --jx-rule-strong: rgba(255, 255, 255, 0.14);
     --md-default-bg-color: var(--jx-paper);
     --md-default-fg-color: var(--jx-ink);
     --md-code-bg-color: var(--jx-surface-sunk);
@@ -32,6 +56,8 @@
     --md-primary-fg-color: var(--jx-accent);
     --md-primary-bg-color: var(--jx-paper);
     --md-accent-fg-color: var(--jx-accent);
+    --iot-grid: rgba(125, 226, 216, 0.045);
+    --iot-glow: rgba(52, 178, 166, 0.12);
     color-scheme: dark;
   }
 
@@ -137,6 +163,10 @@ body,
 .md-typeset a.iot-pill:hover,
 .md-typeset a.iot-layer-card,
 .md-typeset a.iot-layer-card:hover,
+.md-typeset a.jx-action,
+.md-typeset a.jx-action:hover,
+.md-typeset a.jx-pill,
+.md-typeset a.jx-pill:hover,
 .jx-footer-custom__index a {
   text-decoration: none;
 }
@@ -148,6 +178,15 @@ body,
 }
 .md-typeset a.iot-layer-card {
   color: var(--jx-ink);
+}
+.md-typeset a.jx-action {
+  color: var(--jx-cta-fg);
+}
+.md-typeset a.jx-action.jx-action--secondary {
+  color: var(--jx-ink);
+}
+.md-typeset a.jx-pill {
+  color: var(--jx-ink-2);
 }
 
 /* ═══ Code ═══ */
@@ -224,6 +263,8 @@ body,
 }
 
 .md-header__title {
+  min-width: 0;
+  flex: 1 1 auto;
   font-family: var(--jx-font-display);
   font-weight: var(--jx-weight-heading);
   font-size: var(--jx-fs-sm);
@@ -240,6 +281,69 @@ body,
 
 .md-source__repository {
   color: var(--jx-ink-2) !important;
+}
+
+.iot-global-nav {
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+}
+
+.iot-global-nav .jx-return-to-hub {
+  color: var(--jx-ink-muted);
+}
+
+@media (max-width: 1100px) {
+  .iot-global-nav .jx-site-nav__links {
+    display: none;
+  }
+
+  .iot-global-nav .jx-site-nav__menu {
+    display: block;
+    position: relative;
+  }
+
+  .iot-global-nav .jx-site-nav__menu summary {
+    min-width: 44px;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: var(--jx-ink);
+    font-family: var(--jx-font-mono);
+    font-size: var(--jx-fs-xs);
+    list-style: none;
+    transition: transform var(--jx-duration-press) var(--jx-ease-out),
+                color var(--jx-duration-fast) var(--jx-ease-out),
+                background-color var(--jx-duration-fast) var(--jx-ease-out);
+  }
+
+  .iot-global-nav .jx-site-nav__menu summary:active {
+    transform: scale(var(--jx-press-scale));
+  }
+
+  .iot-global-nav .jx-site-nav__menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .iot-global-nav .jx-site-nav__menu nav {
+    position: absolute;
+    inset: calc(100% + var(--jx-space-2)) 0 auto auto;
+    min-width: 210px;
+    display: grid;
+    gap: var(--jx-space-1);
+    padding: var(--jx-space-3);
+    background: var(--jx-surface);
+    border-radius: var(--jx-radius-4);
+    box-shadow: var(--jx-shadow-stack);
+  }
+
+  .iot-global-nav .jx-site-nav__menu nav a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding-inline: var(--jx-space-3);
+    border-radius: var(--jx-radius-2);
+  }
 }
 
 .md-tabs {
@@ -374,32 +478,6 @@ body,
   border-radius: var(--jx-radius-pill);
 }
 
-/* ═══ Return-to-hub component ═══ */
-.jx-return-to-hub {
-  position: fixed;
-  top: 12px;
-  left: 12px;
-  z-index: 100;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--jx-space-2);
-  padding: var(--jx-space-2) var(--jx-space-3);
-  font-family: var(--jx-font-mono);
-  font-size: var(--jx-fs-micro);
-  text-transform: lowercase;
-  letter-spacing: var(--jx-tracking-eyebrow);
-  color: var(--jx-ink-muted);
-  text-decoration: none;
-  background: color-mix(in oklab, var(--jx-paper), transparent 20%);
-  backdrop-filter: blur(8px);
-  border-radius: var(--jx-radius-pill);
-  box-shadow: var(--jx-shadow-hairline);
-  transition: color var(--jx-duration-fast) var(--jx-easing);
-}
-
-.jx-return-to-hub::before { content: "←"; }
-.jx-return-to-hub:hover { color: var(--jx-accent-hub); }
-
 /* ═══ Custom footer (jx-footer) ═══ */
 .jx-footer-custom {
   margin-top: var(--jx-space-7);
@@ -454,10 +532,36 @@ body,
   .jx-footer-custom__stamp { text-align: start; }
 }
 
-/* ═══ Reduce motion ═══ */
+/* ═══ Reduced motion keeps immediate semantic color feedback ═══ */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  .iot-global-nav .jx-site-nav__menu summary,
+  .iot-global-nav .jx-site-nav__menu summary:active {
+    transform: none;
+    transition-property: color, background-color;
+    transition-duration: var(--jx-duration-fast);
+    transition-timing-function: var(--jx-ease-out);
   }
+}
+
+.iot-not-found {
+  width: min(100% - 2rem, 52rem);
+  margin: clamp(4rem, 12vw, 9rem) auto;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  border: 1px solid var(--jx-line);
+  background: var(--jx-paper);
+}
+
+.iot-not-found h1 {
+  max-width: 12ch;
+  margin: 1rem 0;
+  font-family: var(--jx-font-display);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 1.04;
+}
+
+.iot-not-found__actions {
+  display: flex;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
