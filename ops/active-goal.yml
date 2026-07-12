@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T046
-status: ACTIVE
+status: CLOSING
 objective: >-
   按 M2 可信基线计划，对 8 层每层导航精选前 3 篇（共 24 篇）canonical 文档执行
   STRUCTURAL shadow audit，建立跨层结构审计覆盖。继承 IOT-T045 已完成的 5 篇
@@ -169,25 +169,18 @@ selection:
     applications: v2x-autonomous-driving, iiot-predictive-maintenance, indoor-positioning-survey;
     frontier: digital-twin-edge-offloading, 6g-isac-iot, wasm-edge-runtime.
 progress:
-  completed_batches: 1
-  completed_articles: 11
-  completed_commits: 1
+  completed_batches: 2
+  completed_articles: 29
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: SLICE_OK
-  last_external_delta: STRUCTURAL_SHADOW_BATCH1
+  last_result: ALL_SLICES_COMPLETE
+  last_external_delta: STRUCTURAL_SHADOW_BATCH2
 activation:
   ref: 8617f894d9997d7f698925dd9b1540a59feedbb7
   activated_at: '2026-07-12T06:30:00Z'
 next_action:
-  kind: RUN_NEXT_SLICE
+  kind: RUN_GOAL_CLOSE_CHECKS
   requires_activation: false
   instruction: >-
-    Run remaining 18 STRUCTURAL shadow audits covering all M2 24-paper sample:
-    foundation(rtos-comparison,tinyml-mcu-deployment,rfid-sensing-survey),
-    connectivity(sparklink-vs-ble6,lpwan-comparison,uwb-positioning),
-    network(tsn-detnet-industrial,wsn-routing-drl),
-    computing(serverless-edge,kubeedge-openyurt-comparison),
-    intelligence(federated-learning-iot,model-compression-edge),
-    security(federated-learning-privacy,puf-device-authentication),
-    applications(iiot-predictive-maintenance,indoor-positioning-survey),
-    frontier(6g-isac-iot,wasm-edge-runtime).
+    All 29 articles (5 T045 legacy + 24 M2 sample) have STRUCTURAL AUDITABLE no-op
+    records. Run EVERY_SLICE + GOAL_CLOSE gates, transition to CLOSING then COMPLETE.
