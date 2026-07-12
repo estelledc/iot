@@ -156,11 +156,18 @@
     border: 1px solid transparent;
     border-radius: var(--jx-radius-2);
     text-decoration: none !important;
+    transition: background-color var(--jx-duration-fast) var(--jx-ease-out),
+                border-color var(--jx-duration-fast) var(--jx-ease-out);
   }
-  .iot-stack-map a:hover,
   .iot-stack-map a:focus-visible {
     color: var(--iot-console-ink) !important;
-    background: var(--iot-console-hover);
+    background-color: var(--iot-console-hover);
+    border-color: var(--iot-console-line-strong);
+    outline: none;
+    box-shadow: var(--jx-shadow-focus);
+  }
+  .iot-stack-map a:active {
+    background-color: var(--iot-console-hover);
     border-color: var(--iot-console-line-strong);
   }
   .iot-stack-map__id {
@@ -313,17 +320,22 @@
     border: 1px solid var(--jx-rule-strong);
     border-radius: var(--jx-radius-4);
     background: var(--jx-surface);
-    transition: box-shadow var(--jx-duration-base) var(--jx-easing),
-                border-color var(--jx-duration-base) var(--jx-easing);
+    transition: box-shadow var(--jx-duration-fast) var(--jx-ease-out),
+                border-color var(--jx-duration-fast) var(--jx-ease-out);
     text-decoration: none !important;
     display: block;
     color: var(--jx-ink) !important;
   }
-  .iot-layer-card:hover {
+  .iot-layer-card:focus-visible {
     border-color: var(--jx-ink);
-    box-shadow: var(--jx-shadow-stack);
+    box-shadow: var(--jx-shadow-focus);
     text-decoration: none !important;
     color: var(--jx-ink) !important;
+    outline: none;
+  }
+  .iot-layer-card:active {
+    border-color: var(--jx-ink);
+    box-shadow: var(--jx-shadow-press);
   }
   .iot-layer-card__eyebrow {
     font-family: var(--jx-font-mono);
@@ -353,6 +365,29 @@
     font-size: var(--jx-fs-xs);
     color: var(--jx-ink-2);
     letter-spacing: var(--jx-tracking-mono);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .iot-stack-map a:hover {
+      color: var(--iot-console-ink) !important;
+      background-color: var(--iot-console-hover);
+      border-color: var(--iot-console-line-strong);
+    }
+    .iot-layer-card:hover {
+      border-color: var(--jx-ink);
+      box-shadow: var(--jx-shadow-stack);
+      text-decoration: none !important;
+      color: var(--jx-ink) !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .iot-stack-map a,
+    .iot-layer-card {
+      transition-property: color, background-color, border-color, box-shadow;
+      transition-duration: var(--jx-duration-fast);
+      transition-timing-function: var(--jx-ease-out);
+    }
   }
 
   /* ── Canonical Markdown prose ── */
