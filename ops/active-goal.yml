@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T046
-status: PREPARED
+status: ACTIVE
 objective: >-
   按 M2 可信基线计划，对 8 层每层导航精选前 3 篇（共 24 篇）canonical 文档执行
   STRUCTURAL shadow audit，建立跨层结构审计覆盖。继承 IOT-T045 已完成的 5 篇
@@ -10,7 +10,7 @@ scope:
   mode: STRUCTURAL_SHADOW_AUDIT
   first_batch_articles: 11
   max_articles: 29
-activated_by: "PENDING_DEDICATED_AGENT_LAUNCH"
+activated_by: "dedicated-agent-user-request"
 review_after: FIRST_SLICE_ACCEPTANCE
 budget:
   max_batches: 4
@@ -128,21 +128,66 @@ selection:
     激活时从 IOT-T045 遗留的 5 篇 foundation/connectivity 审计出发，追加 M2 抽样
     清单中每层 1 篇（共 6 篇），首批总计 11 篇，覆盖全部 8 层。首批通过
     EVERY_SLICE 门禁后按层扩展到 24 篇 M2 样本；总数不超过 29 篇（含遗留 5 篇）。
-  selected_articles: []
-  rationale: null
+  selected_articles:
+    - docs/foundation/papers/3d-printed-sensor-enclosure.md
+    - docs/foundation/papers/4-20ma-current-loop-industrial.md
+    - docs/foundation/papers/rtos-comparison.md
+    - docs/foundation/papers/tinyml-mcu-deployment.md
+    - docs/foundation/papers/rfid-sensing-survey.md
+    - docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
+    - docs/connectivity/papers/5g-network-slicing-iot-vertical.md
+    - docs/connectivity/papers/5g-nr-redcap-iot-device.md
+    - docs/connectivity/papers/sparklink-vs-ble6.md
+    - docs/connectivity/papers/lpwan-comparison.md
+    - docs/connectivity/papers/uwb-positioning.md
+    - docs/network/papers/iot-app-protocols.md
+    - docs/network/papers/tsn-detnet-industrial.md
+    - docs/network/papers/wsn-routing-drl.md
+    - docs/computing/papers/edge-computing-survey.md
+    - docs/computing/papers/serverless-edge.md
+    - docs/computing/papers/kubeedge-openyurt-comparison.md
+    - docs/intelligence/papers/jupiter.md
+    - docs/intelligence/papers/federated-learning-iot.md
+    - docs/intelligence/papers/model-compression-edge.md
+    - docs/security/papers/iot-security-systematic-review.md
+    - docs/security/papers/federated-learning-privacy.md
+    - docs/security/papers/puf-device-authentication.md
+    - docs/applications/papers/v2x-autonomous-driving.md
+    - docs/applications/papers/iiot-predictive-maintenance.md
+    - docs/applications/papers/indoor-positioning-survey.md
+    - docs/frontier/papers/digital-twin-edge-offloading.md
+    - docs/frontier/papers/6g-isac-iot.md
+    - docs/frontier/papers/wasm-edge-runtime.md
+  rationale: >-
+    完整 M2 抽样：5 篇 IOT-T045 遗留 + 24 篇 M2 跨层样本（8层×3篇），共 29 篇。
+    foundation: 2 legacy + rtos-comparison, tinyml-mcu-deployment, rfid-sensing-survey;
+    connectivity: 3 legacy + sparklink-vs-ble6, lpwan-comparison, uwb-positioning;
+    network: iot-app-protocols, tsn-detnet-industrial, wsn-routing-drl;
+    computing: edge-computing-survey, serverless-edge, kubeedge-openyurt-comparison;
+    intelligence: jupiter, federated-learning-iot, model-compression-edge;
+    security: iot-security-systematic-review, federated-learning-privacy, puf-device-authentication;
+    applications: v2x-autonomous-driving, iiot-predictive-maintenance, indoor-positioning-survey;
+    frontier: digital-twin-edge-offloading, 6g-isac-iot, wasm-edge-runtime.
 progress:
-  completed_batches: 0
-  completed_articles: 0
-  completed_commits: 0
+  completed_batches: 1
+  completed_articles: 11
+  completed_commits: 1
   no_external_delta_batches: 0
-  last_result: NOT_STARTED
-  last_external_delta: NONE
+  last_result: SLICE_OK
+  last_external_delta: STRUCTURAL_SHADOW_BATCH1
 activation:
-  ref: null
-  activated_at: null
+  ref: 8617f894d9997d7f698925dd9b1540a59feedbb7
+  activated_at: '2026-07-12T06:30:00Z'
 next_action:
-  kind: ACTIVATE_AND_RUN_FIRST_SLICE
-  requires_activation: true
+  kind: RUN_NEXT_SLICE
+  requires_activation: false
   instruction: >-
-    Activate the bounded first slice: freeze 11 articles (5 legacy + 6 new M2
-    cross-layer samples), set activation ref, and run STRUCTURAL audits.
+    Run remaining 18 STRUCTURAL shadow audits covering all M2 24-paper sample:
+    foundation(rtos-comparison,tinyml-mcu-deployment,rfid-sensing-survey),
+    connectivity(sparklink-vs-ble6,lpwan-comparison,uwb-positioning),
+    network(tsn-detnet-industrial,wsn-routing-drl),
+    computing(serverless-edge,kubeedge-openyurt-comparison),
+    intelligence(federated-learning-iot,model-compression-edge),
+    security(federated-learning-privacy,puf-device-authentication),
+    applications(iiot-predictive-maintenance,indoor-positioning-survey),
+    frontier(6g-isac-iot,wasm-edge-runtime).
