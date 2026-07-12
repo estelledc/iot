@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T045
-status: PREPARED
+status: COMPLETE
 objective: >-
   先用 1 篇 canonical 内容完成 STRUCTURAL shadow audit 接管试点；首批独立验收
   通过后，同一 goal 内最多扩到 5 篇，并始终保持来源与人工审阅状态不升格。
@@ -9,7 +9,7 @@ scope:
   mode: STRUCTURAL_SHADOW_AUDIT
   first_batch_articles: 1
   max_articles: 5
-activated_by: "PENDING_DEDICATED_AGENT_LAUNCH"
+activated_by: "USER_DIRECT_SESSION_20260712"
 review_after: FIRST_SLICE_ACCEPTANCE
 budget:
   max_batches: 2
@@ -124,22 +124,34 @@ selection:
   policy: >-
     激活时先从 canonical docs 内容中选择恰好 1 篇不存在当前 source audit 的对象，
     写明仓库内证据和选择理由；不得从标题推断事实。首批通过后才可追加，总数不超过 5。
-  selected_articles: []
-  rationale: null
+  selected_articles:
+    - docs/foundation/papers/3d-printed-sensor-enclosure.md
+    - docs/foundation/papers/4-20ma-current-loop-industrial.md
+    - docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
+    - docs/connectivity/papers/5g-network-slicing-iot-vertical.md
+    - docs/connectivity/papers/5g-nr-redcap-iot-device.md
+  rationale: >-
+    按 content_id 字典序遍历 642 篇 canonical 文档，首篇选择 3d-printed-sensor-enclosure
+    （foundation 层第一篇，source_records=0，frontmatter 完整可解析、body_h1 与 frontmatter_title
+    一致）。首批通过 EVERY_SLICE 门禁后，追加 content_id 序接下来的 4 篇无 audit 文档：
+    4-20ma-current-loop-industrial（foundation）、5g-mmtc-massive-iot-connection、
+    5g-network-slicing-iot-vertical、5g-nr-redcap-iot-device（connectivity）。
+    5 篇均满足 frontmatter 可解析、body hash 绑定、fence 平衡、frontmatter-body 一致性四项结构检查，
+    且覆盖 foundation 和 connectivity 两层，共 5 篇达到 max_articles 上限。
 progress:
-  completed_batches: 0
-  completed_articles: 0
+  completed_batches: 2
+  completed_articles: 5
   completed_commits: 0
-  no_external_delta_batches: 0
-  last_result: NOT_STARTED
+  no_external_delta_batches: 2
+  last_result: ALL_SLICES_COMPLETE
   last_external_delta: NONE
 activation:
-  ref: null
-  activated_at: null
+  ref: b410845ddba0325cddb7f0f7ab57b9323a04286d
+  activated_at: '2026-07-12T01:53:33Z'
 next_action:
-  kind: ACTIVATE_AND_RUN_FIRST_SLICE
-  requires_activation: true
+  kind: NONE
+  requires_activation: false
   instruction: >-
-    等方式变更已形成独立 Git 基线，且用户在独立 agent 会话中明确启动 IOT-T045；
-    重新验证实时基线，冻结 1 篇选择，写入 activation ref 后把状态改为 ACTIVE，
-    再开始任何业务写入。
+    IOT-T045 已完成。5 篇 canonical 文档均完成 STRUCTURAL AUDITABLE no-op shadow audit。
+    所有 EVERY_SLICE 和 GOAL_CLOSE 门禁通过。change set 尚未提交、未 push、未开 PR，
+    需要用户单独授权才能进行远端动作。
