@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T049
-status: ACTIVE
+status: PAUSED
 objective: >-
   针对已经真实部署成功的 main merge SHA 建立机器可验证的 Pages 验收记录，
   绑定不可变 commit、workflow run、公开 URL、HTTP 状态、首页品牌和八层导航、
@@ -162,18 +162,17 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 2
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: T049_DEPLOY_ACCEPTANCE_LOCAL_CHECKS_PASSED
-  last_external_delta: DEPLOY_ACCEPTANCE_RECORD_BOUND_TO_B375FD8_MAIN_PAGES
+  last_result: PR_24_REMOTE_QUALITY_SUCCESS_WAIT_REVIEW
+  last_external_delta: DRAFT_PR_24_OPENED_AND_REPOSITORY_QUALITY_SUCCEEDED
 activation:
   ref: b375fd8bb32b35be9ab03e08ecedd4287dec87a1
   activated_at: "2026-07-13T04:34:11Z"
 next_action:
-  kind: PUSH_AND_OPEN_DRAFT_PR
+  kind: WAIT_REVIEW
   requires_activation: false
   instruction: >-
-    Commit the deploy acceptance record and checker, push codex/iot-t049-deployed-sha-acceptance,
-    open the unique Draft PR, wait for Repository quality on the current head, then
-    mark the PR ready for review if all checks pass. Do not merge without a separate
-    merge authorization.
+    Push this status update to PR #24, wait for Repository quality on the current
+    head to succeed, then mark PR #24 ready for review. Do not merge without a
+    separate merge authorization.
