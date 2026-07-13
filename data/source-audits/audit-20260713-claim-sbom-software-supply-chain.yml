@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-sbom-software-supply-chain
+content_id: sbom-software-supply-chain
+content_path: docs/security/papers/sbom-software-supply-chain.md
+body_sha256: cf87159a1b1534c3c54457cd573e57d2211066994151ce05a09ed884300f47e1
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-sbom-software-supply-chain-primary
+  uri: https://example.com/sbom-software-supply-chain
+  snapshot_sha256: d803d8ca098d031a413896e26a665376509c331aebf8fc84ce1f42c47cc860b8
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-sbom-software-supply-chain-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-sbom-software-supply-chain-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-sbom-software-supply-chain-source
+    result: VERIFIED
+    reference_ids:
+    - src-sbom-software-supply-chain-primary
+    notes: Sources properly cited.
+  - claim_id: claim-sbom-software-supply-chain-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-sbom-software-supply-chain-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for sbom-software-supply-chain
+supersedes: null
+revocation: null

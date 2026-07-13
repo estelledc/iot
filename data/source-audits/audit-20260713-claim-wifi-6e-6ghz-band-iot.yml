@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-wifi-6e-6ghz-band-iot
+content_id: wifi-6e-6ghz-band-iot
+content_path: docs/connectivity/papers/wifi-6e-6ghz-band-iot.md
+body_sha256: c374cd78e95e7683d015aee3e2a188f3c1af87d740c5c73a84d283d8dca2e364
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-wifi-6e-6ghz-band-iot-primary
+  uri: https://example.com/wifi-6e-6ghz-band-iot
+  snapshot_sha256: 84f08b3ddc75f88af3c19072500eb7c17776153fce160fda7a9163bcd4d0a4f4
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-wifi-6e-6ghz-band-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-wifi-6e-6ghz-band-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-wifi-6e-6ghz-band-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-wifi-6e-6ghz-band-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-wifi-6e-6ghz-band-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-wifi-6e-6ghz-band-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for wifi-6e-6ghz-band-iot
+supersedes: null
+revocation: null

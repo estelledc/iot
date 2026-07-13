@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-compressive-sensing-iot-data
+content_id: compressive-sensing-iot-data
+content_path: docs/connectivity/papers/compressive-sensing-iot-data.md
+body_sha256: 7f3c9cb3bff82a4e4070f36725836e3e1bc1dd7e644522627bbcec0068ec57ee
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-compressive-sensing-iot-data
+- audit-20260713-claim-compressive-sensing-iot-data
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for compressive-sensing-iot-data
+supersedes: review-20260713-start-compressive-sensing-iot-data
+revocation: null

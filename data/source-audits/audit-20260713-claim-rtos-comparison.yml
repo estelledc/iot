@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-rtos-comparison
+content_id: rtos-comparison
+content_path: docs/foundation/papers/rtos-comparison.md
+body_sha256: 2e8a2ae6a84d437fdbfe9ab548feea4fe37367b82322cfdf05a979f7ae399c04
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T10:15:00Z'
+source_references:
+- reference_id: src-rtos-comparison
+  uri: https://ieeexplore.ieee.org/document/9543210
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T10:10:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-rtos-real-time-guarantee
+    result: VERIFIED
+    reference_ids: &id001
+    - src-rtos-comparison
+    notes: "claim-rtos-real-time-guarantee \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-rtos-memory-footprint
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-rtos-memory-footprint \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-rtos-power-management
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-rtos-power-management \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 rtos-comparison \u5185\u5BB9\u7684 CLAIM_VERIFICATION \u5BA1\u8BA1\
+  \uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

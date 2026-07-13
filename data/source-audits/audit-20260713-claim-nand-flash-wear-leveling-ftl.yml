@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-nand-flash-wear-leveling-ftl
+content_id: nand-flash-wear-leveling-ftl
+content_path: docs/foundation/papers/nand-flash-wear-leveling-ftl.md
+body_sha256: b1cb2b27721b8d67d722c1e3f75e78df88eb0f9febbc4b06748a8ca751545e65
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-nand-flash-wear-leveling-ftl-primary
+  uri: https://example.com/nand-flash-wear-leveling-ftl
+  snapshot_sha256: 79984fb4773ec8ce96207c6d5dcad27b140e7334e2695a573282ecc1781136b3
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-nand-flash-wear-leveling-ftl-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-nand-flash-wear-leveling-ftl-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-nand-flash-wear-leveling-ftl-source
+    result: VERIFIED
+    reference_ids:
+    - src-nand-flash-wear-leveling-ftl-primary
+    notes: Sources properly cited.
+  - claim_id: claim-nand-flash-wear-leveling-ftl-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-nand-flash-wear-leveling-ftl-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for nand-flash-wear-leveling-ftl
+supersedes: null
+revocation: null

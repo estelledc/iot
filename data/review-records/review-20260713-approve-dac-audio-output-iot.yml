@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-dac-audio-output-iot
+content_id: dac-audio-output-iot
+content_path: docs/foundation/papers/dac-audio-output-iot.md
+body_sha256: b90c5527f207385662c3cab0b59324bfe6eaa2b64ead5daa071719a72d318e64
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-dac-audio-output-iot
+- audit-20260713-claim-dac-audio-output-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for dac-audio-output-iot
+supersedes: review-20260713-start-dac-audio-output-iot
+revocation: null

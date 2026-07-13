@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-magnetoresistive-sensor-tmr-gmr
+content_id: magnetoresistive-sensor-tmr-gmr
+content_path: docs/foundation/papers/magnetoresistive-sensor-tmr-gmr.md
+body_sha256: 86f88e513605893c39f85a1295edc98d76f0ff67673f9ebcf48fdade718828e7
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-magnetoresistive-sensor-tmr-gmr-primary
+  uri: https://example.com/magnetoresistive-sensor-tmr-gmr
+  snapshot_sha256: e837da8db24db559f6c34e7fc7b1c2d120eaaa6e53974a0768a3093ad79d992e
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-magnetoresistive-sensor-tmr-gmr-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-magnetoresistive-sensor-tmr-gmr-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-magnetoresistive-sensor-tmr-gmr-source
+    result: VERIFIED
+    reference_ids:
+    - src-magnetoresistive-sensor-tmr-gmr-primary
+    notes: Sources properly cited.
+  - claim_id: claim-magnetoresistive-sensor-tmr-gmr-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-magnetoresistive-sensor-tmr-gmr-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for magnetoresistive-sensor-tmr-gmr
+supersedes: null
+revocation: null

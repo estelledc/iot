@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-adversarial-attacks-edge-ai
+content_id: adversarial-attacks-edge-ai
+content_path: docs/security/papers/adversarial-attacks-edge-ai.md
+body_sha256: a8f496903f9bdc7b408ccbedcbb55e96d2bbc81ba3d64c38e160effa7d685fd1
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-adversarial-attacks-edge-ai
+- audit-20260713-claim-adversarial-attacks-edge-ai
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for adversarial-attacks-edge-ai
+supersedes: null
+revocation: null

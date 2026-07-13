@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-model-compression-edge
+content_id: model-compression-edge
+content_path: docs/intelligence/papers/model-compression-edge.md
+body_sha256: 80c3d695af28179d0a5fd53328bd2564f009f0d15da3aa08b97b5fff074a3f08
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T10:00:00Z'
+source_references:
+- reference_id: src-model-compression
+  uri: https://ieeexplore.ieee.org/document/9654321
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T09:55:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-compression-accuracy-tradeoff
+    result: VERIFIED
+    reference_ids: &id001
+    - src-model-compression
+    notes: "claim-compression-accuracy-tradeoff \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-compression-inference-speedup
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-compression-inference-speedup \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-edge-deployment-size
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-edge-deployment-size \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 model-compression-edge \u5185\u5BB9\u7684 CLAIM_VERIFICATION\
+  \ \u5BA1\u8BA1\uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

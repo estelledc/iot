@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: '1.0'
 audit_id: audit-20260712-structural-federated-learning-iot
 content_id: federated-learning-iot
 content_path: docs/intelligence/papers/federated-learning-iot.md
@@ -11,22 +11,27 @@ status_transition:
 auditor_id: agent-structural-auditor
 auditor_type: AGENT
 auditor_role: STRUCTURAL_AUDITOR
-audited_at: '2026-07-12T06:28:13Z'
+audited_at: '2026-07-12T10:00:00Z'
 source_references: []
 structural_checks:
-  - check_id: frontmatter-parses
-    result: PASS
-    evidence: YAML frontmatter parses without duplicate keys or type errors; all required fields present.
-  - check_id: body-hash-bound
-    result: PASS
-    evidence: Body SHA256 24c3cefe9b7704235a72daa7f2a123b7a653f9d86dcc943bd310e15614828b6d matches canonical content hash bound by ContentDocument parser.
-  - check_id: markdown-fence-balance
-    result: PASS
-    evidence: All code fences are properly opened and closed; no dangling fences detected.
-  - check_id: frontmatter-body-consistency
-    result: PASS
-    evidence: frontmatter_title matches body_h1 exactly; layer=intelligence, content_type consistent with document path.
+- check_id: frontmatter-parses
+  result: PASS
+  evidence: YAML frontmatter parses without duplicate keys or type errors; all required
+    fields present.
+- check_id: body-hash-bound
+  result: PASS
+  evidence: Body SHA256 24c3cefe9b7704235a72daa7f2a123b7a653f9d86dcc943bd310e15614828b6d
+    matches canonical content hash bound by ContentDocument parser.
+- check_id: markdown-fence-balance
+  result: PASS
+  evidence: All code fences are properly opened and closed; no dangling fences detected.
+- check_id: frontmatter-body-consistency
+  result: PASS
+  evidence: frontmatter_title matches body_h1 exactly; layer=intelligence, content_type
+    consistent with document path.
 claim_coverage: null
-notes: Structural shadow audit proves only that the document is structurally auditable; source_status remains UNVERIFIED. No claim verification or content review is performed or implied.
+notes: Structural shadow audit proves only that the document is structurally auditable;
+  source_status remains UNVERIFIED. No claim verification or content review is performed
+  or implied.
 supersedes: null
 revocation: null

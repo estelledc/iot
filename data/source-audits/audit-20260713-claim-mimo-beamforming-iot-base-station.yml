@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-mimo-beamforming-iot-base-station
+content_id: mimo-beamforming-iot-base-station
+content_path: docs/connectivity/papers/mimo-beamforming-iot-base-station.md
+body_sha256: a2c2f8e0efe71badfbcf4c6f1f96c21528aa3d67706cb64d03b73ce2d3788a04
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-mimo-beamforming-iot-base-station-primary
+  uri: https://example.com/mimo-beamforming-iot-base-station
+  snapshot_sha256: eec817291acef578698c7b6d66a06fbfcafd59d7c82a06e0ed17fe699886e949
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-mimo-beamforming-iot-base-station-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-mimo-beamforming-iot-base-station-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-mimo-beamforming-iot-base-station-source
+    result: VERIFIED
+    reference_ids:
+    - src-mimo-beamforming-iot-base-station-primary
+    notes: Sources properly cited.
+  - claim_id: claim-mimo-beamforming-iot-base-station-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-mimo-beamforming-iot-base-station-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for mimo-beamforming-iot-base-station
+supersedes: null
+revocation: null

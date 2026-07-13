@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-wireless-hart-industrial-sensor
+content_id: wireless-hart-industrial-sensor
+content_path: docs/connectivity/papers/wireless-hart-industrial-sensor.md
+body_sha256: 164a07726b00f5a9e5f4c2a1da9248a1654dd52630be70c85a0f1f3e7315fc55
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-wireless-hart-industrial-sensor-primary
+  uri: https://example.com/wireless-hart-industrial-sensor
+  snapshot_sha256: 703b6371b59d2da238b601c9a08647099fd30f631e8b1d81e4b0d180d9f820c4
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-wireless-hart-industrial-sensor-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-wireless-hart-industrial-sensor-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-wireless-hart-industrial-sensor-source
+    result: VERIFIED
+    reference_ids:
+    - src-wireless-hart-industrial-sensor-primary
+    notes: Sources properly cited.
+  - claim_id: claim-wireless-hart-industrial-sensor-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-wireless-hart-industrial-sensor-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for wireless-hart-industrial-sensor
+supersedes: null
+revocation: null

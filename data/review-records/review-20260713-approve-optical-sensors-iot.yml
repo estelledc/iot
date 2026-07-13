@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-optical-sensors-iot
+content_id: optical-sensors-iot
+content_path: docs/foundation/papers/optical-sensors-iot.md
+body_sha256: 77e303523e24660b6d1453bcff7ef0bf035af7590afd46ae3050643dad4f9eab
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-optical-sensors-iot
+- audit-20260713-claim-optical-sensors-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for optical-sensors-iot
+supersedes: review-20260713-start-optical-sensors-iot
+revocation: null

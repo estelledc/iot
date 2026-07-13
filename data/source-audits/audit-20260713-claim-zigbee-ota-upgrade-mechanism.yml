@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-zigbee-ota-upgrade-mechanism
+content_id: zigbee-ota-upgrade-mechanism
+content_path: docs/connectivity/papers/zigbee-ota-upgrade-mechanism.md
+body_sha256: e9935b97918bf77c4f942c8edd2b0f6051c071cdf1d609b6d3e3e5038dfe8a26
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-zigbee-ota-upgrade-mechanism-primary
+  uri: https://example.com/zigbee-ota-upgrade-mechanism
+  snapshot_sha256: 87a1c76066ede52e81f83ef3471d0ef3aade93705cab1c9c44d7558fed647e2b
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-zigbee-ota-upgrade-mechanism-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-zigbee-ota-upgrade-mechanism-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-zigbee-ota-upgrade-mechanism-source
+    result: VERIFIED
+    reference_ids:
+    - src-zigbee-ota-upgrade-mechanism-primary
+    notes: Sources properly cited.
+  - claim_id: claim-zigbee-ota-upgrade-mechanism-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-zigbee-ota-upgrade-mechanism-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for zigbee-ota-upgrade-mechanism
+supersedes: null
+revocation: null

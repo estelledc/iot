@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-cross-border-logistics-iot
+content_id: cross-border-logistics-iot
+content_path: docs/applications/papers/cross-border-logistics-iot.md
+body_sha256: a19f568c18a964c33714f6069100a61c0d9fa45496a14c8d168e5069c49bee63
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-cross-border-logistics-iot-primary
+  uri: https://example.com/cross-border-logistics-iot
+  snapshot_sha256: f274d8d02015e6ee6c79d8fe3adc979f683c8e62df330d36afe9230a8aa82cd0
+  retrieved_at: '2026-07-12T13:43:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-cross-border-logistics-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-cross-border-logistics-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-cross-border-logistics-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-cross-border-logistics-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-cross-border-logistics-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-cross-border-logistics-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for cross-border-logistics-iot
+supersedes: null
+revocation: null

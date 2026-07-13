@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-arm-cortex-m-architecture-overview
+content_id: arm-cortex-m-architecture-overview
+content_path: docs/foundation/papers/arm-cortex-m-architecture-overview.md
+body_sha256: 14ad653de9b461348cfa9cf4a54b0b7eb3e1962d30ead17c349102a0d6896953
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-arm-cortex-m-architecture-overview-primary
+  uri: https://example.com/arm-cortex-m-architecture-overview
+  snapshot_sha256: ffb8423a54e3b5830a1d008a1f110650a98a60d4eaec98ba7ca7fbd38118656a
+  retrieved_at: '2026-07-12T12:22:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-arm-cortex-m-architecture-overview-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-arm-cortex-m-architecture-overview-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-arm-cortex-m-architecture-overview-source
+    result: VERIFIED
+    reference_ids:
+    - src-arm-cortex-m-architecture-overview-primary
+    notes: Sources properly cited.
+  - claim_id: claim-arm-cortex-m-architecture-overview-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-arm-cortex-m-architecture-overview-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for arm-cortex-m-architecture-overview
+supersedes: null
+revocation: null

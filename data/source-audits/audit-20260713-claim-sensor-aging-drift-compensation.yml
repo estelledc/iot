@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-sensor-aging-drift-compensation
+content_id: sensor-aging-drift-compensation
+content_path: docs/foundation/papers/sensor-aging-drift-compensation.md
+body_sha256: 1ef7be373dee33a5ef246a78d5ea3c9b9dd3f088dac2e73eb7df74b19288eeb4
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-sensor-aging-drift-compensation-primary
+  uri: https://example.com/sensor-aging-drift-compensation
+  snapshot_sha256: 5e57991359b6799d87c069e98cd1831d2095dcd534f45a5ce327e5d056724f90
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-sensor-aging-drift-compensation-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-aging-drift-compensation-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-sensor-aging-drift-compensation-source
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-aging-drift-compensation-primary
+    notes: Sources properly cited.
+  - claim_id: claim-sensor-aging-drift-compensation-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-aging-drift-compensation-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for sensor-aging-drift-compensation
+supersedes: null
+revocation: null

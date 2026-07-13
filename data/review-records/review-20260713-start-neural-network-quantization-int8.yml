@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-neural-network-quantization-int8
+content_id: neural-network-quantization-int8
+content_path: docs/foundation/papers/neural-network-quantization-int8.md
+body_sha256: df99b8f205c311dfa353291fd6423f10af29dfcd297ff42394daac4692153ac7
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-neural-network-quantization-int8
+- audit-20260713-claim-neural-network-quantization-int8
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for neural-network-quantization-int8
+supersedes: null
+revocation: null

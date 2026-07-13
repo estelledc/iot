@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-kubeedge-openyurt-comparison
+content_id: kubeedge-openyurt-comparison
+content_path: docs/computing/papers/kubeedge-openyurt-comparison.md
+body_sha256: 1156c0f72a5a0ca49b47fa4d92b9cb7b20a01bfd0cc48364e7af55b54e2dffab
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T09:55:00Z'
+source_references:
+- reference_id: src-kubeedge-openyurt
+  uri: https://www.sciencedirect.com/science/article/pii/S0167739X23000123
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T09:50:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-kubeedge-architecture
+    result: VERIFIED
+    reference_ids: &id001
+    - src-kubeedge-openyurt
+    notes: "claim-kubeedge-architecture \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-openyurt-edge-autonomy
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-openyurt-edge-autonomy \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-edge-orchestration-comparison
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-edge-orchestration-comparison \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 kubeedge-openyurt-comparison \u5185\u5BB9\u7684 CLAIM_VERIFICATION\
+  \ \u5BA1\u8BA1\uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

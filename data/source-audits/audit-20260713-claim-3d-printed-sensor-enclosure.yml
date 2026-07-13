@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-3d-printed-sensor-enclosure
+content_id: 3d-printed-sensor-enclosure
+content_path: docs/foundation/papers/3d-printed-sensor-enclosure.md
+body_sha256: 4bb71a43f2756216002dfb860fd04c753e2529c39732bb4cd0be7861d95b4308
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T09:00:00Z'
+source_references:
+- reference_id: src-3d-printed-enclosure
+  uri: https://www.sciencedirect.com/science/article/pii/S0010448523000789
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T08:55:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-3d-print-material-selection
+    result: VERIFIED
+    reference_ids: &id001
+    - src-3d-printed-enclosure
+    notes: "claim-3d-print-material-selection \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-enclosure-protection-level
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-enclosure-protection-level \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-rf-interference-minimization
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-rf-interference-minimization \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 3d-printed-sensor-enclosure \u5185\u5BB9\u7684 CLAIM_VERIFICATION\
+  \ \u5BA1\u8BA1\uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

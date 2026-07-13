@@ -1,0 +1,32 @@
+schema_version: '1.0'
+audit_id: audit-20260712-structural-i3c-next-gen-sensor-bus
+content_id: i3c-next-gen-sensor-bus
+content_path: docs/foundation/papers/i3c-next-gen-sensor-bus.md
+body_sha256: 3a5b37c7ef50a7cd61de11ea33cc598a8819206c0269de3c91baacfd6c032453
+audit_kind: STRUCTURAL
+outcome: AUDITABLE
+status_transition:
+  from: UNVERIFIED
+  to: UNVERIFIED
+auditor_id: agent-structural-auditor
+auditor_type: AGENT
+auditor_role: STRUCTURAL_AUDITOR
+audited_at: '2026-07-12T10:00:00Z'
+structural_checks:
+- check_id: frontmatter-parses
+  result: PASS
+  evidence: YAML frontmatter parses without duplicate keys or type errors.
+- check_id: body-hash-bound
+  result: PASS
+  evidence: Body SHA256 matches canonical content hash.
+- check_id: markdown-fence-balance
+  result: PASS
+  evidence: All code fences are properly opened and closed.
+- check_id: frontmatter-body-consistency
+  result: PASS
+  evidence: frontmatter_title matches body_h1; layer and content_type consistent.
+notes: Structural audit for i3c-next-gen-sensor-bus
+supersedes: null
+revocation: null
+source_references: []
+claim_coverage: null

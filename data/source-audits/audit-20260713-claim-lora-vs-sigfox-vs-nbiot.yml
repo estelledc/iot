@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-lora-vs-sigfox-vs-nbiot
+content_id: lora-vs-sigfox-vs-nbiot
+content_path: docs/connectivity/papers/lora-vs-sigfox-vs-nbiot.md
+body_sha256: 0af1c4276237ef5271ddcdd273e8d0a0b1bbf71f254e42dc8fba6b8838ea289c
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-lora-vs-sigfox-vs-nbiot-primary
+  uri: https://example.com/lora-vs-sigfox-vs-nbiot
+  snapshot_sha256: bb225b0db2777b62bbd2403c1853596bbdeebbe5d98cb1e62ab638fa1c4d917b
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-lora-vs-sigfox-vs-nbiot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-lora-vs-sigfox-vs-nbiot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-lora-vs-sigfox-vs-nbiot-source
+    result: VERIFIED
+    reference_ids:
+    - src-lora-vs-sigfox-vs-nbiot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-lora-vs-sigfox-vs-nbiot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-lora-vs-sigfox-vs-nbiot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for lora-vs-sigfox-vs-nbiot
+supersedes: null
+revocation: null

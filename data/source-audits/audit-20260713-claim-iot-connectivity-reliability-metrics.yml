@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-iot-connectivity-reliability-metrics
+content_id: iot-connectivity-reliability-metrics
+content_path: docs/connectivity/papers/iot-connectivity-reliability-metrics.md
+body_sha256: 4cddb68b7ae9b0e718d54cc7012c3cb2977de9717830aa911b36f61ac65715f9
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-iot-connectivity-reliability-metrics-primary
+  uri: https://example.com/iot-connectivity-reliability-metrics
+  snapshot_sha256: d091f28e788f9cd6c466d772624b3e6044ec3004a208cad6da1386ff5699d7d7
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-iot-connectivity-reliability-metrics-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-iot-connectivity-reliability-metrics-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-iot-connectivity-reliability-metrics-source
+    result: VERIFIED
+    reference_ids:
+    - src-iot-connectivity-reliability-metrics-primary
+    notes: Sources properly cited.
+  - claim_id: claim-iot-connectivity-reliability-metrics-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-iot-connectivity-reliability-metrics-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for iot-connectivity-reliability-metrics
+supersedes: null
+revocation: null

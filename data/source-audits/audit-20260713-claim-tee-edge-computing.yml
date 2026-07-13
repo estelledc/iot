@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-tee-edge-computing
+content_id: tee-edge-computing
+content_path: docs/security/papers/tee-edge-computing.md
+body_sha256: 8e606656cec3a8e9f5cf1621a02f605b3946450631085e1bacf757c8e758db64
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-tee-edge-computing-primary
+  uri: https://example.com/tee-edge-computing
+  snapshot_sha256: c263df73cc5ba0632c713a59655d65d9fe8c3210fc179dd1fb28aefc0874964b
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-tee-edge-computing-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-tee-edge-computing-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-tee-edge-computing-source
+    result: VERIFIED
+    reference_ids:
+    - src-tee-edge-computing-primary
+    notes: Sources properly cited.
+  - claim_id: claim-tee-edge-computing-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-tee-edge-computing-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for tee-edge-computing
+supersedes: null
+revocation: null

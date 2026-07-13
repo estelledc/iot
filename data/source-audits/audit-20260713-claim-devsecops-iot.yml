@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-devsecops-iot
+content_id: devsecops-iot
+content_path: docs/security/papers/devsecops-iot.md
+body_sha256: d2f6d7f2cf9bd31eb332e575015d87d45dafe88351a6a045b6900cba279f5aba
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-devsecops-iot-primary
+  uri: https://example.com/devsecops-iot
+  snapshot_sha256: 2a245524f870bcb713282bc2233be78b9e103713d3f76ce5c9eb4cc4ddd29b6f
+  retrieved_at: '2026-07-12T14:01:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-devsecops-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-devsecops-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-devsecops-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-devsecops-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-devsecops-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-devsecops-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for devsecops-iot
+supersedes: null
+revocation: null

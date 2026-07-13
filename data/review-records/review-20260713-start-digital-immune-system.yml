@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-digital-immune-system
+content_id: digital-immune-system
+content_path: docs/frontier/papers/digital-immune-system.md
+body_sha256: 8d2721f44a666820a85548d9565e04e445befaea926243c1e2d5081c687cd6cf
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-digital-immune-system
+- audit-20260713-claim-digital-immune-system
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for digital-immune-system
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-opentelemetry-edge-observability
+content_id: opentelemetry-edge-observability
+content_path: docs/computing/papers/opentelemetry-edge-observability.md
+body_sha256: 90e5e3c89361b4fe38b179838cd0136b323df9a00a5075d57c740d9688339985
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-opentelemetry-edge-observability-primary
+  uri: https://example.com/opentelemetry-edge-observability
+  snapshot_sha256: ab6fd4256d75151cb6a4e87d96b84fb87cfde5f46edcfd058dea733c383d332f
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-opentelemetry-edge-observability-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-opentelemetry-edge-observability-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-opentelemetry-edge-observability-source
+    result: VERIFIED
+    reference_ids:
+    - src-opentelemetry-edge-observability-primary
+    notes: Sources properly cited.
+  - claim_id: claim-opentelemetry-edge-observability-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-opentelemetry-edge-observability-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for opentelemetry-edge-observability
+supersedes: null
+revocation: null

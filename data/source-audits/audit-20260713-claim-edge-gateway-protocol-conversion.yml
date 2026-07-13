@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-edge-gateway-protocol-conversion
+content_id: edge-gateway-protocol-conversion
+content_path: docs/network/papers/edge-gateway-protocol-conversion.md
+body_sha256: 00b690bfec94dbf701378fac2da498b4130d5c1d8b41b64b01a58c0dc0d3b2d9
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-edge-gateway-protocol-conversion-primary
+  uri: https://example.com/edge-gateway-protocol-conversion
+  snapshot_sha256: b151508cb82b4b13fbf4b925e2251394fd206fb97dfb749f47992d940108003f
+  retrieved_at: '2026-07-12T14:26:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-edge-gateway-protocol-conversion-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-edge-gateway-protocol-conversion-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-edge-gateway-protocol-conversion-source
+    result: VERIFIED
+    reference_ids:
+    - src-edge-gateway-protocol-conversion-primary
+    notes: Sources properly cited.
+  - claim_id: claim-edge-gateway-protocol-conversion-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-edge-gateway-protocol-conversion-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for edge-gateway-protocol-conversion
+supersedes: null
+revocation: null

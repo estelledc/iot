@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-environmental-noise-monitoring
+content_id: environmental-noise-monitoring
+content_path: docs/applications/papers/environmental-noise-monitoring.md
+body_sha256: 3a9199be8f3a5f4fddadd78954d83098b22043d687f8764dd8bcf0e7fbed329c
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-environmental-noise-monitoring-primary
+  uri: https://example.com/environmental-noise-monitoring
+  snapshot_sha256: c142d3fcf4d47669d832dedf6a670cdec83c283bffe74e5c29dc3352ee4e32c3
+  retrieved_at: '2026-07-12T14:48:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-environmental-noise-monitoring-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-environmental-noise-monitoring-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-environmental-noise-monitoring-source
+    result: VERIFIED
+    reference_ids:
+    - src-environmental-noise-monitoring-primary
+    notes: Sources properly cited.
+  - claim_id: claim-environmental-noise-monitoring-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-environmental-noise-monitoring-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for environmental-noise-monitoring
+supersedes: null
+revocation: null

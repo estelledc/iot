@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-fog-computing-architecture
+content_id: fog-computing-architecture
+content_path: docs/computing/papers/fog-computing-architecture.md
+body_sha256: 99c53f049c5ae2bad68438f25bca70763d1542b239142b0775dce4e9ed34336f
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-fog-computing-architecture-primary
+  uri: https://example.com/fog-computing-architecture
+  snapshot_sha256: 850c8e3e6be6f683878253cf6320b2b43939c4b1a797ede5960ba5d3fda334d0
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-fog-computing-architecture-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-fog-computing-architecture-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-fog-computing-architecture-source
+    result: VERIFIED
+    reference_ids:
+    - src-fog-computing-architecture-primary
+    notes: Sources properly cited.
+  - claim_id: claim-fog-computing-architecture-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-fog-computing-architecture-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for fog-computing-architecture
+supersedes: null
+revocation: null

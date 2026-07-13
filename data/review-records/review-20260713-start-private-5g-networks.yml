@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-private-5g-networks
+content_id: private-5g-networks
+content_path: docs/connectivity/papers/private-5g-networks.md
+body_sha256: a531c298d784b6e4f79e05b62f0d3e194e65ad6d97f6101a5a29a551387080eb
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-private-5g-networks
+- audit-20260713-claim-private-5g-networks
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for private-5g-networks
+supersedes: null
+revocation: null

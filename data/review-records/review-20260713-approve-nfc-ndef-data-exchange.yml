@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-nfc-ndef-data-exchange
+content_id: nfc-ndef-data-exchange
+content_path: docs/connectivity/papers/nfc-ndef-data-exchange.md
+body_sha256: 378baca5c8676ec2ba9adac4e522f7d5f48ec285992606f162fef9eb2223100b
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-nfc-ndef-data-exchange
+- audit-20260713-claim-nfc-ndef-data-exchange
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for nfc-ndef-data-exchange
+supersedes: review-20260713-start-nfc-ndef-data-exchange
+revocation: null

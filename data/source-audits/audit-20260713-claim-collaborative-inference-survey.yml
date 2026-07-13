@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-collaborative-inference-survey
+content_id: collaborative-inference-survey
+content_path: docs/intelligence/papers/collaborative-inference-survey.md
+body_sha256: 861dbc9fb0a81fec8cbb9426c9f18b70dbe4eb1d4b39f1ea7d9598efba1f5176
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-collaborative-inference-survey-primary
+  uri: https://example.com/collaborative-inference-survey
+  snapshot_sha256: 19083496980770f481398e181baa3b24058f28ab484086d4c36f83d1c3d81bf4
+  retrieved_at: '2026-07-12T13:24:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-collaborative-inference-survey-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-collaborative-inference-survey-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-collaborative-inference-survey-source
+    result: VERIFIED
+    reference_ids:
+    - src-collaborative-inference-survey-primary
+    notes: Sources properly cited.
+  - claim_id: claim-collaborative-inference-survey-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-collaborative-inference-survey-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for collaborative-inference-survey
+supersedes: null
+revocation: null

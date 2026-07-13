@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-fpga-soft-processor-nios-microblaze
+content_id: fpga-soft-processor-nios-microblaze
+content_path: docs/foundation/papers/fpga-soft-processor-nios-microblaze.md
+body_sha256: d83f7a5545a22bdc8c88b6a3391ea303b369c668eed1812eff5e83ff73b4d24f
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-fpga-soft-processor-nios-microblaze
+- audit-20260713-claim-fpga-soft-processor-nios-microblaze
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for fpga-soft-processor-nios-microblaze
+supersedes: review-20260713-start-fpga-soft-processor-nios-microblaze
+revocation: null

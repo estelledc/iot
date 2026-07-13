@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-torque-sensor-magnetostrictive
+content_id: torque-sensor-magnetostrictive
+content_path: docs/foundation/papers/torque-sensor-magnetostrictive.md
+body_sha256: 96afbc7c0f359223eed20a41fc9e9c3bf3f1c4d1fd5c165ff4a198446149b47b
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-torque-sensor-magnetostrictive-primary
+  uri: https://example.com/torque-sensor-magnetostrictive
+  snapshot_sha256: 278409f9c0acaebba6ef8de21eb5aaf5e54e192a1c48c4bab59552042ed8adbf
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-torque-sensor-magnetostrictive-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-torque-sensor-magnetostrictive-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-torque-sensor-magnetostrictive-source
+    result: VERIFIED
+    reference_ids:
+    - src-torque-sensor-magnetostrictive-primary
+    notes: Sources properly cited.
+  - claim_id: claim-torque-sensor-magnetostrictive-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-torque-sensor-magnetostrictive-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for torque-sensor-magnetostrictive
+supersedes: null
+revocation: null

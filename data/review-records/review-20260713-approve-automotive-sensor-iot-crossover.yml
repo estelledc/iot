@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-automotive-sensor-iot-crossover
+content_id: automotive-sensor-iot-crossover
+content_path: docs/foundation/papers/automotive-sensor-iot-crossover.md
+body_sha256: 7d4277507f0bfdeb0cf659f6b1d02f73366c0803f38f0745d422a9e27bd78481
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-automotive-sensor-iot-crossover
+- audit-20260713-claim-automotive-sensor-iot-crossover
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for automotive-sensor-iot-crossover
+supersedes: review-20260713-start-automotive-sensor-iot-crossover
+revocation: null

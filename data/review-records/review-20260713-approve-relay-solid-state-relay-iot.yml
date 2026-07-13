@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-relay-solid-state-relay-iot
+content_id: relay-solid-state-relay-iot
+content_path: docs/foundation/papers/relay-solid-state-relay-iot.md
+body_sha256: 9c09d178558e0460f8da34bf33100f2e853d48c89868ae3606c486d6b2979d21
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-relay-solid-state-relay-iot
+- audit-20260713-claim-relay-solid-state-relay-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for relay-solid-state-relay-iot
+supersedes: review-20260713-start-relay-solid-state-relay-iot
+revocation: null

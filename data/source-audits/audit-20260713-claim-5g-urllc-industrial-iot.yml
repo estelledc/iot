@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-5g-urllc-industrial-iot
+content_id: 5g-urllc-industrial-iot
+content_path: docs/connectivity/papers/5g-urllc-industrial-iot.md
+body_sha256: 99a2f9b47afbb4dbfed2a612b90fb3facf7389b6f6b920471382de3928028483
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-5g-urllc-industrial-iot-primary
+  uri: https://example.com/5g-urllc-industrial-iot
+  snapshot_sha256: 9ce5a77a04cbc8dca1edb640e17d267aff3187fa5810dc164df0ed91b3e4efd3
+  retrieved_at: '2026-07-12T11:57:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-5g-urllc-industrial-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-5g-urllc-industrial-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-5g-urllc-industrial-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-5g-urllc-industrial-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-5g-urllc-industrial-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-5g-urllc-industrial-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for 5g-urllc-industrial-iot
+supersedes: null
+revocation: null

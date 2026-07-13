@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-nfc-reader-mode-card-emulation
+content_id: nfc-reader-mode-card-emulation
+content_path: docs/connectivity/papers/nfc-reader-mode-card-emulation.md
+body_sha256: 4fbfb177a0655cb2fc216344a4b102c20890dcf8583873466a16b15f6c3ae268
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-nfc-reader-mode-card-emulation
+- audit-20260713-claim-nfc-reader-mode-card-emulation
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for nfc-reader-mode-card-emulation
+supersedes: review-20260713-start-nfc-reader-mode-card-emulation
+revocation: null

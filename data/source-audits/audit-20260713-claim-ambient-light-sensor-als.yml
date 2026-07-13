@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ambient-light-sensor-als
+content_id: ambient-light-sensor-als
+content_path: docs/foundation/papers/ambient-light-sensor-als.md
+body_sha256: 8546d45a8adf3b0927f756ac24d02923c9bbd9ebe591ca569938d42e213a1ca2
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ambient-light-sensor-als-primary
+  uri: https://example.com/ambient-light-sensor-als
+  snapshot_sha256: 22cf7500fb25207f7445802ea0793bfbdda01ce51d543e7cb129c8b29d266dd9
+  retrieved_at: '2026-07-12T12:13:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ambient-light-sensor-als-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ambient-light-sensor-als-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ambient-light-sensor-als-source
+    result: VERIFIED
+    reference_ids:
+    - src-ambient-light-sensor-als-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ambient-light-sensor-als-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ambient-light-sensor-als-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ambient-light-sensor-als
+supersedes: null
+revocation: null

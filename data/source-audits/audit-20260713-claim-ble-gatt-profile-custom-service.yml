@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ble-gatt-profile-custom-service
+content_id: ble-gatt-profile-custom-service
+content_path: docs/connectivity/papers/ble-gatt-profile-custom-service.md
+body_sha256: cf69c742be170b063cb387397ec9956684b9d57b82fa0ee678319c7777b27313
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ble-gatt-profile-custom-service-primary
+  uri: https://example.com/ble-gatt-profile-custom-service
+  snapshot_sha256: 24b670345b77f4d4ca99cde22f7fafd85c021f61c2c087441cf81f7a13e8d963
+  retrieved_at: '2026-07-12T12:41:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ble-gatt-profile-custom-service-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ble-gatt-profile-custom-service-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ble-gatt-profile-custom-service-source
+    result: VERIFIED
+    reference_ids:
+    - src-ble-gatt-profile-custom-service-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ble-gatt-profile-custom-service-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ble-gatt-profile-custom-service-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ble-gatt-profile-custom-service
+supersedes: null
+revocation: null

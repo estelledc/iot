@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-wifi-mesh-esp-mesh-architecture
+content_id: wifi-mesh-esp-mesh-architecture
+content_path: docs/connectivity/papers/wifi-mesh-esp-mesh-architecture.md
+body_sha256: 28920d74ae3987e7763c896c18062d372ab786288a5dde4ce23da95fcc6474ec
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-wifi-mesh-esp-mesh-architecture-primary
+  uri: https://example.com/wifi-mesh-esp-mesh-architecture
+  snapshot_sha256: 583ac817d524873c8a4c3f0000cdac4ac9f78054eda6bcf4fcfcd5ef3a521ebf
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-wifi-mesh-esp-mesh-architecture-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-wifi-mesh-esp-mesh-architecture-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-wifi-mesh-esp-mesh-architecture-source
+    result: VERIFIED
+    reference_ids:
+    - src-wifi-mesh-esp-mesh-architecture-primary
+    notes: Sources properly cited.
+  - claim_id: claim-wifi-mesh-esp-mesh-architecture-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-wifi-mesh-esp-mesh-architecture-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for wifi-mesh-esp-mesh-architecture
+supersedes: null
+revocation: null

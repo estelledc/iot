@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-cooperative-vs-preemptive-scheduling
+content_id: cooperative-vs-preemptive-scheduling
+content_path: docs/foundation/papers/cooperative-vs-preemptive-scheduling.md
+body_sha256: 13dccc2d5f232cfbb67ba5678b7849307afd991d9a8f433015a639c7e0181c19
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-cooperative-vs-preemptive-scheduling
+- audit-20260713-claim-cooperative-vs-preemptive-scheduling
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for cooperative-vs-preemptive-scheduling
+supersedes: review-20260713-start-cooperative-vs-preemptive-scheduling
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-opc-ua-information-model-iot
+content_id: opc-ua-information-model-iot
+content_path: docs/connectivity/papers/opc-ua-information-model-iot.md
+body_sha256: 12795d6e63f53339da26d449fb0a9e38cc04121e7494923d70ec1976d1938b91
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-opc-ua-information-model-iot-primary
+  uri: https://example.com/opc-ua-information-model-iot
+  snapshot_sha256: a0b65b6e9fa500cded3d6d24ce2f27a42bc6e5acf450f1cbd47a63fc81e4e9cf
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-opc-ua-information-model-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-opc-ua-information-model-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-opc-ua-information-model-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-opc-ua-information-model-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-opc-ua-information-model-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-opc-ua-information-model-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for opc-ua-information-model-iot
+supersedes: null
+revocation: null

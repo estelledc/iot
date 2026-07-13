@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-mbus-metering-protocol-iot
+content_id: mbus-metering-protocol-iot
+content_path: docs/connectivity/papers/mbus-metering-protocol-iot.md
+body_sha256: 5f2f5ea504ea0cdffedc1be0762e4da43a5546d92cc430657f929215cd31a530
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-mbus-metering-protocol-iot-primary
+  uri: https://example.com/mbus-metering-protocol-iot
+  snapshot_sha256: 96d0c6d87a46f063d6f2ef5b01c1357c1cb85e573fe1439b2669f2aec7c51579
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-mbus-metering-protocol-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-mbus-metering-protocol-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-mbus-metering-protocol-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-mbus-metering-protocol-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-mbus-metering-protocol-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-mbus-metering-protocol-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for mbus-metering-protocol-iot
+supersedes: null
+revocation: null

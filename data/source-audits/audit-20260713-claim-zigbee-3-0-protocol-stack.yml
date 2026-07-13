@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-zigbee-3-0-protocol-stack
+content_id: zigbee-3-0-protocol-stack
+content_path: docs/connectivity/papers/zigbee-3-0-protocol-stack.md
+body_sha256: 378ac213d6af1449787152461227ceb071fbb8f5312430f3df39227dff369882
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-zigbee-3-0-protocol-stack-primary
+  uri: https://example.com/zigbee-3-0-protocol-stack
+  snapshot_sha256: e863635e0e4c9f3601e119042fbc992c18feac04c49dbe8f507846d4b64dc271
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-zigbee-3-0-protocol-stack-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-zigbee-3-0-protocol-stack-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-zigbee-3-0-protocol-stack-source
+    result: VERIFIED
+    reference_ids:
+    - src-zigbee-3-0-protocol-stack-primary
+    notes: Sources properly cited.
+  - claim_id: claim-zigbee-3-0-protocol-stack-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-zigbee-3-0-protocol-stack-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for zigbee-3-0-protocol-stack
+supersedes: null
+revocation: null

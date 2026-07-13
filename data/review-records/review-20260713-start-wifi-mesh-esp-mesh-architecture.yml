@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-wifi-mesh-esp-mesh-architecture
+content_id: wifi-mesh-esp-mesh-architecture
+content_path: docs/connectivity/papers/wifi-mesh-esp-mesh-architecture.md
+body_sha256: 28920d74ae3987e7763c896c18062d372ab786288a5dde4ce23da95fcc6474ec
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-wifi-mesh-esp-mesh-architecture
+- audit-20260713-claim-wifi-mesh-esp-mesh-architecture
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for wifi-mesh-esp-mesh-architecture
+supersedes: null
+revocation: null

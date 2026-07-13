@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-mems-packaging-reliability
+content_id: mems-packaging-reliability
+content_path: docs/foundation/papers/mems-packaging-reliability.md
+body_sha256: c22b9aaf3059c96ff5c6be33edf0349f9f4ec1489041debb4743d24eb1ed0c87
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-mems-packaging-reliability-primary
+  uri: https://example.com/mems-packaging-reliability
+  snapshot_sha256: 4c005d5aeb6155e9d6b2d0f959b779a9e2333bb66fbd17704190d7606475411d
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-mems-packaging-reliability-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-mems-packaging-reliability-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-mems-packaging-reliability-source
+    result: VERIFIED
+    reference_ids:
+    - src-mems-packaging-reliability-primary
+    notes: Sources properly cited.
+  - claim_id: claim-mems-packaging-reliability-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-mems-packaging-reliability-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for mems-packaging-reliability
+supersedes: null
+revocation: null

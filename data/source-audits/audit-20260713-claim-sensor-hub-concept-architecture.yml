@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-sensor-hub-concept-architecture
+content_id: sensor-hub-concept-architecture
+content_path: docs/foundation/papers/sensor-hub-concept-architecture.md
+body_sha256: fade8c1440c016664e9508fc7b79e931a67424a9953268acc0017b72b988ece6
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-sensor-hub-concept-architecture-primary
+  uri: https://example.com/sensor-hub-concept-architecture
+  snapshot_sha256: 52905e6bf302d5e5219710768d1518a914417da1bc4316f7b4be827ba5ea4fc6
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-sensor-hub-concept-architecture-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-hub-concept-architecture-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-sensor-hub-concept-architecture-source
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-hub-concept-architecture-primary
+    notes: Sources properly cited.
+  - claim_id: claim-sensor-hub-concept-architecture-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-hub-concept-architecture-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for sensor-hub-concept-architecture
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-cross-layer-design-iot-protocol
+content_id: cross-layer-design-iot-protocol
+content_path: docs/connectivity/papers/cross-layer-design-iot-protocol.md
+body_sha256: 06757f927fae8f90b163b1d6c367abf95d8879c00a96897752359ff821b6dee4
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-cross-layer-design-iot-protocol-primary
+  uri: https://example.com/cross-layer-design-iot-protocol
+  snapshot_sha256: b765a1808df3c650087b1bcac4eb129dc70a7993f508a9a7dc5d0a158793198d
+  retrieved_at: '2026-07-12T13:44:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-cross-layer-design-iot-protocol-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-cross-layer-design-iot-protocol-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-cross-layer-design-iot-protocol-source
+    result: VERIFIED
+    reference_ids:
+    - src-cross-layer-design-iot-protocol-primary
+    notes: Sources properly cited.
+  - claim_id: claim-cross-layer-design-iot-protocol-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-cross-layer-design-iot-protocol-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for cross-layer-design-iot-protocol
+supersedes: null
+revocation: null

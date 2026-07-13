@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-named-data-networking-iot
+content_id: named-data-networking-iot
+content_path: docs/network/papers/named-data-networking-iot.md
+body_sha256: 9a0b01b979f45b6e0e890dbe77c0b8673cd377f0567d0f5a9dbe74de532bbba6
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-named-data-networking-iot-primary
+  uri: https://example.com/named-data-networking-iot
+  snapshot_sha256: 311b3acacc7ea201a9405a5c779485cddcb6212e2f6c3ffff8c4db7acdd091a7
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-named-data-networking-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-named-data-networking-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-named-data-networking-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-named-data-networking-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-named-data-networking-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-named-data-networking-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for named-data-networking-iot
+supersedes: null
+revocation: null

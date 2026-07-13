@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-energy-efficient-routing-wsn
+content_id: energy-efficient-routing-wsn
+content_path: docs/connectivity/papers/energy-efficient-routing-wsn.md
+body_sha256: 01c1570ee2e31c53a7b9a7235336d1da56d1c960d5caed90f86665cfac54ef5e
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-energy-efficient-routing-wsn-primary
+  uri: https://example.com/energy-efficient-routing-wsn
+  snapshot_sha256: c0634557b0e32d6c0f9db2a2c00de79a1cdf17f7b7a2f7ab064dee9d4e01156e
+  retrieved_at: '2026-07-12T14:45:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-energy-efficient-routing-wsn-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-energy-efficient-routing-wsn-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-energy-efficient-routing-wsn-source
+    result: VERIFIED
+    reference_ids:
+    - src-energy-efficient-routing-wsn-primary
+    notes: Sources properly cited.
+  - claim_id: claim-energy-efficient-routing-wsn-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-energy-efficient-routing-wsn-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for energy-efficient-routing-wsn
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-sensor-network-time-sync-hardware
+content_id: sensor-network-time-sync-hardware
+content_path: docs/foundation/papers/sensor-network-time-sync-hardware.md
+body_sha256: 6c7733ec222dbe1481bb36b923bd0a7ab4230acc48e812973d4aabe858d2f7f7
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-sensor-network-time-sync-hardware-primary
+  uri: https://example.com/sensor-network-time-sync-hardware
+  snapshot_sha256: c12dfd5568d6c022fdd995cef7a4d9a180a81f6b7a5c2ad9a19181e62d8ed36e
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-sensor-network-time-sync-hardware-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-network-time-sync-hardware-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-sensor-network-time-sync-hardware-source
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-network-time-sync-hardware-primary
+    notes: Sources properly cited.
+  - claim_id: claim-sensor-network-time-sync-hardware-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-network-time-sync-hardware-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for sensor-network-time-sync-hardware
+supersedes: null
+revocation: null

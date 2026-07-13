@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-elderly-home-care
+content_id: elderly-home-care
+content_path: docs/applications/papers/elderly-home-care.md
+body_sha256: 1f831f2bbe08332d2692db84a6fe73623047d2b3e58a7a34c94e4a1c8d87d742
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-elderly-home-care
+- audit-20260713-claim-elderly-home-care
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for elderly-home-care
+supersedes: null
+revocation: null

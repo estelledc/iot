@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ai-driven-network-optimization-iot
+content_id: ai-driven-network-optimization-iot
+content_path: docs/connectivity/papers/ai-driven-network-optimization-iot.md
+body_sha256: ec431feab78030e6ad91ff6a2911cbda238c101b6a20bc769959e73e45a71d2d
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ai-driven-network-optimization-iot-primary
+  uri: https://example.com/ai-driven-network-optimization-iot
+  snapshot_sha256: 08e17e2d5386b25f3d0f3dfe77ce8b8a9d4fee97e34a8df235d6a29641c663a0
+  retrieved_at: '2026-07-12T12:09:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ai-driven-network-optimization-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ai-driven-network-optimization-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ai-driven-network-optimization-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-ai-driven-network-optimization-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ai-driven-network-optimization-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ai-driven-network-optimization-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ai-driven-network-optimization-iot
+supersedes: null
+revocation: null

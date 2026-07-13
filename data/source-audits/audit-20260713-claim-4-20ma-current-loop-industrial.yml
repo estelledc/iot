@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-4-20ma-current-loop-industrial
+content_id: 4-20ma-current-loop-industrial
+content_path: docs/foundation/papers/4-20ma-current-loop-industrial.md
+body_sha256: d91ff967f7a45036114ac8a2470f3a4e41d6db880349672e602b86f04a0b4f54
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T09:05:00Z'
+source_references:
+- reference_id: src-4-20ma-loop
+  uri: https://www.industrial-electronics.com/4-20ma-current-loop-principles
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T09:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-current-loop-standard
+    result: VERIFIED
+    reference_ids: &id001
+    - src-4-20ma-loop
+    notes: "claim-current-loop-standard \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-4-20ma-noise-immunity
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-4-20ma-noise-immunity \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-loop-power-supply-design
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-loop-power-supply-design \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 4-20ma-current-loop-industrial \u5185\u5BB9\u7684 CLAIM_VERIFICATION\
+  \ \u5BA1\u8BA1\uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

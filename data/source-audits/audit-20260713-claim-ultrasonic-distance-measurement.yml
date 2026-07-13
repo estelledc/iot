@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ultrasonic-distance-measurement
+content_id: ultrasonic-distance-measurement
+content_path: docs/foundation/papers/ultrasonic-distance-measurement.md
+body_sha256: 779867b648cb2effaa0376742d3196dc15a2783c72e3aa3ebaf3b5be486ba789
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ultrasonic-distance-measurement-primary
+  uri: https://example.com/ultrasonic-distance-measurement
+  snapshot_sha256: 3987ce69457354d59eea257a61a295536a6ec37b832577f92242605a9622e98a
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ultrasonic-distance-measurement-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ultrasonic-distance-measurement-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ultrasonic-distance-measurement-source
+    result: VERIFIED
+    reference_ids:
+    - src-ultrasonic-distance-measurement-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ultrasonic-distance-measurement-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ultrasonic-distance-measurement-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ultrasonic-distance-measurement
+supersedes: null
+revocation: null

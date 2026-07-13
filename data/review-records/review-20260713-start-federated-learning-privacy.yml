@@ -1,0 +1,33 @@
+schema_version: '1.0'
+review_id: review-20260713-start-federated-learning-privacy
+content_id: federated-learning-privacy
+content_path: docs/security/papers/federated-learning-privacy.md
+body_sha256: 35b161c3924351bfbcd07352640836a07cde5cf4a8dfab33c44fc648fe2fa203
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T11:21:00Z'
+linked_audit_ids:
+- audit-20260712-structural-federated-learning-privacy
+- audit-20260713-claim-federated-learning-privacy
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist and are valid for this content version.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: "\u5F00\u59CB\u5BF9 federated-learning-privacy \u5185\u5BB9\u8FDB\u884C\u4EBA\
+  \u5DE5\u5BA1\u9605\uFF0C\u6E90\u8BC1\u636E\u5DF2\u9A8C\u8BC1\u3002"
+supersedes: null
+revocation: null

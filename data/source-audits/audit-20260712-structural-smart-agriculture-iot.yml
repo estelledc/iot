@@ -1,0 +1,32 @@
+schema_version: '1.0'
+audit_id: audit-20260712-structural-smart-agriculture-iot
+content_id: smart-agriculture-iot
+content_path: docs/applications/papers/smart-agriculture-iot.md
+body_sha256: 3d04edfc8fdf54f0eebcfb41e62f5085959eda232383b0ba1ed78ca467c5db5c
+audit_kind: STRUCTURAL
+outcome: AUDITABLE
+status_transition:
+  from: UNVERIFIED
+  to: UNVERIFIED
+auditor_id: agent-structural-auditor
+auditor_type: AGENT
+auditor_role: STRUCTURAL_AUDITOR
+audited_at: '2026-07-12T10:00:00Z'
+structural_checks:
+- check_id: frontmatter-parses
+  result: PASS
+  evidence: YAML frontmatter parses without duplicate keys or type errors.
+- check_id: body-hash-bound
+  result: PASS
+  evidence: Body SHA256 matches canonical content hash.
+- check_id: markdown-fence-balance
+  result: PASS
+  evidence: All code fences are properly opened and closed.
+- check_id: frontmatter-body-consistency
+  result: PASS
+  evidence: frontmatter_title matches body_h1; layer and content_type consistent.
+notes: Structural audit for smart-agriculture-iot
+supersedes: null
+revocation: null
+source_references: []
+claim_coverage: null

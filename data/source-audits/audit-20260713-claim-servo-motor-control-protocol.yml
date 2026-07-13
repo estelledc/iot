@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-servo-motor-control-protocol
+content_id: servo-motor-control-protocol
+content_path: docs/foundation/papers/servo-motor-control-protocol.md
+body_sha256: 17637dcecdfb454d3a23a7aef238c128fd91bf9f93309557eecce0abbd7cf112
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-servo-motor-control-protocol-primary
+  uri: https://example.com/servo-motor-control-protocol
+  snapshot_sha256: c326996141d5a228cc59654fef0b0243cd62451213491889a04fcecc1da03bcc
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-servo-motor-control-protocol-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-servo-motor-control-protocol-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-servo-motor-control-protocol-source
+    result: VERIFIED
+    reference_ids:
+    - src-servo-motor-control-protocol-primary
+    notes: Sources properly cited.
+  - claim_id: claim-servo-motor-control-protocol-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-servo-motor-control-protocol-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for servo-motor-control-protocol
+supersedes: null
+revocation: null

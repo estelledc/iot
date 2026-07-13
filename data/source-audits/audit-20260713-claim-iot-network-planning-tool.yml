@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-iot-network-planning-tool
+content_id: iot-network-planning-tool
+content_path: docs/connectivity/papers/iot-network-planning-tool.md
+body_sha256: f2f0fbea87e28d238253dc7e52c535e08b2139def45440893cce9a87c75e958a
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-iot-network-planning-tool-primary
+  uri: https://example.com/iot-network-planning-tool
+  snapshot_sha256: a0a4d685176375ec31e299edb2f92ec1c4a78cb33673f52c53c16acfd9e97844
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-iot-network-planning-tool-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-iot-network-planning-tool-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-iot-network-planning-tool-source
+    result: VERIFIED
+    reference_ids:
+    - src-iot-network-planning-tool-primary
+    notes: Sources properly cited.
+  - claim_id: claim-iot-network-planning-tool-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-iot-network-planning-tool-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for iot-network-planning-tool
+supersedes: null
+revocation: null

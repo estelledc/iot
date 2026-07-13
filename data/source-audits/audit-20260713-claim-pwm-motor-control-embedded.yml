@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-pwm-motor-control-embedded
+content_id: pwm-motor-control-embedded
+content_path: docs/foundation/papers/pwm-motor-control-embedded.md
+body_sha256: 167fa54b7b032b577902b01db2e6d465e188902badbeb549f9ec33de4c11b248
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-pwm-motor-control-embedded-primary
+  uri: https://example.com/pwm-motor-control-embedded
+  snapshot_sha256: 85c8c62d80ccf9e8337a3c3310413f9304f155aaa6eccc6f4e5eeb8e2936e636
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-pwm-motor-control-embedded-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-pwm-motor-control-embedded-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-pwm-motor-control-embedded-source
+    result: VERIFIED
+    reference_ids:
+    - src-pwm-motor-control-embedded-primary
+    notes: Sources properly cited.
+  - claim_id: claim-pwm-motor-control-embedded-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-pwm-motor-control-embedded-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for pwm-motor-control-embedded
+supersedes: null
+revocation: null

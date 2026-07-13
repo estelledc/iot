@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-switched-capacitor-circuit-sensor
+content_id: switched-capacitor-circuit-sensor
+content_path: docs/foundation/papers/switched-capacitor-circuit-sensor.md
+body_sha256: 1c3dc4e4ffadea3ac266a2a86206636bf663d81d1a3e9c38593d1420ac6ff6f2
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-switched-capacitor-circuit-sensor-primary
+  uri: https://example.com/switched-capacitor-circuit-sensor
+  snapshot_sha256: 7df5cd6a859753af6a415a3207f36698baa4584049b539f0f2c76c7a49a6946f
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-switched-capacitor-circuit-sensor-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-switched-capacitor-circuit-sensor-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-switched-capacitor-circuit-sensor-source
+    result: VERIFIED
+    reference_ids:
+    - src-switched-capacitor-circuit-sensor-primary
+    notes: Sources properly cited.
+  - claim_id: claim-switched-capacitor-circuit-sensor-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-switched-capacitor-circuit-sensor-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for switched-capacitor-circuit-sensor
+supersedes: null
+revocation: null

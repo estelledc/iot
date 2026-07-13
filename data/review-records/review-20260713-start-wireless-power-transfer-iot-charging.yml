@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-wireless-power-transfer-iot-charging
+content_id: wireless-power-transfer-iot-charging
+content_path: docs/connectivity/papers/wireless-power-transfer-iot-charging.md
+body_sha256: 62327bf30c2d98a2a0f41addf16e66bb3d6d9f48ad45382c2b12b4552376a01d
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-wireless-power-transfer-iot-charging
+- audit-20260713-claim-wireless-power-transfer-iot-charging
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for wireless-power-transfer-iot-charging
+supersedes: null
+revocation: null

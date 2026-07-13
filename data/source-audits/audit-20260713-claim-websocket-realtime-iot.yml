@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-websocket-realtime-iot
+content_id: websocket-realtime-iot
+content_path: docs/network/papers/websocket-realtime-iot.md
+body_sha256: 2496b73461fa502954f7d69d22524bcdd7a962dc4c5222d830eaed99e3160d02
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-websocket-realtime-iot-primary
+  uri: https://example.com/websocket-realtime-iot
+  snapshot_sha256: b2bfc66f5acc93f4f8b3d2c5c796eef74b2c8862f84b5a42a9ffb3edf9ce1215
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-websocket-realtime-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-websocket-realtime-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-websocket-realtime-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-websocket-realtime-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-websocket-realtime-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-websocket-realtime-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for websocket-realtime-iot
+supersedes: null
+revocation: null

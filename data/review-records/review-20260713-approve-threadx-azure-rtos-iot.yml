@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-threadx-azure-rtos-iot
+content_id: threadx-azure-rtos-iot
+content_path: docs/foundation/papers/threadx-azure-rtos-iot.md
+body_sha256: a8c5e94f7f5edbefe188ccfe634020e70802305b91fe99d6345b9a4b7303ae11
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-threadx-azure-rtos-iot
+- audit-20260713-claim-threadx-azure-rtos-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for threadx-azure-rtos-iot
+supersedes: review-20260713-start-threadx-azure-rtos-iot
+revocation: null

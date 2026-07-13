@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-smart-building-hvac
+content_id: smart-building-hvac
+content_path: docs/applications/papers/smart-building-hvac.md
+body_sha256: 09bf3ad70c66834f1b717670e0b89fdc5fa4d888b9bcd9f98d03012be5fe9dfe
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-smart-building-hvac-primary
+  uri: https://example.com/smart-building-hvac
+  snapshot_sha256: bc93becdc791dd037582d60162132b6be68e40524d7fcf8aae465ee31030093a
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-smart-building-hvac-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-smart-building-hvac-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-smart-building-hvac-source
+    result: VERIFIED
+    reference_ids:
+    - src-smart-building-hvac-primary
+    notes: Sources properly cited.
+  - claim_id: claim-smart-building-hvac-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-smart-building-hvac-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for smart-building-hvac
+supersedes: null
+revocation: null

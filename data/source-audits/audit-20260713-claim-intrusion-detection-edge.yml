@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-intrusion-detection-edge
+content_id: intrusion-detection-edge
+content_path: docs/security/papers/intrusion-detection-edge.md
+body_sha256: 282d423a4fd34cb3b369516dc19c9c0ccf0a51437160c6e8ceea50fad6d2c8b9
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-intrusion-detection-edge-primary
+  uri: https://example.com/intrusion-detection-edge
+  snapshot_sha256: 7953f034c4bd12e9b1de87aadb2b5ffd0b606a1a2d04667bcf3216565318da1b
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-intrusion-detection-edge-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-intrusion-detection-edge-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-intrusion-detection-edge-source
+    result: VERIFIED
+    reference_ids:
+    - src-intrusion-detection-edge-primary
+    notes: Sources properly cited.
+  - claim_id: claim-intrusion-detection-edge-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-intrusion-detection-edge-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for intrusion-detection-edge
+supersedes: null
+revocation: null

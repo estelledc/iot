@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-quic-iot-applicability
+content_id: quic-iot-applicability
+content_path: docs/network/papers/quic-iot-applicability.md
+body_sha256: 9e7b4caf6bfc59ea015297f468c1cb86e9ad2a451e3902e6d9688f10706cd4e9
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-quic-iot-applicability-primary
+  uri: https://example.com/quic-iot-applicability
+  snapshot_sha256: ded039df7775ecc4a6b65b2d4c9063e91e57d5910ba4071775d80aa493f0b333
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-quic-iot-applicability-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-quic-iot-applicability-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-quic-iot-applicability-source
+    result: VERIFIED
+    reference_ids:
+    - src-quic-iot-applicability-primary
+    notes: Sources properly cited.
+  - claim_id: claim-quic-iot-applicability-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-quic-iot-applicability-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for quic-iot-applicability
+supersedes: null
+revocation: null

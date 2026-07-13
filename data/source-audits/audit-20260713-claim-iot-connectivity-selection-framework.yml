@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-iot-connectivity-selection-framework
+content_id: iot-connectivity-selection-framework
+content_path: docs/connectivity/papers/iot-connectivity-selection-framework.md
+body_sha256: ae29091deec8e043e25185626a3fc7572ce498ecd1e4e9c3236b0ccb8ad293aa
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-iot-connectivity-selection-framework-primary
+  uri: https://example.com/iot-connectivity-selection-framework
+  snapshot_sha256: 6626e27a51972cb96da148148fba3add7b5a9db2dc79384b10900cb8d4b31ee6
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-iot-connectivity-selection-framework-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-iot-connectivity-selection-framework-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-iot-connectivity-selection-framework-source
+    result: VERIFIED
+    reference_ids:
+    - src-iot-connectivity-selection-framework-primary
+    notes: Sources properly cited.
+  - claim_id: claim-iot-connectivity-selection-framework-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-iot-connectivity-selection-framework-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for iot-connectivity-selection-framework
+supersedes: null
+revocation: null

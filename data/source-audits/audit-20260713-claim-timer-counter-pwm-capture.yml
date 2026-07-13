@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-timer-counter-pwm-capture
+content_id: timer-counter-pwm-capture
+content_path: docs/foundation/papers/timer-counter-pwm-capture.md
+body_sha256: 7c2ca772b299cc3d60727caa83d4789ea95875decbf551757def6ae3e24c0131
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-timer-counter-pwm-capture-primary
+  uri: https://example.com/timer-counter-pwm-capture
+  snapshot_sha256: 645b24491cb0ae0a4bab30a25db52804746723fcc75f73b8ca6db2b838ac327b
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-timer-counter-pwm-capture-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-timer-counter-pwm-capture-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-timer-counter-pwm-capture-source
+    result: VERIFIED
+    reference_ids:
+    - src-timer-counter-pwm-capture-primary
+    notes: Sources properly cited.
+  - claim_id: claim-timer-counter-pwm-capture-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-timer-counter-pwm-capture-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for timer-counter-pwm-capture
+supersedes: null
+revocation: null

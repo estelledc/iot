@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-uwb-module-dw1000-ranging
+content_id: uwb-module-dw1000-ranging
+content_path: docs/foundation/papers/uwb-module-dw1000-ranging.md
+body_sha256: 9a4dfd3aad16bade09f0b6637a774ea7e4eaa51869551220dcc6ebcc3d256504
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-uwb-module-dw1000-ranging-primary
+  uri: https://example.com/uwb-module-dw1000-ranging
+  snapshot_sha256: 309c182007eef4dd9e17b1f94b527a6be557972c6bbc068f3a50bad172087ef4
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-uwb-module-dw1000-ranging-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-uwb-module-dw1000-ranging-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-uwb-module-dw1000-ranging-source
+    result: VERIFIED
+    reference_ids:
+    - src-uwb-module-dw1000-ranging-primary
+    notes: Sources properly cited.
+  - claim_id: claim-uwb-module-dw1000-ranging-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-uwb-module-dw1000-ranging-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for uwb-module-dw1000-ranging
+supersedes: null
+revocation: null

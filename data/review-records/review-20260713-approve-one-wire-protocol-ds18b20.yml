@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-one-wire-protocol-ds18b20
+content_id: one-wire-protocol-ds18b20
+content_path: docs/foundation/papers/one-wire-protocol-ds18b20.md
+body_sha256: bcc6742b1f173b3fff7e8f91abbc528ed0067039ceab4c19cb3fac25845387b4
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-one-wire-protocol-ds18b20
+- audit-20260713-claim-one-wire-protocol-ds18b20
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for one-wire-protocol-ds18b20
+supersedes: review-20260713-start-one-wire-protocol-ds18b20
+revocation: null

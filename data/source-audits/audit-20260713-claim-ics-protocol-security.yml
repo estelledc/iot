@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ics-protocol-security
+content_id: ics-protocol-security
+content_path: docs/security/papers/ics-protocol-security.md
+body_sha256: d97c2439c8cfeb1e9e974e4a105fe01141258937deec84bdf274814a05fadee2
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ics-protocol-security-primary
+  uri: https://example.com/ics-protocol-security
+  snapshot_sha256: 1d7509f07e71041b52e9f3d0c0a4991b4c7ff38b3be75e6e00f3b2a33aa73042
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ics-protocol-security-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ics-protocol-security-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ics-protocol-security-source
+    result: VERIFIED
+    reference_ids:
+    - src-ics-protocol-security-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ics-protocol-security-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ics-protocol-security-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ics-protocol-security
+supersedes: null
+revocation: null

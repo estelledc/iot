@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-pcb-stackup-layer-design
+content_id: pcb-stackup-layer-design
+content_path: docs/foundation/papers/pcb-stackup-layer-design.md
+body_sha256: aa9dbd7bb0f88e2a2823740e336f1f68fa6de91f2b0b850a7a195a50b34936ad
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-pcb-stackup-layer-design-primary
+  uri: https://example.com/pcb-stackup-layer-design
+  snapshot_sha256: 4834e18efeb42d4bd224fab79371770e331026b912b36cc633dbeb5823a7939e
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-pcb-stackup-layer-design-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-pcb-stackup-layer-design-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-pcb-stackup-layer-design-source
+    result: VERIFIED
+    reference_ids:
+    - src-pcb-stackup-layer-design-primary
+    notes: Sources properly cited.
+  - claim_id: claim-pcb-stackup-layer-design-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-pcb-stackup-layer-design-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for pcb-stackup-layer-design
+supersedes: null
+revocation: null

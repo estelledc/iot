@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-fpga-hdl-verilog-basics-iot
+content_id: fpga-hdl-verilog-basics-iot
+content_path: docs/foundation/papers/fpga-hdl-verilog-basics-iot.md
+body_sha256: 0e552b734bb61af24f4e0cddd68082f91c615a46dd92849b823eb6170b9e9659
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-fpga-hdl-verilog-basics-iot-primary
+  uri: https://example.com/fpga-hdl-verilog-basics-iot
+  snapshot_sha256: b358b8aca9479d60545d97c53b1ad160b80163127ad8b84c121905c6d3ff429e
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-fpga-hdl-verilog-basics-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-fpga-hdl-verilog-basics-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-fpga-hdl-verilog-basics-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-fpga-hdl-verilog-basics-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-fpga-hdl-verilog-basics-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-fpga-hdl-verilog-basics-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for fpga-hdl-verilog-basics-iot
+supersedes: null
+revocation: null

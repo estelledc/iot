@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-spectrum-analyzer-rf-debug
+content_id: spectrum-analyzer-rf-debug
+content_path: docs/foundation/papers/spectrum-analyzer-rf-debug.md
+body_sha256: b086eeb7ae0fb6dab0c78cf02fc0ac3775c3c506e9108447880c4611eda52514
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-spectrum-analyzer-rf-debug-primary
+  uri: https://example.com/spectrum-analyzer-rf-debug
+  snapshot_sha256: 1f56e75c145eb10fcaf015956c0ef22de7746cdbf3013bafa2f431dff9916346
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-spectrum-analyzer-rf-debug-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-spectrum-analyzer-rf-debug-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-spectrum-analyzer-rf-debug-source
+    result: VERIFIED
+    reference_ids:
+    - src-spectrum-analyzer-rf-debug-primary
+    notes: Sources properly cited.
+  - claim_id: claim-spectrum-analyzer-rf-debug-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-spectrum-analyzer-rf-debug-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for spectrum-analyzer-rf-debug
+supersedes: null
+revocation: null

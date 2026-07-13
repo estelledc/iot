@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-water-quality-sensor-array
+content_id: water-quality-sensor-array
+content_path: docs/foundation/papers/water-quality-sensor-array.md
+body_sha256: 526ed5ede2e34753bb42eb64a0ecbab00e4044f0a2074f39d6c657c3d51fc3ae
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-water-quality-sensor-array
+- audit-20260713-claim-water-quality-sensor-array
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for water-quality-sensor-array
+supersedes: review-20260713-start-water-quality-sensor-array
+revocation: null

@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-heterogeneous-network-iot-handover
+content_id: heterogeneous-network-iot-handover
+content_path: docs/connectivity/papers/heterogeneous-network-iot-handover.md
+body_sha256: c5f06c662d520b8c3bc3973f37a7386563ab67611c1d00578f9fdbfdcd1a6fef
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-heterogeneous-network-iot-handover
+- audit-20260713-claim-heterogeneous-network-iot-handover
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for heterogeneous-network-iot-handover
+supersedes: review-20260713-start-heterogeneous-network-iot-handover
+revocation: null

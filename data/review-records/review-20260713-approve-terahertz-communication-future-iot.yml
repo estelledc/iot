@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-terahertz-communication-future-iot
+content_id: terahertz-communication-future-iot
+content_path: docs/connectivity/papers/terahertz-communication-future-iot.md
+body_sha256: 291435ec2cc6dbfdb99217542490e7f9196bd89c3d9b7dd4a482c047a09a0b0b
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-terahertz-communication-future-iot
+- audit-20260713-claim-terahertz-communication-future-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for terahertz-communication-future-iot
+supersedes: review-20260713-start-terahertz-communication-future-iot
+revocation: null

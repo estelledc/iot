@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-service-mesh-edge
+content_id: service-mesh-edge
+content_path: docs/computing/papers/service-mesh-edge.md
+body_sha256: 9936e120f7d859df21c1ec298251cd8237e6a42ef3fa3782d4d72c0e2bddc3e4
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-service-mesh-edge-primary
+  uri: https://example.com/service-mesh-edge
+  snapshot_sha256: 95ddb58a8312ceb11bbc5a9a9239905735543187dabb66e817f0052dc55f769a
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-service-mesh-edge-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-service-mesh-edge-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-service-mesh-edge-source
+    result: VERIFIED
+    reference_ids:
+    - src-service-mesh-edge-primary
+    notes: Sources properly cited.
+  - claim_id: claim-service-mesh-edge-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-service-mesh-edge-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for service-mesh-edge
+supersedes: null
+revocation: null

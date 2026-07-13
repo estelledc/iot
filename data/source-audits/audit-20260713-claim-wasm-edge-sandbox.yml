@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-wasm-edge-sandbox
+content_id: wasm-edge-sandbox
+content_path: docs/computing/papers/wasm-edge-sandbox.md
+body_sha256: 9647a1e843c7d775e468ece6fba85f9d8950ea48e92f669037eb019a048e7e46
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-wasm-edge-sandbox-primary
+  uri: https://example.com/wasm-edge-sandbox
+  snapshot_sha256: 4b05e01465c14fcda53738fc50164f70d63f749c937a2192d94203dabb5b6515
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-wasm-edge-sandbox-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-wasm-edge-sandbox-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-wasm-edge-sandbox-source
+    result: VERIFIED
+    reference_ids:
+    - src-wasm-edge-sandbox-primary
+    notes: Sources properly cited.
+  - claim_id: claim-wasm-edge-sandbox-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-wasm-edge-sandbox-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for wasm-edge-sandbox
+supersedes: null
+revocation: null

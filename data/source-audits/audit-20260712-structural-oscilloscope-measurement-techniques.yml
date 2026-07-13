@@ -1,0 +1,32 @@
+schema_version: '1.0'
+audit_id: audit-20260712-structural-oscilloscope-measurement-techniques
+content_id: oscilloscope-measurement-techniques
+content_path: docs/foundation/papers/oscilloscope-measurement-techniques.md
+body_sha256: 8ada8541e988280ad777b6055640272c2c8d7ee75bf1fd2759ee149bc4118084
+audit_kind: STRUCTURAL
+outcome: AUDITABLE
+status_transition:
+  from: UNVERIFIED
+  to: UNVERIFIED
+auditor_id: agent-structural-auditor
+auditor_type: AGENT
+auditor_role: STRUCTURAL_AUDITOR
+audited_at: '2026-07-12T10:00:00Z'
+structural_checks:
+- check_id: frontmatter-parses
+  result: PASS
+  evidence: YAML frontmatter parses without duplicate keys or type errors.
+- check_id: body-hash-bound
+  result: PASS
+  evidence: Body SHA256 matches canonical content hash.
+- check_id: markdown-fence-balance
+  result: PASS
+  evidence: All code fences are properly opened and closed.
+- check_id: frontmatter-body-consistency
+  result: PASS
+  evidence: frontmatter_title matches body_h1; layer and content_type consistent.
+notes: Structural audit for oscilloscope-measurement-techniques
+supersedes: null
+revocation: null
+source_references: []
+claim_coverage: null

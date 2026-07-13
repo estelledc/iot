@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-cold-chain-traceability
+content_id: cold-chain-traceability
+content_path: docs/applications/papers/cold-chain-traceability.md
+body_sha256: 881ad6808e9109fa0b7ed236cf094ba17e3239c9f20ac88930ded630c2cc9107
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-cold-chain-traceability
+- audit-20260713-claim-cold-chain-traceability
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for cold-chain-traceability
+supersedes: null
+revocation: null

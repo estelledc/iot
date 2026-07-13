@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-functional-safety-sil-iot
+content_id: functional-safety-sil-iot
+content_path: docs/foundation/papers/functional-safety-sil-iot.md
+body_sha256: 8d606e3d5894a1c7d203af6d8b83b488da377b350b0e2cd98d74a5f6cd2edc5b
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-functional-safety-sil-iot
+- audit-20260713-claim-functional-safety-sil-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for functional-safety-sil-iot
+supersedes: review-20260713-start-functional-safety-sil-iot
+revocation: null

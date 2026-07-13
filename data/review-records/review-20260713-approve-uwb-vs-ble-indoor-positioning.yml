@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-uwb-vs-ble-indoor-positioning
+content_id: uwb-vs-ble-indoor-positioning
+content_path: docs/connectivity/papers/uwb-vs-ble-indoor-positioning.md
+body_sha256: 604fa056388b117bfd45e79d18c3fe233eb2ec83d3bfbc216208119fe2639d6f
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-uwb-vs-ble-indoor-positioning
+- audit-20260713-claim-uwb-vs-ble-indoor-positioning
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for uwb-vs-ble-indoor-positioning
+supersedes: review-20260713-start-uwb-vs-ble-indoor-positioning
+revocation: null

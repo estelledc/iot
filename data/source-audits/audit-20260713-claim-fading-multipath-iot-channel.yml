@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-fading-multipath-iot-channel
+content_id: fading-multipath-iot-channel
+content_path: docs/connectivity/papers/fading-multipath-iot-channel.md
+body_sha256: 966e5b9f2c00b9e11dd3153a8857728d5029d4ea87bdb57703d58d19aa95d774
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-fading-multipath-iot-channel-primary
+  uri: https://example.com/fading-multipath-iot-channel
+  snapshot_sha256: 9f1ee81f9a65aa0475967caeeafe4b644e13a0c0692e029cbf8c4e8f94f87a7c
+  retrieved_at: '2026-07-12T15:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-fading-multipath-iot-channel-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-fading-multipath-iot-channel-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-fading-multipath-iot-channel-source
+    result: VERIFIED
+    reference_ids:
+    - src-fading-multipath-iot-channel-primary
+    notes: Sources properly cited.
+  - claim_id: claim-fading-multipath-iot-channel-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-fading-multipath-iot-channel-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for fading-multipath-iot-channel
+supersedes: null
+revocation: null

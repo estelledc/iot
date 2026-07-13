@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-protocol-analyzer-wireless-debug
+content_id: protocol-analyzer-wireless-debug
+content_path: docs/connectivity/papers/protocol-analyzer-wireless-debug.md
+body_sha256: aa117fd3bd260bc7a667d8b60c2abaa54230f6dea230a410ad98ea702afe0ac6
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-protocol-analyzer-wireless-debug
+- audit-20260713-claim-protocol-analyzer-wireless-debug
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for protocol-analyzer-wireless-debug
+supersedes: review-20260713-start-protocol-analyzer-wireless-debug
+revocation: null

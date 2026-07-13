@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-async-federated-learning
+content_id: async-federated-learning
+content_path: docs/intelligence/papers/async-federated-learning.md
+body_sha256: 7388c9c38ad2d48b7c91f10d5dae723cf50f501c4f94bc0d2203baef918c9a39
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-async-federated-learning
+- audit-20260713-claim-async-federated-learning
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for async-federated-learning
+supersedes: null
+revocation: null

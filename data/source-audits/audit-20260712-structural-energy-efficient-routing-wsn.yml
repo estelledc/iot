@@ -1,0 +1,32 @@
+schema_version: '1.0'
+audit_id: audit-20260712-structural-energy-efficient-routing-wsn
+content_id: energy-efficient-routing-wsn
+content_path: docs/connectivity/papers/energy-efficient-routing-wsn.md
+body_sha256: 01c1570ee2e31c53a7b9a7235336d1da56d1c960d5caed90f86665cfac54ef5e
+audit_kind: STRUCTURAL
+outcome: AUDITABLE
+status_transition:
+  from: UNVERIFIED
+  to: UNVERIFIED
+auditor_id: agent-structural-auditor
+auditor_type: AGENT
+auditor_role: STRUCTURAL_AUDITOR
+audited_at: '2026-07-12T10:00:00Z'
+structural_checks:
+- check_id: frontmatter-parses
+  result: PASS
+  evidence: YAML frontmatter parses without duplicate keys or type errors.
+- check_id: body-hash-bound
+  result: PASS
+  evidence: Body SHA256 matches canonical content hash.
+- check_id: markdown-fence-balance
+  result: PASS
+  evidence: All code fences are properly opened and closed.
+- check_id: frontmatter-body-consistency
+  result: PASS
+  evidence: frontmatter_title matches body_h1; layer and content_type consistent.
+notes: Structural audit for energy-efficient-routing-wsn
+supersedes: null
+revocation: null
+source_references: []
+claim_coverage: null

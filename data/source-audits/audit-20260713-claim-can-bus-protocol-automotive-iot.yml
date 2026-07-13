@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-can-bus-protocol-automotive-iot
+content_id: can-bus-protocol-automotive-iot
+content_path: docs/connectivity/papers/can-bus-protocol-automotive-iot.md
+body_sha256: b86cec13f88816e74680c45c138d1d037d2e777fa0930c4440cbad948d57ad1b
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-can-bus-protocol-automotive-iot-primary
+  uri: https://example.com/can-bus-protocol-automotive-iot
+  snapshot_sha256: 0ae3d019e948025fc56c1c77121489008508e48c9ed7485a1276b420e2553fa9
+  retrieved_at: '2026-07-12T12:56:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-can-bus-protocol-automotive-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-can-bus-protocol-automotive-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-can-bus-protocol-automotive-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-can-bus-protocol-automotive-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-can-bus-protocol-automotive-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-can-bus-protocol-automotive-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for can-bus-protocol-automotive-iot
+supersedes: null
+revocation: null

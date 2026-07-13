@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-can-fd-flexible-data-rate
+content_id: can-fd-flexible-data-rate
+content_path: docs/connectivity/papers/can-fd-flexible-data-rate.md
+body_sha256: 4c29b7c7a23f0950d381ddd241a7c89b5a4dcf46d410fb3523b944b88543d810
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-can-fd-flexible-data-rate
+- audit-20260713-claim-can-fd-flexible-data-rate
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for can-fd-flexible-data-rate
+supersedes: review-20260713-start-can-fd-flexible-data-rate
+revocation: null

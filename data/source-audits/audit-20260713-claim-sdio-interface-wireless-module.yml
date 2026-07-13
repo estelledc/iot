@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-sdio-interface-wireless-module
+content_id: sdio-interface-wireless-module
+content_path: docs/foundation/papers/sdio-interface-wireless-module.md
+body_sha256: 0a899162f80bc05777f3ce19dd0db7abd92829dade06d4fb8b54fbc0ee82f105
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-sdio-interface-wireless-module-primary
+  uri: https://example.com/sdio-interface-wireless-module
+  snapshot_sha256: c237713a68c09cff2a2be8722adeec04ba4e639a5e4d8b847aae5d4f81ebcca7
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-sdio-interface-wireless-module-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-sdio-interface-wireless-module-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-sdio-interface-wireless-module-source
+    result: VERIFIED
+    reference_ids:
+    - src-sdio-interface-wireless-module-primary
+    notes: Sources properly cited.
+  - claim_id: claim-sdio-interface-wireless-module-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-sdio-interface-wireless-module-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for sdio-interface-wireless-module
+supersedes: null
+revocation: null

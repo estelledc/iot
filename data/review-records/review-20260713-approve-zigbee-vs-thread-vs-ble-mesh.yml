@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-zigbee-vs-thread-vs-ble-mesh
+content_id: zigbee-vs-thread-vs-ble-mesh
+content_path: docs/connectivity/papers/zigbee-vs-thread-vs-ble-mesh.md
+body_sha256: 4a3d66fac1071bb8df3e922a2ec3435fb76d3f6bf3611f1ca5c672b2895dc659
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-zigbee-vs-thread-vs-ble-mesh
+- audit-20260713-claim-zigbee-vs-thread-vs-ble-mesh
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for zigbee-vs-thread-vs-ble-mesh
+supersedes: review-20260713-start-zigbee-vs-thread-vs-ble-mesh
+revocation: null

@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-sigfox-0g-network-architecture
+content_id: sigfox-0g-network-architecture
+content_path: docs/connectivity/papers/sigfox-0g-network-architecture.md
+body_sha256: d5502d185b38798220ee629be3581ed1d732bab9d13ba2454a969a73ab9bb17d
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-sigfox-0g-network-architecture
+- audit-20260713-claim-sigfox-0g-network-architecture
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for sigfox-0g-network-architecture
+supersedes: review-20260713-start-sigfox-0g-network-architecture
+revocation: null

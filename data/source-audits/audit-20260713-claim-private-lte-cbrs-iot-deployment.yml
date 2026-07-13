@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-private-lte-cbrs-iot-deployment
+content_id: private-lte-cbrs-iot-deployment
+content_path: docs/connectivity/papers/private-lte-cbrs-iot-deployment.md
+body_sha256: d43bb5c8f1e6c74db97f12e1ed373d86bc7d1a17dc70b37b91aa0be0221e1b27
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-private-lte-cbrs-iot-deployment-primary
+  uri: https://example.com/private-lte-cbrs-iot-deployment
+  snapshot_sha256: 14b699549012bd6a18514fd2ab3fa3e51d6f09bf4ac6e4ecf691359d54fb7d99
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-private-lte-cbrs-iot-deployment-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-private-lte-cbrs-iot-deployment-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-private-lte-cbrs-iot-deployment-source
+    result: VERIFIED
+    reference_ids:
+    - src-private-lte-cbrs-iot-deployment-primary
+    notes: Sources properly cited.
+  - claim_id: claim-private-lte-cbrs-iot-deployment-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-private-lte-cbrs-iot-deployment-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for private-lte-cbrs-iot-deployment
+supersedes: null
+revocation: null

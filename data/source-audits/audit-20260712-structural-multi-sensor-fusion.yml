@@ -1,0 +1,32 @@
+schema_version: '1.0'
+audit_id: audit-20260712-structural-multi-sensor-fusion
+content_id: multi-sensor-fusion
+content_path: docs/foundation/papers/multi-sensor-fusion.md
+body_sha256: 133290ce496a97c0aed3925e6e9142dab0f1bd5390fc17cc4ceac7c1f162f235
+audit_kind: STRUCTURAL
+outcome: AUDITABLE
+status_transition:
+  from: UNVERIFIED
+  to: UNVERIFIED
+auditor_id: agent-structural-auditor
+auditor_type: AGENT
+auditor_role: STRUCTURAL_AUDITOR
+audited_at: '2026-07-12T10:00:00Z'
+structural_checks:
+- check_id: frontmatter-parses
+  result: PASS
+  evidence: YAML frontmatter parses without duplicate keys or type errors.
+- check_id: body-hash-bound
+  result: PASS
+  evidence: Body SHA256 matches canonical content hash.
+- check_id: markdown-fence-balance
+  result: PASS
+  evidence: All code fences are properly opened and closed.
+- check_id: frontmatter-body-consistency
+  result: PASS
+  evidence: frontmatter_title matches body_h1; layer and content_type consistent.
+notes: Structural audit for multi-sensor-fusion
+supersedes: null
+revocation: null
+source_references: []
+claim_coverage: null

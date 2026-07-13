@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-low-power-wide-area-network-survey
+content_id: low-power-wide-area-network-survey
+content_path: docs/connectivity/papers/low-power-wide-area-network-survey.md
+body_sha256: 6ff523c3279d3870b3ee3c16cb409817387488bc824cf827096a5ccca081bbb7
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-low-power-wide-area-network-survey
+- audit-20260713-claim-low-power-wide-area-network-survey
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for low-power-wide-area-network-survey
+supersedes: null
+revocation: null

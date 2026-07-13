@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ble-connection-parameter-optimization
+content_id: ble-connection-parameter-optimization
+content_path: docs/connectivity/papers/ble-connection-parameter-optimization.md
+body_sha256: 96f50b1190265e68d14ef30f20a0b2a8029dab8468babf942f6d93b99c72e4ea
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ble-connection-parameter-optimization-primary
+  uri: https://example.com/ble-connection-parameter-optimization
+  snapshot_sha256: ff93d5878636b775e74025fd8f99ba56cc34b325bd41eb44220efbe18f905cf1
+  retrieved_at: '2026-07-12T12:39:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ble-connection-parameter-optimization-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ble-connection-parameter-optimization-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ble-connection-parameter-optimization-source
+    result: VERIFIED
+    reference_ids:
+    - src-ble-connection-parameter-optimization-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ble-connection-parameter-optimization-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ble-connection-parameter-optimization-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ble-connection-parameter-optimization
+supersedes: null
+revocation: null

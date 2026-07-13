@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-sigfox-0g-network-architecture
+content_id: sigfox-0g-network-architecture
+content_path: docs/connectivity/papers/sigfox-0g-network-architecture.md
+body_sha256: d5502d185b38798220ee629be3581ed1d732bab9d13ba2454a969a73ab9bb17d
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-sigfox-0g-network-architecture-primary
+  uri: https://example.com/sigfox-0g-network-architecture
+  snapshot_sha256: df4b2656866f1b01dc5297cd32bff5c7e93c552940d0ebe49b5136289dd62468
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-sigfox-0g-network-architecture-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-sigfox-0g-network-architecture-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-sigfox-0g-network-architecture-source
+    result: VERIFIED
+    reference_ids:
+    - src-sigfox-0g-network-architecture-primary
+    notes: Sources properly cited.
+  - claim_id: claim-sigfox-0g-network-architecture-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-sigfox-0g-network-architecture-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for sigfox-0g-network-architecture
+supersedes: null
+revocation: null

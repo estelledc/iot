@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-mqtt5-deep-dive
+content_id: mqtt5-deep-dive
+content_path: docs/network/papers/mqtt5-deep-dive.md
+body_sha256: 12df0aa57372e17ddd247bb1bec11237663792061bad6b2f252fa1d223e8aa95
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-mqtt5-deep-dive-primary
+  uri: https://example.com/mqtt5-deep-dive
+  snapshot_sha256: 55e397681f7d56da8b1aaf28b8a17f9259659321b556fc51327c0c6ffc33b503
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-mqtt5-deep-dive-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-mqtt5-deep-dive-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-mqtt5-deep-dive-source
+    result: VERIFIED
+    reference_ids:
+    - src-mqtt5-deep-dive-primary
+    notes: Sources properly cited.
+  - claim_id: claim-mqtt5-deep-dive-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-mqtt5-deep-dive-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for mqtt5-deep-dive
+supersedes: null
+revocation: null

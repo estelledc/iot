@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-rf-interference-troubleshooting
+content_id: rf-interference-troubleshooting
+content_path: docs/connectivity/papers/rf-interference-troubleshooting.md
+body_sha256: 25c17356ef67f476e553590e1bc0a147de5055d41d1c9108dc68aaac71d00a6e
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-rf-interference-troubleshooting-primary
+  uri: https://example.com/rf-interference-troubleshooting
+  snapshot_sha256: af4935396dcc55bb7da300522c7c0a07a0c421f83ae2c667297a54a5bae14e27
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-rf-interference-troubleshooting-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-rf-interference-troubleshooting-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-rf-interference-troubleshooting-source
+    result: VERIFIED
+    reference_ids:
+    - src-rf-interference-troubleshooting-primary
+    notes: Sources properly cited.
+  - claim_id: claim-rf-interference-troubleshooting-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-rf-interference-troubleshooting-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for rf-interference-troubleshooting
+supersedes: null
+revocation: null

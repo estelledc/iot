@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-stm32-hal-driver-architecture
+content_id: stm32-hal-driver-architecture
+content_path: docs/foundation/papers/stm32-hal-driver-architecture.md
+body_sha256: f29f9dcdf39a9e3d777950f8062eb4eced014bcd2da628a93e8a06b6b1dada49
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-stm32-hal-driver-architecture-primary
+  uri: https://example.com/stm32-hal-driver-architecture
+  snapshot_sha256: 945b802763f64b3e30471907dcaa49e97694f49f75ee897fa1de76f19c5b3ee8
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-stm32-hal-driver-architecture-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-stm32-hal-driver-architecture-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-stm32-hal-driver-architecture-source
+    result: VERIFIED
+    reference_ids:
+    - src-stm32-hal-driver-architecture-primary
+    notes: Sources properly cited.
+  - claim_id: claim-stm32-hal-driver-architecture-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-stm32-hal-driver-architecture-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for stm32-hal-driver-architecture
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-lora-spread-factor-optimization
+content_id: lora-spread-factor-optimization
+content_path: docs/connectivity/papers/lora-spread-factor-optimization.md
+body_sha256: 933d26099427c6984036327b2e18e50616df6ea5cb3b6e2aa6f122ef427e60be
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-lora-spread-factor-optimization-primary
+  uri: https://example.com/lora-spread-factor-optimization
+  snapshot_sha256: e40e856b973a8005999a5e6c84458ff34b1481c52e46cde74f579a12af519a26
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-lora-spread-factor-optimization-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-lora-spread-factor-optimization-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-lora-spread-factor-optimization-source
+    result: VERIFIED
+    reference_ids:
+    - src-lora-spread-factor-optimization-primary
+    notes: Sources properly cited.
+  - claim_id: claim-lora-spread-factor-optimization-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-lora-spread-factor-optimization-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for lora-spread-factor-optimization
+supersedes: null
+revocation: null

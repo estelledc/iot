@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-edgex-foundry-deep-dive
+content_id: edgex-foundry-deep-dive
+content_path: docs/computing/papers/edgex-foundry-deep-dive.md
+body_sha256: b9e07583034234d3588e7f813c090d9f184b0e35be4bdcc8b094b700e254ded3
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-edgex-foundry-deep-dive-primary
+  uri: https://example.com/edgex-foundry-deep-dive
+  snapshot_sha256: fbcbde8d80e636201f8a88069af0ba824934804a0bea1d97bb5aa30cf5679294
+  retrieved_at: '2026-07-12T14:32:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-edgex-foundry-deep-dive-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-edgex-foundry-deep-dive-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-edgex-foundry-deep-dive-source
+    result: VERIFIED
+    reference_ids:
+    - src-edgex-foundry-deep-dive-primary
+    notes: Sources properly cited.
+  - claim_id: claim-edgex-foundry-deep-dive-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-edgex-foundry-deep-dive-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for edgex-foundry-deep-dive
+supersedes: null
+revocation: null

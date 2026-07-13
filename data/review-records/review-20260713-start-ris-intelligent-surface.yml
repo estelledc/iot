@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-ris-intelligent-surface
+content_id: ris-intelligent-surface
+content_path: docs/frontier/papers/ris-intelligent-surface.md
+body_sha256: 04e87dd3b747dd9f901eb24b45d734a9d13a6806bcbc0d6fed36d6ee5d55c580
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-ris-intelligent-surface
+- audit-20260713-claim-ris-intelligent-surface
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for ris-intelligent-surface
+supersedes: null
+revocation: null

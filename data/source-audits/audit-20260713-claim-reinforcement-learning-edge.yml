@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-reinforcement-learning-edge
+content_id: reinforcement-learning-edge
+content_path: docs/intelligence/papers/reinforcement-learning-edge.md
+body_sha256: be318d8b6b2912154790c28fd5ec20b362c8b70cbd360c63671ed17a29d93812
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-reinforcement-learning-edge-primary
+  uri: https://example.com/reinforcement-learning-edge
+  snapshot_sha256: 46a779f195bb065221f6408f5c56ab0ecc6bb7c625383f8215650a7de0ac2168
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-reinforcement-learning-edge-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-reinforcement-learning-edge-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-reinforcement-learning-edge-source
+    result: VERIFIED
+    reference_ids:
+    - src-reinforcement-learning-edge-primary
+    notes: Sources properly cited.
+  - claim_id: claim-reinforcement-learning-edge-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-reinforcement-learning-edge-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for reinforcement-learning-edge
+supersedes: null
+revocation: null

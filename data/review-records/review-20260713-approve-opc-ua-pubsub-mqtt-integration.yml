@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-opc-ua-pubsub-mqtt-integration
+content_id: opc-ua-pubsub-mqtt-integration
+content_path: docs/connectivity/papers/opc-ua-pubsub-mqtt-integration.md
+body_sha256: ac054b383b79b5bbcf2ace89fe97a9e8dd6075fd8958e3f07d82ee057bbc7250
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-opc-ua-pubsub-mqtt-integration
+- audit-20260713-claim-opc-ua-pubsub-mqtt-integration
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for opc-ua-pubsub-mqtt-integration
+supersedes: review-20260713-start-opc-ua-pubsub-mqtt-integration
+revocation: null

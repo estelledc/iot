@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-op-amp-selection-iot-sensor
+content_id: op-amp-selection-iot-sensor
+content_path: docs/foundation/papers/op-amp-selection-iot-sensor.md
+body_sha256: 51c8b3690a86eac8f86f99e6a221dd2199fa86f57c3d2361eef280e0d3e810e2
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-op-amp-selection-iot-sensor
+- audit-20260713-claim-op-amp-selection-iot-sensor
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for op-amp-selection-iot-sensor
+supersedes: review-20260713-start-op-amp-selection-iot-sensor
+revocation: null

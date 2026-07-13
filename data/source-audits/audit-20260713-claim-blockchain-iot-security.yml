@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-blockchain-iot-security
+content_id: blockchain-iot-security
+content_path: docs/security/papers/blockchain-iot-security.md
+body_sha256: 7a7d46f6b58f9207e08d8b217bca51b143a0603940485a3dc9afb51710152048
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-blockchain-iot-security-primary
+  uri: https://example.com/blockchain-iot-security
+  snapshot_sha256: 279e39862ac6713561734f10f55f90ea75a579453c301364f9e2d1e417823061
+  retrieved_at: '2026-07-12T12:48:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-blockchain-iot-security-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-blockchain-iot-security-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-blockchain-iot-security-source
+    result: VERIFIED
+    reference_ids:
+    - src-blockchain-iot-security-primary
+    notes: Sources properly cited.
+  - claim_id: claim-blockchain-iot-security-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-blockchain-iot-security-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for blockchain-iot-security
+supersedes: null
+revocation: null

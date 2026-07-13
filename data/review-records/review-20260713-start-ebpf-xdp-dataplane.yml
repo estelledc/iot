@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-ebpf-xdp-dataplane
+content_id: ebpf-xdp-dataplane
+content_path: docs/computing/papers/ebpf-xdp-dataplane.md
+body_sha256: a26f0c80e533b50742c68bed7b9c0ed4430417a8286423366f72a9b64665ca47
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-ebpf-xdp-dataplane
+- audit-20260713-claim-ebpf-xdp-dataplane
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for ebpf-xdp-dataplane
+supersedes: null
+revocation: null

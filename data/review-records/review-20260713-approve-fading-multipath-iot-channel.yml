@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-fading-multipath-iot-channel
+content_id: fading-multipath-iot-channel
+content_path: docs/connectivity/papers/fading-multipath-iot-channel.md
+body_sha256: 966e5b9f2c00b9e11dd3153a8857728d5029d4ea87bdb57703d58d19aa95d774
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-fading-multipath-iot-channel
+- audit-20260713-claim-fading-multipath-iot-channel
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for fading-multipath-iot-channel
+supersedes: review-20260713-start-fading-multipath-iot-channel
+revocation: null

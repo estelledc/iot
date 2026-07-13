@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-image-sensor-cmos-iot-vision
+content_id: image-sensor-cmos-iot-vision
+content_path: docs/foundation/papers/image-sensor-cmos-iot-vision.md
+body_sha256: 8dd89b9859c9a23954ec9fac667350351075a240c7ad41de94cab8036d1144c8
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-image-sensor-cmos-iot-vision-primary
+  uri: https://example.com/image-sensor-cmos-iot-vision
+  snapshot_sha256: 88e849d355e59a30c26e93b7ac66b8f24d6ded17a2ad525539f7731ee7748bef
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-image-sensor-cmos-iot-vision-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-image-sensor-cmos-iot-vision-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-image-sensor-cmos-iot-vision-source
+    result: VERIFIED
+    reference_ids:
+    - src-image-sensor-cmos-iot-vision-primary
+    notes: Sources properly cited.
+  - claim_id: claim-image-sensor-cmos-iot-vision-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-image-sensor-cmos-iot-vision-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for image-sensor-cmos-iot-vision
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-conformal-coating-iot-protection
+content_id: conformal-coating-iot-protection
+content_path: docs/foundation/papers/conformal-coating-iot-protection.md
+body_sha256: 602b3abca96b519d61b3302839b89a113ac39f06d41bd27eee7ff177aa39e0b0
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-conformal-coating-iot-protection-primary
+  uri: https://example.com/conformal-coating-iot-protection
+  snapshot_sha256: 96a3d1a7123ee6364adbcfc75ffe098f98fc26ce56d5608d22b0748697f55822
+  retrieved_at: '2026-07-12T13:30:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-conformal-coating-iot-protection-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-conformal-coating-iot-protection-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-conformal-coating-iot-protection-source
+    result: VERIFIED
+    reference_ids:
+    - src-conformal-coating-iot-protection-primary
+    notes: Sources properly cited.
+  - claim_id: claim-conformal-coating-iot-protection-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-conformal-coating-iot-protection-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for conformal-coating-iot-protection
+supersedes: null
+revocation: null

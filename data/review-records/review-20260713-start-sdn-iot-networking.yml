@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-sdn-iot-networking
+content_id: sdn-iot-networking
+content_path: docs/network/papers/sdn-iot-networking.md
+body_sha256: ae0f8d3e7383cd9e2dd1953a9e247e5736ac60e7821ab694a89fd5fa7de884b6
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-sdn-iot-networking
+- audit-20260713-claim-sdn-iot-networking
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for sdn-iot-networking
+supersedes: null
+revocation: null

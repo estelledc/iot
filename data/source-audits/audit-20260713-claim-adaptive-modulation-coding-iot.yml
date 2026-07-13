@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-adaptive-modulation-coding-iot
+content_id: adaptive-modulation-coding-iot
+content_path: docs/connectivity/papers/adaptive-modulation-coding-iot.md
+body_sha256: 1ff2294c3c65dbdeec9a72a58f31af58129fca01b9761969358f0f8a6f1dc42b
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-adaptive-modulation-coding-iot-primary
+  uri: https://example.com/adaptive-modulation-coding-iot
+  snapshot_sha256: 9669a47d09ef31d743db148aef25bdb6f29af4657d61f49e83cf533d4e378bce
+  retrieved_at: '2026-07-12T12:01:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-adaptive-modulation-coding-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-adaptive-modulation-coding-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-adaptive-modulation-coding-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-adaptive-modulation-coding-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-adaptive-modulation-coding-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-adaptive-modulation-coding-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for adaptive-modulation-coding-iot
+supersedes: null
+revocation: null

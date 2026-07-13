@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-event-camera-dvs-iot
+content_id: event-camera-dvs-iot
+content_path: docs/foundation/papers/event-camera-dvs-iot.md
+body_sha256: 602331b6ffa78ef5d47670d1c2a2267bfdaf4d576e43c09084a632b30a2a1cd5
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-event-camera-dvs-iot
+- audit-20260713-claim-event-camera-dvs-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for event-camera-dvs-iot
+supersedes: review-20260713-start-event-camera-dvs-iot
+revocation: null

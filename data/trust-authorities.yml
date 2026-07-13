@@ -5,4 +5,279 @@ actors:
     actor_type: AGENT
     allowed_roles:
       - STRUCTURAL_AUDITOR
-entries: []
+  - actor_id: human-author
+    actor_type: HUMAN
+    allowed_roles:
+      - CONTENT_AUTHOR
+  - actor_id: human-fact-auditor
+    actor_type: HUMAN
+    allowed_roles:
+      - FACT_AUDITOR
+  - actor_id: human-reviewer
+    actor_type: HUMAN
+    allowed_roles:
+      - REVIEWER
+      - APPROVER
+entries:
+  - content_id: jupiter
+    content_path: docs/intelligence/papers/jupiter.md
+    body_sha256: 690a995f8d7a947a25dd56254cfee5b673e6036799e503a7e4bf755ed31bb987
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-pp-lowest-communication
+      - claim-sequence-pipeline
+      - claim-speculative-decoding
+      - claim-dp-planning
+  - content_id: edge-computing-survey
+    content_path: docs/computing/papers/edge-computing-survey.md
+    body_sha256: deada9ae441213f9f327f68fc63f2c17454ca1f8b543211e301d666a4402f711
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-edge-computing-definition
+      - claim-edge-latency-benefit
+      - claim-edge-cloud-hybrid
+  - content_id: federated-learning-iot
+    content_path: docs/intelligence/papers/federated-learning-iot.md
+    body_sha256: 24c3cefe9b7704235a72daa7f2a123b7a653f9d86dcc943bd310e15614828b6d
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-fl-privacy-benefit
+      - claim-fl-communication-efficiency
+      - claim-fl-iot-scalability
+  - content_id: iot-security-systematic-review
+    content_path: docs/security/papers/iot-security-systematic-review.md
+    body_sha256: c001ed94511f70cd10398bd62ab2129ea726e6ec18b56ba5ce105fbb05023eff
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-iot-threat-classification
+      - claim-iot-security-framework
+      - claim-iot-zero-trust
+  - content_id: wasm-edge-runtime
+    content_path: docs/frontier/papers/wasm-edge-runtime.md
+    body_sha256: a08ab487cc9c23ca4fec2b0199744d23cb6ae973ed368c8f9317a9136d4d7bda
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-wasm-security-sandbox
+      - claim-wasm-performance
+      - claim-wasm-portability
+  - content_id: lpwan-comparison
+    content_path: docs/connectivity/papers/lpwan-comparison.md
+    body_sha256: 4212902e2f4cc851a7321f55d9c9c93b5a7adf456440aafd687017bc2b802981
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-lora-range-benefit
+      - claim-nbiot-coverage
+      - claim-lpwan-power-efficiency
+  - content_id: 3d-printed-sensor-enclosure
+    content_path: docs/foundation/papers/3d-printed-sensor-enclosure.md
+    body_sha256: 4bb71a43f2756216002dfb860fd04c753e2529c39732bb4cd0be7861d95b4308
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-3d-print-material-selection
+      - claim-enclosure-protection-level
+      - claim-rf-interference-minimization
+  - content_id: 4-20ma-current-loop-industrial
+    content_path: docs/foundation/papers/4-20ma-current-loop-industrial.md
+    body_sha256: d91ff967f7a45036114ac8a2470f3a4e41d6db880349672e602b86f04a0b4f54
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-current-loop-standard
+      - claim-4-20ma-noise-immunity
+      - claim-loop-power-supply-design
+  - content_id: 5g-mmtc-massive-iot-connection
+    content_path: docs/connectivity/papers/5g-mmtc-massive-iot-connection.md
+    body_sha256: 244c184a66f32c3ed9a294cc4471386f43afc7942198ef699d209034f00ebbee
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-mmtc-connection-density
+      - claim-mmtc-power-efficiency
+      - claim-mmtc-latency-requirements
+  - content_id: 5g-nr-redcap-iot-device
+    content_path: docs/connectivity/papers/5g-nr-redcap-iot-device.md
+    body_sha256: d6bff43bc5f5b91037ee0248bba410c8177cb18cf92a395dd1f1d665776d135e
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-redcap-spectrum-efficiency
+      - claim-redcap-device-cost
+      - claim-redcap-latency-tradeoff
+  - content_id: 5g-network-slicing-iot-vertical
+    content_path: docs/connectivity/papers/5g-network-slicing-iot-vertical.md
+    body_sha256: 1da08ba7e35c0c558506946cc3563dbbe88b7d8bfc14757d4e270affab247cff
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-network-slicing-isolation
+      - claim-slicing-resource-allocation
+      - claim-slicing-lifecycle-management
+  - content_id: 6g-isac-iot
+    content_path: docs/frontier/papers/6g-isac-iot.md
+    body_sha256: 8dabf3f7e18a3a553d3398bff22a14421ffa1313fde6dbe916a37d3e7ded3dc9
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-isac-spectrum-sharing
+      - claim-isac-sensing-accuracy
+      - claim-isac-iot-integration
+  - content_id: digital-twin-edge-offloading
+    content_path: docs/frontier/papers/digital-twin-edge-offloading.md
+    body_sha256: 7421f8d2fd856d67b96dc223ac8c0840ea73b28d09819a49095c4b44791d632c
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-digital-twin-real-time
+      - claim-edge-offloading-latency
+      - claim-twin-sync-mechanism
+  - content_id: federated-learning-privacy
+    content_path: docs/security/papers/federated-learning-privacy.md
+    body_sha256: 35b161c3924351bfbcd07352640836a07cde5cf4a8dfab33c44fc648fe2fa203
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-fl-privacy-guarantees
+      - claim-fl-attack-resistance
+      - claim-fl-compliance-framework
+  - content_id: iiot-predictive-maintenance
+    content_path: docs/applications/papers/iiot-predictive-maintenance.md
+    body_sha256: 3cd03506ca7dd02e5d80270d9c4d23074e1dcfcd091abe904d1bb2b208d28aac
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-predictive-maintenance-accuracy
+      - claim-iiot-data-quality
+      - claim-maintenance-cost-reduction
+  - content_id: indoor-positioning-survey
+    content_path: docs/applications/papers/indoor-positioning-survey.md
+    body_sha256: ee409ff8921f19829fb34116ac3202b2e871b52eae8ffc0cf1fdf6bb86a66526
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-indoor-positioning-accuracy
+      - claim-multi-technique-fusion
+      - claim-fingerprinting-calibration
+  - content_id: iot-app-protocols
+    content_path: docs/network/papers/iot-app-protocols.md
+    body_sha256: f46cad4b426ce218132eca76a12c110df176b39138807c9b19e7751817182c8b
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-protocol-selection-criteria
+      - claim-mqtt-vs-coap
+      - claim-protocol-security-features
+  - content_id: kubeedge-openyurt-comparison
+    content_path: docs/computing/papers/kubeedge-openyurt-comparison.md
+    body_sha256: 1156c0f72a5a0ca49b47fa4d92b9cb7b20a01bfd0cc48364e7af55b54e2dffab
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-kubeedge-architecture
+      - claim-openyurt-edge-autonomy
+      - claim-edge-orchestration-comparison
+  - content_id: model-compression-edge
+    content_path: docs/intelligence/papers/model-compression-edge.md
+    body_sha256: 80c3d695af28179d0a5fd53328bd2564f009f0d15da3aa08b97b5fff074a3f08
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-compression-accuracy-tradeoff
+      - claim-compression-inference-speedup
+      - claim-edge-deployment-size
+  - content_id: puf-device-authentication
+    content_path: docs/security/papers/puf-device-authentication.md
+    body_sha256: 29b5977354a6068b7981f2978c81e113542e9d8b4d513850f4e954c1d3559200
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-puf-unclonability
+      - claim-puf-noise-tolerance
+      - claim-puf-security-analysis
+  - content_id: rfid-sensing-survey
+    content_path: docs/foundation/papers/rfid-sensing-survey.md
+    body_sha256: 9897652694885cb4bac97154c67a014785af334c9d8c1e0d0a8a7150f00c75c3
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-rfid-sensing-principle
+      - claim-rfid-range-limitation
+      - claim-rfid-anti-collision
+  - content_id: rtos-comparison
+    content_path: docs/foundation/papers/rtos-comparison.md
+    body_sha256: 2e8a2ae6a84d437fdbfe9ab548feea4fe37367b82322cfdf05a979f7ae399c04
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-rtos-real-time-guarantee
+      - claim-rtos-memory-footprint
+      - claim-rtos-power-management
+  - content_id: serverless-edge
+    content_path: docs/computing/papers/serverless-edge.md
+    body_sha256: 9b21ad2fb922acde7f516c8089ee7117edd74f6f7f67f251537045d59de5bde5
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-serverless-cold-start
+      - claim-edge-serverless-latency
+      - claim-serverless-cost-model
+  - content_id: sparklink-vs-ble6
+    content_path: docs/connectivity/papers/sparklink-vs-ble6.md
+    body_sha256: 0ebeb040e55639100b92a7907c1102994b796fc0057d29062d1906c20f74de27
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-sparklink-throughput
+      - claim-ble6-power-efficiency
+      - claim-protocol-interoperability
+  - content_id: tinyml-mcu-deployment
+    content_path: docs/foundation/papers/tinyml-mcu-deployment.md
+    body_sha256: fd502dc0cc423a5383ec6975bcfec2e6886839c7fbf2098224fb912010b9a893
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-tinyml-model-size
+      - claim-mcu-inference-speed
+      - claim-mcu-power-consumption
+  - content_id: tsn-detnet-industrial
+    content_path: docs/network/papers/tsn-detnet-industrial.md
+    body_sha256: 4c0945c2f0873b978cafcdb9086697897561ec03bd4cc07bda99a8fedc87e526
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-tsn-time-synchronization
+      - claim-detnet-reliability
+      - claim-industrial-determinism
+  - content_id: uwb-positioning
+    content_path: docs/connectivity/papers/uwb-positioning.md
+    body_sha256: 542f101fb0dcb2ae52fd3485c3914838ad029d727720ad7833f3e42c28cd45e2
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-uwb-precision
+      - claim-uwb-multi-path
+      - claim-uwb-power-consumption
+  - content_id: v2x-autonomous-driving
+    content_path: docs/applications/papers/v2x-autonomous-driving.md
+    body_sha256: 9a2c6ffb6b987e56bcd1e9b479df1c5e49d761474f5e7333674cd25fe19034ee
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-v2x-communication-latency
+      - claim-v2x-safety-critical
+      - claim-v2x-standardization
+  - content_id: wsn-routing-drl
+    content_path: docs/network/papers/wsn-routing-drl.md
+    body_sha256: 1b1845f33038e0b854108fbf00a295485ee747d9bb29d33f7da2ac5bc11af77c
+    author_ids:
+      - human-author
+    critical_claim_ids:
+      - claim-drl-routing-efficiency
+      - claim-wsn-energy-optimization
+      - claim-routing-scalability

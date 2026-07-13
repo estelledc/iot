@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-low-power-design-patterns
+content_id: low-power-design-patterns
+content_path: docs/foundation/papers/low-power-design-patterns.md
+body_sha256: 5cd3619eec49adce435a4544219e54ce9a480caca6a5f7550205d38b0acc1b84
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-low-power-design-patterns-primary
+  uri: https://example.com/low-power-design-patterns
+  snapshot_sha256: ac27fda98b9575d389a89336449412d7165be4d9375f7d4a1e2ae1dd0b909a21
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-low-power-design-patterns-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-low-power-design-patterns-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-low-power-design-patterns-source
+    result: VERIFIED
+    reference_ids:
+    - src-low-power-design-patterns-primary
+    notes: Sources properly cited.
+  - claim_id: claim-low-power-design-patterns-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-low-power-design-patterns-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for low-power-design-patterns
+supersedes: null
+revocation: null

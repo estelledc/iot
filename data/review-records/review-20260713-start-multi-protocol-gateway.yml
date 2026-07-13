@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-multi-protocol-gateway
+content_id: multi-protocol-gateway
+content_path: docs/connectivity/papers/multi-protocol-gateway.md
+body_sha256: b1a4d2e444c0cdeb50619a15b9b37fa78579ee8941cdcd97483e9d528ffd3495
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-multi-protocol-gateway
+- audit-20260713-claim-multi-protocol-gateway
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for multi-protocol-gateway
+supersedes: null
+revocation: null

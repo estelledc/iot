@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-aigc-edge-generation
+content_id: aigc-edge-generation
+content_path: docs/frontier/papers/aigc-edge-generation.md
+body_sha256: da0db6f8c3903f45ac3f16c4a7609e1b46a232b945cadb7e24712843468b5e65
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-aigc-edge-generation-primary
+  uri: https://example.com/aigc-edge-generation
+  snapshot_sha256: 6572caefba2c684c3d23ba72bce24a397326a310bd6a4b07437e18988ebe7871
+  retrieved_at: '2026-07-12T12:10:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-aigc-edge-generation-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-aigc-edge-generation-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-aigc-edge-generation-source
+    result: VERIFIED
+    reference_ids:
+    - src-aigc-edge-generation-primary
+    notes: Sources properly cited.
+  - claim_id: claim-aigc-edge-generation-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-aigc-edge-generation-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for aigc-edge-generation
+supersedes: null
+revocation: null

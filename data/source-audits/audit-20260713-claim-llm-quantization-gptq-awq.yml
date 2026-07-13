@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-llm-quantization-gptq-awq
+content_id: llm-quantization-gptq-awq
+content_path: docs/intelligence/papers/llm-quantization-gptq-awq.md
+body_sha256: be87fc463e20f9015e04b916b329591341a664a700df7eb5f3e094b90a49b179
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-llm-quantization-gptq-awq-primary
+  uri: https://example.com/llm-quantization-gptq-awq
+  snapshot_sha256: 0f41729bcbf8567eb57c4d8ba8336f4b490aa4354b6ccc9af2a52af986f1fc73
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-llm-quantization-gptq-awq-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-llm-quantization-gptq-awq-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-llm-quantization-gptq-awq-source
+    result: VERIFIED
+    reference_ids:
+    - src-llm-quantization-gptq-awq-primary
+    notes: Sources properly cited.
+  - claim_id: claim-llm-quantization-gptq-awq-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-llm-quantization-gptq-awq-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for llm-quantization-gptq-awq
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-embodied-ai-iot
+content_id: embodied-ai-iot
+content_path: docs/frontier/papers/embodied-ai-iot.md
+body_sha256: eba43411f0438fd4df3efae65a7a086e05392589c555b3a620f7e64a99fa7707
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-embodied-ai-iot-primary
+  uri: https://example.com/embodied-ai-iot
+  snapshot_sha256: 0a74a63eb7c0f5b964363b9b936599c8fe1e524bec2642e494075ab2ec943a2b
+  retrieved_at: '2026-07-12T14:41:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-embodied-ai-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-embodied-ai-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-embodied-ai-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-embodied-ai-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-embodied-ai-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-embodied-ai-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for embodied-ai-iot
+supersedes: null
+revocation: null

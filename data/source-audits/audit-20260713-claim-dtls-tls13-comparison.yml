@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-dtls-tls13-comparison
+content_id: dtls-tls13-comparison
+content_path: docs/network/papers/dtls-tls13-comparison.md
+body_sha256: 2f1bd0f3c1a0edc1ac1aea99614585795e1e17a311bf49bd425e67acf55030c9
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-dtls-tls13-comparison-primary
+  uri: https://example.com/dtls-tls13-comparison
+  snapshot_sha256: 1b8fbc1a7ebc73314260cfd5cf3c673caa74296f6032865eec4eaff961eee77f
+  retrieved_at: '2026-07-12T14:12:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-dtls-tls13-comparison-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-dtls-tls13-comparison-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-dtls-tls13-comparison-source
+    result: VERIFIED
+    reference_ids:
+    - src-dtls-tls13-comparison-primary
+    notes: Sources properly cited.
+  - claim_id: claim-dtls-tls13-comparison-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-dtls-tls13-comparison-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for dtls-tls13-comparison
+supersedes: null
+revocation: null

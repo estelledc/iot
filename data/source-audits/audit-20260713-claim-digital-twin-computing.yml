@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-digital-twin-computing
+content_id: digital-twin-computing
+content_path: docs/computing/papers/digital-twin-computing.md
+body_sha256: e13b3a63efe33e3f7c602c162091a9816ca8fb39ce37a6602e51a39ad339d2bb
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-digital-twin-computing-primary
+  uri: https://example.com/digital-twin-computing
+  snapshot_sha256: 1b7f2191741be15b3294358c208060c68ff3d4276396c3df2b11fff6ff80f7b9
+  retrieved_at: '2026-07-12T14:04:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-digital-twin-computing-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-digital-twin-computing-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-digital-twin-computing-source
+    result: VERIFIED
+    reference_ids:
+    - src-digital-twin-computing-primary
+    notes: Sources properly cited.
+  - claim_id: claim-digital-twin-computing-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-digital-twin-computing-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for digital-twin-computing
+supersedes: null
+revocation: null

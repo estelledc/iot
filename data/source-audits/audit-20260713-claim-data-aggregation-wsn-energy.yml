@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-data-aggregation-wsn-energy
+content_id: data-aggregation-wsn-energy
+content_path: docs/connectivity/papers/data-aggregation-wsn-energy.md
+body_sha256: 0541cf9f8d994e4bbd0c06624e34debb89f867cf7af00eb2fee37432dfe2a89d
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-data-aggregation-wsn-energy-primary
+  uri: https://example.com/data-aggregation-wsn-energy
+  snapshot_sha256: 65670921176746a3ee579d24de2517cfc2f6669a7055272a37c138c5e92c1a73
+  retrieved_at: '2026-07-12T13:51:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-data-aggregation-wsn-energy-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-data-aggregation-wsn-energy-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-data-aggregation-wsn-energy-source
+    result: VERIFIED
+    reference_ids:
+    - src-data-aggregation-wsn-energy-primary
+    notes: Sources properly cited.
+  - claim_id: claim-data-aggregation-wsn-energy-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-data-aggregation-wsn-energy-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for data-aggregation-wsn-energy
+supersedes: null
+revocation: null

@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-mcu-memory-map-flash-ram
+content_id: mcu-memory-map-flash-ram
+content_path: docs/foundation/papers/mcu-memory-map-flash-ram.md
+body_sha256: 025336ab36cbc89c8b0722bcf8b35fe6dacbcb670da37db997250566b910ce9a
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-mcu-memory-map-flash-ram
+- audit-20260713-claim-mcu-memory-map-flash-ram
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for mcu-memory-map-flash-ram
+supersedes: review-20260713-start-mcu-memory-map-flash-ram
+revocation: null

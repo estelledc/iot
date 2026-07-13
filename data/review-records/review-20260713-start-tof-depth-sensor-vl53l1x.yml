@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-tof-depth-sensor-vl53l1x
+content_id: tof-depth-sensor-vl53l1x
+content_path: docs/foundation/papers/tof-depth-sensor-vl53l1x.md
+body_sha256: 7ca33431d184c1b24feac7b9f0ec738d05b47b3b35f4ca1f0a0a27f619dd2e6d
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-tof-depth-sensor-vl53l1x
+- audit-20260713-claim-tof-depth-sensor-vl53l1x
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for tof-depth-sensor-vl53l1x
+supersedes: null
+revocation: null

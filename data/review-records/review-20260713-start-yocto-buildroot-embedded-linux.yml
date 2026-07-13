@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-yocto-buildroot-embedded-linux
+content_id: yocto-buildroot-embedded-linux
+content_path: docs/foundation/papers/yocto-buildroot-embedded-linux.md
+body_sha256: d352a316ab3ca4de2564a601bb953e3c2e782e477b4d9188cc3b6814a7fb7a3a
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-yocto-buildroot-embedded-linux
+- audit-20260713-claim-yocto-buildroot-embedded-linux
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for yocto-buildroot-embedded-linux
+supersedes: null
+revocation: null

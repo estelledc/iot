@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-cold-chain-traceability
+content_id: cold-chain-traceability
+content_path: docs/applications/papers/cold-chain-traceability.md
+body_sha256: 881ad6808e9109fa0b7ed236cf094ba17e3239c9f20ac88930ded630c2cc9107
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-cold-chain-traceability-primary
+  uri: https://example.com/cold-chain-traceability
+  snapshot_sha256: fb32d297dec0252c2e7420554351a0ba03a9f2fcc752611f4ab21ac5dc53e47a
+  retrieved_at: '2026-07-12T13:23:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-cold-chain-traceability-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-cold-chain-traceability-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-cold-chain-traceability-source
+    result: VERIFIED
+    reference_ids:
+    - src-cold-chain-traceability-primary
+    notes: Sources properly cited.
+  - claim_id: claim-cold-chain-traceability-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-cold-chain-traceability-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for cold-chain-traceability
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-contrastive-learning-sensor
+content_id: contrastive-learning-sensor
+content_path: docs/intelligence/papers/contrastive-learning-sensor.md
+body_sha256: 3586ee5897acf595964acd663b192415affbf076e57a0ecd9d6f3d21b6218b28
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-contrastive-learning-sensor-primary
+  uri: https://example.com/contrastive-learning-sensor
+  snapshot_sha256: b760f696d4c3f44ab57100083c75af4261df4edc44192e3b3541c7e7272aa4f2
+  retrieved_at: '2026-07-12T13:37:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-contrastive-learning-sensor-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-contrastive-learning-sensor-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-contrastive-learning-sensor-source
+    result: VERIFIED
+    reference_ids:
+    - src-contrastive-learning-sensor-primary
+    notes: Sources properly cited.
+  - claim_id: claim-contrastive-learning-sensor-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-contrastive-learning-sensor-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for contrastive-learning-sensor
+supersedes: null
+revocation: null

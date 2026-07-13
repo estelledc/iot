@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-adc-sar-vs-sigma-delta
+content_id: adc-sar-vs-sigma-delta
+content_path: docs/foundation/papers/adc-sar-vs-sigma-delta.md
+body_sha256: 6c4d898a8f1795f92d0d87ecdb640f928bcc1e3012d27d5221eee47a4ce0d053
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-adc-sar-vs-sigma-delta-primary
+  uri: https://example.com/adc-sar-vs-sigma-delta
+  snapshot_sha256: 2516c8a238ff8559f3f716c3b69b933d88addcbd43736f8c59e7b7cff2f5cbf6
+  retrieved_at: '2026-07-12T12:06:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-adc-sar-vs-sigma-delta-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-adc-sar-vs-sigma-delta-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-adc-sar-vs-sigma-delta-source
+    result: VERIFIED
+    reference_ids:
+    - src-adc-sar-vs-sigma-delta-primary
+    notes: Sources properly cited.
+  - claim_id: claim-adc-sar-vs-sigma-delta-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-adc-sar-vs-sigma-delta-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for adc-sar-vs-sigma-delta
+supersedes: null
+revocation: null

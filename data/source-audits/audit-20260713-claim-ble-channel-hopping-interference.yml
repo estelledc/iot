@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ble-channel-hopping-interference
+content_id: ble-channel-hopping-interference
+content_path: docs/connectivity/papers/ble-channel-hopping-interference.md
+body_sha256: 8a34975bbfc5ab690861a4ebca726b8c5a8861b92866289675c72efcf44bac88
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ble-channel-hopping-interference-primary
+  uri: https://example.com/ble-channel-hopping-interference
+  snapshot_sha256: ecfcd806293032c6bf2d981a45ba9c8a157888cfaeaafe0edf4c5fc6dd2dd2db
+  retrieved_at: '2026-07-12T12:38:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ble-channel-hopping-interference-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ble-channel-hopping-interference-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ble-channel-hopping-interference-source
+    result: VERIFIED
+    reference_ids:
+    - src-ble-channel-hopping-interference-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ble-channel-hopping-interference-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ble-channel-hopping-interference-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ble-channel-hopping-interference
+supersedes: null
+revocation: null

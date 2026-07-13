@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-comparator-circuit-threshold-detection
+content_id: comparator-circuit-threshold-detection
+content_path: docs/foundation/papers/comparator-circuit-threshold-detection.md
+body_sha256: 2e1ae4f27064b1f00fc2c8df14e94a107b22aefaae54f7fcefa9cdad99f1fc4a
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-comparator-circuit-threshold-detection
+- audit-20260713-claim-comparator-circuit-threshold-detection
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for comparator-circuit-threshold-detection
+supersedes: null
+revocation: null

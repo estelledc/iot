@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-federated-learning-iot
+content_id: federated-learning-iot
+content_path: docs/intelligence/papers/federated-learning-iot.md
+body_sha256: 24c3cefe9b7704235a72daa7f2a123b7a653f9d86dcc943bd310e15614828b6d
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T07:05:00Z'
+source_references:
+- reference_id: src-fl-iot-survey
+  uri: https://arxiv.org/abs/2403.15470
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T07:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-fl-privacy-benefit
+    result: VERIFIED
+    reference_ids: &id001
+    - src-fl-iot-survey
+    notes: "claim-fl-privacy-benefit \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-fl-communication-efficiency
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-fl-communication-efficiency \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-fl-iot-scalability
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-fl-iot-scalability \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 federated-learning-iot \u5185\u5BB9\u7684 CLAIM_VERIFICATION\
+  \ \u5BA1\u8BA1\uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

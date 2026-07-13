@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-swipt-energy-harvesting
+content_id: swipt-energy-harvesting
+content_path: docs/connectivity/papers/swipt-energy-harvesting.md
+body_sha256: 0b04d2642b1df2ac919ed7a45a55c740d79ff21792562155481202ad9959f5c7
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-swipt-energy-harvesting-primary
+  uri: https://example.com/swipt-energy-harvesting
+  snapshot_sha256: 3e2d20620754c89c84d5c7c28e1a512161bd9380ea7e3841993131dc0658b926
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-swipt-energy-harvesting-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-swipt-energy-harvesting-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-swipt-energy-harvesting-source
+    result: VERIFIED
+    reference_ids:
+    - src-swipt-energy-harvesting-primary
+    notes: Sources properly cited.
+  - claim_id: claim-swipt-energy-harvesting-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-swipt-energy-harvesting-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for swipt-energy-harvesting
+supersedes: null
+revocation: null

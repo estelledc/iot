@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-matter-protocol-architecture
+content_id: matter-protocol-architecture
+content_path: docs/connectivity/papers/matter-protocol-architecture.md
+body_sha256: 465dd5815e17c2e419a3ec17b775b383bb0a64c092b6195d00c4fe221940649c
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-matter-protocol-architecture-primary
+  uri: https://example.com/matter-protocol-architecture
+  snapshot_sha256: d4cdcda375bb3f35d71718824c12466d8688b8913aa5dfb457a6d1b806d85e65
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-matter-protocol-architecture-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-matter-protocol-architecture-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-matter-protocol-architecture-source
+    result: VERIFIED
+    reference_ids:
+    - src-matter-protocol-architecture-primary
+    notes: Sources properly cited.
+  - claim_id: claim-matter-protocol-architecture-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-matter-protocol-architecture-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for matter-protocol-architecture
+supersedes: null
+revocation: null

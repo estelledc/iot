@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ce-fcc-certification-iot
+content_id: ce-fcc-certification-iot
+content_path: docs/foundation/papers/ce-fcc-certification-iot.md
+body_sha256: e618ae9ecb142680c5b121050f317a3b2e980394cadffa5c51894b020a163aa7
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ce-fcc-certification-iot-primary
+  uri: https://example.com/ce-fcc-certification-iot
+  snapshot_sha256: f664db47b0c544ab47f352160ca32bf14685d2d3f94dd2e3ef5a4096f5206d0d
+  retrieved_at: '2026-07-12T13:10:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ce-fcc-certification-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ce-fcc-certification-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ce-fcc-certification-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-ce-fcc-certification-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ce-fcc-certification-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ce-fcc-certification-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ce-fcc-certification-iot
+supersedes: null
+revocation: null

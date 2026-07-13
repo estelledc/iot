@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-buck-converter-design-iot
+content_id: buck-converter-design-iot
+content_path: docs/foundation/papers/buck-converter-design-iot.md
+body_sha256: cab4d0e5fa6e1f0b594f97d85b56c1b8c3fda9200dc6851ed4ecbdeb2cef730f
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-buck-converter-design-iot-primary
+  uri: https://example.com/buck-converter-design-iot
+  snapshot_sha256: 83dc1e663aa2ec959914f4fa584f65f222b0cf316480e8e7813164a9397858ae
+  retrieved_at: '2026-07-12T12:53:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-buck-converter-design-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-buck-converter-design-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-buck-converter-design-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-buck-converter-design-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-buck-converter-design-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-buck-converter-design-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for buck-converter-design-iot
+supersedes: null
+revocation: null

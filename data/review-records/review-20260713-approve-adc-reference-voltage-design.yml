@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-adc-reference-voltage-design
+content_id: adc-reference-voltage-design
+content_path: docs/foundation/papers/adc-reference-voltage-design.md
+body_sha256: 4a00285afd1ca8f6a000cfbcec27b506a8b83fa167f142175286959cdf30270c
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-adc-reference-voltage-design
+- audit-20260713-claim-adc-reference-voltage-design
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for adc-reference-voltage-design
+supersedes: review-20260713-start-adc-reference-voltage-design
+revocation: null

@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-ble-5-features-coded-phy
+content_id: ble-5-features-coded-phy
+content_path: docs/connectivity/papers/ble-5-features-coded-phy.md
+body_sha256: 642c5e0373794b74ec4476378939ee399915288086c98881405a0bca8b447f43
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-ble-5-features-coded-phy
+- audit-20260713-claim-ble-5-features-coded-phy
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for ble-5-features-coded-phy
+supersedes: review-20260713-start-ble-5-features-coded-phy
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-tof-depth-sensor-vl53l1x
+content_id: tof-depth-sensor-vl53l1x
+content_path: docs/foundation/papers/tof-depth-sensor-vl53l1x.md
+body_sha256: 7ca33431d184c1b24feac7b9f0ec738d05b47b3b35f4ca1f0a0a27f619dd2e6d
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-tof-depth-sensor-vl53l1x-primary
+  uri: https://example.com/tof-depth-sensor-vl53l1x
+  snapshot_sha256: de0a09f572a4504c69f623243404aad6b83baa316c9c19f938474ca3a925fe81
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-tof-depth-sensor-vl53l1x-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-tof-depth-sensor-vl53l1x-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-tof-depth-sensor-vl53l1x-source
+    result: VERIFIED
+    reference_ids:
+    - src-tof-depth-sensor-vl53l1x-primary
+    notes: Sources properly cited.
+  - claim_id: claim-tof-depth-sensor-vl53l1x-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-tof-depth-sensor-vl53l1x-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for tof-depth-sensor-vl53l1x
+supersedes: null
+revocation: null

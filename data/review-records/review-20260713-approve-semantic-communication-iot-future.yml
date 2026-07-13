@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-semantic-communication-iot-future
+content_id: semantic-communication-iot-future
+content_path: docs/connectivity/papers/semantic-communication-iot-future.md
+body_sha256: 475988389ae89a6292c2b711058af58b628d8c99a438b82f2c52acc5abb2d085
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-semantic-communication-iot-future
+- audit-20260713-claim-semantic-communication-iot-future
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for semantic-communication-iot-future
+supersedes: review-20260713-start-semantic-communication-iot-future
+revocation: null

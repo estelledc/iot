@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-zigbee-green-power-energy-harvest
+content_id: zigbee-green-power-energy-harvest
+content_path: docs/connectivity/papers/zigbee-green-power-energy-harvest.md
+body_sha256: 826848c5433b8a83056f19793d3d5a619c2c11c349e6095b9cc22820ec163516
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-zigbee-green-power-energy-harvest
+- audit-20260713-claim-zigbee-green-power-energy-harvest
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for zigbee-green-power-energy-harvest
+supersedes: review-20260713-start-zigbee-green-power-energy-harvest
+revocation: null

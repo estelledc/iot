@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-flexible-pcb-rigid-flex-iot
+content_id: flexible-pcb-rigid-flex-iot
+content_path: docs/foundation/papers/flexible-pcb-rigid-flex-iot.md
+body_sha256: 2c1735e7d77fb6ec098886fa884ac2177b712d1ce8b3a30d3a7a52f8d78fd0f0
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-flexible-pcb-rigid-flex-iot-primary
+  uri: https://example.com/flexible-pcb-rigid-flex-iot
+  snapshot_sha256: 6274316d7f9f066f4f8cda9de17d22d9658b296300f9d44604239bfe58135ac0
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-flexible-pcb-rigid-flex-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-flexible-pcb-rigid-flex-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-flexible-pcb-rigid-flex-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-flexible-pcb-rigid-flex-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-flexible-pcb-rigid-flex-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-flexible-pcb-rigid-flex-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for flexible-pcb-rigid-flex-iot
+supersedes: null
+revocation: null

@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-nand-flash-wear-leveling-ftl
+content_id: nand-flash-wear-leveling-ftl
+content_path: docs/foundation/papers/nand-flash-wear-leveling-ftl.md
+body_sha256: b1cb2b27721b8d67d722c1e3f75e78df88eb0f9febbc4b06748a8ca751545e65
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-nand-flash-wear-leveling-ftl
+- audit-20260713-claim-nand-flash-wear-leveling-ftl
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for nand-flash-wear-leveling-ftl
+supersedes: review-20260713-start-nand-flash-wear-leveling-ftl
+revocation: null

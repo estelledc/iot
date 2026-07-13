@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ble-periodic-advertising-sync
+content_id: ble-periodic-advertising-sync
+content_path: docs/connectivity/papers/ble-periodic-advertising-sync.md
+body_sha256: bf0708baab1de1832e7c6bdbc95ed4830ebec785b082214f9b23cc5250a1af5a
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ble-periodic-advertising-sync-primary
+  uri: https://example.com/ble-periodic-advertising-sync
+  snapshot_sha256: 73d0d40035ea9118e7195c8c2f7cbef11fba7c55c466fcc72e4de3a4e3bb80f7
+  retrieved_at: '2026-07-12T12:44:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ble-periodic-advertising-sync-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ble-periodic-advertising-sync-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ble-periodic-advertising-sync-source
+    result: VERIFIED
+    reference_ids:
+    - src-ble-periodic-advertising-sync-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ble-periodic-advertising-sync-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ble-periodic-advertising-sync-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ble-periodic-advertising-sync
+supersedes: null
+revocation: null

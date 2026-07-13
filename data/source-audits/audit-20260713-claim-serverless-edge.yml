@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-serverless-edge
+content_id: serverless-edge
+content_path: docs/computing/papers/serverless-edge.md
+body_sha256: 9b21ad2fb922acde7f516c8089ee7117edd74f6f7f67f251537045d59de5bde5
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T10:20:00Z'
+source_references:
+- reference_id: src-serverless-edge
+  uri: https://www.sciencedirect.com/science/article/pii/S0167739X23000234
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T10:15:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-serverless-cold-start
+    result: VERIFIED
+    reference_ids: &id001
+    - src-serverless-edge
+    notes: "claim-serverless-cold-start \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-edge-serverless-latency
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-edge-serverless-latency \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-serverless-cost-model
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-serverless-cost-model \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 serverless-edge \u5185\u5BB9\u7684 CLAIM_VERIFICATION \u5BA1\u8BA1\
+  \uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

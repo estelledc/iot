@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-lorawan-scalability
+content_id: lorawan-scalability
+content_path: docs/connectivity/papers/lorawan-scalability.md
+body_sha256: 42807c147848c3ff361ff9ce721f654a32cbe6a7f0a36ad42a495d40a9579ea2
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-lorawan-scalability-primary
+  uri: https://example.com/lorawan-scalability
+  snapshot_sha256: a7c2a96e9763edce665bb66481efd8e02242a31e0abcf52ff9224a7d6b867f61
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-lorawan-scalability-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-lorawan-scalability-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-lorawan-scalability-source
+    result: VERIFIED
+    reference_ids:
+    - src-lorawan-scalability-primary
+    notes: Sources properly cited.
+  - claim_id: claim-lorawan-scalability-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-lorawan-scalability-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for lorawan-scalability
+supersedes: null
+revocation: null

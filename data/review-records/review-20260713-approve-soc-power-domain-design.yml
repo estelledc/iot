@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-soc-power-domain-design
+content_id: soc-power-domain-design
+content_path: docs/foundation/papers/soc-power-domain-design.md
+body_sha256: 968053d9ff00f3f00ea66b926fb14505a8d158f17cd679baadd7cf725a444b91
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-soc-power-domain-design
+- audit-20260713-claim-soc-power-domain-design
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for soc-power-domain-design
+supersedes: review-20260713-start-soc-power-domain-design
+revocation: null

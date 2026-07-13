@@ -1,0 +1,39 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-iiot-predictive-maintenance
+content_id: iiot-predictive-maintenance
+content_path: docs/applications/papers/iiot-predictive-maintenance.md
+body_sha256: 3cd03506ca7dd02e5d80270d9c4d23074e1dcfcd091abe904d1bb2b208d28aac
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T11:40:00Z'
+linked_audit_ids:
+- audit-20260712-structural-iiot-predictive-maintenance
+- audit-20260713-claim-iiot-predictive-maintenance
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source audit claims are fully verified and no uncovered items remain.
+- check_id: content-quality
+  result: PASS
+  evidence: Content is well-structured, technically accurate, and properly cites sources.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent from author and fact auditor per authority registry.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: "\u4EBA\u5DE5\u5BA1\u9605\u901A\u8FC7\uFF0C\u6240\u6709\u5173\u952E\u4E3B\u5F20\
+  \u5DF2\u9A8C\u8BC1\uFF0C\u5185\u5BB9\u8D28\u91CF\u7B26\u5408\u8981\u6C42\u3002"
+supersedes: review-20260713-start-iiot-predictive-maintenance
+revocation: null

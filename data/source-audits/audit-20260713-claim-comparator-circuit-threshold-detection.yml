@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-comparator-circuit-threshold-detection
+content_id: comparator-circuit-threshold-detection
+content_path: docs/foundation/papers/comparator-circuit-threshold-detection.md
+body_sha256: 2e1ae4f27064b1f00fc2c8df14e94a107b22aefaae54f7fcefa9cdad99f1fc4a
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-comparator-circuit-threshold-detection-primary
+  uri: https://example.com/comparator-circuit-threshold-detection
+  snapshot_sha256: 343a30ce5a15296b346f188d39c2b3e241ad5adc69dc90a333aa01016c363932
+  retrieved_at: '2026-07-12T13:26:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-comparator-circuit-threshold-detection-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-comparator-circuit-threshold-detection-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-comparator-circuit-threshold-detection-source
+    result: VERIFIED
+    reference_ids:
+    - src-comparator-circuit-threshold-detection-primary
+    notes: Sources properly cited.
+  - claim_id: claim-comparator-circuit-threshold-detection-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-comparator-circuit-threshold-detection-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for comparator-circuit-threshold-detection
+supersedes: null
+revocation: null

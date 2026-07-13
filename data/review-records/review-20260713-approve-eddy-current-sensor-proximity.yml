@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-eddy-current-sensor-proximity
+content_id: eddy-current-sensor-proximity
+content_path: docs/foundation/papers/eddy-current-sensor-proximity.md
+body_sha256: b85407a2ee8fbdf21ba3dbb9046fbc6fd5189ee220cc00a46909106e131d2d04
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-eddy-current-sensor-proximity
+- audit-20260713-claim-eddy-current-sensor-proximity
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for eddy-current-sensor-proximity
+supersedes: review-20260713-start-eddy-current-sensor-proximity
+revocation: null

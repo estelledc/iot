@@ -1,0 +1,51 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-jupiter
+content_id: jupiter
+content_path: docs/intelligence/papers/jupiter.md
+body_sha256: 690a995f8d7a947a25dd56254cfee5b673e6036799e503a7e4bf755ed31bb987
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T07:00:00Z'
+source_references:
+- reference_id: src-jupiter-arxiv
+  uri: https://arxiv.org/abs/2504.08242
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T06:55:00Z'
+- reference_id: src-jupiter-github
+  uri: https://github.com/ysyisyourbrother/Jupiter
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T06:56:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-pp-lowest-communication
+    result: VERIFIED
+    reference_ids: &id001
+    - src-jupiter-arxiv
+    notes: "claim-pp-lowest-communication \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-sequence-pipeline
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-sequence-pipeline \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-speculative-decoding
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-speculative-decoding \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-dp-planning
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-dp-planning \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 jupiter \u5185\u5BB9\u7684 CLAIM_VERIFICATION \u5BA1\u8BA1\uFF0C\
+  \u5DF2\u9A8C\u8BC1\u6240\u6709\u56DB\u4E2A\u5173\u952E\u4E3B\u5F20\uFF0C\u65E0\u672A\
+  \u8986\u76D6\u9879\u548C\u963B\u585E\u9879\u3002"
+supersedes: null
+revocation: null

@@ -1,0 +1,32 @@
+schema_version: '1.0'
+audit_id: audit-20260712-structural-hybrid-connectivity-multi-protocol
+content_id: hybrid-connectivity-multi-protocol
+content_path: docs/connectivity/papers/hybrid-connectivity-multi-protocol.md
+body_sha256: 26eb3f786d52d52d3447bf3bf046bf5c58efd9ac1d0b9e785ed2e55ebb2e7fe3
+audit_kind: STRUCTURAL
+outcome: AUDITABLE
+status_transition:
+  from: UNVERIFIED
+  to: UNVERIFIED
+auditor_id: agent-structural-auditor
+auditor_type: AGENT
+auditor_role: STRUCTURAL_AUDITOR
+audited_at: '2026-07-12T10:00:00Z'
+structural_checks:
+- check_id: frontmatter-parses
+  result: PASS
+  evidence: YAML frontmatter parses without duplicate keys or type errors.
+- check_id: body-hash-bound
+  result: PASS
+  evidence: Body SHA256 matches canonical content hash.
+- check_id: markdown-fence-balance
+  result: PASS
+  evidence: All code fences are properly opened and closed.
+- check_id: frontmatter-body-consistency
+  result: PASS
+  evidence: frontmatter_title matches body_h1; layer and content_type consistent.
+notes: Structural audit for hybrid-connectivity-multi-protocol
+supersedes: null
+revocation: null
+source_references: []
+claim_coverage: null

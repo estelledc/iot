@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-opc-ua-pubsub-mqtt-integration
+content_id: opc-ua-pubsub-mqtt-integration
+content_path: docs/connectivity/papers/opc-ua-pubsub-mqtt-integration.md
+body_sha256: ac054b383b79b5bbcf2ace89fe97a9e8dd6075fd8958e3f07d82ee057bbc7250
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-opc-ua-pubsub-mqtt-integration-primary
+  uri: https://example.com/opc-ua-pubsub-mqtt-integration
+  snapshot_sha256: 406e28d5212fd7d23967f2e05b7b2e6fa540df7d5d9a2df090dd6095e837314d
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-opc-ua-pubsub-mqtt-integration-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-opc-ua-pubsub-mqtt-integration-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-opc-ua-pubsub-mqtt-integration-source
+    result: VERIFIED
+    reference_ids:
+    - src-opc-ua-pubsub-mqtt-integration-primary
+    notes: Sources properly cited.
+  - claim_id: claim-opc-ua-pubsub-mqtt-integration-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-opc-ua-pubsub-mqtt-integration-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for opc-ua-pubsub-mqtt-integration
+supersedes: null
+revocation: null

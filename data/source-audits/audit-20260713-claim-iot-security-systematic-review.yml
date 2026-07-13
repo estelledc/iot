@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-iot-security-systematic-review
+content_id: iot-security-systematic-review
+content_path: docs/security/papers/iot-security-systematic-review.md
+body_sha256: c001ed94511f70cd10398bd62ab2129ea726e6ec18b56ba5ce105fbb05023eff
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T07:10:00Z'
+source_references:
+- reference_id: src-iot-security-survey
+  uri: https://doi.org/10.1145/3616939
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T07:05:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-iot-threat-classification
+    result: VERIFIED
+    reference_ids: &id001
+    - src-iot-security-survey
+    notes: "claim-iot-threat-classification \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-iot-security-framework
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-iot-security-framework \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-iot-zero-trust
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-iot-zero-trust \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 iot-security-systematic-review \u5185\u5BB9\u7684 CLAIM_VERIFICATION\
+  \ \u5BA1\u8BA1\uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

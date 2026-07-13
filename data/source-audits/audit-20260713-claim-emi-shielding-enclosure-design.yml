@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-emi-shielding-enclosure-design
+content_id: emi-shielding-enclosure-design
+content_path: docs/foundation/papers/emi-shielding-enclosure-design.md
+body_sha256: 886259b610f3167563002666c17411e95d359db1dcbc7462ea31ea01080955e5
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-emi-shielding-enclosure-design-primary
+  uri: https://example.com/emi-shielding-enclosure-design
+  snapshot_sha256: 267f4aaedf486bd17e2d3a6106a2ea86ab59007ff7ce513c239390be82558a44
+  retrieved_at: '2026-07-12T14:43:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-emi-shielding-enclosure-design-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-emi-shielding-enclosure-design-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-emi-shielding-enclosure-design-source
+    result: VERIFIED
+    reference_ids:
+    - src-emi-shielding-enclosure-design-primary
+    notes: Sources properly cited.
+  - claim_id: claim-emi-shielding-enclosure-design-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-emi-shielding-enclosure-design-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for emi-shielding-enclosure-design
+supersedes: null
+revocation: null

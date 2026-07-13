@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-ipv6-6lowpan-rpl
+content_id: ipv6-6lowpan-rpl
+content_path: docs/network/papers/ipv6-6lowpan-rpl.md
+body_sha256: f1f1593fe4be0482fdbd968d37cb5cac266c1a38e0809b540c429ce7fd71dbbf
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-ipv6-6lowpan-rpl
+- audit-20260713-claim-ipv6-6lowpan-rpl
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for ipv6-6lowpan-rpl
+supersedes: review-20260713-start-ipv6-6lowpan-rpl
+revocation: null

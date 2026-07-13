@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-stepper-motor-driver-iot
+content_id: stepper-motor-driver-iot
+content_path: docs/foundation/papers/stepper-motor-driver-iot.md
+body_sha256: baa21dd55923955f70d4de97fc29b9959c277d9c5ca3c4acca6d486edefe28d8
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-stepper-motor-driver-iot-primary
+  uri: https://example.com/stepper-motor-driver-iot
+  snapshot_sha256: 3b3f12388407cefc8b86c94b3a20b473ec1c5296ad88080c62975e71721934e3
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-stepper-motor-driver-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-stepper-motor-driver-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-stepper-motor-driver-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-stepper-motor-driver-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-stepper-motor-driver-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-stepper-motor-driver-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for stepper-motor-driver-iot
+supersedes: null
+revocation: null

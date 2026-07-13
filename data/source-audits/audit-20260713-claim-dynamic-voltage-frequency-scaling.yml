@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-dynamic-voltage-frequency-scaling
+content_id: dynamic-voltage-frequency-scaling
+content_path: docs/foundation/papers/dynamic-voltage-frequency-scaling.md
+body_sha256: 9f03466c0d700659d865b99fa79706ae45ff98d2e270fe2d144395f9d211b101
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-dynamic-voltage-frequency-scaling-primary
+  uri: https://example.com/dynamic-voltage-frequency-scaling
+  snapshot_sha256: f7d5c247ed49fd1edd88c172209fa16f056dbc0dd4ff3d8c2bc0883b7810edaa
+  retrieved_at: '2026-07-12T14:16:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-dynamic-voltage-frequency-scaling-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-dynamic-voltage-frequency-scaling-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-dynamic-voltage-frequency-scaling-source
+    result: VERIFIED
+    reference_ids:
+    - src-dynamic-voltage-frequency-scaling-primary
+    notes: Sources properly cited.
+  - claim_id: claim-dynamic-voltage-frequency-scaling-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-dynamic-voltage-frequency-scaling-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for dynamic-voltage-frequency-scaling
+supersedes: null
+revocation: null

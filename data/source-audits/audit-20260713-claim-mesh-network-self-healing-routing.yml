@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-mesh-network-self-healing-routing
+content_id: mesh-network-self-healing-routing
+content_path: docs/connectivity/papers/mesh-network-self-healing-routing.md
+body_sha256: 23133a2b6a850886e722eaf71e70d68726c9fafb737de4b7afab58ce1f19c486
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-mesh-network-self-healing-routing-primary
+  uri: https://example.com/mesh-network-self-healing-routing
+  snapshot_sha256: e5cca4bf179a7027ae45e3bc0f25328e687f88436456d3643b455babefb065cf
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-mesh-network-self-healing-routing-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-mesh-network-self-healing-routing-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-mesh-network-self-healing-routing-source
+    result: VERIFIED
+    reference_ids:
+    - src-mesh-network-self-healing-routing-primary
+    notes: Sources properly cited.
+  - claim_id: claim-mesh-network-self-healing-routing-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-mesh-network-self-healing-routing-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for mesh-network-self-healing-routing
+supersedes: null
+revocation: null

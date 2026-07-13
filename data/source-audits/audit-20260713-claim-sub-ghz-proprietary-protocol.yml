@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-sub-ghz-proprietary-protocol
+content_id: sub-ghz-proprietary-protocol
+content_path: docs/connectivity/papers/sub-ghz-proprietary-protocol.md
+body_sha256: 5100296ad35f4e97c9d29e5df68b6e59f12b396e0bd3c7e5f51f312524f5b05d
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-sub-ghz-proprietary-protocol-primary
+  uri: https://example.com/sub-ghz-proprietary-protocol
+  snapshot_sha256: 52ddbacad55c7079b0381a1c544967f6bb815e5ad883bfaa40a500e34d881524
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-sub-ghz-proprietary-protocol-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-sub-ghz-proprietary-protocol-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-sub-ghz-proprietary-protocol-source
+    result: VERIFIED
+    reference_ids:
+    - src-sub-ghz-proprietary-protocol-primary
+    notes: Sources properly cited.
+  - claim_id: claim-sub-ghz-proprietary-protocol-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-sub-ghz-proprietary-protocol-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for sub-ghz-proprietary-protocol
+supersedes: null
+revocation: null

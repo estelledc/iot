@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-lattice-ice40-low-power-fpga
+content_id: lattice-ice40-low-power-fpga
+content_path: docs/foundation/papers/lattice-ice40-low-power-fpga.md
+body_sha256: c7fdabfb2963864cac90135bd8bf58dfac05dcebbfd0dcb9b8535f27aa8ccacd
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-lattice-ice40-low-power-fpga-primary
+  uri: https://example.com/lattice-ice40-low-power-fpga
+  snapshot_sha256: d22701549a45dcd68ab70775d8f73f7798755e2c3d624a989d25f40a40ee3a6a
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-lattice-ice40-low-power-fpga-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-lattice-ice40-low-power-fpga-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-lattice-ice40-low-power-fpga-source
+    result: VERIFIED
+    reference_ids:
+    - src-lattice-ice40-low-power-fpga-primary
+    notes: Sources properly cited.
+  - claim_id: claim-lattice-ice40-low-power-fpga-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-lattice-ice40-low-power-fpga-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for lattice-ice40-low-power-fpga
+supersedes: null
+revocation: null

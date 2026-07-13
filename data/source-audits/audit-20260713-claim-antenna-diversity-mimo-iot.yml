@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-antenna-diversity-mimo-iot
+content_id: antenna-diversity-mimo-iot
+content_path: docs/foundation/papers/antenna-diversity-mimo-iot.md
+body_sha256: eaf58cdfd7523b655f5432de8a991fd2e8c38131ec463ce801ab1d7086a6fc0e
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-antenna-diversity-mimo-iot-primary
+  uri: https://example.com/antenna-diversity-mimo-iot
+  snapshot_sha256: c0df68125a44c537920329dfa27e0825f47f7bf68a426940ac455414c6ed8561
+  retrieved_at: '2026-07-12T12:15:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-antenna-diversity-mimo-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-antenna-diversity-mimo-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-antenna-diversity-mimo-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-antenna-diversity-mimo-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-antenna-diversity-mimo-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-antenna-diversity-mimo-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for antenna-diversity-mimo-iot
+supersedes: null
+revocation: null

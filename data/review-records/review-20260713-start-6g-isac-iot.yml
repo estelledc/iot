@@ -1,0 +1,33 @@
+schema_version: '1.0'
+review_id: review-20260713-start-6g-isac-iot
+content_id: 6g-isac-iot
+content_path: docs/frontier/papers/6g-isac-iot.md
+body_sha256: 8dabf3f7e18a3a553d3398bff22a14421ffa1313fde6dbe916a37d3e7ded3dc9
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T11:15:00Z'
+linked_audit_ids:
+- audit-20260712-structural-6g-isac-iot
+- audit-20260713-claim-6g-isac-iot
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist and are valid for this content version.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: "\u5F00\u59CB\u5BF9 6g-isac-iot \u5185\u5BB9\u8FDB\u884C\u4EBA\u5DE5\u5BA1\u9605\
+  \uFF0C\u6E90\u8BC1\u636E\u5DF2\u9A8C\u8BC1\u3002"
+supersedes: null
+revocation: null

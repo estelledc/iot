@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-multi-tenant-edge-isolation
+content_id: multi-tenant-edge-isolation
+content_path: docs/computing/papers/multi-tenant-edge-isolation.md
+body_sha256: 895c133489a51fee22e3e1d1e4f09ecf435255a54b4c872c2e626fb55f2672b3
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-multi-tenant-edge-isolation
+- audit-20260713-claim-multi-tenant-edge-isolation
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for multi-tenant-edge-isolation
+supersedes: null
+revocation: null

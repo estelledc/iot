@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-drone-iot-inspection
+content_id: drone-iot-inspection
+content_path: docs/applications/papers/drone-iot-inspection.md
+body_sha256: 050c23bd4ae83e32959f2bb742eec2a25c6c298e4cde67275e83e1b1bacda313
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-drone-iot-inspection-primary
+  uri: https://example.com/drone-iot-inspection
+  snapshot_sha256: 2f1889cc24dcd3d2cb973f6468d1901fd33ce297607222504187427bc1fb8634
+  retrieved_at: '2026-07-12T14:11:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-drone-iot-inspection-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-drone-iot-inspection-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-drone-iot-inspection-source
+    result: VERIFIED
+    reference_ids:
+    - src-drone-iot-inspection-primary
+    notes: Sources properly cited.
+  - claim_id: claim-drone-iot-inspection-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-drone-iot-inspection-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for drone-iot-inspection
+supersedes: null
+revocation: null

@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-dect-2020-nr
+content_id: dect-2020-nr
+content_path: docs/connectivity/papers/dect-2020-nr.md
+body_sha256: 5d18fd634b52d1c4e9b7c6c726abbdc42ae414986d19b4fdf8aea9032d32a8af
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-dect-2020-nr
+- audit-20260713-claim-dect-2020-nr
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for dect-2020-nr
+supersedes: review-20260713-start-dect-2020-nr
+revocation: null

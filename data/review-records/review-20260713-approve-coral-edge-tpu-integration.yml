@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-coral-edge-tpu-integration
+content_id: coral-edge-tpu-integration
+content_path: docs/foundation/papers/coral-edge-tpu-integration.md
+body_sha256: 5b96293016740abfdb7a67f5ea7701b685cc751bfc482402021d6040b98177ab
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-coral-edge-tpu-integration
+- audit-20260713-claim-coral-edge-tpu-integration
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for coral-edge-tpu-integration
+supersedes: review-20260713-start-coral-edge-tpu-integration
+revocation: null

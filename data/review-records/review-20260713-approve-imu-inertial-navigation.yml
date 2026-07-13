@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-imu-inertial-navigation
+content_id: imu-inertial-navigation
+content_path: docs/foundation/papers/imu-inertial-navigation.md
+body_sha256: 1154685a0fafd30018a48ae810acd87189befd0e94e07b0e4aab0c4e3bff1c59
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-imu-inertial-navigation
+- audit-20260713-claim-imu-inertial-navigation
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for imu-inertial-navigation
+supersedes: review-20260713-start-imu-inertial-navigation
+revocation: null

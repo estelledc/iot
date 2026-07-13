@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-capacitive-level-sensor-liquid
+content_id: capacitive-level-sensor-liquid
+content_path: docs/foundation/papers/capacitive-level-sensor-liquid.md
+body_sha256: 95e538e633732e552b96f9313659cea3e032c93669bfb7d1e4306222600c3ebc
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-capacitive-level-sensor-liquid
+- audit-20260713-claim-capacitive-level-sensor-liquid
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for capacitive-level-sensor-liquid
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-fram-mram-nvram-comparison
+content_id: fram-mram-nvram-comparison
+content_path: docs/foundation/papers/fram-mram-nvram-comparison.md
+body_sha256: f7258f65babbc6834ea6c5c7229132ab1564367f35cd987c6228bb62f5557d40
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-fram-mram-nvram-comparison-primary
+  uri: https://example.com/fram-mram-nvram-comparison
+  snapshot_sha256: a959631a61977b3efc3a6f3b96f9a4ce817211ee0615d660624d03a6e358cba3
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-fram-mram-nvram-comparison-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-fram-mram-nvram-comparison-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-fram-mram-nvram-comparison-source
+    result: VERIFIED
+    reference_ids:
+    - src-fram-mram-nvram-comparison-primary
+    notes: Sources properly cited.
+  - claim_id: claim-fram-mram-nvram-comparison-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-fram-mram-nvram-comparison-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for fram-mram-nvram-comparison
+supersedes: null
+revocation: null

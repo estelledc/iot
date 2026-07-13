@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-backscatter-communication
+content_id: backscatter-communication
+content_path: docs/connectivity/papers/backscatter-communication.md
+body_sha256: 9db21dae1f0357501b40628a8fbb89ffda7ca5fa1b0b94483ea9a7841d95b408
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-backscatter-communication-primary
+  uri: https://example.com/backscatter-communication
+  snapshot_sha256: 437fdc0736694d9d0d20afa060ff220ff929700d469ede0851dc918db5b8c365
+  retrieved_at: '2026-07-12T12:26:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-backscatter-communication-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-backscatter-communication-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-backscatter-communication-source
+    result: VERIFIED
+    reference_ids:
+    - src-backscatter-communication-primary
+    notes: Sources properly cited.
+  - claim_id: claim-backscatter-communication-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-backscatter-communication-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for backscatter-communication
+supersedes: null
+revocation: null

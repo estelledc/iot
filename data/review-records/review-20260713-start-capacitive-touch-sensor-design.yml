@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-capacitive-touch-sensor-design
+content_id: capacitive-touch-sensor-design
+content_path: docs/foundation/papers/capacitive-touch-sensor-design.md
+body_sha256: 00b3153cceaf459097830831148bf10d73e637bfa0ce85a400bfe349e36c182e
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-capacitive-touch-sensor-design
+- audit-20260713-claim-capacitive-touch-sensor-design
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for capacitive-touch-sensor-design
+supersedes: null
+revocation: null

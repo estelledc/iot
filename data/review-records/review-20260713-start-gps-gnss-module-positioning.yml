@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-gps-gnss-module-positioning
+content_id: gps-gnss-module-positioning
+content_path: docs/foundation/papers/gps-gnss-module-positioning.md
+body_sha256: 97998211ff4e84f65f500f5cce63d4da51e8016ce90f3e60e55652fcd2a8295d
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-gps-gnss-module-positioning
+- audit-20260713-claim-gps-gnss-module-positioning
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for gps-gnss-module-positioning
+supersedes: null
+revocation: null

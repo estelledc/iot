@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-mec-5g-integration
+content_id: mec-5g-integration
+content_path: docs/computing/papers/mec-5g-integration.md
+body_sha256: 968a615ca5bcd0fd9be20e1be2a88ca3a5b62b2ad8da494dd74c5abd8ec8c467
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-mec-5g-integration-primary
+  uri: https://example.com/mec-5g-integration
+  snapshot_sha256: a74e0946a071e85084f73166805947b58458e1eb17f29e1d3d94ea4ccaa04111
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-mec-5g-integration-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-mec-5g-integration-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-mec-5g-integration-source
+    result: VERIFIED
+    reference_ids:
+    - src-mec-5g-integration-primary
+    notes: Sources properly cited.
+  - claim_id: claim-mec-5g-integration-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-mec-5g-integration-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for mec-5g-integration
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-rf-front-end-lna-pa-design
+content_id: rf-front-end-lna-pa-design
+content_path: docs/foundation/papers/rf-front-end-lna-pa-design.md
+body_sha256: 4e77dcac3a33f76bea36b17992e28bc99bfbf4e3d1b665c5d37944c8285094e3
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-rf-front-end-lna-pa-design-primary
+  uri: https://example.com/rf-front-end-lna-pa-design
+  snapshot_sha256: edaac4a8fa7c272e405ca289d6ef0166a273efdb12448e5680de5a956548a155
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-rf-front-end-lna-pa-design-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-rf-front-end-lna-pa-design-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-rf-front-end-lna-pa-design-source
+    result: VERIFIED
+    reference_ids:
+    - src-rf-front-end-lna-pa-design-primary
+    notes: Sources properly cited.
+  - claim_id: claim-rf-front-end-lna-pa-design-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-rf-front-end-lna-pa-design-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for rf-front-end-lna-pa-design
+supersedes: null
+revocation: null

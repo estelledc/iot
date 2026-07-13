@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-ble-channel-hopping-interference
+content_id: ble-channel-hopping-interference
+content_path: docs/connectivity/papers/ble-channel-hopping-interference.md
+body_sha256: 8a34975bbfc5ab690861a4ebca726b8c5a8861b92866289675c72efcf44bac88
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-ble-channel-hopping-interference
+- audit-20260713-claim-ble-channel-hopping-interference
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for ble-channel-hopping-interference
+supersedes: review-20260713-start-ble-channel-hopping-interference
+revocation: null

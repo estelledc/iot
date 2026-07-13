@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-adc-resolution-snr-enob
+content_id: adc-resolution-snr-enob
+content_path: docs/foundation/papers/adc-resolution-snr-enob.md
+body_sha256: 5eaf43e10c05d8b593dde0a70fe1630790113b0a833581efe460662db4c1cad7
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-adc-resolution-snr-enob-primary
+  uri: https://example.com/adc-resolution-snr-enob
+  snapshot_sha256: d6dad11b3c9fe1d27304f31c220c5dc607b1170b1482cd191b0f396f59729ed4
+  retrieved_at: '2026-07-12T12:05:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-adc-resolution-snr-enob-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-adc-resolution-snr-enob-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-adc-resolution-snr-enob-source
+    result: VERIFIED
+    reference_ids:
+    - src-adc-resolution-snr-enob-primary
+    notes: Sources properly cited.
+  - claim_id: claim-adc-resolution-snr-enob-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-adc-resolution-snr-enob-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for adc-resolution-snr-enob
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-smart-parking-system
+content_id: smart-parking-system
+content_path: docs/applications/papers/smart-parking-system.md
+body_sha256: d04885638b9c2c486e235addea12755bc37fd8ca7d2f5bb570590ee0d94fac5f
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-smart-parking-system-primary
+  uri: https://example.com/smart-parking-system
+  snapshot_sha256: 2686cbc01ab971ef59a015cc8e72cd5bd67fd9e437e47c4fe2026dfdb04034e4
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-smart-parking-system-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-smart-parking-system-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-smart-parking-system-source
+    result: VERIFIED
+    reference_ids:
+    - src-smart-parking-system-primary
+    notes: Sources properly cited.
+  - claim_id: claim-smart-parking-system-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-smart-parking-system-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for smart-parking-system
+supersedes: null
+revocation: null

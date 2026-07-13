@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-rtos-memory-management-pool-heap
+content_id: rtos-memory-management-pool-heap
+content_path: docs/foundation/papers/rtos-memory-management-pool-heap.md
+body_sha256: 605dd4d2728771b248976d86f75eb3303d12ca1793bf70f1ae9e66abe5016c4b
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-rtos-memory-management-pool-heap-primary
+  uri: https://example.com/rtos-memory-management-pool-heap
+  snapshot_sha256: 1c006981338123395074018eadf8a759379a2e54c4af5d427b8b7d01ed02ab5d
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-rtos-memory-management-pool-heap-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-rtos-memory-management-pool-heap-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-rtos-memory-management-pool-heap-source
+    result: VERIFIED
+    reference_ids:
+    - src-rtos-memory-management-pool-heap-primary
+    notes: Sources properly cited.
+  - claim_id: claim-rtos-memory-management-pool-heap-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-rtos-memory-management-pool-heap-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for rtos-memory-management-pool-heap
+supersedes: null
+revocation: null

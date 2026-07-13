@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-optocoupler-digital-isolator-comparison
+content_id: optocoupler-digital-isolator-comparison
+content_path: docs/foundation/papers/optocoupler-digital-isolator-comparison.md
+body_sha256: 0673fb7a2ec2102c13fe0774bb3083148fa4f212446ded7048043be43409d94f
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-optocoupler-digital-isolator-comparison-primary
+  uri: https://example.com/optocoupler-digital-isolator-comparison
+  snapshot_sha256: c8c25e0c1c1b249ed63b17b671eb65df9603ee11af61cc26b90abe60349a4275
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-optocoupler-digital-isolator-comparison-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-optocoupler-digital-isolator-comparison-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-optocoupler-digital-isolator-comparison-source
+    result: VERIFIED
+    reference_ids:
+    - src-optocoupler-digital-isolator-comparison-primary
+    notes: Sources properly cited.
+  - claim_id: claim-optocoupler-digital-isolator-comparison-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-optocoupler-digital-isolator-comparison-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for optocoupler-digital-isolator-comparison
+supersedes: null
+revocation: null

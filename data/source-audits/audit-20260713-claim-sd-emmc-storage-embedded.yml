@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-sd-emmc-storage-embedded
+content_id: sd-emmc-storage-embedded
+content_path: docs/foundation/papers/sd-emmc-storage-embedded.md
+body_sha256: 95864f2956697dd5d7401fab893c145a45e38e55d7548e606164145396f7009b
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-sd-emmc-storage-embedded-primary
+  uri: https://example.com/sd-emmc-storage-embedded
+  snapshot_sha256: c33edda7102ec65ef8a2d330c16d72326a614861d234ee20ccaa7e4aa9597a83
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-sd-emmc-storage-embedded-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-sd-emmc-storage-embedded-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-sd-emmc-storage-embedded-source
+    result: VERIFIED
+    reference_ids:
+    - src-sd-emmc-storage-embedded-primary
+    notes: Sources properly cited.
+  - claim_id: claim-sd-emmc-storage-embedded-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-sd-emmc-storage-embedded-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for sd-emmc-storage-embedded
+supersedes: null
+revocation: null

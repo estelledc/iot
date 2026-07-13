@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-wireguard-vpn-iot
+content_id: wireguard-vpn-iot
+content_path: docs/network/papers/wireguard-vpn-iot.md
+body_sha256: 4ca8ef138d0acc8f34b730b02c6d15eaa90dae7aeb53495456049c4273e5f0c9
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-wireguard-vpn-iot-primary
+  uri: https://example.com/wireguard-vpn-iot
+  snapshot_sha256: 3e183ef8feb0775fa88bc2fed78fe9d8831e918e2ecc206ba95190e44b79a34e
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-wireguard-vpn-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-wireguard-vpn-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-wireguard-vpn-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-wireguard-vpn-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-wireguard-vpn-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-wireguard-vpn-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for wireguard-vpn-iot
+supersedes: null
+revocation: null

@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-forward-error-correction-iot
+content_id: forward-error-correction-iot
+content_path: docs/connectivity/papers/forward-error-correction-iot.md
+body_sha256: 6bf6c523fd44fa8f99bf5bfc623908ec46eb2c44d71d44baf4104a19202f394e
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-forward-error-correction-iot
+- audit-20260713-claim-forward-error-correction-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for forward-error-correction-iot
+supersedes: review-20260713-start-forward-error-correction-iot
+revocation: null

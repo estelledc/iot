@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-mox-metal-oxide-gas-sensor
+content_id: mox-metal-oxide-gas-sensor
+content_path: docs/foundation/papers/mox-metal-oxide-gas-sensor.md
+body_sha256: d6b544de24fb85c96d76a96e17b3163e9bdbe65607df33a85dd8cc184eec4644
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-mox-metal-oxide-gas-sensor
+- audit-20260713-claim-mox-metal-oxide-gas-sensor
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for mox-metal-oxide-gas-sensor
+supersedes: review-20260713-start-mox-metal-oxide-gas-sensor
+revocation: null

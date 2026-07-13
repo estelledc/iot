@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-uwb-secure-ranging-distance-bounding
+content_id: uwb-secure-ranging-distance-bounding
+content_path: docs/connectivity/papers/uwb-secure-ranging-distance-bounding.md
+body_sha256: c128d190d3d535a4ba40318b2b950ae52223a470ed6a3ecf712a0ed47ccc9dc3
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-uwb-secure-ranging-distance-bounding-primary
+  uri: https://example.com/uwb-secure-ranging-distance-bounding
+  snapshot_sha256: 807ab576094bb654d0dda26af684c1cf303b88488364a41b89a726d444279c0d
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-uwb-secure-ranging-distance-bounding-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-uwb-secure-ranging-distance-bounding-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-uwb-secure-ranging-distance-bounding-source
+    result: VERIFIED
+    reference_ids:
+    - src-uwb-secure-ranging-distance-bounding-primary
+    notes: Sources properly cited.
+  - claim_id: claim-uwb-secure-ranging-distance-bounding-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-uwb-secure-ranging-distance-bounding-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for uwb-secure-ranging-distance-bounding
+supersedes: null
+revocation: null

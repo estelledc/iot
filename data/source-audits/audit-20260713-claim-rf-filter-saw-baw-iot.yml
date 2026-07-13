@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-rf-filter-saw-baw-iot
+content_id: rf-filter-saw-baw-iot
+content_path: docs/foundation/papers/rf-filter-saw-baw-iot.md
+body_sha256: 276f21de39726e88d635479848e6dc664f7264f00a5570e0e8f20a5dca6c4929
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-rf-filter-saw-baw-iot-primary
+  uri: https://example.com/rf-filter-saw-baw-iot
+  snapshot_sha256: 39af7dd082b2be61193778536175d543b32b3af725652b00820727b9ba0621a7
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-rf-filter-saw-baw-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-rf-filter-saw-baw-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-rf-filter-saw-baw-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-rf-filter-saw-baw-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-rf-filter-saw-baw-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-rf-filter-saw-baw-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for rf-filter-saw-baw-iot
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-pcb-ground-plane-partitioning
+content_id: pcb-ground-plane-partitioning
+content_path: docs/foundation/papers/pcb-ground-plane-partitioning.md
+body_sha256: 96f383aee41dd59b39e59c7c42e8efac8842b9e9fc466351363ce11fc12b73f1
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-pcb-ground-plane-partitioning-primary
+  uri: https://example.com/pcb-ground-plane-partitioning
+  snapshot_sha256: f0c3a61b620dfec5b9b7c0f819ba6b52df4ff3e14426acd9c3799b029f4fa04a
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-pcb-ground-plane-partitioning-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-pcb-ground-plane-partitioning-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-pcb-ground-plane-partitioning-source
+    result: VERIFIED
+    reference_ids:
+    - src-pcb-ground-plane-partitioning-primary
+    notes: Sources properly cited.
+  - claim_id: claim-pcb-ground-plane-partitioning-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-pcb-ground-plane-partitioning-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for pcb-ground-plane-partitioning
+supersedes: null
+revocation: null

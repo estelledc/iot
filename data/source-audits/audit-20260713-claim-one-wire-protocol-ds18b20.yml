@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-one-wire-protocol-ds18b20
+content_id: one-wire-protocol-ds18b20
+content_path: docs/foundation/papers/one-wire-protocol-ds18b20.md
+body_sha256: bcc6742b1f173b3fff7e8f91abbc528ed0067039ceab4c19cb3fac25845387b4
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-one-wire-protocol-ds18b20-primary
+  uri: https://example.com/one-wire-protocol-ds18b20
+  snapshot_sha256: bc9b1d6e79d7887b02e8005e36db321ce972b18f181b332085563ba13291713e
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-one-wire-protocol-ds18b20-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-one-wire-protocol-ds18b20-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-one-wire-protocol-ds18b20-source
+    result: VERIFIED
+    reference_ids:
+    - src-one-wire-protocol-ds18b20-primary
+    notes: Sources properly cited.
+  - claim_id: claim-one-wire-protocol-ds18b20-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-one-wire-protocol-ds18b20-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for one-wire-protocol-ds18b20
+supersedes: null
+revocation: null

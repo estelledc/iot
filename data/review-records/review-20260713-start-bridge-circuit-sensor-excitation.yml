@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-bridge-circuit-sensor-excitation
+content_id: bridge-circuit-sensor-excitation
+content_path: docs/foundation/papers/bridge-circuit-sensor-excitation.md
+body_sha256: 5598b24790bc025ee5bfdac2eae637c60112f5d8b13d6d19063f443637beb7f4
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-bridge-circuit-sensor-excitation
+- audit-20260713-claim-bridge-circuit-sensor-excitation
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for bridge-circuit-sensor-excitation
+supersedes: null
+revocation: null

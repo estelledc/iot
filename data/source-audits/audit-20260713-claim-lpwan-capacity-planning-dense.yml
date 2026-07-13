@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-lpwan-capacity-planning-dense
+content_id: lpwan-capacity-planning-dense
+content_path: docs/connectivity/papers/lpwan-capacity-planning-dense.md
+body_sha256: 851e99a599c08647869f2c33a06de05b5bbcbe6997786a53d947a12e7e0dc819
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-lpwan-capacity-planning-dense-primary
+  uri: https://example.com/lpwan-capacity-planning-dense
+  snapshot_sha256: e282fe20656fb64dc4e97faf11557e1a6feb07f8a430a84d296ae5f081417121
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-lpwan-capacity-planning-dense-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-lpwan-capacity-planning-dense-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-lpwan-capacity-planning-dense-source
+    result: VERIFIED
+    reference_ids:
+    - src-lpwan-capacity-planning-dense-primary
+    notes: Sources properly cited.
+  - claim_id: claim-lpwan-capacity-planning-dense-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-lpwan-capacity-planning-dense-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for lpwan-capacity-planning-dense
+supersedes: null
+revocation: null

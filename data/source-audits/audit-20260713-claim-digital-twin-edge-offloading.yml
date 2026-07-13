@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-digital-twin-edge-offloading
+content_id: digital-twin-edge-offloading
+content_path: docs/frontier/papers/digital-twin-edge-offloading.md
+body_sha256: 7421f8d2fd856d67b96dc223ac8c0840ea73b28d09819a49095c4b44791d632c
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T09:30:00Z'
+source_references:
+- reference_id: src-digital-twin-edge
+  uri: https://www.sciencedirect.com/science/article/pii/S0957417423002154
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T09:25:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-digital-twin-real-time
+    result: VERIFIED
+    reference_ids: &id001
+    - src-digital-twin-edge
+    notes: "claim-digital-twin-real-time \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-edge-offloading-latency
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-edge-offloading-latency \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-twin-sync-mechanism
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-twin-sync-mechanism \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 digital-twin-edge-offloading \u5185\u5BB9\u7684 CLAIM_VERIFICATION\
+  \ \u5BA1\u8BA1\uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

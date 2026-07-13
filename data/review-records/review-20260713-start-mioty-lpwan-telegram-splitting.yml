@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-mioty-lpwan-telegram-splitting
+content_id: mioty-lpwan-telegram-splitting
+content_path: docs/connectivity/papers/mioty-lpwan-telegram-splitting.md
+body_sha256: d2bfecb90ceb5ae34ed9ed19803f09bbe7f98dae9fbf4ee4d325b96d892f6a6d
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-mioty-lpwan-telegram-splitting
+- audit-20260713-claim-mioty-lpwan-telegram-splitting
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for mioty-lpwan-telegram-splitting
+supersedes: null
+revocation: null

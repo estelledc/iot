@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-decoupling-capacitor-placement
+content_id: decoupling-capacitor-placement
+content_path: docs/foundation/papers/decoupling-capacitor-placement.md
+body_sha256: 36ef784e8ebee0d582f9f5bba0bf6a22d1164accb80663802bc3a2d2d8604641
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-decoupling-capacitor-placement
+- audit-20260713-claim-decoupling-capacitor-placement
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for decoupling-capacitor-placement
+supersedes: review-20260713-start-decoupling-capacitor-placement
+revocation: null

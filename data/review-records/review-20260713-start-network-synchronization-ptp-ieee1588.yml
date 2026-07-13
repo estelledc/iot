@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-network-synchronization-ptp-ieee1588
+content_id: network-synchronization-ptp-ieee1588
+content_path: docs/connectivity/papers/network-synchronization-ptp-ieee1588.md
+body_sha256: a94e04984e0b13698a72f37d2e93b9a38d697718922fffb8e58873fe6d16333c
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-network-synchronization-ptp-ieee1588
+- audit-20260713-claim-network-synchronization-ptp-ieee1588
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for network-synchronization-ptp-ieee1588
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-wifi-roaming-802-11r-iot
+content_id: wifi-roaming-802-11r-iot
+content_path: docs/connectivity/papers/wifi-roaming-802-11r-iot.md
+body_sha256: eaa17234dc35a26e6ff79f3befc5e606fad1b5cecd4a8298cc9c553c1d638c81
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-wifi-roaming-802-11r-iot-primary
+  uri: https://example.com/wifi-roaming-802-11r-iot
+  snapshot_sha256: ca672bdbb1fc89ff03972fd36c679fcf0993a69468344209883e8c1c0df8c7c0
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-wifi-roaming-802-11r-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-wifi-roaming-802-11r-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-wifi-roaming-802-11r-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-wifi-roaming-802-11r-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-wifi-roaming-802-11r-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-wifi-roaming-802-11r-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for wifi-roaming-802-11r-iot
+supersedes: null
+revocation: null

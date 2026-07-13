@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-network-coding-iot-throughput
+content_id: network-coding-iot-throughput
+content_path: docs/connectivity/papers/network-coding-iot-throughput.md
+body_sha256: 8003be8c044b2622f9ce570f77cb7a678b24ce2130c789be7b459950c7c388f3
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-network-coding-iot-throughput-primary
+  uri: https://example.com/network-coding-iot-throughput
+  snapshot_sha256: d742089ab669eafbff7be465fdc9be56bd5dcd15119b52761bd1083de1e71048
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-network-coding-iot-throughput-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-network-coding-iot-throughput-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-network-coding-iot-throughput-source
+    result: VERIFIED
+    reference_ids:
+    - src-network-coding-iot-throughput-primary
+    notes: Sources properly cited.
+  - claim_id: claim-network-coding-iot-throughput-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-network-coding-iot-throughput-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for network-coding-iot-throughput
+supersedes: null
+revocation: null

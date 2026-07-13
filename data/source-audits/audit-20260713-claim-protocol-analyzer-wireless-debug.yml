@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-protocol-analyzer-wireless-debug
+content_id: protocol-analyzer-wireless-debug
+content_path: docs/connectivity/papers/protocol-analyzer-wireless-debug.md
+body_sha256: aa117fd3bd260bc7a667d8b60c2abaa54230f6dea230a410ad98ea702afe0ac6
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-protocol-analyzer-wireless-debug-primary
+  uri: https://example.com/protocol-analyzer-wireless-debug
+  snapshot_sha256: c6c150e85daaf2cba991af93eac0dbc137ddd583f4eabdc00ff058b3bfe467ef
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-protocol-analyzer-wireless-debug-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-protocol-analyzer-wireless-debug-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-protocol-analyzer-wireless-debug-source
+    result: VERIFIED
+    reference_ids:
+    - src-protocol-analyzer-wireless-debug-primary
+    notes: Sources properly cited.
+  - claim_id: claim-protocol-analyzer-wireless-debug-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-protocol-analyzer-wireless-debug-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for protocol-analyzer-wireless-debug
+supersedes: null
+revocation: null

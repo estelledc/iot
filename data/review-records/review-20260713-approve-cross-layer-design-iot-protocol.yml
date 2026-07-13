@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-cross-layer-design-iot-protocol
+content_id: cross-layer-design-iot-protocol
+content_path: docs/connectivity/papers/cross-layer-design-iot-protocol.md
+body_sha256: 06757f927fae8f90b163b1d6c367abf95d8879c00a96897752359ff821b6dee4
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-cross-layer-design-iot-protocol
+- audit-20260713-claim-cross-layer-design-iot-protocol
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for cross-layer-design-iot-protocol
+supersedes: review-20260713-start-cross-layer-design-iot-protocol
+revocation: null

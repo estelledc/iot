@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-edge-rag-retrieval
+content_id: edge-rag-retrieval
+content_path: docs/intelligence/papers/edge-rag-retrieval.md
+body_sha256: 07cb4193da067a0992b804f73872b7a24c5f631840514c210b4b7643f0594299
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-edge-rag-retrieval
+- audit-20260713-claim-edge-rag-retrieval
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for edge-rag-retrieval
+supersedes: review-20260713-start-edge-rag-retrieval
+revocation: null

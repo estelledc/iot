@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-multicore-mcu-amp-smp
+content_id: multicore-mcu-amp-smp
+content_path: docs/foundation/papers/multicore-mcu-amp-smp.md
+body_sha256: 332d8f60d993e01720a7e443bb94c00b0af757e59bb8d82140410bbcf404f315
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-multicore-mcu-amp-smp-primary
+  uri: https://example.com/multicore-mcu-amp-smp
+  snapshot_sha256: 588ea2085c78c5c47aa10a8e1e6ec6761abada65d67f8b87307c2fbc9e4abbf8
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-multicore-mcu-amp-smp-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-multicore-mcu-amp-smp-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-multicore-mcu-amp-smp-source
+    result: VERIFIED
+    reference_ids:
+    - src-multicore-mcu-amp-smp-primary
+    notes: Sources properly cited.
+  - claim_id: claim-multicore-mcu-amp-smp-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-multicore-mcu-amp-smp-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for multicore-mcu-amp-smp
+supersedes: null
+revocation: null

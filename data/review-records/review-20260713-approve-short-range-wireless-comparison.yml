@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-short-range-wireless-comparison
+content_id: short-range-wireless-comparison
+content_path: docs/connectivity/papers/short-range-wireless-comparison.md
+body_sha256: 83724ee1ae522d370acdc05005cbfcf5c869d7d6719aee34734d9a8516ff1b71
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-short-range-wireless-comparison
+- audit-20260713-claim-short-range-wireless-comparison
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for short-range-wireless-comparison
+supersedes: review-20260713-start-short-range-wireless-comparison
+revocation: null

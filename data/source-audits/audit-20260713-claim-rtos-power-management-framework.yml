@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-rtos-power-management-framework
+content_id: rtos-power-management-framework
+content_path: docs/foundation/papers/rtos-power-management-framework.md
+body_sha256: 42bff23241c11f84c848bc3b8fcb2130e5cc8834b94d7b5547a86f371cca51a5
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-rtos-power-management-framework-primary
+  uri: https://example.com/rtos-power-management-framework
+  snapshot_sha256: 080ad8972f9f42110ccb0877278a60eb73b9bdc6b92b3a367d8d08f0740e2543
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-rtos-power-management-framework-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-rtos-power-management-framework-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-rtos-power-management-framework-source
+    result: VERIFIED
+    reference_ids:
+    - src-rtos-power-management-framework-primary
+    notes: Sources properly cited.
+  - claim_id: claim-rtos-power-management-framework-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-rtos-power-management-framework-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for rtos-power-management-framework
+supersedes: null
+revocation: null

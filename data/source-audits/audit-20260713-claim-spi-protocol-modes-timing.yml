@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-spi-protocol-modes-timing
+content_id: spi-protocol-modes-timing
+content_path: docs/foundation/papers/spi-protocol-modes-timing.md
+body_sha256: 62ad4b1c28530fae0b61345a5b1a7989306ce6ca5d5eb5013dfef43bc8ec7681
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-spi-protocol-modes-timing-primary
+  uri: https://example.com/spi-protocol-modes-timing
+  snapshot_sha256: 2a6f229601327d377f042b9aea54542a95c6a1e63333415c655bc939e4cda923
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-spi-protocol-modes-timing-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-spi-protocol-modes-timing-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-spi-protocol-modes-timing-source
+    result: VERIFIED
+    reference_ids:
+    - src-spi-protocol-modes-timing-primary
+    notes: Sources properly cited.
+  - claim_id: claim-spi-protocol-modes-timing-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-spi-protocol-modes-timing-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for spi-protocol-modes-timing
+supersedes: null
+revocation: null

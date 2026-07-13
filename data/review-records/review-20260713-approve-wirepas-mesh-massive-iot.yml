@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-wirepas-mesh-massive-iot
+content_id: wirepas-mesh-massive-iot
+content_path: docs/connectivity/papers/wirepas-mesh-massive-iot.md
+body_sha256: 749704611ac840f26de0112f3a60c4f36ebfbc4b20dc38c6e47fbe043a6a5e53
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-wirepas-mesh-massive-iot
+- audit-20260713-claim-wirepas-mesh-massive-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for wirepas-mesh-massive-iot
+supersedes: review-20260713-start-wirepas-mesh-massive-iot
+revocation: null

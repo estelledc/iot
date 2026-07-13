@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-water-quality-sensor-array
+content_id: water-quality-sensor-array
+content_path: docs/foundation/papers/water-quality-sensor-array.md
+body_sha256: 526ed5ede2e34753bb42eb64a0ecbab00e4044f0a2074f39d6c657c3d51fc3ae
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-water-quality-sensor-array-primary
+  uri: https://example.com/water-quality-sensor-array
+  snapshot_sha256: f5264b651d8ff1343f885ad3f549d42b20a163ea1b2c406c09f6f4afc7c3a298
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-water-quality-sensor-array-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-water-quality-sensor-array-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-water-quality-sensor-array-source
+    result: VERIFIED
+    reference_ids:
+    - src-water-quality-sensor-array-primary
+    notes: Sources properly cited.
+  - claim_id: claim-water-quality-sensor-array-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-water-quality-sensor-array-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for water-quality-sensor-array
+supersedes: null
+revocation: null

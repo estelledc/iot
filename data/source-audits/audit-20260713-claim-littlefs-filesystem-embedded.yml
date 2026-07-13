@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-littlefs-filesystem-embedded
+content_id: littlefs-filesystem-embedded
+content_path: docs/foundation/papers/littlefs-filesystem-embedded.md
+body_sha256: b4d48fa9affe1a5f56f792731da45438f05124981786159c902640badcc7b0c1
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-littlefs-filesystem-embedded-primary
+  uri: https://example.com/littlefs-filesystem-embedded
+  snapshot_sha256: d8cf84a45c9531e2eb60a63a345709a06f7ebb26642a997c2de38b32f2cdfe79
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-littlefs-filesystem-embedded-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-littlefs-filesystem-embedded-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-littlefs-filesystem-embedded-source
+    result: VERIFIED
+    reference_ids:
+    - src-littlefs-filesystem-embedded-primary
+    notes: Sources properly cited.
+  - claim_id: claim-littlefs-filesystem-embedded-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-littlefs-filesystem-embedded-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for littlefs-filesystem-embedded
+supersedes: null
+revocation: null

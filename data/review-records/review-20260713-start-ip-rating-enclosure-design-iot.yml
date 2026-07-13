@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-ip-rating-enclosure-design-iot
+content_id: ip-rating-enclosure-design-iot
+content_path: docs/foundation/papers/ip-rating-enclosure-design-iot.md
+body_sha256: 1d77165c5f2cf5fc6d21eb707fbe5cb22ae0cb2ae3802c9211d9e7a00a4aabdf
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-ip-rating-enclosure-design-iot
+- audit-20260713-claim-ip-rating-enclosure-design-iot
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for ip-rating-enclosure-design-iot
+supersedes: null
+revocation: null

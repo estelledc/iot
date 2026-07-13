@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-edge-database-sqlite-duckdb
+content_id: edge-database-sqlite-duckdb
+content_path: docs/computing/papers/edge-database-sqlite-duckdb.md
+body_sha256: 3d88eec4cfd30ff66270c70cb75cd11eeb56b0a66f59768d3ff7f5258a5c2169
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-edge-database-sqlite-duckdb-primary
+  uri: https://example.com/edge-database-sqlite-duckdb
+  snapshot_sha256: 7611074adb12f9e524ebf428572698f82796cf4b2c631f8048a24842bbbface1
+  retrieved_at: '2026-07-12T14:24:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-edge-database-sqlite-duckdb-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-edge-database-sqlite-duckdb-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-edge-database-sqlite-duckdb-source
+    result: VERIFIED
+    reference_ids:
+    - src-edge-database-sqlite-duckdb-primary
+    notes: Sources properly cited.
+  - claim_id: claim-edge-database-sqlite-duckdb-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-edge-database-sqlite-duckdb-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for edge-database-sqlite-duckdb
+supersedes: null
+revocation: null

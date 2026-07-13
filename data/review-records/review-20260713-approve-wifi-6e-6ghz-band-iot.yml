@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-wifi-6e-6ghz-band-iot
+content_id: wifi-6e-6ghz-band-iot
+content_path: docs/connectivity/papers/wifi-6e-6ghz-band-iot.md
+body_sha256: c374cd78e95e7683d015aee3e2a188f3c1af87d740c5c73a84d283d8dca2e364
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-wifi-6e-6ghz-band-iot
+- audit-20260713-claim-wifi-6e-6ghz-band-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for wifi-6e-6ghz-band-iot
+supersedes: review-20260713-start-wifi-6e-6ghz-band-iot
+revocation: null

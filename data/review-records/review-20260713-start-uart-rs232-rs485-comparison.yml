@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-uart-rs232-rs485-comparison
+content_id: uart-rs232-rs485-comparison
+content_path: docs/foundation/papers/uart-rs232-rs485-comparison.md
+body_sha256: f840b333ed50e71fa41a8547d8938c53615f795c1bba7943d71381ce103f8e7f
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-uart-rs232-rs485-comparison
+- audit-20260713-claim-uart-rs232-rs485-comparison
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for uart-rs232-rs485-comparison
+supersedes: null
+revocation: null

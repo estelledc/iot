@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-lorawan-multicast-firmware-update
+content_id: lorawan-multicast-firmware-update
+content_path: docs/connectivity/papers/lorawan-multicast-firmware-update.md
+body_sha256: f69a9b156b58f26767824fc8e9b1d494a54ff931c2a2beaa9886afe36b843cc4
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-lorawan-multicast-firmware-update-primary
+  uri: https://example.com/lorawan-multicast-firmware-update
+  snapshot_sha256: 8bf8213e5311b95492d56bbfdfa1091e5e13395f01e19a2252a771151d6f666d
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-lorawan-multicast-firmware-update-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-lorawan-multicast-firmware-update-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-lorawan-multicast-firmware-update-source
+    result: VERIFIED
+    reference_ids:
+    - src-lorawan-multicast-firmware-update-primary
+    notes: Sources properly cited.
+  - claim_id: claim-lorawan-multicast-firmware-update-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-lorawan-multicast-firmware-update-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for lorawan-multicast-firmware-update
+supersedes: null
+revocation: null

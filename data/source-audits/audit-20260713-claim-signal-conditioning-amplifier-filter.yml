@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-signal-conditioning-amplifier-filter
+content_id: signal-conditioning-amplifier-filter
+content_path: docs/foundation/papers/signal-conditioning-amplifier-filter.md
+body_sha256: 497c10fa955e892483d9db6442f87195d95c98273a5d8997c72e604c65378868
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-signal-conditioning-amplifier-filter-primary
+  uri: https://example.com/signal-conditioning-amplifier-filter
+  snapshot_sha256: 185b6d1b4c1dbe65565dbafddca4cfaed75dfcee4a28c260f24321099fb3dbb9
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-signal-conditioning-amplifier-filter-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-signal-conditioning-amplifier-filter-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-signal-conditioning-amplifier-filter-source
+    result: VERIFIED
+    reference_ids:
+    - src-signal-conditioning-amplifier-filter-primary
+    notes: Sources properly cited.
+  - claim_id: claim-signal-conditioning-amplifier-filter-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-signal-conditioning-amplifier-filter-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for signal-conditioning-amplifier-filter
+supersedes: null
+revocation: null

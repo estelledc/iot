@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-radar-level-sensor-fmcw
+content_id: radar-level-sensor-fmcw
+content_path: docs/foundation/papers/radar-level-sensor-fmcw.md
+body_sha256: 6441c4db3f67479cc76eac53d03de97ec4882f7661733758304dd1f2d58230f7
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-radar-level-sensor-fmcw-primary
+  uri: https://example.com/radar-level-sensor-fmcw
+  snapshot_sha256: 8acf086b5379b53d68cbe7cf042fb6cd3c49ce9b1b8295881ef39660ce1dcf59
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-radar-level-sensor-fmcw-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-radar-level-sensor-fmcw-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-radar-level-sensor-fmcw-source
+    result: VERIFIED
+    reference_ids:
+    - src-radar-level-sensor-fmcw-primary
+    notes: Sources properly cited.
+  - claim_id: claim-radar-level-sensor-fmcw-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-radar-level-sensor-fmcw-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for radar-level-sensor-fmcw
+supersedes: null
+revocation: null

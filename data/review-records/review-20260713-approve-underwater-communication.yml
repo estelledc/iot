@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-underwater-communication
+content_id: underwater-communication
+content_path: docs/applications/papers/underwater-communication.md
+body_sha256: 6a611fcd44898ca2dc8e71ce52c51f16305f351962a1e3d6d2bff68a3f422dbb
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-underwater-communication
+- audit-20260713-claim-underwater-communication
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for underwater-communication
+supersedes: review-20260713-start-underwater-communication
+revocation: null

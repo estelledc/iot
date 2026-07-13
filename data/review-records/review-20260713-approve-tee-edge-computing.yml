@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-tee-edge-computing
+content_id: tee-edge-computing
+content_path: docs/security/papers/tee-edge-computing.md
+body_sha256: 8e606656cec3a8e9f5cf1621a02f605b3946450631085e1bacf757c8e758db64
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-tee-edge-computing
+- audit-20260713-claim-tee-edge-computing
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for tee-edge-computing
+supersedes: review-20260713-start-tee-edge-computing
+revocation: null

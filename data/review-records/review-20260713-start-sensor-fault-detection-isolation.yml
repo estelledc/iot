@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-sensor-fault-detection-isolation
+content_id: sensor-fault-detection-isolation
+content_path: docs/foundation/papers/sensor-fault-detection-isolation.md
+body_sha256: 7133137bd45007cb5207c80be15b89782e10e4b2f8604bce98e111520e13deb3
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-sensor-fault-detection-isolation
+- audit-20260713-claim-sensor-fault-detection-isolation
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for sensor-fault-detection-isolation
+supersedes: null
+revocation: null

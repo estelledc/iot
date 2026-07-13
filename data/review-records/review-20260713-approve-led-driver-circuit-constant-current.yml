@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-led-driver-circuit-constant-current
+content_id: led-driver-circuit-constant-current
+content_path: docs/foundation/papers/led-driver-circuit-constant-current.md
+body_sha256: ee70ad4974da30d2eba46ba8f975d801f4118608e99b1796ed8e3389bc577e07
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-led-driver-circuit-constant-current
+- audit-20260713-claim-led-driver-circuit-constant-current
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for led-driver-circuit-constant-current
+supersedes: review-20260713-start-led-driver-circuit-constant-current
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-ble-throughput-optimization-dle
+content_id: ble-throughput-optimization-dle
+content_path: docs/connectivity/papers/ble-throughput-optimization-dle.md
+body_sha256: 763143842e57b18823307ef8866e1430f0d6f1706f1ecdd74b45e25b0f74940d
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-ble-throughput-optimization-dle-primary
+  uri: https://example.com/ble-throughput-optimization-dle
+  snapshot_sha256: 3a19b5173c5ac92872fa61bbd0c42819565d671c3f6dee07fa1151981f58a8f4
+  retrieved_at: '2026-07-12T12:47:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-ble-throughput-optimization-dle-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-ble-throughput-optimization-dle-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-ble-throughput-optimization-dle-source
+    result: VERIFIED
+    reference_ids:
+    - src-ble-throughput-optimization-dle-primary
+    notes: Sources properly cited.
+  - claim_id: claim-ble-throughput-optimization-dle-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-ble-throughput-optimization-dle-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for ble-throughput-optimization-dle
+supersedes: null
+revocation: null

@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-inclination-sensor-tilt-measurement
+content_id: inclination-sensor-tilt-measurement
+content_path: docs/foundation/papers/inclination-sensor-tilt-measurement.md
+body_sha256: 460f65b38abe539fe5d4e1a9490920c433ff316d5ce2f2d14c02964b5acb3269
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-inclination-sensor-tilt-measurement-primary
+  uri: https://example.com/inclination-sensor-tilt-measurement
+  snapshot_sha256: 5aa97db9f73922313c97aba2f8c3a522bc2a3268c4371f66cce2a19aa7d04cd3
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-inclination-sensor-tilt-measurement-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-inclination-sensor-tilt-measurement-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-inclination-sensor-tilt-measurement-source
+    result: VERIFIED
+    reference_ids:
+    - src-inclination-sensor-tilt-measurement-primary
+    notes: Sources properly cited.
+  - claim_id: claim-inclination-sensor-tilt-measurement-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-inclination-sensor-tilt-measurement-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for inclination-sensor-tilt-measurement
+supersedes: null
+revocation: null

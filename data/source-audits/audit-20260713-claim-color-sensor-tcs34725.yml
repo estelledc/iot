@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-color-sensor-tcs34725
+content_id: color-sensor-tcs34725
+content_path: docs/foundation/papers/color-sensor-tcs34725.md
+body_sha256: 2d00a5f143d372ae744c7fbac4962a2f325e2f641e56c7c84506ff7e500608df
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-color-sensor-tcs34725-primary
+  uri: https://example.com/color-sensor-tcs34725
+  snapshot_sha256: 99101c5851360941caedfdf0df83bad00bcc68961e66332753d93a66141008c1
+  retrieved_at: '2026-07-12T13:25:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-color-sensor-tcs34725-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-color-sensor-tcs34725-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-color-sensor-tcs34725-source
+    result: VERIFIED
+    reference_ids:
+    - src-color-sensor-tcs34725-primary
+    notes: Sources properly cited.
+  - claim_id: claim-color-sensor-tcs34725-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-color-sensor-tcs34725-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for color-sensor-tcs34725
+supersedes: null
+revocation: null

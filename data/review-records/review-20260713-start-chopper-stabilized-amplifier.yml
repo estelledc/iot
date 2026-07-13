@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-chopper-stabilized-amplifier
+content_id: chopper-stabilized-amplifier
+content_path: docs/foundation/papers/chopper-stabilized-amplifier.md
+body_sha256: 4b2963a73a401c25127a788e41aac0b3125d3897577f4302162a6f03b169e2ef
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-chopper-stabilized-amplifier
+- audit-20260713-claim-chopper-stabilized-amplifier
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for chopper-stabilized-amplifier
+supersedes: null
+revocation: null

@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-i2c-vs-spi-selection-guide
+content_id: i2c-vs-spi-selection-guide
+content_path: docs/foundation/papers/i2c-vs-spi-selection-guide.md
+body_sha256: 605b82dec1ce982c35f3dccccc419d787b74bd1f4d9e8a072f42bcfec160d2f2
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-i2c-vs-spi-selection-guide
+- audit-20260713-claim-i2c-vs-spi-selection-guide
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for i2c-vs-spi-selection-guide
+supersedes: review-20260713-start-i2c-vs-spi-selection-guide
+revocation: null

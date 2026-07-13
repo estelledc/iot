@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-connectivity-cost-analysis-tco
+content_id: connectivity-cost-analysis-tco
+content_path: docs/connectivity/papers/connectivity-cost-analysis-tco.md
+body_sha256: e0c43bf653dd9907e3e03c85e377aacb8bf1e8d97621e6df6bc53be73c92c2fc
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-connectivity-cost-analysis-tco-primary
+  uri: https://example.com/connectivity-cost-analysis-tco
+  snapshot_sha256: 6e98ff6f0b43339ce2769e809fc3e7438dcf21aea55e811eb752d939e71a617c
+  retrieved_at: '2026-07-12T13:31:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-connectivity-cost-analysis-tco-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-connectivity-cost-analysis-tco-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-connectivity-cost-analysis-tco-source
+    result: VERIFIED
+    reference_ids:
+    - src-connectivity-cost-analysis-tco-primary
+    notes: Sources properly cited.
+  - claim_id: claim-connectivity-cost-analysis-tco-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-connectivity-cost-analysis-tco-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for connectivity-cost-analysis-tco
+supersedes: null
+revocation: null

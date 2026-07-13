@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-radiation-hardened-sensor-iot
+content_id: radiation-hardened-sensor-iot
+content_path: docs/foundation/papers/radiation-hardened-sensor-iot.md
+body_sha256: 4a974b68bfcadb22bd4ecccddcfea6f8ad36e8c521123d2d9418ff62e427e453
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-radiation-hardened-sensor-iot-primary
+  uri: https://example.com/radiation-hardened-sensor-iot
+  snapshot_sha256: 13ade6df1cb65e91d9f1bea2f1d7a028e2cfe966d0c74287a8db9af6040fa28f
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-radiation-hardened-sensor-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-radiation-hardened-sensor-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-radiation-hardened-sensor-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-radiation-hardened-sensor-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-radiation-hardened-sensor-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-radiation-hardened-sensor-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for radiation-hardened-sensor-iot
+supersedes: null
+revocation: null

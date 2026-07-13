@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-grant-free-access-massive-iot
+content_id: grant-free-access-massive-iot
+content_path: docs/connectivity/papers/grant-free-access-massive-iot.md
+body_sha256: 7ccf10029dd9691cd50752847caa58d75062cbcf24e2be04f212bbe3b7ae3be6
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-grant-free-access-massive-iot-primary
+  uri: https://example.com/grant-free-access-massive-iot
+  snapshot_sha256: b5944e4630a917bcf31a12899c903f204d3149d4eeca82bc2496db2607c5674a
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-grant-free-access-massive-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-grant-free-access-massive-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-grant-free-access-massive-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-grant-free-access-massive-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-grant-free-access-massive-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-grant-free-access-massive-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for grant-free-access-massive-iot
+supersedes: null
+revocation: null

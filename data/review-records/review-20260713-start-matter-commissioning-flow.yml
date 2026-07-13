@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-matter-commissioning-flow
+content_id: matter-commissioning-flow
+content_path: docs/connectivity/papers/matter-commissioning-flow.md
+body_sha256: 658d55728395455d514e1876b5ecd8d5b144987fa2ce0dda7723a997bac82904
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-matter-commissioning-flow
+- audit-20260713-claim-matter-commissioning-flow
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for matter-commissioning-flow
+supersedes: null
+revocation: null

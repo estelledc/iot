@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-wirepas-mesh-massive-iot
+content_id: wirepas-mesh-massive-iot
+content_path: docs/connectivity/papers/wirepas-mesh-massive-iot.md
+body_sha256: 749704611ac840f26de0112f3a60c4f36ebfbc4b20dc38c6e47fbe043a6a5e53
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-wirepas-mesh-massive-iot-primary
+  uri: https://example.com/wirepas-mesh-massive-iot
+  snapshot_sha256: 7910ded4f485af0ff580e2ba48a66b3aa7462e05234fb367a0d6d80078e03d1a
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-wirepas-mesh-massive-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-wirepas-mesh-massive-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-wirepas-mesh-massive-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-wirepas-mesh-massive-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-wirepas-mesh-massive-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-wirepas-mesh-massive-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for wirepas-mesh-massive-iot
+supersedes: null
+revocation: null

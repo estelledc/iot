@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-sensor-aging-drift-compensation
+content_id: sensor-aging-drift-compensation
+content_path: docs/foundation/papers/sensor-aging-drift-compensation.md
+body_sha256: 1ef7be373dee33a5ef246a78d5ea3c9b9dd3f088dac2e73eb7df74b19288eeb4
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-sensor-aging-drift-compensation
+- audit-20260713-claim-sensor-aging-drift-compensation
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for sensor-aging-drift-compensation
+supersedes: null
+revocation: null

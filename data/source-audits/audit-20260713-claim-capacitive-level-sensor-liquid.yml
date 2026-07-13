@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-capacitive-level-sensor-liquid
+content_id: capacitive-level-sensor-liquid
+content_path: docs/foundation/papers/capacitive-level-sensor-liquid.md
+body_sha256: 95e538e633732e552b96f9313659cea3e032c93669bfb7d1e4306222600c3ebc
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-capacitive-level-sensor-liquid-primary
+  uri: https://example.com/capacitive-level-sensor-liquid
+  snapshot_sha256: c154cf624a2995f8c6f6d20b12386160a43a837a59be6521a038f7cfd8844e92
+  retrieved_at: '2026-07-12T12:59:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-capacitive-level-sensor-liquid-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-capacitive-level-sensor-liquid-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-capacitive-level-sensor-liquid-source
+    result: VERIFIED
+    reference_ids:
+    - src-capacitive-level-sensor-liquid-primary
+    notes: Sources properly cited.
+  - claim_id: claim-capacitive-level-sensor-liquid-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-capacitive-level-sensor-liquid-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for capacitive-level-sensor-liquid
+supersedes: null
+revocation: null

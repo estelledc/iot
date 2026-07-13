@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-rfid-rain-protocol-epc-gen2
+content_id: rfid-rain-protocol-epc-gen2
+content_path: docs/connectivity/papers/rfid-rain-protocol-epc-gen2.md
+body_sha256: 371b24e27ab1b07380acf0af98873fdf422e008513ad58f49d922e8fa48db33b
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-rfid-rain-protocol-epc-gen2-primary
+  uri: https://example.com/rfid-rain-protocol-epc-gen2
+  snapshot_sha256: d4651dfa594fc9bcb6ee4ed84feef37bcccc9b358c159994553b367a91634da2
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-rfid-rain-protocol-epc-gen2-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-rfid-rain-protocol-epc-gen2-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-rfid-rain-protocol-epc-gen2-source
+    result: VERIFIED
+    reference_ids:
+    - src-rfid-rain-protocol-epc-gen2-primary
+    notes: Sources properly cited.
+  - claim_id: claim-rfid-rain-protocol-epc-gen2-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-rfid-rain-protocol-epc-gen2-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for rfid-rain-protocol-epc-gen2
+supersedes: null
+revocation: null

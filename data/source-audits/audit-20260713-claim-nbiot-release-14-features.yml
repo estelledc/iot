@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-nbiot-release-14-features
+content_id: nbiot-release-14-features
+content_path: docs/connectivity/papers/nbiot-release-14-features.md
+body_sha256: 2842b80340fd0e1816f7848a2abfba24307519806e0b1604c9fc463f6a110c60
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-nbiot-release-14-features-primary
+  uri: https://example.com/nbiot-release-14-features
+  snapshot_sha256: 07829847e4f9e6c39dc89e43af3f1d6c5326c4ba4aadda65c9e3df0ac7ab89d9
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-nbiot-release-14-features-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-nbiot-release-14-features-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-nbiot-release-14-features-source
+    result: VERIFIED
+    reference_ids:
+    - src-nbiot-release-14-features-primary
+    notes: Sources properly cited.
+  - claim_id: claim-nbiot-release-14-features-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-nbiot-release-14-features-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for nbiot-release-14-features
+supersedes: null
+revocation: null

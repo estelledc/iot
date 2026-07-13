@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-tactile-sensing-iot
+content_id: tactile-sensing-iot
+content_path: docs/foundation/papers/tactile-sensing-iot.md
+body_sha256: 944c3dab5e524c0316997a5eb02d9e08c3295188bc0ae2fca0902070223975ff
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-tactile-sensing-iot-primary
+  uri: https://example.com/tactile-sensing-iot
+  snapshot_sha256: fca1368a112c5cd53f32a5ff03da8e933394175b87c8b549addcfd05e7c6c78f
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-tactile-sensing-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-tactile-sensing-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-tactile-sensing-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-tactile-sensing-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-tactile-sensing-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-tactile-sensing-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for tactile-sensing-iot
+supersedes: null
+revocation: null

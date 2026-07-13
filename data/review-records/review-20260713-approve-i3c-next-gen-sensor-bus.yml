@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-i3c-next-gen-sensor-bus
+content_id: i3c-next-gen-sensor-bus
+content_path: docs/foundation/papers/i3c-next-gen-sensor-bus.md
+body_sha256: 3a5b37c7ef50a7cd61de11ea33cc598a8819206c0269de3c91baacfd6c032453
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-i3c-next-gen-sensor-bus
+- audit-20260713-claim-i3c-next-gen-sensor-bus
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for i3c-next-gen-sensor-bus
+supersedes: review-20260713-start-i3c-next-gen-sensor-bus
+revocation: null

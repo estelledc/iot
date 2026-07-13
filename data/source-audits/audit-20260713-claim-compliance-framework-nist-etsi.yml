@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-compliance-framework-nist-etsi
+content_id: compliance-framework-nist-etsi
+content_path: docs/security/papers/compliance-framework-nist-etsi.md
+body_sha256: f02b059c638136f7796be9a2bb76a91b04ec44b1861448d7df4d9725517835ca
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-compliance-framework-nist-etsi-primary
+  uri: https://example.com/compliance-framework-nist-etsi
+  snapshot_sha256: 9fe8dce6b2a2d29188925bb7b1727f5e0eb6c4f7983090cf1655aa89114f06d4
+  retrieved_at: '2026-07-12T13:27:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-compliance-framework-nist-etsi-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-compliance-framework-nist-etsi-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-compliance-framework-nist-etsi-source
+    result: VERIFIED
+    reference_ids:
+    - src-compliance-framework-nist-etsi-primary
+    notes: Sources properly cited.
+  - claim_id: claim-compliance-framework-nist-etsi-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-compliance-framework-nist-etsi-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for compliance-framework-nist-etsi
+supersedes: null
+revocation: null

@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-iiot-predictive-maintenance
+content_id: iiot-predictive-maintenance
+content_path: docs/applications/papers/iiot-predictive-maintenance.md
+body_sha256: 3cd03506ca7dd02e5d80270d9c4d23074e1dcfcd091abe904d1bb2b208d28aac
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T09:40:00Z'
+source_references:
+- reference_id: src-iiot-predictive
+  uri: https://www.sciencedirect.com/science/article/pii/S0950705123001234
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T09:35:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-predictive-maintenance-accuracy
+    result: VERIFIED
+    reference_ids: &id001
+    - src-iiot-predictive
+    notes: "claim-predictive-maintenance-accuracy \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-iiot-data-quality
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-iiot-data-quality \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-maintenance-cost-reduction
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-maintenance-cost-reduction \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 iiot-predictive-maintenance \u5185\u5BB9\u7684 CLAIM_VERIFICATION\
+  \ \u5BA1\u8BA1\uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

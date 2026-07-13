@@ -1,0 +1,42 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-lpwan-comparison
+content_id: lpwan-comparison
+content_path: docs/connectivity/papers/lpwan-comparison.md
+body_sha256: 4212902e2f4cc851a7321f55d9c9c93b5a7adf456440aafd687017bc2b802981
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T07:20:00Z'
+source_references:
+- reference_id: src-lpwan-survey
+  uri: https://www.sciencedirect.com/science/article/pii/S1389128623001859
+  snapshot_sha256: 9d011be593dca5bda4af57d9e5ded330db41a167d3599448f4f19ef65f3bd115
+  retrieved_at: '2026-07-12T07:15:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-lora-range-benefit
+    result: VERIFIED
+    reference_ids: &id001
+    - src-lpwan-survey
+    notes: "claim-lora-range-benefit \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-nbiot-coverage
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-nbiot-coverage \u5DF2\u9A8C\u8BC1\u3002"
+  - claim_id: claim-lpwan-power-efficiency
+    result: VERIFIED
+    reference_ids: *id001
+    notes: "claim-lpwan-power-efficiency \u5DF2\u9A8C\u8BC1\u3002"
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: "\u9488\u5BF9 lpwan-comparison \u5185\u5BB9\u7684 CLAIM_VERIFICATION \u5BA1\
+  \u8BA1\uFF0C\u5DF2\u9A8C\u8BC1\u6240\u6709\u5173\u952E\u4E3B\u5F20\u3002"
+supersedes: null
+revocation: null

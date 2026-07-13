@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-knowledge-distillation-edge
+content_id: knowledge-distillation-edge
+content_path: docs/intelligence/papers/knowledge-distillation-edge.md
+body_sha256: 63ddcba9b534400ac13d87e3b6de83dd66110a91b81e8a52352c0c586a14435a
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-knowledge-distillation-edge-primary
+  uri: https://example.com/knowledge-distillation-edge
+  snapshot_sha256: 63829fcfa144af37b2aeedc9b283854fe27a3f39113d2ca69908254d26f3cd2c
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-knowledge-distillation-edge-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-knowledge-distillation-edge-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-knowledge-distillation-edge-source
+    result: VERIFIED
+    reference_ids:
+    - src-knowledge-distillation-edge-primary
+    notes: Sources properly cited.
+  - claim_id: claim-knowledge-distillation-edge-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-knowledge-distillation-edge-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for knowledge-distillation-edge
+supersedes: null
+revocation: null

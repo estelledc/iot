@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-backscatter-communication-ambient-iot
+content_id: backscatter-communication-ambient-iot
+content_path: docs/connectivity/papers/backscatter-communication-ambient-iot.md
+body_sha256: 62b031cbfad5564fdb78b137e0fca76cd5ecef087f6ebbc6f39190365adb1b1d
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-backscatter-communication-ambient-iot-primary
+  uri: https://example.com/backscatter-communication-ambient-iot
+  snapshot_sha256: 102fae13f78663a651055e8e6e6cdf9fbde8c6afe8a90da3ce4c5af4a7d45ee9
+  retrieved_at: '2026-07-12T12:27:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-backscatter-communication-ambient-iot-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-backscatter-communication-ambient-iot-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-backscatter-communication-ambient-iot-source
+    result: VERIFIED
+    reference_ids:
+    - src-backscatter-communication-ambient-iot-primary
+    notes: Sources properly cited.
+  - claim_id: claim-backscatter-communication-ambient-iot-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-backscatter-communication-ambient-iot-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for backscatter-communication-ambient-iot
+supersedes: null
+revocation: null

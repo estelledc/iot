@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-sensor-fault-detection-isolation
+content_id: sensor-fault-detection-isolation
+content_path: docs/foundation/papers/sensor-fault-detection-isolation.md
+body_sha256: 7133137bd45007cb5207c80be15b89782e10e4b2f8604bce98e111520e13deb3
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-sensor-fault-detection-isolation-primary
+  uri: https://example.com/sensor-fault-detection-isolation
+  snapshot_sha256: 109094b6763e59e1eed18ecbdd8dec3dac0bfff032475ad8da02b80d167b871c
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-sensor-fault-detection-isolation-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-fault-detection-isolation-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-sensor-fault-detection-isolation-source
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-fault-detection-isolation-primary
+    notes: Sources properly cited.
+  - claim_id: claim-sensor-fault-detection-isolation-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-sensor-fault-detection-isolation-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for sensor-fault-detection-isolation
+supersedes: null
+revocation: null

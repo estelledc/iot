@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-adc-reference-voltage-design
+content_id: adc-reference-voltage-design
+content_path: docs/foundation/papers/adc-reference-voltage-design.md
+body_sha256: 4a00285afd1ca8f6a000cfbcec27b506a8b83fa167f142175286959cdf30270c
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-adc-reference-voltage-design-primary
+  uri: https://example.com/adc-reference-voltage-design
+  snapshot_sha256: c2a5948f9640431c423d5790b759d22a22966448b9fc0b1a343adbd4733b3329
+  retrieved_at: '2026-07-12T12:04:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-adc-reference-voltage-design-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-adc-reference-voltage-design-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-adc-reference-voltage-design-source
+    result: VERIFIED
+    reference_ids:
+    - src-adc-reference-voltage-design-primary
+    notes: Sources properly cited.
+  - claim_id: claim-adc-reference-voltage-design-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-adc-reference-voltage-design-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for adc-reference-voltage-design
+supersedes: null
+revocation: null

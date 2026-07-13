@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-uwb-secure-ranging-distance-bounding
+content_id: uwb-secure-ranging-distance-bounding
+content_path: docs/connectivity/papers/uwb-secure-ranging-distance-bounding.md
+body_sha256: c128d190d3d535a4ba40318b2b950ae52223a470ed6a3ecf712a0ed47ccc9dc3
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-uwb-secure-ranging-distance-bounding
+- audit-20260713-claim-uwb-secure-ranging-distance-bounding
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for uwb-secure-ranging-distance-bounding
+supersedes: review-20260713-start-uwb-secure-ranging-distance-bounding
+revocation: null

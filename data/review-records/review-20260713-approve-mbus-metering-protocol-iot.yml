@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-mbus-metering-protocol-iot
+content_id: mbus-metering-protocol-iot
+content_path: docs/connectivity/papers/mbus-metering-protocol-iot.md
+body_sha256: 5f2f5ea504ea0cdffedc1be0762e4da43a5546d92cc430657f929215cd31a530
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-mbus-metering-protocol-iot
+- audit-20260713-claim-mbus-metering-protocol-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for mbus-metering-protocol-iot
+supersedes: review-20260713-start-mbus-metering-protocol-iot
+revocation: null

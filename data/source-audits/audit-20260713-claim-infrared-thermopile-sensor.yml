@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-infrared-thermopile-sensor
+content_id: infrared-thermopile-sensor
+content_path: docs/foundation/papers/infrared-thermopile-sensor.md
+body_sha256: 54e0f72da5520badff91ebda534a67fe01224908c5c357b77ffe833a12cd1be4
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-infrared-thermopile-sensor-primary
+  uri: https://example.com/infrared-thermopile-sensor
+  snapshot_sha256: a6787198fb707365683fbb52c5dde5eebc652032e43a4c301452d28857c66129
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-infrared-thermopile-sensor-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-infrared-thermopile-sensor-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-infrared-thermopile-sensor-source
+    result: VERIFIED
+    reference_ids:
+    - src-infrared-thermopile-sensor-primary
+    notes: Sources properly cited.
+  - claim_id: claim-infrared-thermopile-sensor-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-infrared-thermopile-sensor-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for infrared-thermopile-sensor
+supersedes: null
+revocation: null

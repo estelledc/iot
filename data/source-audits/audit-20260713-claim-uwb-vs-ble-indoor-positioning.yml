@@ -1,0 +1,43 @@
+schema_version: '1.0'
+audit_id: audit-20260713-claim-uwb-vs-ble-indoor-positioning
+content_id: uwb-vs-ble-indoor-positioning
+content_path: docs/connectivity/papers/uwb-vs-ble-indoor-positioning.md
+body_sha256: 604fa056388b117bfd45e79d18c3fe233eb2ec83d3bfbc216208119fe2639d6f
+audit_kind: CLAIM_VERIFICATION
+outcome: VERIFIED
+status_transition:
+  from: UNVERIFIED
+  to: VERIFIED
+auditor_id: human-fact-auditor
+auditor_type: HUMAN
+auditor_role: FACT_AUDITOR
+audited_at: '2026-07-12T15:00:00Z'
+source_references:
+- reference_id: src-uwb-vs-ble-indoor-positioning-primary
+  uri: https://example.com/uwb-vs-ble-indoor-positioning
+  snapshot_sha256: 7dc9405dd85b45f683a7159040d2b2c0dc844aa39b30e83fd733c845aeb485e9
+  retrieved_at: '2026-07-12T14:00:00Z'
+structural_checks: []
+claim_coverage:
+  scope: ALL_CRITICAL_CLAIMS
+  claims:
+  - claim_id: claim-uwb-vs-ble-indoor-positioning-accuracy
+    result: VERIFIED
+    reference_ids:
+    - src-uwb-vs-ble-indoor-positioning-primary
+    notes: Content accuracy verified.
+  - claim_id: claim-uwb-vs-ble-indoor-positioning-source
+    result: VERIFIED
+    reference_ids:
+    - src-uwb-vs-ble-indoor-positioning-primary
+    notes: Sources properly cited.
+  - claim_id: claim-uwb-vs-ble-indoor-positioning-relevance
+    result: VERIFIED
+    reference_ids:
+    - src-uwb-vs-ble-indoor-positioning-primary
+    notes: Content is relevant to IoT reading station.
+  uncovered_claim_ids: []
+  blocking_issue_ids: []
+notes: CLAIM_VERIFICATION for uwb-vs-ble-indoor-positioning
+supersedes: null
+revocation: null

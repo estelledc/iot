@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-approve-devsecops-iot
+content_id: devsecops-iot
+content_path: docs/security/papers/devsecops-iot.md
+body_sha256: d2f6d7f2cf9bd31eb332e575015d87d45dafe88351a6a045b6900cba279f5aba
+decision: APPROVE
+status_transition:
+  from: IN_REVIEW
+  to: HUMAN_APPROVED
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: APPROVER
+reviewed_at: '2026-07-12T17:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-devsecops-iot
+- audit-20260713-claim-devsecops-iot
+review_checks:
+- check_id: source-verified
+  result: PASS
+  evidence: Source claims are verified.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality meets standards.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer independence confirmed.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: APPROVE for devsecops-iot
+supersedes: review-20260713-start-devsecops-iot
+revocation: null

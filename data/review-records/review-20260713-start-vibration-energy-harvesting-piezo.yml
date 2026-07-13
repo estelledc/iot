@@ -1,0 +1,38 @@
+schema_version: '1.0'
+review_id: review-20260713-start-vibration-energy-harvesting-piezo
+content_id: vibration-energy-harvesting-piezo
+content_path: docs/foundation/papers/vibration-energy-harvesting-piezo.md
+body_sha256: 5967e2d52fb57fb8ff6b1e8b65e8541839428ba95ff5d2e559cf57d6d5756112
+decision: START_REVIEW
+status_transition:
+  from: UNREVIEWED
+  to: IN_REVIEW
+source_status_at_review: VERIFIED
+reviewer_id: human-reviewer
+reviewer_type: HUMAN
+reviewer_role: REVIEWER
+reviewed_at: '2026-07-12T16:00:00Z'
+linked_audit_ids:
+- audit-20260712-structural-vibration-energy-harvesting-piezo
+- audit-20260713-claim-vibration-energy-harvesting-piezo
+review_checks:
+- check_id: audit-evidence-available
+  result: PASS
+  evidence: Source audits exist.
+- check_id: content-quality
+  result: PASS
+  evidence: Content quality is acceptable.
+- check_id: independence-declaration
+  result: PASS
+  evidence: Reviewer is independent.
+independence:
+  author_ids:
+  - human-author
+  linked_auditor_ids:
+  - agent-structural-auditor
+  - human-fact-auditor
+  reviewer_is_author: false
+  reviewer_is_linked_auditor: false
+notes: START_REVIEW for vibration-energy-harvesting-piezo
+supersedes: null
+revocation: null
