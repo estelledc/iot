@@ -27,6 +27,11 @@ LOCK_PATH = ROOT / "ops/active-goal.lock.json"
 SCHEMA_PATH = ROOT / "schemas/active-goal.schema.json"
 PAUSE_AFTER_NO_EXTERNAL_DELTA = 3
 ARTICLE_SELECTION_MODES = {"STRUCTURAL_SHADOW_AUDIT"}
+SUPPORTED_GOAL_MODES = ARTICLE_SELECTION_MODES | {
+    "PROGRESSION_CONTRACT_HARDENING",
+    "SOURCE_AUDIT_INVENTORY_PROJECTION",
+    "DEPLOYED_SHA_ACCEPTANCE",
+}
 IMMUTABLE_FIELDS = (
     "schema_version",
     "goal_id",
@@ -411,6 +416,10 @@ def validate_payload(
 
     if payload["goal_id"] != scope["task_id"]:
         errors.append("SEMANTIC:scope.task_id:must-match-goal-id")
+    if scope["mode"] not in SUPPORTED_GOAL_MODES:
+        errors.append("SEMANTIC:scope.mode:unsupported")
+    if scope["max_articles"] > 0 and scope["mode"] not in ARTICLE_SELECTION_MODES:
+        errors.append("SEMANTIC:scope.mode:article-selection-policy-required")
     if scope["first_batch_articles"] > scope["max_articles"]:
         errors.append("SEMANTIC:scope:first-batch-exceeds-goal-maximum")
     if budget["max_articles"] != scope["max_articles"]:

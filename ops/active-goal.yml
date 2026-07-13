@@ -15,7 +15,7 @@ review_after: "2026-07-20"
 budget:
   max_batches: 3
   max_articles: 0
-  max_commits: 4
+  max_commits: 5
   max_wall_minutes: 180
   max_parallel_agents: 2
   max_parallel_writers: 1
@@ -150,12 +150,12 @@ selection:
   selected_articles: []
   rationale: "No content selection; T047 only hardens contract/checker/tests."
 progress:
-  completed_batches: 2
+  completed_batches: 3
   completed_articles: 0
-  completed_commits: 4
+  completed_commits: 5
   no_external_delta_batches: 0
-  last_result: READY_FOR_REVIEW_WAIT_REVIEW
-  last_external_delta: PR_22_READY_FOR_REVIEW
+  last_result: REVIEW_FINDING_FIXED_WAIT_REVIEW
+  last_external_delta: CHECKER_UNKNOWN_MODE_FAIL_CLOSED
 activation:
   ref: 4310810cc6de71c7c151da790cb887f512f11c33
   activated_at: "2026-07-13T02:23:40Z"

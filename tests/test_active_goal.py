@@ -205,6 +205,27 @@ class RepositoryActiveGoalTests(unittest.TestCase):
         active["external_action_authority"]["merge"] = True
         self.assertNotEqual(expected_hash, check_active_goal.immutable_sha256(active))
 
+    def test_unknown_or_misclassified_goal_mode_fails_closed(self) -> None:
+        typo = copy.deepcopy(self.prepared)
+        typo["scope"]["mode"] = "STRUCTURAL_SHADOW_AUDIT_TYPO"
+        self.assertIn(
+            "SEMANTIC:scope.mode:unsupported",
+            check_active_goal.validate_payload(typo, self.schema),
+        )
+
+        article_without_policy = copy.deepcopy(self.prepared)
+        article_without_policy["scope"] = {
+            "task_id": article_without_policy["goal_id"],
+            "mode": "PROGRESSION_CONTRACT_HARDENING",
+            "first_batch_articles": 1,
+            "max_articles": 1,
+        }
+        article_without_policy["budget"]["max_articles"] = 1
+        self.assertIn(
+            "SEMANTIC:scope.mode:article-selection-policy-required",
+            check_active_goal.validate_payload(article_without_policy, self.schema),
+        )
+
     def test_active_contract_pauses_after_three_no_delta_batches(self) -> None:
         active = copy.deepcopy(self.prepared)
         active["status"] = "ACTIVE"
