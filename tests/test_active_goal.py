@@ -18,7 +18,7 @@ def _prepared_fixture(payload: dict) -> dict:
     prepared["superseded_by"] = None
     prepared["scope"] = {
         "task_id": payload["goal_id"],
-        "mode": payload["scope"]["mode"],
+        "mode": "STRUCTURAL_SHADOW_AUDIT",
         "first_batch_articles": 1,
         "max_articles": 5,
     }
@@ -30,6 +30,20 @@ def _prepared_fixture(payload: dict) -> dict:
         "max_parallel_agents": 2,
         "max_parallel_writers": 1,
     }
+    prepared["external_action_authority"] = {
+        key: False for key in payload["external_action_authority"]
+    }
+    prepared["external_action_grant"] = None
+    prepared["allowed_mutations"] = [
+        "ops/active-goal.yml",
+        "data/source-audits/",
+        "data/trust-authorities.yml",
+    ]
+    prepared["forbidden_mutations"] = [
+        "docs/foundation/papers/",
+        "data/review-records/",
+        "VERSION",
+    ]
     prepared["selection"] = {
         "policy": payload["selection"]["policy"],
         "selected_articles": [],
@@ -70,11 +84,12 @@ class RepositoryActiveGoalTests(unittest.TestCase):
             [],
             check_active_goal.validate_payload(self.live_payload, self.schema),
         )
-        self.assertEqual("IOT-T046", self.live_payload["goal_id"])
-        self.assertFalse(
-            any(self.live_payload["external_action_authority"].values())
-        )
         self.assertIsNotNone(self.lock)
+        self.assertEqual(self.live_payload["goal_id"], self.lock["goal_id"])
+        if any(self.live_payload["external_action_authority"].values()):
+            self.assertIsNotNone(self.live_payload["external_action_grant"])
+        else:
+            self.assertIsNone(self.live_payload["external_action_grant"])
         self.assertEqual(
             [],
             check_active_goal.validate_lock(self.live_payload, self.lock),
@@ -129,9 +144,66 @@ class RepositoryActiveGoalTests(unittest.TestCase):
         changed["external_action_authority"]["push"] = True
         errors = check_active_goal.validate_payload(changed, self.schema)
         self.assertIn(
-            "SEMANTIC:external_action_authority:prepared-must-be-false",
+            "SEMANTIC:external_action_grant:required-for-authority",
             errors,
         )
+
+        changed["external_action_grant"] = {
+            "source": "unit-test-explicit-user-authorization",
+            "granted_at": "2026-07-13T00:00:00Z",
+            "scope": "Allow push only inside this synthetic unit-test goal.",
+        }
+        self.assertEqual([], check_active_goal.validate_payload(changed, self.schema))
+
+        changed["external_action_authority"]["push"] = False
+        errors = check_active_goal.validate_payload(changed, self.schema)
+        self.assertIn(
+            "SEMANTIC:external_action_grant:authority-required-for-grant",
+            errors,
+        )
+
+    def test_non_article_goal_can_activate_with_locked_user_grant(self) -> None:
+        prepared = copy.deepcopy(self.prepared)
+        prepared["scope"] = {
+            "task_id": prepared["goal_id"],
+            "mode": "PROGRESSION_CONTRACT_HARDENING",
+            "first_batch_articles": 0,
+            "max_articles": 0,
+        }
+        prepared["budget"]["max_articles"] = 0
+        prepared["external_action_authority"] = {
+            "commit": True,
+            "push": True,
+            "open_pr": True,
+            "merge": False,
+            "deploy": False,
+        }
+        prepared["external_action_grant"] = {
+            "source": "unit-test-explicit-user-authorization",
+            "granted_at": "2026-07-13T00:00:00Z",
+            "scope": "Allow commit, push, and opening one PR for this goal only.",
+        }
+        self.assertEqual([], check_active_goal.validate_payload(prepared, self.schema))
+        expected_hash = check_active_goal.immutable_sha256(prepared)
+
+        active = copy.deepcopy(prepared)
+        active["status"] = "ACTIVE"
+        active["activated_by"] = "dedicated-agent-user-request"
+        active["activation"] = {
+            "ref": "1" * 40,
+            "activated_at": "2026-07-13T00:01:00Z",
+        }
+        active["selection"]["rationale"] = "contract-only goal; no content selected"
+        active["next_action"] = {
+            "kind": "RUN_CONTRACT_HARDENING_SLICE",
+            "requires_activation": False,
+            "instruction": "Run checker and lifecycle hardening only.",
+        }
+        self.assertEqual([], check_active_goal.validate_payload(active, self.schema))
+        self.assertEqual(expected_hash, check_active_goal.immutable_sha256(active))
+
+        active["external_action_authority"]["merge"] = True
+        self.assertNotEqual(expected_hash, check_active_goal.immutable_sha256(active))
 
     def test_active_contract_pauses_after_three_no_delta_batches(self) -> None:
         active = copy.deepcopy(self.prepared)
@@ -366,7 +438,9 @@ class RepositoryActiveGoalTests(unittest.TestCase):
 
     def test_activation_ref_and_real_changed_paths_are_enforced(self) -> None:
         active = copy.deepcopy(self.prepared)
-        with tempfile.TemporaryDirectory() as directory:
+        # Local Git integrations may write .git/ai logs shortly after commit exits.
+        # The assertion under test is path enforcement, not OS tempdir cleanup timing.
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as directory:
             root = Path(directory)
             subprocess.run(
                 ["git", "init", "-q", str(root)],
