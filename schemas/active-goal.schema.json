@@ -15,6 +15,7 @@
     "budget",
     "external_outcome",
     "external_action_authority",
+    "external_action_grant",
     "stop_conditions",
     "superseded_by",
     "baseline",
@@ -64,10 +65,10 @@
           "$ref": "#/$defs/nonEmptyString"
         },
         "first_batch_articles": {
-          "$ref": "#/$defs/positiveInteger"
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "max_articles": {
-          "$ref": "#/$defs/positiveInteger"
+          "$ref": "#/$defs/nonNegativeInteger"
         }
       }
     },
@@ -93,7 +94,7 @@
           "$ref": "#/$defs/positiveInteger"
         },
         "max_articles": {
-          "$ref": "#/$defs/positiveInteger"
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "max_commits": {
           "$ref": "#/$defs/positiveInteger"
@@ -162,6 +163,34 @@
           "type": "boolean"
         }
       }
+    },
+    "external_action_grant": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "granted_at",
+            "scope"
+          ],
+          "properties": {
+            "source": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "granted_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "scope": {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          }
+        }
+      ]
     },
     "stop_conditions": {
       "$ref": "#/$defs/nonEmptyStringArray"
@@ -424,6 +453,10 @@
     "positiveInteger": {
       "type": "integer",
       "minimum": 1
+    },
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0
     },
     "nonEmptyString": {
       "type": "string",

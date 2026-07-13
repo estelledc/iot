@@ -26,6 +26,12 @@ GOAL_PATH = ROOT / "ops/active-goal.yml"
 LOCK_PATH = ROOT / "ops/active-goal.lock.json"
 SCHEMA_PATH = ROOT / "schemas/active-goal.schema.json"
 PAUSE_AFTER_NO_EXTERNAL_DELTA = 3
+ARTICLE_SELECTION_MODES = {"STRUCTURAL_SHADOW_AUDIT"}
+SUPPORTED_GOAL_MODES = ARTICLE_SELECTION_MODES | {
+    "PROGRESSION_CONTRACT_HARDENING",
+    "SOURCE_AUDIT_INVENTORY_PROJECTION",
+    "DEPLOYED_SHA_ACCEPTANCE",
+}
 IMMUTABLE_FIELDS = (
     "schema_version",
     "goal_id",
@@ -37,6 +43,7 @@ IMMUTABLE_FIELDS = (
     "acceptance_checks",
     "allowed_mutations",
     "forbidden_mutations",
+    "external_action_grant",
 )
 
 
@@ -160,63 +167,21 @@ def _path_is_allowed(path: str, rules: list[str]) -> bool:
     )
 
 
-def validate_git_scope(
+def _uses_article_selection(payload: Mapping[str, Any]) -> bool:
+    return (
+        payload["scope"]["mode"] in ARTICLE_SELECTION_MODES
+        or payload["scope"]["max_articles"] > 0
+    )
+
+
+def _validate_structural_shadow_audit_state(
     payload: Mapping[str, Any],
     *,
-    root: Path = ROOT,
+    root: Path,
+    source_records: list[Mapping[str, Any]],
+    review_files: list[Path],
 ) -> list[str]:
-    """Verify activation ref and all post-activation paths fail closed."""
-
-    activation_ref = payload["activation"]["ref"]
-    if activation_ref is None:
-        return []
-    code, _ = _git_output(root, "cat-file", "-e", f"{activation_ref}^{{commit}}")
-    if code != 0:
-        return ["GIT:activation-ref:not-a-local-commit"]
-    code, _ = _git_output(root, "merge-base", "--is-ancestor", activation_ref, "HEAD")
-    if code != 0:
-        return ["GIT:activation-ref:not-an-ancestor-of-head"]
-
-    code, tracked = _git_output(
-        root,
-        "diff",
-        "--name-only",
-        "--no-renames",
-        activation_ref,
-        "--",
-    )
-    if code != 0:
-        return ["GIT:worktree:diff-enumeration-failed"]
-    code, untracked = _git_output(
-        root,
-        "ls-files",
-        "--others",
-        "--exclude-standard",
-    )
-    if code != 0:
-        return ["GIT:worktree:untracked-enumeration-failed"]
-
-    allowed_rules = [
-        normalized
-        for raw in payload["allowed_mutations"]
-        if (normalized := _normalize_rule_path(raw)) is not None
-    ]
-    changed = {
-        line.strip()
-        for line in f"{tracked}\n{untracked}".splitlines()
-        if line.strip()
-    }
-    if any(not _path_is_allowed(path, allowed_rules) for path in changed):
-        return ["GIT:worktree:change-outside-allowed-mutations"]
-    return []
-
-
-def validate_repository_state(
-    payload: Mapping[str, Any],
-    *,
-    root: Path = ROOT,
-) -> list[str]:
-    """Bind contract counters and invariants to the current repository."""
+    """Validate the legacy IOT-T046 structural audit repository policy."""
 
     errors: list[str] = []
     selected = payload["selection"]["selected_articles"]
@@ -225,14 +190,6 @@ def validate_repository_state(
         if not candidate.is_file() or candidate.is_symlink():
             errors.append("REPOSITORY:selection:canonical-file-missing-or-unsafe")
 
-    source_files = _record_files(root / "data/source-audits")
-    review_files = _record_files(root / "data/review-records")
-    source_records: list[Mapping[str, Any]] = []
-    for path in source_files:
-        try:
-            source_records.append(trust_records.load_record(path))
-        except trust_records.TrustRecordError:
-            errors.append("REPOSITORY:source-audits:invalid-yaml-record")
     if review_files:
         errors.append("REPOSITORY:review-records:must-remain-empty")
 
@@ -304,7 +261,94 @@ def validate_repository_state(
     elif source_records:
         errors.append("REPOSITORY:trust-authorities:required-for-source-records")
 
+    return errors
+
+
+def validate_git_scope(
+    payload: Mapping[str, Any],
+    *,
+    root: Path = ROOT,
+) -> list[str]:
+    """Verify activation ref and all post-activation paths fail closed."""
+
+    activation_ref = payload["activation"]["ref"]
+    if activation_ref is None:
+        return []
+    code, _ = _git_output(root, "cat-file", "-e", f"{activation_ref}^{{commit}}")
+    if code != 0:
+        return ["GIT:activation-ref:not-a-local-commit"]
+    code, _ = _git_output(root, "merge-base", "--is-ancestor", activation_ref, "HEAD")
+    if code != 0:
+        return ["GIT:activation-ref:not-an-ancestor-of-head"]
+
+    code, tracked = _git_output(
+        root,
+        "diff",
+        "--name-only",
+        "--no-renames",
+        activation_ref,
+        "--",
+    )
+    if code != 0:
+        return ["GIT:worktree:diff-enumeration-failed"]
+    code, untracked = _git_output(
+        root,
+        "ls-files",
+        "--others",
+        "--exclude-standard",
+    )
+    if code != 0:
+        return ["GIT:worktree:untracked-enumeration-failed"]
+
+    allowed_rules = [
+        normalized
+        for raw in payload["allowed_mutations"]
+        if (normalized := _normalize_rule_path(raw)) is not None
+    ]
+    changed = {
+        line.strip()
+        for line in f"{tracked}\n{untracked}".splitlines()
+        if line.strip()
+    }
+    if any(not _path_is_allowed(path, allowed_rules) for path in changed):
+        return ["GIT:worktree:change-outside-allowed-mutations"]
+    return []
+
+
+def validate_repository_state(
+    payload: Mapping[str, Any],
+    *,
+    root: Path = ROOT,
+) -> list[str]:
+    """Bind contract counters and mode-specific invariants to the repository."""
+
+    errors: list[str] = []
+    source_files = _record_files(root / "data/source-audits")
+    review_files = _record_files(root / "data/review-records")
+    source_records: list[Mapping[str, Any]] = []
+    for path in source_files:
+        try:
+            source_records.append(trust_records.load_record(path))
+        except trust_records.TrustRecordError:
+            errors.append("REPOSITORY:source-audits:invalid-yaml-record")
+
+    if payload["scope"]["mode"] == "STRUCTURAL_SHADOW_AUDIT":
+        errors.extend(
+            _validate_structural_shadow_audit_state(
+                payload,
+                root=root,
+                source_records=source_records,
+                review_files=review_files,
+            )
+        )
+
     if root == ROOT:
+        expected_trust = payload["baseline"]["expected_trust"]
+        if len(source_records) != expected_trust["source_records"]:
+            errors.append("REPOSITORY:source-audits:count-drift")
+        if len(review_files) != expected_trust["review_records"]:
+            errors.append("REPOSITORY:review-records:count-drift")
+
         inventory = content_inventory.content_inventory()
         totals = inventory["totals"]
         expected_inventory = payload["baseline"]["expected_inventory"]
@@ -324,10 +368,8 @@ def validate_repository_state(
             if trust.issues:
                 errors.append("REPOSITORY:trust-state:issues-present")
             summary = trust.summary
-            expected_trust = payload["baseline"]["expected_trust"]
-            if summary.source_records != len(source_records):
-                errors.append("REPOSITORY:trust-state:source-record-count-mismatch")
             for field in (
+                "source_records",
                 "review_records",
                 "legacy_unbound",
                 "evidence_bound_review",
@@ -364,14 +406,20 @@ def validate_payload(
     scope = payload["scope"]
     budget = payload["budget"]
     authority = payload["external_action_authority"]
+    authority_grant = payload["external_action_grant"]
     selection = payload["selection"]["selected_articles"]
     selection_rationale = payload["selection"]["rationale"]
     progress = payload["progress"]
     activation = payload["activation"]
     next_action = payload["next_action"]
+    uses_article_selection = _uses_article_selection(payload)
 
     if payload["goal_id"] != scope["task_id"]:
         errors.append("SEMANTIC:scope.task_id:must-match-goal-id")
+    if scope["mode"] not in SUPPORTED_GOAL_MODES:
+        errors.append("SEMANTIC:scope.mode:unsupported")
+    if scope["max_articles"] > 0 and scope["mode"] not in ARTICLE_SELECTION_MODES:
+        errors.append("SEMANTIC:scope.mode:article-selection-policy-required")
     if scope["first_batch_articles"] > scope["max_articles"]:
         errors.append("SEMANTIC:scope:first-batch-exceeds-goal-maximum")
     if budget["max_articles"] != scope["max_articles"]:
@@ -393,14 +441,22 @@ def validate_payload(
         errors.append("SEMANTIC:selection.selected_articles:goal-maximum-exceeded")
     if progress["completed_articles"] > len(selection):
         errors.append("SEMANTIC:progress.completed_articles:exceeds-selection")
-    if progress["completed_batches"] > progress["completed_articles"]:
-        errors.append("SEMANTIC:progress.completed_batches:exceeds-completed-articles")
     if progress["no_external_delta_batches"] > progress["completed_batches"]:
         errors.append("SEMANTIC:progress.no-external-delta:exceeds-completed-batches")
+    if (
+        uses_article_selection
+        and progress["completed_batches"] > progress["completed_articles"]
+    ):
+        errors.append("SEMANTIC:progress.completed_batches:exceeds-completed-articles")
 
     check_ids = [check["id"] for check in payload["acceptance_checks"]]
     if len(check_ids) != len(set(check_ids)):
         errors.append("SEMANTIC:acceptance_checks:id-must-be-unique")
+
+    if any(authority.values()) and authority_grant is None:
+        errors.append("SEMANTIC:external_action_grant:required-for-authority")
+    if not any(authority.values()) and authority_grant is not None:
+        errors.append("SEMANTIC:external_action_grant:authority-required-for-grant")
 
     normalized_rules: dict[str, list[str]] = {}
     for key in ("allowed_mutations", "forbidden_mutations"):
@@ -426,8 +482,6 @@ def validate_payload(
         errors.append("SEMANTIC:superseded_by:only-valid-for-superseded-status")
 
     if status == "PREPARED":
-        if any(authority.values()):
-            errors.append("SEMANTIC:external_action_authority:prepared-must-be-false")
         if activation["ref"] is not None or activation["activated_at"] is not None:
             errors.append("SEMANTIC:activation:prepared-must-be-empty")
         if selection:
@@ -454,15 +508,22 @@ def validate_payload(
             errors.append("SEMANTIC:activation:active-requires-snapshot")
         if payload["activated_by"].startswith("PENDING"):
             errors.append("SEMANTIC:activated_by:active-cannot-be-pending")
-        if not selection:
+        if uses_article_selection and not selection:
             errors.append("SEMANTIC:selection:active-requires-article")
         if selection_rationale is None:
             errors.append("SEMANTIC:selection:active-requires-rationale")
         if (
-            progress["completed_batches"] == 0
+            uses_article_selection
+            and progress["completed_batches"] == 0
             and len(selection) != scope["first_batch_articles"]
         ):
             errors.append("SEMANTIC:selection:active-first-batch-size-mismatch")
+        if (
+            progress["completed_batches"] == 0
+            and not uses_article_selection
+            and selection
+        ):
+            errors.append("SEMANTIC:selection:non-article-goal-must-stay-empty")
         if next_action["kind"].startswith("ACTIVATE"):
             errors.append("SEMANTIC:next_action:active-kind-cannot-be-activate")
         if next_action["requires_activation"] is not False:
@@ -471,7 +532,10 @@ def validate_payload(
             errors.append("SEMANTIC:status:active-must-pause-after-three-no-delta-batches")
         if (
             progress["completed_batches"] >= budget["max_batches"]
-            or progress["completed_articles"] >= budget["max_articles"]
+            or (
+                uses_article_selection
+                and progress["completed_articles"] >= budget["max_articles"]
+            )
             or progress["completed_commits"] >= budget["max_commits"]
         ):
             errors.append("SEMANTIC:status:active-cannot-have-exhausted-budget")
@@ -479,9 +543,11 @@ def validate_payload(
     if status == "CLOSING":
         if activation["ref"] is None or activation["activated_at"] is None:
             errors.append("SEMANTIC:activation:closing-requires-prior-activation")
-        if progress["completed_batches"] < 1 or progress["completed_articles"] < 1:
+        if progress["completed_batches"] < 1:
             errors.append("SEMANTIC:progress:closing-requires-finished-slice")
-        if progress["completed_articles"] != len(selection):
+        if uses_article_selection and progress["completed_articles"] < 1:
+            errors.append("SEMANTIC:progress:closing-requires-finished-article")
+        if uses_article_selection and progress["completed_articles"] != len(selection):
             errors.append("SEMANTIC:progress:closing-must-cover-selection")
         if (
             next_action["kind"] != "RUN_GOAL_CLOSE_CHECKS"
@@ -492,7 +558,7 @@ def validate_payload(
     if status == "PAUSED":
         if activation["ref"] is None or activation["activated_at"] is None:
             errors.append("SEMANTIC:activation:paused-requires-prior-activation")
-        if not selection:
+        if uses_article_selection and not selection:
             errors.append("SEMANTIC:selection:paused-requires-article")
         if next_action["requires_activation"] is not False:
             errors.append("SEMANTIC:next_action:paused-cannot-require-activation")
@@ -506,9 +572,11 @@ def validate_payload(
     if status == "COMPLETE":
         if activation["ref"] is None or activation["activated_at"] is None:
             errors.append("SEMANTIC:activation:complete-requires-prior-activation")
-        if progress["completed_batches"] < 1 or progress["completed_articles"] < 1:
+        if progress["completed_batches"] < 1:
             errors.append("SEMANTIC:progress:complete-requires-finished-slice")
-        if progress["completed_articles"] != len(selection):
+        if uses_article_selection and progress["completed_articles"] < 1:
+            errors.append("SEMANTIC:progress:complete-requires-finished-article")
+        if uses_article_selection and progress["completed_articles"] != len(selection):
             errors.append("SEMANTIC:progress:complete-must-cover-selection")
         if next_action["kind"] != "NONE" or next_action["requires_activation"]:
             errors.append("SEMANTIC:next_action:complete-must-be-none")
