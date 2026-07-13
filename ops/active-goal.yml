@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T047
-status: ACTIVE
+status: PAUSED
 objective: >-
   泛化 active-goal checker，使推进合同可安全承接不同 goal mode；同时修复
   PREPARED 到 ACTIVE 的外部权限生命周期矛盾，以及 tests.test_active_goal 中
@@ -25,7 +25,7 @@ external_outcome:
     VERSION 或发布配置的前提下，为后续 IOT-T048/IOT-T049 建立可锁定、可验证的
     progression contract 底座。最终外部结果以唯一 Draft PR 当前 SHA 的
     Repository quality 成功和 ready for review 状态为准。
-  d_axis: D2
+  d_axis: D3
   satisfies_when:
     - active-goal 生命周期通用检查与 STRUCTURAL_SHADOW_AUDIT 专用检查完成分层。
     - PREPARED 到 ACTIVE 的 commit、push、open_pr 权限必须由显式 grant 锁定。
@@ -150,19 +150,19 @@ selection:
   selected_articles: []
   rationale: "No content selection; T047 only hardens contract/checker/tests."
 progress:
-  completed_batches: 1
+  completed_batches: 2
   completed_articles: 0
-  completed_commits: 2
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: DRAFT_PR_OPENED_WAIT_CI
-  last_external_delta: PR_22_OPENED_AND_REPOSITORY_QUALITY_STARTED
+  last_result: READY_FOR_REVIEW_WAIT_REVIEW
+  last_external_delta: PR_22_CURRENT_SHA_QUALITY_SUCCESS_AND_READY_FOR_REVIEW
 activation:
   ref: 4310810cc6de71c7c151da790cb887f512f11c33
   activated_at: "2026-07-13T02:23:40Z"
 next_action:
-  kind: WAIT_FOR_PR_CI
+  kind: WAIT_REVIEW
   requires_activation: false
   instruction: >-
-    Wait for PR #22 Repository quality on the current pushed SHA. If it fails, fix only
-    actionable IOT-T047 issues; if it succeeds, mark the PR ready for review and pause
-    without starting IOT-T048.
+    PR #22 is ready for review at head 1c97ce90ac09f277701f1c24ff7c53221b5b55a5
+    with Repository quality success. Wait for human review or merge; do not start
+    IOT-T048 until IOT-T047 is merged into main.
