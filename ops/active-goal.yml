@@ -150,18 +150,18 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 1
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: HUMAN_REVIEW_PACKET_PREPARED
-  last_external_delta: AGENT_ADVISORY_AND_HUMAN_REVIEW_PACKET_READY
+  last_result: PR_READY_FOR_REVIEW
+  last_external_delta: PR_26_READY_FOR_REVIEW_CI_GREEN
 activation:
   ref: c2f266add2a6a75160b4d25aa944ad31bec1cce5
   activated_at: "2026-07-13T06:50:07Z"
 next_action:
-  kind: PUSH_AND_OPEN_DRAFT_PR
+  kind: WAIT_REVIEW
   requires_activation: false
   instruction: >-
-    Commit the T051 review preparation packet, push codex/iot-t051-human-review-packet,
-    open the unique Draft PR, wait for Repository quality on the current head, then
-    mark ready for review if all checks pass. Do not merge without separate merge
-    authorization, and do not treat this packet as HUMAN_APPROVED.
+    PR #26 contains the T051 review preparation packet and is ready for review after
+    Repository quality succeeds on the current head. Stop writer work until reviewer
+    feedback, explicit merge authorization, or another external state change. Do not
+    treat this packet as HUMAN_APPROVED.
