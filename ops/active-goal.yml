@@ -1,68 +1,69 @@
 schema_version: "1.0"
-goal_id: IOT-T050
+goal_id: IOT-T051
 status: PAUSED
 objective: >-
-  收口 M2 当前证据状态：记录 IOT-T047/T048/T049 已完成的外部闭环，并明确 M2
-  尚不能宣布完成或发布 v0.3.0，因为事实核验链、FACT_AUDITOR authority 与人类审批证据仍缺失。
+  在不伪造 human review 的前提下，为 M2 事实核验和真人审批准备可交接材料：
+  生成 agent advisory review 与 human review packet，明确这些材料不能提升
+  PARTIAL、VERIFIED 或 HUMAN_APPROVED。
 scope:
-  task_id: IOT-T050
+  task_id: IOT-T051
   mode: PROGRESSION_CONTRACT_HARDENING
   first_batch_articles: 0
   max_articles: 0
-activated_by: "explicit-user-request-2026-07-13-m2-closeout"
+activated_by: "explicit-user-request-2026-07-13-prepare-human-review-packet"
 review_after: "2026-07-20"
 budget:
   max_batches: 1
   max_articles: 0
-  max_commits: 4
-  max_wall_minutes: 90
+  max_commits: 3
+  max_wall_minutes: 120
   max_parallel_agents: 1
   max_parallel_writers: 1
 external_outcome:
   definition: >-
     在不修改正文、frontmatter、source audit record、review record、trust authority、
-    trust ledger、VERSION 或 workflow 的前提下，把 M2 当前状态写清楚：T047-T049
-    已完成到 D4；M2 进入 PARKED_HUMAN_EVIDENCE，等待真实事实核验员与人工审批证据。
-    最终外部结果以 PR #25 当前 SHA 的 Repository quality 成功、agent review comment
-    完成和 merge commit 合入 main 为准。
+    trust ledger、VERSION、schema、tools 或 workflow 的前提下，把 M2 从
+    PARKED_HUMAN_EVIDENCE 推进到可交接的人审准备状态。最终外部结果以唯一 PR
+    当前 SHA 的 Repository quality 成功和 ready for review 状态为准；该结果不构成
+    human approval，也不允许发布 v0.3.0。
   d_axis: D3
   satisfies_when:
-    - docs/progress.md 明确 T047/T048/T049 已完成，且 M2 未完成。
-    - README.md 与 ROADMAP.md 不再暗示 M2 可自动完成或 v0.3.0 可发布。
-    - 文档列出 M2 剩余最小输入：CONTENT_AUTHOR、FACT_AUDITOR、critical_claim_ids、CLAIM_VERIFICATION、HUMAN approver/review record。
+    - agent advisory review 明确标注为 agent 预审，不是 HUMAN_APPROVED。
+    - human review packet 列出真人 reviewer 需要补齐的 authority、claim、source、review record 输入。
+    - docs/progress.md 链接上述材料，并继续声明 M2 未完成、v0.3.0 不发布。
     - trust 基线保持 source_records=29、review_records=0、legacy_unbound=642、verified=0、approved=0。
-    - PR #25 ready for review 后，当前 SHA 的 Repository quality 远端 CI 成功。
-    - agent review comment 明确 no findings，且不冒充 HUMAN_APPROVED。
-    - 用户单独授权 merge 后，PR #25 只能用 merge commit 合入 main。
+    - 不创建 data/review-records、CLAIM_VERIFICATION、HUMAN_APPROVED、VERIFIED 或 PARTIAL 状态。
+    - PR 创建后，当前 SHA 的 Repository quality 远端 CI 成功。
 external_action_authority:
   commit: true
   push: true
   open_pr: true
-  merge: true
+  merge: false
   deploy: false
 external_action_grant:
-  source: "current-user-prompt-2026-07-13-merge"
-  granted_at: "2026-07-13T06:19:19Z"
+  source: "current-user-prompt-2026-07-13-prepare-human-review-packet"
+  granted_at: "2026-07-13T06:50:07Z"
   scope: >-
-    仅限 IOT-T050 M2 closeout status 的 PR #25：允许从 T049 merge 后的 origin/main
-    创建 codex feature branch、修改本 contract 列出的状态文档、原子 commit、push 分支、
-    创建或更新唯一 PR；允许在 agent review no findings 且当前 head 的 Repository quality
-    成功后，以 merge commit 合并 PR #25。仍不允许 deploy、force-push、rebase、squash、
-    修改正文/frontmatter/source audit/review/trust 记录、VERSION 或 workflow。
+    仅限 IOT-T051 human review packet preparation：允许从 T050 merge 后的 origin/main
+    创建 codex feature branch、修改本 contract 列出的人审准备文档和 progress 链接、
+    原子 commit、push 分支、创建或更新唯一 Draft PR，并在远端 CI 通过后标记 ready for review。
+    不允许 merge、deploy、force-push、rebase、squash、修改正文/frontmatter/source
+    audit/review/trust 记录、VERSION、schema、tools 或 workflow。
 stop_conditions:
-  - 工作树出现不属于 IOT-T050 允许路径的改动。
+  - 工作树出现不属于 IOT-T051 允许路径的改动。
   - goal/lock 不一致，且无法在不放宽安全边界的情况下重签。
   - Python 3.11 环境或 .tmp/agent-venv/bin/python 不可复现。
-  - 必须修改正文、frontmatter、source audit record、review record、trust authority、trust ledger、VERSION 或 workflow 才能继续。
-  - 需要伪造作者、来源、FACT_AUDITOR、真人 reviewer、approver 或提升 VERIFIED/HUMAN_APPROVED。
-  - 需要宣布 M2 或 v0.3.0 完成，但仍缺事实核验链或人工证据。
+  - 必须修改正文、frontmatter、source audit record、review record、trust authority、trust ledger、VERSION、schema、tools 或 workflow 才能继续。
+  - 需要伪造作者、来源、FACT_AUDITOR、真人 reviewer、approver 或提升 PARTIAL/VERIFIED/HUMAN_APPROVED。
+  - 需要把 agent advisory review 当作 human review、review record 或 approval evidence。
+  - 需要宣布 M2 或 v0.3.0 完成，但仍缺真实事实核验链或人工证据。
   - 当前 PR 仅等待人工 review 或 merge。
   - 预算耗尽或 review_after 到达 2026-07-20。
 superseded_by: null
 baseline:
-  prepared_at_ref: 8161511f679cf158c19749191e9df2a0667f7d0c
-  remote_main_ref: 8161511f679cf158c19749191e9df2a0667f7d0c
-  required_history_ancestor: 8161511f679cf158c19749191e9df2a0667f7d0c
+  prepared_at_ref: c2f266add2a6a75160b4d25aa944ad31bec1cce5
+  remote_main_ref: c2f266add2a6a75160b4d25aa944ad31bec1cce5
+  required_history_ancestor: c2f266add2a6a75160b4d25aa944ad31bec1cce5
   expected_inventory:
     canonical_content: 642
     plan_topics: 1761
@@ -77,7 +78,7 @@ acceptance_checks:
   - id: active_goal_contract
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_active_goal.py
-    expectation: ACTIVE_GOAL_OK goal_id=IOT-T050 status=ACTIVE until closing.
+    expectation: ACTIVE_GOAL_OK goal_id=IOT-T051 status=PAUSED after documentation slice.
   - id: content_inventory
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/content_inventory.py --check
@@ -117,9 +118,8 @@ acceptance_checks:
 allowed_mutations:
   - ops/active-goal.yml
   - ops/active-goal.lock.json
-  - README.md
-  - ROADMAP.md
   - docs/progress.md
+  - docs/superpowers/review-packets/
 forbidden_mutations:
   - AGENTS.md
   - schemas/
@@ -143,23 +143,25 @@ forbidden_mutations:
   - .github/workflows/
 selection:
   policy: >-
-    IOT-T050 不选择、生成、重写或审计任何文章。它只收口 M2 当前证据状态。
+    IOT-T051 不选择、生成、重写或审计任何文章。它只准备人审交接材料，
+    不创建 trust evidence，不提升内容可信状态。
   selected_articles: []
-  rationale: "No content selection; T050 only documents M2 closeout state and blockers."
+  rationale: "No content selection; T051 only prepares advisory and human review packet docs."
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 4
+  completed_commits: 1
   no_external_delta_batches: 0
-  last_result: MERGE_AUTHORIZED_AFTER_AGENT_REVIEW
-  last_external_delta: USER_AUTHORIZED_MERGE_FOR_PR_25
+  last_result: HUMAN_REVIEW_PACKET_PREPARED
+  last_external_delta: AGENT_ADVISORY_AND_HUMAN_REVIEW_PACKET_READY
 activation:
-  ref: 8161511f679cf158c19749191e9df2a0667f7d0c
-  activated_at: "2026-07-13T05:21:00Z"
+  ref: c2f266add2a6a75160b4d25aa944ad31bec1cce5
+  activated_at: "2026-07-13T06:50:07Z"
 next_action:
-  kind: MERGE_PR_AFTER_CI
+  kind: PUSH_AND_OPEN_DRAFT_PR
   requires_activation: false
   instruction: >-
-    Push this merge authorization update to PR #25, wait for Repository quality on
-    the current head to succeed, then merge PR #25 with a merge commit. After merge,
-    verify origin/main and main quality/Pages. Do not announce M2 or v0.3.0 complete.
+    Commit the T051 review preparation packet, push codex/iot-t051-human-review-packet,
+    open the unique Draft PR, wait for Repository quality on the current head, then
+    mark ready for review if all checks pass. Do not merge without separate merge
+    authorization, and do not treat this packet as HUMAN_APPROVED.
