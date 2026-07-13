@@ -1,0 +1,195 @@
+data/review-records/review-20260713-approve-3d-printed-sensor-enclosure.yml
+  s_6d1a97cf6468cd::t_861de6eed08e81 14,16
+data/review-records/review-20260713-approve-4-20ma-current-loop-industrial.yml
+  s_6d1a97cf6468cd::t_5da5b36cd2aaa8 14,16
+data/review-records/review-20260713-approve-5g-mmtc-massive-iot-connection.yml
+  s_6d1a97cf6468cd::t_3b06b4701e6f29 14,16
+data/review-records/review-20260713-approve-5g-network-slicing-iot-vertical.yml
+  s_6d1a97cf6468cd::t_d9d7b7971135e1 14,16
+data/review-records/review-20260713-approve-5g-nr-redcap-iot-device.yml
+  s_6d1a97cf6468cd::t_c25efb6d8ec37f 14,16
+data/review-records/review-20260713-approve-6g-isac-iot.yml
+  s_6d1a97cf6468cd::t_bb3f5dc44489da 14
+data/review-records/review-20260713-approve-digital-twin-edge-offloading.yml
+  s_6d1a97cf6468cd::t_1231e8818b63d5 14
+data/review-records/review-20260713-approve-edge-computing-survey.yml
+  s_6d1a97cf6468cd::t_7627b2681f7383 14
+data/review-records/review-20260713-approve-federated-learning-iot.yml
+  s_6d1a97cf6468cd::t_2f0c62176b4392 14
+data/review-records/review-20260713-approve-federated-learning-privacy.yml
+  s_6d1a97cf6468cd::t_d75a744aac16fe 14
+data/review-records/review-20260713-approve-iiot-predictive-maintenance.yml
+  s_6d1a97cf6468cd::t_8fe6c2d15cd09c 14
+data/review-records/review-20260713-approve-indoor-positioning-survey.yml
+  s_6d1a97cf6468cd::t_80fbf63ebb9930 14
+data/review-records/review-20260713-approve-iot-app-protocols.yml
+  s_6d1a97cf6468cd::t_e2367d5604f313 14
+data/review-records/review-20260713-approve-iot-security-systematic-review.yml
+  s_6d1a97cf6468cd::t_278a16db0c58ea 14
+data/review-records/review-20260713-approve-jupiter.yml
+  s_6d1a97cf6468cd::t_027cc29901d1f2 14
+data/review-records/review-20260713-approve-kubeedge-openyurt-comparison.yml
+  s_6d1a97cf6468cd::t_8ebb78a394ac25 14
+data/review-records/review-20260713-approve-lpwan-comparison.yml
+  s_6d1a97cf6468cd::t_4996eae6a845c4 14
+data/review-records/review-20260713-approve-model-compression-edge.yml
+  s_6d1a97cf6468cd::t_b0676ee5aea5a3 14
+data/review-records/review-20260713-approve-puf-device-authentication.yml
+  s_6d1a97cf6468cd::t_27fc7234489385 14
+data/review-records/review-20260713-approve-rfid-sensing-survey.yml
+  s_6d1a97cf6468cd::t_fc138afc174b1a 14
+data/review-records/review-20260713-approve-rtos-comparison.yml
+  s_6d1a97cf6468cd::t_021b54f624a22a 14
+data/review-records/review-20260713-approve-serverless-edge.yml
+  s_6d1a97cf6468cd::t_ce7d64c56eff27 14
+data/review-records/review-20260713-approve-sparklink-vs-ble6.yml
+  s_6d1a97cf6468cd::t_e7cd1b38873960 14
+data/review-records/review-20260713-approve-tinyml-mcu-deployment.yml
+  s_6d1a97cf6468cd::t_b6faf2ca2fad29 14
+data/review-records/review-20260713-approve-tsn-detnet-industrial.yml
+  s_6d1a97cf6468cd::t_8fe23be5b5d75a 14
+data/review-records/review-20260713-approve-uwb-positioning.yml
+  s_6d1a97cf6468cd::t_7d6f9d2bb59f97 14
+data/review-records/review-20260713-approve-v2x-autonomous-driving.yml
+  s_6d1a97cf6468cd::t_16211628a66d7b 14
+data/review-records/review-20260713-approve-wasm-edge-runtime.yml
+  s_6d1a97cf6468cd::t_e66b29da7ccdbe 14
+data/review-records/review-20260713-approve-wsn-routing-drl.yml
+  s_6d1a97cf6468cd::t_b48f4ad1305e07 14
+data/review-records/review-20260713-start-3d-printed-sensor-enclosure.yml
+  s_6d1a97cf6468cd::t_517f1ab9f3d43c 14,16
+data/review-records/review-20260713-start-4-20ma-current-loop-industrial.yml
+  s_6d1a97cf6468cd::t_bc12ee1217a737 14,16
+data/review-records/review-20260713-start-5g-mmtc-massive-iot-connection.yml
+  s_6d1a97cf6468cd::t_779b2512787bf9 14,16
+data/review-records/review-20260713-start-5g-network-slicing-iot-vertical.yml
+  s_6d1a97cf6468cd::t_0afcfd9db90b41 14,16
+data/review-records/review-20260713-start-5g-nr-redcap-iot-device.yml
+  s_6d1a97cf6468cd::t_4b3d451090cb52 14,16
+data/review-records/review-20260713-start-6g-isac-iot.yml
+  s_6d1a97cf6468cd::t_4827c8df23786a 14
+data/review-records/review-20260713-start-digital-twin-edge-offloading.yml
+  s_6d1a97cf6468cd::t_e53cb8ca722a31 14
+data/review-records/review-20260713-start-edge-computing-survey.yml
+  s_6d1a97cf6468cd::t_d2ed9a36621d89 14
+data/review-records/review-20260713-start-federated-learning-iot.yml
+  s_6d1a97cf6468cd::t_3b0d6ec5cd8bef 14
+data/review-records/review-20260713-start-federated-learning-privacy.yml
+  s_6d1a97cf6468cd::t_6d3f58167efc9d 14
+data/review-records/review-20260713-start-iiot-predictive-maintenance.yml
+  s_6d1a97cf6468cd::t_f0eb789cb47319 14
+data/review-records/review-20260713-start-indoor-positioning-survey.yml
+  s_6d1a97cf6468cd::t_60822c604108b6 14
+data/review-records/review-20260713-start-iot-app-protocols.yml
+  s_6d1a97cf6468cd::t_ba8c12682827a8 14
+data/review-records/review-20260713-start-iot-security-systematic-review.yml
+  s_6d1a97cf6468cd::t_a26383c156650b 14
+data/review-records/review-20260713-start-jupiter.yml
+  s_6d1a97cf6468cd::t_3a884e5efa0231 14
+data/review-records/review-20260713-start-kubeedge-openyurt-comparison.yml
+  s_6d1a97cf6468cd::t_73101bcf52b8c3 14
+data/review-records/review-20260713-start-lpwan-comparison.yml
+  s_6d1a97cf6468cd::t_11bf9628788f08 14
+data/review-records/review-20260713-start-model-compression-edge.yml
+  s_6d1a97cf6468cd::t_8efb2354d22220 14
+data/review-records/review-20260713-start-puf-device-authentication.yml
+  s_6d1a97cf6468cd::t_a6d976e7ee295d 14
+data/review-records/review-20260713-start-rfid-sensing-survey.yml
+  s_6d1a97cf6468cd::t_c8aa27f91cc84d 14
+data/review-records/review-20260713-start-rtos-comparison.yml
+  s_6d1a97cf6468cd::t_94df66a55e2c83 14
+data/review-records/review-20260713-start-serverless-edge.yml
+  s_6d1a97cf6468cd::t_3d6db53efe1467 14
+data/review-records/review-20260713-start-sparklink-vs-ble6.yml
+  s_6d1a97cf6468cd::t_2b3c4e8676ea9a 14
+data/review-records/review-20260713-start-tinyml-mcu-deployment.yml
+  s_6d1a97cf6468cd::t_c751656bb90819 14
+data/review-records/review-20260713-start-tsn-detnet-industrial.yml
+  s_6d1a97cf6468cd::t_f6ccb08afa5239 14
+data/review-records/review-20260713-start-uwb-positioning.yml
+  s_6d1a97cf6468cd::t_c32aff4af10c8a 14
+data/review-records/review-20260713-start-v2x-autonomous-driving.yml
+  s_6d1a97cf6468cd::t_bf9d8f6e069755 14
+data/review-records/review-20260713-start-wasm-edge-runtime.yml
+  s_6d1a97cf6468cd::t_d0b3e937f6867e 14
+data/review-records/review-20260713-start-wsn-routing-drl.yml
+  s_6d1a97cf6468cd::t_d5b2b5fec247fc 14
+data/source-audits/audit-20260713-claim-3d-printed-sensor-enclosure.yml
+  s_6d1a97cf6468cd::t_35fbed0b6b0fa3 14
+data/source-audits/audit-20260713-claim-4-20ma-current-loop-industrial.yml
+  s_6d1a97cf6468cd::t_0ca41421224fd5 14
+data/source-audits/audit-20260713-claim-5g-mmtc-massive-iot-connection.yml
+  s_6d1a97cf6468cd::t_55e74cb202fbdb 14
+data/source-audits/audit-20260713-claim-5g-network-slicing-iot-vertical.yml
+  s_6d1a97cf6468cd::t_ab9cd1c7d9fa42 14
+data/source-audits/audit-20260713-claim-5g-nr-redcap-iot-device.yml
+  s_6d1a97cf6468cd::t_c8dcbdab26b48e 14
+data/source-audits/audit-20260713-claim-6g-isac-iot.yml
+  s_6d1a97cf6468cd::t_1dc1bb9dad263c 14
+data/source-audits/audit-20260713-claim-digital-twin-edge-offloading.yml
+  s_6d1a97cf6468cd::t_7fe965276f5201 14
+data/source-audits/audit-20260713-claim-edge-computing-survey.yml
+  s_6d1a97cf6468cd::t_1df4713e4cf16d 14
+data/source-audits/audit-20260713-claim-federated-learning-iot.yml
+  s_6d1a97cf6468cd::t_16a31e0931d4a4 14
+data/source-audits/audit-20260713-claim-federated-learning-privacy.yml
+  s_6d1a97cf6468cd::t_36c05aee131a04 14
+data/source-audits/audit-20260713-claim-iiot-predictive-maintenance.yml
+  s_6d1a97cf6468cd::t_565c4ee4dbbaaa 14
+data/source-audits/audit-20260713-claim-indoor-positioning-survey.yml
+  s_6d1a97cf6468cd::t_b93a96f8344c8b 14
+data/source-audits/audit-20260713-claim-iot-app-protocols.yml
+  s_6d1a97cf6468cd::t_4f83334ed5a7bb 14
+data/source-audits/audit-20260713-claim-iot-security-systematic-review.yml
+  s_6d1a97cf6468cd::t_f5da6d782e9483 14
+data/source-audits/audit-20260713-claim-jupiter.yml
+  s_6d1a97cf6468cd::t_a38c38abed2aa8 14
+data/source-audits/audit-20260713-claim-kubeedge-openyurt-comparison.yml
+  s_6d1a97cf6468cd::t_d92b372974ad80 14
+data/source-audits/audit-20260713-claim-lpwan-comparison.yml
+  s_6d1a97cf6468cd::t_6a7edc116bc52c 14
+data/source-audits/audit-20260713-claim-model-compression-edge.yml
+  s_6d1a97cf6468cd::t_6102bea96aab9f 14
+data/source-audits/audit-20260713-claim-puf-device-authentication.yml
+  s_6d1a97cf6468cd::t_c2225910bcc969 14
+data/source-audits/audit-20260713-claim-rfid-sensing-survey.yml
+  s_6d1a97cf6468cd::t_420a00c9f28b83 14
+data/source-audits/audit-20260713-claim-rtos-comparison.yml
+  s_6d1a97cf6468cd::t_4a48661bb04744 14
+data/source-audits/audit-20260713-claim-serverless-edge.yml
+  s_6d1a97cf6468cd::t_4a64186094aa02 14
+data/source-audits/audit-20260713-claim-sparklink-vs-ble6.yml
+  s_6d1a97cf6468cd::t_0ba4ea426944d8 14
+data/source-audits/audit-20260713-claim-tinyml-mcu-deployment.yml
+  s_6d1a97cf6468cd::t_34e70f9d06566f 14
+data/source-audits/audit-20260713-claim-tsn-detnet-industrial.yml
+  s_6d1a97cf6468cd::t_72982b83188bc0 14
+data/source-audits/audit-20260713-claim-uwb-positioning.yml
+  s_6d1a97cf6468cd::t_2bcf5864c9025a 14
+data/source-audits/audit-20260713-claim-v2x-autonomous-driving.yml
+  s_6d1a97cf6468cd::t_d4493b9c60fa4e 14
+data/source-audits/audit-20260713-claim-wasm-edge-runtime.yml
+  s_6d1a97cf6468cd::t_e2db3d06c98e3e 14
+data/source-audits/audit-20260713-claim-wsn-routing-drl.yml
+  s_6d1a97cf6468cd::t_cb5e67f6b32664 14
+data/trust-authorities.yml
+  s_6d1a97cf6468cd::t_36bae6845ef305 1-2,4-20,22-5800
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cbeecdd66a9829dbf0a60aeda8785661ff4432e0",
+  "prompts": {},
+  "sessions": {
+    "s_6d1a97cf6468cd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_6d1a97cf6468cd",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
