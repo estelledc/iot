@@ -15,7 +15,7 @@ review_after: "2026-07-20"
 budget:
   max_batches: 3
   max_articles: 0
-  max_commits: 5
+  max_commits: 6
   max_wall_minutes: 180
   max_parallel_agents: 2
   max_parallel_writers: 1
@@ -36,15 +36,16 @@ external_action_authority:
   commit: true
   push: true
   open_pr: true
-  merge: false
+  merge: true
   deploy: false
 external_action_grant:
   source: "current-user-prompt-2026-07-13"
   granted_at: "2026-07-13T02:23:40Z"
   scope: >-
     仅限 IOT-T047 progression-contract hardening：允许从 origin/main 创建 codex feature
-    branch、修改本 contract 列出的推进方式文件、原子 commit、push 分支并创建或更新唯一
-    Draft PR；不允许 merge、deploy、force-push、rebase、squash 或扩大到正文和信任记录。
+    branch、修改本 contract 列出的推进方式文件、原子 commit、push 分支、创建或更新唯一
+    PR，并在当前 PR head 的 Repository quality 成功后以 merge commit 合并 PR #22；
+    不允许 deploy、force-push、rebase、squash 或扩大到正文和信任记录。
 stop_conditions:
   - 工作树出现不属于 IOT-T047 允许路径的改动。
   - goal/lock 不一致，且无法在不放宽安全边界的情况下重签。
@@ -152,16 +153,17 @@ selection:
 progress:
   completed_batches: 3
   completed_articles: 0
-  completed_commits: 5
+  completed_commits: 6
   no_external_delta_batches: 0
-  last_result: REVIEW_FINDING_FIXED_WAIT_REVIEW
-  last_external_delta: CHECKER_UNKNOWN_MODE_FAIL_CLOSED
+  last_result: MERGE_AUTHORIZED_WAIT_CI
+  last_external_delta: USER_AUTHORIZED_PR_22_MERGE_AND_CONTRACT_RESIGNED
 activation:
   ref: 4310810cc6de71c7c151da790cb887f512f11c33
   activated_at: "2026-07-13T02:23:40Z"
 next_action:
-  kind: WAIT_REVIEW
+  kind: MERGE_PR_AFTER_CI
   requires_activation: false
   instruction: >-
-    PR #22 is ready for review. Wait for human review or merge; do not start IOT-T048
-    until IOT-T047 is merged into main and the merge commit is verified from origin/main.
+    Push this merge authorization update to PR #22, wait for Repository quality on the
+    current head to succeed, then merge PR #22 with a merge commit. Do not start IOT-T048
+    until the merge commit is verified from origin/main.
