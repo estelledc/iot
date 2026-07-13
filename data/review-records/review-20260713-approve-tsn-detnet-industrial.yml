@@ -11,7 +11,7 @@ source_status_at_review: VERIFIED
 reviewer_id: human-reviewer
 reviewer_type: HUMAN
 reviewer_role: APPROVER
-reviewed_at: '2026-07-12T12:35:00Z'
+reviewed_at: '2026-07-12T17:00:00Z'
 linked_audit_ids:
 - audit-20260712-structural-tsn-detnet-industrial
 - audit-20260713-claim-tsn-detnet-industrial

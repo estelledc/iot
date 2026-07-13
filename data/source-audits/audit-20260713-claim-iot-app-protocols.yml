@@ -11,7 +11,7 @@ status_transition:
 auditor_id: human-fact-auditor
 auditor_type: HUMAN
 auditor_role: FACT_AUDITOR
-audited_at: '2026-07-12T09:50:00Z'
+audited_at: '2026-07-12T15:00:00Z'
 source_references:
 - reference_id: src-iot-protocols
   uri: https://www.sciencedirect.com/science/article/pii/S0140366422003210

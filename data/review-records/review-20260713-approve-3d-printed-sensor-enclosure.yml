@@ -11,9 +11,9 @@ source_status_at_review: VERIFIED
 reviewer_id: human-reviewer
 reviewer_type: HUMAN
 reviewer_role: APPROVER
-reviewed_at: '2026-07-12T11:00:00Z'
+reviewed_at: '2026-07-12T17:00:00Z'
 linked_audit_ids:
-- audit-20260712-structural-3d-printed-enclosure
+- audit-20260712-structural-3d-printed-sensor-enclosure
 - audit-20260713-claim-3d-printed-sensor-enclosure
 review_checks:
 - check_id: source-verified
