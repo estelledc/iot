@@ -1,0 +1,78 @@
+update_frontmatter.py
+  s_4d3afb4104128b::t_92cd13c938c446 38-41
+  s_4d3afb4104128b::t_aa9f1f63853d1b 35-37
+  s_4d3afb4104128b::t_d8c4131863d64b 42-44
+  s_6cc0a061f65d7c::t_d675571804e9b7 1-34,45-56
+clean_authorities.py
+  s_6cc0a061f65d7c::t_7d3f5ee9e2b457 1-32
+create_full_trust_chain.py
+  s_6cc0a061f65d7c::t_98ef31448db45c 1-222
+create_structural_audits.py
+  s_6cc0a061f65d7c::t_0d852e60e7da51 1-84
+fix_all_body_hashes.py
+  s_6cc0a061f65d7c::t_ae683d43d6b21f 1-55
+fix_all_review_times.py
+  s_6cc0a061f65d7c::t_44752d823f700a 1-27
+fix_approve_review_times.py
+  s_6cc0a061f65d7c::t_32c4fc7420d566 1-47
+fix_audit_times.py
+  s_6cc0a061f65d7c::t_dd270bf782dd9b 1-27
+fix_linked_auditors.py
+  s_6cc0a061f65d7c::t_606720e1c0b95d 1-41
+fix_linked_audits2.py
+  s_6cc0a061f65d7c::t_bf337f1885ae01 1-45
+fix_linked_audits3.py
+  s_6cc0a061f65d7c::t_31b5e7665d166a 1-52
+fix_mismatched_audits.py
+  s_6cc0a061f65d7c::t_5c30140289100c 1-29
+fix_source_reference_times.py
+  s_6cc0a061f65d7c::t_42d06e8163facf 1-29
+fix_start_review_audits.py
+  s_6cc0a061f65d7c::t_286c6ab711898c 1-54
+fix_start_review_times.py
+  s_6cc0a061f65d7c::t_44fbd00581d190 1-51
+fix_structural_audits.py
+  s_6cc0a061f65d7c::t_039235620970d7 1-44
+fix_structural_audits2.py
+  s_6cc0a061f65d7c::t_a9c3c00fae2b5c 1-82
+fix_structural_audits3.py
+  s_6cc0a061f65d7c::t_db7b2caf919f45 1-32
+fix_time_formats.py
+  s_6cc0a061f65d7c::t_3e41acb431beef 1-31
+remove_duplicate_audits.py
+  s_6cc0a061f65d7c::t_92e46472b15594 1-30
+remove_invalid_audits.py
+  s_6cc0a061f65d7c::t_04d7832a9d6aa8 1-39
+reset_review_times.py
+  s_6cc0a061f65d7c::t_e619413a079df9 1-27
+update_authorities.py
+  s_6cc0a061f65d7c::t_ac1839c949b08c 1-76
+update_body_hashes.py
+  s_6cc0a061f65d7c::t_91afae77573052 1-74
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "59425924be2394d922741898ea3bf51a317bd52c",
+  "prompts": {},
+  "sessions": {
+    "s_4d3afb4104128b": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a5493167c0da26523dc698d",
+        "model": "Doubao_1_6__dev"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    },
+    "s_6cc0a061f65d7c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_6cc0a061f65d7c",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
