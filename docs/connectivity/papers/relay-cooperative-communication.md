@@ -16,8 +16,8 @@ tags:
   - 全双工中继
   - 缓冲辅助中继
   - UAV中继
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 中继协作通信：IoT 网络的"接力赛跑"

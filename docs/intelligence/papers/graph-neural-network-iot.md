@@ -17,8 +17,8 @@ tags:
   - 传感器网络
   - 图异常检测
   - 边缘部署
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 图神经网络在 IoT 中的应用

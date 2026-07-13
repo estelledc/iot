@@ -17,8 +17,8 @@ tags:
   - PCB布局
   - 回流路径
   - CISPR
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 辐射发射降低：走线/接地/屏蔽综合策略

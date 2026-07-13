@@ -17,8 +17,8 @@ tags:
   - 量化噪声
   - 过采样
   - 噪声预算
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # ADC分辨率/SNR/ENOB有效位数深度解析

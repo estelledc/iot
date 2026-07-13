@@ -17,8 +17,8 @@ tags:
 - 硬件安全
 - 机器学习攻击
 - 硅指纹
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # PUF物理不可克隆函数：IoT设备的"硅指纹"认证

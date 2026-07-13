@@ -15,8 +15,8 @@ tags:
   - PN码
   - 抗干扰
   - ISM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 扩频技术DSSS与FHSS在IoT抗干扰中的原理

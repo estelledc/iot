@@ -17,8 +17,8 @@ tags:
   - VRM
   - 电源层
   - 阻抗
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电源完整性PDN设计与去耦网络分析

@@ -16,8 +16,8 @@ tags:
   - 抖动
   - IoT
   - TCXO
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MEMS振荡器与石英晶振时钟源对比

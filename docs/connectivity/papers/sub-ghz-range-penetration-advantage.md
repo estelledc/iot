@@ -17,8 +17,8 @@ tags:
   - Z-Wave
   - ISM
   - 链路预算
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Sub-GHz频段穿透力与传输距离优势分析

@@ -16,8 +16,8 @@ tags:
   - 光耦
   - 触点
   - IoT执行器
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 继电器与固态继电器在IoT控制中的选型

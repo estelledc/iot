@@ -19,8 +19,8 @@ tags:
 - MQTT
 - CRDT
 - 可观测性
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘微服务架构：设计模式与实践

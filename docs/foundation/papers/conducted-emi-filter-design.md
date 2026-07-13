@@ -15,8 +15,8 @@ tags:
   - 共模扼流圈
   - X电容
   - Y电容
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 传导EMI滤波器设计：共模/差模抑制

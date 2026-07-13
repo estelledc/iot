@@ -16,8 +16,8 @@ tags:
   - SPI
   - I2C
   - 倾斜检测
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MEMS加速度计ADXL345原理与运动检测

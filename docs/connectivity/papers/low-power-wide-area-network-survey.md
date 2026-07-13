@@ -15,8 +15,8 @@ tags:
   - Sigfox
   - 免许可频谱
   - mMTC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 低功耗广域网LPWAN技术综合综述

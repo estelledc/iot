@@ -19,8 +19,8 @@ tags:
 - 隐私计算
 - OpenFHE
 - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 同态加密实用化进展：从理论突破到 IoT 落地

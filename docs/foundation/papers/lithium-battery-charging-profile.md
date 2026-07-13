@@ -16,8 +16,8 @@ tags:
   - NTC
   - 电源路径
   - IoT电池
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 锂电池CC-CV充电曲线与充电IC设计

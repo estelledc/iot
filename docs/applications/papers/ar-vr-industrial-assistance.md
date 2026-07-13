@@ -20,8 +20,8 @@ tags:
 - 数字孪生
 - 边缘渲染
 - MRTK
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # AR/VR 工业辅助系统

@@ -18,8 +18,8 @@ tags:
 - 认证鲁棒性
 - RobustBench
 - 物理世界攻击
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘AI对抗攻击与防御：当智能模型遭遇恶意对手

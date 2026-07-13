@@ -17,8 +17,8 @@ tags:
   - LPWAN
   - PER
   - 射频测试
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 无线信道模拟器在IoT通信测试中的应用

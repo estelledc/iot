@@ -14,8 +14,8 @@ tags:
   - 开漏输出
   - 电池监测
   - 中断唤醒
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 比较器电路在阈值检测与报警中的应用

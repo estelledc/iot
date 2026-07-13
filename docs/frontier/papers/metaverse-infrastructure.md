@@ -19,8 +19,8 @@ tags:
 - USD
 - 空间计算
 - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 元宇宙基础设施：支撑虚实融合的计算与网络底座

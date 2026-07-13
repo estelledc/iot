@@ -17,8 +17,8 @@ tags:
   - 微流控
   - 风速传感
   - CMOS-MEMS
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MEMS 热式流量传感器微结构与响应特性

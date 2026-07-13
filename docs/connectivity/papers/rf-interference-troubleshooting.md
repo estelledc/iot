@@ -16,8 +16,8 @@ tags:
   - 现场调试
   - 2.4GHz
   - 底噪
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 射频干扰排查与IoT现场调试方法

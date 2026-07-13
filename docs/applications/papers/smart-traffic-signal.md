@@ -18,8 +18,8 @@ tags:
 - 强化学习
 - 绿波协调
 - SUMO
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 智慧城市交通信号优化

@@ -17,8 +17,8 @@ tags:
   - 过采样
   - 巴特沃斯
   - 滤波器
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 抗混叠滤波器设计与截止频率选择

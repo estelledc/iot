@@ -17,8 +17,8 @@ tags:
   - NAMUR
   - 变送器
   - 信号调理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 4-20mA电流环在工业IoT中的信号传输

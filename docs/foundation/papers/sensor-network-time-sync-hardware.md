@@ -17,8 +17,8 @@ tags:
   - TDOA
   - 传感器网络
   - GPS
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 传感器网络硬件级时间同步PPS/PTP

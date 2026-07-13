@@ -18,8 +18,8 @@ tags:
 - NIST-800-207
 - 持续认证
 - PEP-PDP
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 零信任架构与IoT：从"城堡护城河"到"永不信任"

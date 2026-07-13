@@ -17,8 +17,8 @@ tags:
   - HC-SR04
   - 传感器
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 超声波测距原理与IoT应用设计

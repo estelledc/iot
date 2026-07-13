@@ -17,8 +17,8 @@ tags:
   - STS
   - 中继攻击
   - BLE
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # UWB FiRa数字车钥匙技术方案

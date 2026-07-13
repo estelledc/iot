@@ -17,8 +17,8 @@ tags:
   - 流量池
   - IMSI
   - 连接管理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT SIM管理平台技术架构

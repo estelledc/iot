@@ -17,8 +17,8 @@ tags:
   - 时钟门控
   - HSE
   - 低功耗
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # SoC/MCU时钟树设计与PLL/FLL配置

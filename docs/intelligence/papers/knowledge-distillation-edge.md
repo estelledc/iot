@@ -18,8 +18,8 @@ tags:
 - 边缘AI
 - FitNets
 - MiniLLM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 知识蒸馏在边缘部署的应用

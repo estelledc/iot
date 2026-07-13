@@ -18,8 +18,8 @@ tags:
 - IPSO
 - Observe
 - NB-IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # CoAP 与 LwM2M：受限设备的轻量协议栈

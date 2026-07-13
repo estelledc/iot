@@ -17,8 +17,8 @@ tags:
   - SA组网
   - 工业物联网
   - 边缘核心网
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 私有 5G 网络在工业 IoT 中的部署

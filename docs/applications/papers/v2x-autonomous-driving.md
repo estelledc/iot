@@ -18,8 +18,8 @@ tags:
 - 任务卸载
 - ADAS
 - NR-V2X
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # V2X 与自动驾驶边缘计算

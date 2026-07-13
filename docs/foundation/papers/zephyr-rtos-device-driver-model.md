@@ -18,8 +18,8 @@ tags:
   - West
   - 嵌入式
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Zephyr RTOS设备驱动模型与设备树

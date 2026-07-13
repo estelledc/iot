@@ -18,8 +18,8 @@ tags:
   - 低功耗
   - 虚拟传感器
   - BHI260
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 传感器Hub芯片概念与架构分析

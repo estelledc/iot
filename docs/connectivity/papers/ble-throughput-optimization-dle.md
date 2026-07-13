@@ -17,8 +17,8 @@ tags:
   - 2M PHY
   - L2CAP
   - OTA
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BLE数据长度扩展DLE与吞吐量优化

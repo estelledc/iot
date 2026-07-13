@@ -17,8 +17,8 @@ tags:
   - A/B分区
   - Ed25519
   - SUIT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # OTA 安全更新机制

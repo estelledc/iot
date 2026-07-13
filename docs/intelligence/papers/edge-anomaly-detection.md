@@ -16,8 +16,8 @@ tags:
   - 预测性维护
   - 边缘推理
   - 半监督
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘异常检测：Autoencoder 与 Isolation Forest

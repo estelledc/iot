@@ -18,8 +18,8 @@ tags:
 - 异常检测
 - 太阳能供电
 - 环境监测
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 水质监测物联网系统

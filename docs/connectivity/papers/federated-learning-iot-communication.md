@@ -17,8 +17,8 @@ tags:
   - Over-the-Air
   - 干扰检测
   - 边缘智能
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 联邦学习在 IoT 通信优化中的应用

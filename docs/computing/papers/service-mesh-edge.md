@@ -17,8 +17,8 @@ tags:
 - Ambient Mesh
 - Envoy
 - 边缘计算
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 服务网格 Istio-lite 在边缘的应用

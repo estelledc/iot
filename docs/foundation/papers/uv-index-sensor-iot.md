@@ -17,8 +17,8 @@ tags:
   - 户外IoT
   - 光学滤波
   - 健康监测
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 紫外线指数传感器原理与户外IoT应用

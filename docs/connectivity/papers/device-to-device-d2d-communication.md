@@ -17,8 +17,8 @@ tags:
 - 设备发现
 - 干扰管理
 - 工业IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 设备到设备D2D通信在IoT中的应用

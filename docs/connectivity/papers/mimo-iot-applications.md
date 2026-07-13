@@ -15,8 +15,8 @@ tags:
   - MU-MIMO
   - 波束赋形
   - RedCap
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MIMO 技术在 IoT 中的应用

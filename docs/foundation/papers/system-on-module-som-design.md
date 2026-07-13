@@ -18,8 +18,8 @@ tags:
   - 嵌入式模块
   - IoT网关
   - 供应链
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 系统级模块SoM在IoT产品快速落地中的应用

@@ -17,8 +17,8 @@ tags:
 - 离散制造
 - IO-Link Wireless
 - 预测维护
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IO-Link传感器执行器智能接口标准

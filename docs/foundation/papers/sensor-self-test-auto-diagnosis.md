@@ -18,8 +18,8 @@ tags:
   - WHO_AM_I
   - 传感器健康
   - SIL
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 传感器自测试与自动诊断功能实现

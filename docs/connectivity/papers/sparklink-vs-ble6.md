@@ -17,8 +17,8 @@ tags:
   - 车联网
   - SLE
   - SLB
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 星闪(SparkLink) vs 蓝牙 6.0：下一代短距无线技术对决

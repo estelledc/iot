@@ -16,8 +16,8 @@ tags:
   - Rate-Energy
   - Powercast
   - 无电池
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 射频能量收集与通信一体化 SWIPT

@@ -17,8 +17,8 @@ tags:
   - ADC
   - 精密模拟
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 精密电压基准源设计与噪声分析

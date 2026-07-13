@@ -15,8 +15,8 @@ tags:
   - 能耗优化
   - RIP
   - IoT数据采集
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 压缩感知在IoT数据采集中的应用

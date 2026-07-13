@@ -17,8 +17,8 @@ tags:
   - IoT网关
   - libbpf
   - AF_XDP
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # eBPF/XDP 数据平面编程在 IoT 网关中的应用

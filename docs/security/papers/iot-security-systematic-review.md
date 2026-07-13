@@ -16,8 +16,8 @@ tags:
   - 攻击面
   - 综述
   - 零信任
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT安全系统性综述：威胁分类、攻击面与纵深防御

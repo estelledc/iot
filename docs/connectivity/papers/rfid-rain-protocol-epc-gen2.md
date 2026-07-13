@@ -16,8 +16,8 @@ tags:
   - 读写器
   - DRM
   - LLRP
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # RAIN RFID EPC Gen2协议与读写器设计

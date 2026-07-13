@@ -16,8 +16,8 @@ tags:
   - 高压测量
   - 数字隔离器
   - AMC1301
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 隔离放大器与光耦隔离在高压测量中的对比

@@ -18,8 +18,8 @@ tags:
   - 能耗最优
   - OPP
   - 低功耗
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # DVFS动态电压频率调节在IoT节点中的实现

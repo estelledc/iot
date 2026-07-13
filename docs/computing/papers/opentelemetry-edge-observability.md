@@ -18,8 +18,8 @@ tags:
 - 采样
 - Prometheus
 - 边缘监控
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 可观测性：OpenTelemetry 在边缘的实践

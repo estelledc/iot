@@ -17,8 +17,8 @@ tags:
 - 自适应
 - SLA
 - 流量整形
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT 服务质量 QoS 自适应机制

@@ -15,8 +15,8 @@ tags:
   - 超低功耗
   - IEEE-802.11ba
   - OOK
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 唤醒接收器在IoT MAC层中的超低功耗设计

@@ -17,8 +17,8 @@ tags:
   - STM32
   - 总线
   - 嵌入式
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # SDIO接口在无线模组通信中的应用

@@ -16,8 +16,8 @@ tags:
   - WPA2
   - 设备发现
   - IoT直连
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WiFi Direct P2P在IoT设备间直连通信中的应用

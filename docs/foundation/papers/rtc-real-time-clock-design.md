@@ -17,8 +17,8 @@ tags:
   - 晶体
   - DS3231
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # RTC实时时钟芯片选型与时间同步

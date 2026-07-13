@@ -17,8 +17,8 @@ tags:
   - DMA
   - QSPI
   - 嵌入式总线
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # SPI协议四种模式与时序参数详解

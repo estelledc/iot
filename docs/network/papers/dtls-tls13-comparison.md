@@ -18,8 +18,8 @@ tags:
 - CoAP
 - MQTT
 - 握手
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # DTLS 与 TLS 1.3 在 IoT 协议安全中的对比

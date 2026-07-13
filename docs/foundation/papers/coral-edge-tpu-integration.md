@@ -14,8 +14,8 @@ tags:
   - INT8量化
   - 边缘AI
   - 模型部署
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Google Coral Edge TPU硬件集成与模型部署

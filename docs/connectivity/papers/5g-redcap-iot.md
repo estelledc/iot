@@ -19,8 +19,8 @@ tags:
 - 模组选型
 - 网络切片
 - 运营商部署
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 5G RedCap：为物联网量身定制的 5G 技术

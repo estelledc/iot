@@ -15,8 +15,8 @@ tags:
   - FDC1004
   - 非接触测量
   - PTFE
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电容式液位传感器原理与防腐设计

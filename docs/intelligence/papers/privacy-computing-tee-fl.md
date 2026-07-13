@@ -18,8 +18,8 @@ tags:
 - TrustZone
 - SGX
 - 梯度泄露
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 隐私计算：TEE 加联邦学习联合方案

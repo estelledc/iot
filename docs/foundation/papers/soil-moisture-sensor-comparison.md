@@ -17,8 +17,8 @@ tags:
   - 标定
   - 电阻式
   - 智慧农业
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 土壤湿度传感器类型与农业IoT选型

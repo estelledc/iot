@@ -17,8 +17,8 @@ tags:
   - TSN
   - 硬件时间戳
   - Grandmaster
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 网络时间同步PTP IEEE 1588在IoT中的实现

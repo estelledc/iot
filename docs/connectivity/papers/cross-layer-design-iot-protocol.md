@@ -15,8 +15,8 @@ tags:
   - RPL
   - 能量协同
   - PHY-MAC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 跨层设计在IoT协议栈优化中的方法

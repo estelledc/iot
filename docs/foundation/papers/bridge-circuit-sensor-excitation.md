@@ -16,8 +16,8 @@ tags:
   - 应变片
   - 温度补偿
   - INA
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电桥电路传感器激励与零点调整

@@ -17,8 +17,8 @@ tags:
   - HALT
   - 可靠性
   - 失效机理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT设备加速寿命试验设计与数据分析

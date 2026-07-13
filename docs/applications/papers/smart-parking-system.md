@@ -18,8 +18,8 @@ tags:
 - 动态定价
 - 占用预测
 - 车牌识别
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 智慧停车系统

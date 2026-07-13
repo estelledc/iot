@@ -17,8 +17,8 @@ tags:
   - SDIO
   - 数据记录
   - 嵌入式文件系统
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 嵌入式FAT文件系统FatFs移植与SD卡操作

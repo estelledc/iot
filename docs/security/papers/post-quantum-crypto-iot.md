@@ -18,8 +18,8 @@ tags:
 - 格密码
 - 混合TLS
 - 嵌入式安全
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 后量子密码学在 IoT 中的迁移

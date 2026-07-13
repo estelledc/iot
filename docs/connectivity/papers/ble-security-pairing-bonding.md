@@ -16,8 +16,8 @@ tags:
   - SMP
   - RPA
   - AES-CCM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BLE安全机制：配对/绑定/加密详解

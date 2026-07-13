@@ -18,8 +18,8 @@ tags:
   - IoT节点
   - 光伏
   - 电源管理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 太阳能采集MPPT算法与IoT节点集成

@@ -15,8 +15,8 @@ tags:
   - 第二货源
   - PCB成本
   - SoC集成
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT设备BOM成本优化策略与替代选型

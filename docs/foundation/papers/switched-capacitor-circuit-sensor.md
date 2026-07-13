@@ -17,8 +17,8 @@ tags:
   - 模拟IC
   - 传感器接口
   - 噪声
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 开关电容电路在传感器接口中的应用

@@ -17,8 +17,8 @@ tags:
   - 企业专网
   - GAA
   - PAL
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 私有LTE CBRS频段IoT部署方案

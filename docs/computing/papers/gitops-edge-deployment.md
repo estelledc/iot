@@ -18,8 +18,8 @@ tags:
 - OTA
 - Akri
 - K3s
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # GitOps 边缘部署实践

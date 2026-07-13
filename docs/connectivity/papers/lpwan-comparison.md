@@ -16,8 +16,8 @@ tags:
   - Sigfox
   - 技术选型
   - TCO
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LPWAN 技术全面对比：LoRaWAN vs NB-IoT vs LTE-M vs Sigfox

@@ -17,8 +17,8 @@ tags:
 - Configured Grant
 - mMTC
 - 活跃检测
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 免授权接入在大规模IoT连接中的方案

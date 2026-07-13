@@ -17,8 +17,8 @@ tags:
   - IEC61000
   - 预合规
   - 认证
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT设备EMC电磁兼容性基础与标准

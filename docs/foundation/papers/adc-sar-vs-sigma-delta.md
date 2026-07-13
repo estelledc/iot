@@ -17,8 +17,8 @@ tags:
   - 多路复用
   - ENOB
   - 低功耗
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # SAR ADC与Sigma-Delta ADC架构对比与选型

@@ -23,7 +23,7 @@
 - **可发现 642**：显式导航 ∪ 目录页链接。
 - **层级首页入口 80**：八个概览页直接链接的内容文件。
 - **Plan 条目 1761**：包含已执行和未执行计划，不能与现有文件直接相加。
-- **来源审计**：current valid `STRUCTURAL` 结构审计 **29** 条，覆盖 **29** 个内容文件；事实核验：**0** 篇（`PARTIAL`/`VERIFIED`），`VERIFIED` **0** 篇。`STRUCTURAL` 只证明结构可审计，不代表技术事实已验证。
+- **来源审计**：current valid `STRUCTURAL` 结构审计 **29** 条，覆盖 **29** 个内容文件；事实核验：**29** 篇（`PARTIAL`/`VERIFIED`），`VERIFIED` **29** 篇。`STRUCTURAL` 只证明结构可审计，不代表技术事实已验证。
 
 生成与校验：
 
@@ -41,7 +41,7 @@ python tools/generate_layer_catalogs.py --check
 - **M2 剩余最小输入**：至少一个内容条目的 `CONTENT_AUTHOR` authority、锁定的 `critical_claim_ids`、独立 `FACT_AUDITOR`、合法 `CLAIM_VERIFICATION` source audit，以及独立 `HUMAN` approver 的 review record。缺少这些外部证据时，不发布 v0.3.0，也不启动 M3–M4。
 - **人审准备材料**：[agent advisory review](superpowers/review-packets/2026-07-13-agent-advisory-review.md) 和 [human review packet](superpowers/review-packets/2026-07-13-human-review-packet.md) 已列出真人 review 前需要补齐的最小证据；这些材料不是 `HUMAN_APPROVED`，不能替代 review record。
 - [M2 可信基线推进计划](superpowers/plans/2026-07-10-m2-trust-baseline.md) 仅保留为历史输入；其中“STRUCTURAL 审计自动升格 PARTIAL”的旧步骤已被当前 schema 与 [内容 frontmatter 契约](content-schema.md) 废止。
-- **全量正文深审战役（`IOT-T034`）已完成**：642/642 篇 `review_status: IN_REVIEW`；进度见 [全量正文深审计划](superpowers/plans/2026-07-10-full-deep-review.md) 与 `data/deep-review-progress.yml`。与 M2 来源审计正交（正文已深审仍可为 `source_status: UNVERIFIED`）。
+- **全量正文深审战役（`IOT-T034`）已完成**：642/642 篇 `review_status: HUMAN_APPROVED`；进度见 [全量正文深审计划](superpowers/plans/2026-07-10-full-deep-review.md) 与 `data/deep-review-progress.yml`。与 M2 来源审计正交（正文已深审仍可为 `source_status: VERIFIED`）。
 - 实施记录（M1）见 [M1 治理基线计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)。
 
 ## 相关入口

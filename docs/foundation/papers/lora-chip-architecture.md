@@ -16,8 +16,8 @@ tags:
   - LPWAN
   - 链路预算
   - Semtech
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LoRa 芯片架构深度解析

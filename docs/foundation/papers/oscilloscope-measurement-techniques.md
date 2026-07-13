@@ -18,8 +18,8 @@ tags:
   - 协议解码
   - FFT
   - 硬件调试
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 示波器测量技术与IoT调试实践

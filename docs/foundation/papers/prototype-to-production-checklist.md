@@ -18,8 +18,8 @@ tags:
   - BOM
   - 检查清单
   - NPI
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT硬件原型到量产的设计检查清单

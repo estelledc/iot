@@ -19,8 +19,8 @@ tags:
 - 隐私
 - Bridge
 - 消费物联网
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Amazon Sidewalk 邻里 IoT 网络技术分析

@@ -17,8 +17,8 @@ tags:
   - 结构健康监测
   - 工业IoT
   - OTDR
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 光纤传感器在工业IoT温度/应变测量中的应用

@@ -15,8 +15,8 @@ tags:
   - 开关驱动
   - 指示灯
   - IoT人机界面
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LED恒流驱动电路设计与调光方案

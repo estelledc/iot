@@ -16,8 +16,8 @@ tags:
   - 电桥测量
   - 微弱信号
   - 差分放大
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 仪表放大器INA在微弱信号测量中的应用

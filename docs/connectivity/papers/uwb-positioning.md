@@ -15,8 +15,8 @@ tags:
   - AoA
   - 802.15.4z
   - 资产追踪
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # UWB 超宽带高精度定位技术

@@ -17,8 +17,8 @@ tags:
   - 线性化
   - 测温
   - ADC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NTC热敏电阻线性化方法与查表算法

@@ -17,8 +17,8 @@ tags:
   - SCMA
   - mMTC
   - MUST
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NOMA 非正交多址接入技术：让更多设备"同时说话"

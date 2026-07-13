@@ -18,8 +18,8 @@ tags:
   - 能量管理
   - 宽频
   - 结构健康
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 压电振动能量采集原理与IoT供电

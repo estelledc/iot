@@ -17,8 +17,8 @@ tags:
   - MOSFET
   - 执行器
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电磁阀驱动电路设计与反向电动势保护

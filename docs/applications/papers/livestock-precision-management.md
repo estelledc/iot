@@ -17,8 +17,8 @@ tags:
 - 虚拟围栏
 - 瘤胃丸
 - 边缘分析
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 畜牧养殖精准管理

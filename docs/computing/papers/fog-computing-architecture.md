@@ -17,8 +17,8 @@ tags:
 - 云边端协同
 - 边缘计算
 - Cloud-to-Thing
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 雾计算：云与端之间的多层计算架构

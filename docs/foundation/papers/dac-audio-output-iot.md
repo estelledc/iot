@@ -17,8 +17,8 @@ tags:
   - 执行器控制
   - DMA
   - 数模转换
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # DAC在IoT音频输出与执行器控制中的应用

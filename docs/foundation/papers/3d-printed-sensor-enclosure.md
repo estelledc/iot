@@ -17,8 +17,8 @@ tags:
   - 快速原型
   - 材料选型
   - DFM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 3D打印传感器外壳设计与快速原型

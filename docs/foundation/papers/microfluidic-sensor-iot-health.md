@@ -17,8 +17,8 @@ tags:
   - lab-on-chip
   - IoT医疗
   - 即时检测
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 微流控传感器在IoT健康检测中的前沿

@@ -17,8 +17,8 @@ tags:
 - ChipWhisperer
 - 硬件安全
 - 常量时间
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 侧信道攻击与防护

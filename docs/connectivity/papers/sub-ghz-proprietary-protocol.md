@@ -16,8 +16,8 @@ tags:
   - 低功耗
   - 帧设计
   - ISM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Sub-GHz私有协议设计与频段规划

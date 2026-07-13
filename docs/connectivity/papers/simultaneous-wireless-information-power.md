@@ -15,8 +15,8 @@ tags:
   - 时间切换
   - 无电池IoT
   - RF能量
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 无线信息与能量同传SWIPT在IoT中的应用

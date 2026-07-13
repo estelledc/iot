@@ -17,8 +17,8 @@ tags:
   - 盐雾
   - IP等级
   - HALT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT硬件环境试验：温度/湿度/振动/盐雾

@@ -15,8 +15,8 @@ tags:
   - 实时性
   - 栈开销
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 协作式与抢占式调度在资源受限设备中的权衡

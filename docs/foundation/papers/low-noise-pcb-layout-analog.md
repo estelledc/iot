@@ -17,8 +17,8 @@ tags:
   - ADC
   - 串扰
   - 布局
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 低噪声模拟信号PCB布局设计规则

@@ -17,8 +17,8 @@ tags:
   - 无线安全
   - CCA
   - IoT安全
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 无线安全干扰检测与抗干扰策略

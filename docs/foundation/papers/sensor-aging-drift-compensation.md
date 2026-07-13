@@ -17,8 +17,8 @@ tags:
   - MEMS
   - 预测性维护
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 传感器老化漂移补偿与在线校准策略

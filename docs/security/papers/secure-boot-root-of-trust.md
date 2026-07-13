@@ -18,8 +18,8 @@ tags:
 - 防回滚
 - 信任链
 - 安全元件
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 安全启动链与 Root of Trust

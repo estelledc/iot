@@ -15,8 +15,8 @@ tags:
   - BSS-Coloring
   - 802.11ax
   - 密集IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WiFi 6 OFDMA与MU-MIMO在IoT密集部署中的优势

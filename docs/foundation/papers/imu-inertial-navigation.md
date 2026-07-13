@@ -15,8 +15,8 @@ tags:
   - 航位推算
   - Madgwick
   - 惯性导航
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 惯性导航 IMU 在 IoT 中的应用

@@ -16,8 +16,8 @@ tags:
   - 配网
   - URI
   - NTAG
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NFC NDEF数据交换格式与标签类型

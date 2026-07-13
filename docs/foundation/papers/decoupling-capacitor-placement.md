@@ -17,8 +17,8 @@ tags:
   - PCB布局
   - 电源完整性
   - DC偏压
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 去耦电容选型与PCB放置策略

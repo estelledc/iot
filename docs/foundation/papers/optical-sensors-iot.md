@@ -18,8 +18,8 @@ tags:
   - ALS
   - 光纤传感
   - 光谱
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 光电传感器在 IoT 中的应用

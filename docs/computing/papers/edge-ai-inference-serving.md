@@ -17,8 +17,8 @@ tags:
   - KServe
   - 边缘NPU
   - 延迟SLA
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘 AI 推理服务化

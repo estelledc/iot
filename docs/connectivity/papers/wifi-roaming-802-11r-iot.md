@@ -16,8 +16,8 @@ tags:
   - 802.11v
   - AGV
   - 移动物联网
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WiFi快速漫游802.11r在移动IoT中的应用

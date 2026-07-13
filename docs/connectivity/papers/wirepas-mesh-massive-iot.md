@@ -17,8 +17,8 @@ tags:
   - 去中心化
   - 跳频
   - 智慧照明
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Wirepas Mesh大规模IoT自组网技术

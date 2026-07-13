@@ -17,8 +17,8 @@ tags:
 - 控制平面
 - 网络可编程
 - P4
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 软件定义网络在物联网中的应用

@@ -18,8 +18,8 @@ tags:
 - 分布式能源
 - 故障自愈
 - 虚拟电厂
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 智能电网边缘计算

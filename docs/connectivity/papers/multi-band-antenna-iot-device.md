@@ -17,8 +17,8 @@ tags:
   - 隔离度
   - OTA
   - IoT模组
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 多频段天线在IoT多模设备中的设计

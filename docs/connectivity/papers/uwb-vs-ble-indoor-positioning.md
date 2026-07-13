@@ -17,8 +17,8 @@ tags:
   - RSSI
   - TDoA
   - 选型
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # UWB与BLE室内定位精度对比

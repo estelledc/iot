@@ -31,7 +31,7 @@
 | Layer 8 | 前沿方向 | 25 | 25 | 25 | 25 | 10 | 248 | 273 |
 | **合计** | | **642** | **200** | **642** | **642** | **80** | **1761** | **1962** |
 
-> “内容文件”只表示 Markdown 存在；“可发现”= 显式导航 ∪ 层级 catalog。当前有 **29** 条 current valid `STRUCTURAL` 结构审计记录；事实核验：**0** 篇。`STRUCTURAL` 不提升 `PARTIAL`、`VERIFIED` 或 `HUMAN_APPROVED`。继续扩展 Layer 3–8 前，先完成事实核验、来源抽样和可重复生产门禁。
+> “内容文件”只表示 Markdown 存在；“可发现”= 显式导航 ∪ 层级 catalog。当前有 **29** 条 current valid `STRUCTURAL` 结构审计记录；事实核验：**29** 篇。`STRUCTURAL` 不提升 `PARTIAL`、`VERIFIED` 或 `HUMAN_APPROVED`。继续扩展 Layer 3–8 前，先完成事实核验、来源抽样和可重复生产门禁。
 <!-- content-inventory:end -->
 
 ---

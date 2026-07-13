@@ -16,8 +16,8 @@ tags:
   - 资产追踪
   - 仓储
   - 防碰撞
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # UHF RFID无源标签在IoT资产追踪中的应用

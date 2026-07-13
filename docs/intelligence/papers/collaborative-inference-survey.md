@@ -18,8 +18,8 @@ tags:
 - PowerInfer
 - Prefill-Decode
 - 边缘LLM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 协作推理系统全景：多设备协同运行深度学习模型

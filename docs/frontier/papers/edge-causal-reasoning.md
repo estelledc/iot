@@ -18,8 +18,8 @@ tags:
 - 因果发现
 - 结构因果模型
 - IoT诊断
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘因果推理：让 IoT 设备理解"为什么"

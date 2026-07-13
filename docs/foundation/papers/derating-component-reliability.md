@@ -17,8 +17,8 @@ tags:
   - Arrhenius
   - 最坏情况分析
   - 热设计
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 元器件降额使用与可靠性提升

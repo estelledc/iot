@@ -18,8 +18,8 @@ tags:
   - 智能表计
   - 远距离
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Sub-GHz无线模组CC1310硬件设计

@@ -18,8 +18,8 @@ tags:
 - 安全启动
 - NIST-800-161
 - 安全供应
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT 供应链安全：从芯片到云端的信任链

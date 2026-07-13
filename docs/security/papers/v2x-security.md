@@ -17,8 +17,8 @@ tags:
 - C-V2X
 - Sybil
 - 不当行为检测
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 车联网 V2X 安全：高速移动场景下的信任挑战

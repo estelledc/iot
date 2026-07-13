@@ -18,8 +18,8 @@ tags:
 - IoT合规
 - 安全基线
 - CSF 2.0
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT 合规框架：NIST 与 ETSI EN 303 645 详解

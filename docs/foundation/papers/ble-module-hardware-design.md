@@ -16,8 +16,8 @@ tags:
   - 2.4GHz
   - 模组认证
   - Smith圆图
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BLE模组硬件设计：天线匹配与射频前端

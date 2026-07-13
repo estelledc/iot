@@ -16,8 +16,8 @@ tags:
   - OMS
   - 抄表
   - AES-128
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Wireless M-Bus无线抄表在智能水表中的应用

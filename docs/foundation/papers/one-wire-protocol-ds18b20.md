@@ -16,8 +16,8 @@ tags:
   - 单总线
   - CRC
   - 寄生供电
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 1-Wire协议与DS18B20温度传感器实战

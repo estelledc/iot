@@ -15,8 +15,8 @@ tags:
   - ESP-Touch
   - 无头设备
   - 凭证传递
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WiFi配网技术SmartConfig/SoftAP/BLE辅助对比

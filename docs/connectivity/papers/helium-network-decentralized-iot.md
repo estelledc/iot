@@ -17,8 +17,8 @@ tags:
 - 去中心化
 - Data Credits
 - Solana
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Helium去中心化IoT网络经济模型分析

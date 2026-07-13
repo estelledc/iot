@@ -16,8 +16,8 @@ tags:
   - 密钥生成
   - 模糊提取
   - IoT安全
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 物理不可克隆函数PUF设备指纹技术

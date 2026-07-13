@@ -17,8 +17,8 @@ tags:
   - 嗅探器
   - 无线调试
   - 重传分析
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 协议分析仪在无线IoT调试中的使用

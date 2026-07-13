@@ -17,8 +17,8 @@ tags:
 - 感知通信
 - IoT
 - 波形设计
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 6G 通感一体化（ISAC）与 IoT

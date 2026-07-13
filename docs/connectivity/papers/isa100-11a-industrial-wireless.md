@@ -17,8 +17,8 @@ tags:
   - WirelessHART
   - 6LoWPAN
   - 过程自动化
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # ISA100.11a工业无线标准与应用

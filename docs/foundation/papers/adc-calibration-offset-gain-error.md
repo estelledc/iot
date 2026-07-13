@@ -17,8 +17,8 @@ tags:
   - 温漂补偿
   - 端到端校准
   - STM32
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # ADC校准：失调误差与增益误差补偿

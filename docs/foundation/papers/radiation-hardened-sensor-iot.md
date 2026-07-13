@@ -15,8 +15,8 @@ tags:
   - 极端环境
   - 核电站
   - 航天IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 抗辐射加固传感器在极端环境IoT中的设计

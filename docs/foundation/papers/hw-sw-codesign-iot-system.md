@@ -16,8 +16,8 @@ tags:
   - SystemC
   - IoT系统
   - 接口规范
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT系统软硬件协同设计方法论

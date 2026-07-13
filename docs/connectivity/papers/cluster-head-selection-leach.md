@@ -15,8 +15,8 @@ tags:
   - DEEC
   - 能量均衡
   - 分层路由
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 簇头选择LEACH协议与改进算法

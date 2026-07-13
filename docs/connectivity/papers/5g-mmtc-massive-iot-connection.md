@@ -19,8 +19,8 @@ tags:
 - PSM
 - eDRX
 - Ambient-IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 5G mMTC 大规模 IoT 连接场景分析

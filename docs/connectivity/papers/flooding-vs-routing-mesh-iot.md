@@ -18,8 +18,8 @@ tags:
   - BLE Mesh
   - Thread
   - 路由
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Mesh 网络泛洪与路由转发策略对比

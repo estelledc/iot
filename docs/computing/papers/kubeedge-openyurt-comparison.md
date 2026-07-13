@@ -18,8 +18,8 @@ tags:
 - DeviceTwin
 - NodePool
 - CNCF
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # KubeEdge vs OpenYurt vs K3s：边缘 Kubernetes 方案对比

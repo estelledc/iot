@@ -14,8 +14,8 @@ tags:
   - RTC
   - 频率精度
   - ppm
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 晶振选型：频率精度/温度稳定性/功耗

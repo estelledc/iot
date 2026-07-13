@@ -16,8 +16,8 @@ tags:
   - 四线
   - 工业HMI
   - 校准
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电阻式触摸屏接口电路与控制器

@@ -18,8 +18,8 @@ tags:
   - Endpoint
   - Aggregator
   - 智能家居
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Matter桥接器连接传统非Matter设备

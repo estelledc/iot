@@ -16,8 +16,8 @@ tags:
   - 毫米波
   - RIS
   - 波束管理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 太赫兹通信在未来IoT中的潜力与挑战

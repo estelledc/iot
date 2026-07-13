@@ -16,8 +16,8 @@ tags:
   - 空中时间
   - ADR
   - 占空比
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LoRa扩频因子SF优化与链路预算计算

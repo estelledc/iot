@@ -18,8 +18,8 @@ tags:
   - 网络生命周期
   - 数据聚合
   - 多路径
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 无线传感器网络能量高效路由协议

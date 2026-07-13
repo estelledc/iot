@@ -16,8 +16,8 @@ tags:
   - Slave Latency
   - PPK2
   - DCDC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BLE功耗分析：广播/连接/休眠各阶段

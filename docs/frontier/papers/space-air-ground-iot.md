@@ -18,8 +18,8 @@ tags:
 - HAP
 - 天地一体化
 - 3GPP
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 天地一体化 IoT 网络

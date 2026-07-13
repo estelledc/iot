@@ -17,8 +17,8 @@ tags:
   - FreeRTOS
   - 核间通信
   - 实时性
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 多核MCU的AMP与SMP运行模式分析

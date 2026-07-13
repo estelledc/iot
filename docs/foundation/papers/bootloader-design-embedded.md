@@ -15,8 +15,8 @@ tags:
   - Flash布局
   - VTOR
   - DFU
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 嵌入式Bootloader设计与固件升级流程

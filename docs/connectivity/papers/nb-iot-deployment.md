@@ -17,8 +17,8 @@ tags:
   - 智能抄表
   - 运营商
   - 带内部署
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NB-IoT 规模部署：从标准到实践

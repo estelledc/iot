@@ -16,8 +16,8 @@ tags:
 - 概念漂移
 - PackNet
 - 边缘AI
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘持续学习：学新知识不忘旧知识

@@ -17,8 +17,8 @@ tags:
 - TOPSIS
 - 网络选择
 - ABC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 异构网络IoT设备切换与连接选择

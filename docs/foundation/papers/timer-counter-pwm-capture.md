@@ -17,8 +17,8 @@ tags:
   - 输出比较
   - MCU外设
   - 嵌入式
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 定时器计数器PWM与输入捕获应用

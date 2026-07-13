@@ -16,8 +16,8 @@ tags:
   - Beacon
   - IoT功耗
   - 802.11ax
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WiFi省电机制DTIM/TWT在IoT中的配置

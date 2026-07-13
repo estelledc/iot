@@ -17,8 +17,8 @@ tags:
   - ID脚
   - 供电
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 嵌入式USB OTG设备设计与角色切换

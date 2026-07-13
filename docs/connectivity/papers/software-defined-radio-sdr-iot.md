@@ -15,8 +15,8 @@ tags:
   - 频谱分析
   - HackRF
   - IoT调试
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 软件定义无线电SDR在IoT原型中的应用

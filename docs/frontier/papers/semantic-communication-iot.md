@@ -16,8 +16,8 @@ tags:
 - IoT
 - 6G
 - 知识库
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 语义通信与 IoT

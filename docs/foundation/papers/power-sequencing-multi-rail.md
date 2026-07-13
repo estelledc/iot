@@ -17,8 +17,8 @@ tags:
   - 时序控制器
   - 复位
   - 欠压锁定
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 多路电源上电时序设计与保护

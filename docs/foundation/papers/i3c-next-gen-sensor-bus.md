@@ -16,8 +16,8 @@ tags:
   - IBI
   - 传感器总线
   - HDR
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # I3C下一代传感器总线协议技术分析

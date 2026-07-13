@@ -17,8 +17,8 @@ tags:
   - CTE
   - 天线阵列
   - 测向
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BLE测向技术AoA/AoD室内定位原理

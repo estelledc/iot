@@ -16,8 +16,8 @@ tags:
   - Matter
   - 短距离无线
   - 技术选型
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 短距离无线技术对比：BLE/WiFi/Zigbee/Thread

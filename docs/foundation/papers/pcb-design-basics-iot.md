@@ -18,8 +18,8 @@ tags:
   - 天线净空
   - DRC
   - IoT硬件
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT设备PCB设计基础：布局布线规则

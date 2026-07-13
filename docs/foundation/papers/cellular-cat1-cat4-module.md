@@ -16,8 +16,8 @@ tags:
   - 模组集成
   - VoLTE
   - 电源设计
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 蜂窝Cat.1/Cat.4模组硬件选型与集成

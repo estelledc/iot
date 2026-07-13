@@ -15,8 +15,8 @@ tags:
   - 嵌套中断
   - FreeRTOS
   - 实时系统
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NVIC中断优先级配置与嵌套中断设计

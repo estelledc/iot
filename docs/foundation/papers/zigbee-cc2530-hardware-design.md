@@ -18,8 +18,8 @@ tags:
   - 智能家居
   - TI
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Zigbee CC2530硬件设计与射频匹配

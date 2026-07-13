@@ -16,8 +16,8 @@ tags:
   - OPC-UA
   - 5G
   - 工业自动化
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 时间敏感网络TSN在IoT确定性通信中的标准

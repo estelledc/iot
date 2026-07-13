@@ -16,8 +16,8 @@ tags:
   - Matter
   - DODAG
   - IEEE 802.15.4
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IPv6/6LoWPAN/RPL：物联网 IP 化协议栈

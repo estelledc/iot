@@ -16,8 +16,8 @@ tags:
   - IEEE-802.22
   - 农村覆盖
   - LPWAN
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电视白频谱TVWS在IoT中的大范围连接

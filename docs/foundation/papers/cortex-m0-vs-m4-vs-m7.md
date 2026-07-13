@@ -15,8 +15,8 @@ tags:
   - 功耗
   - DSP
   - 嵌入式选型
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Cortex-M0/M4/M7性能功耗对比分析

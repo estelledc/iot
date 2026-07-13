@@ -16,8 +16,8 @@ tags:
   - BMP
   - 导航导航
   - IIR
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MEMS气压计高度测量原理与温度补偿

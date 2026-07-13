@@ -17,8 +17,8 @@ tags:
   - 嵌入式存储
   - 启动
   - 存储器映射
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NOR Flash SPI/QSPI接口与XIP执行

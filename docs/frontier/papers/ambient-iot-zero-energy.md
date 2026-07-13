@@ -17,8 +17,8 @@ tags:
 - RFID
 - 无电池
 - Backscatter
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 零能耗通信（Ambient IoT）：无电池时代的万亿连接

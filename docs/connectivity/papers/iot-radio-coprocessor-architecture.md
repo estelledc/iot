@@ -17,8 +17,8 @@ tags:
   - UART
   - SPI
   - 主机控制器
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT射频协处理器架构与主控分工

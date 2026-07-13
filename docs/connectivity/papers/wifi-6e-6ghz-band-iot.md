@@ -16,8 +16,8 @@ tags:
   - WPA3
   - OFDMA
   - 频谱监管
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WiFi 6E 6GHz频段对IoT应用的影响

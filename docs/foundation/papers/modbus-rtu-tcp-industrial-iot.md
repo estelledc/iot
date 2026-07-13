@@ -17,8 +17,8 @@ tags:
   - 串口
   - 网关
   - SCADA
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Modbus RTU/TCP在工业IoT中的协议分析

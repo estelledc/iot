@@ -15,8 +15,8 @@ tags:
   - 功耗
   - 下行延迟
   - Ping Slot
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LoRaWAN Class A/B/C工作模式对比分析

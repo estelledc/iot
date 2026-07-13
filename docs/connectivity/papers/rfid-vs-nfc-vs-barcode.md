@@ -16,8 +16,8 @@ tags:
   - AutoID
   - 选型
   - 对比
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # RFID/NFC/条码在IoT识别中的对比选型

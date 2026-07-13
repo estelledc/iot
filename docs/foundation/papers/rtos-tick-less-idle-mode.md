@@ -17,8 +17,8 @@ tags:
   - Zephyr
   - 定时器
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # RTOS Tickless空闲模式实现与功耗收益

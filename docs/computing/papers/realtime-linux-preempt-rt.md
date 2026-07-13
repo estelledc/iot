@@ -17,8 +17,8 @@ tags:
 - SCHED_FIFO
 - 工业控制
 - 边缘计算
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 实时 Linux PREEMPT_RT 在边缘计算中的应用

@@ -17,8 +17,8 @@ tags:
 - 海啸预警
 - 水声通信
 - 生物附着
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 海洋浮标传感网络

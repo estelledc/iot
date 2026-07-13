@@ -16,8 +16,8 @@ tags:
   - IEC-60529
   - 户外IoT
   - 防水防尘
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IP防护等级与IoT设备外壳设计

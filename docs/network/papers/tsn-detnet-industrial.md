@@ -17,8 +17,8 @@ tags:
   - 工业以太网
   - 5G-TSN
   - FRER
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # TSN/DetNet 确定性网络：工业物联网的实时通信基石

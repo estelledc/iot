@@ -14,8 +14,8 @@ tags:
   - 过程仪表
   - 零稳定性
   - 工业IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 科里奥利质量流量计工作原理与精度分析

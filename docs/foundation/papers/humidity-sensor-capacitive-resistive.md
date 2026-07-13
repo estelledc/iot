@@ -17,8 +17,8 @@ tags:
   - SHT
   - 冷凝
   - 温湿度
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电容式与电阻式湿度传感器对比

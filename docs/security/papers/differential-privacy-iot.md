@@ -17,8 +17,8 @@ tags:
 - 智能电表
 - Laplace
 - Shuffle Model
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 差分隐私在IoT中的应用：用数学保障数据隐私

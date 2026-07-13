@@ -17,8 +17,8 @@ tags:
   - Auracast
   - 同步
   - ESL
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BLE周期性广播与同步传输应用

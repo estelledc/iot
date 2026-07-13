@@ -17,8 +17,8 @@ tags:
   - Zephyr
   - 休眠
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # RTOS电源管理框架与低功耗状态转换

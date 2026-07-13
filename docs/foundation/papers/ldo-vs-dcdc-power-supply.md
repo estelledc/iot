@@ -15,8 +15,8 @@ tags:
   - 电源效率
   - 低功耗IoT
   - 纹波噪声
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LDO与DC-DC电源转换器效率对比与选型

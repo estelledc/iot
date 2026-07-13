@@ -18,8 +18,8 @@ tags:
   - 电池充电
   - 电量计
   - I2C
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 集成PMIC电源管理芯片选型与设计

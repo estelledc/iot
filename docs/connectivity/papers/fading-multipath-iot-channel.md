@@ -18,8 +18,8 @@ tags:
   - 相干带宽
   - 多普勒
   - 链路预算
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 衰落与多径效应对 IoT 无线信道的影响

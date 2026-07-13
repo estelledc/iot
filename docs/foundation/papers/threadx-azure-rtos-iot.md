@@ -18,8 +18,8 @@ tags:
   - 物联网
   - 实时系统
   - 中间件
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # ThreadX/Azure RTOS在物联网中的应用与生态

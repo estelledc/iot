@@ -16,8 +16,8 @@ tags:
   - 网络容量
   - LinkADRReq
   - 移动性
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LoRaWAN ADR自适应速率算法深度分析

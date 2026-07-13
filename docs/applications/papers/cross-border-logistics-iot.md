@@ -19,8 +19,8 @@ tags:
 - DCSA
 - ETA预测
 - 供应链可视化
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 跨境物流 IoT 系统

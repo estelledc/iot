@@ -18,8 +18,8 @@ tags:
 - 硬件感知
 - DARTS
 - 进化搜索
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 神经架构搜索 One-Shot NAS 在边缘的应用

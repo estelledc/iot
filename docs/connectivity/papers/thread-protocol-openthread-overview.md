@@ -16,8 +16,8 @@ tags:
   - IPv6
   - Matter
   - IEEE802.15.4
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Thread协议与OpenThread开源实现概述

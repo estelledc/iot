@@ -17,8 +17,8 @@ tags:
   - 任务通知
   - 信号量
   - 事件组
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # RTOS进程间通信机制综述

@@ -16,8 +16,8 @@ tags:
   - 负载开关
   - PCB设计
   - 休眠电流
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT设备漏电流控制与PCB设计注意事项

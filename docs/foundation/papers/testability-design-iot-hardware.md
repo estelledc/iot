@@ -18,8 +18,8 @@ tags:
   - 量产测试
   - FCT
   - IoT硬件
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT硬件可测试性设计DFT与测试点布局

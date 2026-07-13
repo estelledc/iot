@@ -15,8 +15,8 @@ tags:
   - Dragonfly
   - PMF
   - 资源受限
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WPA3在IoT设备中的实现与安全增强

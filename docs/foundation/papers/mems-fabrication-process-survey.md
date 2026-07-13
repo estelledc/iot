@@ -16,8 +16,8 @@ tags:
   - SOI
   - 牺牲层
   - 晶圆键合
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MEMS传感器制造工艺：体硅与表面微加工

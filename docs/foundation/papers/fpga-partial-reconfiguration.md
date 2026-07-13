@@ -17,8 +17,8 @@ tags:
   - 比特流
   - 动态功能交换
   - IoT网关
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # FPGA部分重配置在自适应IoT系统中的应用

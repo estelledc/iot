@@ -17,8 +17,8 @@ tags:
   - 并联基准
   - ADC精度
   - PSRR
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # ADC基准电压源设计与温漂控制

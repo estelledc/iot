@@ -17,8 +17,8 @@ tags:
   - 气压计
   - 麦克风
   - 传感器选型
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MEMS 传感器技术综述

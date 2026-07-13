@@ -17,8 +17,8 @@ tags:
   - ATECC
   - 设备配给
   - 安全启动
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 硬件安全模块HSM在IoT设备中的集成

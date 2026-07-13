@@ -17,8 +17,8 @@ tags:
   - 生命体征
   - 4D成像
   - IoT感知
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 毫米波雷达感知技术：从 FMCW 原理到 4D 成像雷达

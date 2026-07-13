@@ -17,8 +17,8 @@ tags:
   - 机壳设计
   - 板级屏蔽
   - 波导截止
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # EMI屏蔽与机壳设计减少辐射发射

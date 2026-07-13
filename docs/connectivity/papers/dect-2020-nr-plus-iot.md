@@ -17,8 +17,8 @@ tags:
 - 1.9GHz
 - 非蜂窝5G
 - Nordic
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # DECT-2020 NR+非蜂窝5G IoT标准

@@ -17,8 +17,8 @@ tags:
   - 智慧城市
   - 声源识别
   - GB3096
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 环境噪声监测物联网

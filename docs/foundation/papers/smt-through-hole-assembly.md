@@ -17,8 +17,8 @@ tags:
   - 回流焊
   - IoT硬件
   - 可制造性
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # SMT与通孔装配工艺在IoT硬件中的选择

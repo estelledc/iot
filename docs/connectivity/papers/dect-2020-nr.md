@@ -17,8 +17,8 @@ tags:
 - IMT-2020
 - 工业物联网
 - nRF9161
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # DECT-2020 NR：从无绳电话到工业物联网的蜕变

@@ -16,8 +16,8 @@ tags:
   - 技术选型
   - 总拥有成本
   - 双向通信
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LoRa/Sigfox/NB-IoT LPWAN技术全面对比

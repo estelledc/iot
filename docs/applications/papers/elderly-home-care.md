@@ -17,8 +17,8 @@ tags:
   - 隐私保护
   - 边缘计算
   - 非侵入监测
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 老年人居家看护物联网

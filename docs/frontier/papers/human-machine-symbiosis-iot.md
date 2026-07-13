@@ -19,8 +19,8 @@ tags:
 - 神经工效学
 - 可穿戴
 - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 人机共融 IoT：脑机接口与增强人类

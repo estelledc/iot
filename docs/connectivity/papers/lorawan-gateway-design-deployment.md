@@ -16,8 +16,8 @@ tags:
   - 回程
   - 覆盖规划
   - 容量规划
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LoRaWAN网关设计与部署规划

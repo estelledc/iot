@@ -18,8 +18,8 @@ tags:
 - 知识蒸馏
 - 边缘AI
 - TensorRT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘 AI 模型压缩技术全景

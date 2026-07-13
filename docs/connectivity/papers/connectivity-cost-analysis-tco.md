@@ -15,8 +15,8 @@ tags:
   - NB-IoT
   - LoRaWAN
   - 电池更换
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT连接技术TCO总拥有成本分析

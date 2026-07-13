@@ -18,8 +18,8 @@ tags:
   - 冷启动
   - IoT供电
   - 热管理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 温差发电能量采集与IoT节点供电

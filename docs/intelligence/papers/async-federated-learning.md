@@ -16,8 +16,8 @@ tags:
 - 异构设备
 - 梯度压缩
 - Flower
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 异步联邦学习：让千差万别的设备协同训练

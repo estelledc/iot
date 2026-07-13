@@ -17,8 +17,8 @@ tags:
   - CE-Level
   - Chase合并
   - 链路预算
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NB-IoT覆盖增强重复传输机制分析

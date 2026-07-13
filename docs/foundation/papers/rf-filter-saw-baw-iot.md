@@ -17,8 +17,8 @@ tags:
   - Wi-Fi
   - LTE
   - IoT前端
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # SAW/BAW射频滤波器在IoT频段选择中的应用

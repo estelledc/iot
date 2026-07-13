@@ -17,8 +17,8 @@ tags:
   - 反射
   - SI
   - EMC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 高速信号完整性与串扰分析

@@ -17,8 +17,8 @@ tags:
   - GPS
   - 互补滤波
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 传感器数据融合卡尔曼滤波实现详解

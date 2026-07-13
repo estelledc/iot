@@ -18,8 +18,8 @@ tags:
 - 少样本
 - 端侧预训练
 - 传感器
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 自监督预训练在端侧的应用

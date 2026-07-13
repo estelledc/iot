@@ -18,8 +18,8 @@ tags:
 - URLLC
 - 3GPP
 - CAMARA
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MEC 与 5G 深度融合：从标准到部署

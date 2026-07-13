@@ -17,8 +17,8 @@ tags:
   - 嵌入式Linux
   - RTOS
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # SoC、MCU与MPU在物联网中的选型对比

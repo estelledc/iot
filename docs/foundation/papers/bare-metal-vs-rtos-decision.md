@@ -17,8 +17,8 @@ tags:
   - 调度
   - 低功耗
   - 并发
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 裸机编程与RTOS：IoT项目决策框架

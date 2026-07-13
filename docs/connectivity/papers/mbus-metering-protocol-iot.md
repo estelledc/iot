@@ -16,8 +16,8 @@ tags:
   - 抄表
   - 总线供电
   - 物联网网关
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # M-Bus抄表协议在IoT智能计量中的应用

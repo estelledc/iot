@@ -17,8 +17,8 @@ tags:
   - 对象模型
   - 智慧楼宇
   - IoT集成
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BACnet楼宇自动化IoT通信协议

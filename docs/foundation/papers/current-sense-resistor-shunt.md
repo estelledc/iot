@@ -17,8 +17,8 @@ tags:
   - INA
   - 功耗监测
   - PCB布局
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电流采样电阻与分流器精密电流测量

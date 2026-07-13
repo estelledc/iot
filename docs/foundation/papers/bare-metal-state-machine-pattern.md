@@ -16,8 +16,8 @@ tags:
   - 裸机
   - QP
   - 嵌入式架构
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 裸机编程状态机模式与事件驱动架构

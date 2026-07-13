@@ -19,8 +19,8 @@ tags:
 - 安全元件
 - CTAP2
 - IoT身份
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 身份联邦 FIDO2/WebAuthn 在 IoT 中的应用

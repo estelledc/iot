@@ -17,8 +17,8 @@ tags:
   - RF能量收集
   - IoT供电
   - 近场
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 无线电力传输在IoT设备充电中的应用

@@ -17,8 +17,8 @@ tags:
   - 环境能量
   - 肖特基
   - 微功率
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 射频能量采集整流天线设计与效率分析

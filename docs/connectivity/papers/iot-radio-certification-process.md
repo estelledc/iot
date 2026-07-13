@@ -17,8 +17,8 @@ tags:
   - EMC
   - 预认证模组
   - 杂散辐射
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT无线设备射频认证流程与测试

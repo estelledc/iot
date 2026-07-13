@@ -15,8 +15,8 @@ tags:
   - 体内传感
   - 靶向递送
   - ISI
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 分子通信在生物IoT纳米网络中的前沿

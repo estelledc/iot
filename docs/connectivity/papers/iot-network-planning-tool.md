@@ -17,8 +17,8 @@ tags:
   - 射线追踪
   - LoRaWAN
   - 容量规划
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT网络规划工具与覆盖仿真

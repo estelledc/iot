@@ -17,8 +17,8 @@ tags:
 - MQTT
 - Azure IoT Hub
 - Exchange
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # AMQP 与工业消息传递

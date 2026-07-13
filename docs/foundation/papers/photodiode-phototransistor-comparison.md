@@ -17,8 +17,8 @@ tags:
   - 光谱响应
   - 光传感
   - 线性度
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 光电二极管与光电晶体管对比选型

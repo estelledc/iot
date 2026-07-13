@@ -14,8 +14,8 @@ tags:
   - 发射率
   - MEMS传感器
   - MLX90614
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 红外热电堆传感器非接触测温技术

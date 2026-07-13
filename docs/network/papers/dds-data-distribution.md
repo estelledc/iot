@@ -17,8 +17,8 @@ tags:
 - ROS2
 - 发布订阅
 - 实时中间件
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # DDS 数据分发服务深度解析

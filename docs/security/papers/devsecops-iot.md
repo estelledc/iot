@@ -19,8 +19,8 @@ tags:
 - STRIDE
 - 安全左移
 - 嵌入式
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # DevSecOps for IoT：安全左移的嵌入式实践

@@ -18,8 +18,8 @@ tags:
 - DNN切分
 - 特征隐私
 - 延迟优化
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 分割计算：DNN 端-边最优切分

@@ -18,8 +18,8 @@ tags:
   - IoT电源
   - ESR
   - 峰值电流
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 超级电容在IoT能量缓冲中的应用

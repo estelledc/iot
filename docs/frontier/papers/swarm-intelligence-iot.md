@@ -17,8 +17,8 @@ tags:
 - 分布式共识
 - IoT
 - Boids
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 群体智能（Swarm Intelligence）：从蚁群到万物协作

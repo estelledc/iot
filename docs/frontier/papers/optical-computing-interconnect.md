@@ -19,8 +19,8 @@ tags:
 - MZI
 - WDM
 - IoT边缘
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 光计算与光互连：用光速重塑计算架构

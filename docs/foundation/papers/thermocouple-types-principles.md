@@ -17,8 +17,8 @@ tags:
   - 工业传感
   - 塞贝克效应
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 热电偶类型与测温原理及冷端补偿

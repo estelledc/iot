@@ -17,8 +17,8 @@ tags:
   - 动态范围
   - 电池寿命
   - 分流器
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 功耗分析仪在IoT设备电流测量中的应用

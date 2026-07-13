@@ -16,8 +16,8 @@ tags:
 - 端侧推理
 - 生成式AI
 - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # AIGC 边缘生成

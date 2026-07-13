@@ -17,8 +17,8 @@ tags:
   - pinctrl
   - 硬件描述
   - Bootloader
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 设备树Device Tree在嵌入式Linux中的硬件描述

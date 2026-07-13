@@ -17,8 +17,8 @@ tags:
   - 优先级继承
   - 上下文切换
   - Cortex-M
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # FreeRTOS任务调度器源码深度分析

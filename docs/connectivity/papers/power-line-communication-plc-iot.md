@@ -16,8 +16,8 @@ tags:
   - 智能电网
   - AMI
   - HomePlug
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电力线通信PLC在IoT智能电网中的应用

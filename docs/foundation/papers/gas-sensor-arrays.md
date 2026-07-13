@@ -17,8 +17,8 @@ tags:
   - 交叉灵敏度
   - 漂移补偿
   - 气味识别
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 气体传感器阵列与电子鼻

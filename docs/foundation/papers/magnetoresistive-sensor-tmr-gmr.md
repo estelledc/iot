@@ -15,8 +15,8 @@ tags:
   - 自旋电子学
   - 电流传感
   - 角度传感
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # TMR与GMR磁阻传感器技术对比

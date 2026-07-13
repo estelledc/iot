@@ -17,8 +17,8 @@ tags:
 - 边缘计算
 - 漏泄通信
 - 防爆
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 矿山安全监测物联网

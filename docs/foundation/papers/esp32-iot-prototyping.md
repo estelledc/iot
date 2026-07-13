@@ -17,8 +17,8 @@ tags:
   - BLE
   - 原型开发
   - FreeRTOS
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # ESP32 物联网开发平台深度分析

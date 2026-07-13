@@ -17,8 +17,8 @@ tags:
   - 执行器
   - 闭环控制
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 舵机控制协议PWM/总线式在IoT中的对比

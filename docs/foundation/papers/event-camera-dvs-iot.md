@@ -17,8 +17,8 @@ tags:
   - SNN
   - 常开感知
   - Prophesee
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 事件相机DVS在IoT低功耗视觉中的应用

@@ -16,8 +16,8 @@ tags:
 - 时序解释
 - IoT合规
 - 反事实解释
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 可解释 AI for IoT：让黑箱决策变得透明

@@ -17,8 +17,8 @@ tags:
   - 非易失存储
   - 磨损均衡
   - IoT数据记录
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # FRAM/MRAM/NVRAM新型非易失存储对比

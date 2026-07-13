@@ -19,8 +19,8 @@ tags:
 - NFV
 - SDN
 - 垂直行业
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 5G 网络切片在 IoT 垂直行业中的应用

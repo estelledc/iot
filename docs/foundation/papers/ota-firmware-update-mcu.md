@@ -18,8 +18,8 @@ tags:
   - 差分更新
   - MCUboot
   - 回滚
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MCU OTA固件更新机制与双Bank设计

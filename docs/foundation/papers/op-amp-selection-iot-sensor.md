@@ -18,8 +18,8 @@ tags:
   - 仪表放大器
   - 跨阻放大器
   - 传感器调理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 运算放大器在IoT传感器前端的选型要点

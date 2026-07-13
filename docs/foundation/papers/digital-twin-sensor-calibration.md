@@ -17,8 +17,8 @@ tags:
   - 虚拟传感器
   - 迁移学习
   - 在线校准
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 数字孪生驱动的传感器校准：从物理模型到在线自适应

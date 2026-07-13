@@ -17,8 +17,8 @@ tags:
 - Library OS
 - 边缘虚拟化
 - microVM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Unikernel 极简虚拟化在边缘的应用

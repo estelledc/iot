@@ -15,8 +15,8 @@ tags:
   - IEEE-802.15.4
   - 碰撞
   - 隐藏终端
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 竞争式MAC协议CSMA/ALOHA在IoT中的应用

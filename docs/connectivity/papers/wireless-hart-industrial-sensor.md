@@ -17,8 +17,8 @@ tags:
   - 工业无线
   - Mesh
   - 过程自动化
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WirelessHART工业无线传感器网络

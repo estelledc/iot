@@ -16,8 +16,8 @@ tags:
   - 数据中心
   - 分子吸收
   - Sub-THz
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 太赫兹通信在 IoT 中的前景

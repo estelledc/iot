@@ -17,8 +17,8 @@ tags:
   - CoE
   - FSoE
   - 工业以太网
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # EtherCAT 实时工业以太网在 IoT 中的应用

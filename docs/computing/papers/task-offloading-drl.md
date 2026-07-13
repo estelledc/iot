@@ -18,8 +18,8 @@ tags:
 - PPO
 - DAG
 - 数字孪生
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 深度强化学习驱动的计算卸载决策

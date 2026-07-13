@@ -17,8 +17,8 @@ tags:
   - CIC-IoT
   - 深度学习
   - IoT安全
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘入侵检测系统：在资源受限环境中守护网络安全

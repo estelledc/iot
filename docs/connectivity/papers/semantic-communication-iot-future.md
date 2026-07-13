@@ -15,8 +15,8 @@ tags:
   - 任务导向通信
   - 带宽压缩
   - 深度学习
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 语义通信在未来IoT中的应用前景

@@ -17,8 +17,8 @@ tags:
   - 磨损均衡
   - 嵌入式存储
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # SD/eMMC嵌入式存储接口与文件系统选择

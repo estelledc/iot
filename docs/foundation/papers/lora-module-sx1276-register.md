@@ -16,8 +16,8 @@ tags:
   - 寄存器
   - SPI
   - FIFO
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LoRa模组SX1276寄存器配置与扩频参数

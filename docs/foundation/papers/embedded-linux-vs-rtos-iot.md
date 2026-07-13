@@ -18,8 +18,8 @@ tags:
   - 实时性
   - 异构混合
   - IoT选型
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 嵌入式Linux与RTOS在IoT设备中的选择

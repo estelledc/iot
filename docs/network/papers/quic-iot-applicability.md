@@ -17,8 +17,8 @@ tags:
 - TLS 1.3
 - 嵌入式
 - IoT传输
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # QUIC 协议在 IoT 中的适用性分析

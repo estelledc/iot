@@ -17,8 +17,8 @@ tags:
   - Provisioning
   - 发布订阅
   - NetKey
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BLE Mesh组网架构与消息转发机制

@@ -17,8 +17,8 @@ tags:
   - VNA
   - 射频
   - 天线
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 天线阻抗匹配网络设计与Smith圆图

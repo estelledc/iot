@@ -16,8 +16,8 @@ tags:
   - 协议解码
   - 调试
   - Saleae
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 逻辑分析仪在嵌入式协议调试中的使用

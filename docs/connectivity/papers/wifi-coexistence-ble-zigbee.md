@@ -17,8 +17,8 @@ tags:
   - AFH
   - PTA
   - WiFi
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WiFi与BLE/Zigbee 2.4GHz共存干扰管理

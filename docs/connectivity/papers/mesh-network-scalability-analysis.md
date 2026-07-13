@@ -16,8 +16,8 @@ tags:
   - RPL
   - 多网关
   - 容量规划
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Mesh网络可扩展性分析与节点容量

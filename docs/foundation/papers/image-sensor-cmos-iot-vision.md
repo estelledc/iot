@@ -15,8 +15,8 @@ tags:
   - DVP
   - 低功耗视觉
   - IoT摄像头
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # CMOS图像传感器在IoT视觉应用中的选型

@@ -17,8 +17,8 @@ tags:
 - 硬件时间戳
 - 时间同步
 - SyncE
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 精密时间同步协议：从 NTP 到 IEEE 1588 PTP

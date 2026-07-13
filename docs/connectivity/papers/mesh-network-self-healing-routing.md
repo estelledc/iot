@@ -16,8 +16,8 @@ tags:
   - ETX
   - Thread
   - Zigbee
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Mesh网络自愈路由与链路修复机制

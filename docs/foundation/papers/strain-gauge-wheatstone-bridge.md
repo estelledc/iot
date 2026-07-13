@@ -18,8 +18,8 @@ tags:
   - 温度补偿
   - 信号调理
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 应变片与惠斯通电桥测量电路

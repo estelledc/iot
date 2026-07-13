@@ -17,8 +17,8 @@ tags:
   - 温度测量
   - IoT调试
   - PWM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 万用表高级测量：真有效值/温度/频率

@@ -17,8 +17,8 @@ tags:
   - I2S
   - 振膜
   - 声学封装
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MEMS 麦克风芯片设计与声学性能指标

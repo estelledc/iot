@@ -16,8 +16,8 @@ tags:
   - ESP32
   - ChaCha20
   - 零信任接入
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WireGuard VPN 在 IoT 中的应用

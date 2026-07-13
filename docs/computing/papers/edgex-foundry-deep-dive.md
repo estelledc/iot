@@ -18,8 +18,8 @@ tags:
 - IoT中间件
 - Modbus
 - LF Edge
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # EdgeX Foundry 深度解析：IoT 边缘中间件平台

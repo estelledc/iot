@@ -17,8 +17,8 @@ tags:
   - BIS
   - BLE音频
   - 助听器
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LE Audio与LC3编解码器在IoT音频中的应用

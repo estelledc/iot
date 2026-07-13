@@ -17,8 +17,8 @@ tags:
   - RTK
   - 低功耗定位
   - 天线
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # GPS/GNSS定位模组硬件接口与精度分析

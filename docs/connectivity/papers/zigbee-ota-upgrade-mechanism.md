@@ -16,8 +16,8 @@ tags:
   - 设备管理
   - 安全启动
   - 低带宽
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Zigbee OTA固件升级机制与实现

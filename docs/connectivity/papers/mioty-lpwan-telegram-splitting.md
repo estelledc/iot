@@ -16,8 +16,8 @@ tags:
   - DBPSK
   - 工业物联网
   - 抗干扰
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MIOTY LPWAN电报分割技术分析

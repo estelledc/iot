@@ -17,8 +17,8 @@ tags:
   - 天线
   - 电源设计
   - 蜂窝物联网
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NB-IoT模组硬件集成与AT指令调试

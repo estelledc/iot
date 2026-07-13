@@ -18,8 +18,8 @@ tags:
   - SM-DP
   - 远程配置
   - 蜂窝IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # eSIM IoT 远程配置与运营商切换

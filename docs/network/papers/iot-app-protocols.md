@@ -18,8 +18,8 @@ tags:
   - 应用层协议
   - 协议选型
   - QoS
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT 应用层协议全面对比：MQTT vs CoAP vs LwM2M vs AMQP vs HTTP

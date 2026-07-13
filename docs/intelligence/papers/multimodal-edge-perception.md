@@ -19,8 +19,8 @@ tags:
 - 边缘感知
 - 晚期融合
 - 缺失模态
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 多模态边缘感知

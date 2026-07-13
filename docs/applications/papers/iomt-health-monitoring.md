@@ -17,8 +17,8 @@ tags:
   - HIPAA
   - 边缘推理
   - TinyML
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoMT 实时健康监测

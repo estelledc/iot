@@ -16,8 +16,8 @@ tags:
   - OTA
   - 车载网络
   - CAN XL
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # CAN FD灵活数据速率协议增强分析

@@ -17,8 +17,8 @@ tags:
   - 配给
   - IoT安全
   - 密钥存储
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 安全芯片SE在IoT身份认证中的应用

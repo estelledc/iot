@@ -18,8 +18,8 @@ tags:
 - SLAM
 - 货到人
 - 数字孪生
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 仓储机器人协同系统

@@ -17,8 +17,8 @@ tags:
   - 边缘加速
   - eFPGA
   - 能效
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # FPGA与ASIC在IoT加速中的成本性能对比

@@ -16,8 +16,8 @@ tags:
 - 红外桥接
 - 遥控
 - 视线通信
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 红外通信IrDA在IoT遥控中的应用与局限

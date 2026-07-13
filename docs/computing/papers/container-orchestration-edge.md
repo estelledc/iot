@@ -17,8 +17,8 @@ tags:
   - Firecracker
   - 镜像优化
   - 边缘运行时
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘容器编排技术：从 Docker 到轻量级运行时

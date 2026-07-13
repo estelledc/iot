@@ -17,8 +17,8 @@ tags:
   - MCU
   - 部署优化
   - 深度学习
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 模型压缩：剪枝与知识蒸馏在边缘部署中的对比

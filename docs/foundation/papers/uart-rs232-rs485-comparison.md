@@ -17,8 +17,8 @@ tags:
   - 差分信号
   - 工业总线
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # UART与RS-232/RS-485物理层对比

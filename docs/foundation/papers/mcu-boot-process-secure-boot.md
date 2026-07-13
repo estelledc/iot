@@ -17,8 +17,8 @@ tags:
   - MCUboot
   - 反回滚
   - 信任根
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MCU启动流程与安全启动链实现

@@ -16,8 +16,8 @@ tags:
   - DNS-SD
   - NAT64
   - Matter
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Thread边界路由器设计与IPv6互联

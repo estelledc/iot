@@ -17,8 +17,8 @@ tags:
   - 混合检索
   - SQLite-vec
   - 离线推理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘 RAG：检索增强生成在边缘的实现

@@ -16,8 +16,8 @@ tags:
   - 锂亚电池
   - CR2032
   - 能量预算
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT电池寿命估算模型与实测验证

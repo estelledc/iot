@@ -17,8 +17,8 @@ tags:
 - WSN
 - 局部最小值
 - 平面化
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 地理路由GPSR在IoT传感器网络中的应用

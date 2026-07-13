@@ -17,8 +17,8 @@ tags:
   - 定位
   - NPRS
   - 资产追踪
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NB-IoT定位技术OTDOA/E-CID精度分析

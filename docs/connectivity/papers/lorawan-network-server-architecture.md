@@ -16,8 +16,8 @@ tags:
   - Join Server
   - ChirpStack
   - 下行调度
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LoRaWAN网络服务器架构与数据流

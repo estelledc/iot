@@ -17,8 +17,8 @@ tags:
   - MPTCP
   - BLE
   - LTE-M
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 多射频连接管理与无缝切换策略

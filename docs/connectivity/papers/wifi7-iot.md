@@ -17,8 +17,8 @@ tags:
   - OFDMA
   - IoT接入
   - HaLow
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WiFi 7 (802.11be) 对物联网接入的适用性分析

@@ -19,8 +19,8 @@ tags:
 - AGV
 - 频谱
 - OT集成
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 5G 专网在工业 IoT 中的部署模式

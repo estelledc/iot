@@ -17,8 +17,8 @@ tags:
   - 交叉敏感
   - 寿命管理
   - LMP91000
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电化学气体传感器工作原理与寿命管理

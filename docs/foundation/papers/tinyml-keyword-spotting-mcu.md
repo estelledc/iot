@@ -18,8 +18,8 @@ tags:
   - 低功耗音频
   - MCU
   - 边缘AI
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # TinyML关键词唤醒在MCU上的实现

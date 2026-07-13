@@ -17,8 +17,8 @@ tags:
   - 覆盖规划
   - LoRaWAN
   - 链路预算
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 无线电传播模型在IoT覆盖规划中的应用

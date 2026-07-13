@@ -17,8 +17,8 @@ tags:
   - 标定
   - IAQ
   - HVAC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NDIR 红外 CO2 传感器光路设计与标定

@@ -16,8 +16,8 @@ tags:
   - 链路预算
   - ISM
   - 传播
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Sub-GHz 频段技术对比：穿墙利器的选择之道

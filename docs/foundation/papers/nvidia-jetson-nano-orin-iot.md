@@ -18,8 +18,8 @@ tags:
   - CUDA
   - DeepStream
   - 边缘推理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NVIDIA Jetson Nano/Orin在IoT边缘推理中的定位

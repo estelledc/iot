@@ -17,8 +17,8 @@ tags:
   - 可见光定位
   - LED
   - 光无线通信
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 可见光通信 LiFi 技术：用灯光传数据

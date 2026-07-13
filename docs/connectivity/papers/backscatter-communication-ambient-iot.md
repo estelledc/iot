@@ -17,8 +17,8 @@ tags:
   - 3GPP
   - WiFi Backscatter
   - 无电池
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 反向散射通信在环境IoT中的应用

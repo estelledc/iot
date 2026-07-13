@@ -19,8 +19,8 @@ tags:
 - 知识蒸馏
 - ONNX
 - TensorRT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Transformer 模型边缘部署技术

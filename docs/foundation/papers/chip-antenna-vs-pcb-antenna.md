@@ -17,8 +17,8 @@ tags:
   - 天线选型
   - 净空区
   - OTA
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 陶瓷贴片天线与PCB天线性能对比

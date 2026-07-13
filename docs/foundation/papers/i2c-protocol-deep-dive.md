@@ -16,8 +16,8 @@ tags:
   - 嵌入式总线
   - NXP
   - 上拉电阻
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # I2C总线协议深度解析：地址/时序/仲裁

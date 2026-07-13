@@ -16,8 +16,8 @@ tags:
 - NeRF
 - 光场显示
 - 边缘渲染
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 全息通信：从平面视频到三维临场

@@ -17,8 +17,8 @@ tags:
 - 隐私计算
 - 混淆电路
 - IoT隐私
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 安全多方计算 MPC 在 IoT 中的应用

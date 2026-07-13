@@ -16,8 +16,8 @@ tags:
   - 自动调零
   - 精密模拟
   - 低漂移
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 斩波稳定放大器消除低频噪声与失调

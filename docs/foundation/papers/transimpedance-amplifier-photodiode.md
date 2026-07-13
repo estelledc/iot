@@ -18,8 +18,8 @@ tags:
   - 光电传感
   - 噪声
   - 模拟前端
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 跨阻放大器与光电二极管读出设计

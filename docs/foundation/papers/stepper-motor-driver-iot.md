@@ -17,8 +17,8 @@ tags:
   - 失步
   - 精密控制
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 步进电机驱动器在IoT精密控制中的应用

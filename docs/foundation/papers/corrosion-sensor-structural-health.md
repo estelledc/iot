@@ -14,8 +14,8 @@ tags:
   - 结构健康监测
   - 管道IoT
   - 预测性维护
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 腐蚀传感器在结构健康监测IoT中的应用

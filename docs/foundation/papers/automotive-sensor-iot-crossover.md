@@ -15,8 +15,8 @@ tags:
   - 功能安全
   - 工业IoT
   - 可靠性
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 车规级传感器技术向IoT的迁移与复用

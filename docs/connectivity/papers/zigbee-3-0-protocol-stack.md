@@ -16,8 +16,8 @@ tags:
   - Mesh
   - CSA
   - 智能家居
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Zigbee 3.0协议栈架构与互操作性

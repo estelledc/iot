@@ -16,8 +16,8 @@ tags:
   - 温度补偿
   - 膜片
   - 工业IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 压阻式压力传感器工作原理与MEMS制造

@@ -17,8 +17,8 @@ tags:
   - FreeRTOS
   - Zephyr
   - 嵌入式Linux
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NuttX POSIX兼容RTOS在IoT中的应用

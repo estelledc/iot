@@ -17,8 +17,8 @@ tags:
   - 边缘AI
   - 阵列
   - 声发射
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 声学传感网络：从MEMS麦克风阵列到边缘音频智能

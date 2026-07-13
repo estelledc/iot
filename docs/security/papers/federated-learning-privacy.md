@@ -19,8 +19,8 @@ tags:
 - TEE
 - 隐私计算
 - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 联邦学习隐私保护：从梯度泄露到多重防御

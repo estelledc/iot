@@ -18,8 +18,8 @@ tags:
   - 机器人
   - 柔性传感
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 触觉传感技术与 IoT 应用

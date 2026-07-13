@@ -17,8 +17,8 @@ tags:
   - 策略冲突
   - ONOS
   - 闭环控制
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 意图驱动网络 IBN 在 IoT 中的应用

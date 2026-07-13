@@ -17,8 +17,8 @@ tags:
 - NDN-Lite
 - Trust Schema
 - V2X
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 命名数据网络 NDN-IoT：以内容为中心的物联网通信

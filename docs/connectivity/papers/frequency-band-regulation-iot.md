@@ -17,8 +17,8 @@ tags:
 - FCC
 - ETSI
 - SRRC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT无线频段法规：ISM/免许可/许可频段

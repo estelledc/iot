@@ -19,8 +19,8 @@ tags:
 - BWP
 - HD-FDD
 - IoT模组
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 5G NR RedCap 精简能力设备 IoT 应用

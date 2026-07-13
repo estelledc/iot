@@ -17,8 +17,8 @@ tags:
   - MAX31865
   - 工业测温
   - ADC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # RTD/PT100温度传感器信号调理电路设计

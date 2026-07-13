@@ -14,8 +14,8 @@ tags:
   - 派瑞林
   - IPC-CC-830
   - 户外IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 三防漆在IoT户外设备中的防护应用

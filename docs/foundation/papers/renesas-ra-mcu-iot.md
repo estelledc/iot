@@ -16,8 +16,8 @@ tags:
   - IoT网关
   - SCE
   - TrustZone
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 瑞萨RA系列MCU在IoT网关中的应用

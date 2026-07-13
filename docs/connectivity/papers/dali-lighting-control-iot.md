@@ -16,8 +16,8 @@ tags:
 - DiiA
 - 智能建筑
 - 人因照明
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # DALI数字照明控制在IoT智能照明中的应用

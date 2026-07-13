@@ -17,8 +17,8 @@ tags:
   - SPI
   - PWM
   - 数字逻辑
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # FPGA Verilog HDL基础与IoT外设实现

@@ -16,8 +16,8 @@ tags:
   - 超电容
   - BQ25570
   - 微功率
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Boost升压转换器在能量采集中的应用

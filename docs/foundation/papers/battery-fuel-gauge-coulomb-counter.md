@@ -17,8 +17,8 @@ tags:
   - 电池
   - 卡尔曼滤波
   - IoT功耗
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电池电量计库仑计法与电压法对比

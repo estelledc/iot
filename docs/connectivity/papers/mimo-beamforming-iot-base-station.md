@@ -16,8 +16,8 @@ tags:
   - 阵列增益
   - CSI
   - 基站
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MIMO波束赋形在IoT基站中的应用

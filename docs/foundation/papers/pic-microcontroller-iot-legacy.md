@@ -18,8 +18,8 @@ tags:
   - 迁移
   - Cortex-M
   - 供货周期
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # PIC单片机在工业IoT中的延续与局限

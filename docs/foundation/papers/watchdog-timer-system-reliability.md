@@ -17,8 +17,8 @@ tags:
   - 窗口看门狗
   - 嵌入式
   - 故障恢复
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 看门狗定时器与系统可靠性设计

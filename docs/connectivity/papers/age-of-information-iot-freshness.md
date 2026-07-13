@@ -19,8 +19,8 @@ tags:
 - 能量约束
 - 调度
 - 语义通信
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 信息年龄 AoI 在 IoT 数据新鲜度中的度量

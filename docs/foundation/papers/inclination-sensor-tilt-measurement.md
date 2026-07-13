@@ -14,8 +14,8 @@ tags:
   - 倾斜测量
   - 校准
   - 结构监测
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 倾角传感器倾斜测量原理与MEMS实现

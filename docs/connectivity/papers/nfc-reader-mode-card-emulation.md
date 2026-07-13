@@ -16,8 +16,8 @@ tags:
   - 安全元件
   - 门禁
   - AID
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NFC读卡器模式与卡模拟在IoT中的应用

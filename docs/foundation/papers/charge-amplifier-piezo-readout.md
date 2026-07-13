@@ -16,8 +16,8 @@ tags:
   - 振动传感
   - 反馈电容
   - 低噪声运放
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电荷放大器在压电传感器读出电路中的设计

@@ -18,8 +18,8 @@ tags:
   - 隐私保护
   - 边缘训练
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 联邦学习与物联网：隐私保护下的分布式智能

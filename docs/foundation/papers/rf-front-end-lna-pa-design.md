@@ -17,8 +17,8 @@ tags:
   - PAE
   - 射频前端
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 射频前端LNA/PA设计基础与指标

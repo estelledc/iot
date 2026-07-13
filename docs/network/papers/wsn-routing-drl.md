@@ -16,8 +16,8 @@ tags:
   - 图神经网络
   - 路由优化
   - 网络寿命
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # AI 驱动的无线传感网路由优化

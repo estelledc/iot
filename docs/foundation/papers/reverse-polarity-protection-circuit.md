@@ -16,8 +16,8 @@ tags:
   - ESD
   - 理想二极管
   - 电源保护
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 反接保护与过压保护电路设计

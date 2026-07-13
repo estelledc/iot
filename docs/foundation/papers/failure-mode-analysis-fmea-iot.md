@@ -17,8 +17,8 @@ tags:
   - 失效模式
   - IoT硬件
   - FTA
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT硬件失效模式分析FMEA方法

@@ -18,8 +18,8 @@ tags:
 - Sim-to-Real
 - 多智能体
 - DVFS
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 强化学习在边缘自适应中的应用

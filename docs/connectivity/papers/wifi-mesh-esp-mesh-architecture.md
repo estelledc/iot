@@ -16,8 +16,8 @@ tags:
   - 根节点
   - 多跳
   - Espressif
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # WiFi Mesh ESP-MESH自组网架构分析

@@ -17,8 +17,8 @@ tags:
 - Pub/Sub
 - 边缘消息
 - QoS
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘消息队列：NATS 与 Mosquitto 深度对比

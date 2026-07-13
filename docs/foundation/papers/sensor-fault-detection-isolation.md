@@ -17,8 +17,8 @@ tags:
   - 残差
   - 传感器诊断
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 传感器故障检测与隔离FDI方法

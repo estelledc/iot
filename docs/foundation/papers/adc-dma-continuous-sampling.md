@@ -17,8 +17,8 @@ tags:
   - 定时器触发
   - 过采样
   - STM32
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # ADC+DMA连续采样实时数据采集系统设计

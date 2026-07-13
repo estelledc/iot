@@ -17,8 +17,8 @@ tags:
   - 边缘AI
   - 模型量化
   - AIoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘AI加速器NPU芯片对比：K210/V831/BL808

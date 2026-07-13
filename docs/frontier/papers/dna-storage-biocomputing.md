@@ -18,8 +18,8 @@ tags:
 - 合成生物学
 - 冷数据归档
 - DNA逻辑门
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # DNA 存储与生物计算：用生命的语言记录数据

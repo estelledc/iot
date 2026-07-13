@@ -17,8 +17,8 @@ tags:
   - 负载控制
   - IoT电源
   - 续流二极管
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MOSFET开关电路在IoT负载控制中的设计

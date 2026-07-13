@@ -16,8 +16,8 @@ tags:
   - NB-IoT
   - 天地一体
   - 混合连接
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 卫星物联网：天地一体的连接覆盖

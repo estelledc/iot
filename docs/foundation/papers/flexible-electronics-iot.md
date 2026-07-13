@@ -17,8 +17,8 @@ tags:
   - 可拉伸互连
   - IoT传感
   - 基底材料
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 柔性电子与 IoT 融合：从可弯曲基底到可穿戴传感贴片

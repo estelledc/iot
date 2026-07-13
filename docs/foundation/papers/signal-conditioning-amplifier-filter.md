@@ -18,8 +18,8 @@ tags:
   - 传感器前端
   - 增益
   - ADC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 传感器信号调理放大与滤波电路设计

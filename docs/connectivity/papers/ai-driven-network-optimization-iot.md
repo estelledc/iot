@@ -19,8 +19,8 @@ tags:
 - 联邦学习
 - 网络切片
 - 自优化
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # AI 驱动的 IoT 网络优化与自配置

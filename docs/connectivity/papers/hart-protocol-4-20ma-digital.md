@@ -16,8 +16,8 @@ tags:
 - HART-IP
 - 过程自动化
 - 预测维护
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # HART协议4-20mA叠加数字通信

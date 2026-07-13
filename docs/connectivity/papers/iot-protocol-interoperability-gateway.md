@@ -17,8 +17,8 @@ tags:
   - 网关
   - WoT
   - Zigbee
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT协议互操作性与协议转换网关

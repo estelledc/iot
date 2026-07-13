@@ -17,8 +17,8 @@ tags:
   - 能效
   - 边缘推理
   - 量化
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘 AI 加速器对比：Edge TPU vs NPU vs GPU

@@ -14,8 +14,8 @@ tags:
   - 恶劣环境
   - 镀层
   - 抗振动
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 恶劣环境IoT设备连接器选型指南

@@ -18,8 +18,8 @@ tags:
   - BSP
   - IoT网关
   - 构建系统
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Yocto与Buildroot嵌入式Linux构建系统对比

@@ -15,8 +15,8 @@ tags:
   - 调试探针
   - Cortex-M
   - 边界扫描
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # JTAG与SWD调试接口原理与工具链

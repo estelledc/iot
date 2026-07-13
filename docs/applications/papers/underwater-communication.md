@@ -17,8 +17,8 @@ tags:
 - SOFAR
 - 水下定位
 - 海洋物联网
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 水下通信与探测技术

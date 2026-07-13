@@ -17,8 +17,8 @@ tags:
   - 单对以太网
   - 过程自动化
   - 现场连接
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 单对以太网 SPE 在 IoT 边缘连接中的应用

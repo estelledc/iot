@@ -17,8 +17,8 @@ tags:
   - 室内定位
   - 超宽带
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 超宽带UWB模组DW1000测距原理与硬件

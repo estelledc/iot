@@ -16,8 +16,8 @@ tags:
   - 超窄带
   - UnaBiz
   - 随机接入
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Sigfox 0G网络架构与超窄带技术

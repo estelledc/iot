@@ -15,8 +15,8 @@ tags:
   - 解调
   - 工业测量
   - 励磁
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LVDT差动变压器位移传感器原理与应用

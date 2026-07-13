@@ -18,8 +18,8 @@ tags:
   - 占空比
   - NB-IoT
   - 网关密度
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LPWAN密集部署容量规划与干扰分析

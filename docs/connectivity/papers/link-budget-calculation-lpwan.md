@@ -17,8 +17,8 @@ tags:
   - NB-IoT
   - 路径损耗
   - 接收灵敏度
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LPWAN链路预算计算与覆盖估算

@@ -17,8 +17,8 @@ tags:
   - TAU
   - 电池寿命
   - 寻呼
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # NB-IoT省电模式PSM与eDRX配置优化

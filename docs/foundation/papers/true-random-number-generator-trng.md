@@ -18,8 +18,8 @@ tags:
   - 随机数
   - NIST
   - 密钥生成
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 真随机数发生器TRNG原理与IoT安全应用

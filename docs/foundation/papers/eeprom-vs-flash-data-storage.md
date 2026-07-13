@@ -17,8 +17,8 @@ tags:
   - I2C
   - 非易失存储
   - Flash模拟EEPROM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # EEPROM与Flash在IoT配置存储中的对比

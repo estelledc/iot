@@ -18,8 +18,8 @@ tags:
 - PockEngine
 - 迁移学习
 - PEFT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 设备端在线训练：让边缘模型持续进化

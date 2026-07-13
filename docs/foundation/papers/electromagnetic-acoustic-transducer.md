@@ -17,8 +17,8 @@ tags:
   - 导波
   - 结构健康监测
   - 非接触超声
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 电磁超声换能器EMAT在无损检测IoT中的应用

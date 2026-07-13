@@ -17,8 +17,8 @@ tags:
   - WiFi共存
   - CSA
   - 干扰
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BLE跳频机制与2.4GHz干扰规避

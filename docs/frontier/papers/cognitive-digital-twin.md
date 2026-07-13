@@ -17,8 +17,8 @@ tags:
 - 自主决策
 - 工业物联网
 - CDT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 认知数字孪生：从仿真镜像到自主推理决策

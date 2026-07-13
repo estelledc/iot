@@ -17,8 +17,8 @@ tags:
   - 数字传感器
   - 虚拟传感器
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 集成MCU的智能传感器架构与应用

@@ -17,8 +17,8 @@ tags:
 - WAL
 - 边缘分析
 - 时序数据
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘数据库：SQLite 与 DuckDB 实战

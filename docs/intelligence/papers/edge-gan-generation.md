@@ -17,8 +17,8 @@ tags:
   - 差分隐私
   - 类别不平衡
   - TinyML
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘生成对抗网络

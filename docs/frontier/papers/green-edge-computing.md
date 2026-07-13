@@ -17,8 +17,8 @@ tags:
 - MEC
 - 休眠管理
 - 可持续IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 绿色边缘计算

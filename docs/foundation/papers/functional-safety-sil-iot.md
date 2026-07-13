@@ -17,8 +17,8 @@ tags:
   - 安全仪表
   - IoT传感器
   - 诊断覆盖
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 功能安全SIL等级在IoT传感器中的应用

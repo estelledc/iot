@@ -18,8 +18,8 @@ tags:
   - 浊度
   - 传感器阵列
   - 环境IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 水质传感器阵列与多参数监测系统

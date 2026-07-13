@@ -17,8 +17,8 @@ tags:
   - EnergyTrace
   - 唤醒
   - 能量收集
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # MSP430超低功耗MCU架构与唤醒机制

@@ -17,8 +17,8 @@ tags:
   - 链路多样性
   - WSN
   - 占空比
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 机会路由在IoT不稳定链路中的应用

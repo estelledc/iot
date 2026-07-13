@@ -17,8 +17,8 @@ tags:
   - 趋肤效应
   - 工业IoT
   - 非接触检测
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 涡流传感器接近检测与金属识别

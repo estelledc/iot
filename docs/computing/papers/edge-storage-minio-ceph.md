@@ -17,8 +17,8 @@ tags:
 - S3
 - 边缘存储
 - Rook
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 边缘存储：MinIO 与 Ceph-lite 方案

@@ -17,8 +17,8 @@ tags:
   - 覆盖扩展
   - 虚拟MIMO
   - LPWAN
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 中继协作通信在IoT覆盖扩展中的应用

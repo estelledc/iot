@@ -17,8 +17,8 @@ tags:
 - P2P能源交易
 - DER
 - 智能电网
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 能量互联网（Energy Internet/EoT）：能源的 IoT 化转型

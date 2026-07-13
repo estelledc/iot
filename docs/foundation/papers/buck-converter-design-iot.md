@@ -15,8 +15,8 @@ tags:
   - 电感选型
   - CCM
   - PFM
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Buck降压转换器在IoT设备中的设计要点

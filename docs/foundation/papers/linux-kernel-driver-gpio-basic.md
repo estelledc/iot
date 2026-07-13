@@ -15,8 +15,8 @@ tags:
   - 设备树
   - 平台驱动
   - 嵌入式Linux
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Linux内核GPIO驱动开发基础

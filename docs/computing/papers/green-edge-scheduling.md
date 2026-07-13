@@ -18,8 +18,8 @@ tags:
 - 边缘调度
 - 太阳能边缘
 - PUE
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 绿色边缘调度策略

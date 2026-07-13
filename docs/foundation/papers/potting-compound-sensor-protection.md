@@ -16,8 +16,8 @@ tags:
   - IP防护
   - 传感器封装
   - 热管理
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 灌封材料在传感器防护中的选型与工艺

@@ -17,8 +17,8 @@ tags:
   - GPS
   - 点云
   - 边缘感知
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 多传感器融合技术综述

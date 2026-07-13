@@ -17,8 +17,8 @@ tags:
   - 智能家居
   - 低功耗
   - Commissioning
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Matter over Thread与Matter over WiFi对比

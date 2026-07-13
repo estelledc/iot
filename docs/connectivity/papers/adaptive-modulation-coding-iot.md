@@ -19,8 +19,8 @@ tags:
 - 链路自适应
 - 能效
 - BLER
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 自适应调制编码 AMC 在 IoT 中的实现

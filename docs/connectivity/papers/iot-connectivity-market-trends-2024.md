@@ -17,8 +17,8 @@ tags:
   - Matter
   - eSIM
   - 卫星IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 2024年IoT连接技术市场趋势分析

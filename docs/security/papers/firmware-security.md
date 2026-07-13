@@ -19,8 +19,8 @@ tags:
 - SBOM
 - MCUboot
 - 漏洞分析
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # IoT固件安全分析：从提取到防护的全链路

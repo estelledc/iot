@@ -16,8 +16,8 @@ tags:
   - KNXnet/IP
   - HVAC
   - 智能建筑
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # KNX智能建筑协议在IoT中的定位

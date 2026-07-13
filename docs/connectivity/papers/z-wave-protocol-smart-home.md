@@ -15,8 +15,8 @@ tags:
   - S2
   - 互操作认证
   - Silicon Labs
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Z-Wave协议在智能家居中的定位与特点

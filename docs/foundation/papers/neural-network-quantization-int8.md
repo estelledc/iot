@@ -17,8 +17,8 @@ tags:
   - CMSIS-NN
   - 边缘推理
   - 嵌入式AI
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 神经网络INT8量化在边缘设备上的实现

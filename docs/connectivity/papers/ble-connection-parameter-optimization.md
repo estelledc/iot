@@ -17,8 +17,8 @@ tags:
   - iOS约束
   - 参数协商
   - 电池寿命
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # BLE连接参数优化与功耗平衡策略

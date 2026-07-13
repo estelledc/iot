@@ -16,8 +16,8 @@ tags:
 - HAR
 - InfoNCE
 - 数据增强
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 对比学习在传感器数据中的应用

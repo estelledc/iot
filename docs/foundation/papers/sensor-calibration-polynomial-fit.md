@@ -17,8 +17,8 @@ tags:
   - 非线性
   - MCU
   - 传感器
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 传感器校准：多项式拟合与查找表方法

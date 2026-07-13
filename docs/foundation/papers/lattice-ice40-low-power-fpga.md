@@ -15,8 +15,8 @@ tags:
   - IceStorm
   - 开源工具链
   - Lattice
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Lattice iCE40超低功耗FPGA在IoT中的应用

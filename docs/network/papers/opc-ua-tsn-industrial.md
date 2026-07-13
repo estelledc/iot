@@ -17,8 +17,8 @@ tags:
 - IEC 60802
 - IT/OT
 - 确定性网络
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # OPC UA over TSN：工业互联网融合

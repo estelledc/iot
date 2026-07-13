@@ -16,8 +16,8 @@ tags:
   - LoRaWAN
   - 生态
   - 开放标准
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # Weightless协议族在IoT LPWAN中的定位

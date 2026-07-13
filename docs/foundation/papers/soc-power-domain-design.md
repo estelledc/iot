@@ -18,8 +18,8 @@ tags:
   - 隔离单元
   - 电压域
   - IoT
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # SoC电源域划分与低功耗架构

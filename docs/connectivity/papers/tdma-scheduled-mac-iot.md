@@ -16,8 +16,8 @@ tags:
   - MAC
   - 确定性
   - 工业物联网
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # TDMA调度式MAC在工业IoT中的确定性通信

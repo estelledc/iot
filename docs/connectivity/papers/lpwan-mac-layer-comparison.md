@@ -17,8 +17,8 @@ tags:
   - ALOHA
   - 调度
   - Class-A
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # LPWAN MAC层协议对比：LoRaWAN/Sigfox/NB-IoT

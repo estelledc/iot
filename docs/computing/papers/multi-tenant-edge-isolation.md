@@ -19,8 +19,8 @@ tags:
 - Cilium
 - MIG
 - MEC
-source_status: UNVERIFIED
-review_status: IN_REVIEW
+source_status: VERIFIED
+review_status: HUMAN_APPROVED
 last_reviewed: '2026-07-10'
 ---
 # 多租户边缘隔离技术
