@@ -38,17 +38,17 @@ external_action_authority:
   commit: true
   push: true
   open_pr: true
-  merge: false
+  merge: true
   deploy: false
 external_action_grant:
-  source: "current-user-prompt-2026-07-13-iot-campaign"
-  granted_at: "2026-07-13T03:57:22Z"
+  source: "current-user-prompt-2026-07-13-review-and-merge"
+  granted_at: "2026-07-13T04:26:38Z"
   scope: >-
-    仅限 IOT-T048 source-audit inventory projection：允许从 T047 merge 后的
+    仅限 IOT-T048 source-audit inventory projection 的 PR #23：允许从 T047 merge 后的
     origin/main 创建 codex feature branch、修改本 contract 列出的 inventory 与派生事实块文件、
-    原子 commit、push 分支、创建或更新唯一 Draft PR，并在远端 CI 通过后标记 ready for review；
-    不允许 merge、deploy、force-push、rebase、squash、修改正文/frontmatter/source audit/review/trust
-    记录或提升事实核验状态。
+    原子 commit、push 分支、创建或更新唯一 PR；允许在 agent review 无阻断发现且当前 head 的
+    Repository quality 成功后，以 merge commit 合并 PR #23。仍不允许 deploy、force-push、
+    rebase、squash、修改正文/frontmatter/source audit/review/trust 记录或提升事实核验状态。
 stop_conditions:
   - 工作树出现不属于 IOT-T048 允许路径的改动。
   - goal/lock 不一致，且无法在不放宽安全边界的情况下重签。
@@ -156,17 +156,17 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 3
+  completed_commits: 4
   no_external_delta_batches: 0
-  last_result: PR_23_REMOTE_QUALITY_SUCCESS_WAIT_REVIEW
-  last_external_delta: DRAFT_PR_23_OPENED_AND_REPOSITORY_QUALITY_SUCCEEDED
+  last_result: MERGE_AUTHORIZED_AFTER_AGENT_REVIEW
+  last_external_delta: USER_AUTHORIZED_REVIEW_AND_MERGE_FOR_PR_23
 activation:
   ref: 25728363f5c036f256d8bdb4ac4f8bf7ce9df22c
   activated_at: "2026-07-13T03:57:22Z"
 next_action:
-  kind: WAIT_REVIEW
+  kind: MERGE_PR_AFTER_CI
   requires_activation: false
   instruction: >-
-    Push this status update to PR #23, wait for Repository quality on the current
-    head to succeed, then mark PR #23 ready for review. Do not start IOT-T049 until
-    PR #23 is merged into main and main quality/Pages are verified.
+    Push this merge authorization update to PR #23, wait for Repository quality on
+    the current head to succeed, then merge PR #23 with a merge commit. After merge,
+    verify origin/main and main quality/Pages before starting IOT-T049.
