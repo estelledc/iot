@@ -89,7 +89,7 @@ flowchart LR
 
 ### 为什么是这个顺序
 
-存量内容目前背着三笔债务：内容正文没有 frontmatter 元数据、来源审计状态为 `NOT_TRACKED`、大部分内容文件未进入显式导航（缺口见上方基线表）。在治理能力建立之前继续批量生成，只会让债务按比例放大。M1/M2 建立的元数据与审计能力，既是 M3 流水线「新增内容不产生新债务」的前提，也是 M4 学习路径的数据基础。
+存量内容最初背着三笔债务：内容正文没有 frontmatter 元数据、来源审计状态不可统计、大部分内容文件未进入显式导航。M1 已解决元数据与可发现性，M2 已把 29 条结构审计与部署验收转为机器可读证据；剩余债务是事实核验与人工审批证据。缺少这条证据链时继续批量生成，只会让可信债务按比例放大。M1/M2 建立的元数据与审计能力，既是 M3 流水线「新增内容不产生新债务」的前提，也是 M4 学习路径的数据基础。
 
 ### M1 治理基线 — 让全部存量内容可发现、可分类
 
@@ -113,22 +113,26 @@ flowchart LR
 
 ### M2 可信基线 — 从「文件存在」到「来源可查」
 
-**可执行计划**：[docs/superpowers/plans/2026-07-10-m2-trust-baseline.md](docs/superpowers/plans/2026-07-10-m2-trust-baseline.md)（任务 T1–T6，完成后版本目标 `0.3.0`）。
+**状态**：`PARKED_HUMAN_EVIDENCE`。结构审计投影与 Pages 验收已收口；事实核验和人工审批证据尚未建立，因此不发布 v0.3.0。
+
+**历史输入**：[docs/superpowers/plans/2026-07-10-m2-trust-baseline.md](docs/superpowers/plans/2026-07-10-m2-trust-baseline.md)（保留为历史计划；其中“STRUCTURAL 审计自动升格 PARTIAL”的旧步骤已被当前 schema 废止）。
 
 **目标**：把「文件存在 ≠ 技术事实已验证」的免责声明替换为机器可读的审计事实。
 
 **工作项**：
 
-1. **来源审计记录**：每篇内容的 `source_status`（`UNVERIFIED` / `PARTIAL` / `VERIFIED`）落入 frontmatter；清单工具把 `source_audited_files` 从 `null` 变为可统计。抽样规模锁定为每层 3 篇（导航精选前 3）。结构性审计只判断可审计性，不提升 `source_status`；`PARTIAL` / `VERIFIED` 必须由当前正文的事实核验记录投影，完整规则见[内容 frontmatter 契约](docs/content-schema.md)。
-2. **抽样核验**：每层 3 篇报告写入 `data/source-audits/<slug>/`；抽样不合格（`NEEDS_CHANGES`）的篇目先修复再谈升格。
+1. **结构审计记录**：29 条 current valid `STRUCTURAL` source audit 已入库并投影到 inventory；它们只证明结构可审计，不提升 `source_status`。
+2. **事实核验链**：`PARTIAL` / `VERIFIED` 必须由当前正文的 `CLAIM_VERIFICATION` 记录投影，并需要 `CONTENT_AUTHOR`、`FACT_AUDITOR` 与锁定的 `critical_claim_ids`。
 3. **review record 流程**：`HUMAN_APPROVED` 必须绑定独立人工证据与当前正文 hash，审批权威是 [review record schema](schemas/review-record.schema.json)；frontmatter 只保存兼容缓存字段。
-4. **线上验收**：对 <https://estelledc.github.io/iot/> 针对目标 commit 做一次部署健康验收，结果写入 [`data/deploy-acceptance.yml`](data/deploy-acceptance.yml)。
+4. **线上验收**：已对 <https://estelledc.github.io/iot/> 针对目标 commit 做部署健康验收，结果写入 [`data/deploy-acceptance.yml`](data/deploy-acceptance.yml)。
 
 **完成判据**：
 
 - 全部内容文件有显式 `source_status`（允许 `UNVERIFIED`，不允许缺失）；
-- 每层至少 3 篇抽样核验报告入库；
-- 清单中的 `source_audit` 从 `NOT_TRACKED` 变为可统计状态（每层 `SAMPLED`）。
+- 每层至少 3 篇 current valid `STRUCTURAL` 抽样报告入库，并在 inventory 中显示 `SAMPLED_STRUCTURAL`；
+- 至少一个样本完成合法 `CLAIM_VERIFICATION`，使 `source_audited_files > 0` 且 `PARTIAL` 或 `VERIFIED` 由 validator 投影产生；
+- 若声明 `HUMAN_APPROVED`，必须有独立 `HUMAN` approver 的 review record，且职责分离由 authority registry 复核；
+- Pages 部署验收记录绑定目标 SHA，且 main 的 quality / Pages workflow 成功。
 
 ### M3 受控生长 — 按门禁恢复 Layer 3–8 扩容
 

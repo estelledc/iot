@@ -10,7 +10,7 @@
 - **系统**：Markdown 源真相 → frontmatter schema 与确定性清单 → 自动 catalog、搜索与 MkDocs Pages → CI 结构、链接和发布门禁。
 - **可核查证据**：8 层技术体系；642 个内容文件已全部进入可发现目录；M1 治理基线已完成。
 - **协作分工**：Jason 负责分层、里程碑、发布门禁与验收判断；AI 辅助研究、初稿、批量深审和站点实现，不能自行授予 `VERIFIED` 或 `HUMAN_APPROVED`。
-- **当前局限**：已有 29 条 `STRUCTURAL` 结构审计，但事实核验仍为 0；642/642 正文处于 `IN_REVIEW`，不表示技术事实已经人工验证；Pages 验收记录见 [`data/deploy-acceptance.yml`](data/deploy-acceptance.yml)。
+- **当前局限**：M2 已完成结构审计投影和 Pages 验收收口，但仍停在 `PARKED_HUMAN_EVIDENCE`；事实核验仍为 0，642/642 正文处于 `IN_REVIEW` 不表示技术事实已经人工验证；Pages 验收记录见 [`data/deploy-acceptance.yml`](data/deploy-acceptance.yml)。
 
 <!-- content-inventory:start -->
 ## 当前内容基线
@@ -31,6 +31,6 @@
 
 ## 扩展原则与未来方向
 
-M1 治理基线已完成（v0.2.0）：642 篇 frontmatter、八层 catalog 可发现、CI 全量校验。继续扩展 Layer 3–8 前，先完成 M2 来源抽样与可重复生产门禁；不要一次性批量生成计划中的全部条目。
+M1 治理基线已完成（v0.2.0）：642 篇 frontmatter、八层 catalog 可发现、CI 全量校验。M2 的结构审计、清单投影和 Pages 验收已经收口；继续扩展 Layer 3–8 前，仍需补齐事实核验链：`CONTENT_AUTHOR`、`FACT_AUDITOR`、`critical_claim_ids`、`CLAIM_VERIFICATION` 记录以及独立人工 review record。
 
-项目按四个里程碑推进——**M1 治理基线**（已完成）→ **M2 可信基线**（来源审计与抽样核验）→ **M3 受控生长**（流水线化扩容 Layer 3–8）→ **M4 体验与社区**（学习路径图与共建设施）。完整方向与各里程碑完成判据见 [ROADMAP.md](ROADMAP.md#三未来方向四个里程碑)。
+项目按四个里程碑推进——**M1 治理基线**（已完成）→ **M2 可信基线**（`PARKED_HUMAN_EVIDENCE`）→ **M3 受控生长**（等待 M2 证据门打开）→ **M4 体验与社区**（学习路径图与共建设施）。完整方向与各里程碑完成判据见 [ROADMAP.md](ROADMAP.md#三未来方向四个里程碑)。
