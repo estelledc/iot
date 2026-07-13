@@ -14,7 +14,7 @@ review_after: "2026-07-20"
 budget:
   max_batches: 1
   max_articles: 0
-  max_commits: 3
+  max_commits: 4
   max_wall_minutes: 90
   max_parallel_agents: 1
   max_parallel_writers: 1
@@ -23,29 +23,32 @@ external_outcome:
     在不修改正文、frontmatter、source audit record、review record、trust authority、
     trust ledger、VERSION 或 workflow 的前提下，把 M2 当前状态写清楚：T047-T049
     已完成到 D4；M2 进入 PARKED_HUMAN_EVIDENCE，等待真实事实核验员与人工审批证据。
-    最终外部结果以唯一 Draft PR 当前 SHA 的 Repository quality 成功和 ready for review
-    状态为准。
+    最终外部结果以 PR #25 当前 SHA 的 Repository quality 成功、agent review comment
+    完成和 merge commit 合入 main 为准。
   d_axis: D3
   satisfies_when:
     - docs/progress.md 明确 T047/T048/T049 已完成，且 M2 未完成。
     - README.md 与 ROADMAP.md 不再暗示 M2 可自动完成或 v0.3.0 可发布。
     - 文档列出 M2 剩余最小输入：CONTENT_AUTHOR、FACT_AUDITOR、critical_claim_ids、CLAIM_VERIFICATION、HUMAN approver/review record。
     - trust 基线保持 source_records=29、review_records=0、legacy_unbound=642、verified=0、approved=0。
-    - Draft PR 创建后，当前 SHA 的 Repository quality 远端 CI 成功。
+    - PR #25 ready for review 后，当前 SHA 的 Repository quality 远端 CI 成功。
+    - agent review comment 明确 no findings，且不冒充 HUMAN_APPROVED。
+    - 用户单独授权 merge 后，PR #25 只能用 merge commit 合入 main。
 external_action_authority:
   commit: true
   push: true
   open_pr: true
-  merge: false
+  merge: true
   deploy: false
 external_action_grant:
-  source: "current-user-prompt-2026-07-13-m2-closeout"
-  granted_at: "2026-07-13T05:21:00Z"
+  source: "current-user-prompt-2026-07-13-merge"
+  granted_at: "2026-07-13T06:19:19Z"
   scope: >-
-    仅限 IOT-T050 M2 closeout status：允许从 T049 merge 后的 origin/main 创建 codex
-    feature branch、修改本 contract 列出的状态文档、原子 commit、push 分支、创建或更新唯一
-    Draft PR，并在远端 CI 通过后标记 ready for review；不允许 merge、deploy、force-push、
-    rebase、squash、修改正文/frontmatter/source audit/review/trust 记录、VERSION 或 workflow。
+    仅限 IOT-T050 M2 closeout status 的 PR #25：允许从 T049 merge 后的 origin/main
+    创建 codex feature branch、修改本 contract 列出的状态文档、原子 commit、push 分支、
+    创建或更新唯一 PR；允许在 agent review no findings 且当前 head 的 Repository quality
+    成功后，以 merge commit 合并 PR #25。仍不允许 deploy、force-push、rebase、squash、
+    修改正文/frontmatter/source audit/review/trust 记录、VERSION 或 workflow。
 stop_conditions:
   - 工作树出现不属于 IOT-T050 允许路径的改动。
   - goal/lock 不一致，且无法在不放宽安全边界的情况下重签。
@@ -146,18 +149,17 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 3
+  completed_commits: 4
   no_external_delta_batches: 0
-  last_result: PR_READY_FOR_REVIEW
-  last_external_delta: PR_25_READY_FOR_REVIEW_CI_GREEN
+  last_result: MERGE_AUTHORIZED_AFTER_AGENT_REVIEW
+  last_external_delta: USER_AUTHORIZED_MERGE_FOR_PR_25
 activation:
   ref: 8161511f679cf158c19749191e9df2a0667f7d0c
   activated_at: "2026-07-13T05:21:00Z"
 next_action:
-  kind: WAIT_REVIEW
+  kind: MERGE_PR_AFTER_CI
   requires_activation: false
   instruction: >-
-    PR #25 is ready for review and Repository quality passed on the current head.
-    Stop writer work until reviewer feedback, explicit merge authorization, or an
-    external state change. Do not merge without a separate merge authorization and
-    matching machine-readable contract update.
+    Push this merge authorization update to PR #25, wait for Repository quality on
+    the current head to succeed, then merge PR #25 with a merge commit. After merge,
+    verify origin/main and main quality/Pages. Do not announce M2 or v0.3.0 complete.
