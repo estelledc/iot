@@ -154,19 +154,19 @@ selection:
   selected_articles: []
   rationale: "No content selection; T048 only projects existing structural audit coverage."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 1
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: T048_CONTRACT_BOOTSTRAP_VALIDATED
-  last_external_delta: IOT_T048_ACTIVE_CONTRACT_AND_LOCK_CREATED
+  last_result: T048_INVENTORY_PROJECTION_LOCAL_CHECKS_PASSED
+  last_external_delta: STRUCTURAL_AUDITS_PROJECTED_TO_INVENTORY_AND_PUBLIC_BLOCKS
 activation:
   ref: 25728363f5c036f256d8bdb4ac4f8bf7ce9df22c
   activated_at: "2026-07-13T03:57:22Z"
 next_action:
-  kind: RUN_T048_RED_TESTS
+  kind: PUSH_AND_OPEN_DRAFT_PR
   requires_activation: false
   instruction: >-
-    Add failing tests for source-audit inventory projection and fingerprint drift,
-    then implement the minimal inventory projection without changing source audit,
-    review, trust, content, schema, VERSION, or workflow files.
+    Commit the inventory projection changes, push codex/iot-t048-inventory-projection,
+    open the unique Draft PR, wait for Repository quality on the current head, then
+    mark the PR ready for review if all checks pass.

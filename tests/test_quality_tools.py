@@ -3,6 +3,7 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 from tools import (
     check_markdown_fences,
@@ -23,6 +24,116 @@ class ContentInventoryTests(unittest.TestCase):
             content_inventory._json_bytes(second),
         )
         self.assertEqual([], content_inventory.check_inventory(first))
+
+    def test_structural_source_audits_are_projected_as_sampled_inventory(self) -> None:
+        inventory = content_inventory.content_inventory()
+        expected_by_layer = {
+            "foundation": 5,
+            "connectivity": 6,
+            "network": 3,
+            "computing": 3,
+            "intelligence": 3,
+            "security": 3,
+            "applications": 3,
+            "frontier": 3,
+        }
+        actual_by_layer = {
+            layer["slug"]: layer["structural_source_audit_records"]
+            for layer in inventory["layers"]
+        }
+        self.assertEqual(expected_by_layer, actual_by_layer)
+        self.assertEqual(
+            {
+                "UNVERIFIED": 642,
+                "PARTIAL": 0,
+                "VERIFIED": 0,
+            },
+            inventory["totals"]["source_status_counts"],
+        )
+        self.assertEqual(29, inventory["totals"]["structural_source_audit_records"])
+        self.assertEqual(29, inventory["totals"]["structural_source_audited_files"])
+        self.assertEqual(0, inventory["totals"]["source_audited_files"])
+        self.assertTrue(
+            all(layer["source_audit"] == "SAMPLED_STRUCTURAL" for layer in inventory["layers"])
+        )
+
+    def test_source_audit_projection_uses_only_current_active_structural_records(self) -> None:
+        trust_result = SimpleNamespace(
+            projections={
+                "active-structural-content": SimpleNamespace(
+                    content_path="docs/foundation/papers/active.md",
+                    source_status="UNVERIFIED",
+                    active_audit_ids=("active-structural", "active-claim"),
+                ),
+                "inactive-structural-content": SimpleNamespace(
+                    content_path="docs/foundation/papers/inactive.md",
+                    source_status="UNVERIFIED",
+                    active_audit_ids=(),
+                ),
+                "partial-claim-content": SimpleNamespace(
+                    content_path="docs/connectivity/papers/partial.md",
+                    source_status="PARTIAL",
+                    active_audit_ids=("active-claim-2",),
+                ),
+            }
+        )
+        records_by_id = {
+            "active-structural": {"audit_kind": "STRUCTURAL"},
+            "inactive-structural": {"audit_kind": "STRUCTURAL"},
+            "active-claim": {"audit_kind": "CLAIM_VERIFICATION"},
+            "active-claim-2": {"audit_kind": "CLAIM_VERIFICATION"},
+        }
+
+        projection = content_inventory._source_audit_projection(
+            trust_result,
+            records_by_id,
+        )
+
+        self.assertEqual(1, projection["by_layer"]["foundation"]["structural_records"])
+        self.assertEqual(0, projection["by_layer"]["connectivity"]["structural_records"])
+        self.assertEqual(1, projection["totals"]["structural_source_audit_records"])
+        self.assertEqual(1, projection["totals"]["source_audited_files"])
+        self.assertEqual(
+            {
+                "UNVERIFIED": 2,
+                "PARTIAL": 1,
+                "VERIFIED": 0,
+            },
+            projection["totals"]["source_status_counts"],
+        )
+
+    def test_source_audit_files_are_part_of_inventory_fingerprint(self) -> None:
+        audit_inputs = {
+            path.relative_to(content_inventory.ROOT).as_posix()
+            for path in content_inventory._source_audit_paths()
+        }
+        fingerprint_inputs = {
+            path.relative_to(content_inventory.ROOT).as_posix()
+            for path in content_inventory._inventory_structural_paths()
+        }
+        self.assertEqual(29, len(audit_inputs))
+        self.assertLessEqual(audit_inputs, fingerprint_inputs)
+
+        temp_root = content_inventory.ROOT / ".tmp"
+        temp_root.mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=temp_root) as directory:
+            probe = Path(directory) / "audit.yml"
+            probe.write_text("audit: before\n", encoding="utf-8")
+            before = content_inventory._source_fingerprint([probe])
+            probe.write_text("audit: after\n", encoding="utf-8")
+            after = content_inventory._source_fingerprint([probe])
+        self.assertNotEqual(before, after)
+
+    def test_public_inventory_blocks_show_structural_not_factual_verification(self) -> None:
+        inventory = content_inventory.content_inventory()
+        for rendered in (
+            content_inventory._render_readme(inventory),
+            content_inventory._render_roadmap_root(inventory),
+            content_inventory._render_docs_progress(inventory),
+        ):
+            self.assertIn("STRUCTURAL", rendered)
+            self.assertIn("事实核验：**0**", rendered)
+            self.assertNotIn("状态为 `NOT_TRACKED`", rendered)
 
 
 class HomepageSourceTruthTests(unittest.TestCase):
