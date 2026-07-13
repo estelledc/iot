@@ -146,17 +146,18 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 2
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: M2_CLOSEOUT_DOCS_UPDATED
-  last_external_delta: PARKED_HUMAN_EVIDENCE_STATUS_DOCUMENTED
+  last_result: PR_READY_FOR_REVIEW
+  last_external_delta: PR_25_READY_FOR_REVIEW_CI_GREEN
 activation:
   ref: 8161511f679cf158c19749191e9df2a0667f7d0c
   activated_at: "2026-07-13T05:21:00Z"
 next_action:
-  kind: PUSH_AND_OPEN_DRAFT_PR
+  kind: WAIT_REVIEW
   requires_activation: false
   instruction: >-
-    Commit the M2 closeout documentation, push codex/iot-m2-closeout, open the unique
-    Draft PR, wait for Repository quality on the current head, then mark the PR ready
-    for review if all checks pass. Do not merge without a separate merge authorization.
+    PR #25 is ready for review and Repository quality passed on the current head.
+    Stop writer work until reviewer feedback, explicit merge authorization, or an
+    external state change. Do not merge without a separate merge authorization and
+    matching machine-readable contract update.
