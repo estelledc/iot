@@ -10,7 +10,7 @@
 - **系统**：Markdown 源真相 → frontmatter schema 与确定性清单 → 自动 catalog、搜索与 MkDocs Pages → CI 结构、链接和发布门禁。
 - **可核查证据**：8 层技术体系；642 个内容文件已全部进入可发现目录；M1 治理基线已完成。
 - **协作分工**：Jason 负责分层、里程碑、发布门禁与验收判断；AI 辅助研究、初稿、批量深审和站点实现，不能自行授予 `VERIFIED` 或 `HUMAN_APPROVED`。
-- **当前局限**：全量来源审计仍是 `NOT_TRACKED`；642/642 正文处于 `IN_REVIEW`，不表示技术事实已经人工验证；Pages 运行状态需针对目标 commit 单独验收。
+- **当前局限**：已有 29 条 `STRUCTURAL` 结构审计，但事实核验仍为 0；642/642 正文处于 `IN_REVIEW`，不表示技术事实已经人工验证；Pages 验收记录见 [`data/deploy-acceptance.yml`](data/deploy-acceptance.yml)。
 
 <!-- content-inventory:start -->
 ## 当前内容基线
