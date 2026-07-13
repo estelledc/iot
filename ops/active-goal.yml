@@ -152,10 +152,10 @@ selection:
 progress:
   completed_batches: 2
   completed_articles: 0
-  completed_commits: 3
+  completed_commits: 4
   no_external_delta_batches: 0
   last_result: READY_FOR_REVIEW_WAIT_REVIEW
-  last_external_delta: PR_22_CURRENT_SHA_QUALITY_SUCCESS_AND_READY_FOR_REVIEW
+  last_external_delta: PR_22_READY_FOR_REVIEW
 activation:
   ref: 4310810cc6de71c7c151da790cb887f512f11c33
   activated_at: "2026-07-13T02:23:40Z"
@@ -163,6 +163,5 @@ next_action:
   kind: WAIT_REVIEW
   requires_activation: false
   instruction: >-
-    PR #22 is ready for review at head 1c97ce90ac09f277701f1c24ff7c53221b5b55a5
-    with Repository quality success. Wait for human review or merge; do not start
-    IOT-T048 until IOT-T047 is merged into main.
+    PR #22 is ready for review. Wait for human review or merge; do not start IOT-T048
+    until IOT-T047 is merged into main and the merge commit is verified from origin/main.
