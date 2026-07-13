@@ -21,10 +21,12 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from tools import trust_records, validate_trust_state
 from tools.iot_domain import LAYERS, iter_content_documents
 
 DATA_PATH = Path("data/content-inventory.json")
 REVIEW_BASELINE_COMMIT = "2a18aec69793494156ffca67848ca0639c145fe4"
+SOURCE_AUDIT_ROOT = Path("data/source-audits")
 START_MARKER = "<!-- content-inventory:start -->"
 END_MARKER = "<!-- content-inventory:end -->"
 
@@ -84,10 +86,139 @@ def _source_fingerprint(structural_paths: list[Path]) -> str:
     return digest.hexdigest()
 
 
+def _source_audit_paths() -> list[Path]:
+    root = ROOT / SOURCE_AUDIT_ROOT
+    if not root.exists():
+        return []
+    return sorted(
+        path
+        for path in root.rglob("*")
+        if path.suffix in {".yml", ".yaml"} and path.is_file()
+    )
+
+
+def _inventory_structural_paths() -> list[Path]:
+    paths = [ROOT / "mkdocs.yml"]
+    papers_by_layer = {layer.slug: [] for layer in LAYERS}
+    for document in iter_content_documents(repo_root=ROOT):
+        papers_by_layer[document.layer.slug].append(document.path)
+
+    for _, slug, _, plan_name in LAYERS:
+        plan_path = ROOT / "plans" / plan_name
+        index_path = ROOT / "docs" / slug / "index.md"
+        catalog_file = ROOT / "docs" / slug / "catalog.md"
+        paths.extend(papers_by_layer[slug])
+        paths.extend((plan_path, index_path))
+        if catalog_file.is_file():
+            paths.append(catalog_file)
+    paths.extend(_source_audit_paths())
+    return paths
+
+
+def _load_source_audit_records_by_id() -> dict[str, dict[str, Any]]:
+    records: dict[str, dict[str, Any]] = {}
+    for path in _source_audit_paths():
+        record = trust_records.load_record(path)
+        audit_id = record.get("audit_id")
+        if not isinstance(audit_id, str) or not audit_id:
+            raise ValueError(f"source audit missing audit_id: {path.relative_to(ROOT)}")
+        if audit_id in records:
+            raise ValueError(f"duplicate source audit id: {audit_id}")
+        records[audit_id] = record
+    return records
+
+
+def _layer_slug_from_content_path(content_path: str) -> str:
+    parts = Path(content_path).parts
+    if len(parts) != 4 or parts[0] != "docs" or parts[2] != "papers":
+        raise ValueError(f"invalid source audit content path: {content_path}")
+    slugs = {layer.slug for layer in LAYERS}
+    if parts[1] not in slugs:
+        raise ValueError(f"unknown source audit layer slug: {parts[1]}")
+    return parts[1]
+
+
+def _source_audit_label(structural_files: int) -> str:
+    if structural_files >= 3:
+        return "SAMPLED_STRUCTURAL"
+    if structural_files:
+        return "PARTIAL_STRUCTURAL"
+    return "NOT_TRACKED"
+
+
+def _source_audit_projection(
+    trust_result: Any,
+    records_by_id: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    by_layer = {
+        layer.slug: {
+            "structural_records": 0,
+            "structural_files": 0,
+            "factual_source_audited_files": 0,
+            "source_audit": "NOT_TRACKED",
+        }
+        for layer in LAYERS
+    }
+    source_status_counts = {"UNVERIFIED": 0, "PARTIAL": 0, "VERIFIED": 0}
+
+    for projection in trust_result.projections.values():
+        status = str(getattr(projection, "source_status"))
+        source_status_counts.setdefault(status, 0)
+        source_status_counts[status] += 1
+
+        slug = _layer_slug_from_content_path(str(getattr(projection, "content_path")))
+        if status in {"PARTIAL", "VERIFIED"}:
+            by_layer[slug]["factual_source_audited_files"] += 1
+
+        active_structural_ids = [
+            audit_id
+            for audit_id in getattr(projection, "active_audit_ids")
+            if records_by_id.get(audit_id, {}).get("audit_kind") == "STRUCTURAL"
+        ]
+        if active_structural_ids:
+            by_layer[slug]["structural_files"] += 1
+            by_layer[slug]["structural_records"] += len(active_structural_ids)
+
+    for layer_projection in by_layer.values():
+        layer_projection["source_audit"] = _source_audit_label(
+            layer_projection["structural_files"]
+        )
+
+    return {
+        "by_layer": by_layer,
+        "totals": {
+            "source_status_counts": source_status_counts,
+            "source_audited_files": (
+                source_status_counts.get("PARTIAL", 0)
+                + source_status_counts.get("VERIFIED", 0)
+            ),
+            "structural_source_audit_records": sum(
+                layer["structural_records"] for layer in by_layer.values()
+            ),
+            "structural_source_audited_files": sum(
+                layer["structural_files"] for layer in by_layer.values()
+            ),
+        },
+    }
+
+
+def _current_source_audit_projection() -> dict[str, Any]:
+    trust_result = validate_trust_state.validate_repository_trust(
+        repo_root=ROOT,
+        baseline_mode=True,
+    )
+    if trust_result.issues:
+        raise ValueError("trust state has validation issues; cannot project source audits")
+    return _source_audit_projection(
+        trust_result,
+        _load_source_audit_records_by_id(),
+    )
+
+
 def content_inventory() -> dict[str, Any]:
     nav_paths = _nav_paper_paths()
+    audit_projection = _current_source_audit_projection()
     layers: list[dict[str, Any]] = []
-    structural_paths = [ROOT / "mkdocs.yml"]
     papers_by_layer = {layer.slug: [] for layer in LAYERS}
     for document in iter_content_documents(repo_root=ROOT):
         papers_by_layer[document.layer.slug].append(document.path)
@@ -105,6 +236,7 @@ def content_inventory() -> dict[str, Any]:
         planned_capacity = max(content_files, seed_files + plan_topics)
         layer_nav_paths = {path for path in nav_paths if path.startswith(f"{slug}/")}
         discoverable = layer_nav_paths | catalog_paths
+        layer_audit = audit_projection["by_layer"][slug]
 
         layers.append(
             {
@@ -118,13 +250,14 @@ def content_inventory() -> dict[str, Any]:
                 "discoverable_entries": len(discoverable),
                 "plan_topics": plan_topics,
                 "planned_capacity": planned_capacity,
-                "source_audit": "NOT_TRACKED",
+                "source_audit": layer_audit["source_audit"],
+                "structural_source_audit_records": layer_audit["structural_records"],
+                "structural_source_audited_files": layer_audit["structural_files"],
+                "factual_source_audited_files": layer_audit[
+                    "factual_source_audited_files"
+                ],
             }
         )
-        structural_paths.extend(paper_paths)
-        structural_paths.extend((plan_path, index_path))
-        if catalog_file.is_file():
-            structural_paths.append(catalog_file)
 
     totals = {
         "content_files": sum(layer["content_files"] for layer in layers),
@@ -134,14 +267,14 @@ def content_inventory() -> dict[str, Any]:
         "discoverable_entries": sum(layer["discoverable_entries"] for layer in layers),
         "plan_topics": sum(layer["plan_topics"] for layer in layers),
         "planned_capacity": sum(layer["planned_capacity"] for layer in layers),
-        "source_audited_files": None,
+        **audit_projection["totals"],
     }
 
     return {
         "schema_version": 1,
         "review_baseline_commit": REVIEW_BASELINE_COMMIT,
         "generated_by": "python tools/content_inventory.py --write",
-        "source_fingerprint_sha256": _source_fingerprint(structural_paths),
+        "source_fingerprint_sha256": _source_fingerprint(_inventory_structural_paths()),
         "definitions": {
             "content_files": "docs/<layer>/papers 下存在的 Markdown 文件；不代表来源或事实已审核",
             "explicit_nav_entries": "mkdocs.yml 的 nav 中显式列出的内容文件",
@@ -150,7 +283,10 @@ def content_inventory() -> dict[str, Any]:
             "discoverable_entries": "显式导航 ∪ 层级 catalog 链接；不等于来源已审核",
             "plan_topics": "plans/*.json 中的条目；包含已完成扩展计划，不能与内容文件直接相加",
             "planned_capacity": "每层 max(现有文件数, 25 个种子文件 + plan 条目数) 的容量估计",
-            "source_audited_files": "尚无机器可读的全量来源审计记录，因此为 null",
+            "source_audited_files": "当前由 CLAIM_VERIFICATION 投影为 PARTIAL 或 VERIFIED 的内容文件数；STRUCTURAL 不计入",
+            "structural_source_audit_records": "当前有效的 STRUCTURAL source audit 记录数，只证明结构可审计",
+            "structural_source_audited_files": "至少有一条当前有效 STRUCTURAL source audit 的内容文件数",
+            "source_status_counts": "仓库级 trust graph 当前投影出的 source_status 计数",
         },
         "totals": totals,
         "layers": layers,
@@ -204,7 +340,10 @@ def _render_readme(inventory: dict[str, Any]) -> str:
         f"**{totals['layer_index_entries']}** 篇。\n"
         f"- 扩展计划：`plans/*.json` 共 **{totals['plan_topics']}** 条；按当前口径的目标容量为 "
         f"**{totals['planned_capacity']}** 篇。\n"
-        "- 来源审计：尚未建立全量机器可读记录，不能把“文件存在”表述为“技术事实已验证”。\n\n"
+        f"- 来源审计：current valid `STRUCTURAL` 结构审计 **{totals['structural_source_audit_records']}** 条，"
+        f"覆盖 **{totals['structural_source_audited_files']}** 个内容文件；事实核验："
+        f"**{totals['source_audited_files']}** 篇（`PARTIAL`/`VERIFIED`）。"
+        "`STRUCTURAL` 只证明结构可审计，不代表技术事实已验证。\n\n"
         "统计由 `python tools/content_inventory.py --write` 生成；"
         "`python tools/content_inventory.py --check` 用于检查漂移。\n\n"
         "配置的 Pages 地址：<https://estelledc.github.io/iot/>"
@@ -213,11 +352,15 @@ def _render_readme(inventory: dict[str, Any]) -> str:
 
 
 def _render_roadmap_root(inventory: dict[str, Any]) -> str:
+    totals = inventory["totals"]
     return (
         "### 当前内容基线（自动派生）\n\n"
         + _markdown_table(inventory)
         + "\n\n> “内容文件”只表示 Markdown 存在；“可发现”= 显式导航 ∪ 层级 catalog。"
-        "来源审计状态尚未建立。继续扩展 Layer 3–8 前，先完成来源抽样和可重复生产门禁。"
+        f"当前有 **{totals['structural_source_audit_records']}** 条 current valid `STRUCTURAL` "
+        f"结构审计记录；事实核验：**{totals['source_audited_files']}** 篇。"
+        "`STRUCTURAL` 不提升 `PARTIAL`、`VERIFIED` 或 `HUMAN_APPROVED`。"
+        "继续扩展 Layer 3–8 前，先完成事实核验、来源抽样和可重复生产门禁。"
     )
 
 
@@ -252,7 +395,11 @@ def _render_docs_progress(inventory: dict[str, Any]) -> str:
         f"- **可发现 {totals['discoverable_entries']}**：显式导航 ∪ 目录页链接。\n"
         f"- **层级首页入口 {totals['layer_index_entries']}**：八个概览页直接链接的内容文件。\n"
         f"- **Plan 条目 {totals['plan_topics']}**：包含已执行和未执行计划，不能与现有文件直接相加。\n"
-        "- **来源审计**：尚无机器可读的全量记录，状态为 `NOT_TRACKED`。\n\n"
+        f"- **来源审计**：current valid `STRUCTURAL` 结构审计 **{totals['structural_source_audit_records']}** 条，"
+        f"覆盖 **{totals['structural_source_audited_files']}** 个内容文件；事实核验："
+        f"**{totals['source_audited_files']}** 篇（`PARTIAL`/`VERIFIED`），"
+        f"`VERIFIED` **{totals['source_status_counts']['VERIFIED']}** 篇。"
+        "`STRUCTURAL` 只证明结构可审计，不代表技术事实已验证。\n\n"
         "生成与校验：\n\n"
         "```bash\n"
         "python tools/content_inventory.py --write\n"
@@ -371,7 +518,9 @@ def _summary(inventory: dict[str, Any]) -> str:
         f"discoverable={totals['discoverable_entries']} "
         f"layer_index={totals['layer_index_entries']} "
         f"plan_topics={totals['plan_topics']} "
-        f"planned_capacity={totals['planned_capacity']}"
+        f"planned_capacity={totals['planned_capacity']} "
+        f"structural_source_audits={totals['structural_source_audit_records']} "
+        f"source_audited_files={totals['source_audited_files']}"
     )
 
 
