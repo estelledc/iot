@@ -25,7 +25,7 @@ external_outcome:
     VERSION 或发布配置的前提下，为后续 IOT-T048/IOT-T049 建立可锁定、可验证的
     progression contract 底座。最终外部结果以唯一 Draft PR 当前 SHA 的
     Repository quality 成功和 ready for review 状态为准。
-  d_axis: D1
+  d_axis: D2
   satisfies_when:
     - active-goal 生命周期通用检查与 STRUCTURAL_SHADOW_AUDIT 专用检查完成分层。
     - PREPARED 到 ACTIVE 的 commit、push、open_pr 权限必须由显式 grant 锁定。
@@ -152,16 +152,17 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 1
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: LOCAL_VALIDATION_PASSED
-  last_external_delta: CONTRACT_HARDENED_AND_LOCAL_GATES_PASSED
+  last_result: DRAFT_PR_OPENED_WAIT_CI
+  last_external_delta: PR_22_OPENED_AND_REPOSITORY_QUALITY_STARTED
 activation:
   ref: 4310810cc6de71c7c151da790cb887f512f11c33
   activated_at: "2026-07-13T02:23:40Z"
 next_action:
-  kind: PUSH_AND_OPEN_DRAFT_PR
+  kind: WAIT_FOR_PR_CI
   requires_activation: false
   instruction: >-
-    Push codex/iot-t047-progression-contract and open the unique Draft PR; then monitor
-    the PR SHA Repository quality result without starting IOT-T048.
+    Wait for PR #22 Repository quality on the current pushed SHA. If it fails, fix only
+    actionable IOT-T047 issues; if it succeeds, mark the PR ready for review and pause
+    without starting IOT-T048.
