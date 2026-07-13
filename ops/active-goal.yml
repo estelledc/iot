@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T050
-status: ACTIVE
+status: PAUSED
 objective: >-
   收口 M2 当前证据状态：记录 IOT-T047/T048/T049 已完成的外部闭环，并明确 M2
   尚不能宣布完成或发布 v0.3.0，因为事实核验链、FACT_AUDITOR authority 与人类审批证据仍缺失。
@@ -144,19 +144,19 @@ selection:
   selected_articles: []
   rationale: "No content selection; T050 only documents M2 closeout state and blockers."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 1
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: T050_CONTRACT_BOOTSTRAP
-  last_external_delta: USER_AUTHORIZED_M2_CLOSEOUT
+  last_result: M2_CLOSEOUT_DOCS_UPDATED
+  last_external_delta: PARKED_HUMAN_EVIDENCE_STATUS_DOCUMENTED
 activation:
   ref: 8161511f679cf158c19749191e9df2a0667f7d0c
   activated_at: "2026-07-13T05:21:00Z"
 next_action:
-  kind: RUN_M2_CLOSEOUT_DOC_UPDATE
+  kind: PUSH_AND_OPEN_DRAFT_PR
   requires_activation: false
   instruction: >-
-    Update README.md, ROADMAP.md, and docs/progress.md to reflect that T047-T049
-    are complete while M2 is PARKED_HUMAN_EVIDENCE pending factual claim verification
-    and human review evidence. Do not modify content, trust records, VERSION, or workflows.
+    Commit the M2 closeout documentation, push codex/iot-m2-closeout, open the unique
+    Draft PR, wait for Repository quality on the current head, then mark the PR ready
+    for review if all checks pass. Do not merge without a separate merge authorization.
