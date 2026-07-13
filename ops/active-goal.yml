@@ -160,19 +160,20 @@ selection:
   selected_articles: []
   rationale: "No content selection; T049 only records deployed SHA acceptance evidence."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 1
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: T049_CONTRACT_BOOTSTRAP
-  last_external_delta: PR_23_MERGED_AND_MAIN_QUALITY_PAGES_SUCCEEDED
+  last_result: T049_DEPLOY_ACCEPTANCE_LOCAL_CHECKS_PASSED
+  last_external_delta: DEPLOY_ACCEPTANCE_RECORD_BOUND_TO_B375FD8_MAIN_PAGES
 activation:
   ref: b375fd8bb32b35be9ab03e08ecedd4287dec87a1
   activated_at: "2026-07-13T04:34:11Z"
 next_action:
-  kind: RUN_T049_RED_TESTS
+  kind: PUSH_AND_OPEN_DRAFT_PR
   requires_activation: false
   instruction: >-
-    Add failing deploy acceptance tests and checker/schema, then create the minimal
-    data/deploy-acceptance.yml record for b375fd8bb32b35be9ab03e08ecedd4287dec87a1.
-    Do not change content, trust state, VERSION, workflow permissions, or deploy settings.
+    Commit the deploy acceptance record and checker, push codex/iot-t049-deployed-sha-acceptance,
+    open the unique Draft PR, wait for Repository quality on the current head, then
+    mark the PR ready for review if all checks pass. Do not merge without a separate
+    merge authorization.

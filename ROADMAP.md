@@ -122,7 +122,7 @@ flowchart LR
 1. **来源审计记录**：每篇内容的 `source_status`（`UNVERIFIED` / `PARTIAL` / `VERIFIED`）落入 frontmatter；清单工具把 `source_audited_files` 从 `null` 变为可统计。抽样规模锁定为每层 3 篇（导航精选前 3）。结构性审计只判断可审计性，不提升 `source_status`；`PARTIAL` / `VERIFIED` 必须由当前正文的事实核验记录投影，完整规则见[内容 frontmatter 契约](docs/content-schema.md)。
 2. **抽样核验**：每层 3 篇报告写入 `data/source-audits/<slug>/`；抽样不合格（`NEEDS_CHANGES`）的篇目先修复再谈升格。
 3. **review record 流程**：`HUMAN_APPROVED` 必须绑定独立人工证据与当前正文 hash，审批权威是 [review record schema](schemas/review-record.schema.json)；frontmatter 只保存兼容缓存字段。
-4. **线上验收**：对 <https://estelledc.github.io/iot/> 针对目标 commit 做一次部署健康验收，结果写入 `data/deploy-acceptance.yml`。
+4. **线上验收**：对 <https://estelledc.github.io/iot/> 针对目标 commit 做一次部署健康验收，结果写入 [`data/deploy-acceptance.yml`](data/deploy-acceptance.yml)。
 
 **完成判据**：
 

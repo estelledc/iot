@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://estelledc.github.io/iot/schemas/deploy-acceptance.schema.json",
+  "title": "IoT deployed Pages acceptance evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "accepted_at",
+    "target_sha",
+    "site_url",
+    "repository_quality",
+    "pages_deploy",
+    "checks",
+    "inventory_summary",
+    "trust_summary",
+    "notes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "accepted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "target_sha": {
+      "$ref": "#/$defs/commitRef"
+    },
+    "site_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://estelledc\\.github\\.io/iot/$"
+    },
+    "repository_quality": {
+      "$ref": "#/$defs/workflowRun"
+    },
+    "pages_deploy": {
+      "$ref": "#/$defs/workflowRun"
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "ok",
+          "url",
+          "detail"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "ok": {
+            "type": "boolean"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "detail": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        }
+      }
+    },
+    "inventory_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_files",
+        "structural_source_audit_records",
+        "source_audited_files",
+        "source_status_counts"
+      ],
+      "properties": {
+        "content_files": {
+          "const": 642
+        },
+        "structural_source_audit_records": {
+          "const": 29
+        },
+        "source_audited_files": {
+          "const": 0
+        },
+        "source_status_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "UNVERIFIED",
+            "PARTIAL",
+            "VERIFIED"
+          ],
+          "properties": {
+            "UNVERIFIED": {
+              "const": 642
+            },
+            "PARTIAL": {
+              "const": 0
+            },
+            "VERIFIED": {
+              "const": 0
+            }
+          }
+        }
+      }
+    },
+    "trust_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_records",
+        "review_records",
+        "legacy_unbound",
+        "evidence_bound_review",
+        "verified",
+        "approved"
+      ],
+      "properties": {
+        "source_records": {
+          "const": 29
+        },
+        "review_records": {
+          "const": 0
+        },
+        "legacy_unbound": {
+          "const": 642
+        },
+        "evidence_bound_review": {
+          "const": 0
+        },
+        "verified": {
+          "const": 0
+        },
+        "approved": {
+          "const": 0
+        }
+      }
+    },
+    "notes": {
+      "$ref": "#/$defs/nonEmptyString"
+    }
+  },
+  "$defs": {
+    "commitRef": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workflowRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow_name",
+        "run_id",
+        "run_url",
+        "conclusion"
+      ],
+      "properties": {
+        "workflow_name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "run_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "run_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://github\\.com/estelledc/iot/actions/runs/[0-9]+$"
+        },
+        "conclusion": {
+          "enum": [
+            "success",
+            "failure",
+            "cancelled",
+            "skipped",
+            "timed_out",
+            "action_required"
+          ]
+        }
+      }
+    }
+  }
+}
