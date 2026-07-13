@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T048
-status: ACTIVE
+status: PAUSED
 objective: >-
   将现有 29 条 current valid STRUCTURAL source audit 诚实投影到 content inventory
   及公开派生块中，同时明确结构可审计不等于事实已核验，且不得提升
@@ -156,17 +156,17 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 2
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: T048_INVENTORY_PROJECTION_LOCAL_CHECKS_PASSED
-  last_external_delta: STRUCTURAL_AUDITS_PROJECTED_TO_INVENTORY_AND_PUBLIC_BLOCKS
+  last_result: PR_23_REMOTE_QUALITY_SUCCESS_WAIT_REVIEW
+  last_external_delta: DRAFT_PR_23_OPENED_AND_REPOSITORY_QUALITY_SUCCEEDED
 activation:
   ref: 25728363f5c036f256d8bdb4ac4f8bf7ce9df22c
   activated_at: "2026-07-13T03:57:22Z"
 next_action:
-  kind: PUSH_AND_OPEN_DRAFT_PR
+  kind: WAIT_REVIEW
   requires_activation: false
   instruction: >-
-    Commit the inventory projection changes, push codex/iot-t048-inventory-projection,
-    open the unique Draft PR, wait for Repository quality on the current head, then
-    mark the PR ready for review if all checks pass.
+    Push this status update to PR #23, wait for Repository quality on the current
+    head to succeed, then mark PR #23 ready for review. Do not start IOT-T049 until
+    PR #23 is merged into main and main quality/Pages are verified.
