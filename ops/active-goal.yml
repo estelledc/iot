@@ -1,39 +1,39 @@
 schema_version: "1.0"
-goal_id: IOT-T053
-status: COMPLETE
+goal_id: IOT-T054
+status: ACTIVE
 objective: >-
-  在当前本地 main 基线上新增 5 篇 IoT 论文初读卡片，刷新派生目录与
+  在当前本地 main 基线上分十批新增 40 篇 IoT 论文初读卡片，刷新派生目录与
   inventory，完成本地质量门禁、原子提交、push 到 main，并等待 GitHub Pages
   部署成功后记录可复查验收证据。新增卡片只作为研究入口，不提升
   PARTIAL、VERIFIED 或 HUMAN_APPROVED。
 scope:
-  task_id: IOT-T053
+  task_id: IOT-T054
   mode: SOURCE_AUDIT_INVENTORY_PROJECTION
   first_batch_articles: 0
   max_articles: 0
-activated_by: "current-user-prompt-2026-07-14-continue-iot-research-5-new-papers-full-deploy"
+activated_by: "current-user-prompt-2026-07-14-continue-iot-research-40-papers-ten-batches-full-deploy"
 review_after: "2026-07-14"
 budget:
-  max_batches: 2
+  max_batches: 12
   max_articles: 0
-  max_commits: 3
-  max_wall_minutes: 240
+  max_commits: 6
+  max_wall_minutes: 360
   max_parallel_agents: 1
   max_parallel_writers: 1
 external_outcome:
   definition: >-
-    5 篇新论文以 canonical Markdown 初读卡形式进入站点，目录与 inventory
-    更新到 657 篇；本地质量门禁通过；提交并 push 到 main 触发远端 Repository
+    40 篇新论文以 canonical Markdown 初读卡形式进入站点，目录与 inventory
+    更新到 697 篇；本地质量门禁通过；提交并 push 到 main 触发远端 Repository
     quality 与 Pages deploy；部署验收记录只说明目标 SHA 已上线，不把新增卡片
     写成事实核验或人工审批完成。
   d_axis: D4
   satisfies_when:
-    - 新增 5 个 docs/<layer>/papers/*.md，frontmatter 通过 schema 校验。
+    - 新增 40 个 docs/<layer>/papers/*.md，frontmatter 通过 schema 校验。
     - 新增卡片均保持 source_status=UNVERIFIED、review_status=UNREVIEWED。
     - content inventory、layer catalogs、README、ROADMAP、docs/index、docs/progress、docs/roadmap 与 reading-progress 派生块同步。
-    - trust projection 保持 source_records=1284、review_records=1284、evidence_bound_review=642、verified=642、approved=642；新增 5 篇不提升可信状态。
+    - trust projection 保持 source_records=1284、review_records=1284、evidence_bound_review=642、verified=642、approved=642；新增 40 篇不提升可信状态。
     - 本地 full tests、strict MkDocs build、Markdown fence/link checks 和 git diff --check 通过。
-    - 测试中的仓库基线常量与当前 657 篇内容、1284 条 source/review 记录和 642 篇已核验投影一致。
+    - 测试中的仓库基线常量与当前 697 篇内容、1284 条 source/review 记录和 642 篇已核验投影一致。
     - 通过原子提交将本轮变更推送到 main，等待 Repository quality 与 Pages deploy 成功。
     - data/deploy-acceptance.yml 记录新部署验收，不伪造人工 review 或 release 完成状态。
 external_action_authority:
@@ -44,15 +44,15 @@ external_action_authority:
   deploy: true
 external_action_grant:
   source: "current-user-prompt-2026-07-14-full-process-deploy"
-  granted_at: "2026-07-14T12:05:03Z"
+  granted_at: "2026-07-14T13:10:01Z"
   scope: >-
-    仅限 IOT-T053：允许在当前 main 上新增 5 篇 IoT 论文初读卡、刷新派生索引、
-    更新 active goal 与部署验收记录、创建不超过 3 个原子提交、push 到 origin/main
+    仅限 IOT-T054：允许在当前 main 上分十批新增 40 篇 IoT 论文初读卡、刷新派生索引、
+    更新 active goal 与部署验收记录、创建不超过 6 个原子提交、push 到 origin/main
     并等待 GitHub Actions / GitHub Pages 完成部署。不允许 force-push、rebase、
     修改 schema/tools/workflow、伪造 source audit/review/human approval，或提升新增
-    5 篇的可信状态。
+    40 篇的可信状态。
 stop_conditions:
-  - 工作树出现不属于 IOT-T053 允许路径的改动。
+  - 工作树出现不属于 IOT-T054 允许路径的改动。
   - goal/lock 不一致，且无法在不放宽安全边界的情况下重签。
   - Python 3.11 环境或 .tmp/agent-venv/bin/python 不可复现。
   - 新增论文需要写成 PARTIAL、VERIFIED、HUMAN_APPROVED 或创建伪造 source/review record 才能通过。
@@ -62,11 +62,11 @@ stop_conditions:
   - 预算耗尽或 review_after 到达 2026-07-14。
 superseded_by: null
 baseline:
-  prepared_at_ref: ad859ffced303a91f8cde81aee7e080248a62e41
-  remote_main_ref: ad859ffced303a91f8cde81aee7e080248a62e41
-  required_history_ancestor: ad859ffced303a91f8cde81aee7e080248a62e41
+  prepared_at_ref: a509d3f5ab56c6f6fe3480e0518e0a061a9830ab
+  remote_main_ref: a509d3f5ab56c6f6fe3480e0518e0a061a9830ab
+  required_history_ancestor: a509d3f5ab56c6f6fe3480e0518e0a061a9830ab
   expected_inventory:
-    canonical_content: 657
+    canonical_content: 697
     plan_topics: 1761
   expected_trust:
     source_records: 1284
@@ -79,11 +79,11 @@ acceptance_checks:
   - id: active_goal_contract
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_active_goal.py
-    expectation: ACTIVE_GOAL_OK goal_id=IOT-T053 status=ACTIVE during content/deploy slice.
+    expectation: ACTIVE_GOAL_OK goal_id=IOT-T054 status=ACTIVE during content/deploy slice.
   - id: content_inventory
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/content_inventory.py --check
-    expectation: content inventory is current and reports content_files=657 source_audited_files=642.
+    expectation: content inventory is current and reports content_files=697 source_audited_files=642.
   - id: layer_catalogs
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/generate_layer_catalogs.py --check
@@ -91,7 +91,7 @@ acceptance_checks:
   - id: frontmatter
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_frontmatter.py --all
-    expectation: FRONTMATTER_SCHEMA_OK checked=657 schema_version=1.0.
+    expectation: FRONTMATTER_SCHEMA_OK checked=697 schema_version=1.0.
   - id: source_records
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_source_audits.py --all
@@ -103,7 +103,7 @@ acceptance_checks:
   - id: trust_projection
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_trust_state.py --all --baseline-mode
-    expectation: TRUST_STATE_OK canonical_content=657 source_records=1284 review_records=1284 verified=642 approved=642.
+    expectation: TRUST_STATE_OK canonical_content=697 source_records=1284 review_records=1284 verified=642 approved=642.
   - id: full_tests
     cadence: GOAL_CLOSE
     command: .tmp/agent-venv/bin/python -m unittest discover -s tests -v
@@ -136,15 +136,58 @@ allowed_mutations:
   - docs/index.md
   - docs/progress.md
   - docs/roadmap.md
+  - docs/network/index.md
+  - docs/network/catalog.md
+  - docs/computing/index.md
+  - docs/computing/catalog.md
   - docs/intelligence/index.md
-  - docs/security/index.md
   - docs/intelligence/catalog.md
+  - docs/security/index.md
   - docs/security/catalog.md
-  - docs/intelligence/papers/foundation-models-iot-survey.md
-  - docs/intelligence/papers/edge-large-ai-models-iot-applications.md
-  - docs/intelligence/papers/distributed-swarm-learning-edge-iot.md
-  - docs/security/papers/semantic-iot-wireless-security.md
-  - docs/security/papers/drl-intrusion-detection-iot.md
+  - docs/applications/index.md
+  - docs/applications/catalog.md
+  - docs/frontier/index.md
+  - docs/frontier/catalog.md
+  - docs/network/papers/tip-decentralized-iot-interoperability.md
+  - docs/network/papers/protocol-aware-p4-mqtt-security.md
+  - docs/network/papers/rpl-radio-feature-intrusion-detection.md
+  - docs/network/papers/dns-over-quic-datagram-iot.md
+  - docs/computing/papers/ecokube-carbon-aware-edge-cloud-scheduling.md
+  - docs/computing/papers/fog-computing-llm-vision.md
+  - docs/computing/papers/edge-object-detection-load-balancing.md
+  - docs/computing/papers/carbon-aware-mec-task-offloading-marl.md
+  - docs/intelligence/papers/agentic-iot-internet-of-agents.md
+  - docs/intelligence/papers/ai-uav-backscatter-localization.md
+  - docs/intelligence/papers/hardware-aware-nas-embedded-devices.md
+  - docs/intelligence/papers/tinyml-acoustic-anomaly-detection.md
+  - docs/intelligence/papers/power-side-channel-tinyml-anomaly-detection.md
+  - docs/intelligence/papers/fast-time-series-anomaly-detection.md
+  - docs/intelligence/papers/sim-to-real-rl-aiot-benchmark.md
+  - docs/intelligence/papers/cascaded-pruning-on-device-llm-iiot.md
+  - docs/security/papers/vexaiot-agentic-vulnerability-exploitation.md
+  - docs/security/papers/federated-acvae-iot-intrusion-detection.md
+  - docs/security/papers/gnn-kan-iot-intrusion-detection.md
+  - docs/security/papers/generative-ai-federated-learning-ids.md
+  - docs/security/papers/cross-domain-iiot-intrusion-detection.md
+  - docs/security/papers/quic-binary-security-iot.md
+  - docs/security/papers/qers-mqtt-post-quantum-cryptography.md
+  - docs/security/papers/secure-ai-service-provisioning-iot.md
+  - docs/applications/papers/topobrick-building-iot-forecasting.md
+  - docs/applications/papers/neuro-agentic-control-industrial-iot.md
+  - docs/applications/papers/structural-attribution-cyber-physical-iot.md
+  - docs/applications/papers/medical-iot-formally-verified-translation.md
+  - docs/applications/papers/wearable-eeg-compression-iot.md
+  - docs/applications/papers/energy-aware-marl-drone-networks.md
+  - docs/applications/papers/smart-home-automation-6g-cities.md
+  - docs/applications/papers/iot-zoo-reproducible-traffic-capture.md
+  - docs/frontier/papers/internet-of-everything-6g-era.md
+  - docs/frontier/papers/haps-ris-iot-disaster-recovery.md
+  - docs/frontier/papers/visible-light-rf-backscatter-ambient-iot.md
+  - docs/frontier/papers/multi-satellite-noma-irsa-iot.md
+  - docs/frontier/papers/reconfigurable-wireless-powered-networks.md
+  - docs/frontier/papers/version-aware-multihop-iot-communication.md
+  - docs/frontier/papers/green-iot-data-computation-orchestration.md
+  - docs/frontier/papers/adaptive-random-access-ambient-iot.md
   - tests/test_iot_domain.py
   - tests/test_layer_catalogs.py
   - tests/test_quality_tools.py
@@ -159,27 +202,29 @@ forbidden_mutations:
   - data/trust-authorities.yml
   - data/trust-migration-ledger.yml
   - docs/foundation/papers/
-  - docs/network/papers/
-  - docs/computing/papers/
-  - docs/frontier/papers/
+  - docs/connectivity/papers/
 selection:
   policy: >-
-    本轮通过当前用户明确指令新增 5 篇 paper_reading 初读卡；由于 active-goal
+    本轮通过当前用户明确指令分十批新增 40 篇 paper_reading 初读卡；由于 active-goal
     checker 当前只对结构审计模式启用 article selection 计数，新增清单由
     allowed_mutations 与验收命令冻结，不通过 selected_articles 提升可信状态。
   selected_articles: []
-  rationale: "Non-article-selection deploy goal; the five new canonical paths are frozen in allowed_mutations."
+  rationale: "Non-article-selection deploy goal; the forty new canonical paths are frozen in allowed_mutations."
 progress:
-  completed_batches: 2
+  completed_batches: 10
   completed_articles: 0
-  completed_commits: 3
+  completed_commits: 0
   no_external_delta_batches: 0
-  last_result: DEPLOY_ACCEPTED_FOR_09BAC11
-  last_external_delta: FIVE_NEW_RESEARCH_CARDS_DEPLOYED_TO_PAGES
+  last_result: TEN_RESEARCH_BATCHES_WRITTEN
+  last_external_delta: FORTY_NEW_RESEARCH_CARDS_ADDED_LOCALLY
 activation:
-  ref: ad859ffced303a91f8cde81aee7e080248a62e41
-  activated_at: "2026-07-14T12:05:03Z"
+  ref: a509d3f5ab56c6f6fe3480e0518e0a061a9830ab
+  activated_at: "2026-07-14T13:10:01Z"
 next_action:
-  kind: NONE
+  kind: RUN_VALIDATION_COMMIT_PUSH_AND_DEPLOY
   requires_activation: false
-  instruction: "IOT-T053 complete; no follow-up action remains inside this goal."
+  instruction: >-
+    Refresh any remaining generated surfaces, run local quality gates, create
+    atomic commit(s), push to origin/main, wait for Repository quality and Pages
+    deploy, then update deploy acceptance evidence without promoting the forty
+    new cards to VERIFIED or HUMAN_APPROVED.

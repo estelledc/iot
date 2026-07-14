@@ -44,7 +44,7 @@ class ContentInventoryTests(unittest.TestCase):
         self.assertEqual(expected_by_layer, actual_by_layer)
         self.assertEqual(
             {
-                "UNVERIFIED": 15,
+                "UNVERIFIED": 55,
                 "PARTIAL": 0,
                 "VERIFIED": 642,
             },
@@ -152,7 +152,7 @@ class HomepageSourceTruthTests(unittest.TestCase):
             "持续维护 · Maintained",
             "Explore the stack as a dependency system",
             'class="iot-stack-map"',
-            "642 / 657",
+            "642 / 697",
             "HUMAN_APPROVED",
             "NOT_TRACKED",
             'class="jx-proof"',
@@ -161,7 +161,7 @@ class HomepageSourceTruthTests(unittest.TestCase):
             "AI / 辅助",
             "Evidence / 证据",
             "Limitations / 局限",
-            "642/657 正文已有",
+            "642/697 正文已有",
             "新增卡片必须继续走事实核验和人工审查后才能升级",
         ):
             self.assertIn(expected, markdown)

@@ -76,7 +76,7 @@ class LayerCatalogTests(unittest.TestCase):
     def test_repository_title_h1_invariant_covers_all_content(self) -> None:
         papers = sorted(generate_layer_catalogs.ROOT.glob("docs/*/papers/*.md"))
         expected = content_inventory.content_inventory()["totals"]["content_files"]
-        self.assertEqual(657, expected)
+        self.assertEqual(697, expected)
         self.assertEqual(expected, len(papers))
         for paper in papers:
             with self.subTest(path=paper.relative_to(generate_layer_catalogs.ROOT)):
