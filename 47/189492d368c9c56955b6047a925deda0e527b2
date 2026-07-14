@@ -1,0 +1,2192 @@
+docs/computing/papers/ecokube-carbon-aware-edge-cloud-scheduling.md
+  s_2f711cc0cfa53e::t_7c3d113cba1c1c 1-76 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563646327f744c7a9205f9","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,76]}]}]}
+ops/active-goal.yml
+  s_2f711cc0cfa53e::t_43cc0f37fe31a2 2-3,5,10,14,17,19-20,25-26,31,34,36,47,49-50,53,55,65-67,69,82,86,94,106,139-142,145,147-190,205,208,212,216,221-222,226 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56353f327f744c7a920373","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[2,3]},{"Single":5},{"Single":10},{"Single":14},{"Single":17},{"Range":[19,20]},{"Range":[25,26]},{"Single":31},{"Single":34},{"Single":36},{"Single":47},{"Range":[49,50]},{"Single":53},{"Single":55},{"Range":[65,67]},{"Single":69},{"Single":82},{"Single":86},{"Single":94},{"Single":106},{"Range":[139,142]},{"Single":145},{"Range":[147,190]},{"Single":205},{"Single":208},{"Single":212},{"Single":216},{"Range":[221,222]},{"Single":226}]}]}
+  s_2f711cc0cfa53e::t_835b62befe909d 214,218-219,224,227-230 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56395d327f744c7a921184","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Single":214},{"Range":[218,219]},{"Single":224},{"Range":[227,230]}]}]}
+docs/applications/papers/smart-home-automation-6g-cities.md
+  s_2f711cc0cfa53e::t_90cc6ba55b5a87 1-77 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563787327f744c7a92099c","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,77]}]}]}
+docs/frontier/papers/visible-light-rf-backscatter-ambient-iot.md
+  s_2f711cc0cfa53e::t_67fa2df2b97ab1 1-80 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5637cf327f744c7a920a56","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,80]}]}]}
+docs/intelligence/papers/power-side-channel-tinyml-anomaly-detection.md
+  s_2f711cc0cfa53e::t_8658beb61ac81a 1-76 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56383a327f744c7a920c0a","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,76]}]}]}
+docs/frontier/papers/haps-ris-iot-disaster-recovery.md
+  s_2f711cc0cfa53e::t_7e824c2da8e4dd 1-80 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5637bd327f744c7a920a28","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,80]}]}]}
+docs/frontier/papers/multi-satellite-noma-irsa-iot.md
+  s_2f711cc0cfa53e::t_56258bdc72a7c2 1-76 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5637e3327f744c7a920a98","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,76]}]}]}
+docs/applications/papers/medical-iot-formally-verified-translation.md
+  s_2f711cc0cfa53e::t_5ba5fda75c6ed6 1-76 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563747327f744c7a9208e7","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,76]}]}]}
+tests/test_quality_tools.py
+  s_2f711cc0cfa53e::t_daeb8d9734f19d 47,155,164 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56393c327f744c7a92105f","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Single":47},{"Single":155},{"Single":164}]}]}
+docs/applications/papers/iot-zoo-reproducible-traffic-capture.md
+  s_2f711cc0cfa53e::t_3f622ceafa2c7f 1-77 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563797327f744c7a9209c7","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,77]}]}]}
+docs/frontier/papers/reconfigurable-wireless-powered-networks.md
+  s_2f711cc0cfa53e::t_1a007963ab3c42 1-77 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5637fc327f744c7a920ae7","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,77]}]}]}
+docs/applications/papers/wearable-eeg-compression-iot.md
+  s_2f711cc0cfa53e::t_036a769d922a5e 1-80 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563756327f744c7a920915","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,80]}]}]}
+docs/intelligence/papers/cascaded-pruning-on-device-llm-iiot.md
+  s_2f711cc0cfa53e::t_af48558fd9f263 1-80 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563868327f744c7a920cd8","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,80]}]}]}
+docs/applications/papers/neuro-agentic-control-industrial-iot.md
+  s_2f711cc0cfa53e::t_aed6350a3348d6 1-79 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56372a327f744c7a920881","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,79]}]}]}
+docs/frontier/papers/green-iot-data-computation-orchestration.md
+  s_2f711cc0cfa53e::t_dc283df17d8070 1-79 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56381a327f744c7a920b6f","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,79]}]}]}
+ops/active-goal.lock.json
+  s_2f711cc0cfa53e::t_9542d6d1419f5c 3 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563592327f744c7a920411","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Single":3}]}]}
+  s_2f711cc0cfa53e::t_23bd06fee29c02 4
+docs/computing/papers/fog-computing-llm-vision.md
+  s_2f711cc0cfa53e::t_0545075c51f47e 1-75 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56365c327f744c7a920624","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,75]}]}]}
+docs/intelligence/papers/ai-uav-backscatter-localization.md
+  s_2f711cc0cfa53e::t_3e9846ef6b7f08 1-75 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5636a6327f744c7a9206f4","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,75]}]}]}
+docs/frontier/papers/internet-of-everything-6g-era.md
+  s_2f711cc0cfa53e::t_6a6b9aceff7469 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5637a7327f744c7a9209f4","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/security/papers/quic-binary-security-iot.md
+  s_2f711cc0cfa53e::t_4bd8c8eb9a2803 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56388d327f744c7a920d56","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/applications/papers/structural-attribution-cyber-physical-iot.md
+  s_2f711cc0cfa53e::t_ae22ba924abf2c 1-79 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56373a327f744c7a9208ae","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,79]}]}]}
+docs/computing/papers/edge-object-detection-load-balancing.md
+  s_2f711cc0cfa53e::t_2f8506d71c6cb9 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56366d327f744c7a920653","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/intelligence/papers/tinyml-acoustic-anomaly-detection.md
+  s_2f711cc0cfa53e::t_52f014efdcfda0 1-77 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5636cd327f744c7a92076e","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,77]}]}]}
+tests/test_iot_domain.py
+  s_2f711cc0cfa53e::t_eddf0f7c503ecb 320-321,333 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56394a327f744c7a9210bb","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[320,321]},{"Single":333}]}]}
+docs/network/papers/protocol-aware-p4-mqtt-security.md
+  s_2f711cc0cfa53e::t_24dcd65d1c07fd 1-79 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563607327f744c7a920551","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,79]}]}]}
+docs/security/papers/federated-acvae-iot-intrusion-detection.md
+  s_2f711cc0cfa53e::t_cecdb247e58276 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5636ed327f744c7a9207d4","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/security/papers/gnn-kan-iot-intrusion-detection.md
+  s_2f711cc0cfa53e::t_8651de05cf092e 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563701327f744c7a920821","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/applications/papers/energy-aware-marl-drone-networks.md
+  s_2f711cc0cfa53e::t_5c136da40593d2 1-76 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563776327f744c7a92096f","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,76]}]}]}
+docs/computing/papers/carbon-aware-mec-task-offloading-marl.md
+  s_2f711cc0cfa53e::t_99f3919b44e0a3 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56367e327f744c7a920683","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/security/papers/qers-mqtt-post-quantum-cryptography.md
+  s_2f711cc0cfa53e::t_02fbdc01f1f242 1-75 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56389c327f744c7a920d84","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,75]}]}]}
+docs/index.md
+  s_2f711cc0cfa53e::t_b59fc6bfb28bb2 12-13,17,34-39,66,83 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563922327f744c7a920ffa","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[12,13]},{"Single":17},{"Range":[34,39]},{"Single":66},{"Single":83}]}]}
+  s_e203c0188fd2d8::t_f10d0c65ea27aa 96,117-123
+docs/network/papers/tip-decentralized-iot-interoperability.md
+  s_2f711cc0cfa53e::t_549cec82f129a1 1-77 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5635ed327f744c7a9204ee","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,77]}]}]}
+docs/intelligence/papers/fast-time-series-anomaly-detection.md
+  s_2f711cc0cfa53e::t_01fc66fedd173b 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563849327f744c7a920c69","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/security/papers/secure-ai-service-provisioning-iot.md
+  s_2f711cc0cfa53e::t_9f064acf724c16 1-80 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5638ac327f744c7a920dd3","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,80]}]}]}
+tests/test_layer_catalogs.py
+  s_2f711cc0cfa53e::t_2a8f720f60d694 79 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563953327f744c7a921101","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Single":79}]}]}
+docs/frontier/papers/adaptive-random-access-ambient-iot.md
+  s_2f711cc0cfa53e::t_4366625de35bea 1-80 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563829327f744c7a920bb8","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,80]}]}]}
+docs/intelligence/papers/agentic-iot-internet-of-agents.md
+  s_2f711cc0cfa53e::t_604ed36c2d16ed 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563693327f744c7a9206bc","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/intelligence/papers/hardware-aware-nas-embedded-devices.md
+  s_2f711cc0cfa53e::t_647fce62631c18 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5636bf327f744c7a920739","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/security/papers/cross-domain-iiot-intrusion-detection.md
+  s_2f711cc0cfa53e::t_39e178ac89b234 1-77 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56387b327f744c7a920d1e","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,77]}]}]}
+README.md
+  s_2f711cc0cfa53e::t_ae7504a1b5ed42 11,13 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563930327f744c7a921039","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Single":11},{"Single":13}]}]}
+  s_e203c0188fd2d8::t_bc6021ba8a1633 18-19
+tests/test_trust_state_machine.py
+  s_2f711cc0cfa53e::t_7869c372d14d47 1037 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563abf327f744c7a92155c","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Single":1037}]}]}
+docs/network/papers/dns-over-quic-datagram-iot.md
+  s_2f711cc0cfa53e::t_79261d282b88aa 1-76 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56362f327f744c7a9205cc","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,76]}]}]}
+docs/applications/papers/topobrick-building-iot-forecasting.md
+  s_2f711cc0cfa53e::t_c7730d23ccb93a 1-80 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563766327f744c7a920942","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,80]}]}]}
+docs/intelligence/papers/sim-to-real-rl-aiot-benchmark.md
+  s_2f711cc0cfa53e::t_f72e6bd9316767 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56385a327f744c7a920c9b","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+docs/frontier/papers/version-aware-multihop-iot-communication.md
+  s_2f711cc0cfa53e::t_efb837ad0a1a3b 1-76 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56380b327f744c7a920b26","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,76]}]}]}
+docs/security/papers/generative-ai-federated-learning-ids.md
+  s_2f711cc0cfa53e::t_aeaea4b66d29cc 1-80 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563718327f744c7a920852","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,80]}]}]}
+docs/network/papers/rpl-radio-feature-intrusion-detection.md
+  s_2f711cc0cfa53e::t_251fda2703dae6 1-77 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a563618327f744c7a92058b","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,77]}]}]}
+docs/security/papers/vexaiot-agentic-vulnerability-exploitation.md
+  s_2f711cc0cfa53e::t_14c79fc74b8a8d 1-78 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5636dc327f744c7a9207a4","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,78]}]}]}
+ROADMAP.md
+  s_e203c0188fd2d8::t_9ab2c99f1d7973 26-32
+data/content-inventory.json
+  s_e203c0188fd2d8::t_0108d6218eccdf 5,20,23-24,28,73,76-77,89,92-93,105,108-109,121,124-125,137,140-141,153,156-157
+docs/applications/catalog.md
+  s_e203c0188fd2d8::t_db81b40dee1dcc 15-41
+docs/computing/catalog.md
+  s_e203c0188fd2d8::t_eef2b66d61e94c 8-36
+docs/frontier/catalog.md
+  s_e203c0188fd2d8::t_2b4f26b36d027f 9-40
+docs/intelligence/catalog.md
+  s_e203c0188fd2d8::t_d3f9a90d490a03 8-49
+docs/network/catalog.md
+  s_e203c0188fd2d8::t_d3f00bf623202b 12-36
+docs/progress.md
+  s_e203c0188fd2d8::t_1621e7c7d0cd80 12-18,20,22-23
+docs/roadmap.md
+  s_e203c0188fd2d8::t_dde2e70d8f1b93 14-22
+docs/security/catalog.md
+  s_e203c0188fd2d8::t_41f7ced148e70f 11-43
+reading-progress.md
+  s_e203c0188fd2d8::t_d0b4a7e493ab5d 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "47189492d368c9c56955b6047a925deda0e527b2",
+  "prompts": {},
+  "sessions": {
+    "s_2f711cc0cfa53e": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a5632e4327f744c7a920022",
+        "model": "gpt-5.5__max"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    },
+    "s_e203c0188fd2d8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_e203c0188fd2d8",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {
+    "README.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_ae7504a1b5ed42",
+        "line_ranges": [
+          {
+            "Single": 11
+          },
+          {
+            "Single": 13
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563930327f744c7a921039",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Single": 11
+              },
+              {
+                "Single": 13
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/applications/papers/energy-aware-marl-drone-networks.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_5c136da40593d2",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              76
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563776327f744c7a92096f",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  76
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/applications/papers/iot-zoo-reproducible-traffic-capture.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_3f622ceafa2c7f",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              77
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563797327f744c7a9209c7",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  77
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/applications/papers/medical-iot-formally-verified-translation.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_5ba5fda75c6ed6",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              76
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563747327f744c7a9208e7",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  76
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/applications/papers/neuro-agentic-control-industrial-iot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_aed6350a3348d6",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              79
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56372a327f744c7a920881",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  79
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/applications/papers/smart-home-automation-6g-cities.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_90cc6ba55b5a87",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              77
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563787327f744c7a92099c",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  77
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/applications/papers/structural-attribution-cyber-physical-iot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_ae22ba924abf2c",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              79
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56373a327f744c7a9208ae",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  79
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/applications/papers/topobrick-building-iot-forecasting.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_c7730d23ccb93a",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              80
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563766327f744c7a920942",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  80
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/applications/papers/wearable-eeg-compression-iot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_036a769d922a5e",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              80
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563756327f744c7a920915",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  80
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/computing/papers/carbon-aware-mec-task-offloading-marl.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_99f3919b44e0a3",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56367e327f744c7a920683",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/computing/papers/ecokube-carbon-aware-edge-cloud-scheduling.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_7c3d113cba1c1c",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              76
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563646327f744c7a9205f9",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  76
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/computing/papers/edge-object-detection-load-balancing.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_2f8506d71c6cb9",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56366d327f744c7a920653",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/computing/papers/fog-computing-llm-vision.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_0545075c51f47e",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              75
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56365c327f744c7a920624",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  75
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/frontier/papers/adaptive-random-access-ambient-iot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_4366625de35bea",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              80
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563829327f744c7a920bb8",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  80
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/frontier/papers/green-iot-data-computation-orchestration.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_dc283df17d8070",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              79
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56381a327f744c7a920b6f",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  79
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/frontier/papers/haps-ris-iot-disaster-recovery.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_7e824c2da8e4dd",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              80
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5637bd327f744c7a920a28",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  80
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/frontier/papers/internet-of-everything-6g-era.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_6a6b9aceff7469",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5637a7327f744c7a9209f4",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/frontier/papers/multi-satellite-noma-irsa-iot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_56258bdc72a7c2",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              76
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5637e3327f744c7a920a98",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  76
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/frontier/papers/reconfigurable-wireless-powered-networks.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_1a007963ab3c42",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              77
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5637fc327f744c7a920ae7",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  77
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/frontier/papers/version-aware-multihop-iot-communication.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_efb837ad0a1a3b",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              76
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56380b327f744c7a920b26",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  76
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/frontier/papers/visible-light-rf-backscatter-ambient-iot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_67fa2df2b97ab1",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              80
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5637cf327f744c7a920a56",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  80
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/index.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_b59fc6bfb28bb2",
+        "line_ranges": [
+          {
+            "Range": [
+              12,
+              13
+            ]
+          },
+          {
+            "Single": 17
+          },
+          {
+            "Range": [
+              34,
+              39
+            ]
+          },
+          {
+            "Single": 66
+          },
+          {
+            "Single": 83
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563922327f744c7a920ffa",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  12,
+                  13
+                ]
+              },
+              {
+                "Single": 17
+              },
+              {
+                "Range": [
+                  34,
+                  39
+                ]
+              },
+              {
+                "Single": 66
+              },
+              {
+                "Single": 83
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/intelligence/papers/agentic-iot-internet-of-agents.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_604ed36c2d16ed",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563693327f744c7a9206bc",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/intelligence/papers/ai-uav-backscatter-localization.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_3e9846ef6b7f08",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              75
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5636a6327f744c7a9206f4",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  75
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/intelligence/papers/cascaded-pruning-on-device-llm-iiot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_af48558fd9f263",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              80
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563868327f744c7a920cd8",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  80
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/intelligence/papers/fast-time-series-anomaly-detection.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_01fc66fedd173b",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563849327f744c7a920c69",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/intelligence/papers/hardware-aware-nas-embedded-devices.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_647fce62631c18",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5636bf327f744c7a920739",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/intelligence/papers/power-side-channel-tinyml-anomaly-detection.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_8658beb61ac81a",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              76
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56383a327f744c7a920c0a",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  76
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/intelligence/papers/sim-to-real-rl-aiot-benchmark.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_f72e6bd9316767",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56385a327f744c7a920c9b",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/intelligence/papers/tinyml-acoustic-anomaly-detection.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_52f014efdcfda0",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              77
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5636cd327f744c7a92076e",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  77
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/network/papers/dns-over-quic-datagram-iot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_79261d282b88aa",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              76
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56362f327f744c7a9205cc",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  76
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/network/papers/protocol-aware-p4-mqtt-security.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_24dcd65d1c07fd",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              79
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563607327f744c7a920551",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  79
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/network/papers/rpl-radio-feature-intrusion-detection.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_251fda2703dae6",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              77
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563618327f744c7a92058b",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  77
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/network/papers/tip-decentralized-iot-interoperability.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_549cec82f129a1",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              77
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5635ed327f744c7a9204ee",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  77
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/security/papers/cross-domain-iiot-intrusion-detection.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_39e178ac89b234",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              77
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56387b327f744c7a920d1e",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  77
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/security/papers/federated-acvae-iot-intrusion-detection.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_cecdb247e58276",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5636ed327f744c7a9207d4",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/security/papers/generative-ai-federated-learning-ids.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_aeaea4b66d29cc",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              80
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563718327f744c7a920852",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  80
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/security/papers/gnn-kan-iot-intrusion-detection.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_8651de05cf092e",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563701327f744c7a920821",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/security/papers/qers-mqtt-post-quantum-cryptography.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_02fbdc01f1f242",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              75
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56389c327f744c7a920d84",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  75
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/security/papers/quic-binary-security-iot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_4bd8c8eb9a2803",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56388d327f744c7a920d56",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/security/papers/secure-ai-service-provisioning-iot.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_9f064acf724c16",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              80
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5638ac327f744c7a920dd3",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  80
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/security/papers/vexaiot-agentic-vulnerability-exploitation.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_14c79fc74b8a8d",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              78
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5636dc327f744c7a9207a4",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  78
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "ops/active-goal.lock.json": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_9542d6d1419f5c",
+        "line_ranges": [
+          {
+            "Single": 3
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563592327f744c7a920411",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Single": 3
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "ops/active-goal.yml": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_43cc0f37fe31a2",
+        "line_ranges": [
+          {
+            "Range": [
+              2,
+              3
+            ]
+          },
+          {
+            "Single": 5
+          },
+          {
+            "Single": 10
+          },
+          {
+            "Single": 14
+          },
+          {
+            "Single": 17
+          },
+          {
+            "Range": [
+              19,
+              20
+            ]
+          },
+          {
+            "Range": [
+              25,
+              26
+            ]
+          },
+          {
+            "Single": 31
+          },
+          {
+            "Single": 34
+          },
+          {
+            "Single": 36
+          },
+          {
+            "Single": 47
+          },
+          {
+            "Range": [
+              49,
+              50
+            ]
+          },
+          {
+            "Single": 53
+          },
+          {
+            "Single": 55
+          },
+          {
+            "Range": [
+              65,
+              67
+            ]
+          },
+          {
+            "Single": 69
+          },
+          {
+            "Single": 82
+          },
+          {
+            "Single": 86
+          },
+          {
+            "Single": 94
+          },
+          {
+            "Single": 106
+          },
+          {
+            "Range": [
+              139,
+              142
+            ]
+          },
+          {
+            "Single": 145
+          },
+          {
+            "Range": [
+              147,
+              190
+            ]
+          },
+          {
+            "Single": 205
+          },
+          {
+            "Single": 208
+          },
+          {
+            "Single": 212
+          },
+          {
+            "Single": 216
+          },
+          {
+            "Range": [
+              221,
+              222
+            ]
+          },
+          {
+            "Single": 226
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56353f327f744c7a920373",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  2,
+                  3
+                ]
+              },
+              {
+                "Single": 5
+              },
+              {
+                "Single": 10
+              },
+              {
+                "Single": 14
+              },
+              {
+                "Single": 17
+              },
+              {
+                "Range": [
+                  19,
+                  20
+                ]
+              },
+              {
+                "Range": [
+                  25,
+                  26
+                ]
+              },
+              {
+                "Single": 31
+              },
+              {
+                "Single": 34
+              },
+              {
+                "Single": 36
+              },
+              {
+                "Single": 47
+              },
+              {
+                "Range": [
+                  49,
+                  50
+                ]
+              },
+              {
+                "Single": 53
+              },
+              {
+                "Single": 55
+              },
+              {
+                "Range": [
+                  65,
+                  67
+                ]
+              },
+              {
+                "Single": 69
+              },
+              {
+                "Single": 82
+              },
+              {
+                "Single": 86
+              },
+              {
+                "Single": 94
+              },
+              {
+                "Single": 106
+              },
+              {
+                "Range": [
+                  139,
+                  142
+                ]
+              },
+              {
+                "Single": 145
+              },
+              {
+                "Range": [
+                  147,
+                  190
+                ]
+              },
+              {
+                "Single": 205
+              },
+              {
+                "Single": 208
+              },
+              {
+                "Single": 212
+              },
+              {
+                "Single": 216
+              },
+              {
+                "Range": [
+                  221,
+                  222
+                ]
+              },
+              {
+                "Single": 226
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hash": "s_2f711cc0cfa53e::t_835b62befe909d",
+        "line_ranges": [
+          {
+            "Single": 214
+          },
+          {
+            "Range": [
+              218,
+              219
+            ]
+          },
+          {
+            "Single": 224
+          },
+          {
+            "Range": [
+              227,
+              230
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56395d327f744c7a921184",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Single": 214
+              },
+              {
+                "Range": [
+                  218,
+                  219
+                ]
+              },
+              {
+                "Single": 224
+              },
+              {
+                "Range": [
+                  227,
+                  230
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "tests/test_iot_domain.py": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_eddf0f7c503ecb",
+        "line_ranges": [
+          {
+            "Range": [
+              320,
+              321
+            ]
+          },
+          {
+            "Single": 333
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56394a327f744c7a9210bb",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  320,
+                  321
+                ]
+              },
+              {
+                "Single": 333
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "tests/test_layer_catalogs.py": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_2a8f720f60d694",
+        "line_ranges": [
+          {
+            "Single": 79
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563953327f744c7a921101",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Single": 79
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "tests/test_quality_tools.py": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_daeb8d9734f19d",
+        "line_ranges": [
+          {
+            "Single": 47
+          },
+          {
+            "Single": 155
+          },
+          {
+            "Single": 164
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56393c327f744c7a92105f",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Single": 47
+              },
+              {
+                "Single": 155
+              },
+              {
+                "Single": 164
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "tests/test_trust_state_machine.py": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_7869c372d14d47",
+        "line_ranges": [
+          {
+            "Single": 1037
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a563abf327f744c7a92155c",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Single": 1037
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "s_2f711cc0cfa53e": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_01fc66fedd173b": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_02fbdc01f1f242": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_036a769d922a5e": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_0545075c51f47e": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_14c79fc74b8a8d": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_1a007963ab3c42": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_24dcd65d1c07fd": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_251fda2703dae6": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_2a8f720f60d694": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_2f8506d71c6cb9": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_39e178ac89b234": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_3e9846ef6b7f08": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_3f622ceafa2c7f": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_4366625de35bea": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_43cc0f37fe31a2": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_4bd8c8eb9a2803": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_52f014efdcfda0": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_549cec82f129a1": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_56258bdc72a7c2": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_5ba5fda75c6ed6": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_5c136da40593d2": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_604ed36c2d16ed": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_647fce62631c18": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_67fa2df2b97ab1": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_6a6b9aceff7469": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_7869c372d14d47": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_79261d282b88aa": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_7c3d113cba1c1c": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_7e824c2da8e4dd": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_835b62befe909d": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_8651de05cf092e": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_8658beb61ac81a": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_90cc6ba55b5a87": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_9542d6d1419f5c": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_99f3919b44e0a3": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_9f064acf724c16": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_ae22ba924abf2c": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_ae7504a1b5ed42": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_aeaea4b66d29cc": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_aed6350a3348d6": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_af48558fd9f263": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_b59fc6bfb28bb2": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_c7730d23ccb93a": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_cecdb247e58276": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_daeb8d9734f19d": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_dc283df17d8070": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_eddf0f7c503ecb": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_efb837ad0a1a3b": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_f4296e69b91df6": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_f72e6bd9316767": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_fa2b3e3301f66f": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
