@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T054
-status: ACTIVE
+status: COMPLETE
 objective: >-
   在当前本地 main 基线上分十批新增 40 篇 IoT 论文初读卡片，刷新派生目录与
   inventory，完成本地质量门禁、原子提交、push 到 main，并等待 GitHub Pages
@@ -211,20 +211,16 @@ selection:
   selected_articles: []
   rationale: "Non-article-selection deploy goal; the forty new canonical paths are frozen in allowed_mutations."
 progress:
-  completed_batches: 10
+  completed_batches: 12
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: TEN_RESEARCH_BATCHES_WRITTEN
-  last_external_delta: FORTY_NEW_RESEARCH_CARDS_ADDED_LOCALLY
+  last_result: DEPLOY_ACCEPTED_FOR_4718949
+  last_external_delta: FORTY_NEW_RESEARCH_CARDS_DEPLOYED_TO_PAGES
 activation:
   ref: a509d3f5ab56c6f6fe3480e0518e0a061a9830ab
   activated_at: "2026-07-14T13:10:01Z"
 next_action:
-  kind: RUN_VALIDATION_COMMIT_PUSH_AND_DEPLOY
+  kind: NONE
   requires_activation: false
-  instruction: >-
-    Refresh any remaining generated surfaces, run local quality gates, create
-    atomic commit(s), push to origin/main, wait for Repository quality and Pages
-    deploy, then update deploy acceptance evidence without promoting the forty
-    new cards to VERIFIED or HUMAN_APPROVED.
+  instruction: "IOT-T054 complete; no follow-up action remains inside this goal."
