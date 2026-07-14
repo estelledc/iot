@@ -93,7 +93,7 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
     <span class="iot-stats__label">技术层级</span>
   </div>
   <div class="iot-stats__item">
-    <span class="iot-stats__num">652</span>
+    <span class="iot-stats__num">657</span>
     <span class="iot-stats__label">内容文件</span>
   </div>
   <div class="iot-stats__item">
@@ -116,11 +116,11 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
 | Layer 2 | [无线接入](connectivity/index.md) | 219 |
 | Layer 3 | [网络协议](network/index.md) | 25 |
 | Layer 4 | [计算平台](computing/index.md) | 25 |
-| Layer 5 | [边缘智能](intelligence/index.md) | 31 |
-| Layer 6 | [安全与隐私](security/index.md) | 26 |
+| Layer 5 | [边缘智能](intelligence/index.md) | 34 |
+| Layer 6 | [安全与隐私](security/index.md) | 28 |
 | Layer 7 | [综合应用](applications/index.md) | 26 |
 | Layer 8 | [前沿方向](frontier/index.md) | 25 |
-| **合计** | | **652** |
+| **合计** | | **657** |
 
 > 上表统计的是仓库中的内容文件，不代表来源和技术事实已经审核。显式导航、目录覆盖与扩展计划见[阅读进度](progress.md)。
 

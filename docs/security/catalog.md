@@ -10,25 +10,27 @@
 | 3 | IoT 合规框架：NIST 与 ETSI EN 303 645 详解 | [compliance-framework-nist-etsi](papers/compliance-framework-nist-etsi.md) |
 | 4 | DevSecOps for IoT：安全左移的嵌入式实践 | [devsecops-iot](papers/devsecops-iot.md) |
 | 5 | 差分隐私在IoT中的应用：用数学保障数据隐私 | [differential-privacy-iot](papers/differential-privacy-iot.md) |
-| 6 | 联邦学习隐私保护：从梯度泄露到多重防御 | [federated-learning-privacy](papers/federated-learning-privacy.md) |
-| 7 | 身份联邦 FIDO2/WebAuthn 在 IoT 中的应用 | [fido2-webauthn-iot](papers/fido2-webauthn-iot.md) |
-| 8 | IoT固件安全分析：从提取到防护的全链路 | [firmware-security](papers/firmware-security.md) |
-| 9 | 同态加密实用化进展：从理论突破到 IoT 落地 | [homomorphic-encryption-practical](papers/homomorphic-encryption-practical.md) |
-| 10 | IoT 蜜罐与诱骗技术 | [honeypot-deception-iot](papers/honeypot-deception-iot.md) |
-| 11 | 工控 ICS 协议安全：从 Modbus 到 OPC UA 的攻防实战 | [ics-protocol-security](papers/ics-protocol-security.md) |
-| 12 | 边缘入侵检测系统：在资源受限环境中守护网络安全 | [intrusion-detection-edge](papers/intrusion-detection-edge.md) |
-| 13 | IoT安全系统性综述：威胁分类、攻击面与纵深防御 | [iot-security-systematic-review](papers/iot-security-systematic-review.md) |
-| 14 | LLM 与 IoT 生态：安全挑战、应用与部署边界 | [llm-iot-security-survey](papers/llm-iot-security-survey.md) |
-| 15 | 网络流量异常检测与机器学习 | [network-traffic-anomaly-ml](papers/network-traffic-anomaly-ml.md) |
-| 16 | OTA 安全更新机制 | [ota-secure-update](papers/ota-secure-update.md) |
-| 17 | 后量子密码学在 IoT 中的迁移 | [post-quantum-crypto-iot](papers/post-quantum-crypto-iot.md) |
-| 18 | PUF物理不可克隆函数：IoT设备的"硅指纹"认证 | [puf-device-authentication](papers/puf-device-authentication.md) |
-| 19 | SBOM 软件物料清单在 IoT 中的实践 | [sbom-software-supply-chain](papers/sbom-software-supply-chain.md) |
-| 20 | 安全启动链与 Root of Trust | [secure-boot-root-of-trust](papers/secure-boot-root-of-trust.md) |
-| 21 | 安全多方计算 MPC 在 IoT 中的应用 | [secure-multiparty-computation](papers/secure-multiparty-computation.md) |
-| 22 | 侧信道攻击与防护 | [side-channel-attack-defense](papers/side-channel-attack-defense.md) |
-| 23 | IoT 供应链安全：从芯片到云端的信任链 | [supply-chain-security-iot](papers/supply-chain-security-iot.md) |
-| 24 | TEE与边缘计算安全：硬件隔离的信任锚 | [tee-edge-computing](papers/tee-edge-computing.md) |
-| 25 | 车联网 V2X 安全：高速移动场景下的信任挑战 | [v2x-security](papers/v2x-security.md) |
-| 26 | 零信任架构与IoT：从"城堡护城河"到"永不信任" | [zero-trust-iot](papers/zero-trust-iot.md) |
+| 6 | IoT 入侵检测中的深度强化学习综述 | [drl-intrusion-detection-iot](papers/drl-intrusion-detection-iot.md) |
+| 7 | 联邦学习隐私保护：从梯度泄露到多重防御 | [federated-learning-privacy](papers/federated-learning-privacy.md) |
+| 8 | 身份联邦 FIDO2/WebAuthn 在 IoT 中的应用 | [fido2-webauthn-iot](papers/fido2-webauthn-iot.md) |
+| 9 | IoT固件安全分析：从提取到防护的全链路 | [firmware-security](papers/firmware-security.md) |
+| 10 | 同态加密实用化进展：从理论突破到 IoT 落地 | [homomorphic-encryption-practical](papers/homomorphic-encryption-practical.md) |
+| 11 | IoT 蜜罐与诱骗技术 | [honeypot-deception-iot](papers/honeypot-deception-iot.md) |
+| 12 | 工控 ICS 协议安全：从 Modbus 到 OPC UA 的攻防实战 | [ics-protocol-security](papers/ics-protocol-security.md) |
+| 13 | 边缘入侵检测系统：在资源受限环境中守护网络安全 | [intrusion-detection-edge](papers/intrusion-detection-edge.md) |
+| 14 | IoT安全系统性综述：威胁分类、攻击面与纵深防御 | [iot-security-systematic-review](papers/iot-security-systematic-review.md) |
+| 15 | LLM 与 IoT 生态：安全挑战、应用与部署边界 | [llm-iot-security-survey](papers/llm-iot-security-survey.md) |
+| 16 | 网络流量异常检测与机器学习 | [network-traffic-anomaly-ml](papers/network-traffic-anomaly-ml.md) |
+| 17 | OTA 安全更新机制 | [ota-secure-update](papers/ota-secure-update.md) |
+| 18 | 后量子密码学在 IoT 中的迁移 | [post-quantum-crypto-iot](papers/post-quantum-crypto-iot.md) |
+| 19 | PUF物理不可克隆函数：IoT设备的"硅指纹"认证 | [puf-device-authentication](papers/puf-device-authentication.md) |
+| 20 | SBOM 软件物料清单在 IoT 中的实践 | [sbom-software-supply-chain](papers/sbom-software-supply-chain.md) |
+| 21 | 安全启动链与 Root of Trust | [secure-boot-root-of-trust](papers/secure-boot-root-of-trust.md) |
+| 22 | 安全多方计算 MPC 在 IoT 中的应用 | [secure-multiparty-computation](papers/secure-multiparty-computation.md) |
+| 23 | 语义 IoT 中的无线通信安全再思考 | [semantic-iot-wireless-security](papers/semantic-iot-wireless-security.md) |
+| 24 | 侧信道攻击与防护 | [side-channel-attack-defense](papers/side-channel-attack-defense.md) |
+| 25 | IoT 供应链安全：从芯片到云端的信任链 | [supply-chain-security-iot](papers/supply-chain-security-iot.md) |
+| 26 | TEE与边缘计算安全：硬件隔离的信任锚 | [tee-edge-computing](papers/tee-edge-computing.md) |
+| 27 | 车联网 V2X 安全：高速移动场景下的信任挑战 | [v2x-security](papers/v2x-security.md) |
+| 28 | 零信任架构与IoT：从"城堡护城河"到"永不信任" | [zero-trust-iot](papers/zero-trust-iot.md) |
 <!-- layer-catalog:end -->

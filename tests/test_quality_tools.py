@@ -44,7 +44,7 @@ class ContentInventoryTests(unittest.TestCase):
         self.assertEqual(expected_by_layer, actual_by_layer)
         self.assertEqual(
             {
-                "UNVERIFIED": 10,
+                "UNVERIFIED": 15,
                 "PARTIAL": 0,
                 "VERIFIED": 642,
             },

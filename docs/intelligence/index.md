@@ -79,6 +79,14 @@
 |---|------|--------|------|
 | 15 | [边缘视频分析系统](papers/edge-ai-video-analytics.md) | 模型级联, ROI 过滤, FilterForward, Ekya, VideoStorm | 🟡 进阶 |
 
+### 基础模型与协作新范式
+
+| # | 论文 | 关键词 | 难度 |
+|---|------|--------|------|
+| 16 | [IoT 基础模型综述](papers/foundation-models-iot-survey.md) | Foundation Model, IoT Taxonomy, 效率/上下文/安全准则 | 🔴 研究级 |
+| 17 | [边缘大模型协作部署](papers/edge-large-ai-models-iot-applications.md) | Edge LAM, 微服务推理, 多模态传感 token 化 | 🔴 研究级 |
+| 18 | [分布式群体学习](papers/distributed-swarm-learning-edge-iot.md) | Swarm Learning, 联邦学习扩展, 无线边缘 | 🟠 挑战 |
+
 ## 阅读路径建议
 
 **入门路径**（刚接触边缘 AI）：
@@ -102,6 +110,7 @@
 4. [边缘持续学习](papers/continual-learning-edge.md) — 学新知识不忘旧知识
 5. [NAS 自动化设计](papers/nas-edge-models.md) — 让机器设计机器
 6. [DARTS](papers/differentiable-nas-darts.md) 与 [MobileViT](papers/mobile-vit-edge-transformer.md) — 深入模型搜索与移动 Transformer
+7. [IoT 基础模型](papers/foundation-models-iot-survey.md)、[边缘大模型协作部署](papers/edge-large-ai-models-iot-applications.md) 与 [分布式群体学习](papers/distributed-swarm-learning-edge-iot.md) — 进入基础模型和群体协作的新范式
 
 ## 难度标记说明
 
