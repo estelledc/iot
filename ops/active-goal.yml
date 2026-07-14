@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T052
-status: COMPLETE
+status: ACTIVE
 objective: >-
   在当前本地 main 基线上新增 5 篇 IoT 论文初读卡片，刷新派生目录与
   inventory，完成本地质量门禁、原子提交、push 到 main，并等待 GitHub Pages
@@ -23,7 +23,7 @@ budget:
 external_outcome:
   definition: >-
     5 篇新论文以 canonical Markdown 初读卡形式进入站点，目录与 inventory
-    更新到 647 篇；本地质量门禁通过；提交并 push 到 main 触发远端 Repository
+    更新到 652 篇；本地质量门禁通过；提交并 push 到 main 触发远端 Repository
     quality 与 Pages deploy；部署验收记录只说明目标 SHA 已上线，不把新增卡片
     写成事实核验或人工审批完成。
   d_axis: D4
@@ -33,7 +33,7 @@ external_outcome:
     - content inventory、layer catalogs、README、ROADMAP、docs/index、docs/progress、docs/roadmap 与 reading-progress 派生块同步。
     - trust projection 保持 source_records=1284、review_records=1284、evidence_bound_review=642、verified=642、approved=642；新增 5 篇不提升可信状态。
     - 本地 full tests、strict MkDocs build、Markdown fence/link checks 和 git diff --check 通过。
-    - 测试中的仓库基线常量与当前 647 篇内容、1284 条 source/review 记录和 642 篇已核验投影一致。
+    - 测试中的仓库基线常量与当前 652 篇内容、1284 条 source/review 记录和 642 篇已核验投影一致。
     - 通过原子提交将本轮变更推送到 main，等待 Repository quality 与 Pages deploy 成功。
     - data/deploy-acceptance.yml 记录新部署验收，不伪造人工 review 或 release 完成状态。
 external_action_authority:
@@ -66,7 +66,7 @@ baseline:
   remote_main_ref: 86cbd870e7d179b2f9903e6a7dca2e2897a25f1e
   required_history_ancestor: cbeecdd66a9829dbf0a60aeda8785661ff4432e0
   expected_inventory:
-    canonical_content: 647
+    canonical_content: 652
     plan_topics: 1761
   expected_trust:
     source_records: 1284
@@ -83,7 +83,7 @@ acceptance_checks:
   - id: content_inventory
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/content_inventory.py --check
-    expectation: content inventory is current and reports content_files=647 source_audited_files=642.
+    expectation: content inventory is current and reports content_files=652 source_audited_files=642.
   - id: layer_catalogs
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/generate_layer_catalogs.py --check
@@ -91,7 +91,7 @@ acceptance_checks:
   - id: frontmatter
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_frontmatter.py --all
-    expectation: FRONTMATTER_SCHEMA_OK checked=647 schema_version=1.0.
+    expectation: FRONTMATTER_SCHEMA_OK checked=652 schema_version=1.0.
   - id: source_records
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_source_audits.py --all
@@ -103,7 +103,7 @@ acceptance_checks:
   - id: trust_projection
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_trust_state.py --all --baseline-mode
-    expectation: TRUST_STATE_OK canonical_content=647 source_records=1284 review_records=1284 verified=642 approved=642.
+    expectation: TRUST_STATE_OK canonical_content=652 source_records=1284 review_records=1284 verified=642 approved=642.
   - id: full_tests
     cadence: GOAL_CLOSE
     command: .tmp/agent-venv/bin/python -m unittest discover -s tests -v
@@ -125,6 +125,7 @@ acceptance_checks:
     command: git diff --check
     expectation: no whitespace errors.
 allowed_mutations:
+  - CHANGELOG.md
   - ops/active-goal.yml
   - ops/active-goal.lock.json
   - README.md
@@ -135,6 +136,7 @@ allowed_mutations:
   - docs/index.md
   - docs/progress.md
   - docs/roadmap.md
+  - docs/intelligence/index.md
   - docs/connectivity/catalog.md
   - docs/intelligence/catalog.md
   - docs/security/catalog.md
@@ -142,6 +144,11 @@ allowed_mutations:
   - docs/connectivity/papers/ambient-iot-standardization-6g.md
   - docs/connectivity/papers/physical-layer-ambient-iot.md
   - docs/intelligence/papers/on-device-edge-learning-iot-streams.md
+  - docs/intelligence/papers/differentiable-nas-darts.md
+  - docs/intelligence/papers/federated-averaging-deep-dive.md
+  - docs/intelligence/papers/flash-attention-edge-adaptation.md
+  - docs/intelligence/papers/mobile-vit-edge-transformer.md
+  - docs/intelligence/papers/speculative-decoding-edge.md
   - docs/security/papers/llm-iot-security-survey.md
   - docs/applications/papers/adaptive-digital-twin-fl-slicing-iot.md
   - papers/edge-computing-survey/index.md
@@ -174,16 +181,16 @@ selection:
   selected_articles: []
   rationale: "Non-article-selection deploy goal; the five new canonical paths are frozen in allowed_mutations."
 progress:
-  completed_batches: 2
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 3
+  completed_commits: 0
   no_external_delta_batches: 0
-  last_result: DEPLOY_ACCEPTED_FOR_07110A9
-  last_external_delta: FIVE_NEW_RESEARCH_CARDS_DEPLOYED_TO_PAGES
+  last_result: LOCAL_CONTENT_AND_INVENTORY_READY
+  last_external_delta: FIVE_NEW_RESEARCH_CARDS_ADDED
 activation:
   ref: cbeecdd66a9829dbf0a60aeda8785661ff4432e0
   activated_at: "2026-07-14T10:36:13Z"
 next_action:
-  kind: NONE
+  kind: RUN_LOCAL_GATES_AND_DEPLOY
   requires_activation: false
-  instruction: "IOT-T052 complete; no follow-up action remains inside this goal."
+  instruction: "Run full local gates, then commit, push, and record deploy acceptance for IOT-T052."

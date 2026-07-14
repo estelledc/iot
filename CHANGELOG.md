@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- `IOT-T052`：Layer 5 边缘智能受控扩容 5 篇论文初读卡片：FedAvg、DARTS、MobileViT、Medusa、FlashAttention；新增 canonical 正文均保持 `source_status: UNVERIFIED` / `review_status: UNREVIEWED`，并通过 catalog 与 inventory 派生入口纳入 652 篇可发现内容。不提升 `VERIFIED`、`HUMAN_APPROVED` 或版本号。
+
 ### Fixed
 
 - `IOT-T035` / `IOT-F018` / `IOT-F027` / `IOT-F034`：新增 catalog 漂移、发布链接边界、legacy mirror 单向同步，以及 642 篇 frontmatter `title` / 正文 H1 一致性的回归护栏；围栏或 HTML 注释中的伪 H1 不计入正文标题。
@@ -22,9 +26,9 @@
 
 ### Review baseline
 
-- Source commit: `f9c61f60675b894ce8e3c00a2500d7915a61b234`
+- Source commit: `f157c5d904061c3dcc8869ba132a0c803f8fe5b3`
 - Validated handoff ZIP SHA-256: `3989804a4b351aaa3a03b5094823ebc0480a4507e0429d27d1f483d30486b2e7`
-- 迁移说明：无公开 URL、frontmatter `id`、canonical 正文或可信状态迁移；只更新派生 catalog、inventory 指纹与声明为 `READ_ONLY_MIRROR` 的 root mirrors。当前为未发布工作树，版本仍为 `0.2.2`。
+- 迁移说明：无公开 URL、frontmatter `id` 或可信状态迁移；新增 5 篇 canonical 正文并更新派生 catalog、inventory 指纹。当前为未发布工作树，版本仍为 `0.2.2`。
 
 ## [0.2.2] - 2026-07-10
 

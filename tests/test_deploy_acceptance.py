@@ -97,11 +97,11 @@ class DeployAcceptanceTests(unittest.TestCase):
     def test_inventory_and_trust_counts_are_release_specific(self) -> None:
         payload = _valid_record()
         payload["inventory_summary"] = {
-            "content_files": 647,
+            "content_files": 652,
             "structural_source_audit_records": 642,
             "source_audited_files": 642,
             "source_status_counts": {
-                "UNVERIFIED": 5,
+                "UNVERIFIED": 10,
                 "PARTIAL": 0,
                 "VERIFIED": 642,
             },

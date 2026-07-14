@@ -1034,7 +1034,7 @@ class RepositoryTrustGraphTests(unittest.TestCase):
         )
 
         self.assertEqual([], result.issues)
-        self.assertEqual(647, result.summary.canonical_content)
+        self.assertEqual(652, result.summary.canonical_content)
         self.assertEqual(0, result.summary.legacy_unbound)
         self.assertEqual(642, result.summary.evidence_bound_review)
         self.assertEqual(642, result.summary.verified)

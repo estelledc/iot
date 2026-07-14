@@ -51,28 +51,33 @@
 | 1 | [Jupiter: 边缘设备上的协作 LLM 推理](papers/jupiter.md) | 流水线并行, 投机解码, 大纲式解码, INFOCOM 2025 | 🟠 挑战 |
 | 2 | [协作推理系统全景](papers/collaborative-inference-survey.md) | Pipeline/Tensor/Hybrid 并行, EdgeShard, Petals, PowerInfer-2 | 🟠 挑战 |
 | 3 | [分割计算：DNN 端-边最优切分](papers/split-computing.md) | Split Point, Early Exit, Neurosurgeon, SPINN, DADS | 🟡 进阶 |
+| 4 | [Medusa 与边缘端 LLM 投机解码加速](papers/speculative-decoding-edge.md) | 多解码头, 投机解码, Decoding | 🔴 研究级 |
+| 5 | [FlashAttention 与边缘设备上的注意力内存瓶颈](papers/flash-attention-edge-adaptation.md) | IO-Aware, 长上下文, Attention Kernel | 🔴 研究级 |
 
 ### 模型优化
 
 | # | 论文 | 关键词 | 难度 |
 |---|------|--------|------|
-| 4 | [边缘 AI 模型压缩技术全景](papers/model-compression-edge.md) | 量化 (PTQ/QAT/GPTQ/AWQ), 剪枝, NAS, TensorRT | 🟡 进阶 |
-| 5 | [知识蒸馏在边缘部署的应用](papers/knowledge-distillation-edge.md) | 软标签, 注意力迁移, 自蒸馏, 数据无关蒸馏 | 🟡 进阶 |
-| 6 | [NAS 自动化边缘模型设计](papers/nas-edge-models.md) | MobileNet, EfficientNet, Once-for-All, MCUNet | 🟡 进阶 |
+| 6 | [边缘 AI 模型压缩技术全景](papers/model-compression-edge.md) | 量化 (PTQ/QAT/GPTQ/AWQ), 剪枝, NAS, TensorRT | 🟡 进阶 |
+| 7 | [知识蒸馏在边缘部署的应用](papers/knowledge-distillation-edge.md) | 软标签, 注意力迁移, 自蒸馏, 数据无关蒸馏 | 🟡 进阶 |
+| 8 | [NAS 自动化边缘模型设计](papers/nas-edge-models.md) | MobileNet, EfficientNet, Once-for-All, MCUNet | 🟡 进阶 |
+| 9 | [DARTS 可微分架构搜索与边缘模型设计](papers/differentiable-nas-darts.md) | 可微分搜索, 超网络, AutoML | 🔴 研究级 |
+| 10 | [MobileViT 在边缘端的视觉 Transformer 实践](papers/mobile-vit-edge-transformer.md) | CNN+ViT, 移动视觉, 轻量模型 | 🟡 进阶 |
 
 ### 训练与学习
 
 | # | 论文 | 关键词 | 难度 |
 |---|------|--------|------|
-| 7 | [联邦学习与物联网](papers/federated-learning-iot.md) | FedAvg, Non-IID, FedProx, FedGPA, INFOCOM 2025 | 🟠 挑战 |
-| 8 | [设备端在线训练](papers/on-device-training.md) | Transfer Learning, LoRA on Edge, TinyTL, PockEngine | 🟡 进阶 |
-| 9 | [边缘持续学习](papers/continual-learning-edge.md) | 灾难性遗忘, EWC, PackNet, Replay, 概念漂移 | 🟠 挑战 |
+| 11 | [联邦学习与物联网](papers/federated-learning-iot.md) | FedAvg, Non-IID, FedProx, FedGPA, INFOCOM 2025 | 🟠 挑战 |
+| 12 | [FedAvg 算法深度剖析与 IoT 训练边界](papers/federated-averaging-deep-dive.md) | 加权平均, 本地训练, 通信效率 | 🟡 进阶 |
+| 13 | [设备端在线训练](papers/on-device-training.md) | Transfer Learning, LoRA on Edge, TinyTL, PockEngine | 🟡 进阶 |
+| 14 | [边缘持续学习](papers/continual-learning-edge.md) | 灾难性遗忘, EWC, PackNet, Replay, 概念漂移 | 🟠 挑战 |
 
 ### 系统应用
 
 | # | 论文 | 关键词 | 难度 |
 |---|------|--------|------|
-| 10 | [边缘视频分析系统](papers/edge-ai-video-analytics.md) | 模型级联, ROI 过滤, FilterForward, Ekya, VideoStorm | 🟡 进阶 |
+| 15 | [边缘视频分析系统](papers/edge-ai-video-analytics.md) | 模型级联, ROI 过滤, FilterForward, Ekya, VideoStorm | 🟡 进阶 |
 
 ## 阅读路径建议
 
@@ -85,14 +90,18 @@
 **系统路径**（想理解边缘推理系统）：
 1. 阅读基石论文 [Jupiter](papers/jupiter.md) 理解协作推理的范式
 2. [协作推理全景](papers/collaborative-inference-survey.md) 看更广的技术版图
-3. [分割计算](papers/split-computing.md) 深入理解模型怎么切分
-4. [边缘视频分析](papers/edge-ai-video-analytics.md) 看实际的系统设计
+3. [Medusa 与投机解码](papers/speculative-decoding-edge.md) 理解 decoding 如何减少串行步数
+4. [FlashAttention](papers/flash-attention-edge-adaptation.md) 理解 attention 为什么会被内存访问卡住
+5. [分割计算](papers/split-computing.md) 深入理解模型怎么切分
+6. [边缘视频分析](papers/edge-ai-video-analytics.md) 看实际的系统设计
 
 **研究路径**（对训练和学习感兴趣）：
 1. [联邦学习与物联网](papers/federated-learning-iot.md) — 隐私保护下的分布式训练
-2. [设备端在线训练](papers/on-device-training.md) — 模型在设备上持续进化
-3. [边缘持续学习](papers/continual-learning-edge.md) — 学新知识不忘旧知识
-4. [NAS 自动化设计](papers/nas-edge-models.md) — 让机器设计机器
+2. [FedAvg 深度剖析](papers/federated-averaging-deep-dive.md) — 理解联邦训练的算法地基
+3. [设备端在线训练](papers/on-device-training.md) — 模型在设备上持续进化
+4. [边缘持续学习](papers/continual-learning-edge.md) — 学新知识不忘旧知识
+5. [NAS 自动化设计](papers/nas-edge-models.md) — 让机器设计机器
+6. [DARTS](papers/differentiable-nas-darts.md) 与 [MobileViT](papers/mobile-vit-edge-transformer.md) — 深入模型搜索与移动 Transformer
 
 ## 难度标记说明
 
