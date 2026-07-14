@@ -9,12 +9,12 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
     <p class="iot-hero__eyebrow">IoT SYSTEM ATLAS / 8-LAYER LAB</p>
     <div class="iot-hero__status">
       <span class="jx-chip" data-state="maintained">持续维护 · Maintained</span>
-      <span><b>642 / 652</b> HUMAN_APPROVED</span>
-      <span><b>642 / 652</b> SOURCE VERIFIED</span>
+      <span><b>642 / 657</b> HUMAN_APPROVED</span>
+      <span><b>642 / 657</b> SOURCE VERIFIED</span>
     </div>
     <h1 id="iot-title">先看依赖，再选择要深入的 IoT 层。</h1>
     <p class="iot-hero__lead">
-      这不是 652 篇文章的陈列柜，而是一张可进入、可检查的系统地图。每层同时公开内容规模、上游依赖和审查状态；新增 10 篇保持 <code>UNVERIFIED</code> / <code>UNREVIEWED</code>，旧版 <code>NOT_TRACKED</code> 风险标签也会留在首屏，不被“内容很多”掩盖。
+      这不是 657 篇文章的陈列柜，而是一张可进入、可检查的系统地图。每层同时公开内容规模、上游依赖和审查状态；新增 15 篇保持 <code>UNVERIFIED</code> / <code>UNREVIEWED</code>，旧版 <code>NOT_TRACKED</code> 风险标签也会留在首屏，不被“内容很多”掩盖。
     </p>
     <p class="iot-hero__en" lang="en">Explore the stack as a dependency system. Every layer exposes its content volume and evidence state—without presenting review activity as source verification.</p>
     <div class="iot-hero__actions">
@@ -33,8 +33,8 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
     <ol class="iot-stack-map">
       <li><a href="frontier/"><span class="iot-stack-map__id">L8</span><strong>前沿方向</strong><small>25 files</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
       <li><a href="applications/"><span class="iot-stack-map__id">L7</span><strong>综合应用</strong><small>26 files · depends on L4–L6</small><em>MIXED</em><b>1 UNVERIFIED</b></a></li>
-      <li><a href="security/"><span class="iot-stack-map__id">L6</span><strong>安全与隐私</strong><small>26 files · cross-cutting</small><em>MIXED</em><b>1 UNVERIFIED</b></a></li>
-      <li><a href="intelligence/"><span class="iot-stack-map__id">L5</span><strong>边缘智能</strong><small>26 files · depends on L4</small><em>MIXED</em><b>1 UNVERIFIED</b></a></li>
+      <li><a href="security/"><span class="iot-stack-map__id">L6</span><strong>安全与隐私</strong><small>28 files · cross-cutting</small><em>MIXED</em><b>3 UNVERIFIED</b></a></li>
+      <li><a href="intelligence/"><span class="iot-stack-map__id">L5</span><strong>边缘智能</strong><small>34 files · depends on L4</small><em>MIXED</em><b>9 UNVERIFIED</b></a></li>
       <li><a href="computing/"><span class="iot-stack-map__id">L4</span><strong>计算平台</strong><small>25 files · depends on L1–L3</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
       <li><a href="network/"><span class="iot-stack-map__id">L3</span><strong>网络协议</strong><small>25 files · depends on L2</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
       <li><a href="connectivity/"><span class="iot-stack-map__id">L2</span><strong>无线接入</strong><small>219 files · depends on L1</small><em>MIXED</em><b>2 UNVERIFIED</b></a></li>
@@ -63,7 +63,7 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
 
       <div class="jx-proof__metrics" aria-label="可机械验证的项目证据">
         <div class="jx-proof__metric"><strong>8</strong><span>层 IoT 技术体系</span></div>
-        <div class="jx-proof__metric"><strong>652</strong><span>个内容文件，全部可发现</span></div>
+        <div class="jx-proof__metric"><strong>657</strong><span>个内容文件，全部可发现</span></div>
         <div class="jx-proof__metric"><strong>M1</strong><span>治理基线已完成</span></div>
       </div>
 
@@ -80,7 +80,7 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
       <div><dt>Jason Xun / 决策与验收</dt><dd>定义分层与里程碑，锁定“先治理、再可信、后扩容”，并决定发布是否满足证据门槛。</dd></div>
       <div><dt>AI / 辅助</dt><dd>帮助研究、起草、批量深审和工程实现；自动门禁通过仍不能替代人工验收。</dd></div>
       <div><dt>System / 系统</dt><dd>Markdown → schema 与清单 → catalog 与搜索 → MkDocs Pages；CI 对结构、链接、来源状态和发布规则做回归。</dd></div>
-      <div><dt>Evidence / 证据</dt><dd>652 个文件全部进入可发现目录；642/652 正文已有 <code>VERIFIED</code> / <code>HUMAN_APPROVED</code> 投影，新增 10 篇保持初读状态。</dd></div>
+      <div><dt>Evidence / 证据</dt><dd>657 个文件全部进入可发现目录；642/657 正文已有 <code>VERIFIED</code> / <code>HUMAN_APPROVED</code> 投影，新增 15 篇保持初读状态。</dd></div>
       <div><dt>Limitations / 局限</dt><dd class="jx-proof__limitation">全量来源审计仍为当前目标外的待补工作；<code>NOT_TRACKED</code> 是旧版风险标签，新增卡片必须继续走事实核验和人工审查后才能升级。</dd></div>
     </dl>
   </div>
