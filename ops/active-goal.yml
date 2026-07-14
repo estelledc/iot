@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T052
-status: ACTIVE
+status: COMPLETE
 objective: >-
   在当前本地 main 基线上新增 5 篇 IoT 论文初读卡片，刷新派生目录与
   inventory，完成本地质量门禁、原子提交、push 到 main，并等待 GitHub Pages
@@ -181,16 +181,16 @@ selection:
   selected_articles: []
   rationale: "Non-article-selection deploy goal; the five new canonical paths are frozen in allowed_mutations."
 progress:
-  completed_batches: 1
+  completed_batches: 2
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: LOCAL_CONTENT_AND_INVENTORY_READY
-  last_external_delta: FIVE_NEW_RESEARCH_CARDS_ADDED
+  last_result: DEPLOY_ACCEPTED_FOR_8F06EF0
+  last_external_delta: FIVE_NEW_RESEARCH_CARDS_DEPLOYED_TO_PAGES
 activation:
   ref: cbeecdd66a9829dbf0a60aeda8785661ff4432e0
   activated_at: "2026-07-14T10:36:13Z"
 next_action:
-  kind: RUN_LOCAL_GATES_AND_DEPLOY
+  kind: NONE
   requires_activation: false
-  instruction: "Run full local gates, then commit, push, and record deploy acceptance for IOT-T052."
+  instruction: "IOT-T052 complete; no follow-up action remains inside this goal."

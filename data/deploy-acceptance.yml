@@ -1,16 +1,16 @@
 schema_version: "1.0"
-accepted_at: "2026-07-14T10:56:04Z"
-target_sha: 07110a9df7a708ce406d32f5a189690f0e57ea63
+accepted_at: "2026-07-14T11:49:08Z"
+target_sha: 8f06ef0ea602fc295f99ae70cfac8944f7811cae
 site_url: https://estelledc.github.io/iot/
 repository_quality:
   workflow_name: Repository quality
-  run_id: 29326789816
-  run_url: https://github.com/estelledc/iot/actions/runs/29326789816
+  run_id: 29329910908
+  run_url: https://github.com/estelledc/iot/actions/runs/29329910908
   conclusion: success
 pages_deploy:
   workflow_name: Deploy MkDocs to GitHub Pages
-  run_id: 29326789771
-  run_url: https://github.com/estelledc/iot/actions/runs/29326789771
+  run_id: 29329910954
+  run_url: https://github.com/estelledc/iot/actions/runs/29329910954
   conclusion: success
 checks:
   - name: homepage_http_status
@@ -33,24 +33,28 @@ checks:
     ok: true
     url: https://estelledc.github.io/iot/foundation/catalog/
     detail: 页面包含物联网全栈技术学习站、感知与硬件和 catalog 标记。
-  - name: homepage_reflects_647_content_files
+  - name: homepage_reflects_652_content_files
     ok: true
     url: https://estelledc.github.io/iot/
-    detail: 页面包含 647 内容文件与 642 / 647 SOURCE VERIFIED。
-  - name: connectivity_catalog_contains_new_ambient_iot_cards
+    detail: 页面包含 652 内容文件与 642 / 652 SOURCE VERIFIED。
+  - name: intelligence_catalog_contains_iot_t052_cards
     ok: true
-    url: https://estelledc.github.io/iot/connectivity/catalog/
-    detail: 页面包含 ambient-iot-standardization-6g 与 physical-layer-ambient-iot。
-  - name: security_catalog_contains_llm_iot_card
+    url: https://estelledc.github.io/iot/intelligence/catalog/
+    detail: 页面包含 federated-averaging-deep-dive、differentiable-nas-darts、mobile-vit-edge-transformer、speculative-decoding-edge 与 flash-attention-edge-adaptation。
+  - name: fedavg_card_http_status
     ok: true
-    url: https://estelledc.github.io/iot/security/catalog/
-    detail: 页面包含 llm-iot-security-survey。
+    url: https://estelledc.github.io/iot/intelligence/papers/federated-averaging-deep-dive/
+    detail: HTTP 200，页面包含 FedAvg、Communication-Efficient Learning 与 UNVERIFIED / UNREVIEWED。
+  - name: medusa_card_http_status
+    ok: true
+    url: https://estelledc.github.io/iot/intelligence/papers/speculative-decoding-edge/
+    detail: HTTP 200，页面包含 Medusa、Medusa-1 与 UNVERIFIED / UNREVIEWED。
 inventory_summary:
-  content_files: 647
+  content_files: 652
   structural_source_audit_records: 642
   source_audited_files: 642
   source_status_counts:
-    UNVERIFIED: 5
+    UNVERIFIED: 10
     PARTIAL: 0
     VERIFIED: 642
 trust_summary:
@@ -62,6 +66,7 @@ trust_summary:
   approved: 642
 notes: >-
   Acceptance against the deployed GitHub Pages artifact for the recorded commit.
-  This deployment adds five paper-reading entry cards that remain UNVERIFIED and
-  UNREVIEWED. Existing trust evidence projects 642 prior content files to
-  VERIFIED and HUMAN_APPROVED; this record does not promote the five new cards.
+  This deployment adds five Layer 5 paper-reading entry cards for FedAvg, DARTS,
+  MobileViT, Medusa, and FlashAttention. They remain UNVERIFIED and UNREVIEWED.
+  Existing trust evidence projects 642 prior content files to VERIFIED and
+  HUMAN_APPROVED; this record does not promote the new cards.
