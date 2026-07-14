@@ -1,0 +1,37 @@
+ops/active-goal.lock.json
+  s_d667df056cd83f::t_d729e8b51db11f 3-4
+ops/active-goal.yml
+  s_d667df056cd83f::t_da2d0daaff717c 2-3,5-7,10-11,14-15,17,20,25-29,31-38,42-44,46-47,49-53,55,58-62,65-67,69,72-77,82,86-94,98,102,106,115-122,130-135,137-153,157-159,170-172,174,176,178,180-181,183-184,186,189-192
+papers/edge-computing-survey/index.md
+  s_d667df056cd83f::t_ff7517f4d5d496 19-20
+papers/jupiter/index.md
+  s_d667df056cd83f::t_e21b1e6e88d24f 23-24
+tests/test_iot_domain.py
+  s_d667df056cd83f::t_446396d38e8d27 320-321,333
+tests/test_layer_catalogs.py
+  s_d667df056cd83f::t_dbeb8ddbc9e138 79
+tests/test_quality_tools.py
+  s_d667df056cd83f::t_60000f3152ca19 31-38,47,49,53-55,114,135,155-156,164-165
+tests/test_trust_authorities.py
+  s_d667df056cd83f::t_7cd394c5a80a5f 49-60
+tests/test_trust_state_machine.py
+  s_d667df056cd83f::t_693be765ba5a86 1026,1037-1041,1046-1049
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "07110a9df7a708ce406d32f5a189690f0e57ea63",
+  "prompts": {},
+  "sessions": {
+    "s_d667df056cd83f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_d667df056cd83f",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
