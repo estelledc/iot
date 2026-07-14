@@ -22,12 +22,13 @@
 | 15 | 多模态边缘感知 | [multimodal-edge-perception](papers/multimodal-edge-perception.md) |
 | 16 | NAS 自动化边缘模型设计：让机器设计机器 | [nas-edge-models](papers/nas-edge-models.md) |
 | 17 | 端侧 Diffusion Model 部署 | [on-device-diffusion-model](papers/on-device-diffusion-model.md) |
-| 18 | 设备端在线训练：让边缘模型持续进化 | [on-device-training](papers/on-device-training.md) |
-| 19 | 神经架构搜索 One-Shot NAS 在边缘的应用 | [one-shot-nas-edge](papers/one-shot-nas-edge.md) |
-| 20 | 隐私计算：TEE 加联邦学习联合方案 | [privacy-computing-tee-fl](papers/privacy-computing-tee-fl.md) |
-| 21 | 强化学习在边缘自适应中的应用 | [reinforcement-learning-edge](papers/reinforcement-learning-edge.md) |
-| 22 | 自监督预训练在端侧的应用 | [self-supervised-pretraining-device](papers/self-supervised-pretraining-device.md) |
-| 23 | 分割计算：DNN 端-边最优切分 | [split-computing](papers/split-computing.md) |
-| 24 | 时序预测 Transformer 模型 | [time-series-transformer](papers/time-series-transformer.md) |
-| 25 | Transformer 模型边缘部署技术 | [transformer-edge-deployment](papers/transformer-edge-deployment.md) |
+| 18 | IoT 数据流的端侧边缘学习：持续学习与资源约束 | [on-device-edge-learning-iot-streams](papers/on-device-edge-learning-iot-streams.md) |
+| 19 | 设备端在线训练：让边缘模型持续进化 | [on-device-training](papers/on-device-training.md) |
+| 20 | 神经架构搜索 One-Shot NAS 在边缘的应用 | [one-shot-nas-edge](papers/one-shot-nas-edge.md) |
+| 21 | 隐私计算：TEE 加联邦学习联合方案 | [privacy-computing-tee-fl](papers/privacy-computing-tee-fl.md) |
+| 22 | 强化学习在边缘自适应中的应用 | [reinforcement-learning-edge](papers/reinforcement-learning-edge.md) |
+| 23 | 自监督预训练在端侧的应用 | [self-supervised-pretraining-device](papers/self-supervised-pretraining-device.md) |
+| 24 | 分割计算：DNN 端-边最优切分 | [split-computing](papers/split-computing.md) |
+| 25 | 时序预测 Transformer 模型 | [time-series-transformer](papers/time-series-transformer.md) |
+| 26 | Transformer 模型边缘部署技术 | [transformer-edge-deployment](papers/transformer-edge-deployment.md) |
 <!-- layer-catalog:end -->

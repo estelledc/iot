@@ -9,12 +9,12 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
     <p class="iot-hero__eyebrow">IoT SYSTEM ATLAS / 8-LAYER LAB</p>
     <div class="iot-hero__status">
       <span class="jx-chip" data-state="maintained">持续维护 · Maintained</span>
-      <span><b>642 / 642</b> IN_REVIEW</span>
-      <span><b>0 / 642</b> SOURCE VERIFIED</span>
+      <span><b>642 / 647</b> HUMAN_APPROVED</span>
+      <span><b>642 / 647</b> SOURCE VERIFIED</span>
     </div>
     <h1 id="iot-title">先看依赖，再选择要深入的 IoT 层。</h1>
     <p class="iot-hero__lead">
-      这不是 642 篇文章的陈列柜，而是一张可进入、可检查的系统地图。每层同时公开内容规模、上游依赖和审查状态；<code>IN_REVIEW</code> 与 <code>NOT_TRACKED</code> 会留在首屏，不被“内容很多”掩盖。
+      这不是 647 篇文章的陈列柜，而是一张可进入、可检查的系统地图。每层同时公开内容规模、上游依赖和审查状态；新增 5 篇保持 <code>UNVERIFIED</code> / <code>UNREVIEWED</code>，旧版 <code>NOT_TRACKED</code> 风险标签也会留在首屏，不被“内容很多”掩盖。
     </p>
     <p class="iot-hero__en" lang="en">Explore the stack as a dependency system. Every layer exposes its content volume and evidence state—without presenting review activity as source verification.</p>
     <div class="iot-hero__actions">
@@ -32,17 +32,17 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
     </header>
     <ol class="iot-stack-map">
       <li><a href="frontier/"><span class="iot-stack-map__id">L8</span><strong>前沿方向</strong><small>25 files</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
-      <li><a href="applications/"><span class="iot-stack-map__id">L7</span><strong>综合应用</strong><small>25 files · depends on L4–L6</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
-      <li><a href="security/"><span class="iot-stack-map__id">L6</span><strong>安全与隐私</strong><small>25 files · cross-cutting</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
-      <li><a href="intelligence/"><span class="iot-stack-map__id">L5</span><strong>边缘智能</strong><small>25 files · depends on L4</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="applications/"><span class="iot-stack-map__id">L7</span><strong>综合应用</strong><small>26 files · depends on L4–L6</small><em>MIXED</em><b>1 UNVERIFIED</b></a></li>
+      <li><a href="security/"><span class="iot-stack-map__id">L6</span><strong>安全与隐私</strong><small>26 files · cross-cutting</small><em>MIXED</em><b>1 UNVERIFIED</b></a></li>
+      <li><a href="intelligence/"><span class="iot-stack-map__id">L5</span><strong>边缘智能</strong><small>26 files · depends on L4</small><em>MIXED</em><b>1 UNVERIFIED</b></a></li>
       <li><a href="computing/"><span class="iot-stack-map__id">L4</span><strong>计算平台</strong><small>25 files · depends on L1–L3</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
       <li><a href="network/"><span class="iot-stack-map__id">L3</span><strong>网络协议</strong><small>25 files · depends on L2</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
-      <li><a href="connectivity/"><span class="iot-stack-map__id">L2</span><strong>无线接入</strong><small>217 files · depends on L1</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
+      <li><a href="connectivity/"><span class="iot-stack-map__id">L2</span><strong>无线接入</strong><small>219 files · depends on L1</small><em>MIXED</em><b>2 UNVERIFIED</b></a></li>
       <li><a href="foundation/"><span class="iot-stack-map__id">L1</span><strong>感知与硬件</strong><small>275 files · foundation</small><em>IN_REVIEW</em><b>NOT_TRACKED</b></a></li>
     </ol>
     <div class="iot-stack-lab__legend" aria-label="审查状态图例">
       <span><i data-state="review"></i>正文进入审查</span>
-      <span><i data-state="source"></i>来源审计未跟踪</span>
+      <span><i data-state="source"></i>新增卡片未核验；NOT_TRACKED 为历史风险标签</span>
       <a href="architecture/release-policy/">状态如何升级？</a>
     </div>
   </aside>
@@ -63,7 +63,7 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
 
       <div class="jx-proof__metrics" aria-label="可机械验证的项目证据">
         <div class="jx-proof__metric"><strong>8</strong><span>层 IoT 技术体系</span></div>
-        <div class="jx-proof__metric"><strong>642</strong><span>个内容文件，全部可发现</span></div>
+        <div class="jx-proof__metric"><strong>647</strong><span>个内容文件，全部可发现</span></div>
         <div class="jx-proof__metric"><strong>M1</strong><span>治理基线已完成</span></div>
       </div>
 
@@ -80,8 +80,8 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
       <div><dt>Jason Xun / 决策与验收</dt><dd>定义分层与里程碑，锁定“先治理、再可信、后扩容”，并决定发布是否满足证据门槛。</dd></div>
       <div><dt>AI / 辅助</dt><dd>帮助研究、起草、批量深审和工程实现；自动门禁通过仍不能替代人工验收。</dd></div>
       <div><dt>System / 系统</dt><dd>Markdown → schema 与清单 → catalog 与搜索 → MkDocs Pages；CI 对结构、链接、来源状态和发布规则做回归。</dd></div>
-      <div><dt>Evidence / 证据</dt><dd>642 个文件全部进入可发现目录；642/642 正文完成深审并保持 <code>IN_REVIEW</code>。</dd></div>
-      <div><dt>Limitations / 局限</dt><dd class="jx-proof__limitation">全量来源审计仍为 <code>NOT_TRACKED</code>；<code>IN_REVIEW</code> 不等于事实已验证，线上状态也需针对目标 commit 单独验收。</dd></div>
+      <div><dt>Evidence / 证据</dt><dd>647 个文件全部进入可发现目录；642/647 正文已有 <code>VERIFIED</code> / <code>HUMAN_APPROVED</code> 投影，新增 5 篇保持初读状态。</dd></div>
+      <div><dt>Limitations / 局限</dt><dd class="jx-proof__limitation">全量来源审计仍为当前目标外的待补工作；<code>NOT_TRACKED</code> 是旧版风险标签，新增卡片必须继续走事实核验和人工审查后才能升级。</dd></div>
     </dl>
   </div>
 </section>
@@ -93,7 +93,7 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
     <span class="iot-stats__label">技术层级</span>
   </div>
   <div class="iot-stats__item">
-    <span class="iot-stats__num">642</span>
+    <span class="iot-stats__num">647</span>
     <span class="iot-stats__label">内容文件</span>
   </div>
   <div class="iot-stats__item">
@@ -113,14 +113,14 @@ description: 从传感器、无线接入到边缘智能与 6G 前沿，用八层
 | 层级 | 方向 | 内容文件 |
 | --- | --- | ---: |
 | Layer 1 | [感知与硬件](foundation/index.md) | 275 |
-| Layer 2 | [无线接入](connectivity/index.md) | 217 |
+| Layer 2 | [无线接入](connectivity/index.md) | 219 |
 | Layer 3 | [网络协议](network/index.md) | 25 |
 | Layer 4 | [计算平台](computing/index.md) | 25 |
-| Layer 5 | [边缘智能](intelligence/index.md) | 25 |
-| Layer 6 | [安全与隐私](security/index.md) | 25 |
-| Layer 7 | [综合应用](applications/index.md) | 25 |
+| Layer 5 | [边缘智能](intelligence/index.md) | 26 |
+| Layer 6 | [安全与隐私](security/index.md) | 26 |
+| Layer 7 | [综合应用](applications/index.md) | 26 |
 | Layer 8 | [前沿方向](frontier/index.md) | 25 |
-| **合计** | | **642** |
+| **合计** | | **647** |
 
 > 上表统计的是仓库中的内容文件，不代表来源和技术事实已经审核。显式导航、目录覆盖与扩展计划见[阅读进度](progress.md)。
 

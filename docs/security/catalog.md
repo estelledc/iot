@@ -18,16 +18,17 @@
 | 11 | 工控 ICS 协议安全：从 Modbus 到 OPC UA 的攻防实战 | [ics-protocol-security](papers/ics-protocol-security.md) |
 | 12 | 边缘入侵检测系统：在资源受限环境中守护网络安全 | [intrusion-detection-edge](papers/intrusion-detection-edge.md) |
 | 13 | IoT安全系统性综述：威胁分类、攻击面与纵深防御 | [iot-security-systematic-review](papers/iot-security-systematic-review.md) |
-| 14 | 网络流量异常检测与机器学习 | [network-traffic-anomaly-ml](papers/network-traffic-anomaly-ml.md) |
-| 15 | OTA 安全更新机制 | [ota-secure-update](papers/ota-secure-update.md) |
-| 16 | 后量子密码学在 IoT 中的迁移 | [post-quantum-crypto-iot](papers/post-quantum-crypto-iot.md) |
-| 17 | PUF物理不可克隆函数：IoT设备的"硅指纹"认证 | [puf-device-authentication](papers/puf-device-authentication.md) |
-| 18 | SBOM 软件物料清单在 IoT 中的实践 | [sbom-software-supply-chain](papers/sbom-software-supply-chain.md) |
-| 19 | 安全启动链与 Root of Trust | [secure-boot-root-of-trust](papers/secure-boot-root-of-trust.md) |
-| 20 | 安全多方计算 MPC 在 IoT 中的应用 | [secure-multiparty-computation](papers/secure-multiparty-computation.md) |
-| 21 | 侧信道攻击与防护 | [side-channel-attack-defense](papers/side-channel-attack-defense.md) |
-| 22 | IoT 供应链安全：从芯片到云端的信任链 | [supply-chain-security-iot](papers/supply-chain-security-iot.md) |
-| 23 | TEE与边缘计算安全：硬件隔离的信任锚 | [tee-edge-computing](papers/tee-edge-computing.md) |
-| 24 | 车联网 V2X 安全：高速移动场景下的信任挑战 | [v2x-security](papers/v2x-security.md) |
-| 25 | 零信任架构与IoT：从"城堡护城河"到"永不信任" | [zero-trust-iot](papers/zero-trust-iot.md) |
+| 14 | LLM 与 IoT 生态：安全挑战、应用与部署边界 | [llm-iot-security-survey](papers/llm-iot-security-survey.md) |
+| 15 | 网络流量异常检测与机器学习 | [network-traffic-anomaly-ml](papers/network-traffic-anomaly-ml.md) |
+| 16 | OTA 安全更新机制 | [ota-secure-update](papers/ota-secure-update.md) |
+| 17 | 后量子密码学在 IoT 中的迁移 | [post-quantum-crypto-iot](papers/post-quantum-crypto-iot.md) |
+| 18 | PUF物理不可克隆函数：IoT设备的"硅指纹"认证 | [puf-device-authentication](papers/puf-device-authentication.md) |
+| 19 | SBOM 软件物料清单在 IoT 中的实践 | [sbom-software-supply-chain](papers/sbom-software-supply-chain.md) |
+| 20 | 安全启动链与 Root of Trust | [secure-boot-root-of-trust](papers/secure-boot-root-of-trust.md) |
+| 21 | 安全多方计算 MPC 在 IoT 中的应用 | [secure-multiparty-computation](papers/secure-multiparty-computation.md) |
+| 22 | 侧信道攻击与防护 | [side-channel-attack-defense](papers/side-channel-attack-defense.md) |
+| 23 | IoT 供应链安全：从芯片到云端的信任链 | [supply-chain-security-iot](papers/supply-chain-security-iot.md) |
+| 24 | TEE与边缘计算安全：硬件隔离的信任锚 | [tee-edge-computing](papers/tee-edge-computing.md) |
+| 25 | 车联网 V2X 安全：高速移动场景下的信任挑战 | [v2x-security](papers/v2x-security.md) |
+| 26 | 零信任架构与IoT：从"城堡护城河"到"永不信任" | [zero-trust-iot](papers/zero-trust-iot.md) |
 <!-- layer-catalog:end -->

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "review_baseline_commit": "2a18aec69793494156ffca67848ca0639c145fe4",
   "generated_by": "python tools/content_inventory.py --write",
-  "source_fingerprint_sha256": "bc5a361aa8e577932f8642f0dd4a2e71c08fb8125c2476e587bd7e8e46ac3823",
+  "source_fingerprint_sha256": "4bc800189e50dc66ad4b4a7d3047130c7a0647c5761c9ec529042715be88bbc2",
   "definitions": {
     "content_files": "docs/<layer>/papers 下存在的 Markdown 文件；不代表来源或事实已审核",
     "explicit_nav_entries": "mkdocs.yml 的 nav 中显式列出的内容文件",
@@ -17,21 +17,21 @@
     "source_status_counts": "仓库级 trust graph 当前投影出的 source_status 计数"
   },
   "totals": {
-    "content_files": 642,
+    "content_files": 647,
     "explicit_nav_entries": 200,
     "layer_index_entries": 80,
-    "catalog_entries": 642,
-    "discoverable_entries": 642,
+    "catalog_entries": 647,
+    "discoverable_entries": 647,
     "plan_topics": 1761,
-    "planned_capacity": 1962,
+    "planned_capacity": 1964,
     "source_status_counts": {
-      "UNVERIFIED": 613,
+      "UNVERIFIED": 5,
       "PARTIAL": 0,
-      "VERIFIED": 29
+      "VERIFIED": 642
     },
-    "source_audited_files": 29,
-    "structural_source_audit_records": 29,
-    "structural_source_audited_files": 29
+    "source_audited_files": 642,
+    "structural_source_audit_records": 642,
+    "structural_source_audited_files": 642
   },
   "layers": [
     {
@@ -46,25 +46,25 @@
       "plan_topics": 250,
       "planned_capacity": 275,
       "source_audit": "SAMPLED_STRUCTURAL",
-      "structural_source_audit_records": 5,
-      "structural_source_audited_files": 5,
-      "factual_source_audited_files": 5
+      "structural_source_audit_records": 275,
+      "structural_source_audited_files": 275,
+      "factual_source_audited_files": 275
     },
     {
       "id": 2,
       "slug": "connectivity",
       "name": "无线接入",
-      "content_files": 217,
+      "content_files": 219,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
-      "catalog_entries": 217,
-      "discoverable_entries": 217,
+      "catalog_entries": 219,
+      "discoverable_entries": 219,
       "plan_topics": 191,
-      "planned_capacity": 217,
+      "planned_capacity": 219,
       "source_audit": "SAMPLED_STRUCTURAL",
-      "structural_source_audit_records": 6,
-      "structural_source_audited_files": 6,
-      "factual_source_audited_files": 6
+      "structural_source_audit_records": 217,
+      "structural_source_audited_files": 217,
+      "factual_source_audited_files": 217
     },
     {
       "id": 3,
@@ -78,9 +78,9 @@
       "plan_topics": 179,
       "planned_capacity": 204,
       "source_audit": "SAMPLED_STRUCTURAL",
-      "structural_source_audit_records": 3,
-      "structural_source_audited_files": 3,
-      "factual_source_audited_files": 3
+      "structural_source_audit_records": 25,
+      "structural_source_audited_files": 25,
+      "factual_source_audited_files": 25
     },
     {
       "id": 4,
@@ -94,57 +94,57 @@
       "plan_topics": 190,
       "planned_capacity": 215,
       "source_audit": "SAMPLED_STRUCTURAL",
-      "structural_source_audit_records": 3,
-      "structural_source_audited_files": 3,
-      "factual_source_audited_files": 3
+      "structural_source_audit_records": 25,
+      "structural_source_audited_files": 25,
+      "factual_source_audited_files": 25
     },
     {
       "id": 5,
       "slug": "intelligence",
       "name": "边缘智能",
-      "content_files": 25,
+      "content_files": 26,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
-      "catalog_entries": 25,
-      "discoverable_entries": 25,
+      "catalog_entries": 26,
+      "discoverable_entries": 26,
       "plan_topics": 301,
       "planned_capacity": 326,
       "source_audit": "SAMPLED_STRUCTURAL",
-      "structural_source_audit_records": 3,
-      "structural_source_audited_files": 3,
-      "factual_source_audited_files": 3
+      "structural_source_audit_records": 25,
+      "structural_source_audited_files": 25,
+      "factual_source_audited_files": 25
     },
     {
       "id": 6,
       "slug": "security",
       "name": "安全与隐私",
-      "content_files": 25,
+      "content_files": 26,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
-      "catalog_entries": 25,
-      "discoverable_entries": 25,
+      "catalog_entries": 26,
+      "discoverable_entries": 26,
       "plan_topics": 197,
       "planned_capacity": 222,
       "source_audit": "SAMPLED_STRUCTURAL",
-      "structural_source_audit_records": 3,
-      "structural_source_audited_files": 3,
-      "factual_source_audited_files": 3
+      "structural_source_audit_records": 25,
+      "structural_source_audited_files": 25,
+      "factual_source_audited_files": 25
     },
     {
       "id": 7,
       "slug": "applications",
       "name": "综合应用",
-      "content_files": 25,
+      "content_files": 26,
       "explicit_nav_entries": 25,
       "layer_index_entries": 10,
-      "catalog_entries": 25,
-      "discoverable_entries": 25,
+      "catalog_entries": 26,
+      "discoverable_entries": 26,
       "plan_topics": 205,
       "planned_capacity": 230,
       "source_audit": "SAMPLED_STRUCTURAL",
-      "structural_source_audit_records": 3,
-      "structural_source_audited_files": 3,
-      "factual_source_audited_files": 3
+      "structural_source_audit_records": 25,
+      "structural_source_audited_files": 25,
+      "factual_source_audited_files": 25
     },
     {
       "id": 8,
@@ -158,9 +158,9 @@
       "plan_topics": 248,
       "planned_capacity": 273,
       "source_audit": "SAMPLED_STRUCTURAL",
-      "structural_source_audit_records": 3,
-      "structural_source_audited_files": 3,
-      "factual_source_audited_files": 3
+      "structural_source_audit_records": 25,
+      "structural_source_audited_files": 25,
+      "factual_source_audited_files": 25
     }
   ]
 }
