@@ -1023,7 +1023,7 @@ class RepositoryTrustGraphTests(unittest.TestCase):
             as_of=self.as_of,
         )
 
-    def test_repository_baseline_keeps_642_legacy_entries_unbound(self) -> None:
+    def test_repository_baseline_reflects_current_bound_evidence(self) -> None:
         from tools import validate_trust_state
 
         result = validate_trust_state.validate_repository_trust(
@@ -1034,16 +1034,19 @@ class RepositoryTrustGraphTests(unittest.TestCase):
         )
 
         self.assertEqual([], result.issues)
-        self.assertEqual(642, result.summary.canonical_content)
-        self.assertEqual(642, result.summary.legacy_unbound)
-        self.assertEqual(0, result.summary.evidence_bound_review)
-        self.assertEqual(0, result.summary.verified)
-        self.assertEqual(0, result.summary.approved)
+        self.assertEqual(647, result.summary.canonical_content)
+        self.assertEqual(0, result.summary.legacy_unbound)
+        self.assertEqual(642, result.summary.evidence_bound_review)
+        self.assertEqual(642, result.summary.verified)
+        self.assertEqual(642, result.summary.approved)
         expected_source_records = len(
             list((ROOT / "data/source-audits").rglob("*.yml"))
         )
         self.assertEqual(expected_source_records, result.summary.source_records)
-        self.assertEqual(0, result.summary.review_records)
+        expected_review_records = len(
+            list((ROOT / "data/review-records").rglob("*.yml"))
+        )
+        self.assertEqual(expected_review_records, result.summary.review_records)
 
     def test_valid_verified_and_human_approved_chain_projects_both_axes(self) -> None:
         result = self._validate_graph()

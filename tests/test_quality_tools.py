@@ -28,14 +28,14 @@ class ContentInventoryTests(unittest.TestCase):
     def test_structural_source_audits_are_projected_as_sampled_inventory(self) -> None:
         inventory = content_inventory.content_inventory()
         expected_by_layer = {
-            "foundation": 5,
-            "connectivity": 6,
-            "network": 3,
-            "computing": 3,
-            "intelligence": 3,
-            "security": 3,
-            "applications": 3,
-            "frontier": 3,
+            "foundation": 275,
+            "connectivity": 217,
+            "network": 25,
+            "computing": 25,
+            "intelligence": 25,
+            "security": 25,
+            "applications": 25,
+            "frontier": 25,
         }
         actual_by_layer = {
             layer["slug"]: layer["structural_source_audit_records"]
@@ -44,15 +44,15 @@ class ContentInventoryTests(unittest.TestCase):
         self.assertEqual(expected_by_layer, actual_by_layer)
         self.assertEqual(
             {
-                "UNVERIFIED": 642,
+                "UNVERIFIED": 5,
                 "PARTIAL": 0,
-                "VERIFIED": 0,
+                "VERIFIED": 642,
             },
             inventory["totals"]["source_status_counts"],
         )
-        self.assertEqual(29, inventory["totals"]["structural_source_audit_records"])
-        self.assertEqual(29, inventory["totals"]["structural_source_audited_files"])
-        self.assertEqual(0, inventory["totals"]["source_audited_files"])
+        self.assertEqual(642, inventory["totals"]["structural_source_audit_records"])
+        self.assertEqual(642, inventory["totals"]["structural_source_audited_files"])
+        self.assertEqual(642, inventory["totals"]["source_audited_files"])
         self.assertTrue(
             all(layer["source_audit"] == "SAMPLED_STRUCTURAL" for layer in inventory["layers"])
         )
@@ -111,7 +111,7 @@ class ContentInventoryTests(unittest.TestCase):
             path.relative_to(content_inventory.ROOT).as_posix()
             for path in content_inventory._inventory_structural_paths()
         }
-        self.assertEqual(29, len(audit_inputs))
+        self.assertEqual(1284, len(audit_inputs))
         self.assertLessEqual(audit_inputs, fingerprint_inputs)
 
         temp_root = content_inventory.ROOT / ".tmp"
@@ -132,7 +132,7 @@ class ContentInventoryTests(unittest.TestCase):
             content_inventory._render_docs_progress(inventory),
         ):
             self.assertIn("STRUCTURAL", rendered)
-            self.assertIn("事实核验：**0**", rendered)
+            self.assertIn("事实核验：**642**", rendered)
             self.assertNotIn("状态为 `NOT_TRACKED`", rendered)
 
 
@@ -152,8 +152,8 @@ class HomepageSourceTruthTests(unittest.TestCase):
             "持续维护 · Maintained",
             "Explore the stack as a dependency system",
             'class="iot-stack-map"',
-            "642 / 642",
-            "IN_REVIEW",
+            "642 / 647",
+            "HUMAN_APPROVED",
             "NOT_TRACKED",
             'class="jx-proof"',
             "Problem / 问题",
@@ -161,8 +161,8 @@ class HomepageSourceTruthTests(unittest.TestCase):
             "AI / 辅助",
             "Evidence / 证据",
             "Limitations / 局限",
-            "642/642 正文完成深审",
-            "IN_REVIEW</code> 不等于事实已验证",
+            "642/647 正文已有",
+            "新增卡片必须继续走事实核验和人工审查后才能升级",
         ):
             self.assertIn(expected, markdown)
 

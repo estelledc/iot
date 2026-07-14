@@ -317,8 +317,8 @@ class RepositoryCorpusTests(unittest.TestCase):
         first_paths = [document.repo_relative_path for document in first]
         self.assertEqual(first_paths, [document.repo_relative_path for document in second])
         self.assertEqual(sorted(first_paths), first_paths)
-        self.assertEqual(642, len(first))
-        self.assertEqual(642, len({document.content_id for document in first}))
+        self.assertEqual(647, len(first))
+        self.assertEqual(647, len({document.content_id for document in first}))
 
         manifest = hashlib.sha256()
         for document in first:
@@ -330,7 +330,7 @@ class RepositoryCorpusTests(unittest.TestCase):
             manifest.update(document.body_sha256.encode("ascii"))
             manifest.update(b"\0")
         self.assertEqual(
-            "ca78e1cd7639547a876f0324f73a1ee5a12a53d6230797001bddd5bdf89c60df",
+            "993c46cbed3053795d454bed8df5714895f13474ce5274567601b32485b8474d",
             manifest.hexdigest(),
         )
 

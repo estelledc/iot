@@ -46,6 +46,18 @@ class TrustAuthorityIntegrationTests(unittest.TestCase):
         document_path = self.repo_root / CONTENT_PATH
         document_path.parent.mkdir(parents=True)
         shutil.copyfile(ROOT / CONTENT_PATH, document_path)
+        document_text = document_path.read_text(encoding="utf-8")
+        document_text = document_text.replace(
+            "source_status: VERIFIED",
+            "source_status: UNVERIFIED",
+        ).replace(
+            "review_status: HUMAN_APPROVED",
+            "review_status: IN_REVIEW",
+        ).replace(
+            "last_reviewed: '2026-07-10'",
+            "last_reviewed: UNKNOWN",
+        )
+        document_path.write_text(document_text, encoding="utf-8")
         progress_path = self.repo_root / "data/deep-review-progress.yml"
         progress_path.parent.mkdir(parents=True)
         progress_path.write_text(
