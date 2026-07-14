@@ -1,0 +1,176 @@
+docs/applications/papers/adaptive-digital-twin-fl-slicing-iot.md
+  s_65995a99278199::t_4d81beee2c3415 1-85 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a561093327f744c7a91d05a","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,85]}]}]}
+docs/intelligence/papers/on-device-edge-learning-iot-streams.md
+  s_65995a99278199::t_21381b6ce39220 1-84 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56106c327f744c7a91cfde","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,84]}]}]}
+docs/security/papers/llm-iot-security-survey.md
+  s_65995a99278199::t_dcd24bf8664837 1-85 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a561080327f744c7a91d030","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,85]}]}]}
+README.md
+  s_918bf42243a8e7::t_52cdd92fcb320b 18-21
+ROADMAP.md
+  s_918bf42243a8e7::t_f93eac5e65d5a1 25,28-30,32,34
+data/content-inventory.json
+  s_918bf42243a8e7::t_e94fe13859b243 5,20,23-24,26,28,30,32-34,49-51,57,60-61,63,65-67,81-83,97-99,105,108-109,113-115,121,124-125,129-131,137,140-141,145-147,161-163
+docs/applications/catalog.md
+  s_918bf42243a8e7::t_a8d26e5f50257f 8-33
+docs/connectivity/catalog.md
+  s_918bf42243a8e7::t_e70792f67ff991 18-226
+docs/connectivity/papers/ambient-iot-standardization-6g.md
+  s_918bf42243a8e7::t_e015aeb0bfea76 1-85
+docs/connectivity/papers/physical-layer-ambient-iot.md
+  s_918bf42243a8e7::t_25dada94ccd7c0 1-83
+docs/index.md
+  s_918bf42243a8e7::t_981f0e3f59a353 12-13,17,35-37,40,45,66,83-84,96,116,119-121,123
+docs/intelligence/catalog.md
+  s_918bf42243a8e7::t_7edb6aafc9ebc8 25-33
+docs/progress.md
+  s_918bf42243a8e7::t_2a387d41fb1a70 11,14-16,18,20,22-23,26
+docs/roadmap.md
+  s_918bf42243a8e7::t_b845a952f13f77 13,16-18,20,22
+docs/security/catalog.md
+  s_918bf42243a8e7::t_1fc93b591efafd 21-33
+reading-progress.md
+  s_918bf42243a8e7::t_4ef49ea6d19b52 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fd18fadb97058d4f56a0a36cec84cb3ba416a881",
+  "prompts": {},
+  "sessions": {
+    "s_65995a99278199": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a560f2f327f744c7a91ccda",
+        "model": "gpt-5.5__max"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    },
+    "s_918bf42243a8e7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_918bf42243a8e7",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {
+    "docs/applications/papers/adaptive-digital-twin-fl-slicing-iot.md": [
+      {
+        "hash": "s_65995a99278199::t_4d81beee2c3415",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              85
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a561093327f744c7a91d05a",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  85
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/intelligence/papers/on-device-edge-learning-iot-streams.md": [
+      {
+        "hash": "s_65995a99278199::t_21381b6ce39220",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              84
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56106c327f744c7a91cfde",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  84
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "docs/security/papers/llm-iot-security-survey.md": [
+      {
+        "hash": "s_65995a99278199::t_dcd24bf8664837",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              85
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a561080327f744c7a91d030",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  85
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "s_65995a99278199": {
+      "tool": "trae",
+      "conversation_id": "6a560f2f327f744c7a91ccda",
+      "session_id": "6a560f2f327f744c7a91ccda",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_65995a99278199::t_21381b6ce39220": {
+      "tool": "trae",
+      "conversation_id": "6a560f2f327f744c7a91ccda",
+      "session_id": "6a560f2f327f744c7a91ccda",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_65995a99278199::t_4d81beee2c3415": {
+      "tool": "trae",
+      "conversation_id": "6a560f2f327f744c7a91ccda",
+      "session_id": "6a560f2f327f744c7a91ccda",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_65995a99278199::t_dcd24bf8664837": {
+      "tool": "trae",
+      "conversation_id": "6a560f2f327f744c7a91ccda",
+      "session_id": "6a560f2f327f744c7a91ccda",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
