@@ -94,6 +94,30 @@ class DeployAcceptanceTests(unittest.TestCase):
         path = self._write_record(_valid_record())
         self.assertEqual([], check_deploy_acceptance.validate_record(path, TARGET_SHA))
 
+    def test_inventory_and_trust_counts_are_release_specific(self) -> None:
+        payload = _valid_record()
+        payload["inventory_summary"] = {
+            "content_files": 647,
+            "structural_source_audit_records": 642,
+            "source_audited_files": 642,
+            "source_status_counts": {
+                "UNVERIFIED": 5,
+                "PARTIAL": 0,
+                "VERIFIED": 642,
+            },
+        }
+        payload["trust_summary"] = {
+            "source_records": 1284,
+            "review_records": 1284,
+            "legacy_unbound": 0,
+            "evidence_bound_review": 642,
+            "verified": 642,
+            "approved": 642,
+        }
+        path = self._write_record(payload)
+
+        self.assertEqual([], check_deploy_acceptance.validate_record(path, TARGET_SHA))
+
     def test_target_sha_must_match_requested_sha(self) -> None:
         payload = _valid_record()
         payload["target_sha"] = "0" * 40

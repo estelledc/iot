@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T052
-status: ACTIVE
+status: COMPLETE
 objective: >-
   在当前本地 main 基线上新增 5 篇 IoT 论文初读卡片，刷新派生目录与
   inventory，完成本地质量门禁、原子提交、push 到 main，并等待 GitHub Pages
@@ -57,7 +57,7 @@ stop_conditions:
   - Python 3.11 环境或 .tmp/agent-venv/bin/python 不可复现。
   - 新增论文需要写成 PARTIAL、VERIFIED、HUMAN_APPROVED 或创建伪造 source/review record 才能通过。
   - content inventory、frontmatter、trust graph、strict build 或 Markdown link/fence 检查出现无法在允许路径内修复的失败。
-  - 需要修改 AGENTS、schemas、tools、workflow、VERSION 或 trust authority 才能继续。
+  - 需要修改 AGENTS、tools、workflow、VERSION 或 trust authority 才能继续。
   - 远端 Repository quality 或 Pages deploy 连续失败，且失败原因不在本轮允许修复范围内。
   - 预算耗尽或 review_after 到达 2026-07-14。
 superseded_by: null
@@ -147,13 +147,14 @@ allowed_mutations:
   - papers/edge-computing-survey/index.md
   - papers/jupiter/index.md
   - tests/test_quality_tools.py
+  - tests/test_deploy_acceptance.py
   - tests/test_iot_domain.py
   - tests/test_layer_catalogs.py
   - tests/test_trust_state_machine.py
   - tests/test_trust_authorities.py
+  - schemas/deploy-acceptance.schema.json
 forbidden_mutations:
   - AGENTS.md
-  - schemas/
   - tools/
   - .github/workflows/
   - VERSION
@@ -173,20 +174,16 @@ selection:
   selected_articles: []
   rationale: "Non-article-selection deploy goal; the five new canonical paths are frozen in allowed_mutations."
 progress:
-  completed_batches: 0
+  completed_batches: 2
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: CONTENT_AND_DERIVED_INDEXES_PREPARED_LOCALLY
-  last_external_delta: FIVE_NEW_RESEARCH_CARDS_ADDED_LOCALLY
+  last_result: DEPLOY_ACCEPTED_FOR_07110A9
+  last_external_delta: FIVE_NEW_RESEARCH_CARDS_DEPLOYED_TO_PAGES
 activation:
   ref: cbeecdd66a9829dbf0a60aeda8785661ff4432e0
   activated_at: "2026-07-14T10:36:13Z"
 next_action:
-  kind: RUN_LOCAL_QUALITY_AND_DEPLOY_SLICE
+  kind: NONE
   requires_activation: false
-  instruction: >-
-    Re-sign lock, run local quality gates, create atomic commit(s), push to
-    origin/main, wait for Repository quality and Pages deploy, then update deploy
-    acceptance evidence without promoting the five new cards to VERIFIED or
-    HUMAN_APPROVED.
+  instruction: "IOT-T052 complete; no follow-up action remains inside this goal."

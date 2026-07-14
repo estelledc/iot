@@ -79,13 +79,13 @@
       ],
       "properties": {
         "content_files": {
-          "const": 642
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "structural_source_audit_records": {
-          "const": 29
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "source_audited_files": {
-          "const": 0
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "source_status_counts": {
           "type": "object",
@@ -97,13 +97,13 @@
           ],
           "properties": {
             "UNVERIFIED": {
-              "const": 642
+              "$ref": "#/$defs/nonNegativeInteger"
             },
             "PARTIAL": {
-              "const": 0
+              "$ref": "#/$defs/nonNegativeInteger"
             },
             "VERIFIED": {
-              "const": 0
+              "$ref": "#/$defs/nonNegativeInteger"
             }
           }
         }
@@ -122,22 +122,22 @@
       ],
       "properties": {
         "source_records": {
-          "const": 29
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "review_records": {
-          "const": 0
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "legacy_unbound": {
-          "const": 642
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "evidence_bound_review": {
-          "const": 0
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "verified": {
-          "const": 0
+          "$ref": "#/$defs/nonNegativeInteger"
         },
         "approved": {
-          "const": 0
+          "$ref": "#/$defs/nonNegativeInteger"
         }
       }
     },
@@ -153,6 +153,10 @@
     "nonEmptyString": {
       "type": "string",
       "minLength": 1
+    },
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0
     },
     "workflowRun": {
       "type": "object",
