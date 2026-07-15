@@ -1,18 +1,18 @@
 schema_version: "1.0"
-goal_id: IOT-T059
-status: COMPLETE
+goal_id: IOT-T061
+status: ACTIVE
 objective: >-
-  承接 IOT-T058 的剩余缺口，获取并整理 3GPP TR 38.848 与 TR 38.769
-  的原始标准文档证据，新增一份 Ambient IoT 标准来源证据包。该证据包只作为
-  后续 CLAIM_VERIFICATION 或 human review 的输入，不修改论文正文、frontmatter、
-  source audit、review record 或 trust authority，不提升 source_status。
+  修复 CI / Pages workflow 的 Python 运行时双源与依赖安装假绿：让两套
+  workflow 统一从 .python-version 读取版本，在 hash-locked 安装后执行
+  pip check，并把这些约束纳入 fail-closed workflow policy 与回归测试。
+  本目标只加固构建基建，不修改内容正文、frontmatter、trust 记录或发布版本。
 scope:
-  task_id: IOT-T059
+  task_id: IOT-T061
   mode: PROGRESSION_CONTRACT_HARDENING
   first_batch_articles: 0
   max_articles: 0
-activated_by: "current-user-prompt-2026-07-15-start-iot-t059"
-review_after: "2026-07-15"
+activated_by: "current-user-prompt-2026-07-15-continue-iot-infrastructure"
+review_after: "2026-07-16"
 budget:
   max_batches: 2
   max_articles: 0
@@ -22,49 +22,44 @@ budget:
   max_parallel_writers: 1
 external_outcome:
   definition: >-
-    新增一份脱敏 3GPP 标准来源证据包，记录 TR 38.848 与 TR 38.769 的可复查
-    获取路径、快照 hash、版本/Release 信息，以及它们对 ambient-iot-standardization-6g
-    标准化 claim 的支撑与剩余缺口；仓库 trust projection 保持不变。
-  d_axis: D4
+    CI 与 Pages 构建不再各自硬编码 Python 版本，依赖安装后的冲突会在进入
+    trust / test / build 门禁前失败；workflow policy 能拒绝版本源漂移和缺失
+    pip check。由于本轮不 push，外部结果止于本地可复现的 D2 运行证据。
+  d_axis: D2
   satisfies_when:
-    - 新增 docs/superpowers/review-packets/2026-07-15-iot-t059-3gpp-ambient-iot-standards-evidence.md。
-    - 证据包引用 3GPP 原始下载页或文件来源，记录检索时间、快照 hash、版本号、Release 和可复查章节线索。
-    - 证据包明确不是 source audit / review record，不创建 HUMAN_APPROVED，不创建 VERIFIED，不修改 source_status。
-    - data/source-audits、data/review-records、data/trust-authorities、论文正文和 frontmatter 均不变。
-    - content inventory 与 trust projection 保持 canonical_content=697、source_records=1287、review_records=1284、verified=642、approved=642。
-    - 本地 active goal、inventory、source/review/trust、Markdown fence/link、strict build 和 git diff --check 通过。
-    - 原子提交 push 到 main，Repository quality 与 Pages deploy 成功。
+    - .github/workflows/ci.yml 与 .github/workflows/deploy.yml 都只通过 .python-version 选择 Python。
+    - 两套 workflow 在 hash-locked 依赖安装后无条件运行 python -m pip check。
+    - tools/check_workflow_policy.py 会拒绝硬编码 Python、错误 version file、重复或可跳过的 setup，以及缺失或可跳过的 pip check。
+    - tests.test_repository_policies.WorkflowPolicyTests 覆盖上述绕过路径，定向测试与全量测试通过。
+    - active goal、workflow policy、inventory、source/review/trust、Markdown、strict build 与 git diff --check 全部通过。
+    - 697 篇 canonical 内容、1287 条 source record、1284 条 review record、642 verified / 642 approved 均保持不变。
 external_action_authority:
   commit: true
-  push: true
+  push: false
   open_pr: false
   merge: false
-  deploy: true
+  deploy: false
 external_action_grant:
-  source: "current-user-prompt-2026-07-15-start-iot-t059"
-  granted_at: "2026-07-15T03:32:08Z"
+  source: "current-user-prompt-2026-07-15-continue-iot-infrastructure"
+  granted_at: "2026-07-15T11:43:49Z"
   scope: >-
-    仅限 IOT-T059：允许读取 3GPP 公开网页/下载文件作为外部来源，新增 1 份
-    review-packet 证据包，更新 ops/active-goal.yml 与 ops/active-goal.lock.json，
-    创建不超过 3 个原子提交、push 到 origin/main 并等待 GitHub Actions /
-    GitHub Pages 完成。不允许修改论文正文、frontmatter、source audit、review record、
-    trust authority、schema、tools、workflow，或提升任何内容到 VERIFIED/HUMAN_APPROVED。
+    仅限 IOT-T061：允许创建 codex/ 分支并为 goal/lock、workflow 基建修复和
+    closeout 创建不超过 3 个原子本地提交；不允许 push、开 PR、merge、deploy，
+    不允许修改内容正文、frontmatter、source/review/trust 数据、schema 或版本号。
 stop_conditions:
-  - 工作树出现不属于 IOT-T059 允许路径的改动。
-  - goal/lock 不一致，且无法在不放宽安全边界的情况下重签。
+  - 工作树出现不属于 IOT-T061 允许路径的改动。
+  - goal/lock 不一致，且无法在不放宽安全边界的情况下修复。
   - Python 3.11 环境或 .tmp/agent-venv/bin/python 不可复现。
-  - 3GPP 原始标准文档无法获取，或只能依赖无法复查的二手来源。
-  - 需要修改 schema、tools、workflow、source audit、review record 或 trust authority 才能继续。
-  - 需要把任何内容写成 VERIFIED、HUMAN_APPROVED 或伪造 HUMAN actor 才能通过。
-  - content inventory、trust graph、strict build 或 Markdown link/fence 检查出现无法在允许路径内修复的失败。
-  - 需要写入 API key、token、账号密钥或本机私密路径才能继续。
-  - 远端 Repository quality 或 Pages deploy 连续失败，且失败原因不在本轮允许修复范围内。
-  - 预算耗尽或 review_after 到达 2026-07-15。
+  - setup-python 不支持从 .python-version 读取版本，或必须使用可变 action ref 才能继续。
+  - 需要修改 schema、trust 工具、内容正文、frontmatter、source/review/trust 数据或 VERSION 才能继续。
+  - 需要弱化 hash-locked 安装、workflow fail-closed 语义或既有门禁才可通过。
+  - content inventory、trust graph、全量测试或 strict build 出现无法在允许路径内修复的失败。
+  - 预算耗尽或 review_after 到达 2026-07-16。
 superseded_by: null
 baseline:
-  prepared_at_ref: 9028b3ac8235476c99392b8c0b014a2a7610d076
-  remote_main_ref: 9028b3ac8235476c99392b8c0b014a2a7610d076
-  required_history_ancestor: 9028b3ac8235476c99392b8c0b014a2a7610d076
+  prepared_at_ref: 90de00ae421b29fa3e7231a5958e9a594fe328b3
+  remote_main_ref: 90de00ae421b29fa3e7231a5958e9a594fe328b3
+  required_history_ancestor: 90de00ae421b29fa3e7231a5958e9a594fe328b3
   expected_inventory:
     canonical_content: 697
     plan_topics: 1761
@@ -79,35 +74,35 @@ acceptance_checks:
   - id: active_goal_contract
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_active_goal.py
-    expectation: ACTIVE_GOAL_OK goal_id=IOT-T059 status=COMPLETE after standards-evidence closeout.
+    expectation: ACTIVE_GOAL_OK goal_id=IOT-T061 during the slice and status=COMPLETE at closeout.
+  - id: workflow_policy_tests
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python -m unittest tests.test_repository_policies.WorkflowPolicyTests -v
+    expectation: runtime-source and pip-check mutation tests pass for CI and Pages workflows.
+  - id: workflow_policy
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/check_workflow_policy.py
+    expectation: immutable action refs, least privilege, runtime source and dependency health checks pass.
   - id: content_inventory
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/content_inventory.py --check
-    expectation: content inventory remains current and reports content_files=697 source_audited_files=645.
-  - id: source_records
-    cadence: EVERY_SLICE
-    command: .tmp/agent-venv/bin/python tools/validate_source_audits.py --all
-    expectation: SOURCE_AUDITS_OK checked=1287.
-  - id: review_records
-    cadence: EVERY_SLICE
-    command: .tmp/agent-venv/bin/python tools/validate_review_records.py --all
-    expectation: REVIEW_RECORDS_OK checked=1284.
+    expectation: content inventory remains current with canonical_content=697 and plan_topics=1761.
   - id: trust_projection
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_trust_state.py --all --baseline-mode
-    expectation: TRUST_STATE_OK canonical_content=697 source_records=1287 review_records=1284 verified=642 approved=642.
-  - id: markdown_fences
+    expectation: source_records=1287 review_records=1284 verified=642 approved=642.
+  - id: full_tests
     cadence: GOAL_CLOSE
-    command: .tmp/agent-venv/bin/python tools/check_markdown_fences.py --all
-    expectation: no Markdown fence errors.
-  - id: markdown_links
+    command: .tmp/agent-venv/bin/python -m unittest discover -s tests -v
+    expectation: the full repository suite passes.
+  - id: markdown
     cadence: GOAL_CLOSE
-    command: .tmp/agent-venv/bin/python tools/check_markdown_links.py --all --anchors --strict
-    expectation: no Markdown link or anchor errors.
+    command: .tmp/agent-venv/bin/python tools/check_markdown_fences.py --all && .tmp/agent-venv/bin/python tools/check_markdown_links.py --all --anchors --strict
+    expectation: Markdown fence, link and anchor checks pass.
   - id: strict_build
     cadence: GOAL_CLOSE
-    command: .tmp/agent-venv/bin/python -m mkdocs build --strict --site-dir .tmp/site-agent-t059
-    expectation: strict build succeeds.
+    command: .tmp/agent-venv/bin/python -m mkdocs build --strict --site-dir .tmp/site-agent-t061
+    expectation: strict site build succeeds.
   - id: diff_check
     cadence: EVERY_SLICE
     command: git diff --check
@@ -115,45 +110,46 @@ acceptance_checks:
 allowed_mutations:
   - ops/active-goal.yml
   - ops/active-goal.lock.json
-  - docs/superpowers/review-packets/2026-07-15-iot-t059-3gpp-ambient-iot-standards-evidence.md
+  - .github/workflows/ci.yml
+  - .github/workflows/deploy.yml
+  - tools/check_workflow_policy.py
+  - tests/test_repository_policies.py
+  - docs/architecture/build-compatibility.md
+  - CHANGELOG.md
 forbidden_mutations:
   - AGENTS.md
-  - tools/
   - schemas/
-  - .github/workflows/
   - VERSION
-  - data/source-audits/
-  - data/review-records/
-  - data/trust-authorities.yml
-  - data/content-inventory.json
-  - docs/foundation/papers/
-  - docs/connectivity/papers/
-  - docs/network/papers/
-  - docs/computing/papers/
-  - docs/intelligence/papers/
-  - docs/security/papers/
-  - docs/applications/papers/
-  - docs/frontier/papers/
+  - data/
+  - docs/foundation/
+  - docs/connectivity/
+  - docs/network/
+  - docs/computing/
+  - docs/intelligence/
+  - docs/security/
+  - docs/applications/
+  - docs/frontier/
+  - papers/
+  - plans/
 selection:
   policy: >-
-    IOT-T059 是非文章新增类的 3GPP 标准来源证据包；由于 active-goal checker 只对
-    STRUCTURAL_SHADOW_AUDIT 启用 article selection 计数，目标对象由 objective
-    和 allowed_mutations 固定，不通过 selected_articles 提升可信状态。
+    IOT-T061 是非文章类构建基建加固；目标文件由 allowed_mutations 固定，
+    不选择文章，也不改变任何可信状态。
   selected_articles: []
-  rationale: "Pilot target: 3GPP TR 38.848 and TR 38.769 standards evidence for ambient-iot-standardization-6g."
+  rationale: "Runtime and dependency-health policy hardening for both GitHub Actions workflows."
 progress:
-  completed_batches: 2
+  completed_batches: 0
   completed_articles: 0
-  completed_commits: 3
+  completed_commits: 0
   no_external_delta_batches: 0
-  last_result: IOT_T059_REMOTE_GATES_PASSED_AND_GOAL_CLOSED
-  last_external_delta: STANDARDS_EVIDENCE_COMMIT_A50B31D_DEPLOYED_WITH_REPOSITORY_QUALITY_AND_PAGES_SUCCESS
+  last_result: IOT_T061_ACTIVATED_BASELINE_GREEN
+  last_external_delta: NONE_LOCAL_CONTRACT_ACTIVATED
 activation:
-  ref: 9028b3ac8235476c99392b8c0b014a2a7610d076
-  activated_at: "2026-07-15T03:32:08Z"
+  ref: 90de00ae421b29fa3e7231a5958e9a594fe328b3
+  activated_at: "2026-07-15T11:43:49Z"
 next_action:
-  kind: NONE
+  kind: RUN_INFRASTRUCTURE_SLICE
   requires_activation: false
   instruction: >-
-    IOT-T059 is complete. Do not continue into another IoT iteration without a
-    new explicit user request and a fresh active-goal contract.
+    Commit the IOT-T061 goal/lock baseline, then add RED policy tests, implement
+    workflow runtime-source and pip-check hardening, and run the closeout gates.
