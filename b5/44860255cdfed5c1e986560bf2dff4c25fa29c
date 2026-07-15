@@ -1,0 +1,27 @@
+docs/architecture/release-policy.md
+  s_72cff8612f01ff::t_e1957daec840b4 20-28
+docs/superpowers/plans/2026-07-15-iot-t054-retrospective.md
+  s_72cff8612f01ff::t_9b1fa414c1b364 1-39
+ops/active-goal.lock.json
+  s_72cff8612f01ff::t_79526bb3a3671a 3-4
+ops/active-goal.yml
+  s_72cff8612f01ff::t_af1a31fcf86227 2-3,5-8,10-11,14-15,17,19-20,25-26,29-33,41-42,44-47,49,52-53,55,58-60,75,79,84-87,90,107-108,112,115,118-123,126,128,130,132,134-135,137-138,140,142-144
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b544860255cdfed5c1e986560bf2dff4c25fa29c",
+  "prompts": {},
+  "sessions": {
+    "s_72cff8612f01ff": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_72cff8612f01ff",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
