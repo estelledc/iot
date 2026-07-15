@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T055
-status: ACTIVE
+status: COMPLETE
 objective: >-
   总结 IOT-T054 十批 40 篇扩容暴露的流程不足，并推进一轮小范围流程加固：
   新增可追踪复盘文档，更新发布规则中的部署验收 SHA 口径，完成本地门禁、
@@ -127,18 +127,16 @@ selection:
   selected_articles: []
   rationale: "Non-article retrospective and policy-hardening goal."
 progress:
-  completed_batches: 1
+  completed_batches: 2
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: RETROSPECTIVE_AND_POLICY_TEXT_WRITTEN
-  last_external_delta: IOT_T054_SHORTCOMINGS_CAPTURED_AND_DEPLOY_SHA_POLICY_CLARIFIED
+  last_result: DEPLOYED_RETROSPECTIVE_POLICY_HARDENING
+  last_external_delta: IOT_T054_SHORTCOMINGS_AND_DEPLOY_SHA_POLICY_DEPLOYED
 activation:
   ref: daffb871e68607d64fee99a733fb3549aa291d10
   activated_at: "2026-07-15T01:35:25Z"
 next_action:
-  kind: RUN_VALIDATION_COMMIT_PUSH_AND_DEPLOY
+  kind: NONE
   requires_activation: false
-  instruction: >-
-    Run local gates, create an atomic commit, push to origin/main, and wait for
-    Repository quality and Pages deploy.
+  instruction: "IOT-T055 complete; no follow-up action remains inside this goal."
