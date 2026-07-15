@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T061
-status: CLOSING
+status: COMPLETE
 objective: >-
   修复 CI / Pages workflow 的 Python 运行时双源与依赖安装假绿：让两套
   workflow 统一从 .python-version 读取版本，在 hash-locked 安装后执行
@@ -140,16 +140,16 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 2
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: IOT_T061_RUNTIME_POLICY_RED_TO_GREEN
+  last_result: IOT_T061_ALL_LOCAL_CLOSEOUT_GATES_PASSED
   last_external_delta: LOCAL_D2_WORKFLOW_RUNTIME_AND_DEPENDENCY_POLICY_ENFORCED
 activation:
   ref: 90de00ae421b29fa3e7231a5958e9a594fe328b3
   activated_at: "2026-07-15T11:43:49Z"
 next_action:
-  kind: RUN_GOAL_CLOSE_CHECKS
+  kind: NONE
   requires_activation: false
   instruction: >-
-    Commit the tested workflow-policy implementation, then run every GOAL_CLOSE
-    check and mark COMPLETE only if the inventory and trust baseline stay fixed.
+    IOT-T061 is complete on the local branch. Do not push, open a PR, deploy, or
+    start IOT-T062 without a new explicit user request and a fresh goal contract.
