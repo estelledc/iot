@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T056
-status: ACTIVE
+status: COMPLETE
 objective: >-
   总结 IOT-T055 后仍未处理的来源检索链路不足，并推进一轮小范围来源治理：
   记录 LightRead 当前 arxiv 可用、scholar 失败的事实，新增研究来源检索 SOP，
@@ -129,18 +129,16 @@ selection:
   selected_articles: []
   rationale: "Non-article source-policy hardening goal."
 progress:
-  completed_batches: 1
+  completed_batches: 2
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: SOURCE_POLICY_AND_T055_RETROSPECTIVE_WRITTEN
-  last_external_delta: LIGHTREAD_BACKEND_STATUS_AND_ARXIV_FALLBACK_POLICY_CAPTURED
+  last_result: DEPLOYED_SOURCE_RETRIEVAL_POLICY
+  last_external_delta: LIGHTREAD_BACKEND_STATUS_AND_ARXIV_FALLBACK_POLICY_DEPLOYED
 activation:
   ref: 48ddfd4fd3dd9ce16654e41d8078b75dbc6dd7d1
   activated_at: "2026-07-15T01:52:22Z"
 next_action:
-  kind: RUN_VALIDATION_COMMIT_PUSH_AND_DEPLOY
+  kind: NONE
   requires_activation: false
-  instruction: >-
-    Run local gates, create an atomic commit, push to origin/main, and wait for
-    Repository quality and Pages deploy.
+  instruction: "IOT-T056 complete; no follow-up action remains inside this goal."
