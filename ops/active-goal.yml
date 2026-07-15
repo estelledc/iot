@@ -142,19 +142,18 @@ selection:
   selected_articles: []
   rationale: "Pilot target: 3GPP TR 38.848 and TR 38.769 standards evidence for ambient-iot-standardization-6g."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 1
   no_external_delta_batches: 0
-  last_result: IOT_T059_ACTIVE_GOAL_CREATED
-  last_external_delta: NONE_YET
+  last_result: THREE_GPP_STANDARDS_EVIDENCE_PACKET_WRITTEN
+  last_external_delta: ONE_REVIEW_PACKET_ADDED_WITH_TRUST_STATE_UNCHANGED
 activation:
   ref: 9028b3ac8235476c99392b8c0b014a2a7610d076
   activated_at: "2026-07-15T03:32:08Z"
 next_action:
-  kind: CREATE_3GPP_AMBIENT_IOT_STANDARDS_EVIDENCE_PACKET
+  kind: RUN_VALIDATION_COMMIT_PUSH_AND_DEPLOY
   requires_activation: false
   instruction: >-
-    Fetch 3GPP TR 38.848 and TR 38.769 evidence into temporary files, write the
-    bounded review packet, run local gates, commit, push, wait for Repository
-    quality and Pages.
+    Run final local gates, commit the standards evidence packet and progress
+    update, push to origin/main, and wait for Repository quality and Pages.
