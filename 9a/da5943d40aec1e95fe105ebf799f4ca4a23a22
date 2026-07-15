@@ -1,0 +1,76 @@
+docs/superpowers/review-packets/2026-07-15-iot-t058-ambient-iot-pdf-evidence.md
+  s_2f711cc0cfa53e::t_07f06347408a8a 1-72 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a56f96c327f744c7a923cb6","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,72]}]}]}
+ops/active-goal.yml
+  s_b2bc34a6dc0efb::t_7f75fddf022b80 145,147,149-150,155,158-159
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9ada5943d40aec1e95fe105ebf799f4ca4a23a22",
+  "prompts": {},
+  "sessions": {
+    "s_2f711cc0cfa53e": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a5632e4327f744c7a920022",
+        "model": "gpt-5.5__max"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    },
+    "s_b2bc34a6dc0efb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_b2bc34a6dc0efb",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {
+    "docs/superpowers/review-packets/2026-07-15-iot-t058-ambient-iot-pdf-evidence.md": [
+      {
+        "hash": "s_2f711cc0cfa53e::t_07f06347408a8a",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              72
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a56f96c327f744c7a923cb6",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  72
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "s_2f711cc0cfa53e": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_2f711cc0cfa53e::t_07f06347408a8a": {
+      "tool": "trae",
+      "conversation_id": "6a5632e4327f744c7a920022",
+      "session_id": "6a5632e4327f744c7a920022",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
