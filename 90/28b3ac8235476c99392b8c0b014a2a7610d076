@@ -1,0 +1,23 @@
+ops/active-goal.lock.json
+  s_10b3394357219d::t_966befe7081ed1 4
+ops/active-goal.yml
+  s_10b3394357219d::t_bb2513d91ff12c 3,82,145,147,149-150,155,158-159
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9028b3ac8235476c99392b8c0b014a2a7610d076",
+  "prompts": {},
+  "sessions": {
+    "s_10b3394357219d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_10b3394357219d",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
