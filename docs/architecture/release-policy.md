@@ -17,6 +17,15 @@
 3. 可在干净工作树复现的验证命令。
 4. 审查基线 commit；使用交接包时记录 ZIP SHA-256，但不能记录本机路径。
 
+## 部署验收 SHA 口径
+
+`data/deploy-acceptance.yml` 的 `target_sha` 指**被验收的内容提交**，不是写入验收记录的收口提交。原因是验收记录提交本身也会触发一次新的 Pages deploy；如果要求记录提交的 SHA 也写进同一个记录，会形成“记录验收 -> 新 SHA -> 再记录验收”的无限收口。
+
+收口提交仍必须满足两点：
+
+1. `data/deploy-acceptance.yml` 通过 `tools/check_deploy_acceptance.py --file ... --target-sha <被验收内容提交>`。
+2. 收口提交 push 后，Repository quality 与 Pages deploy 也必须成功，证明记录本身没有破坏站点。
+
 ## 批次边界
 
 - 一个批次只处理一个并行组或一个可回滚主题。
