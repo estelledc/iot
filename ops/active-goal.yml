@@ -142,18 +142,18 @@ selection:
   selected_articles: []
   rationale: "Pilot target: ambient-iot-standardization-6g PDF evidence packet."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 1
   no_external_delta_batches: 0
-  last_result: IOT_T058_ACTIVE_GOAL_CREATED
-  last_external_delta: NONE_YET
+  last_result: AMBIENT_IOT_PDF_EVIDENCE_PACKET_WRITTEN
+  last_external_delta: ONE_REVIEW_PACKET_ADDED_WITH_TRUST_STATE_UNCHANGED
 activation:
   ref: 5a0c2f4553ac7b63e6f61ad3886f59245f992390
   activated_at: "2026-07-15T03:01:23Z"
 next_action:
-  kind: CREATE_AMBIENT_IOT_PDF_EVIDENCE_PACKET
+  kind: RUN_VALIDATION_COMMIT_PUSH_AND_DEPLOY
   requires_activation: false
   instruction: >-
-    Fetch arXiv abs/PDF evidence into temporary files, write the bounded review
-    packet, run local gates, commit, push, wait for Repository quality and Pages.
+    Run final local gates, commit the evidence packet and progress update, push
+    to origin/main, and wait for Repository quality and Pages deploy.
