@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T059
-status: ACTIVE
+status: COMPLETE
 objective: >-
   承接 IOT-T058 的剩余缺口，获取并整理 3GPP TR 38.848 与 TR 38.769
   的原始标准文档证据，新增一份 Ambient IoT 标准来源证据包。该证据包只作为
@@ -79,7 +79,7 @@ acceptance_checks:
   - id: active_goal_contract
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_active_goal.py
-    expectation: ACTIVE_GOAL_OK goal_id=IOT-T059 status=ACTIVE during standards-evidence work.
+    expectation: ACTIVE_GOAL_OK goal_id=IOT-T059 status=COMPLETE after standards-evidence closeout.
   - id: content_inventory
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/content_inventory.py --check
@@ -142,18 +142,18 @@ selection:
   selected_articles: []
   rationale: "Pilot target: 3GPP TR 38.848 and TR 38.769 standards evidence for ambient-iot-standardization-6g."
 progress:
-  completed_batches: 1
+  completed_batches: 2
   completed_articles: 0
-  completed_commits: 1
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: THREE_GPP_STANDARDS_EVIDENCE_PACKET_WRITTEN
-  last_external_delta: ONE_REVIEW_PACKET_ADDED_WITH_TRUST_STATE_UNCHANGED
+  last_result: IOT_T059_REMOTE_GATES_PASSED_AND_GOAL_CLOSED
+  last_external_delta: STANDARDS_EVIDENCE_COMMIT_A50B31D_DEPLOYED_WITH_REPOSITORY_QUALITY_AND_PAGES_SUCCESS
 activation:
   ref: 9028b3ac8235476c99392b8c0b014a2a7610d076
   activated_at: "2026-07-15T03:32:08Z"
 next_action:
-  kind: RUN_VALIDATION_COMMIT_PUSH_AND_DEPLOY
+  kind: NONE
   requires_activation: false
   instruction: >-
-    Run final local gates, commit the standards evidence packet and progress
-    update, push to origin/main, and wait for Repository quality and Pages.
+    IOT-T059 is complete. Do not continue into another IoT iteration without a
+    new explicit user request and a fresh active-goal contract.
