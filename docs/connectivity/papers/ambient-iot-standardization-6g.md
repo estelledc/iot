@@ -16,7 +16,7 @@ tags:
   - 反向散射
   - 标准化
   - 无线接入
-source_status: UNVERIFIED
+source_status: PARTIAL
 review_status: UNREVIEWED
 last_reviewed: UNKNOWN
 target_paper:

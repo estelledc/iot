@@ -1,0 +1,42 @@
+schema_version: "1.0"
+audit_id: audit-20260715-claim-ambient-iot-standardization-6g
+content_id: ambient-iot-standardization-6g
+content_path: docs/connectivity/papers/ambient-iot-standardization-6g.md
+body_sha256: 003aec0ed4a25ad8562068efb2a6d2f6bae316f37ae3ec291a4d2f69e1357ad5
+audit_kind: CLAIM_VERIFICATION
+outcome: PARTIAL
+status_transition:
+  from: UNVERIFIED
+  to: PARTIAL
+auditor_id: agent-fact-auditor
+auditor_type: AGENT
+auditor_role: FACT_AUDITOR
+audited_at: "2026-07-15T02:23:00Z"
+source_references:
+  - reference_id: src-ambient-iot-standardization-6g-arxiv
+    uri: https://arxiv.org/abs/2412.12519
+    snapshot_sha256: 4b01ca3a41809f7b06ca1177d3f0cd25185b666c72533fc8de960fd6a509b249
+    retrieved_at: "2026-07-15T02:17:48Z"
+structural_checks: []
+claim_coverage:
+  scope: PARTIAL
+  claims:
+    - claim_id: claim-ambient-iot-standardization-6g-source-identity
+      result: VERIFIED
+      reference_ids:
+        - src-ambient-iot-standardization-6g-arxiv
+      notes: arXiv 页面确认题名、作者列表、年份与 arXiv URL 和卡片 target_paper 一致。
+    - claim_id: claim-ambient-iot-standardization-6g-topic-scope
+      result: VERIFIED
+      reference_ids:
+        - src-ambient-iot-standardization-6g-arxiv
+      notes: arXiv 摘要确认论文主题为 Ambient IoT towards 6G 的 standardization、potentials and challenges。
+  uncovered_claim_ids:
+    - claim-ambient-iot-standardization-6g-standards-details
+  blocking_issue_ids: []
+notes: >-
+  Agent partial source audit: verified paper identity and high-level standardization
+  topic scope from the arXiv abstract page only. 3GPP document references,
+  demonstration parameters and field experiment claims remain uncovered.
+supersedes: null
+revocation: null

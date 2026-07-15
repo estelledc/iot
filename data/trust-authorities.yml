@@ -5,6 +5,10 @@ actors:
   actor_type: AGENT
   allowed_roles:
   - STRUCTURAL_AUDITOR
+- actor_id: agent-fact-auditor
+  actor_type: AGENT
+  allowed_roles:
+  - FACT_AUDITOR
 - actor_id: human-author
   actor_type: HUMAN
   allowed_roles:
@@ -19,6 +23,33 @@ actors:
   - REVIEWER
   - APPROVER
 entries:
+- content_id: foundation-models-iot-survey
+  content_path: docs/intelligence/papers/foundation-models-iot-survey.md
+  body_sha256: 13c0aacf1758dd7caaedfafe67905a361a7f30e13bd44faa97059d9a987cbe2c
+  author_ids:
+  - human-author
+  critical_claim_ids:
+  - claim-foundation-models-iot-survey-source-identity
+  - claim-foundation-models-iot-survey-topic-scope
+  - claim-foundation-models-iot-survey-full-taxonomy
+- content_id: drl-intrusion-detection-iot
+  content_path: docs/security/papers/drl-intrusion-detection-iot.md
+  body_sha256: edffa1ddc65a5728aa85d9bfdf26c5ce186292d2e862ef268f1d3275bb5e518f
+  author_ids:
+  - human-author
+  critical_claim_ids:
+  - claim-drl-intrusion-detection-iot-source-identity
+  - claim-drl-intrusion-detection-iot-topic-scope
+  - claim-drl-intrusion-detection-iot-taxonomy-details
+- content_id: ambient-iot-standardization-6g
+  content_path: docs/connectivity/papers/ambient-iot-standardization-6g.md
+  body_sha256: 003aec0ed4a25ad8562068efb2a6d2f6bae316f37ae3ec291a4d2f69e1357ad5
+  author_ids:
+  - human-author
+  critical_claim_ids:
+  - claim-ambient-iot-standardization-6g-source-identity
+  - claim-ambient-iot-standardization-6g-topic-scope
+  - claim-ambient-iot-standardization-6g-standards-details
 - content_id: jupiter
   content_path: docs/intelligence/papers/jupiter.md
   body_sha256: 690a995f8d7a947a25dd56254cfee5b673e6036799e503a7e4bf755ed31bb987

@@ -1,0 +1,42 @@
+schema_version: "1.0"
+audit_id: audit-20260715-claim-drl-intrusion-detection-iot
+content_id: drl-intrusion-detection-iot
+content_path: docs/security/papers/drl-intrusion-detection-iot.md
+body_sha256: edffa1ddc65a5728aa85d9bfdf26c5ce186292d2e862ef268f1d3275bb5e518f
+audit_kind: CLAIM_VERIFICATION
+outcome: PARTIAL
+status_transition:
+  from: UNVERIFIED
+  to: PARTIAL
+auditor_id: agent-fact-auditor
+auditor_type: AGENT
+auditor_role: FACT_AUDITOR
+audited_at: "2026-07-15T02:23:00Z"
+source_references:
+  - reference_id: src-drl-intrusion-detection-iot-arxiv
+    uri: https://arxiv.org/abs/2405.20038
+    snapshot_sha256: 050cb0d0ca39135be10a8346c005f7ddb150d086b26adededd39addd006780fc
+    retrieved_at: "2026-07-15T02:17:48Z"
+structural_checks: []
+claim_coverage:
+  scope: PARTIAL
+  claims:
+    - claim_id: claim-drl-intrusion-detection-iot-source-identity
+      result: VERIFIED
+      reference_ids:
+        - src-drl-intrusion-detection-iot-arxiv
+      notes: arXiv 页面确认题名、作者列表、年份与 arXiv URL 和卡片 target_paper 一致。
+    - claim_id: claim-drl-intrusion-detection-iot-topic-scope
+      result: VERIFIED
+      reference_ids:
+        - src-drl-intrusion-detection-iot-arxiv
+      notes: arXiv 摘要确认论文主题为 IoT intrusion detection 中 deep reinforcement learning 的 survey。
+  uncovered_claim_ids:
+    - claim-drl-intrusion-detection-iot-taxonomy-details
+  blocking_issue_ids: []
+notes: >-
+  Agent partial source audit: verified paper identity and high-level survey
+  scope from the arXiv abstract page only. DRL taxonomy categories, dataset
+  details, metric tables and DOI linkage remain uncovered.
+supersedes: null
+revocation: null

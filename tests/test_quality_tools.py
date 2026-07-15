@@ -44,15 +44,15 @@ class ContentInventoryTests(unittest.TestCase):
         self.assertEqual(expected_by_layer, actual_by_layer)
         self.assertEqual(
             {
-                "UNVERIFIED": 55,
-                "PARTIAL": 0,
+                "UNVERIFIED": 52,
+                "PARTIAL": 3,
                 "VERIFIED": 642,
             },
             inventory["totals"]["source_status_counts"],
         )
         self.assertEqual(642, inventory["totals"]["structural_source_audit_records"])
         self.assertEqual(642, inventory["totals"]["structural_source_audited_files"])
-        self.assertEqual(642, inventory["totals"]["source_audited_files"])
+        self.assertEqual(645, inventory["totals"]["source_audited_files"])
         self.assertTrue(
             all(layer["source_audit"] == "SAMPLED_STRUCTURAL" for layer in inventory["layers"])
         )
@@ -111,7 +111,7 @@ class ContentInventoryTests(unittest.TestCase):
             path.relative_to(content_inventory.ROOT).as_posix()
             for path in content_inventory._inventory_structural_paths()
         }
-        self.assertEqual(1284, len(audit_inputs))
+        self.assertEqual(1287, len(audit_inputs))
         self.assertLessEqual(audit_inputs, fingerprint_inputs)
 
         temp_root = content_inventory.ROOT / ".tmp"
@@ -132,7 +132,7 @@ class ContentInventoryTests(unittest.TestCase):
             content_inventory._render_docs_progress(inventory),
         ):
             self.assertIn("STRUCTURAL", rendered)
-            self.assertIn("事实核验：**642**", rendered)
+            self.assertIn("事实核验：**645**", rendered)
             self.assertNotIn("状态为 `NOT_TRACKED`", rendered)
 
 

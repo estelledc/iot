@@ -17,7 +17,7 @@ tags:
   - DQN
   - WSN
   - 安全指标
-source_status: UNVERIFIED
+source_status: PARTIAL
 review_status: UNREVIEWED
 last_reviewed: UNKNOWN
 target_paper:

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "review_baseline_commit": "2a18aec69793494156ffca67848ca0639c145fe4",
   "generated_by": "python tools/content_inventory.py --write",
-  "source_fingerprint_sha256": "9a75cc615c83cd4335db96683f3487163a6afcc09f06e03dea51b4aa9440ab53",
+  "source_fingerprint_sha256": "d794f39c361b5171589cdee5939de1f47d5a27c20f0eb3a99655b40a1b5ad40a",
   "definitions": {
     "content_files": "docs/<layer>/papers 下存在的 Markdown 文件；不代表来源或事实已审核",
     "explicit_nav_entries": "mkdocs.yml 的 nav 中显式列出的内容文件",
@@ -25,11 +25,11 @@
     "plan_topics": 1761,
     "planned_capacity": 1964,
     "source_status_counts": {
-      "UNVERIFIED": 55,
-      "PARTIAL": 0,
+      "UNVERIFIED": 52,
+      "PARTIAL": 3,
       "VERIFIED": 642
     },
-    "source_audited_files": 642,
+    "source_audited_files": 645,
     "structural_source_audit_records": 642,
     "structural_source_audited_files": 642
   },
@@ -64,7 +64,7 @@
       "source_audit": "SAMPLED_STRUCTURAL",
       "structural_source_audit_records": 217,
       "structural_source_audited_files": 217,
-      "factual_source_audited_files": 217
+      "factual_source_audited_files": 218
     },
     {
       "id": 3,
@@ -112,7 +112,7 @@
       "source_audit": "SAMPLED_STRUCTURAL",
       "structural_source_audit_records": 25,
       "structural_source_audited_files": 25,
-      "factual_source_audited_files": 25
+      "factual_source_audited_files": 26
     },
     {
       "id": 6,
@@ -128,7 +128,7 @@
       "source_audit": "SAMPLED_STRUCTURAL",
       "structural_source_audit_records": 25,
       "structural_source_audited_files": 25,
-      "factual_source_audited_files": 25
+      "factual_source_audited_files": 26
     },
     {
       "id": 7,

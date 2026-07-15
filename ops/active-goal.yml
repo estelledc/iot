@@ -1,36 +1,37 @@
 schema_version: "1.0"
-goal_id: IOT-T056
-status: COMPLETE
+goal_id: IOT-T057
+status: ACTIVE
 objective: >-
-  总结 IOT-T055 后仍未处理的来源检索链路不足，并推进一轮小范围来源治理：
-  记录 LightRead 当前 arxiv 可用、scholar 失败的事实，新增研究来源检索 SOP，
-  更新 IOT-T054/T055 复盘链路，完成本地门禁、原子提交、push 到 main，并等待
-  GitHub Actions / Pages 成功。不得新增论文、不得修改工具或 trust 证据。
+  从新增未核验内容中选择 3 篇论文初读卡进行 claim-level 事实核验试点：
+  仅提升到 PARTIAL，不创建 review approval，不声称全文 VERIFIED。为每篇卡片补充
+  source audit 记录和 trust authority 条目，刷新派生统计，完成本地门禁、原子提交、
+  push 到 main，并等待 GitHub Actions / Pages 成功。
 scope:
-  task_id: IOT-T056
+  task_id: IOT-T057
   mode: PROGRESSION_CONTRACT_HARDENING
   first_batch_articles: 0
   max_articles: 0
-activated_by: "current-user-prompt-2026-07-15-summarize-shortcomings-and-advance-one-more-round"
+activated_by: "current-user-prompt-2026-07-15-start-iot-t057-fact-verification-pilot"
 review_after: "2026-07-15"
 budget:
-  max_batches: 2
+  max_batches: 3
   max_articles: 0
-  max_commits: 2
-  max_wall_minutes: 120
+  max_commits: 3
+  max_wall_minutes: 180
   max_parallel_agents: 1
   max_parallel_writers: 1
 external_outcome:
   definition: >-
-    来源检索链路的当前可用/不可用事实被固化，研究来源 SOP 明确 LightRead、
-    arXiv fallback、停止条件和记录字段；本地与远端门禁通过后完成部署。
+    3 篇新增 paper_reading 卡片由 UNVERIFIED 提升为 PARTIAL，证据仅覆盖论文身份与
+    主题范围等部分关键主张；仓库 trust projection 显示 PARTIAL=3、VERIFIED 保持 642。
   d_axis: D4
   satisfies_when:
-    - 新增 docs/architecture/research-source-policy.md，说明 LightRead/arXiv fallback 使用规则。
-    - 新增 docs/superpowers/plans/2026-07-15-iot-t055-retrospective.md，总结 IOT-T055 后仍然存在的不足和本轮处理。
-    - 不新增 docs/*/papers/*.md，不修改 source/review/trust 记录，不提升任何内容可信状态。
-    - content inventory 与 trust projection 保持 canonical_content=697、verified=642、approved=642。
-    - 本地 active goal、Markdown fence/link、strict build、release metadata 和 git diff --check 通过。
+    - foundation-models-iot-survey、drl-intrusion-detection-iot、ambient-iot-standardization-6g 的 source_status 更新为 PARTIAL，review_status 保持 UNREVIEWED。
+    - 新增 3 条 CLAIM_VERIFICATION source audit，auditor_type=AGENT，outcome=PARTIAL，且引用 arXiv 页面快照。
+    - data/trust-authorities.yml 增加 agent-fact-auditor 与 3 个内容的 locked critical_claim_ids。
+    - 不新增论文，不创建 review record，不写 HUMAN_APPROVED，不提升任何内容到 VERIFIED。
+    - content inventory 与 trust projection 保持 canonical_content=697、verified=642、approved=642，source_records 增至 1287。
+    - 本地 active goal、source/review/trust、inventory、frontmatter、Markdown fence/link、strict build 和 git diff --check 通过。
     - 原子提交 push 到 main，Repository quality 与 Pages deploy 成功。
 external_action_authority:
   commit: true
@@ -39,32 +40,34 @@ external_action_authority:
   merge: false
   deploy: true
 external_action_grant:
-  source: "current-user-prompt-2026-07-15-summarize-shortcomings-and-advance-one-more-round"
-  granted_at: "2026-07-15T01:52:22Z"
+  source: "current-user-prompt-2026-07-15-start-iot-t057-fact-verification-pilot"
+  granted_at: "2026-07-15T02:17:48Z"
   scope: >-
-    仅限 IOT-T056：允许新增研究来源检索 SOP、IOT-T055 复盘、更新 active
-    goal/lock、创建不超过 2 个原子提交、push 到 origin/main 并等待 GitHub
-    Actions / GitHub Pages 完成部署。不允许新增论文、修改 schema/tools/workflow、
-    修改 data/ trust 证据、伪造 source audit/review/human approval，或提升任何内容可信状态。
+    仅限 IOT-T057：允许对 3 篇已存在新增卡片进行 PARTIAL source audit 试点，
+    更新对应 frontmatter、data/trust-authorities.yml、data/source-audits/ 下 3 条新记录、
+    派生 inventory/进度展示和测试基线，创建不超过 3 个原子提交、push 到 origin/main
+    并等待 GitHub Actions / GitHub Pages 完成部署。不允许新增论文、修改 schema/tools/workflow、
+    创建 review record、伪造 human approval，或提升任何内容到 VERIFIED/HUMAN_APPROVED。
 stop_conditions:
-  - 工作树出现不属于 IOT-T056 允许路径的改动。
+  - 工作树出现不属于 IOT-T057 允许路径的改动。
   - goal/lock 不一致，且无法在不放宽安全边界的情况下重签。
   - Python 3.11 环境或 .tmp/agent-venv/bin/python 不可复现。
-  - 需要修改 schema、tools、workflow、trust authority 或 trust record 才能继续。
+  - 需要修改 schema、tools、workflow 或 review record 才能继续。
+  - 需要把任何内容写成 VERIFIED、HUMAN_APPROVED 或伪造 HUMAN actor 才能通过。
   - content inventory、trust graph、strict build 或 Markdown link/fence 检查出现无法在允许路径内修复的失败。
   - 需要写入 API key、token、账号密钥或本机私密路径才能继续。
   - 远端 Repository quality 或 Pages deploy 连续失败，且失败原因不在本轮允许修复范围内。
   - 预算耗尽或 review_after 到达 2026-07-15。
 superseded_by: null
 baseline:
-  prepared_at_ref: 48ddfd4fd3dd9ce16654e41d8078b75dbc6dd7d1
-  remote_main_ref: 48ddfd4fd3dd9ce16654e41d8078b75dbc6dd7d1
-  required_history_ancestor: 48ddfd4fd3dd9ce16654e41d8078b75dbc6dd7d1
+  prepared_at_ref: 20dd30c61c7bddb77c737f650107ae0ed0a8c718
+  remote_main_ref: 20dd30c61c7bddb77c737f650107ae0ed0a8c718
+  required_history_ancestor: 20dd30c61c7bddb77c737f650107ae0ed0a8c718
   expected_inventory:
     canonical_content: 697
     plan_topics: 1761
   expected_trust:
-    source_records: 1284
+    source_records: 1287
     review_records: 1284
     legacy_unbound: 0
     evidence_bound_review: 642
@@ -74,22 +77,30 @@ acceptance_checks:
   - id: active_goal_contract
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_active_goal.py
-    expectation: ACTIVE_GOAL_OK goal_id=IOT-T056 status=ACTIVE during source-policy slice.
+    expectation: ACTIVE_GOAL_OK goal_id=IOT-T057 status=ACTIVE during fact-verification pilot.
   - id: content_inventory
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/content_inventory.py --check
-    expectation: content inventory remains current and reports content_files=697.
+    expectation: content inventory remains current and reports content_files=697 source_audited_files=645.
+  - id: frontmatter
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_frontmatter.py --all
+    expectation: FRONTMATTER_SCHEMA_OK checked=697 schema_version=1.0.
+  - id: source_records
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_source_audits.py --all
+    expectation: SOURCE_AUDITS_OK checked=1287.
+  - id: review_records
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_review_records.py --all
+    expectation: REVIEW_RECORDS_OK checked=1284.
   - id: trust_projection
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/validate_trust_state.py --all --baseline-mode
-    expectation: TRUST_STATE_OK canonical_content=697 source_records=1284 review_records=1284 verified=642 approved=642.
-  - id: release_metadata
-    cadence: EVERY_SLICE
-    command: .tmp/agent-venv/bin/python tools/check_release_metadata.py --version-file VERSION --changelog CHANGELOG.md
-    expectation: release metadata remains consistent.
+    expectation: TRUST_STATE_OK canonical_content=697 source_records=1287 review_records=1284 verified=642 approved=642.
   - id: strict_build
     cadence: GOAL_CLOSE
-    command: .tmp/agent-venv/bin/python -m mkdocs build --strict --site-dir .tmp/site-agent-t056
+    command: .tmp/agent-venv/bin/python -m mkdocs build --strict --site-dir .tmp/site-agent-t057
     expectation: strict build succeeds.
   - id: markdown_fences
     cadence: GOAL_CLOSE
@@ -106,39 +117,53 @@ acceptance_checks:
 allowed_mutations:
   - ops/active-goal.yml
   - ops/active-goal.lock.json
-  - docs/architecture/research-source-policy.md
-  - docs/superpowers/plans/2026-07-15-iot-t055-retrospective.md
+  - data/trust-authorities.yml
+  - data/content-inventory.json
+  - data/source-audits/audit-20260715-claim-foundation-models-iot-survey.yml
+  - data/source-audits/audit-20260715-claim-drl-intrusion-detection-iot.yml
+  - data/source-audits/audit-20260715-claim-ambient-iot-standardization-6g.yml
+  - docs/intelligence/papers/foundation-models-iot-survey.md
+  - docs/security/papers/drl-intrusion-detection-iot.md
+  - docs/connectivity/papers/ambient-iot-standardization-6g.md
+  - README.md
+  - ROADMAP.md
+  - reading-progress.md
+  - docs/index.md
+  - docs/progress.md
+  - docs/roadmap.md
+  - tests/test_quality_tools.py
+  - tests/test_trust_state_machine.py
 forbidden_mutations:
   - AGENTS.md
   - tools/
   - schemas/
   - .github/workflows/
   - VERSION
-  - data/
   - docs/foundation/papers/
-  - docs/connectivity/papers/
   - docs/network/papers/
   - docs/computing/papers/
-  - docs/intelligence/papers/
-  - docs/security/papers/
   - docs/applications/papers/
   - docs/frontier/papers/
+  - data/review-records/
 selection:
   policy: >-
-    IOT-T056 是来源检索流程加固 goal，不选择文章、不扩容内容；本轮只固化检索入口和 fallback 规则。
+    IOT-T057 是 PARTIAL 事实核验试点；由于 active-goal checker 只对结构审计模式启用 article selection 计数，
+    3 篇样本由 allowed_mutations 与本 rationale 冻结，不通过 selected_articles 提升可信状态。
   selected_articles: []
-  rationale: "Non-article source-policy hardening goal."
+  rationale: "Pilot targets: foundation-models-iot-survey, drl-intrusion-detection-iot, ambient-iot-standardization-6g."
 progress:
-  completed_batches: 2
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 2
+  completed_commits: 0
   no_external_delta_batches: 0
-  last_result: DEPLOYED_SOURCE_RETRIEVAL_POLICY
-  last_external_delta: LIGHTREAD_BACKEND_STATUS_AND_ARXIV_FALLBACK_POLICY_DEPLOYED
+  last_result: THREE_PARTIAL_SOURCE_AUDITS_WRITTEN
+  last_external_delta: THREE_NEW_CARDS_PROJECT_TO_PARTIAL_SOURCE_STATUS
 activation:
-  ref: 48ddfd4fd3dd9ce16654e41d8078b75dbc6dd7d1
-  activated_at: "2026-07-15T01:52:22Z"
+  ref: 20dd30c61c7bddb77c737f650107ae0ed0a8c718
+  activated_at: "2026-07-15T02:17:48Z"
 next_action:
-  kind: NONE
+  kind: RUN_VALIDATION_COMMIT_PUSH_AND_DEPLOY
   requires_activation: false
-  instruction: "IOT-T056 complete; no follow-up action remains inside this goal."
+  instruction: >-
+    Run final local gates, create an atomic commit, push to origin/main, and
+    wait for Repository quality and Pages deploy.

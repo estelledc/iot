@@ -18,7 +18,7 @@
 - 内容文件：**697** 篇（八层依次为 275/219/29/29/42/36/34/33）。
 - 显式导航：**200** 篇；目录页入口：**697** 篇；可发现：**697** 篇；层级首页直接入口：**90** 篇。
 - 扩展计划：`plans/*.json` 共 **1761** 条；按当前口径的目标容量为 **1964** 篇。
-- 来源审计：current valid `STRUCTURAL` 结构审计 **642** 条，覆盖 **642** 个内容文件；事实核验：**642** 篇（`PARTIAL`/`VERIFIED`）。`STRUCTURAL` 只证明结构可审计，不代表技术事实已验证。
+- 来源审计：current valid `STRUCTURAL` 结构审计 **642** 条，覆盖 **642** 个内容文件；事实核验：**645** 篇（`PARTIAL`/`VERIFIED`）。`STRUCTURAL` 只证明结构可审计，不代表技术事实已验证。
 
 统计由 `python tools/content_inventory.py --write` 生成；`python tools/content_inventory.py --check` 用于检查漂移。
 
