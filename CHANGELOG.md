@@ -10,6 +10,7 @@
 
 ### Fixed
 
+- `IOT-T061` / `IOT-F037`：CI 与 Pages workflow 统一从 `.python-version` 读取 Python，hash-locked 安装后执行 fail-closed `pip check`；workflow policy 与 mutation tests 会拒绝硬编码版本、错误 version file、重复/可跳过 setup 及缺失/可跳过的依赖健康检查。不修改内容、trust 投影或版本号。
 - `IOT-T035` / `IOT-F018` / `IOT-F027` / `IOT-F034`：新增 catalog 漂移、发布链接边界、legacy mirror 单向同步，以及 642 篇 frontmatter `title` / 正文 H1 一致性的回归护栏；围栏或 HTML 注释中的伪 H1 不计入正文标题。
 - `IOT-T036` / `IOT-F023`：修复深审计划页指向 `docs_dir` 外文件的可点击链接，并让 strict Markdown checker 同时覆盖 inline/reference-style 链接、`/iot/` 路径、目录索引、锚点和 symlink 逃逸。
 - `IOT-T037` / `IOT-F018` / `IOT-F034`：仅通过 catalog generator 同步 Foundation 48 行、Connectivity 19 行标题；642 个链接集合、排序和既有 URL 均保持不变，连续两次生成字节一致。

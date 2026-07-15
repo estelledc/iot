@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T061
-status: ACTIVE
+status: CLOSING
 objective: >-
   修复 CI / Pages workflow 的 Python 运行时双源与依赖安装假绿：让两套
   workflow 统一从 .python-version 读取版本，在 hash-locked 安装后执行
@@ -138,18 +138,18 @@ selection:
   selected_articles: []
   rationale: "Runtime and dependency-health policy hardening for both GitHub Actions workflows."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: IOT_T061_ACTIVATED_BASELINE_GREEN
-  last_external_delta: NONE_LOCAL_CONTRACT_ACTIVATED
+  last_result: IOT_T061_RUNTIME_POLICY_RED_TO_GREEN
+  last_external_delta: LOCAL_D2_WORKFLOW_RUNTIME_AND_DEPENDENCY_POLICY_ENFORCED
 activation:
   ref: 90de00ae421b29fa3e7231a5958e9a594fe328b3
   activated_at: "2026-07-15T11:43:49Z"
 next_action:
-  kind: RUN_INFRASTRUCTURE_SLICE
+  kind: RUN_GOAL_CLOSE_CHECKS
   requires_activation: false
   instruction: >-
-    Commit the IOT-T061 goal/lock baseline, then add RED policy tests, implement
-    workflow runtime-source and pip-check hardening, and run the closeout gates.
+    Commit the tested workflow-policy implementation, then run every GOAL_CLOSE
+    check and mark COMPLETE only if the inventory and trust baseline stay fixed.
