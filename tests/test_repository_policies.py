@@ -302,6 +302,79 @@ class WorkflowPolicyTests(unittest.TestCase):
         if replacements != 1:
             raise AssertionError(f"expected one occurrence of {old!r}, got {replacements}")
 
+    @staticmethod
+    def _setup_python_step(workflow, job_name):
+        return next(
+            step
+            for step in workflow["jobs"][job_name]["steps"]
+            if str(step.get("uses", "")).startswith("actions/setup-python@")
+        )
+
+    @staticmethod
+    def _insert_pip_check(workflow, job_name):
+        steps = workflow["jobs"][job_name]["steps"]
+        if any(step.get("run") == "python -m pip check" for step in steps):
+            return
+        install_index = next(
+            index
+            for index, step in enumerate(steps)
+            if step.get("run")
+            == "python -m pip install --require-hashes -r requirements.lock"
+        )
+        steps.insert(
+            install_index + 1,
+            {"name": "Verify installed dependencies", "run": "python -m pip check"},
+        )
+
+    @staticmethod
+    def _insert_active_goal_check(workflow, job_name):
+        steps = workflow["jobs"][job_name]["steps"]
+        if any(
+            step.get("run") == "python tools/check_active_goal.py"
+            for step in steps
+        ):
+            return
+        check_index = next(
+            index
+            for index, step in enumerate(steps)
+            if step.get("run") == "python -m pip check"
+        )
+        steps.insert(
+            check_index + 1,
+            {
+                "name": "Validate active goal contract",
+                "run": "python tools/check_active_goal.py",
+            },
+        )
+
+    @staticmethod
+    def _remove_active_goal_check(workflow, job_name):
+        steps = workflow["jobs"][job_name]["steps"]
+        workflow["jobs"][job_name]["steps"] = [
+            step
+            for step in steps
+            if step.get("run") != "python tools/check_active_goal.py"
+        ]
+
+    @classmethod
+    def _duplicate_active_goal_check(cls, workflow, job_name):
+        cls._insert_active_goal_check(workflow, job_name)
+        step = cls._step_with_command(
+            workflow,
+            job_name,
+            "python tools/check_active_goal.py",
+        )
+        workflow["jobs"][job_name]["steps"].append(copy.deepcopy(step))
+
+    @staticmethod
+    def _step_with_command(workflow, job_name, command):
+        return next(
+            step
+            for step in workflow["jobs"][job_name]["steps"]
+            if isinstance(step.get("run"), str)
+            and command in {line.strip() for line in step["run"].splitlines()}
+        )
+
     def test_repository_workflows_follow_policy(self):
         ci = check_workflow_policy.load_workflow(check_workflow_policy.ROOT / ".github/workflows/ci.yml")
         deploy = check_workflow_policy.load_workflow(
@@ -323,6 +396,321 @@ class WorkflowPolicyTests(unittest.TestCase):
             check_workflow_policy.ROOT / ".github/workflows/ci.yml", changed
         )
         self.assertTrue(any("mutable" in error for error in errors))
+
+    def test_python_runtime_must_come_from_repository_version_file(self):
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            for mutation_name, setup_with, expected in (
+                (
+                    "hard-coded runtime",
+                    {"python-version": "3.10"},
+                    "python-version-file: .python-version",
+                ),
+                (
+                    "wrong version file",
+                    {"python-version-file": "requirements.txt"},
+                    "python-version-file: .python-version",
+                ),
+            ):
+                with self.subTest(workflow=workflow_name, mutation=mutation_name):
+                    changed = check_workflow_policy.load_workflow(path)
+                    setup = self._setup_python_step(changed, job_name)
+                    setup["with"] = setup_with
+                    errors = validator(path, changed)
+                    self.assertTrue(
+                        any(expected in error for error in errors),
+                        errors,
+                    )
+
+            with self.subTest(workflow=workflow_name, mutation="duplicate setup"):
+                changed = check_workflow_policy.load_workflow(path)
+                setup = copy.deepcopy(self._setup_python_step(changed, job_name))
+                changed["jobs"][job_name]["steps"].append(setup)
+                errors = validator(path, changed)
+                self.assertTrue(
+                    any("exactly one setup-python step" in error for error in errors),
+                    errors,
+                )
+
+            with self.subTest(workflow=workflow_name, mutation="skipped setup"):
+                changed = check_workflow_policy.load_workflow(path)
+                setup = self._setup_python_step(changed, job_name)
+                setup["if"] = "false"
+                errors = validator(path, changed)
+                self.assertTrue(
+                    any("setup-python step must not have an if condition" in error for error in errors),
+                    errors,
+                )
+
+    def test_dependency_health_check_is_required_and_fail_closed(self):
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            workflow = check_workflow_policy.load_workflow(path)
+            self._insert_pip_check(workflow, job_name)
+            for mutation_name, mutate, expected in (
+                (
+                    "missing pip check",
+                    lambda step: step.update(run=""),
+                    "missing required command: python -m pip check",
+                ),
+                (
+                    "wrapped pip check",
+                    lambda step: step.update(run="if false; then\n  python -m pip check\nfi"),
+                    "missing required command: python -m pip check",
+                ),
+                (
+                    "conditional pip check",
+                    lambda step: step.update({"if": "false"}),
+                    "pip check step must not have an if condition",
+                ),
+                (
+                    "continue on error",
+                    lambda step: step.update({"continue-on-error": True}),
+                    "pip check step must fail closed",
+                ),
+            ):
+                with self.subTest(workflow=workflow_name, mutation=mutation_name):
+                    changed = copy.deepcopy(workflow)
+                    step = next(
+                        item
+                        for item in changed["jobs"][job_name]["steps"]
+                        if item.get("run") == "python -m pip check"
+                    )
+                    mutate(step)
+                    errors = validator(path, changed)
+                    self.assertTrue(
+                        any(expected in error for error in errors),
+                        errors,
+                    )
+
+    def test_active_goal_check_is_required_exactly_once_and_unwrapped(self):
+        command = "python tools/check_active_goal.py"
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            for mutation_name, mutate, expected in (
+                (
+                    "missing",
+                    lambda workflow: self._remove_active_goal_check(
+                        workflow,
+                        job_name,
+                    ),
+                    f"missing required command: {command}",
+                ),
+                (
+                    "duplicate",
+                    lambda workflow: self._duplicate_active_goal_check(
+                        workflow,
+                        job_name,
+                    ),
+                    f"must run required command exactly once: {command}",
+                ),
+                (
+                    "wrapped",
+                    lambda workflow: (
+                        self._insert_active_goal_check(workflow, job_name),
+                        self._step_with_command(
+                            workflow,
+                            job_name,
+                            command,
+                        ).update(run=f"if false; then\n  {command}\nfi"),
+                    ),
+                    f"missing required command: {command}",
+                ),
+            ):
+                with self.subTest(workflow=workflow_name, mutation=mutation_name):
+                    changed = check_workflow_policy.load_workflow(path)
+                    mutate(changed)
+                    errors = validator(path, changed)
+                    self.assertTrue(
+                        any(expected in error for error in errors),
+                        errors,
+                    )
+
+    def test_active_goal_check_is_fail_closed(self):
+        command = "python tools/check_active_goal.py"
+        mutations = (
+            (
+                "step condition",
+                lambda step: step.update({"if": "false"}),
+                "active-goal check step must not have an if condition",
+            ),
+            (
+                "continue on error",
+                lambda step: step.update({"continue-on-error": True}),
+                "active-goal check step must fail closed",
+            ),
+            (
+                "custom shell",
+                lambda step: step.update(shell="bash -c 'exit 0' -- {0}"),
+                "active-goal check step must use the default shell",
+            ),
+            (
+                "working directory",
+                lambda step: step.update({"working-directory": "fake-validator-root"}),
+                "active-goal check step must run at repository root",
+            ),
+            (
+                "step environment",
+                lambda step: step.update(env={"PYTHONPATH": "fake-validator-root"}),
+                "active-goal check step must not override its environment",
+            ),
+        )
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            for mutation_name, mutate, expected in mutations:
+                with self.subTest(workflow=workflow_name, mutation=mutation_name):
+                    changed = check_workflow_policy.load_workflow(path)
+                    self._insert_active_goal_check(changed, job_name)
+                    step = self._step_with_command(changed, job_name, command)
+                    mutate(step)
+                    errors = validator(path, changed)
+                    self.assertTrue(
+                        any(expected in error for error in errors),
+                        errors,
+                    )
+
+    def test_active_goal_check_order_is_enforced(self):
+        command = "python tools/check_active_goal.py"
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            changed = check_workflow_policy.load_workflow(path)
+            self._insert_active_goal_check(changed, job_name)
+            steps = changed["jobs"][job_name]["steps"]
+            check_step = self._step_with_command(changed, job_name, command)
+            check_index = steps.index(check_step)
+
+            with self.subTest(workflow=workflow_name, mutation="before setup-python"):
+                reordered = copy.deepcopy(changed)
+                reordered_steps = reordered["jobs"][job_name]["steps"]
+                moved = reordered_steps.pop(check_index)
+                setup_step = self._setup_python_step(reordered, job_name)
+                reordered_steps.insert(reordered_steps.index(setup_step), moved)
+                errors = validator(path, reordered)
+                self.assertTrue(
+                    any(
+                        "active-goal check must run after setup-python, "
+                        "hash-locked install, and pip check" in error
+                        for error in errors
+                    ),
+                    errors,
+                )
+
+            for prerequisite in (
+                "python -m pip install --require-hashes -r requirements.lock",
+                "python -m pip check",
+            ):
+                with self.subTest(
+                    workflow=workflow_name,
+                    mutation=f"before {prerequisite}",
+                ):
+                    reordered = copy.deepcopy(changed)
+                    reordered_steps = reordered["jobs"][job_name]["steps"]
+                    moved = reordered_steps.pop(check_index)
+                    prerequisite_step = self._step_with_command(
+                        reordered,
+                        job_name,
+                        prerequisite,
+                    )
+                    reordered_steps.insert(reordered_steps.index(prerequisite_step), moved)
+                    errors = validator(path, reordered)
+                    self.assertTrue(
+                        any(
+                            "active-goal check must run after setup-python, "
+                            "hash-locked install, and pip check" in error
+                            for error in errors
+                        ),
+                        errors,
+                    )
+
+            for successor in (
+                "python tools/content_inventory.py --check",
+                "python tools/validate_source_audits.py --all",
+                "python -m unittest discover -s tests -v",
+                (
+                    "mkdocs build --strict --site-dir .tmp/site"
+                    if workflow_name == "ci"
+                    else "mkdocs build --strict"
+                ),
+            ):
+                with self.subTest(
+                    workflow=workflow_name,
+                    mutation=f"after {successor}",
+                ):
+                    reordered = copy.deepcopy(changed)
+                    reordered_steps = reordered["jobs"][job_name]["steps"]
+                    moved = reordered_steps.pop(check_index)
+                    successor_step = self._step_with_command(
+                        reordered,
+                        job_name,
+                        successor,
+                    )
+                    successor_index = reordered_steps.index(successor_step)
+                    reordered_steps.insert(successor_index + 1, moved)
+                    errors = validator(path, reordered)
+                    self.assertTrue(
+                        any(
+                            "active-goal check must run before inventory, trust, "
+                            "tests, and build" in error
+                            for error in errors
+                        ),
+                        errors,
+                    )
+
+    def test_python_bootstrap_order_and_lock_install_are_enforced(self):
+        install_command = "python -m pip install --require-hashes -r requirements.lock"
+        for workflow_name, path, job_name, validator in self._workflow_cases():
+            with self.subTest(workflow=workflow_name, mutation="unlocked install"):
+                changed = check_workflow_policy.load_workflow(path)
+                self._replace_command(
+                    changed,
+                    job_name,
+                    install_command,
+                    "python -m pip install -r requirements.txt",
+                )
+                errors = validator(path, changed)
+                self.assertTrue(
+                    any(
+                        f"missing required command: {install_command}" in error
+                        for error in errors
+                    ),
+                    errors,
+                )
+
+            with self.subTest(workflow=workflow_name, mutation="pip check before install"):
+                changed = check_workflow_policy.load_workflow(path)
+                steps = changed["jobs"][job_name]["steps"]
+                install_index = next(
+                    index
+                    for index, step in enumerate(steps)
+                    if step.get("run") == install_command
+                )
+                check_index = next(
+                    index
+                    for index, step in enumerate(steps)
+                    if step.get("run") == "python -m pip check"
+                )
+                steps[install_index], steps[check_index] = (
+                    steps[check_index],
+                    steps[install_index],
+                )
+                errors = validator(path, changed)
+                self.assertTrue(
+                    any("Python bootstrap order" in error for error in errors),
+                    errors,
+                )
+
+            with self.subTest(workflow=workflow_name, mutation="additional unlocked install"):
+                changed = check_workflow_policy.load_workflow(path)
+                steps = changed["jobs"][job_name]["steps"]
+                check_index = next(
+                    index
+                    for index, step in enumerate(steps)
+                    if step.get("run") == "python -m pip check"
+                )
+                steps.insert(
+                    check_index + 1,
+                    {"run": "python -m pip install unexpected-package"},
+                )
+                errors = validator(path, changed)
+                self.assertTrue(
+                    any("unlocked or additional pip install" in error for error in errors),
+                    errors,
+                )
 
     def test_each_required_trust_validation_command_is_enforced(self):
         for workflow_name, path, job_name, validator in self._workflow_cases():

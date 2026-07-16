@@ -23,9 +23,13 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
-          python-version: '3.11'
+          python-version-file: '.python-version'
       - name: Install documentation dependencies
         run: python -m pip install --require-hashes -r requirements.lock
+      - name: Verify installed dependencies
+        run: python -m pip check
+      - name: Validate active goal contract
+        run: python tools/check_active_goal.py
       - name: Verify generated and release metadata
         run: |
           python tools/content_inventory.py --check
