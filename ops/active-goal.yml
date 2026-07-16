@@ -1,62 +1,67 @@
 schema_version: "1.0"
-goal_id: IOT-T062
-status: COMPLETE
+goal_id: IOT-T063
+status: ACTIVE
 objective: >-
-  将已完成且本地验证通过的 IOT-T061 分支
-  codex/iot-t061-workflow-runtime-contract 推送到 origin，并验证远端分支
-  精确指向本地最终 HEAD。本目标只负责交付，不开 PR、不 merge、不 deploy，
-  不修改 IOT-T061 的实现、内容或 trust 数据。
+  将 active-goal 合同从全量 unittest 的间接覆盖提升为 CI 与 Pages workflow
+  中独立、精确、fail-closed 的质量门禁。两套 workflow 必须在 Python runtime、
+  hash-locked install 与 pip check 之后，并在 inventory、trust、tests 和 build
+  之前各运行一次 python tools/check_active_goal.py；workflow policy 必须拒绝
+  缺失、重复、换序、包装或可跳过的门禁。本目标不修改内容、frontmatter、
+  schema、source/review/trust 数据或 VERSION。
 scope:
-  task_id: IOT-T062
+  task_id: IOT-T063
   mode: PROGRESSION_CONTRACT_HARDENING
   first_batch_articles: 0
   max_articles: 0
-activated_by: "current-user-prompt-2026-07-16-authorize-push-and-handoff"
+activated_by: "current-user-prompt-2026-07-16-start-iot-t063"
 review_after: "2026-07-17"
 budget:
   max_batches: 1
   max_articles: 0
-  max_commits: 2
-  max_wall_minutes: 60
+  max_commits: 3
+  max_wall_minutes: 120
   max_parallel_agents: 1
   max_parallel_writers: 1
 external_outcome:
   definition: >-
-    origin/codex/iot-t061-workflow-runtime-contract 存在，并在最终 push 后与
-    本地 HEAD 完全一致；远端 main、PR、merge 和 Pages 部署状态均不改变。
-  d_axis: D1
+    CI 与 Pages workflow 都包含可由 workflow policy 独立验证的显式 active-goal
+    fail-closed 门禁；缺失、重复、换序、包装或跳过该命令的 mutation 均被拒绝。
+    本轮不 push，因此 external outcome 止于本地可复现的 D2 门禁证据。
+  d_axis: D2
   satisfies_when:
-    - 远端分支 refs/heads/codex/iot-t061-workflow-runtime-contract 存在。
-    - git ls-remote 返回的远端分支 SHA 与本地最终 HEAD 完全一致。
-    - 本地分支仍以 90de00ae421b29fa3e7231a5958e9a594fe328b3 为祖先，且不使用 force push。
-    - IOT-T061 的 workflow policy、测试、文档和实现提交原样保留。
-    - push 后工作树干净，active goal 为 IOT-T062 COMPLETE。
-    - 不创建 PR、不 merge、不 deploy，也不修改远端 main。
+    - .github/workflows/ci.yml 与 .github/workflows/deploy.yml 各恰好一次运行 python tools/check_active_goal.py。
+    - active-goal check 位于 setup-python、hash-locked install 和 pip check 之后，并位于 inventory、trust、tests 与 build 之前。
+    - active-goal check 不使用 if、continue-on-error、env、working-directory、自定义 shell 或 wrapper。
+    - tools/check_workflow_policy.py 拒绝 active-goal check 的缺失、重复、换序、包装和可跳过变体。
+    - WorkflowPolicyTests 先记录 RED mutation 证据，再通过最小实现转为 GREEN。
+    - active goal、workflow policy、全量 unittest、inventory、catalog、frontmatter、source、review、trust、Markdown 与 strict build 门禁全部通过。
+    - 697 篇 canonical 内容、1761 个 plan topics、1287 条 source record、1284 条 review record、642 verified 与 642 approved 保持不变。
 external_action_authority:
   commit: true
-  push: true
+  push: false
   open_pr: false
   merge: false
   deploy: false
 external_action_grant:
-  source: "current-user-prompt-2026-07-16-authorize-push-and-handoff"
-  granted_at: "2026-07-16T02:07:28Z"
+  source: "current-user-prompt-2026-07-16-start-iot-t063"
+  granted_at: "2026-07-16T02:19:31Z"
   scope: >-
-    仅限 IOT-T062：允许为 push-only 交付合同和 closeout 创建不超过 2 个
-    原子本地提交，并把当前 codex/iot-t061-workflow-runtime-contract 分支
-    普通 push 到 origin。禁止 force push、开 PR、merge、deploy、修改 main，
-    或修改 ops/active-goal.yml 与 lock 之外的任何文件。
+    仅限 IOT-T063：允许创建 codex/iot-t063-active-goal-ci-gate 分支，并为
+    goal/lock、实现和 closeout 创建最多 3 个原子本地提交。禁止 push、开 PR、
+    merge、deploy、force push；不继承 IOT-T062 的 push 授权；不创建后台或子
+    agent；只允许修改本合同列出的 8 个路径。
 stop_conditions:
-  - 工作树出现 ops/active-goal.yml 与 ops/active-goal.lock.json 之外的改动。
-  - 远端同名分支已存在且不是本地 HEAD 的祖先，普通 push 会产生非快进。
-  - origin/main 不再以 90de00ae421b29fa3e7231a5958e9a594fe328b3 为当前远端 main，导致交付基线需要重审。
-  - goal/lock 不一致，或 Python 3.11 active-goal 校验环境不可复现。
-  - push 需要 force、删除、PR、merge、deploy、凭证落盘或扩大授权才能继续。
-  - push 后远端分支 SHA 无法与本地 HEAD 对齐。
+  - origin/codex/iot-t061-workflow-runtime-contract 不再精确指向 679c5c4f048b3b5b926aafe71393b81e395e8632，或工作树出现既有改动。
+  - 工作树出现不属于 IOT-T063 allowed_mutations 的改动。
+  - 需要修改内容、frontmatter、schema、source/review/trust 数据或 VERSION 才能继续。
+  - 需要弱化现有 trust、workflow 或 hash-locked install 门禁才可通过。
+  - 全量门禁出现无法在 allowed_mutations 范围内修复的失败。
+  - 需要 push、开 PR、merge、deploy 或 force push 才能继续。
+  - Python 3.11 项目环境或 .tmp/agent-venv/bin/python 不可复现。
   - 预算耗尽或 review_after 到达 2026-07-17。
 superseded_by: null
 baseline:
-  prepared_at_ref: c9c3ce4db58af8bf57b31d2062da2eb5b50da8d2
+  prepared_at_ref: 679c5c4f048b3b5b926aafe71393b81e395e8632
   remote_main_ref: 90de00ae421b29fa3e7231a5958e9a594fe328b3
   required_history_ancestor: 90de00ae421b29fa3e7231a5958e9a594fe328b3
   expected_inventory:
@@ -73,23 +78,47 @@ acceptance_checks:
   - id: active_goal_contract
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_active_goal.py
-    expectation: ACTIVE_GOAL_OK goal_id=IOT-T062 during delivery and status=COMPLETE at closeout.
+    expectation: ACTIVE_GOAL_OK goal_id=IOT-T063 during the slice and status=COMPLETE at closeout.
+  - id: workflow_policy_tests
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python -m unittest tests.test_repository_policies.WorkflowPolicyTests -v
+    expectation: active-goal workflow mutation tests reject every specified bypass and both repository workflows pass.
   - id: workflow_policy
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_workflow_policy.py
-    expectation: the delivered IOT-T061 workflow runtime and dependency policy remains valid.
-  - id: required_ancestor
+    expectation: both workflows expose an exact, ordered, fail-closed active-goal check.
+  - id: inventory_catalog
     cadence: EVERY_SLICE
-    command: git merge-base --is-ancestor 90de00ae421b29fa3e7231a5958e9a594fe328b3 HEAD
-    expectation: the delivery branch remains a descendant of the refreshed remote main baseline.
-  - id: remote_branch_exact
+    command: .tmp/agent-venv/bin/python tools/content_inventory.py --check && .tmp/agent-venv/bin/python tools/generate_layer_catalogs.py --check
+    expectation: canonical_content=697, plan_topics=1761 and all generated catalogs remain current.
+  - id: frontmatter
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_frontmatter.py --schema-only --fixtures && .tmp/agent-venv/bin/python tools/validate_frontmatter.py --all
+    expectation: fixture schema and all canonical frontmatter remain valid and unchanged.
+  - id: source_records
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_source_audits.py --all
+    expectation: SOURCE_AUDITS_OK checked=1287.
+  - id: review_records
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_review_records.py --all
+    expectation: REVIEW_RECORDS_OK checked=1284.
+  - id: trust_projection
+    cadence: EVERY_SLICE
+    command: .tmp/agent-venv/bin/python tools/validate_trust_state.py --all --baseline-mode
+    expectation: source_records=1287 review_records=1284 verified=642 approved=642.
+  - id: full_tests
     cadence: GOAL_CLOSE
-    command: test "$(git ls-remote --heads origin refs/heads/codex/iot-t061-workflow-runtime-contract | awk '{print $1}')" = "$(git rev-parse HEAD)"
-    expectation: the remote branch SHA exactly equals the final local HEAD.
-  - id: clean_worktree
+    command: .tmp/agent-venv/bin/python -m unittest discover -s tests -v
+    expectation: the full repository suite passes.
+  - id: markdown
     cadence: GOAL_CLOSE
-    command: test -z "$(git status --porcelain)"
-    expectation: no tracked or untracked worktree changes remain.
+    command: .tmp/agent-venv/bin/python tools/check_markdown_fences.py --all && .tmp/agent-venv/bin/python tools/check_markdown_links.py --all --anchors --strict
+    expectation: Markdown fence, link and anchor checks pass.
+  - id: strict_build
+    cadence: GOAL_CLOSE
+    command: .tmp/agent-venv/bin/python -m mkdocs build --strict --site-dir .tmp/site-agent-t063
+    expectation: strict site build succeeds without changing tracked output.
   - id: diff_check
     cadence: EVERY_SLICE
     command: git diff --check
@@ -97,36 +126,49 @@ acceptance_checks:
 allowed_mutations:
   - ops/active-goal.yml
   - ops/active-goal.lock.json
+  - .github/workflows/ci.yml
+  - .github/workflows/deploy.yml
+  - tools/check_workflow_policy.py
+  - tests/test_repository_policies.py
+  - docs/architecture/build-compatibility.md
+  - CHANGELOG.md
 forbidden_mutations:
   - AGENTS.md
-  - .github/
-  - CHANGELOG.md
   - VERSION
+  - .python-version
+  - requirements.in
+  - requirements.lock
   - schemas/
-  - tools/
-  - tests/
-  - docs/
   - data/
+  - docs/foundation/
+  - docs/connectivity/
+  - docs/network/
+  - docs/computing/
+  - docs/intelligence/
+  - docs/security/
+  - docs/applications/
+  - docs/frontier/
   - papers/
   - plans/
 selection:
   policy: >-
-    IOT-T062 是非文章、push-only 交付目标；不选择文章，不修改实现或可信状态。
+    IOT-T063 是非文章类 workflow 合同加固；目标文件由 allowed_mutations
+    精确固定，不选择文章，也不改变任何内容或可信状态。
   selected_articles: []
-  rationale: "Push-only delivery of the completed IOT-T061 branch."
+  rationale: "Explicit fail-closed active-goal gates for CI and Pages workflows."
 progress:
-  completed_batches: 1
+  completed_batches: 0
   completed_articles: 0
-  completed_commits: 2
+  completed_commits: 0
   no_external_delta_batches: 0
-  last_result: IOT_T062_REMOTE_BRANCH_FINAL_HEAD_VERIFIED
-  last_external_delta: REMOTE_BRANCH_PUSHED_VIA_EXISTING_SSH_IDENTITY
+  last_result: IOT_T063_ACTIVATED_BASELINE_GAP_REPRODUCED
+  last_external_delta: NONE_LOCAL_CONTRACT_ACTIVATED
 activation:
-  ref: c9c3ce4db58af8bf57b31d2062da2eb5b50da8d2
-  activated_at: "2026-07-16T02:07:28Z"
+  ref: 679c5c4f048b3b5b926aafe71393b81e395e8632
+  activated_at: "2026-07-16T02:19:31Z"
 next_action:
-  kind: NONE
+  kind: RUN_INFRASTRUCTURE_SLICE
   requires_activation: false
   instruction: >-
-    IOT-T062 is complete after the final closeout push. Do not open a PR, merge,
-    deploy, or start another IoT goal without a new explicit user request.
+    Commit the IOT-T063 goal/lock baseline, then add RED workflow-policy mutation
+    tests before the minimal workflow and policy implementation.
