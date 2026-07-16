@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T063
-status: ACTIVE
+status: COMPLETE
 objective: >-
   将 active-goal 合同从全量 unittest 的间接覆盖提升为 CI 与 Pages workflow
   中独立、精确、fail-closed 的质量门禁。两套 workflow 必须在 Python runtime、
@@ -157,18 +157,18 @@ selection:
   selected_articles: []
   rationale: "Explicit fail-closed active-goal gates for CI and Pages workflows."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: IOT_T063_ACTIVATED_BASELINE_GAP_REPRODUCED
-  last_external_delta: NONE_LOCAL_CONTRACT_ACTIVATED
+  last_result: IOT_T063_LOCAL_D2_GATES_PASSED_AND_GOAL_CLOSED
+  last_external_delta: LOCAL_D2_ACTIVE_GOAL_WORKFLOW_GATE_REPRODUCED
 activation:
   ref: 679c5c4f048b3b5b926aafe71393b81e395e8632
   activated_at: "2026-07-16T02:19:31Z"
 next_action:
-  kind: RUN_INFRASTRUCTURE_SLICE
+  kind: NONE
   requires_activation: false
   instruction: >-
-    Commit the IOT-T063 goal/lock baseline, then add RED workflow-policy mutation
-    tests before the minimal workflow and policy implementation.
+    IOT-T063 is complete locally. Do not push, open a PR, merge, deploy, or start
+    another IoT goal without a new explicit user request and fresh authorization.
