@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T064
-status: ACTIVE
+status: COMPLETE
 objective: >-
   将本地完成的 IOT-T063 active-goal workflow 门禁通过 SSH 分支 push、
   GitHub PR、普通 merge commit 和主干 Repository quality / Pages deploy
@@ -99,8 +99,8 @@ acceptance_checks:
     expectation: every delivery and closeout commit preserves the required main ancestor.
   - id: delivery_branch_exact
     cadence: EVERY_SLICE
-    command: test "$(git ls-remote git@github.com:estelledc/iot.git refs/heads/codex/iot-t063-active-goal-ci-gate | awk '{print $1}')" = "$(git rev-parse HEAD)"
-    expectation: before the first PR merge, the remote delivery branch exactly matches local HEAD.
+    command: test "$(git ls-remote git@github.com:estelledc/iot.git refs/heads/codex/iot-t063-active-goal-ci-gate | awk '{print $1}')" = "22943f3196401726c4eae968689e1022b4a236e2"
+    expectation: the remote delivery branch remains pinned to the reviewed IOT-T064 delivery contract commit.
   - id: delivery_pr_checks
     cadence: EVERY_SLICE
     command: gh pr checks --repo estelledc/iot --required
@@ -146,19 +146,19 @@ selection:
   selected_articles: []
   rationale: "Two-phase PR, merge, and Pages delivery for the completed IOT-T063 gate."
 progress:
-  completed_batches: 0
+  completed_batches: 2
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: IOT_T064_ACTIVATED_REMOTE_BASELINE_GREEN
-  last_external_delta: NONE_DELIVERY_NOT_STARTED
+  last_result: IOT_T064_DELIVERY_GATES_PASSED_AND_CLOSEOUT_READY
+  last_external_delta: PR_27_MERGE_C708ADAA_REPOSITORY_QUALITY_AND_PAGES_SUCCESS
 activation:
   ref: 52391bfe8b4a8fc60c7c2ff115d5e8a3c230968f
   activated_at: "2026-07-16T04:01:37Z"
 next_action:
-  kind: DELIVER_IOT_T063
+  kind: NONE
   requires_activation: false
   instruction: >-
-    Commit the IOT-T064 goal/lock contract, push the IOT-T063 branch over SSH,
-    open the delivery PR, wait for checks, merge with a merge commit, and verify
-    the resulting main Repository quality and Pages deploy before closeout.
+    IOT-T064 closes through the dedicated closeout PR. After its merge, verify
+    the final main Repository quality and Pages deploy; do not start another
+    goal without a new explicit user request.
