@@ -27,6 +27,17 @@ python -m pip check
 非 hash-locked 安装、缺失或可跳过的 `pip check`，并要求它们发生在 trust
 校验之前。
 
+`IOT-T063` / `IOT-F038` 进一步把 active-goal 合同提升为两套 workflow 的
+显式 fail-closed 门禁。CI 与 Pages 必须在上述 bootstrap 完成后、inventory、
+trust、tests 和 build 之前，各自恰好一次运行：
+
+```bash
+python tools/check_active_goal.py
+```
+
+workflow policy 会拒绝该命令缺失、重复、换序、嵌入 wrapper，或带有 `if`、
+`continue-on-error`、`env`、`working-directory`、自定义 `shell` 的 step。
+
 ## 升级规则
 
 1. 在独立分支更新 `requirements.in` 并重新生成锁文件。

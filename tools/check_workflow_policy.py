@@ -24,6 +24,12 @@ REQUIRED_LOCK_INSTALL_COMMAND = (
     "python -m pip install --require-hashes -r requirements.lock"
 )
 REQUIRED_PIP_CHECK_COMMAND = "python -m pip check"
+REQUIRED_ACTIVE_GOAL_COMMAND = "python tools/check_active_goal.py"
+ACTIVE_GOAL_SUCCESSOR_COMMANDS = (
+    "python tools/content_inventory.py --check",
+    "python tools/validate_source_audits.py --all",
+    "python -m unittest discover -s tests -v",
+)
 
 
 def load_workflow(path: Path) -> dict:
@@ -325,9 +331,129 @@ def validate_python_bootstrap(
     return errors
 
 
+def validate_active_goal_check(
+    path: Path,
+    workflow: dict,
+    *,
+    job_name: str,
+) -> list[str]:
+    """Require one unwrapped active-goal gate at the bootstrap boundary."""
+
+    jobs = workflow.get("jobs", {})
+    job = jobs.get(job_name, {}) if isinstance(jobs, dict) else {}
+    if not isinstance(job, dict):
+        return [f"{path}: job {job_name} must be a mapping"]
+    steps = job.get("steps", [])
+    if not isinstance(steps, list):
+        return [f"{path}: job {job_name} steps must be a sequence"]
+
+    exact_occurrences = [
+        (index, step)
+        for index, step in enumerate(steps)
+        if isinstance(step, dict)
+        and isinstance(step.get("run"), str)
+        and step["run"].strip() == REQUIRED_ACTIVE_GOAL_COMMAND
+    ]
+    embedded_occurrences = [
+        (index, step)
+        for index, step in enumerate(steps)
+        if isinstance(step, dict)
+        and isinstance(step.get("run"), str)
+        for line in step["run"].splitlines()
+        if line.strip() == REQUIRED_ACTIVE_GOAL_COMMAND
+    ]
+
+    errors: list[str] = []
+    if not exact_occurrences:
+        errors.append(
+            f"{path}: job {job_name} is missing required command: "
+            f"{REQUIRED_ACTIVE_GOAL_COMMAND}"
+        )
+        return errors
+    if len(exact_occurrences) != 1 or len(embedded_occurrences) != 1:
+        errors.append(
+            f"{path}: job {job_name} must run required command exactly once: "
+            f"{REQUIRED_ACTIVE_GOAL_COMMAND}"
+        )
+
+    active_position, active_step = exact_occurrences[0]
+    if "if" in active_step:
+        errors.append(
+            f"{path}: job {job_name} active-goal check step must not have "
+            "an if condition"
+        )
+    if "continue-on-error" in active_step:
+        errors.append(
+            f"{path}: job {job_name} active-goal check step must fail closed"
+        )
+    if "shell" in active_step:
+        errors.append(
+            f"{path}: job {job_name} active-goal check step must use "
+            "the default shell"
+        )
+    if "working-directory" in active_step:
+        errors.append(
+            f"{path}: job {job_name} active-goal check step must run "
+            "at repository root"
+        )
+    if "env" in active_step:
+        errors.append(
+            f"{path}: job {job_name} active-goal check step must not override "
+            "its environment"
+        )
+
+    setup_positions = [
+        index
+        for index, step in enumerate(steps)
+        if isinstance(step, dict)
+        and str(step.get("uses", "")).startswith("actions/setup-python@")
+    ]
+    prerequisite_positions = [
+        index
+        for command in (REQUIRED_LOCK_INSTALL_COMMAND, REQUIRED_PIP_CHECK_COMMAND)
+        for index, step in enumerate(steps)
+        if isinstance(step, dict)
+        and isinstance(step.get("run"), str)
+        and step["run"].strip() == command
+    ]
+    if (
+        len(setup_positions) == 1
+        and len(prerequisite_positions) == 2
+        and not (
+            setup_positions[0]
+            < prerequisite_positions[0]
+            < prerequisite_positions[1]
+            < active_position
+        )
+    ):
+        errors.append(
+            f"{path}: job {job_name} active-goal check must run after "
+            "setup-python, hash-locked install, and pip check"
+        )
+
+    successor_positions = [
+        index
+        for index, step in enumerate(steps)
+        if isinstance(step, dict)
+        and isinstance(step.get("run"), str)
+        and any(
+            line.strip() in ACTIVE_GOAL_SUCCESSOR_COMMANDS
+            or line.strip().startswith("mkdocs build --strict")
+            for line in step["run"].splitlines()
+        )
+    ]
+    if successor_positions and active_position >= min(successor_positions):
+        errors.append(
+            f"{path}: job {job_name} active-goal check must run before "
+            "inventory, trust, tests, and build"
+        )
+    return errors
+
+
 def validate_ci(path: Path, workflow: dict) -> list[str]:
     errors = validate_action_refs(path, workflow)
     errors.extend(validate_python_bootstrap(path, workflow, job_name="quality"))
+    errors.extend(validate_active_goal_check(path, workflow, job_name="quality"))
     errors.extend(
         validate_trust_validation_commands(path, workflow, job_name="quality")
     )
@@ -343,6 +469,7 @@ def validate_ci(path: Path, workflow: dict) -> list[str]:
 def validate_deploy(path: Path, workflow: dict) -> list[str]:
     errors = validate_action_refs(path, workflow)
     errors.extend(validate_python_bootstrap(path, workflow, job_name="build"))
+    errors.extend(validate_active_goal_check(path, workflow, job_name="build"))
     errors.extend(validate_trust_validation_commands(path, workflow, job_name="build"))
     errors.extend(validate_full_history_checkout(path, workflow, job_name="build"))
     if workflow.get("permissions") != {"contents": "read"}:
@@ -386,7 +513,7 @@ def main() -> int:
         return 1
     print(
         "WORKFLOW_POLICY_OK: immutable action refs, repository Python runtime, "
-        "dependency health, and least-privilege jobs verified"
+        "dependency health, active-goal gating, and least-privilege jobs verified"
     )
     return 0
 

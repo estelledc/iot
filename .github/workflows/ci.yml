@@ -28,6 +28,8 @@ jobs:
         run: python -m pip install --require-hashes -r requirements.lock
       - name: Verify installed dependencies
         run: python -m pip check
+      - name: Validate active goal contract
+        run: python tools/check_active_goal.py
       - name: Verify generated and release metadata
         run: |
           python tools/content_inventory.py --check
