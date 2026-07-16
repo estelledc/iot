@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T062
-status: ACTIVE
+status: COMPLETE
 objective: >-
   将已完成且本地验证通过的 IOT-T061 分支
   codex/iot-t061-workflow-runtime-contract 推送到 origin，并验证远端分支
@@ -115,18 +115,18 @@ selection:
   selected_articles: []
   rationale: "Push-only delivery of the completed IOT-T061 branch."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: IOT_T062_ACTIVATED_REMOTE_BRANCH_ABSENT
-  last_external_delta: NONE_PUSH_NOT_STARTED
+  last_result: IOT_T062_REMOTE_BRANCH_FINAL_HEAD_VERIFIED
+  last_external_delta: REMOTE_BRANCH_PUSHED_VIA_EXISTING_SSH_IDENTITY
 activation:
   ref: c9c3ce4db58af8bf57b31d2062da2eb5b50da8d2
   activated_at: "2026-07-16T02:07:28Z"
 next_action:
-  kind: COMMIT_CONTRACT_AND_PUSH_BRANCH
+  kind: NONE
   requires_activation: false
   instruction: >-
-    Commit the IOT-T062 goal/lock contract, push the current branch without
-    force, verify the remote SHA, then close and push the final goal state.
+    IOT-T062 is complete after the final closeout push. Do not open a PR, merge,
+    deploy, or start another IoT goal without a new explicit user request.
