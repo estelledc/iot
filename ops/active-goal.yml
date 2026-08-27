@@ -182,18 +182,19 @@ selection:
   selected_articles: []
   rationale: "Disposition plan for the bulk placeholder trust records: revocation is schema-bound to a real HUMAN governance actor, so this goal ships the plan and leaves execution to human-authorized follow-ups."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: IOT_T066_ACTIVATED_BASELINE_GREEN
-  last_external_delta: NONE_SLICE_NOT_STARTED
+  last_result: IOT_T066_DISPOSITION_PLAN_SLICE_PASSED_EVERY_SLICE_CHECKS
+  last_external_delta: NONE_PENDING_BRANCH_PUSH_AND_PR
 activation:
   ref: c9c3fb971895bfd6373bc5972cf96309edeeb4b5
   activated_at: "2026-08-27T05:44:14Z"
 next_action:
-  kind: RUN_FIRST_SLICE
+  kind: PUSH_BRANCH_OPEN_PR_THEN_CLOSE
   requires_activation: false
   instruction: >-
-    执行唯一业务切片：写入处置计划文档并登记 CHANGELOG，跑全部
-    EVERY_SLICE 验收后提交；随后 push 分支、开新 PR 并收口。
+    通过普通 push 发布本分支、开出新 PR 供人工 review，然后运行 GOAL_CLOSE
+    门禁并把状态收口为 COMPLETE；不合并、不向 PR #31 追加、不 squash、
+    不 rebase、不 force push。
