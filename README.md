@@ -10,7 +10,7 @@
 - **系统**：Markdown 源真相 → frontmatter schema 与确定性清单 → 自动 catalog、搜索与 MkDocs Pages → CI 结构、链接和发布门禁。
 - **可核查证据**：8 层技术体系；697 个内容文件已全部进入可发现目录；M1 治理基线已完成。
 - **协作分工**：Jason 负责分层、里程碑、发布门禁与验收判断；AI 辅助研究、初稿、批量深审和站点实现，不能自行授予 `VERIFIED` 或 `HUMAN_APPROVED`。
-- **当前局限**：M2 已完成结构审计投影和 Pages 验收收口，但仍停在 `PARKED_HUMAN_EVIDENCE`；642/697 正文已有可信投影，新增 55 篇保持初读状态，不表示技术事实已经人工验证；Pages 验收记录见 [`data/deploy-acceptance.yml`](data/deploy-acceptance.yml)。
+- **当前局限**：M2 已完成结构审计投影和 Pages 验收收口，但仍停在 `PARKED_HUMAN_EVIDENCE`；trust 投影显示的 642/697 篇 `VERIFIED` / `HUMAN_APPROVED` 来自 2026-07-13 批量生成的占位 human 记录，经 [IOT-T065 findings](docs/superpowers/review-packets/2026-08-27-trust-evidence-findings.md) 判定不构成真实人工审批；新增 55 篇保持初读状态；Pages 验收记录见 [`data/deploy-acceptance.yml`](data/deploy-acceptance.yml)（针对 IOT-T054 时点的内容提交）。
 
 <!-- content-inventory:start -->
 ## 当前内容基线

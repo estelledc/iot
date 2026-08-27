@@ -89,7 +89,7 @@ flowchart LR
 
 ### 为什么是这个顺序
 
-存量内容最初背着三笔债务：内容正文没有 frontmatter 元数据、来源审计状态不可统计、大部分内容文件未进入显式导航。M1 已解决元数据与可发现性，M2 已把 29 条结构审计与部署验收转为机器可读证据；剩余债务是事实核验与人工审批证据。缺少这条证据链时继续批量生成，只会让可信债务按比例放大。M1/M2 建立的元数据与审计能力，既是 M3 流水线「新增内容不产生新债务」的前提，也是 M4 学习路径的数据基础。
+存量内容最初背着三笔债务：内容正文没有 frontmatter 元数据、来源审计状态不可统计、大部分内容文件未进入显式导航。M1 已解决元数据与可发现性，M2 已把 642 条结构审计与部署验收转为机器可读证据；剩余债务是事实核验与人工审批证据——2026-07-13 批量生成的占位 human-\* 审批记录经 [IOT-T065 findings](docs/superpowers/review-packets/2026-08-27-trust-evidence-findings.md) 判定不构成该证据。缺少这条证据链时继续批量生成，只会让可信债务按比例放大。M1/M2 建立的元数据与审计能力，既是 M3 流水线「新增内容不产生新债务」的前提，也是 M4 学习路径的数据基础。
 
 ### M1 治理基线 — 让全部存量内容可发现、可分类
 
@@ -113,7 +113,7 @@ flowchart LR
 
 ### M2 可信基线 — 从「文件存在」到「来源可查」
 
-**状态**：`PARKED_HUMAN_EVIDENCE`。结构审计投影与 Pages 验收已收口；事实核验和人工审批证据尚未建立，因此不发布 v0.3.0。
+**状态**：`PARKED_HUMAN_EVIDENCE`。结构审计投影与 Pages 验收已收口；事实核验和人工审批证据尚未建立，因此不发布 v0.3.0。当前 trust 投影中 642 篇 `VERIFIED` / `HUMAN_APPROVED` 来自占位记录，不改变 parked 状态（证据缺陷与处置选项见 [IOT-T065 findings](docs/superpowers/review-packets/2026-08-27-trust-evidence-findings.md)）。
 
 **历史输入**：[docs/superpowers/plans/2026-07-10-m2-trust-baseline.md](docs/superpowers/plans/2026-07-10-m2-trust-baseline.md)（保留为历史计划；其中“STRUCTURAL 审计自动升格 PARTIAL”的旧步骤已被当前 schema 废止）。
 
@@ -121,7 +121,7 @@ flowchart LR
 
 **工作项**：
 
-1. **结构审计记录**：29 条 current valid `STRUCTURAL` source audit 已入库并投影到 inventory；它们只证明结构可审计，不提升 `source_status`。
+1. **结构审计记录**：642 条 current valid `STRUCTURAL` source audit 已入库并投影到 inventory（首批 29 条抽样后批量扩展）；它们只证明结构可审计，不提升 `source_status`。
 2. **事实核验链**：`PARTIAL` / `VERIFIED` 必须由当前正文的 `CLAIM_VERIFICATION` 记录投影，并需要 `CONTENT_AUTHOR`、`FACT_AUDITOR` 与锁定的 `critical_claim_ids`。
 3. **review record 流程**：`HUMAN_APPROVED` 必须绑定独立人工证据与当前正文 hash，审批权威是 [review record schema](schemas/review-record.schema.json)；frontmatter 只保存兼容缓存字段。
 4. **线上验收**：已对 <https://estelledc.github.io/iot/> 针对目标 commit 做部署健康验收，结果写入 [`data/deploy-acceptance.yml`](data/deploy-acceptance.yml)。
