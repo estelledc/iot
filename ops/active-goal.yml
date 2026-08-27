@@ -181,19 +181,19 @@ selection:
   selected_articles: []
   rationale: "Honesty repair for the 2026-08-27 review verdict: findings packet plus narrative alignment, no trust data mutation."
 progress:
-  completed_batches: 0
+  completed_batches: 1
   completed_articles: 0
-  completed_commits: 0
+  completed_commits: 2
   no_external_delta_batches: 0
-  last_result: IOT_T065_ACTIVATED_BASELINE_GREEN
-  last_external_delta: NONE_SLICE_NOT_STARTED
+  last_result: IOT_T065_FINDINGS_AND_NARRATIVE_SLICE_PASSED_EVERY_SLICE_CHECKS
+  last_external_delta: NONE_PENDING_BRANCH_PUSH_AND_PR
 activation:
   ref: 3d2931930aedcad070c8fa7f4f1538f62cb0a037
   activated_at: "2026-08-27T04:57:36Z"
 next_action:
-  kind: RUN_FIRST_SLICE
+  kind: PUSH_BRANCH_OPEN_PR_THEN_CLOSE
   requires_activation: false
   instruction: >-
-    执行唯一业务切片：写入 findings 证据包并对齐 docs/progress.md、
-    ROADMAP.md、README.md、CHANGELOG.md 的手写叙事，跑全部 EVERY_SLICE
-    验收后提交；随后 push 分支、开 PR 并收口。
+    通过普通 push 发布本分支、开出面向 main 的 PR 供人工 review，然后运行
+    GOAL_CLOSE 门禁并把状态收口为 COMPLETE；不合并、不 squash、不 rebase、
+    不 force push。

@@ -6,6 +6,7 @@
 
 ### Added
 
+- `IOT-T065`：记录 2026-08-27 外部 review BLOCK 判定的可复现 trust 证据缺陷（`docs/superpowers/review-packets/2026-08-27-trust-evidence-findings.md`）：642 篇 `VERIFIED` / `HUMAN_APPROVED` 投影的 human-\* 记录来自单提交 `0c641cd` 批量生成、actor 为无真实身份的占位 id、642 条 claim 审计共享同一 `audited_at` 秒级时间戳、29 条 claim 审计复用同一 `snapshot_sha256`；同步把 `docs/progress.md`、`ROADMAP.md`、`README.md` 手写叙事对齐实时基线（`STRUCTURAL` 29→642、IOT-T034 深审口径回正为 `IN_REVIEW`、M2 维持 `PARKED_HUMAN_EVIDENCE`）。不修改任何 trust 记录、frontmatter、schema、tools 或版本号；记录处置（撤销/隔离/降级）留待用户授权的后续 goal。补录说明：Unreleased 此前缺少 IOT-T053/T054 扩容（652→697 篇初读卡）与 IOT-T055–T059 流程批次的条目，其历史见 git log 与 `data/deploy-acceptance.yml`（`target_sha` 为 IOT-T054 内容提交 `47189492`）。验证：`python tools/check_active_goal.py`、`python tools/content_inventory.py --check`、`python tools/validate_trust_state.py --all --baseline-mode`、`python tools/check_release_metadata.py --version-file VERSION --changelog CHANGELOG.md`、`python tools/check_markdown_links.py --all --anchors --strict`。
 - `IOT-T052`：Layer 5 边缘智能受控扩容 5 篇论文初读卡片：FedAvg、DARTS、MobileViT、Medusa、FlashAttention；新增 canonical 正文均保持 `source_status: UNVERIFIED` / `review_status: UNREVIEWED`，并通过 catalog 与 inventory 派生入口纳入 652 篇可发现内容。不提升 `VERIFIED`、`HUMAN_APPROVED` 或版本号。
 
 ### Fixed

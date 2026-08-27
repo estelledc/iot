@@ -37,11 +37,12 @@ python tools/generate_layer_catalogs.py --check
 ## 当前决策
 
 - M1 治理基线已完成：frontmatter 全量覆盖、八层 catalog 可发现、CI `--all` 启用。
-- **M2 当前状态：`PARKED_HUMAN_EVIDENCE`**。IOT-T047/T048/T049 已完成外部闭环：progression contract 可承接非文章 goal，29 条 current valid `STRUCTURAL` 记录已投影到 inventory，`data/deploy-acceptance.yml` 已绑定真实部署 SHA。但这仍不能把任何内容提升为 `PARTIAL`、`VERIFIED` 或 `HUMAN_APPROVED`。
+- **M2 当前状态：`PARKED_HUMAN_EVIDENCE`**。IOT-T047/T048/T049 已完成外部闭环：progression contract 可承接非文章 goal，current valid `STRUCTURAL` 记录已从首批 29 条扩展至 642 条并投影到 inventory，`data/deploy-acceptance.yml` 已绑定真实部署 SHA。但这仍不能把任何内容提升为 `PARTIAL`、`VERIFIED` 或 `HUMAN_APPROVED`。
 - **M2 剩余最小输入**：至少一个内容条目的 `CONTENT_AUTHOR` authority、锁定的 `critical_claim_ids`、独立 `FACT_AUDITOR`、合法 `CLAIM_VERIFICATION` source audit，以及独立 `HUMAN` approver 的 review record。缺少这些外部证据时，不发布 v0.3.0，也不启动 M3–M4。
 - **人审准备材料**：[agent advisory review](superpowers/review-packets/2026-07-13-agent-advisory-review.md) 和 [human review packet](superpowers/review-packets/2026-07-13-human-review-packet.md) 已列出真人 review 前需要补齐的最小证据；这些材料不是 `HUMAN_APPROVED`，不能替代 review record。
+- **2026-08-27 证据缺陷判定（`IOT-T065`）**：当前 trust 投影显示的 642 篇 `VERIFIED` / `HUMAN_APPROVED` 来自 2026-07-13 单提交批量生成的占位 human-\* 记录（actor 无真实身份、时间戳模板化、29 条 claim 审计复用同一 snapshot hash），经 [trust evidence findings](superpowers/review-packets/2026-08-27-trust-evidence-findings.md) 判定不构成上一条所列的人工审批证据，也不满足 M2 完成判据。这些记录的处置（撤销、隔离或分批降级）需要用户单独授权的后续 goal；在此之前它们保留原样，但不得再被叙述为已完成的人工核验。
 - [M2 可信基线推进计划](superpowers/plans/2026-07-10-m2-trust-baseline.md) 仅保留为历史输入；其中“STRUCTURAL 审计自动升格 PARTIAL”的旧步骤已被当前 schema 与 [内容 frontmatter 契约](content-schema.md) 废止。
-- **全量正文深审战役（`IOT-T034`）已完成**：642/642 篇 `review_status: HUMAN_APPROVED`；进度见 [全量正文深审计划](superpowers/plans/2026-07-10-full-deep-review.md) 与 `data/deep-review-progress.yml`。与 M2 来源审计正交（正文已深审仍可为 `source_status: VERIFIED`）。
+- **全量正文深审战役（`IOT-T034`）已完成**：642/642 篇完成 agent 编辑性深审，按 CHANGELOG 0.2.2 的口径 frontmatter 统一为 `review_status: IN_REVIEW`，不写 `HUMAN_APPROVED` / `VERIFIED`；进度见 [全量正文深审计划](superpowers/plans/2026-07-10-full-deep-review.md) 与 `data/deep-review-progress.yml`。当前 frontmatter 缓存显示的 `HUMAN_APPROVED` 来自 2026-07-13 批量记录而非 T034，证据缺陷见上一条判定。
 - 实施记录（M1）见 [M1 治理基线计划](superpowers/plans/2026-07-10-m1-governance-baseline.md)。
 
 ## 相关入口
