@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T066
-status: ACTIVE
+status: COMPLETE
 objective: >-
   作为 IOT-T065 完成后的新有限目标，承接 2026-08-27 用户"持续推进"授权中
   指定的下一切片：批量占位 trust 记录的处置诚实化。经对 schema 的实测，
@@ -184,17 +184,17 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 2
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: IOT_T066_DISPOSITION_PLAN_SLICE_PASSED_EVERY_SLICE_CHECKS
-  last_external_delta: NONE_PENDING_BRANCH_PUSH_AND_PR
+  last_result: IOT_T066_GOAL_CLOSE_GATES_PASSED_212_TESTS_AND_STRICT_BUILD
+  last_external_delta: BRANCH_PUSHED_AND_PR_32_OPENED_FOR_HUMAN_REVIEW
 activation:
   ref: c9c3fb971895bfd6373bc5972cf96309edeeb4b5
   activated_at: "2026-08-27T05:44:14Z"
 next_action:
-  kind: PUSH_BRANCH_OPEN_PR_THEN_CLOSE
+  kind: NONE
   requires_activation: false
   instruction: >-
-    通过普通 push 发布本分支、开出新 PR 供人工 review，然后运行 GOAL_CLOSE
-    门禁并把状态收口为 COMPLETE；不合并、不向 PR #31 追加、不 squash、
-    不 rebase、不 force push。
+    IOT-T066 通过 PR #32 交付处置计划供人工 review。撤销执行需要用户先决策
+    governance 身份、编排与执行模式（见计划第四节），再以新 goal 授权；
+    在用户新的明确请求之前不启动其他目标，不 merge PR #31/#32。
