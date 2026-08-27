@@ -1,43 +1,45 @@
 schema_version: "1.0"
-goal_id: IOT-T065
+goal_id: IOT-T066
 status: COMPLETE
 objective: >-
-  作为 IOT-T064 完成后的新有限目标，承接 2026-08-27 用户继续授权与外部
-  review 的 BLOCK 判定：把 642 篇 VERIFIED/HUMAN_APPROVED 投影的证据缺陷
-  （占位 human-* actor、复用 snapshot_sha256、单提交批量生成、与 T051
-  human review packet 的直接矛盾）固化为可复现的 findings 证据包，并把
-  docs/progress.md、ROADMAP.md、README.md、CHANGELOG.md 的手写叙事对齐到
-  实时 inventory 与 trust 投影。本目标不修改任何 trust 记录、frontmatter、
-  ledger、schema、tools、tests 或 VERSION，不撤销或删除历史记录，不新增
-  内容，不发布 v0.3.0；交付物通过分支 PR 供人工 review，不合并。
+  作为 IOT-T065 完成后的新有限目标，承接 2026-08-27 用户"持续推进"授权中
+  指定的下一切片：批量占位 trust 记录的处置诚实化。经对 schema 的实测，
+  revocation 块把签发者硬性绑定为 by_actor_type=HUMAN（const）、
+  by_role=GOVERNANCE_REVIEWER（const）与 human-* id，authority registry
+  也没有任何 governance 身份；agent 代签撤销即重演 T065 findings 判定的
+  同类伪造。因此本目标不改写 data/ 任何字节，交付一份可执行的处置计划：
+  给出撤销、agent 降级 supersede 与分批混合三条机械路径的 validator 联动
+  分析、每批验收命令、baseline 连锁数字表和职责分离设计（agent 只准备
+  diff，人类以真实身份 review 并 merge 作为签发行为）。不新增任何
+  VERIFIED/HUMAN_APPROVED/PARTIAL，不扩容 Layer 3-8，不改 VERSION，
+  交付物通过新分支 PR 供人工 review，不合并。
 scope:
-  task_id: IOT-T065
+  task_id: IOT-T066
   mode: PROGRESSION_CONTRACT_HARDENING
   first_batch_articles: 0
   max_articles: 0
-activated_by: "current-user-prompt-2026-08-27-continue-plus-reviewer-block-verdict"
+activated_by: "current-user-prompt-2026-08-27-continue-10h-trust-disposition"
 review_after: "2026-08-29"
 budget:
   max_batches: 2
   max_articles: 0
   max_commits: 3
-  max_wall_minutes: 240
-  max_parallel_agents: 1
+  max_wall_minutes: 600
+  max_parallel_agents: 2
   max_parallel_writers: 1
 external_outcome:
   definition: >-
-    以 origin/main 3d2931930aedcad070c8fa7f4f1538f62cb0a037 为基线的诚实性
-    修复分支通过普通 push 发布到 github.com/estelledc/iot，并开出面向 main
-    的 PR 供人工 review；PR 包含 findings 证据包与叙事对齐，分支上全部
-    EVERY_SLICE 验收命令可复现通过。merge 与后续 trust 数据处置由人类决定，
-    不属于本目标。
+    以 IOT-T065 收口提交 c9c3fb971895bfd6373bc5972cf96309edeeb4b5 为基线的
+    处置计划分支通过普通 push 发布到 github.com/estelledc/iot，并开出新 PR
+    供人工 review；PR 与 goal 诚实声明本批未隔离、未降级、未撤销任何记录，
+    只交付经代码实证的处置计划。merge 与处置执行由人类决定，不属于本目标。
   d_axis: D3
   satisfies_when:
-    - findings 证据包 docs/superpowers/review-packets/2026-08-27-trust-evidence-findings.md 逐条给出可复现验证命令，声明自身不是 review record、不改变任何 trust 状态。
-    - docs/progress.md 与 ROADMAP.md 的手写叙述不再出现与实时 inventory 矛盾的 29 条 STRUCTURAL 口径，并明确 642 篇 VERIFIED/HUMAN_APPROVED 投影的证据缺陷与 M2 PARKED_HUMAN_EVIDENCE 的关系。
-    - README.md 当前局限段落与 CHANGELOG.md Unreleased 对齐实时基线 canonical_content=697、source_records=1287、review_records=1284、verified=642、approved=642。
-    - data/、schemas/、tools/、tests/、docs/ 八层内容目录、全部 frontmatter、VERSION 与 .github/ 保持逐字节不变。
-    - 全部 EVERY_SLICE 验收命令在工作树通过；分支通过普通 push 发布并开出面向 main 的 PR，不合并、不 squash、不 rebase、不 force push、不直接 push main。
+    - 处置计划 docs/superpowers/plans/2026-08-27-trust-record-disposition-plan.md 覆盖撤销路径、agent supersede 降级路径与分批混合路径，每条路径给出 schema/validator 依据、触达文件面、baseline 连锁数字与验收命令。
+    - 计划明确职责分离：任何 revocation 的 by_actor_id 必须是用户注册的真实 HUMAN governance 身份，agent 只能准备 diff，签发行为由人类 review 并 merge 完成。
+    - data/、schemas/、tools/、tests/、docs/ 八层内容目录、全部 frontmatter、VERSION 与 .github/ 保持逐字节不变，trust 投影维持 1287/1284/0/642/642/642。
+    - CHANGELOG.md Unreleased 记录 IOT-T066 计划条目及验证命令。
+    - 全部 EVERY_SLICE 验收命令在工作树通过；分支通过普通 push 发布并开出新 PR，不合并、不 squash、不 rebase、不 force push、不直接 push main、不向 PR #31 追加。
 external_action_authority:
   commit: true
   push: true
@@ -45,28 +47,27 @@ external_action_authority:
   merge: false
   deploy: false
 external_action_grant:
-  source: "current-user-prompt-2026-08-27-continue-plus-reviewer-block-verdict"
-  granted_at: "2026-08-27T04:57:36Z"
+  source: "current-user-prompt-2026-08-27-continue-10h-trust-disposition"
+  granted_at: "2026-08-27T05:44:14Z"
   scope: >-
-    仅限 IOT-T065：允许创建最多 3 个原子本地提交；把工作分支普通 push 到
-    origin 并创建面向 main 的 PR 供人工 review。禁止 merge、deploy、force
-    push、squash、rebase、删除远端分支、直接 push main、修改 trust 数据、
-    扩大文件修改范围或伪造任何 human 证据。
+    仅限 IOT-T066：允许创建最多 3 个原子本地提交；把工作分支普通 push 到
+    origin 并创建新 PR 供人工 review。禁止 merge、deploy、force push、
+    squash、rebase、删除远端分支、直接 push main、向 PR #31 追加提交、
+    修改 data/ 下任何文件或伪造任何 human 证据。
 stop_conditions:
   - 工作树出现 allowed_mutations 之外的改动。
   - goal 与 lock 不一致，且无法在用户已授权的重签范围内恢复一致。
   - 必须修改 data/、schemas/、tools/、tests/、frontmatter 或 VERSION 才能继续。
   - 必须撤销、删除或改写任何 source audit、review record 或 ledger 历史才能继续。
-  - 必须新增 VERIFIED、HUMAN_APPROVED 或任何 human 证据才能继续。
+  - 必须新增 VERIFIED、HUMAN_APPROVED、PARTIAL 或任何 human 身份记录才能继续。
   - content inventory、trust projection、release metadata、Markdown fence/link、strict build 或单元测试出现无法在允许路径内修复的失败。
   - GitHub 凭证不可用，或必须落盘 token、密钥、本机路径才能继续。
-  - origin/main 在收口前移动导致基线不可复现，且无法在不 rebase 的前提下继续。
   - 预算耗尽或 review_after 到达 2026-08-29。
 superseded_by: null
 baseline:
-  prepared_at_ref: 3d2931930aedcad070c8fa7f4f1538f62cb0a037
+  prepared_at_ref: c9c3fb971895bfd6373bc5972cf96309edeeb4b5
   remote_main_ref: 3d2931930aedcad070c8fa7f4f1538f62cb0a037
-  required_history_ancestor: 3d2931930aedcad070c8fa7f4f1538f62cb0a037
+  required_history_ancestor: c9c3fb971895bfd6373bc5972cf96309edeeb4b5
   expected_inventory:
     canonical_content: 697
     plan_topics: 1761
@@ -81,7 +82,7 @@ acceptance_checks:
   - id: active_goal_contract
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_active_goal.py
-    expectation: ACTIVE_GOAL_OK goal_id=IOT-T065 during the slice and status=COMPLETE after closeout.
+    expectation: ACTIVE_GOAL_OK goal_id=IOT-T066 during the slice and status=COMPLETE after closeout.
   - id: content_inventory
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/content_inventory.py --check
@@ -105,23 +106,23 @@ acceptance_checks:
   - id: release_metadata
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_release_metadata.py --version-file VERSION --changelog CHANGELOG.md
-    expectation: RELEASE_METADATA_OK version=0.2.2 with the unreleased section updated for IOT-T065.
+    expectation: RELEASE_METADATA_OK version=0.2.2 with the unreleased section updated for IOT-T066.
   - id: markdown_fences
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_markdown_fences.py --all
-    expectation: all Markdown fences stay balanced after narrative edits.
+    expectation: all Markdown fences stay balanced including the new plan document.
   - id: markdown_links
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_markdown_links.py --all --anchors --strict
-    expectation: all links including the new findings packet resolve strictly.
+    expectation: all links including the new plan document resolve strictly.
   - id: workflow_policy
     cadence: EVERY_SLICE
     command: .tmp/agent-venv/bin/python tools/check_workflow_policy.py
     expectation: workflow gates remain valid and unchanged.
   - id: required_ancestor
     cadence: EVERY_SLICE
-    command: git merge-base --is-ancestor 3d2931930aedcad070c8fa7f4f1538f62cb0a037 HEAD
-    expectation: every slice commit preserves the IOT-T064 closeout ancestor.
+    command: git merge-base --is-ancestor c9c3fb971895bfd6373bc5972cf96309edeeb4b5 HEAD
+    expectation: every slice commit preserves the IOT-T065 closeout ancestor.
   - id: diff_check
     cadence: EVERY_SLICE
     command: git diff --check
@@ -133,7 +134,7 @@ acceptance_checks:
   - id: strict_build
     cadence: GOAL_CLOSE
     command: .tmp/agent-venv/bin/mkdocs build --strict --site-dir .tmp/site
-    expectation: strict MkDocs build succeeds with the findings packet included.
+    expectation: strict MkDocs build succeeds with the plan document included.
   - id: clean_worktree
     cadence: GOAL_CLOSE
     command: test -z "$(git status --porcelain)"
@@ -141,11 +142,8 @@ acceptance_checks:
 allowed_mutations:
   - ops/active-goal.yml
   - ops/active-goal.lock.json
-  - docs/progress.md
-  - ROADMAP.md
-  - README.md
+  - docs/superpowers/plans/2026-08-27-trust-record-disposition-plan.md
   - CHANGELOG.md
-  - docs/superpowers/review-packets/2026-08-27-trust-evidence-findings.md
 forbidden_mutations:
   - AGENTS.md
   - .github/
@@ -161,8 +159,11 @@ forbidden_mutations:
   - plans/
   - mkdocs.yml
   - SOP.md
+  - README.md
+  - ROADMAP.md
   - docs/index.md
   - docs/roadmap.md
+  - docs/progress.md
   - docs/content-schema.md
   - docs/architecture/
   - docs/foundation/
@@ -173,27 +174,27 @@ forbidden_mutations:
   - docs/security/
   - docs/applications/
   - docs/frontier/
-  - docs/superpowers/plans/
+  - docs/superpowers/review-packets/
 selection:
   policy: >-
-    IOT-T065 是非文章类诚实性修复目标：只固化 findings 证据包并对齐手写
-    叙事，不选择文章，不修改任何内容正文、frontmatter 或可信数据。
+    IOT-T066 是非文章类处置计划目标：只交付 trust 记录处置计划并登记
+    CHANGELOG，不选择文章，不修改任何内容正文、frontmatter 或可信数据。
   selected_articles: []
-  rationale: "Honesty repair for the 2026-08-27 review verdict: findings packet plus narrative alignment, no trust data mutation."
+  rationale: "Disposition plan for the bulk placeholder trust records: revocation is schema-bound to a real HUMAN governance actor, so this goal ships the plan and leaves execution to human-authorized follow-ups."
 progress:
   completed_batches: 1
   completed_articles: 0
   completed_commits: 3
   no_external_delta_batches: 0
-  last_result: IOT_T065_GOAL_CLOSE_GATES_PASSED_212_TESTS_AND_STRICT_BUILD
-  last_external_delta: BRANCH_PUSHED_AND_PR_31_OPENED_FOR_HUMAN_REVIEW
+  last_result: IOT_T066_GOAL_CLOSE_GATES_PASSED_212_TESTS_AND_STRICT_BUILD
+  last_external_delta: BRANCH_PUSHED_AND_PR_32_OPENED_FOR_HUMAN_REVIEW
 activation:
-  ref: 3d2931930aedcad070c8fa7f4f1538f62cb0a037
-  activated_at: "2026-08-27T04:57:36Z"
+  ref: c9c3fb971895bfd6373bc5972cf96309edeeb4b5
+  activated_at: "2026-08-27T05:44:14Z"
 next_action:
   kind: NONE
   requires_activation: false
   instruction: >-
-    IOT-T065 通过 PR #31 交付供人工 review。merge、批量 human-* 记录的处置
-    （撤销、隔离或分批降级）以及任何新 goal 都需要用户新的明确请求；在此
-    之前不启动其他目标。
+    IOT-T066 通过 PR #32 交付处置计划供人工 review。撤销执行需要用户先决策
+    governance 身份、编排与执行模式（见计划第四节），再以新 goal 授权；
+    在用户新的明确请求之前不启动其他目标，不 merge PR #31/#32。
