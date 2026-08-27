@@ -1,6 +1,6 @@
 schema_version: "1.0"
 goal_id: IOT-T065
-status: ACTIVE
+status: COMPLETE
 objective: >-
   作为 IOT-T064 完成后的新有限目标，承接 2026-08-27 用户继续授权与外部
   review 的 BLOCK 判定：把 642 篇 VERIFIED/HUMAN_APPROVED 投影的证据缺陷
@@ -183,17 +183,17 @@ selection:
 progress:
   completed_batches: 1
   completed_articles: 0
-  completed_commits: 2
+  completed_commits: 3
   no_external_delta_batches: 0
-  last_result: IOT_T065_FINDINGS_AND_NARRATIVE_SLICE_PASSED_EVERY_SLICE_CHECKS
-  last_external_delta: NONE_PENDING_BRANCH_PUSH_AND_PR
+  last_result: IOT_T065_GOAL_CLOSE_GATES_PASSED_212_TESTS_AND_STRICT_BUILD
+  last_external_delta: BRANCH_PUSHED_AND_PR_31_OPENED_FOR_HUMAN_REVIEW
 activation:
   ref: 3d2931930aedcad070c8fa7f4f1538f62cb0a037
   activated_at: "2026-08-27T04:57:36Z"
 next_action:
-  kind: PUSH_BRANCH_OPEN_PR_THEN_CLOSE
+  kind: NONE
   requires_activation: false
   instruction: >-
-    通过普通 push 发布本分支、开出面向 main 的 PR 供人工 review，然后运行
-    GOAL_CLOSE 门禁并把状态收口为 COMPLETE；不合并、不 squash、不 rebase、
-    不 force push。
+    IOT-T065 通过 PR #31 交付供人工 review。merge、批量 human-* 记录的处置
+    （撤销、隔离或分批降级）以及任何新 goal 都需要用户新的明确请求；在此
+    之前不启动其他目标。
